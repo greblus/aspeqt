@@ -1,4 +1,5 @@
-#include <QtWidgets/QApplication>
+//#include <QtWidgets/QApplication>
+#include <QApplication>
 #include <QTextCodec>
 #include <QLibraryInfo>
 #include "mainwindow.h"
