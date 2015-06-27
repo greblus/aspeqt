@@ -11,11 +11,13 @@
 #include <errno.h>
 #include <sys/types.h>
 #include <unistd.h>
+#include <QAndroidJniObject>
+
 #ifdef Q_OS_UNIX
     #ifdef Q_OS_LINUX
-        #include <stropts.h>
+//        #include <stropts.h>
         #include <termio.h>
-        #include <linux/serial.h>
+//        #include <linux/serial.h>
     #endif
 
     #ifdef Q_OS_MAC
@@ -24,6 +26,8 @@
         #define IOSSIOSPEED    _IOW('T', 2, speed_t)
     #endif
 #endif
+
+extern char * arr;
 
 AbstractSerialPortBackend::AbstractSerialPortBackend(QObject *parent)
     : QObject(parent)
@@ -50,7 +54,8 @@ StandardSerialPortBackend::~StandardSerialPortBackend()
 #ifdef Q_OS_LINUX
   QString StandardSerialPortBackend::defaultPortName()
   {
-      return QString("/dev/ttyS0");
+
+      return QString("Sio2PC-USB");
   }
 #endif
 
@@ -63,28 +68,18 @@ QString StandardSerialPortBackend::defaultPortName()
 
 bool StandardSerialPortBackend::open()
 {
+    qWarning() << "!i" << tr("open");
     if (isOpen()) {
         close();
     }
 
     QString name = aspeqtSettings->serialPortName();
 
-    mHandle = ::open(name.toLocal8Bit().constData(), O_RDWR | O_NOCTTY | O_NDELAY);
+    mHandle = QAndroidJniObject::callStaticMethod<jint>("net/greblus/MyActivity", "ftdiOpenDevice", "()I");
 
-    if (mHandle < 0) {
+    if (mHandle == 0) {
         qCritical() << "!e" << tr("Cannot open serial port '%1': %2")
-                       .arg(name, lastErrorMessage());
-        return false;
-    }
-
-    int status;
-    if (!ioctl(mHandle, TIOCMGET, &status) < 0) {
-        qCritical() << "!e" << tr("Cannot clear DTR and RTS lines in serial port '%1': %2").arg(name, lastErrorMessage());
-        return false;
-    }
-    status = status & ~(TIOCM_DTR & TIOCM_RTS);
-    if (!ioctl(mHandle, TIOCMSET, status)) {
-        qCritical() << "!e" << tr("Cannot clear DTR and RTS lines in serial port '%1': %2").arg(name, lastErrorMessage());
+                       .arg(name, "No device connected!");
         return false;
     }
 
@@ -96,20 +91,8 @@ bool StandardSerialPortBackend::open()
         return false;
     }
 
-    QString m;
-    switch (mMethod) {
-    case 0:
-        m = "RI";
-        break;
-    case 1:
-        m = "DSR";
-        break;
-    case 2:
-        m = "CTS";
-        break;
-    default:
-        m = "DSR";
-    }
+    QString m="DSR";
+
     /* Notify the user that emulation is started */
     qWarning() << "!i" << tr("Emulation started through standard serial port backend on '%1' with %2 handshaking.")
                   .arg(aspeqtSettings->serialPortName())
@@ -120,193 +103,70 @@ bool StandardSerialPortBackend::open()
 
 bool StandardSerialPortBackend::isOpen()
 {
-    return mHandle >= 0;
+    qWarning() << "!i" << tr("isOpen %1").arg(mHandle);
+    return (mHandle > 0);
 }
 
 void StandardSerialPortBackend::close()
 {
+    qWarning() << "!i" << tr("close");
     cancel();
-    if (::close(mHandle)) {
-        qCritical() << "!e" << tr("Cannot close serial port: %1")
-                       .arg(lastErrorMessage());
-    }
+    QAndroidJniObject::callStaticMethod<jint>("net/greblus/MyActivity", "ftdiCloseDevice", "()V");
     mHandle = -1;
 }
 
 void StandardSerialPortBackend::cancel()
 {
+    qWarning() << "!i" << tr("cancel");
     mCanceled = true;
 }
 
 int StandardSerialPortBackend::speedByte()
 {
-    if (aspeqtSettings->serialPortUsePokeyDivisors()) {
-        return aspeqtSettings->serialPortPokeyDivisor();
-    } else {
-        int speed = 0x08;
-        switch (aspeqtSettings->serialPortMaximumSpeed()) {
-        case 0:
-            speed = 0x28;
-            break;
-        case 1:
-            speed = 0x10;
-            break;
-        case 2:
-            speed = 0x08;
-            break;
-        }
-        return speed;
-    }
+    qWarning() << "!i" << tr("speedByte");
+//    if (aspeqtSettings->serialPortUsePokeyDivisors()) {
+//        return aspeqtSettings->serialPortPokeyDivisor();
+//    } else {
+//        int speed = 0x08;
+//        switch (aspeqtSettings->serialPortMaximumSpeed()) {
+//        case 0:
+//            speed = 0x28;
+//            break;
+//        case 1:
+//            speed = 0x10;
+//            break;
+//        case 2:
+//            speed = 0x08;
+//            break;
+//        }
+        return 0x08; // speed;
+//    }
 }
 
 bool StandardSerialPortBackend::setNormalSpeed()
 {
+    qWarning() << "!i" << tr("setNormalSpeed");
     mHighSpeed = false;
     return setSpeed(19200);
 }
 
 bool StandardSerialPortBackend::setHighSpeed()
 {
+    qWarning() << "!i" << tr("setHighSpeed");
     mHighSpeed = true;
-    if (aspeqtSettings->serialPortUsePokeyDivisors()) {
-        return setSpeed(divisorToBaud(aspeqtSettings->serialPortPokeyDivisor()));
-    } else {
-        int speed = 57600;
-        switch (aspeqtSettings->serialPortMaximumSpeed()) {
-        case 0:
-            speed = 19200;
-            break;
-        case 1:
-            speed = 38400;
-            break;
-        case 2:
-            speed = 57600;
-            break;
-        }
-        return setSpeed(speed);
-    }
+
+        return setSpeed(19200);
 }
 
 #ifdef Q_OS_LINUX
 bool StandardSerialPortBackend::setSpeed(int speed)
 {
-    termios tios;
-    struct serial_struct ss;
-
-    tcgetattr(mHandle, &tios);
-    tios.c_cflag &= ~CSTOPB;
-    cfmakeraw(&tios);
-    switch (speed) {
-        case 600:
-            cfsetispeed(&tios, B600);
-            cfsetospeed(&tios, B600);
-            break;
-        case 19200:
-            cfsetispeed(&tios, B19200);
-            cfsetospeed(&tios, B19200);
-            break;
-        case 38400:
-            // reset special handling of 38400bps back to 38400
-            ioctl(mHandle, TIOCGSERIAL, &ss);
-            ss.flags &= ~ASYNC_SPD_MASK;
-            ioctl(mHandle, TIOCSSERIAL, &ss);
-
-            cfsetispeed(&tios, B38400);
-            cfsetospeed(&tios, B38400);
-            break;
-        case 57600:
-            cfsetispeed(&tios, B57600);
-            cfsetospeed(&tios, B57600);
-            break;
-        default:
-            // configure port to use custom speed instead of 38400
-            ioctl(mHandle, TIOCGSERIAL, &ss);
-            ss.flags = (ss.flags & ~ASYNC_SPD_MASK) | ASYNC_SPD_CUST;
-            ss.custom_divisor = (ss.baud_base + (speed / 2)) / speed;
-            int customSpeed = ss.baud_base / ss.custom_divisor;
-
-            if (customSpeed < speed * 98 / 100 || customSpeed > speed * 102 / 100) {
-                qCritical() << "!e" << tr("Cannot set serial port speed to %1: %2").arg(speed).arg(tr("Closest possible speed is %2.").arg(customSpeed));
-                return false;
-            }
-
-            ioctl(mHandle, TIOCSSERIAL, &ss);
-
-            cfsetispeed(&tios, B38400);
-            cfsetospeed(&tios, B38400);
-            break;
-    }
-
-    /* Set serial port state */
-    if (tcsetattr(mHandle, TCSANOW, &tios) != 0) {
-        qCritical() << "!e" << tr("Cannot set serial port speed to %1: %2")
-                       .arg(speed)
-                       .arg(lastErrorMessage());
-        return false;
-    }
-
-    emit statusChanged(tr("%1 bits/sec").arg(speed));
     qWarning() << "!i" << tr("Serial port speed set to %1.").arg(speed);
     mSpeed = speed;
     return true;
 }
 #endif
 
-#ifdef Q_OS_MAC
-bool StandardSerialPortBackend::setSpeed(int speed)
-{
-    termios tios;
-
-    tcgetattr(mHandle, &tios);
-    tios.c_cflag &= ~CSTOPB;
-    cfmakeraw(&tios);
-    tios.c_cflag = CREAD | CLOCAL;     // turn on READ
-    tios.c_cflag |= CS8;
-    tios.c_cc[VMIN] = 0;
-    tios.c_cc[VTIME] = 10;     // 1 sec timeout
-
-    if (ioctl(mHandle, TIOCSETA, &tios) != 0) {
-        qCritical() << "!e" << tr("Failed to set serial attrs");
-        return false;
-    }
-    switch (speed) {
-        case 600:
-            cfsetispeed(&tios, B600);
-            cfsetospeed(&tios, B600);
-            break;
-        case 19200:
-            cfsetispeed(&tios, B19200);
-            cfsetospeed(&tios, B19200);
-            break;
-        case 38400:
-            cfsetispeed(&tios, B38400);
-            cfsetospeed(&tios, B38400);
-            break;
-        case 57600:
-            cfsetispeed(&tios, B57600);
-            cfsetospeed(&tios, B57600);
-            break;
-        default:
-           if (ioctl(mHandle, IOSSIOSPEED, &speed) < 0 ){
-                qCritical() << "!e" << tr("Failed to set serial port speed to %1").arg(speed);
-                return false;
-            }
-           break;
-    }
-
-    /* Set serial port state */
-    if (tcsetattr(mHandle, TCSANOW, &tios) != 0) {
-        qCritical() << "!e" << tr("Cannot set serial port speed to %1: %2")
-                       .arg(speed)
-                       .arg(lastErrorMessage());
-        return false;
-    }
-   emit statusChanged(tr("%1 bits/sec").arg(speed));
-    qWarning() << "!i" << tr("Serial port speed set to %1.").arg(speed);
-    mSpeed = speed;
-    return true;
-}
-#endif
 
 int StandardSerialPortBackend::speed()
 {
@@ -316,82 +176,91 @@ int StandardSerialPortBackend::speed()
 QByteArray StandardSerialPortBackend::readCommandFrame()
 {
     QByteArray data;
-    int mask;
 
-    switch (mMethod) {
-    case 0:
-        mask = TIOCM_RI;
-        break;
-    case 1:
-        mask = TIOCM_DSR;
-        break;
-    case 2:
-        mask = TIOCM_CTS;
-        break;
-    default:
-        mask = TIOCM_DSR;
-    }
+    int mask = 32; //FT_DSR
 
-    int status;
-    int retries = 0, totalRetries = 0;
-    do {
-        data.clear();
-        /* First, wait until command line goes off */
+        int status = -1;
+        int retries = 0, totalRetries = 0;
+
         do {
-            if (ioctl(mHandle, TIOCMGET, &status) < 0) {
-                qCritical() << "!e" << tr("Cannot retrieve serial port status: %1").arg(lastErrorMessage());
-                return data;
-            }
-            if (status & mask) {
-                QThread::yieldCurrentThread();
-            }
-        } while ((status & mask) && !mCanceled);
-        /* Now wait for it to go on again */
-        do {
-            if (ioctl(mHandle, TIOCMGET, &status) < 0) {
-                qCritical() << "!e" << tr("Cannot retrieve serial port status: %1").arg(lastErrorMessage());
-                return data;
-            }
-            if (!(status & mask)) {
-                QThread::yieldCurrentThread();
-            }
-        } while (!(status & mask) && !mCanceled);
-
-        if (mCanceled) {
-            return data;
-        }
-
-        if (tcflush(mHandle, TCIFLUSH) != 0) {
-            qCritical() << "!e" << tr("Cannot clear serial port read buffer: %1")
-                           .arg(lastErrorMessage());
-            return data;
-        }
-
-        data = readDataFrame(4, false);
-
-        if (!data.isEmpty()) {
+            data.clear();
+            /* First, wait until command line goes off */
             do {
-                if (ioctl(mHandle, TIOCMGET, &status) < 0) {
-                    qCritical() << "!e" << tr("Cannot retrieve serial port status: %1").arg(lastErrorMessage());
+                status = QAndroidJniObject::callStaticMethod<jint>("net/greblus/MyActivity", "getModemStatus", "(I)I", 318);
+                if (status < 0) {
+                    qCritical() << "!e" << tr("Cannot retrieve serial port status: %1 321").arg(lastErrorMessage());
                     return data;
                 }
+                if (status & mask) {
+                    QThread::yieldCurrentThread();
+                }
             } while ((status & mask) && !mCanceled);
-            break;
-        } else {
-            retries++;
-            totalRetries++;
-            if (retries == 2) {
-                retries = 0;
-                if (mHighSpeed) {
-                    setNormalSpeed();
-                } else {
-                    setHighSpeed();
+
+            bool ret = QAndroidJniObject::callStaticMethod<jint>("net/greblus/MyActivity", "purge", "(I)Z", 347);
+            if (!ret) {
+                qCritical() << "!e" << tr("Cannot clear serial port read buffer: %1 348")
+                               .arg(lastErrorMessage());
+                return data;
+            }
+
+            /* Now wait for it to go on again */
+            do {
+                status = QAndroidJniObject::callStaticMethod<jint>("net/greblus/MyActivity", "getModemStatus", "(I)I", 331);
+                if (status < 0) {
+                    qCritical() << "!e" << tr("Cannot retrieve serial port status: %1 333").arg(lastErrorMessage());
+                    return data;
+                }
+                if (!(status & mask)) {
+                    QThread::yieldCurrentThread();
+                }
+            } while (!(status & mask) && !mCanceled );
+
+            if (mCanceled) {
+                return data;
+            }
+
+            status = 0;
+            do {
+                status = QAndroidJniObject::callStaticMethod<jint>("net/greblus/MyActivity", "getQueueStatus", "(I)I", 355);
+            } while (status < 4);
+
+            data = readDataFrame(4, false);
+
+            if (!data.isEmpty()) {
+                do {
+                   status = QAndroidJniObject::callStaticMethod<jint>("net/greblus/MyActivity", "getModemStatus", "(I)I", 362);
+                    if (status < 0) {
+                        qCritical() << "!e" << tr("Cannot retrieve serial port status: %1 368").arg(lastErrorMessage());
+                        return data;
+                    }
+                } while ((status & mask) && !mCanceled);
+
+                QString tmp="";
+                for (int i=0; i<4; i++) {
+                    tmp+=QString::number(data[i]) + ", ";
+                }
+                if (tmp.length() > 2)
+                    tmp = tmp.left(tmp.length()-2);
+
+                QAndroidJniObject msg = QAndroidJniObject::fromString("Qt side buf = "+tmp);
+                QAndroidJniObject::callStaticMethod<jint>("net/greblus/MyActivity", "qLog", "(Ljava/lang/String;)V", msg.object<jstring>() );
+
+                break;
+            } else {
+                retries++;
+                totalRetries++;
+                if (retries == 2) {
+                    retries = 0;
+                    if (mHighSpeed) {
+                        setNormalSpeed();
+                    } else {
+                        setHighSpeed();
+                    }
                 }
             }
-        }
-//    } while (totalRetries < 100);
-    } while (1);
-    return data;
+    //    } while (totalRetries < 100);
+        } while (1);
+        return data;
 }
 
 QByteArray StandardSerialPortBackend::readDataFrame(uint size, bool verbose)
@@ -423,48 +292,71 @@ bool StandardSerialPortBackend::writeDataFrame(const QByteArray &data)
     copy.resize(copy.size() + 1);
     copy[copy.size() - 1] = sioChecksum(copy, copy.size() - 1);
     SioWorker::usleep(50);
+
+    for (int i=0; i<copy.size(); i++)
+        arr[i] = (quint8)copy[i];
+
     return writeRawFrame(copy);
 }
 
 bool StandardSerialPortBackend::writeCommandAck()
 {
+    qWarning() << "!i" << tr("writeCommandAck");
+    arr[0]=(quint8)65;
+
     return writeRawFrame(QByteArray(1, 65));
 }
 
 bool StandardSerialPortBackend::writeCommandNak()
 {
+    qWarning() << "!i" << tr("writeCommandNak");
+    arr[0] = (quint8)78;
+
     return writeRawFrame(QByteArray(1, 78));
 }
 
 bool StandardSerialPortBackend::writeDataAck()
 {
+    qWarning() << "!i" << tr("writeDataAck");
+    arr[0] = (quint8)65;
+
     return writeRawFrame(QByteArray(1, 65));
 }
 
 bool StandardSerialPortBackend::writeDataNak()
 {
+    qWarning() << "!i" << tr("writeDataNak");
+    arr[0] = (quint8)78;
+
     return writeRawFrame(QByteArray(1, 78));
 }
 
 bool StandardSerialPortBackend::writeComplete()
 {
+    qWarning() << "!i" << tr("writeComplete");
     SioWorker::usleep(300);
+    arr[0] = (quint8)67;
+
     return writeRawFrame(QByteArray(1, 67));
 }
 
 bool StandardSerialPortBackend::writeError()
 {
+    qWarning() << "!i" << tr("writeError");
     SioWorker::usleep(300);
-    return writeRawFrame(QByteArray(1, 69));
+    arr[0] = (quint8)78;
+
+    return writeRawFrame(QByteArray(1, 78));
 }
 
 quint8 StandardSerialPortBackend::sioChecksum(const QByteArray &data, uint size)
 {
+    qWarning() << "!i" << tr("sioChecksum");
     uint i;
     uint sum = 0;
 
     for (i=0; i < size; i++) {
-        sum += (quint8)data.at(i);
+        sum += (quint8)data[i];
         if (sum > 255) {
             sum -= 255;
         }
@@ -475,10 +367,12 @@ quint8 StandardSerialPortBackend::sioChecksum(const QByteArray &data, uint size)
 
 QByteArray StandardSerialPortBackend::readRawFrame(uint size, bool verbose)
 {
-    QByteArray data;
+    qWarning() << "!i" << tr("readRawFrame");
+
     int result;
     uint total, rest;
 
+    QByteArray data;
     data.resize(size);
 
     total = 0;
@@ -487,30 +381,48 @@ QByteArray StandardSerialPortBackend::readRawFrame(uint size, bool verbose)
     int timeOut = data.count() * 12000 / mSpeed + 10;
     int elapsed;
 
+    bool ret = QAndroidJniObject::callStaticMethod<jint>("net/greblus/MyActivity", "purge", "(I)Z", 517);
+    if (!ret) {
+        qCritical() << "!e" << tr("Cannot clear serial port read buffer: %1 519")
+                       .arg(lastErrorMessage());
+    }
+
     do {
-        result = ::read(mHandle, data.data() + total, rest);
-        if (result < 0 && errno != EAGAIN) {
-            qCritical() << "!e" << tr("Cannot read from serial port: %1")
-                           .arg(lastErrorMessage());
-            data.clear();
-            return data;
-        }
+        result =  QAndroidJniObject::callStaticMethod<jint>("net/greblus/MyActivity", "ftdiRead", "(II)I", rest, total);
+
         if (result < 0) {
             result = 0;
         }
+
         total += result;
         rest -= result;
         elapsed = QTime::currentTime().msecsTo(startTime);
     } while (total < size && elapsed > -timeOut);
 
+    data.clear();
+    for (int i=0; i<size; i++)
+    {
+        data[i] = (quint8)(arr[i] & 0xff);
+    }
+
+    QString tmp;
+    for (int i=0; i<data.count(); i++)
+    {
+        tmp += QString::number(arr[i] & 0xff) + " ";
+    }
+
+     qCritical() << "!e" << tr("readRawFrame: %1").arg(tmp);
+
     if ((uint)total != size) {
         if (verbose) {
             data.resize(total);
-            qCritical() << "!e" << tr("Serial port read timeout.");
+            QAndroidJniObject msg = QAndroidJniObject::fromString("Serial port read timeout.");
+            QAndroidJniObject::callStaticMethod<jint>("net/greblus/MyActivity", "qLog", "(Ljava/lang/String;)V", msg.object<jstring>() );
         }
         data.clear();
         return data;
     }
+
     return data;
 }
 
@@ -520,24 +432,47 @@ bool StandardSerialPortBackend::writeRawFrame(const QByteArray &data)
     uint total, rest;
 
     total = 0;
+
     rest = data.count();
+
+    for (int i = 0; i<rest; i++)
+        arr[i] = (quint8)(data[i]&0xff);
+
+    QAndroidJniObject msg = QAndroidJniObject::fromString("data.count():" + QString::number(rest));
+    QAndroidJniObject::callStaticMethod<jint>("net/greblus/MyActivity", "qLog", "(Ljava/lang/String;)V", msg.object<jstring>() );
+
     QTime startTime = QTime::currentTime();
     int timeOut = data.count() * 120000 / mSpeed + 10;
     int elapsed;
 
-    if (tcdrain(mHandle) != 0) {
-        qCritical() << "!e" << tr("Cannot flush serial port write buffer: %1")
+    bool ret = QAndroidJniObject::callStaticMethod<jint>("net/greblus/MyActivity", "purge", "(I)Z", 561);
+    if (!ret) {
+        qCritical() << "!e" << tr("Cannot clear serial port: %1 562")
                        .arg(lastErrorMessage());
-        return false;
     }
 
     do {
-        result = ::write(mHandle, data.constData() + total, rest);
-        if (result < 0 && errno != EAGAIN) {
-            qCritical() << "!e" << tr("Cannot read from serial port: %1")
+
+        result = QAndroidJniObject::callStaticMethod<jint>("net/greblus/MyActivity", "ftdiWrite", "(II)I", rest, total);
+
+        QAndroidJniObject msg = QAndroidJniObject::fromString("Qt5 side: ftdiWrite() result:" + QString::number(result));
+        QAndroidJniObject::callStaticMethod<jint>("net/greblus/MyActivity", "qLog", "(Ljava/lang/String;)V", msg.object<jstring>() );
+
+        if (result < 0 ) {
+            qCritical() << "!e" << tr("Cannot write to serial port: %1")
                            .arg(lastErrorMessage());
             return false;
         }
+
+        QString tmp;
+
+        for (int i=0; i<data.count(); i++)
+        {
+            tmp += QString::number(data[i] & 0xff) + " ";
+        }
+
+        qCritical() << "!e" << tr("writeRawFrame: %1").arg(tmp);
+
         if (result < 0) {
             result = 0;
         }
@@ -652,7 +587,7 @@ bool AtariSioBackend::open()
         m = "RI";
         break;
     case 1:
-        m = "DSR";
+        m = "CTS";
         break;
     default:
     case 2:
@@ -667,6 +602,7 @@ bool AtariSioBackend::open()
 
     return true;
 }
+
 
 bool AtariSioBackend::isOpen()
 {

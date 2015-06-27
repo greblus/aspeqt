@@ -7,8 +7,9 @@ DEFINES += VERSION=\\\"1.00.Preview_6\\\"
 TARGET = AspeQt
 TEMPLATE = app
 CONFIG += qt
-QT += core gui network widgets printsupport
+QT += core gui network widgets printsupport androidextras
 CONFIG += mobility
+CONFIG += static
 MOBILITY = bearer
 INCLUDEPATH += $$[QT_INSTALL_HEADERS]/QtZlib
 SOURCES += main.cpp \
@@ -99,6 +100,18 @@ TRANSLATIONS = i18n/aspeqt_pl.ts \
                i18n/qt_es.ts
 
 RC_FILE = AspeQt.rc \
+
+DISTFILES += \
+    android/AndroidManifest.xml \
+    android/gradle/wrapper/gradle-wrapper.jar \
+    android/gradlew \
+    android/res/values/libs.xml \
+    android/build.gradle \
+    android/gradle/wrapper/gradle-wrapper.properties \
+    android/gradlew.bat \
+    android/src/net/greblus/MyActivity.java
+
+ANDROID_PACKAGE_SOURCE_DIR = $$PWD/android
 
 
 

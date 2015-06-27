@@ -27,6 +27,8 @@
 
 #include "atarifilesystem.h"
 #include "miscutils.h"
+#include <QAndroidJniObject>
+#include <jni.h>
 
 
 AspeqtSettings *aspeqtSettings;
@@ -47,6 +49,9 @@ bool g_shadeMode = false;
 int g_savedWidth;
 bool g_logOpen;
 
+jbyte *bbuf = NULL;
+char * arr;
+
 // ****************************** END OF GLOBALS ************************************//
 
 // Displayed only in debug mode    "!d"
@@ -55,6 +60,25 @@ bool g_logOpen;
 // Important       (blue)          "!i"
 // Warning         (brown)         "!w"
 // Error           (red)           "!e"
+
+extern "C" {
+
+JNIEXPORT void JNICALL
+    Java_net_greblus_MyActivity_sendBufAddr(JNIEnv *env/*env*/,
+    jobject /*obj*/, jobject buf)
+    {
+        //bbuf = (jbyte *)env->GetDirectBufferAddress(buf);
+        //arr = QByteArray(reinterpret_cast<char *>(bbuf));
+
+        bbuf = (jbyte *)env->GetDirectBufferAddress(buf);
+        arr = reinterpret_cast<char *>(bbuf);
+
+        QString tmp;
+        QAndroidJniObject msg = QAndroidJniObject::fromString("arr mainwindow.cpp: " + tmp.sprintf("%x", arr));
+        QAndroidJniObject::callStaticMethod<jint>("net/greblus/MyActivity", "qLog", "(Ljava/lang/String;)V", msg.object<jstring>() );
+
+    }
+}
 
 void logMessageOutput(QtMsgType type, const QMessageLogContext &context, const QString &msg)
 // void logMessageOutput(QtMsgType type, const char *msg)
