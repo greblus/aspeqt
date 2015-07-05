@@ -140,7 +140,7 @@ int StandardSerialPortBackend::speedByte()
 //            speed = 0x08;
 //            break;
 //        }
-        return 0x08; // speed;
+        return 0x10; // speed;
 //    }
 }
 
