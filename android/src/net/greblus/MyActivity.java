@@ -38,7 +38,7 @@ public class MyActivity extends QtActivity
     public static int counter;
     public static UsbDevice device;
     public static native void sendBufAddr(ByteBuffer buf);
-    private static boolean debug = true;
+    private static boolean debug = false;
 
     public static MyActivity s_activity = null;
 
@@ -108,7 +108,7 @@ public class MyActivity extends QtActivity
                                 //ftDevice.setBitMode((byte)0, D2xxManager.FT_BITMODE_RESET);
                                 ftDevice.setBitMode((byte)0, D2xxManager.FT_BITMODE_RESET);
 
-                                boolean ret = ftDevice.setFlowControl(D2xxManager.FT_FLOW_DTR_DSR, (byte) 0x00, (byte)0x00 );
+                                boolean ret = ftDevice.setFlowControl(D2xxManager.FT_FLOW_NONE, (byte) 0x00, (byte)0x00 );
                                 if (debug) Log.i("FTDI", "setFlowControl " + ret);
 
                                 ftDevice.setDataCharacteristics(D2xxManager.FT_DATA_BITS_8, D2xxManager.FT_STOP_BITS_1,
@@ -118,7 +118,8 @@ public class MyActivity extends QtActivity
 
                                 ftDevice.clrDtr();
                                 ftDevice.clrRts();
-                                ftDevice.setLatencyTimer((byte)2);
+
+                                ftDevice.setLatencyTimer((byte)5);
                                 //ftdid2xx.DriverParameters.setReadTimeout(5000);
                                 ftDevice.purge((byte)(D2xxManager.FT_PURGE_TX | D2xxManager.FT_PURGE_RX));
                                 ftDevice.restartInTask();
@@ -240,7 +241,6 @@ public class MyActivity extends QtActivity
         }
 
         boolean ret = ftDevice.purge((byte)(D2xxManager.FT_PURGE_TX));
-        ftDevice.restartInTask();
         if (debug) Log.i("FTDI", "purgeTX " + line + " " + ret);
         return ret;
     }
@@ -253,10 +253,9 @@ public class MyActivity extends QtActivity
             ftdiOpenDevice();
         }
 
-            ret = ftDevice.purge((byte)(D2xxManager.FT_PURGE_RX));
-            ftDevice.restartInTask();
+        ret = ftDevice.purge((byte)(D2xxManager.FT_PURGE_RX));
 
-            if (debug) Log.i("FTDI", "purgeRX " + line + " " + ret);
+        if (debug) Log.i("FTDI", "purgeRX " + line + " " + ret);
 
         return ret;
     }
