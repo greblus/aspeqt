@@ -244,7 +244,7 @@ QByteArray StandardSerialPortBackend::readCommandFrame()
                         tmp = tmp.left(tmp.length()-2);
 
                     QAndroidJniObject msg = QAndroidJniObject::fromString("Qt side buf = "+tmp);
-                    QAndroidJniObject::callStaticMethod<jint>("net/greblus/MyActivity", "qLog", "(Ljava/lang/String;)V", msg.object<jstring>() );
+                    QAndroidJniObject::callStaticMethod<void>("net/greblus/MyActivity", "qLog", "(Ljava/lang/String;)V", msg.object<jstring>() );
                 }
                 break;
             } else {
@@ -407,7 +407,7 @@ QByteArray StandardSerialPortBackend::readRawFrame(uint size, bool verbose)
             data.resize(total);
             if (debug) {
              QAndroidJniObject msg = QAndroidJniObject::fromString("Serial port read timeout.");
-             QAndroidJniObject::callStaticMethod<jint>("net/greblus/MyActivity", "qLog", "(Ljava/lang/String;)V", msg.object<jstring>() );
+             QAndroidJniObject::callStaticMethod<void>("net/greblus/MyActivity", "qLog", "(Ljava/lang/String;)V", msg.object<jstring>() );
             }
         }
         data.clear();
@@ -431,7 +431,7 @@ bool StandardSerialPortBackend::writeRawFrame(const QByteArray &data)
 
     if (debug) {
      QAndroidJniObject msg = QAndroidJniObject::fromString("data.count():" + QString::number(rest));
-     QAndroidJniObject::callStaticMethod<jint>("net/greblus/MyActivity", "qLog", "(Ljava/lang/String;)V", msg.object<jstring>() );
+     QAndroidJniObject::callStaticMethod<void>("net/greblus/MyActivity", "qLog", "(Ljava/lang/String;)V", msg.object<jstring>() );
     }
 
     QTime startTime = QTime::currentTime();
@@ -448,7 +448,7 @@ bool StandardSerialPortBackend::writeRawFrame(const QByteArray &data)
         result = QAndroidJniObject::callStaticMethod<jint>("net/greblus/MyActivity", "ftdiWrite", "(II)I", rest, total);
 
         QAndroidJniObject msg = QAndroidJniObject::fromString("Qt5 side: ftdiWrite() result:" + QString::number(result));
-        QAndroidJniObject::callStaticMethod<jint>("net/greblus/MyActivity", "qLog", "(Ljava/lang/String;)V", msg.object<jstring>() );
+        QAndroidJniObject::callStaticMethod<void>("net/greblus/MyActivity", "qLog", "(Ljava/lang/String;)V", msg.object<jstring>() );
 
         if (result < 0 ) {
             if (debug) qCritical() << "!e" << tr("Cannot write to serial port: %1")

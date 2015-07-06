@@ -67,15 +67,9 @@ JNIEXPORT void JNICALL
     Java_net_greblus_MyActivity_sendBufAddr(JNIEnv *env/*env*/,
     jobject /*obj*/, jobject buf)
     {
-        //bbuf = (jbyte *)env->GetDirectBufferAddress(buf);
-        //arr = QByteArray(reinterpret_cast<char *>(bbuf));
 
         bbuf = (jbyte *)env->GetDirectBufferAddress(buf);
         arr = reinterpret_cast<char *>(bbuf);
-
-        QString tmp;
-        QAndroidJniObject msg = QAndroidJniObject::fromString("arr mainwindow.cpp: " + tmp.sprintf("%x", arr));
-        QAndroidJniObject::callStaticMethod<jint>("net/greblus/MyActivity", "qLog", "(Ljava/lang/String;)V", msg.object<jstring>() );
 
     }
 }
