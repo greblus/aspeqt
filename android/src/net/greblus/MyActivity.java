@@ -26,7 +26,7 @@ public class MyActivity extends QtActivity
 {
     public static D2xxManager ftdid2xx=null;
     public static FT_Device ftDevice = null;
-    public static int devCount = -1;
+    public static int devCount = 0;
     public static UsbManager manager;
     public static PendingIntent pintent;
     private static final String ACTION_USB_PERMISSION =
@@ -60,9 +60,9 @@ public class MyActivity extends QtActivity
         @Override
 	protected void onDestroy()
 	{
-                //super.onDestroy();
-                //s_activity = null;
-                //ftdiCloseDevice();
+                super.onDestroy();
+                s_activity = null;
+                ftdiCloseDevice();
 	}
 
         public static void registerBroadcastReceiver() {
@@ -77,7 +77,12 @@ public class MyActivity extends QtActivity
         public static int ftdiOpenDevice() {
             HashMap<String, UsbDevice> deviceList = manager.getDeviceList();
             Iterator<UsbDevice> deviceIterator = deviceList.values().iterator();
-             device = deviceIterator.next();
+
+            if (deviceIterator.hasNext())
+                device = deviceIterator.next();
+            else
+                return 0;
+
             while (deviceIterator.hasNext()) {
                 if ((device.getProductId()) == 24577 && (device.getVendorId() == 1027))
                     break;
@@ -87,7 +92,7 @@ public class MyActivity extends QtActivity
 
             manager.requestPermission(device, pintent);
 
-            try {                
+            try {
                 ftdid2xx = D2xxManager.getInstance(s_activity);
                 devCount = (int)ftdid2xx.createDeviceInfoList(s_activity);
 
@@ -125,7 +130,7 @@ public class MyActivity extends QtActivity
                                 ftDevice.restartInTask();
 
                                 if (debug) Log.i("FTDI", "Opened device " + devInfo.description);
-                            }
+                            } else { if (debug) Log.i("FTDI", "No device opened!"); return 0; }
                         } else  if (debug) Log.i("FTDI", "No device connected!");
  		} catch (D2xxManager.D2xxException ex) {
                         ex.printStackTrace();

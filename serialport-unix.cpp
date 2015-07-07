@@ -42,7 +42,7 @@ AbstractSerialPortBackend::~AbstractSerialPortBackend()
 StandardSerialPortBackend::StandardSerialPortBackend(QObject *parent)
     : AbstractSerialPortBackend(parent)
 {
-    mHandle = -1;
+    mHandle = 0;
 }
 
 StandardSerialPortBackend::~StandardSerialPortBackend()
@@ -70,6 +70,7 @@ QString StandardSerialPortBackend::defaultPortName()
 bool StandardSerialPortBackend::open()
 {
     if (debug) qWarning() << "!i" << tr("open");
+
     if (isOpen()) {
         close();
     }
@@ -78,7 +79,8 @@ bool StandardSerialPortBackend::open()
 
     mHandle = QAndroidJniObject::callStaticMethod<jint>("net/greblus/MyActivity", "ftdiOpenDevice", "()I");
 
-    if (mHandle == 0) {
+
+    if (mHandle == 0 || mHandle > 1000000) {
     if (debug) qCritical() << "!e" << tr("Cannot open serial port '%1': %2")
                        .arg(name, "No device connected!");
         return false;
