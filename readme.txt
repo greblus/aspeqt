@@ -3,35 +3,39 @@ AspeQt, Atari Serial Peripheral Emulator for Qt
 Android
 =======
 
-It's really a work in progress. Currently it supports 19200 bps only, booting atr files and xex files works. Cas loading is not working yet.
+It's really a work in progress. Currently it supports 19200 bps only, booting 
+atr files and xex files works. Cas loading is not working yet.
 
 What's necessary to use it:
 
 1. Android device with USB host (OTG) support.
 2. OTG cable.
 3. Sio2PC-USB (I used the one made by Lotharek, it has DSR line connected).
-4. Currently it works on Android 4.2.2 (maybe earlier versions too, but probably won't work on anything older than Android 4.
+4. Currently it works on Android 4.2.2 (maybe earlier versions too, but 
+   probably won't work on anything older than Android 3.1 (testers welcome 
+   ;)).
 5. No root necessary.
 6. No drivers necessary (d2xx java driver is in the package).
-7. On first run, when it will ask you to open Aspeqt's settings, you can safely say no. The settings are currently hardcoded.
+7. On first run, when it will ask you to open Aspeqt's settings, you can 
+   safely say no. The settings are currently hardcoded.
 
 
 IMPORTANT:
-There is a bug in ftd2xx driver due to which the device can't be opened on first try, so in order to start the emulation:
+There is a bug in ftd2xx driver due to which the device can't be opened on first 
+try, so in order to start the emulation:
 
     * Start AspeQt
     * Connect Sio2USB
     * Answer Yes to the permissions request
-    * Click on the connection icon to start the emulation (yes, I'm planning to make 
-      the original icon bigger in the future ;)).
-
-I'll find a good solution to this soon.
+    * Click on the connection icon to start the emulation or select Start 
+      Emulation from File menu.
 
 For the brave ones, who would like to compile or experiment with the code:
 
-    * Use qt-opensource-$YOUR_PLATFORM-android-5.4.2, Qt5.5 has some JNI issues. I've yet to report 
-      them or ask the author to enlighten me of what's happening.
-    * It won't run on KitKat or above (SIGABRT, signal 6 due to some threading issues, hopefully to be solved soon).
+    * On Windows use qt-opensource-windows-android-5.4.2, Qt5.5 has some JNI issues. 
+      On Linux Qt5.5 works flawlessly.
+    * It will run on KitKat but won't connect to ftdi chip. Looks to me that ftd2xx 
+      doesn't support Android 4.4 and above yet. Let's see what FTDI support will answer ;).
 
 Summary
 =======
