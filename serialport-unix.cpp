@@ -94,8 +94,20 @@ bool StandardSerialPortBackend::open()
         return false;
     }
 
-    QString m="DSR";
-
+    QString m;
+        switch (mMethod) {
+        case 0:
+            m = "RI";
+            break;
+        case 1:
+            m = "DSR";
+            break;
+        case 2:
+            m = "CTS";
+            break;
+        default:
+            m = "DSR";
+    }
     /* Notify the user that emulation is started */
     qWarning() << "!i" << tr("Emulation started through standard serial port backend on '%1' with %2 handshaking.")
                   .arg(aspeqtSettings->serialPortName())
@@ -180,7 +192,21 @@ QByteArray StandardSerialPortBackend::readCommandFrame()
 {
     QByteArray data;
 
-    int mask = 32; //FT_DSR
+    int mask;
+
+    switch (mMethod) {
+    case 0:
+        mask = 64;
+        break;
+    case 1:
+        mask = 32;
+        break;
+    case 2:
+        mask = 16;
+        break;
+    default:
+        mask = 32;
+    }
 
         int status = -1;
         int retries = 0, totalRetries = 0;
