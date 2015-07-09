@@ -7,6 +7,18 @@
                 <action android:name="android.intent.action.MAIN"/>
                 <category android:name="android.intent.category.LAUNCHER"/>
             </intent-filter>
+
+            <intent-filter>
+                <action android:name="android.hardware.usb.action.USB_DEVICE_ATTACHED"/>
+            </intent-filter>
+
+            <receiver
+            android:name="USBReceiver"
+            android:enabled="true" >
+            </receiver>
+
+            <meta-data android:name="android.hardware.usb.action.USB_DEVICE_ATTACHED" android:resource="@xml/device_filter"/>
+
             <meta-data android:name="android.app.lib_name" android:value="-- %%INSERT_APP_LIB_NAME%% --"/>
             <meta-data android:name="android.app.qt_sources_resource_id" android:resource="@array/qt_sources"/>
             <meta-data android:name="android.app.repository" android:value="default"/>
@@ -41,7 +53,9 @@
                           signal is sent! -->
             <meta-data android:name="android.app.background_running" android:value="false"/>
             <!-- Background running -->
+
         </activity>
+
     </application>
     <uses-sdk android:minSdkVersion="9" android:targetSdkVersion="14"/>
     <supports-screens android:largeScreens="true" android:normalScreens="true" android:anyDensity="true" android:smallScreens="true"/>
