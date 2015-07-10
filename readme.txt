@@ -3,39 +3,34 @@ AspeQt, Atari Serial Peripheral Emulator for Qt
 Android
 =======
 
-It's really a work in progress. Currently it supports 19200 bps only, booting 
-atr files and xex files works. Cas loading is not working yet.
+It's really a work in progress. Currently it supports 19200 bps only, booting atr files and xex 
+files works. Cas loading is not working yet.
 
 What's necessary to use it:
 
-1. Android device with USB host (OTG) support.
+1. Android device with USB Host support (OTG support != USB Host support)
 2. OTG cable.
 3. Sio2PC-USB (I used the one made by Lotharek, it has DSR line connected).
-4. Currently it works on Android 4.2.2 (maybe earlier versions too, but 
-   probably won't work on anything older than Android 3.1 (testers welcome 
-   ;)).
+4. I've tested it on Lark FreeMe 8" Android 4.2.2 tablet and Kazam 345 4.5"
+   phone with KitKat 4.4 (should work on anything from 3.1 up)
 5. No root necessary.
 6. No drivers necessary (d2xx java driver is in the package).
-7. On first run, when it will ask you to open Aspeqt's settings, you can 
-   safely say no. The settings are currently hardcoded.
-
-
-IMPORTANT:
-There is a bug in ftd2xx driver due to which the device can't be opened on first 
-try, so in order to start the emulation:
-
-    * Start AspeQt
-    * Connect Sio2USB
-    * Answer Yes to the permissions request
-    * Click on the connection icon to start the emulation or select Start 
-      Emulation from File menu.
+7. On first run, when it will ask you to open Aspeqt's settings, if your device
+   has DSR line wired-up you can safely say no. The DSR is default method and 19200bps 
+   is hardcoded.
+   Otherwise you'll have to play a bit of hit-and-miss game with settings window 
+   (it's too small). I'll fix it soon.
+8. After connecting Sio2PC-USB cable AspeQt should start automatically. 
 
 For the brave ones, who would like to compile or experiment with the code:
 
-    * On Windows use qt-opensource-windows-android-5.4.2, Qt5.5 has some JNI issues. 
+    * Use qt-opensource-windows-android-5.4.2, on Windows Qt5.5 has some JNI issues. 
       On Linux Qt5.5 works flawlessly.
-    * It will run on KitKat but won't connect to ftdi chip. Looks to me that ftd2xx 
-      doesn't support Android 4.4 and above yet. Let's see what FTDI support will answer ;).
+
+some videos of AspeQt on Android:
+
+https://www.youtube.com/watch?v=4nPa-w399y0
+https://www.youtube.com/watch?v=c8BRUNzVarc
 
 Summary
 =======
