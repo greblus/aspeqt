@@ -110,16 +110,14 @@ public class MyActivity extends QtActivity
                                     }
                             if (ftDevice.isOpen()) {
                                 devInfo = ftDevice.getDeviceInfo();
-                                //ftDevice.setBitMode((byte)0, D2xxManager.FT_BITMODE_RESET);
                                 ftDevice.setBitMode((byte)0, D2xxManager.FT_BITMODE_RESET);
 
                                 boolean ret = ftDevice.setFlowControl(D2xxManager.FT_FLOW_NONE, (byte) 0x00, (byte)0x00 );
+                                //boolean ret = ftDevice.setFlowControl(D2xxManager.FT_FLOW_DTR_DSR, (byte) 0x00, (byte)0x00 );
                                 if (debug) Log.i("FTDI", "setFlowControl " + ret);
 
                                 ftDevice.setDataCharacteristics(D2xxManager.FT_DATA_BITS_8, D2xxManager.FT_STOP_BITS_1,
                                     D2xxManager.FT_PARITY_NONE);
-
-                                ftDevice.setBaudRate(19200);
 
                                 ftDevice.clrDtr();
                                 ftDevice.clrRts();
@@ -143,6 +141,11 @@ public class MyActivity extends QtActivity
 
      public static void ftdiCloseDevice() {
         ftDevice.close();
+     }
+
+     public static boolean setSpeed(int speed) {
+         if (debug) Log.i("FTDI", "setBaudrate: " + speed);
+         return ftDevice.setBaudRate(speed);
      }
 
     public static int ftdiRead(int size, int total) {
@@ -186,9 +189,6 @@ public class MyActivity extends QtActivity
         bbuf.position(total);
         for (int i=0; i<size; i++)
             b[i] = (byte) (bbuf.get(i) & 0xff);
-
-        //bbuf.position(total);
-        //bbuf.get(b, 0, size);
 
         ret = ftDevice.write(b, size, true);
 

@@ -139,23 +139,23 @@ void StandardSerialPortBackend::cancel()
 int StandardSerialPortBackend::speedByte()
 {
     if (debug) qWarning() << "!i" << tr("speedByte");
-//    if (aspeqtSettings->serialPortUsePokeyDivisors()) {
-//        return aspeqtSettings->serialPortPokeyDivisor();
-//    } else {
-//        int speed = 0x08;
-//        switch (aspeqtSettings->serialPortMaximumSpeed()) {
-//        case 0:
-//            speed = 0x28;
-//            break;
-//        case 1:
-//            speed = 0x10;
-//            break;
-//        case 2:
-//            speed = 0x08;
-//            break;
-//        }
-        return 0x10; // speed;
-//    }
+    if (aspeqtSettings->serialPortUsePokeyDivisors()) {
+        return aspeqtSettings->serialPortPokeyDivisor();
+    } else {
+        int speed = 0x08;
+        switch (aspeqtSettings->serialPortMaximumSpeed()) {
+        case 0:
+            speed = 0x28;
+            break;
+        case 1:
+            speed = 0x10;
+            break;
+        case 2:
+            speed = 0x08;
+            break;
+        }
+        return speed;
+    }
 }
 
 bool StandardSerialPortBackend::setNormalSpeed()
@@ -168,15 +168,38 @@ bool StandardSerialPortBackend::setNormalSpeed()
 bool StandardSerialPortBackend::setHighSpeed()
 {
     if (debug) qWarning() << "!i" << tr("setHighSpeed");
-    mHighSpeed = true;
 
-        return setSpeed(19200);
+    mHighSpeed = true;
+    if (aspeqtSettings->serialPortUsePokeyDivisors()) {
+        return setSpeed(divisorToBaud(aspeqtSettings->serialPortPokeyDivisor()));
+    } else {
+        int speed = 57600;
+        switch (aspeqtSettings->serialPortMaximumSpeed()) {
+        case 0:
+            speed = 19200;
+            break;
+        case 1:
+            speed = 38400;
+            break;
+        case 2:
+            speed = 57600;
+            break;
+        }
+        return setSpeed(speed);
+    }
 }
 
 #ifdef Q_OS_LINUX
 bool StandardSerialPortBackend::setSpeed(int speed)
 {
     if (debug) qWarning() << "!i" << tr("Serial port speed set to %1.").arg(speed);
+
+    bool ret = QAndroidJniObject::callStaticMethod<jint>("net/greblus/MyActivity", "setSpeed", "(I)Z", speed);
+    if (!ret) {
+        if (debug) qCritical() << "!e" << tr("Cannot set serial port speed: %1 199")
+                       .arg(lastErrorMessage());
+    return false;
+    }
     mSpeed = speed;
     return true;
 }
