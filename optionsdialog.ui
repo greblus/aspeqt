@@ -9,8 +9,8 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>638</width>
-    <height>443</height>
+    <width>1024</width>
+    <height>768</height>
    </rect>
   </property>
   <property name="sizePolicy">
@@ -19,6 +19,12 @@
     <verstretch>0</verstretch>
    </sizepolicy>
   </property>
+  <property name="font">
+   <font>
+    <family>DejaVu Sans Condensed</family>
+    <pointsize>7</pointsize>
+   </font>
+  </property>
   <property name="windowTitle">
    <string>Options</string>
   </property>
@@ -26,15 +32,15 @@
    <locale language="English" country="UnitedStates"/>
   </property>
   <property name="modal">
-   <bool>true</bool>
+   <bool>false</bool>
   </property>
   <widget class="QTreeWidget" name="treeWidget">
    <property name="geometry">
     <rect>
      <x>9</x>
      <y>9</y>
-     <width>256</width>
-     <height>192</height>
+     <width>401</width>
+     <height>261</height>
     </rect>
    </property>
    <property name="sizePolicy">
@@ -42,6 +48,15 @@
      <horstretch>0</horstretch>
      <verstretch>0</verstretch>
     </sizepolicy>
+   </property>
+   <property name="lineWidth">
+    <number>1</number>
+   </property>
+   <property name="iconSize">
+    <size>
+     <width>0</width>
+     <height>0</height>
+    </size>
    </property>
    <property name="headerHidden">
     <bool>true</bool>
@@ -70,8 +85,20 @@
      <property name="text">
       <string>AtariSIO</string>
      </property>
+     <property name="background">
+      <brush brushstyle="NoBrush">
+       <color alpha="255">
+        <red>213</red>
+        <green>213</green>
+        <blue>213</blue>
+       </color>
+      </brush>
+     </property>
      <property name="checkState">
       <enum>Unchecked</enum>
+     </property>
+     <property name="flags">
+      <set>ItemIsSelectable|ItemIsDragEnabled|ItemIsUserCheckable</set>
      </property>
     </item>
    </item>
@@ -89,10 +116,10 @@
   <widget class="QStackedWidget" name="stackedWidget">
    <property name="geometry">
     <rect>
-     <x>306</x>
-     <y>9</y>
-     <width>320</width>
-     <height>299</height>
+     <x>480</x>
+     <y>1</y>
+     <width>430</width>
+     <height>600</height>
     </rect>
    </property>
    <property name="sizePolicy">
@@ -102,7 +129,7 @@
     </sizepolicy>
    </property>
    <property name="currentIndex">
-    <number>1</number>
+    <number>0</number>
    </property>
    <widget class="QWidget" name="page_serialPort">
     <layout class="QVBoxLayout" name="verticalLayout_2">
@@ -123,10 +150,27 @@
      </property>
      <item>
       <widget class="QGroupBox" name="serialPortGroup">
+       <property name="sizePolicy">
+        <sizepolicy hsizetype="Preferred" vsizetype="Preferred">
+         <horstretch>0</horstretch>
+         <verstretch>0</verstretch>
+        </sizepolicy>
+       </property>
+       <property name="font">
+        <font>
+         <family>MS Shell Dlg 2</family>
+        </font>
+       </property>
        <property name="title">
         <string>Standard serial port backend options</string>
        </property>
        <layout class="QVBoxLayout" name="verticalLayout_3">
+        <property name="spacing">
+         <number>4</number>
+        </property>
+        <property name="topMargin">
+         <number>1</number>
+        </property>
         <item>
          <widget class="QCheckBox" name="serialPortBox">
           <property name="enabled">
@@ -144,40 +188,35 @@
          </widget>
         </item>
         <item>
-         <widget class="QLabel" name="serialPortDeviceNameLabel">
-          <property name="sizePolicy">
-           <sizepolicy hsizetype="Expanding" vsizetype="Fixed">
-            <horstretch>0</horstretch>
-            <verstretch>0</verstretch>
-           </sizepolicy>
-          </property>
-          <property name="text">
-           <string>Port name:</string>
-          </property>
-         </widget>
-        </item>
-        <item>
          <widget class="QLineEdit" name="serialPortDeviceNameEdit">
+          <property name="minimumSize">
+           <size>
+            <width>0</width>
+            <height>0</height>
+           </size>
+          </property>
+          <property name="baseSize">
+           <size>
+            <width>0</width>
+            <height>15</height>
+           </size>
+          </property>
+          <property name="autoFillBackground">
+           <bool>true</bool>
+          </property>
           <property name="text">
            <string>COM1</string>
           </property>
          </widget>
         </item>
         <item>
-         <widget class="QLabel" name="serialPortHandshakeLabel">
-          <property name="sizePolicy">
-           <sizepolicy hsizetype="Preferred" vsizetype="Fixed">
-            <horstretch>0</horstretch>
-            <verstretch>0</verstretch>
-           </sizepolicy>
-          </property>
-          <property name="text">
-           <string>Handshake method:</string>
-          </property>
-         </widget>
-        </item>
-        <item>
          <widget class="QComboBox" name="serialPortHandshakeCombo">
+          <property name="minimumSize">
+           <size>
+            <width>0</width>
+            <height>0</height>
+           </size>
+          </property>
           <item>
            <property name="text">
             <string>RI</string>
@@ -201,20 +240,13 @@
          </widget>
         </item>
         <item>
-         <widget class="QLabel" name="serialPortBaudLabel">
-          <property name="sizePolicy">
-           <sizepolicy hsizetype="Preferred" vsizetype="Fixed">
-            <horstretch>0</horstretch>
-            <verstretch>0</verstretch>
-           </sizepolicy>
-          </property>
-          <property name="text">
-           <string>High speed mode baud rate:</string>
-          </property>
-         </widget>
-        </item>
-        <item>
          <widget class="QComboBox" name="serialPortBaudCombo">
+          <property name="minimumSize">
+           <size>
+            <width>0</width>
+            <height>0</height>
+           </size>
+          </property>
           <property name="currentIndex">
            <number>2</number>
           </property>
@@ -238,12 +270,12 @@
         <item>
          <widget class="QCheckBox" name="serialPortUseDivisorsBox">
           <property name="text">
-           <string>Use non-standard speeds</string>
+           <string>Use non-standard speeds (divisor):</string>
           </property>
          </widget>
         </item>
         <item>
-         <widget class="QLabel" name="serialPortDivisorLabel">
+         <widget class="QSpinBox" name="serialPortDivisorEdit">
           <property name="enabled">
            <bool>false</bool>
           </property>
@@ -253,15 +285,25 @@
             <verstretch>0</verstretch>
            </sizepolicy>
           </property>
-          <property name="text">
-           <string>High speed mode POKEY divisor:</string>
+          <property name="minimumSize">
+           <size>
+            <width>0</width>
+            <height>0</height>
+           </size>
           </property>
-         </widget>
-        </item>
-        <item>
-         <widget class="QSpinBox" name="serialPortDivisorEdit">
-          <property name="enabled">
-           <bool>false</bool>
+          <property name="baseSize">
+           <size>
+            <width>0</width>
+            <height>0</height>
+           </size>
+          </property>
+          <property name="font">
+           <font>
+            <pointsize>8</pointsize>
+           </font>
+          </property>
+          <property name="frame">
+           <bool>true</bool>
           </property>
           <property name="maximum">
            <number>40</number>
@@ -276,10 +318,13 @@
           <property name="orientation">
            <enum>Qt::Vertical</enum>
           </property>
+          <property name="sizeType">
+           <enum>QSizePolicy::Minimum</enum>
+          </property>
           <property name="sizeHint" stdset="0">
            <size>
             <width>20</width>
-            <height>40</height>
+            <height>5</height>
            </size>
           </property>
          </spacer>
@@ -719,10 +764,10 @@
   <widget class="QDialogButtonBox" name="buttonBox">
    <property name="geometry">
     <rect>
-     <x>9</x>
-     <y>411</y>
-     <width>156</width>
-     <height>23</height>
+     <x>10</x>
+     <y>290</y>
+     <width>300</width>
+     <height>60</height>
     </rect>
    </property>
    <property name="toolTip">

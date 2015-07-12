@@ -160,9 +160,9 @@ void OptionsDialog::on_treeWidget_itemClicked(QTreeWidgetItem* item, int /*colum
 
 void OptionsDialog::on_serialPortUseDivisorsBox_toggled(bool checked)
 {
-    m_ui->serialPortBaudLabel->setEnabled(!checked);
+//    m_ui->serialPortBaudLabel->setEnabled(!checked);
     m_ui->serialPortBaudCombo->setEnabled(!checked);
-    m_ui->serialPortDivisorLabel->setEnabled(checked);
+//    m_ui->serialPortDivisorLabel->setEnabled(checked);
     m_ui->serialPortDivisorEdit->setEnabled(checked);
 }
 
