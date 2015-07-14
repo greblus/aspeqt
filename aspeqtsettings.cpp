@@ -42,7 +42,7 @@ AspeqtSettings::AspeqtSettings()
 
     mSettings->beginReadArray("MountedImageSettings");
 
-    for (i = 0; i < 15; i++) {      //
+    for (i = 0; i < 6; i++) {      //
         mSettings->setArrayIndex(i);
         mMountedImageSettings[i].fileName = mSettings->value("FileName", QString()).toString();
         mMountedImageSettings[i].isWriteProtected = mSettings->value("IsWriteProtected", false).toBool();
@@ -133,7 +133,7 @@ void AspeqtSettings::saveSessionToFile(const QString &fileName)
     s.endGroup();
 //
     s.beginWriteArray("MountedImageSettings");
-    for (int i = 0; i < 15; i++) {                      //
+    for (int i = 0; i < 6; i++) {                      //
         ImageSettings is = mMountedImageSettings[i];
         s.setArrayIndex(i);
         s.setValue("FileName", is.fileName);
@@ -180,7 +180,7 @@ void AspeqtSettings::saveSessionToFile(const QString &fileName)
     s.endGroup();
  //
     s.beginReadArray("MountedImageSettings");
-    for (int i = 0; i < 15; i++) {              //
+    for (int i = 0; i < 6; i++) {              //
         s.setArrayIndex(i);
         setMountedImageSetting(i, s.value("FileName", "").toString(), s.value("IsWriteProtected", false).toBool());
     }
@@ -324,7 +324,7 @@ AspeqtSettings::ImageSettings AspeqtSettings::getImageSettingsFromName(const QSt
     int i;
     bool found = false;
 
-    for (i = 0; i < 15; i++) {          //
+    for (i = 0; i < 6; i++) {          //
         if (mMountedImageSettings[i].fileName == fileName) {
             is = mMountedImageSettings[i];
             found = true;
