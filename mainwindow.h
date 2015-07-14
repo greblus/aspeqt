@@ -22,7 +22,7 @@
 #include "docdisplaywindow.h"
 #include "network.h"
 
-#define g_numberOfDisks 15
+#define g_numberOfDisks 6
 
 namespace Ui
 {
@@ -144,60 +144,28 @@ private slots:
     void on_actionMountDisk_4_triggered();
     void on_actionMountDisk_5_triggered();
     void on_actionMountDisk_6_triggered();
-    void on_actionMountDisk_7_triggered();
-    void on_actionMountDisk_8_triggered();
-    void on_actionMountDisk_9_triggered();
-    void on_actionMountDisk_10_triggered();
-    void on_actionMountDisk_11_triggered();
-    void on_actionMountDisk_12_triggered();
-    void on_actionMountDisk_13_triggered();
-    void on_actionMountDisk_14_triggered();
-    void on_actionMountDisk_15_triggered();
+
     void on_actionMountFolder_1_triggered();
     void on_actionMountFolder_2_triggered();
     void on_actionMountFolder_3_triggered();
     void on_actionMountFolder_4_triggered();
     void on_actionMountFolder_5_triggered();
     void on_actionMountFolder_6_triggered();
-    void on_actionMountFolder_7_triggered();
-    void on_actionMountFolder_8_triggered();
-    void on_actionMountFolder_9_triggered();
-    void on_actionMountFolder_10_triggered();
-    void on_actionMountFolder_11_triggered();
-    void on_actionMountFolder_12_triggered();
-    void on_actionMountFolder_13_triggered();
-    void on_actionMountFolder_14_triggered();
-    void on_actionMountFolder_15_triggered();
+
     void on_actionEject_1_triggered();
     void on_actionEject_2_triggered();
     void on_actionEject_3_triggered();
     void on_actionEject_4_triggered();
     void on_actionEject_5_triggered();
     void on_actionEject_6_triggered();
-    void on_actionEject_7_triggered();
-    void on_actionEject_8_triggered();
-    void on_actionEject_9_triggered();
-    void on_actionEject_10_triggered();
-    void on_actionEject_11_triggered();
-    void on_actionEject_12_triggered();
-    void on_actionEject_13_triggered();
-    void on_actionEject_14_triggered();
-    void on_actionEject_15_triggered();
+
     void on_actionWriteProtect_1_triggered();
     void on_actionWriteProtect_2_triggered();
     void on_actionWriteProtect_3_triggered();
     void on_actionWriteProtect_4_triggered();
     void on_actionWriteProtect_5_triggered();
     void on_actionWriteProtect_6_triggered();
-    void on_actionWriteProtect_7_triggered();
-    void on_actionWriteProtect_8_triggered();
-    void on_actionWriteProtect_9_triggered();
-    void on_actionWriteProtect_10_triggered();
-    void on_actionWriteProtect_11_triggered();
-    void on_actionWriteProtect_12_triggered();
-    void on_actionWriteProtect_13_triggered();
-    void on_actionWriteProtect_14_triggered();
-    void on_actionWriteProtect_15_triggered();
+
     void on_actionMountRecent_0_triggered();
     void on_actionMountRecent_1_triggered();
     void on_actionMountRecent_2_triggered();
@@ -208,81 +176,42 @@ private slots:
     void on_actionMountRecent_7_triggered();
     void on_actionMountRecent_8_triggered();
     void on_actionMountRecent_9_triggered();
+
     void on_actionEditDisk_1_triggered();
     void on_actionEditDisk_2_triggered();
     void on_actionEditDisk_3_triggered();
     void on_actionEditDisk_4_triggered();
     void on_actionEditDisk_5_triggered();
     void on_actionEditDisk_6_triggered();
-    void on_actionEditDisk_7_triggered();
-    void on_actionEditDisk_8_triggered();
-    void on_actionEditDisk_9_triggered();
-    void on_actionEditDisk_10_triggered();
-    void on_actionEditDisk_11_triggered();
-    void on_actionEditDisk_12_triggered();
-    void on_actionEditDisk_13_triggered();
-    void on_actionEditDisk_14_triggered();
-    void on_actionEditDisk_15_triggered();
+
     void on_actionSave_1_triggered();
     void on_actionSave_2_triggered();
     void on_actionSave_3_triggered();
     void on_actionSave_4_triggered();
     void on_actionSave_5_triggered();
     void on_actionSave_6_triggered();
-    void on_actionSave_7_triggered();
-    void on_actionSave_8_triggered();
-    void on_actionSave_9_triggered();
-    void on_actionSave_10_triggered();
-    void on_actionSave_11_triggered();
-    void on_actionSave_12_triggered();
-    void on_actionSave_13_triggered();
-    void on_actionSave_14_triggered();
-    void on_actionSave_15_triggered();
+
     void on_actionAutoSave_1_triggered();
     void on_actionAutoSave_2_triggered();
     void on_actionAutoSave_3_triggered();
     void on_actionAutoSave_4_triggered();
     void on_actionAutoSave_5_triggered();
     void on_actionAutoSave_6_triggered();
-    void on_actionAutoSave_7_triggered();
-    void on_actionAutoSave_8_triggered();
-    void on_actionAutoSave_9_triggered();
-    void on_actionAutoSave_10_triggered();
-    void on_actionAutoSave_11_triggered();
-    void on_actionAutoSave_12_triggered();
-    void on_actionAutoSave_13_triggered();
-    void on_actionAutoSave_14_triggered();
-    void on_actionAutoSave_15_triggered();
+
     void on_actionSaveAs_1_triggered();
     void on_actionSaveAs_2_triggered();
     void on_actionSaveAs_3_triggered();
     void on_actionSaveAs_4_triggered();
     void on_actionSaveAs_5_triggered();
     void on_actionSaveAs_6_triggered();
-    void on_actionSaveAs_7_triggered();
-    void on_actionSaveAs_8_triggered();
-    void on_actionSaveAs_9_triggered();
-    void on_actionSaveAs_10_triggered();
-    void on_actionSaveAs_11_triggered();
-    void on_actionSaveAs_12_triggered();
-    void on_actionSaveAs_13_triggered();
-    void on_actionSaveAs_14_triggered();
-    void on_actionSaveAs_15_triggered();
+
     void on_actionRevert_1_triggered();
     void on_actionRevert_2_triggered();
     void on_actionRevert_3_triggered();
     void on_actionRevert_4_triggered();
     void on_actionRevert_5_triggered();
     void on_actionRevert_6_triggered();
-    void on_actionRevert_7_triggered();
-    void on_actionRevert_8_triggered();
-    void on_actionRevert_9_triggered();
-    void on_actionRevert_10_triggered();
-    void on_actionRevert_11_triggered();
-    void on_actionRevert_12_triggered();
-    void on_actionRevert_13_triggered();
-    void on_actionRevert_14_triggered();
-    void on_actionRevert_15_triggered();
+
     void on_actionBootOption_triggered();
     void on_actionToggleMiniMode_triggered();
     void on_actionToggleShade_triggered();
