@@ -1301,16 +1301,22 @@ void MainWindow::mountDiskImage(int no)
 //    }
 
     QAndroidJniObject::callStaticMethod<void>("net/greblus/MyActivity", "runFileChooser", "()V");
+
     QString fileName = NULL;
-    while (fileName == NULL) {
-        if (fileName == NULL) QThread::yieldCurrentThread();
+    do
+      {
         QAndroidJniObject jFileName = QAndroidJniObject::getStaticObjectField<jstring>("net/greblus/MyActivity", "m_chosen");
         fileName = jFileName.toString();
-    }
+
+        if (fileName == "Cancelled") {fileName.clear(); break;}
+        if (fileName == "None") QThread::yieldCurrentThread();
+      }
+    while (fileName == "None");
 
     if (fileName.isEmpty()) {
         return;
     }
+
     aspeqtSettings->setLastDiskImageDir(QFileInfo(fileName).absolutePath());
     mountFileWithDefaultProtection(no, fileName);
 }
@@ -1323,12 +1329,17 @@ void MainWindow::mountFolderImage(int no)
 //    QString fileName = QFileDialog::getExistingDirectory(this, tr("Open a folder image"), dir);
 
     QAndroidJniObject::callStaticMethod<void>("net/greblus/MyActivity", "runDirChooser", "()V");
+
     QString fileName = NULL;
-    while (fileName == NULL) {
-        if (fileName == NULL) QThread::yieldCurrentThread();
+    do
+      {
         QAndroidJniObject jFileName = QAndroidJniObject::getStaticObjectField<jstring>("net/greblus/MyActivity", "m_chosen");
         fileName = jFileName.toString();
-    }
+
+        if (fileName == "Cancelled") {fileName.clear(); break;}
+        if (fileName == "None") QThread::yieldCurrentThread();
+      }
+    while (fileName == "None");
 
     fileName = QDir::fromNativeSeparators(fileName);    //
     if (fileName.isEmpty()) {

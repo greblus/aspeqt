@@ -30,6 +30,7 @@ import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Comparator;
 import java.util.List;
+import android.util.Log;
 
 import android.app.AlertDialog;
 import android.content.Context;
@@ -76,6 +77,7 @@ public class SimpleFileDialog
 	{
 		public void onChosenDir(String chosenDir);
 	}
+
 
 	public SimpleFileDialog(Context context, String file_select_type, SimpleFileDialogListener SimpleFileDialogListener)
 	{
@@ -184,7 +186,18 @@ public class SimpleFileDialog
 					}
 				}
 			}
-		}).setNegativeButton("Cancel", null);
+		}).setNegativeButton("Cancel", new OnClickListener()
+		
+		{
+			@Override
+			public void onClick(DialogInterface dialog, int which)
+			{
+                        m_SimpleFileDialogListener.onChosenDir("Cancelled");
+			}
+                }
+                );
+
+
 
 		final AlertDialog dirsDialog = dialogBuilder.create();
 

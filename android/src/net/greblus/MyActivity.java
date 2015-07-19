@@ -62,15 +62,15 @@ public class MyActivity extends QtActivity
 
         public static void runFileChooser() {
 
-            m_chosen = null;
+            m_chosen = "None";
             MyActivity.s_activity.runOnUiThread( new FileChooser() );
 
          }
 
          public static void runDirChooser() {
 
-             m_chosen = null;
-             MyActivity.s_activity.runOnUiThread( new DirChooser() );
+            m_chosen = "None";
+            MyActivity.s_activity.runOnUiThread( new DirChooser() );
 
           }
 
@@ -93,7 +93,7 @@ public class MyActivity extends QtActivity
                     {
                             // The code in this function will be executed when the dialog OK button is pushed
                             m_chosen = chosenDir;
-                            Toast.makeText(MyActivity.this, "Chosen File: " +
+                            if (m_chosen != "Cancelled") Toast.makeText(MyActivity.this, "Chosen File: " +
                                             m_chosen, Toast.LENGTH_LONG).show();
                     }
             });
@@ -113,7 +113,7 @@ public class MyActivity extends QtActivity
                     {
                             // The code in this function will be executed when the dialog OK button is pushed
                             m_chosen = chosenDir;
-                            Toast.makeText(MyActivity.this, "Chosen Directory: " +
+                            if (m_chosen != "Cancelled") Toast.makeText(MyActivity.this, "Chosen Directory: " +
                                             m_chosen, Toast.LENGTH_LONG).show();
                     }
             });
