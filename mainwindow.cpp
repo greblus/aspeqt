@@ -29,7 +29,7 @@
 #include "miscutils.h"
 #include <QAndroidJniObject>
 #include <jni.h>
-
+#include <QQuickView>
 
 AspeqtSettings *aspeqtSettings;
 MainWindow *mainWindow;
@@ -223,7 +223,7 @@ MainWindow::MainWindow(QWidget *parent)
     prtOnOffLabel = new QLabel(this);
     netLabel = new QLabel(this);
     clearMessagesLabel = new QLabel(this);
-    speedLabel->setText(tr("19200 bits/sec"));
+    speedLabel->setText(tr(""));
     onOffLabel->setMinimumWidth(21);
     prtOnOffLabel->setMinimumWidth(18);
     prtOnOffLabel->setPixmap(QIcon(":/icons/silk-icons/icons/printer.png").pixmap(32, 32, QIcon::Normal));  //
@@ -1013,7 +1013,7 @@ void MainWindow::on_actionOptions_triggered()
 void MainWindow::changeFonts()
 {
     if (aspeqtSettings->useLargeFont()) {
-        QFont font("Arial Black", 9, QFont::Normal);
+        QFont font("Arial Black", 12, QFont::Normal);
         ui->labelFileName_1->setFont(font);
         ui->labelFileName_2->setFont(font);
         ui->labelFileName_3->setFont(font);
@@ -1021,7 +1021,7 @@ void MainWindow::changeFonts()
         ui->labelFileName_5->setFont(font);
         ui->labelFileName_6->setFont(font);
 } else {
-        QFont font("MS Shell Dlg 2,8", 8, QFont::Normal);
+        QFont font("MS Shell Dlg 2,10", 10, QFont::Normal);
         ui->labelFileName_1->setFont(font);
         ui->labelFileName_2->setFont(font);
         ui->labelFileName_3->setFont(font);
@@ -1299,17 +1299,15 @@ void MainWindow::mountDiskImage(int no)
 //    } else {
 //        dir = QFileInfo(diskWidgets[no].fileNameLabel->text()).absolutePath();
 //    }
-    QString fileName = QFileDialog::getOpenFileName(this,
-                                                    tr("Open a disk image"),
-                                                    dir,
-                                                    tr(
-//                                                    "All Atari disk images (*.atr *.xfd *.atx *.pro);;"
-                                                    "All Atari disk images (*.atr *.xfd *.pro);;"
-                                                    "SIO2PC ATR images (*.atr);;"
-                                                    "XFormer XFD images (*.xfd);;"
-//                                                    "ATX images (*.atx);;"
-                                                    "Pro images (*.pro);;"
-                                                    "All files (*)"));
+
+    QAndroidJniObject::callStaticMethod<void>("net/greblus/MyActivity", "runFileChooser", "()V");
+    QString fileName = NULL;
+    while (fileName == NULL) {
+        if (fileName == NULL) QThread::yieldCurrentThread();
+        QAndroidJniObject jFileName = QAndroidJniObject::getStaticObjectField<jstring>("net/greblus/MyActivity", "m_chosen");
+        fileName = jFileName.toString();
+    }
+
     if (fileName.isEmpty()) {
         return;
     }
@@ -1322,7 +1320,16 @@ void MainWindow::mountFolderImage(int no)
     QString dir;
 // Always mount from "last folder dir" //
     dir = aspeqtSettings->lastFolderImageDir();
-    QString fileName = QFileDialog::getExistingDirectory(this, tr("Open a folder image"), dir);
+//    QString fileName = QFileDialog::getExistingDirectory(this, tr("Open a folder image"), dir);
+
+    QAndroidJniObject::callStaticMethod<void>("net/greblus/MyActivity", "runDirChooser", "()V");
+    QString fileName = NULL;
+    while (fileName == NULL) {
+        if (fileName == NULL) QThread::yieldCurrentThread();
+        QAndroidJniObject jFileName = QAndroidJniObject::getStaticObjectField<jstring>("net/greblus/MyActivity", "m_chosen");
+        fileName = jFileName.toString();
+    }
+
     fileName = QDir::fromNativeSeparators(fileName);    //
     if (fileName.isEmpty()) {
         return;

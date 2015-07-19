@@ -1,5 +1,6 @@
 package net.greblus;
 
+import android.widget.Toast;
 import android.os.Bundle;
 import java.lang.String;
 import android.util.Log;
@@ -39,6 +40,7 @@ public class MyActivity extends QtActivity
     public static UsbDevice device;
     public static native void sendBufAddr(ByteBuffer buf);
     private static boolean debug = false;
+    public static String m_chosen;
 
     public static MyActivity s_activity = null;
 
@@ -47,6 +49,7 @@ public class MyActivity extends QtActivity
 	@Override
 	public void onCreate(Bundle savedInstanceState)
  	{
+
 		s_activity = this;
                 super.onCreate(savedInstanceState);
 
@@ -57,6 +60,20 @@ public class MyActivity extends QtActivity
                 sendBufAddr(bbuf);
         }
 
+        public static void runFileChooser() {
+
+            m_chosen = null;
+            MyActivity.s_activity.runOnUiThread( new FileChooser() );
+
+         }
+
+         public static void runDirChooser() {
+
+             m_chosen = null;
+             MyActivity.s_activity.runOnUiThread( new DirChooser() );
+
+          }
+
         @Override
 	protected void onDestroy()
 	{
@@ -64,6 +81,45 @@ public class MyActivity extends QtActivity
                 s_activity = null;
                 ftdiCloseDevice();
 	}
+
+
+        public void fileChooser()
+        {
+            SimpleFileDialog FileOpenDialog =  new SimpleFileDialog(MyActivity.this, "FileOpen",
+                                                            new SimpleFileDialog.SimpleFileDialogListener()
+            {
+                    @Override
+                    public void onChosenDir(String chosenDir)
+                    {
+                            // The code in this function will be executed when the dialog OK button is pushed
+                            m_chosen = chosenDir;
+                            Toast.makeText(MyActivity.this, "Chosen File: " +
+                                            m_chosen, Toast.LENGTH_LONG).show();
+                    }
+            });
+
+            //You can change the default filename using the public variable "Default_File_Name"
+            FileOpenDialog.Default_File_Name = "";
+            FileOpenDialog.chooseFile_or_Dir();
+        }
+
+        public void dirChooser()
+        {
+            SimpleFileDialog FileOpenDialog =  new SimpleFileDialog(MyActivity.this, "FolderChoose",
+                                                            new SimpleFileDialog.SimpleFileDialogListener()
+            {
+                    @Override
+                    public void onChosenDir(String chosenDir)
+                    {
+                            // The code in this function will be executed when the dialog OK button is pushed
+                            m_chosen = chosenDir;
+                            Toast.makeText(MyActivity.this, "Chosen Directory: " +
+                                            m_chosen, Toast.LENGTH_LONG).show();
+                    }
+            });
+
+            FileOpenDialog.chooseFile_or_Dir();
+        }
 
         public static void registerBroadcastReceiver() {
                 if (MyActivity.s_activity != null) {
@@ -122,7 +178,7 @@ public class MyActivity extends QtActivity
                                 ftDevice.clrDtr();
                                 ftDevice.clrRts();
 
-                                ftDevice.setLatencyTimer((byte)5);
+                                ftDevice.setLatencyTimer((byte)16);
                                 //ftdid2xx.DriverParameters.setReadTimeout(5000);
                                 ftDevice.purge((byte)(D2xxManager.FT_PURGE_TX | D2xxManager.FT_PURGE_RX));
                                 ftDevice.restartInTask();
@@ -338,6 +394,22 @@ class RegisterReceiverRunnable implements Runnable
                 // this method must be called on Android Ui Thread
                 MyActivity.s_activity.registerReceiver(new USBReceiver(), filter);
                 }
+}
+
+class FileChooser implements Runnable
+{
+    @Override
+    public void run() {
+        MyActivity.s_activity.fileChooser();
+    }
+}
+
+class DirChooser implements Runnable
+{
+    @Override
+    public void run() {
+        MyActivity.s_activity.dirChooser();
+    }
 }
 
 class USBReceiver extends BroadcastReceiver {
