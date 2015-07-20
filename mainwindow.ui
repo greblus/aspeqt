@@ -51,14 +51,19 @@
       <property name="minimumSize">
        <size>
         <width>0</width>
-        <height>30</height>
+        <height>20</height>
        </size>
       </property>
       <property name="baseSize">
        <size>
         <width>0</width>
-        <height>50</height>
+        <height>20</height>
        </size>
+      </property>
+      <property name="font">
+       <font>
+        <pointsize>12</pointsize>
+       </font>
       </property>
       <property name="contextMenuPolicy">
        <enum>Qt::DefaultContextMenu</enum>
@@ -68,6 +73,12 @@
       </property>
       <property name="frameShadow">
        <enum>QFrame::Plain</enum>
+      </property>
+      <property name="verticalScrollBarPolicy">
+       <enum>Qt::ScrollBarAlwaysOff</enum>
+      </property>
+      <property name="horizontalScrollBarPolicy">
+       <enum>Qt::ScrollBarAlwaysOff</enum>
       </property>
       <property name="textInteractionFlags">
        <set>Qt::NoTextInteraction</set>
@@ -105,19 +116,19 @@
       </property>
       <layout class="QHBoxLayout" name="horizontalLayout_4">
        <property name="spacing">
-        <number>3</number>
+        <number>1</number>
        </property>
        <property name="leftMargin">
-        <number>3</number>
+        <number>1</number>
        </property>
        <property name="topMargin">
-        <number>3</number>
+        <number>1</number>
        </property>
        <property name="rightMargin">
-        <number>3</number>
+        <number>1</number>
        </property>
        <property name="bottomMargin">
-        <number>3</number>
+        <number>1</number>
        </property>
        <item>
         <widget class="QLabel" name="label_10">
@@ -188,14 +199,14 @@
          </property>
          <property name="minimumSize">
           <size>
-           <width>64</width>
-           <height>64</height>
+           <width>48</width>
+           <height>48</height>
           </size>
          </property>
          <property name="maximumSize">
           <size>
-           <width>64</width>
-           <height>64</height>
+           <width>48</width>
+           <height>48</height>
           </size>
          </property>
          <property name="iconSize">
@@ -213,14 +224,14 @@
          </property>
          <property name="minimumSize">
           <size>
-           <width>64</width>
-           <height>64</height>
+           <width>48</width>
+           <height>48</height>
           </size>
          </property>
          <property name="maximumSize">
           <size>
-           <width>64</width>
-           <height>64</height>
+           <width>48</width>
+           <height>48</height>
           </size>
          </property>
          <property name="iconSize">
@@ -238,14 +249,14 @@
          </property>
          <property name="minimumSize">
           <size>
-           <width>64</width>
-           <height>64</height>
+           <width>48</width>
+           <height>48</height>
           </size>
          </property>
          <property name="maximumSize">
           <size>
-           <width>64</width>
-           <height>64</height>
+           <width>48</width>
+           <height>48</height>
           </size>
          </property>
          <property name="iconSize">
@@ -266,14 +277,14 @@
          </property>
          <property name="minimumSize">
           <size>
-           <width>64</width>
-           <height>64</height>
+           <width>48</width>
+           <height>48</height>
           </size>
          </property>
          <property name="maximumSize">
           <size>
-           <width>64</width>
-           <height>64</height>
+           <width>48</width>
+           <height>48</height>
           </size>
          </property>
          <property name="text">
@@ -297,14 +308,14 @@
          </property>
          <property name="minimumSize">
           <size>
-           <width>64</width>
-           <height>64</height>
+           <width>48</width>
+           <height>48</height>
           </size>
          </property>
          <property name="maximumSize">
           <size>
-           <width>64</width>
-           <height>64</height>
+           <width>48</width>
+           <height>48</height>
           </size>
          </property>
          <property name="iconSize">
@@ -459,14 +470,14 @@
          </property>
          <property name="minimumSize">
           <size>
-           <width>64</width>
-           <height>64</height>
+           <width>48</width>
+           <height>48</height>
           </size>
          </property>
          <property name="maximumSize">
           <size>
-           <width>64</width>
-           <height>64</height>
+           <width>48</width>
+           <height>48</height>
           </size>
          </property>
          <property name="iconSize">
@@ -511,19 +522,19 @@
       </property>
       <layout class="QHBoxLayout" name="horizontalLayout_2">
        <property name="spacing">
-        <number>3</number>
+        <number>1</number>
        </property>
        <property name="leftMargin">
-        <number>3</number>
+        <number>1</number>
        </property>
        <property name="topMargin">
-        <number>3</number>
+        <number>1</number>
        </property>
        <property name="rightMargin">
-        <number>3</number>
+        <number>1</number>
        </property>
        <property name="bottomMargin">
-        <number>3</number>
+        <number>1</number>
        </property>
        <item>
         <widget class="QLabel" name="label_4">
@@ -594,14 +605,14 @@
          </property>
          <property name="minimumSize">
           <size>
-           <width>64</width>
-           <height>64</height>
+           <width>48</width>
+           <height>48</height>
           </size>
          </property>
          <property name="maximumSize">
           <size>
-           <width>64</width>
-           <height>64</height>
+           <width>48</width>
+           <height>48</height>
           </size>
          </property>
          <property name="iconSize">
@@ -619,14 +630,14 @@
          </property>
          <property name="minimumSize">
           <size>
-           <width>64</width>
-           <height>64</height>
+           <width>48</width>
+           <height>48</height>
           </size>
          </property>
          <property name="maximumSize">
           <size>
-           <width>64</width>
-           <height>64</height>
+           <width>48</width>
+           <height>48</height>
           </size>
          </property>
          <property name="iconSize">
@@ -644,14 +655,14 @@
          </property>
          <property name="minimumSize">
           <size>
-           <width>64</width>
-           <height>64</height>
+           <width>48</width>
+           <height>48</height>
           </size>
          </property>
          <property name="maximumSize">
           <size>
-           <width>64</width>
-           <height>64</height>
+           <width>48</width>
+           <height>48</height>
           </size>
          </property>
          <property name="iconSize">
@@ -672,14 +683,14 @@
          </property>
          <property name="minimumSize">
           <size>
-           <width>64</width>
-           <height>64</height>
+           <width>48</width>
+           <height>48</height>
           </size>
          </property>
          <property name="maximumSize">
           <size>
-           <width>64</width>
-           <height>64</height>
+           <width>48</width>
+           <height>48</height>
           </size>
          </property>
          <property name="text">
@@ -703,14 +714,14 @@
          </property>
          <property name="minimumSize">
           <size>
-           <width>64</width>
-           <height>64</height>
+           <width>48</width>
+           <height>48</height>
           </size>
          </property>
          <property name="maximumSize">
           <size>
-           <width>64</width>
-           <height>64</height>
+           <width>48</width>
+           <height>48</height>
           </size>
          </property>
          <property name="iconSize">
@@ -869,14 +880,14 @@
          </property>
          <property name="minimumSize">
           <size>
-           <width>64</width>
-           <height>64</height>
+           <width>48</width>
+           <height>48</height>
           </size>
          </property>
          <property name="maximumSize">
           <size>
-           <width>64</width>
-           <height>64</height>
+           <width>48</width>
+           <height>48</height>
           </size>
          </property>
          <property name="iconSize">
@@ -921,19 +932,19 @@
       </property>
       <layout class="QHBoxLayout" name="horizontalLayout_6">
        <property name="spacing">
-        <number>3</number>
+        <number>1</number>
        </property>
        <property name="leftMargin">
-        <number>3</number>
+        <number>1</number>
        </property>
        <property name="topMargin">
-        <number>3</number>
+        <number>1</number>
        </property>
        <property name="rightMargin">
-        <number>3</number>
+        <number>1</number>
        </property>
        <property name="bottomMargin">
-        <number>3</number>
+        <number>1</number>
        </property>
        <item>
         <widget class="QLabel" name="label_16">
@@ -1004,14 +1015,14 @@
          </property>
          <property name="minimumSize">
           <size>
-           <width>64</width>
-           <height>64</height>
+           <width>48</width>
+           <height>48</height>
           </size>
          </property>
          <property name="maximumSize">
           <size>
-           <width>64</width>
-           <height>64</height>
+           <width>48</width>
+           <height>48</height>
           </size>
          </property>
          <property name="iconSize">
@@ -1029,14 +1040,14 @@
          </property>
          <property name="minimumSize">
           <size>
-           <width>64</width>
-           <height>64</height>
+           <width>48</width>
+           <height>48</height>
           </size>
          </property>
          <property name="maximumSize">
           <size>
-           <width>64</width>
-           <height>64</height>
+           <width>48</width>
+           <height>48</height>
           </size>
          </property>
          <property name="iconSize">
@@ -1054,14 +1065,14 @@
          </property>
          <property name="minimumSize">
           <size>
-           <width>64</width>
-           <height>64</height>
+           <width>48</width>
+           <height>48</height>
           </size>
          </property>
          <property name="maximumSize">
           <size>
-           <width>64</width>
-           <height>64</height>
+           <width>48</width>
+           <height>48</height>
           </size>
          </property>
          <property name="iconSize">
@@ -1082,14 +1093,14 @@
          </property>
          <property name="minimumSize">
           <size>
-           <width>64</width>
-           <height>64</height>
+           <width>48</width>
+           <height>48</height>
           </size>
          </property>
          <property name="maximumSize">
           <size>
-           <width>64</width>
-           <height>64</height>
+           <width>48</width>
+           <height>48</height>
           </size>
          </property>
          <property name="text">
@@ -1113,14 +1124,14 @@
          </property>
          <property name="minimumSize">
           <size>
-           <width>64</width>
-           <height>64</height>
+           <width>48</width>
+           <height>48</height>
           </size>
          </property>
          <property name="maximumSize">
           <size>
-           <width>64</width>
-           <height>64</height>
+           <width>48</width>
+           <height>48</height>
           </size>
          </property>
          <property name="iconSize">
@@ -1275,14 +1286,14 @@
          </property>
          <property name="minimumSize">
           <size>
-           <width>64</width>
-           <height>64</height>
+           <width>48</width>
+           <height>48</height>
           </size>
          </property>
          <property name="maximumSize">
           <size>
-           <width>64</width>
-           <height>64</height>
+           <width>48</width>
+           <height>48</height>
           </size>
          </property>
          <property name="iconSize">
@@ -1327,19 +1338,19 @@
       </property>
       <layout class="QHBoxLayout" name="horizontalLayout_3">
        <property name="spacing">
-        <number>3</number>
+        <number>1</number>
        </property>
        <property name="leftMargin">
-        <number>3</number>
+        <number>1</number>
        </property>
        <property name="topMargin">
-        <number>3</number>
+        <number>1</number>
        </property>
        <property name="rightMargin">
-        <number>3</number>
+        <number>1</number>
        </property>
        <property name="bottomMargin">
-        <number>3</number>
+        <number>1</number>
        </property>
        <item>
         <widget class="QLabel" name="label_7">
@@ -1410,14 +1421,14 @@
          </property>
          <property name="minimumSize">
           <size>
-           <width>64</width>
-           <height>64</height>
+           <width>48</width>
+           <height>48</height>
           </size>
          </property>
          <property name="maximumSize">
           <size>
-           <width>64</width>
-           <height>64</height>
+           <width>48</width>
+           <height>48</height>
           </size>
          </property>
          <property name="iconSize">
@@ -1435,14 +1446,14 @@
          </property>
          <property name="minimumSize">
           <size>
-           <width>64</width>
-           <height>64</height>
+           <width>48</width>
+           <height>48</height>
           </size>
          </property>
          <property name="maximumSize">
           <size>
-           <width>64</width>
-           <height>64</height>
+           <width>48</width>
+           <height>48</height>
           </size>
          </property>
          <property name="iconSize">
@@ -1460,14 +1471,14 @@
          </property>
          <property name="minimumSize">
           <size>
-           <width>64</width>
-           <height>64</height>
+           <width>48</width>
+           <height>48</height>
           </size>
          </property>
          <property name="maximumSize">
           <size>
-           <width>64</width>
-           <height>64</height>
+           <width>48</width>
+           <height>48</height>
           </size>
          </property>
          <property name="iconSize">
@@ -1488,14 +1499,14 @@
          </property>
          <property name="minimumSize">
           <size>
-           <width>64</width>
-           <height>64</height>
+           <width>48</width>
+           <height>48</height>
           </size>
          </property>
          <property name="maximumSize">
           <size>
-           <width>64</width>
-           <height>64</height>
+           <width>48</width>
+           <height>48</height>
           </size>
          </property>
          <property name="text">
@@ -1519,14 +1530,14 @@
          </property>
          <property name="minimumSize">
           <size>
-           <width>64</width>
-           <height>64</height>
+           <width>48</width>
+           <height>48</height>
           </size>
          </property>
          <property name="maximumSize">
           <size>
-           <width>64</width>
-           <height>64</height>
+           <width>48</width>
+           <height>48</height>
           </size>
          </property>
          <property name="iconSize">
@@ -1685,14 +1696,14 @@
          </property>
          <property name="minimumSize">
           <size>
-           <width>64</width>
-           <height>64</height>
+           <width>48</width>
+           <height>48</height>
           </size>
          </property>
          <property name="maximumSize">
           <size>
-           <width>64</width>
-           <height>64</height>
+           <width>48</width>
+           <height>48</height>
           </size>
          </property>
          <property name="iconSize">
@@ -1737,19 +1748,19 @@
       </property>
       <layout class="QHBoxLayout" name="horizontalLayout_5">
        <property name="spacing">
-        <number>3</number>
+        <number>1</number>
        </property>
        <property name="leftMargin">
-        <number>3</number>
+        <number>1</number>
        </property>
        <property name="topMargin">
-        <number>3</number>
+        <number>1</number>
        </property>
        <property name="rightMargin">
-        <number>3</number>
+        <number>1</number>
        </property>
        <property name="bottomMargin">
-        <number>3</number>
+        <number>1</number>
        </property>
        <item>
         <widget class="QLabel" name="label_13">
@@ -1820,14 +1831,14 @@
          </property>
          <property name="minimumSize">
           <size>
-           <width>64</width>
-           <height>64</height>
+           <width>48</width>
+           <height>48</height>
           </size>
          </property>
          <property name="maximumSize">
           <size>
-           <width>64</width>
-           <height>64</height>
+           <width>48</width>
+           <height>48</height>
           </size>
          </property>
          <property name="iconSize">
@@ -1845,14 +1856,14 @@
          </property>
          <property name="minimumSize">
           <size>
-           <width>64</width>
-           <height>64</height>
+           <width>48</width>
+           <height>48</height>
           </size>
          </property>
          <property name="maximumSize">
           <size>
-           <width>64</width>
-           <height>64</height>
+           <width>48</width>
+           <height>48</height>
           </size>
          </property>
          <property name="iconSize">
@@ -1870,14 +1881,14 @@
          </property>
          <property name="minimumSize">
           <size>
-           <width>64</width>
-           <height>64</height>
+           <width>48</width>
+           <height>48</height>
           </size>
          </property>
          <property name="maximumSize">
           <size>
-           <width>64</width>
-           <height>64</height>
+           <width>48</width>
+           <height>48</height>
           </size>
          </property>
          <property name="iconSize">
@@ -1898,14 +1909,14 @@
          </property>
          <property name="minimumSize">
           <size>
-           <width>64</width>
-           <height>64</height>
+           <width>48</width>
+           <height>48</height>
           </size>
          </property>
          <property name="maximumSize">
           <size>
-           <width>64</width>
-           <height>64</height>
+           <width>48</width>
+           <height>48</height>
           </size>
          </property>
          <property name="text">
@@ -1929,14 +1940,14 @@
          </property>
          <property name="minimumSize">
           <size>
-           <width>64</width>
-           <height>64</height>
+           <width>48</width>
+           <height>48</height>
           </size>
          </property>
          <property name="maximumSize">
           <size>
-           <width>64</width>
-           <height>64</height>
+           <width>48</width>
+           <height>48</height>
           </size>
          </property>
          <property name="iconSize">
@@ -2091,14 +2102,14 @@
          </property>
          <property name="minimumSize">
           <size>
-           <width>64</width>
-           <height>64</height>
+           <width>48</width>
+           <height>48</height>
           </size>
          </property>
          <property name="maximumSize">
           <size>
-           <width>64</width>
-           <height>64</height>
+           <width>48</width>
+           <height>48</height>
           </size>
          </property>
          <property name="iconSize">
@@ -2140,19 +2151,19 @@
       </property>
       <layout class="QHBoxLayout" name="horizontalLayout">
        <property name="spacing">
-        <number>3</number>
+        <number>1</number>
        </property>
        <property name="leftMargin">
-        <number>3</number>
+        <number>1</number>
        </property>
        <property name="topMargin">
-        <number>3</number>
+        <number>1</number>
        </property>
        <property name="rightMargin">
-        <number>3</number>
+        <number>1</number>
        </property>
        <property name="bottomMargin">
-        <number>3</number>
+        <number>1</number>
        </property>
        <item>
         <widget class="QLabel" name="label_3">
@@ -2250,14 +2261,14 @@
          </property>
          <property name="minimumSize">
           <size>
-           <width>64</width>
-           <height>64</height>
+           <width>48</width>
+           <height>48</height>
           </size>
          </property>
          <property name="maximumSize">
           <size>
-           <width>64</width>
-           <height>64</height>
+           <width>48</width>
+           <height>48</height>
           </size>
          </property>
          <property name="iconSize">
@@ -2275,14 +2286,14 @@
          </property>
          <property name="minimumSize">
           <size>
-           <width>64</width>
-           <height>64</height>
+           <width>48</width>
+           <height>48</height>
           </size>
          </property>
          <property name="maximumSize">
           <size>
-           <width>64</width>
-           <height>64</height>
+           <width>48</width>
+           <height>48</height>
           </size>
          </property>
          <property name="iconSize">
@@ -2300,14 +2311,14 @@
          </property>
          <property name="minimumSize">
           <size>
-           <width>64</width>
-           <height>64</height>
+           <width>48</width>
+           <height>48</height>
           </size>
          </property>
          <property name="maximumSize">
           <size>
-           <width>64</width>
-           <height>64</height>
+           <width>48</width>
+           <height>48</height>
           </size>
          </property>
          <property name="iconSize">
@@ -2328,14 +2339,14 @@
          </property>
          <property name="minimumSize">
           <size>
-           <width>64</width>
-           <height>64</height>
+           <width>48</width>
+           <height>48</height>
           </size>
          </property>
          <property name="maximumSize">
           <size>
-           <width>64</width>
-           <height>64</height>
+           <width>48</width>
+           <height>48</height>
           </size>
          </property>
          <property name="toolTip">
@@ -2368,14 +2379,14 @@
          </property>
          <property name="minimumSize">
           <size>
-           <width>64</width>
-           <height>64</height>
+           <width>48</width>
+           <height>48</height>
           </size>
          </property>
          <property name="maximumSize">
           <size>
-           <width>64</width>
-           <height>64</height>
+           <width>48</width>
+           <height>48</height>
           </size>
          </property>
          <property name="iconSize">
@@ -2534,14 +2545,14 @@
          </property>
          <property name="minimumSize">
           <size>
-           <width>64</width>
-           <height>64</height>
+           <width>48</width>
+           <height>48</height>
           </size>
          </property>
          <property name="maximumSize">
           <size>
-           <width>64</width>
-           <height>64</height>
+           <width>48</width>
+           <height>48</height>
           </size>
          </property>
          <property name="iconSize">
@@ -2565,6 +2576,9 @@
      <width>1024</width>
      <height>21</height>
     </rect>
+   </property>
+   <property name="nativeMenuBar">
+    <bool>true</bool>
    </property>
    <widget class="QMenu" name="menu_Disk">
     <property name="title">
