@@ -50,6 +50,8 @@ import android.widget.EditText;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 import android.widget.Toast;
+import java.util.Arrays;
+import java.util.List;
 
 public class SimpleFileDialog 
 {
@@ -236,8 +238,16 @@ public class SimpleFileDialog
 				}
 				else if (Select_type == FileSave || Select_type == FileOpen)
 				{
-					// Add file names to the list if we are doing a file save or file open operation
-					dirs.add( file.getName() );
+
+                                        // Add file names to the list if we are doing a file save or file open operation
+                                        List<String> extensions = Arrays.asList(".atr", ".xfd", ".pro", ".xex", ".exe", ".com", ".cas");
+
+                                        for (String ext: extensions)
+                                        {
+                                            String name = file.getName();
+                                            if (name.indexOf(ext) >= 0)
+                                                dirs.add( name );
+                                        }
 				}
 			}
 		}
