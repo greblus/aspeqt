@@ -29,7 +29,6 @@
 #include "miscutils.h"
 #include <QAndroidJniObject>
 #include <jni.h>
-#include <QQuickView>
 
 AspeqtSettings *aspeqtSettings;
 MainWindow *mainWindow;
