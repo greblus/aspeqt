@@ -15,12 +15,9 @@ What's necessary to use it:
    phone with KitKat 4.4 (should work on anything from 3.1 up)
 5. No root necessary.
 6. No drivers necessary (d2xx java driver is in the package).
-7. On first run, when it will ask you to open Aspeqt's settings, if your device
-   has DSR line wired-up you can safely say no. The DSR is default method and 19200bps 
-   is hardcoded.
-   Otherwise you'll have to play a bit of hit-and-miss game with settings window 
-   (it's too small). I'll fix it soon.
-8. After connecting Sio2PC-USB cable AspeQt should start automatically. 
+7. After you connect the SIO2PC-USB to your Android device it'll automatically
+   launch AspeQt. If you have SIO2PC-USB from Lotharek, select DSR flow control
+   method and 19200 (won't work with faster speeds, I'm working on it).
 
 For the brave ones, who would like to compile or experiment with the code:
 
@@ -38,25 +35,11 @@ AspeQt emulates Atari SIO peripherals when connected to an Atari 8-bit computer 
 In that respect it's similar to programs like APE and Atari810. The main difference is that it's free
 (unlike APE) and it's cross-platform (unlike Atari810 and APE).
 
-Some features
-=============
-* Qt based GUI with drag and drop support.
-* Cross-platform (currently Windows and x86-Linux)
-* 15 disk drive emulation (drives 9-15 are only supported by SpartaDOS X)
-* Text-only printer emulation with saving and printing of the output
-* Cassette image playback
-* Folders can be mounted as simulated Dos20s disks. (read-only, now with SDX compatibility, and bootable)
-* Atari executables can be booted directly, optionally with high speed.
-* Contents of image files can be viewed / changed
-* AspeQt Client module (ASPECL.COM). Runs on the Atari and is used to get/set Date/Time on the Atari plus a variety of other remote tasks.
-* Upto 6xSIO speed and more if the serial port adaptor supports it (FTDI chip based cables are recommanded).
-* Localization support
-* Multi-session support
-
 License (see license.txt file for more details)
 ===============================================
 Original code up to version 0.6.0 Copyright 2009 by Fatih Aygün. 
 Updates since v0.6.0 Copyright 2012 by Ray Ataergin.
+Android port of aspeqt-1.0.0.Preview_6 by Wiktor Grebla.
 
 You can freely copy, use, modify and distribute it under the GPL 2.0
 license. Please see license.txt for details.
@@ -75,10 +58,8 @@ Copyright Matthias Reichl <hias@horus.com>. Used in this package under GPL 2.0 l
 Atascii Fonts by Mark Simonson (http://members.bitstream.net/~marksim/atarimac).
 Used in this package under Freeware License.
 
+Contact concering this Android port:
+====================================
+Wiktor Grebla: greblus@gmail.com
 
-Contact
-=======
-Ray Ataergin, mail to ray@atari8warez.com. Please include the word "aspeqt" in the subject field.
-Fatih Aygun, mail to cyco130@yahoo.com, Please include the word "aspeqt" in the subject field.
-
-For SIO2PC/10502PC hardware purchase/support visit www.atari8warez.com
+For SIO2PC-USB hardware purchase visit www.lotharek.pl
