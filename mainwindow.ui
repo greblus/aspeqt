@@ -10,7 +10,7 @@
     <x>0</x>
     <y>0</y>
     <width>684</width>
-    <height>425</height>
+    <height>445</height>
    </rect>
   </property>
   <property name="sizePolicy">
@@ -164,6 +164,12 @@
            <height>48</height>
           </size>
          </property>
+         <property name="iconSize">
+          <size>
+           <width>40</width>
+           <height>40</height>
+          </size>
+         </property>
         </widget>
        </item>
        <item>
@@ -183,6 +189,12 @@
            <height>48</height>
           </size>
          </property>
+         <property name="iconSize">
+          <size>
+           <width>40</width>
+           <height>40</height>
+          </size>
+         </property>
         </widget>
        </item>
        <item>
@@ -200,6 +212,12 @@
           <size>
            <width>48</width>
            <height>48</height>
+          </size>
+         </property>
+         <property name="iconSize">
+          <size>
+           <width>40</width>
+           <height>40</height>
           </size>
          </property>
          <property name="checkable">
@@ -227,6 +245,12 @@
          <property name="text">
           <string/>
          </property>
+         <property name="iconSize">
+          <size>
+           <width>40</width>
+           <height>40</height>
+          </size>
+         </property>
          <property name="checkable">
           <bool>false</bool>
          </property>
@@ -247,6 +271,12 @@
           <size>
            <width>48</width>
            <height>48</height>
+          </size>
+         </property>
+         <property name="iconSize">
+          <size>
+           <width>40</width>
+           <height>40</height>
           </size>
          </property>
          <property name="checkable">
@@ -395,6 +425,12 @@
            <height>48</height>
           </size>
          </property>
+         <property name="iconSize">
+          <size>
+           <width>40</width>
+           <height>40</height>
+          </size>
+         </property>
         </widget>
        </item>
       </layout>
@@ -524,6 +560,12 @@
            <height>48</height>
           </size>
          </property>
+         <property name="iconSize">
+          <size>
+           <width>40</width>
+           <height>40</height>
+          </size>
+         </property>
         </widget>
        </item>
        <item>
@@ -543,6 +585,12 @@
            <height>48</height>
           </size>
          </property>
+         <property name="iconSize">
+          <size>
+           <width>40</width>
+           <height>40</height>
+          </size>
+         </property>
         </widget>
        </item>
        <item>
@@ -560,6 +608,12 @@
           <size>
            <width>48</width>
            <height>48</height>
+          </size>
+         </property>
+         <property name="iconSize">
+          <size>
+           <width>40</width>
+           <height>40</height>
           </size>
          </property>
          <property name="checkable">
@@ -587,6 +641,12 @@
          <property name="text">
           <string/>
          </property>
+         <property name="iconSize">
+          <size>
+           <width>40</width>
+           <height>40</height>
+          </size>
+         </property>
          <property name="checkable">
           <bool>false</bool>
          </property>
@@ -607,6 +667,12 @@
           <size>
            <width>48</width>
            <height>48</height>
+          </size>
+         </property>
+         <property name="iconSize">
+          <size>
+           <width>40</width>
+           <height>40</height>
           </size>
          </property>
          <property name="checkable">
@@ -753,6 +819,12 @@
           <size>
            <width>48</width>
            <height>48</height>
+          </size>
+         </property>
+         <property name="iconSize">
+          <size>
+           <width>40</width>
+           <height>40</height>
           </size>
          </property>
         </widget>
@@ -912,6 +984,12 @@
            <height>48</height>
           </size>
          </property>
+         <property name="iconSize">
+          <size>
+           <width>40</width>
+           <height>40</height>
+          </size>
+         </property>
         </widget>
        </item>
        <item>
@@ -931,6 +1009,12 @@
            <height>48</height>
           </size>
          </property>
+         <property name="iconSize">
+          <size>
+           <width>40</width>
+           <height>40</height>
+          </size>
+         </property>
         </widget>
        </item>
        <item>
@@ -948,6 +1032,12 @@
           <size>
            <width>48</width>
            <height>48</height>
+          </size>
+         </property>
+         <property name="iconSize">
+          <size>
+           <width>40</width>
+           <height>40</height>
           </size>
          </property>
          <property name="checkable">
@@ -975,6 +1065,12 @@
          <property name="text">
           <string/>
          </property>
+         <property name="iconSize">
+          <size>
+           <width>40</width>
+           <height>40</height>
+          </size>
+         </property>
          <property name="checkable">
           <bool>false</bool>
          </property>
@@ -995,6 +1091,12 @@
           <size>
            <width>48</width>
            <height>48</height>
+          </size>
+         </property>
+         <property name="iconSize">
+          <size>
+           <width>40</width>
+           <height>40</height>
           </size>
          </property>
          <property name="checkable">
@@ -1152,6 +1254,12 @@
            <height>48</height>
           </size>
          </property>
+         <property name="iconSize">
+          <size>
+           <width>40</width>
+           <height>40</height>
+          </size>
+         </property>
         </widget>
        </item>
       </layout>
@@ -1281,6 +1389,12 @@
            <height>48</height>
           </size>
          </property>
+         <property name="iconSize">
+          <size>
+           <width>40</width>
+           <height>40</height>
+          </size>
+         </property>
         </widget>
        </item>
        <item>
@@ -1300,6 +1414,12 @@
            <height>48</height>
           </size>
          </property>
+         <property name="iconSize">
+          <size>
+           <width>40</width>
+           <height>40</height>
+          </size>
+         </property>
         </widget>
        </item>
        <item>
@@ -1317,6 +1437,12 @@
           <size>
            <width>48</width>
            <height>48</height>
+          </size>
+         </property>
+         <property name="iconSize">
+          <size>
+           <width>40</width>
+           <height>40</height>
           </size>
          </property>
          <property name="checkable">
@@ -1344,6 +1470,12 @@
          <property name="text">
           <string/>
          </property>
+         <property name="iconSize">
+          <size>
+           <width>40</width>
+           <height>40</height>
+          </size>
+         </property>
          <property name="checkable">
           <bool>false</bool>
          </property>
@@ -1364,6 +1496,12 @@
           <size>
            <width>48</width>
            <height>48</height>
+          </size>
+         </property>
+         <property name="iconSize">
+          <size>
+           <width>40</width>
+           <height>40</height>
           </size>
          </property>
          <property name="checkable">
@@ -1521,6 +1659,12 @@
            <height>48</height>
           </size>
          </property>
+         <property name="iconSize">
+          <size>
+           <width>40</width>
+           <height>40</height>
+          </size>
+         </property>
         </widget>
        </item>
       </layout>
@@ -1650,6 +1794,12 @@
            <height>48</height>
           </size>
          </property>
+         <property name="iconSize">
+          <size>
+           <width>40</width>
+           <height>40</height>
+          </size>
+         </property>
         </widget>
        </item>
        <item>
@@ -1669,6 +1819,12 @@
            <height>48</height>
           </size>
          </property>
+         <property name="iconSize">
+          <size>
+           <width>40</width>
+           <height>40</height>
+          </size>
+         </property>
         </widget>
        </item>
        <item>
@@ -1686,6 +1842,12 @@
           <size>
            <width>48</width>
            <height>48</height>
+          </size>
+         </property>
+         <property name="iconSize">
+          <size>
+           <width>40</width>
+           <height>40</height>
           </size>
          </property>
          <property name="checkable">
@@ -1713,6 +1875,12 @@
          <property name="text">
           <string/>
          </property>
+         <property name="iconSize">
+          <size>
+           <width>40</width>
+           <height>40</height>
+          </size>
+         </property>
          <property name="checkable">
           <bool>false</bool>
          </property>
@@ -1733,6 +1901,12 @@
           <size>
            <width>48</width>
            <height>48</height>
+          </size>
+         </property>
+         <property name="iconSize">
+          <size>
+           <width>40</width>
+           <height>40</height>
           </size>
          </property>
          <property name="checkable">
@@ -1879,6 +2053,12 @@
           <size>
            <width>48</width>
            <height>48</height>
+          </size>
+         </property>
+         <property name="iconSize">
+          <size>
+           <width>40</width>
+           <height>40</height>
           </size>
          </property>
         </widget>
@@ -2034,6 +2214,12 @@
            <height>48</height>
           </size>
          </property>
+         <property name="iconSize">
+          <size>
+           <width>40</width>
+           <height>40</height>
+          </size>
+         </property>
         </widget>
        </item>
        <item>
@@ -2053,6 +2239,12 @@
            <height>48</height>
           </size>
          </property>
+         <property name="iconSize">
+          <size>
+           <width>40</width>
+           <height>40</height>
+          </size>
+         </property>
         </widget>
        </item>
        <item>
@@ -2070,6 +2262,12 @@
           <size>
            <width>48</width>
            <height>48</height>
+          </size>
+         </property>
+         <property name="iconSize">
+          <size>
+           <width>40</width>
+           <height>40</height>
           </size>
          </property>
          <property name="checkable">
@@ -2103,6 +2301,12 @@
          <property name="text">
           <string/>
          </property>
+         <property name="iconSize">
+          <size>
+           <width>40</width>
+           <height>40</height>
+          </size>
+         </property>
          <property name="checkable">
           <bool>false</bool>
          </property>
@@ -2126,6 +2330,12 @@
           <size>
            <width>48</width>
            <height>48</height>
+          </size>
+         </property>
+         <property name="iconSize">
+          <size>
+           <width>40</width>
+           <height>40</height>
           </size>
          </property>
          <property name="checkable">
@@ -2281,6 +2491,12 @@
           <size>
            <width>48</width>
            <height>48</height>
+          </size>
+         </property>
+         <property name="iconSize">
+          <size>
+           <width>40</width>
+           <height>40</height>
           </size>
          </property>
         </widget>
