@@ -1854,17 +1854,24 @@ void MainWindow::on_actionSaveSession_triggered()
 
 void MainWindow::on_actionBootExe_triggered()
 {
-    QString dir = aspeqtSettings->lastExeDir();
-    g_exefileName = QFileDialog::getOpenFileName(this, tr("Open executable"),
-                                 dir,
-                                 tr(
-                                         "Atari executables (*.xex *.com *.exe);;"
-                                         "All files (*)"));
-    if (g_exefileName.isEmpty()) {
+    QAndroidJniObject::callStaticMethod<void>("net/greblus/MyActivity", "runFileChooser", "()V");
+
+    QString fileName = NULL;
+    do
+      {
+        QAndroidJniObject jFileName = QAndroidJniObject::getStaticObjectField<jstring>("net/greblus/MyActivity", "m_chosen");
+        fileName = jFileName.toString();
+
+        if (fileName == "Cancelled") {fileName.clear(); break;}
+        if (fileName == "None") QThread::yieldCurrentThread();
+      }
+    while (fileName == "None");
+
+    if (fileName.isEmpty()) {
         return;
     }
-        aspeqtSettings->setLastExeDir(QFileInfo(g_exefileName).absolutePath());
-    bootExe(g_exefileName);
+        aspeqtSettings->setLastExeDir(QFileInfo(fileName).absolutePath());
+    bootExe(fileName);
 }
 
 void MainWindow::on_actionShowPrinterTextOutput_triggered()
@@ -1884,12 +1891,18 @@ void MainWindow::textPrinterWindowClosed()
 
 void MainWindow::on_actionPlaybackCassette_triggered()
 {
-    QString fileName = QFileDialog::getOpenFileName(this,
-                                                    tr("Open a cassette image"),
-                                                    aspeqtSettings->lastCasDir(),
-                                                    tr(
-                                                    "CAS images (*.cas);;"
-                                                    "All files (*)"));
+    QAndroidJniObject::callStaticMethod<void>("net/greblus/MyActivity", "runFileChooser", "()V");
+
+    QString fileName = NULL;
+    do
+      {
+        QAndroidJniObject jFileName = QAndroidJniObject::getStaticObjectField<jstring>("net/greblus/MyActivity", "m_chosen");
+        fileName = jFileName.toString();
+
+        if (fileName == "Cancelled") {fileName.clear(); break;}
+        if (fileName == "None") QThread::yieldCurrentThread();
+      }
+    while (fileName == "None");
 
     if (fileName.isEmpty()) {
         return;
