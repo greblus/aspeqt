@@ -9,8 +9,8 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>1024</width>
-    <height>800</height>
+    <width>684</width>
+    <height>425</height>
    </rect>
   </property>
   <property name="sizePolicy">
@@ -40,58 +40,13 @@
     <bool>true</bool>
    </property>
    <layout class="QGridLayout" name="gridLayout">
-    <item row="6" column="0" colspan="2">
-     <widget class="QTextEdit" name="textEdit">
-      <property name="sizePolicy">
-       <sizepolicy hsizetype="Expanding" vsizetype="Fixed">
-        <horstretch>0</horstretch>
-        <verstretch>0</verstretch>
-       </sizepolicy>
-      </property>
-      <property name="minimumSize">
-       <size>
-        <width>0</width>
-        <height>20</height>
-       </size>
-      </property>
-      <property name="baseSize">
-       <size>
-        <width>0</width>
-        <height>20</height>
-       </size>
-      </property>
-      <property name="font">
-       <font>
-        <pointsize>12</pointsize>
-       </font>
-      </property>
-      <property name="contextMenuPolicy">
-       <enum>Qt::DefaultContextMenu</enum>
-      </property>
-      <property name="frameShape">
-       <enum>QFrame::StyledPanel</enum>
-      </property>
-      <property name="frameShadow">
-       <enum>QFrame::Plain</enum>
-      </property>
-      <property name="verticalScrollBarPolicy">
-       <enum>Qt::ScrollBarAlwaysOff</enum>
-      </property>
-      <property name="horizontalScrollBarPolicy">
-       <enum>Qt::ScrollBarAlwaysOff</enum>
-      </property>
-      <property name="textInteractionFlags">
-       <set>Qt::NoTextInteraction</set>
-      </property>
-     </widget>
-    </item>
-    <item row="3" column="0">
-     <widget class="QFrame" name="horizontalFrame_4">
+    <item row="4" column="0">
+     <widget class="QFrame" name="horizontalFrame_5">
       <property name="enabled">
        <bool>true</bool>
       </property>
       <property name="sizePolicy">
-       <sizepolicy hsizetype="Expanding" vsizetype="Expanding">
+       <sizepolicy hsizetype="Expanding" vsizetype="Fixed">
         <horstretch>0</horstretch>
         <verstretch>0</verstretch>
        </sizepolicy>
@@ -109,29 +64,29 @@
        <bool>false</bool>
       </property>
       <property name="frameShape">
-       <enum>QFrame::Box</enum>
+       <enum>QFrame::Panel</enum>
       </property>
       <property name="frameShadow">
        <enum>QFrame::Raised</enum>
       </property>
-      <layout class="QHBoxLayout" name="horizontalLayout_4">
+      <layout class="QHBoxLayout" name="horizontalLayout_5">
        <property name="spacing">
-        <number>1</number>
+        <number>3</number>
        </property>
        <property name="leftMargin">
-        <number>1</number>
+        <number>3</number>
        </property>
        <property name="topMargin">
-        <number>1</number>
+        <number>3</number>
        </property>
        <property name="rightMargin">
-        <number>1</number>
+        <number>3</number>
        </property>
        <property name="bottomMargin">
-        <number>1</number>
+        <number>3</number>
        </property>
        <item>
-        <widget class="QLabel" name="label_10">
+        <widget class="QLabel" name="label_13">
          <property name="enabled">
           <bool>true</bool>
          </property>
@@ -185,7 +140,7 @@
           </font>
          </property>
          <property name="text">
-          <string>4:</string>
+          <string>5:</string>
          </property>
          <property name="margin">
           <number>5</number>
@@ -193,7 +148,7 @@
         </widget>
        </item>
        <item>
-        <widget class="QToolButton" name="buttonMountDisk_4">
+        <widget class="QToolButton" name="buttonMountDisk_5">
          <property name="enabled">
           <bool>true</bool>
          </property>
@@ -204,12 +159,6 @@
           </size>
          </property>
          <property name="maximumSize">
-          <size>
-           <width>48</width>
-           <height>48</height>
-          </size>
-         </property>
-         <property name="iconSize">
           <size>
            <width>48</width>
            <height>48</height>
@@ -218,7 +167,7 @@
         </widget>
        </item>
        <item>
-        <widget class="QToolButton" name="buttonMountFolder_4">
+        <widget class="QToolButton" name="buttonMountFolder_5">
          <property name="enabled">
           <bool>true</bool>
          </property>
@@ -229,12 +178,6 @@
           </size>
          </property>
          <property name="maximumSize">
-          <size>
-           <width>48</width>
-           <height>48</height>
-          </size>
-         </property>
-         <property name="iconSize">
           <size>
            <width>48</width>
            <height>48</height>
@@ -243,7 +186,7 @@
         </widget>
        </item>
        <item>
-        <widget class="QToolButton" name="buttonSave_4">
+        <widget class="QToolButton" name="buttonSave_5">
          <property name="enabled">
           <bool>true</bool>
          </property>
@@ -254,12 +197,6 @@
           </size>
          </property>
          <property name="maximumSize">
-          <size>
-           <width>48</width>
-           <height>48</height>
-          </size>
-         </property>
-         <property name="iconSize">
           <size>
            <width>48</width>
            <height>48</height>
@@ -271,7 +208,7 @@
         </widget>
        </item>
        <item>
-        <widget class="QToolButton" name="autoSave_4">
+        <widget class="QToolButton" name="autoSave_5">
          <property name="enabled">
           <bool>true</bool>
          </property>
@@ -290,19 +227,13 @@
          <property name="text">
           <string/>
          </property>
-         <property name="iconSize">
-          <size>
-           <width>48</width>
-           <height>48</height>
-          </size>
-         </property>
          <property name="checkable">
           <bool>false</bool>
          </property>
         </widget>
        </item>
        <item>
-        <widget class="QToolButton" name="buttonEditDisk_4">
+        <widget class="QToolButton" name="buttonEditDisk_5">
          <property name="enabled">
           <bool>true</bool>
          </property>
@@ -318,19 +249,13 @@
            <height>48</height>
           </size>
          </property>
-         <property name="iconSize">
-          <size>
-           <width>48</width>
-           <height>48</height>
-          </size>
-         </property>
          <property name="checkable">
           <bool>false</bool>
          </property>
         </widget>
        </item>
        <item>
-        <layout class="QVBoxLayout" name="verticalLayout_4">
+        <layout class="QVBoxLayout" name="verticalLayout_5">
          <property name="spacing">
           <number>0</number>
          </property>
@@ -341,7 +266,7 @@
           <number>5</number>
          </property>
          <item>
-          <widget class="QLabel" name="labelFileName_4">
+          <widget class="QLabel" name="labelFileName_5">
            <property name="enabled">
             <bool>true</bool>
            </property>
@@ -350,11 +275,6 @@
              <horstretch>0</horstretch>
              <verstretch>0</verstretch>
             </sizepolicy>
-           </property>
-           <property name="font">
-            <font>
-             <pointsize>12</pointsize>
-            </font>
            </property>
            <property name="autoFillBackground">
             <bool>false</bool>
@@ -371,7 +291,7 @@
           </widget>
          </item>
          <item>
-          <widget class="QLabel" name="labelImageProperties_4">
+          <widget class="QLabel" name="labelImageProperties_5">
            <property name="enabled">
             <bool>true</bool>
            </property>
@@ -445,11 +365,6 @@
              </disabled>
             </palette>
            </property>
-           <property name="font">
-            <font>
-             <pointsize>12</pointsize>
-            </font>
-           </property>
            <property name="textFormat">
             <enum>Qt::PlainText</enum>
            </property>
@@ -464,7 +379,7 @@
         </layout>
        </item>
        <item>
-        <widget class="QToolButton" name="buttonEject_4">
+        <widget class="QToolButton" name="buttonEject_5">
          <property name="enabled">
           <bool>true</bool>
          </property>
@@ -480,24 +395,18 @@
            <height>48</height>
           </size>
          </property>
-         <property name="iconSize">
-          <size>
-           <width>64</width>
-           <height>64</height>
-          </size>
-         </property>
         </widget>
        </item>
       </layout>
      </widget>
     </item>
-    <item row="1" column="0">
-     <widget class="QFrame" name="horizontalFrame_2">
+    <item row="5" column="0">
+     <widget class="QFrame" name="horizontalFrame_6">
       <property name="enabled">
        <bool>true</bool>
       </property>
       <property name="sizePolicy">
-       <sizepolicy hsizetype="Expanding" vsizetype="Expanding">
+       <sizepolicy hsizetype="Expanding" vsizetype="Fixed">
         <horstretch>0</horstretch>
         <verstretch>0</verstretch>
        </sizepolicy>
@@ -515,26 +424,414 @@
        <bool>false</bool>
       </property>
       <property name="frameShape">
-       <enum>QFrame::Box</enum>
+       <enum>QFrame::Panel</enum>
+      </property>
+      <property name="frameShadow">
+       <enum>QFrame::Raised</enum>
+      </property>
+      <layout class="QHBoxLayout" name="horizontalLayout_6">
+       <property name="spacing">
+        <number>3</number>
+       </property>
+       <property name="leftMargin">
+        <number>3</number>
+       </property>
+       <property name="topMargin">
+        <number>3</number>
+       </property>
+       <property name="rightMargin">
+        <number>3</number>
+       </property>
+       <property name="bottomMargin">
+        <number>3</number>
+       </property>
+       <item>
+        <widget class="QLabel" name="label_16">
+         <property name="enabled">
+          <bool>true</bool>
+         </property>
+         <property name="sizePolicy">
+          <sizepolicy hsizetype="Fixed" vsizetype="Fixed">
+           <horstretch>0</horstretch>
+           <verstretch>0</verstretch>
+          </sizepolicy>
+         </property>
+         <property name="palette">
+          <palette>
+           <active>
+            <colorrole role="WindowText">
+             <brush brushstyle="SolidPattern">
+              <color alpha="255">
+               <red>104</red>
+               <green>104</green>
+               <blue>104</blue>
+              </color>
+             </brush>
+            </colorrole>
+           </active>
+           <inactive>
+            <colorrole role="WindowText">
+             <brush brushstyle="SolidPattern">
+              <color alpha="255">
+               <red>104</red>
+               <green>104</green>
+               <blue>104</blue>
+              </color>
+             </brush>
+            </colorrole>
+           </inactive>
+           <disabled>
+            <colorrole role="WindowText">
+             <brush brushstyle="SolidPattern">
+              <color alpha="255">
+               <red>120</red>
+               <green>120</green>
+               <blue>120</blue>
+              </color>
+             </brush>
+            </colorrole>
+           </disabled>
+          </palette>
+         </property>
+         <property name="font">
+          <font>
+           <weight>75</weight>
+           <bold>true</bold>
+          </font>
+         </property>
+         <property name="text">
+          <string>6:</string>
+         </property>
+         <property name="margin">
+          <number>5</number>
+         </property>
+        </widget>
+       </item>
+       <item>
+        <widget class="QToolButton" name="buttonMountDisk_6">
+         <property name="enabled">
+          <bool>true</bool>
+         </property>
+         <property name="minimumSize">
+          <size>
+           <width>48</width>
+           <height>48</height>
+          </size>
+         </property>
+         <property name="maximumSize">
+          <size>
+           <width>48</width>
+           <height>48</height>
+          </size>
+         </property>
+        </widget>
+       </item>
+       <item>
+        <widget class="QToolButton" name="buttonMountFolder_6">
+         <property name="enabled">
+          <bool>true</bool>
+         </property>
+         <property name="minimumSize">
+          <size>
+           <width>48</width>
+           <height>48</height>
+          </size>
+         </property>
+         <property name="maximumSize">
+          <size>
+           <width>48</width>
+           <height>48</height>
+          </size>
+         </property>
+        </widget>
+       </item>
+       <item>
+        <widget class="QToolButton" name="buttonSave_6">
+         <property name="enabled">
+          <bool>true</bool>
+         </property>
+         <property name="minimumSize">
+          <size>
+           <width>48</width>
+           <height>48</height>
+          </size>
+         </property>
+         <property name="maximumSize">
+          <size>
+           <width>48</width>
+           <height>48</height>
+          </size>
+         </property>
+         <property name="checkable">
+          <bool>true</bool>
+         </property>
+        </widget>
+       </item>
+       <item>
+        <widget class="QToolButton" name="autoSave_6">
+         <property name="enabled">
+          <bool>true</bool>
+         </property>
+         <property name="minimumSize">
+          <size>
+           <width>48</width>
+           <height>48</height>
+          </size>
+         </property>
+         <property name="maximumSize">
+          <size>
+           <width>48</width>
+           <height>48</height>
+          </size>
+         </property>
+         <property name="text">
+          <string/>
+         </property>
+         <property name="checkable">
+          <bool>false</bool>
+         </property>
+        </widget>
+       </item>
+       <item>
+        <widget class="QToolButton" name="buttonEditDisk_6">
+         <property name="enabled">
+          <bool>true</bool>
+         </property>
+         <property name="minimumSize">
+          <size>
+           <width>48</width>
+           <height>48</height>
+          </size>
+         </property>
+         <property name="maximumSize">
+          <size>
+           <width>48</width>
+           <height>48</height>
+          </size>
+         </property>
+         <property name="checkable">
+          <bool>false</bool>
+         </property>
+        </widget>
+       </item>
+       <item>
+        <layout class="QVBoxLayout" name="verticalLayout_6">
+         <property name="spacing">
+          <number>0</number>
+         </property>
+         <property name="leftMargin">
+          <number>5</number>
+         </property>
+         <property name="rightMargin">
+          <number>5</number>
+         </property>
+         <item>
+          <widget class="QLabel" name="labelFileName_6">
+           <property name="enabled">
+            <bool>true</bool>
+           </property>
+           <property name="sizePolicy">
+            <sizepolicy hsizetype="Ignored" vsizetype="Fixed">
+             <horstretch>0</horstretch>
+             <verstretch>0</verstretch>
+            </sizepolicy>
+           </property>
+           <property name="autoFillBackground">
+            <bool>false</bool>
+           </property>
+           <property name="text">
+            <string/>
+           </property>
+           <property name="textFormat">
+            <enum>Qt::PlainText</enum>
+           </property>
+           <property name="wordWrap">
+            <bool>false</bool>
+           </property>
+          </widget>
+         </item>
+         <item>
+          <widget class="QLabel" name="labelImageProperties_6">
+           <property name="enabled">
+            <bool>true</bool>
+           </property>
+           <property name="sizePolicy">
+            <sizepolicy hsizetype="Preferred" vsizetype="Fixed">
+             <horstretch>0</horstretch>
+             <verstretch>0</verstretch>
+            </sizepolicy>
+           </property>
+           <property name="palette">
+            <palette>
+             <active>
+              <colorrole role="WindowText">
+               <brush brushstyle="SolidPattern">
+                <color alpha="255">
+                 <red>128</red>
+                 <green>128</green>
+                 <blue>128</blue>
+                </color>
+               </brush>
+              </colorrole>
+              <colorrole role="Mid">
+               <brush brushstyle="SolidPattern">
+                <color alpha="255">
+                 <red>157</red>
+                 <green>155</green>
+                 <blue>144</blue>
+                </color>
+               </brush>
+              </colorrole>
+             </active>
+             <inactive>
+              <colorrole role="WindowText">
+               <brush brushstyle="SolidPattern">
+                <color alpha="255">
+                 <red>128</red>
+                 <green>128</green>
+                 <blue>128</blue>
+                </color>
+               </brush>
+              </colorrole>
+              <colorrole role="Mid">
+               <brush brushstyle="SolidPattern">
+                <color alpha="255">
+                 <red>157</red>
+                 <green>155</green>
+                 <blue>144</blue>
+                </color>
+               </brush>
+              </colorrole>
+             </inactive>
+             <disabled>
+              <colorrole role="WindowText">
+               <brush brushstyle="SolidPattern">
+                <color alpha="255">
+                 <red>118</red>
+                 <green>116</green>
+                 <blue>108</blue>
+                </color>
+               </brush>
+              </colorrole>
+              <colorrole role="Mid">
+               <brush brushstyle="SolidPattern">
+                <color alpha="255">
+                 <red>157</red>
+                 <green>155</green>
+                 <blue>144</blue>
+                </color>
+               </brush>
+              </colorrole>
+             </disabled>
+            </palette>
+           </property>
+           <property name="textFormat">
+            <enum>Qt::PlainText</enum>
+           </property>
+           <property name="alignment">
+            <set>Qt::AlignLeading|Qt::AlignLeft|Qt::AlignVCenter</set>
+           </property>
+           <property name="wordWrap">
+            <bool>false</bool>
+           </property>
+          </widget>
+         </item>
+        </layout>
+       </item>
+       <item>
+        <widget class="QToolButton" name="buttonEject_6">
+         <property name="enabled">
+          <bool>true</bool>
+         </property>
+         <property name="minimumSize">
+          <size>
+           <width>48</width>
+           <height>48</height>
+          </size>
+         </property>
+         <property name="maximumSize">
+          <size>
+           <width>48</width>
+           <height>48</height>
+          </size>
+         </property>
+        </widget>
+       </item>
+      </layout>
+     </widget>
+    </item>
+    <item row="6" column="0" colspan="2">
+     <widget class="QTextEdit" name="textEdit">
+      <property name="sizePolicy">
+       <sizepolicy hsizetype="Ignored" vsizetype="Ignored">
+        <horstretch>0</horstretch>
+        <verstretch>0</verstretch>
+       </sizepolicy>
+      </property>
+      <property name="minimumSize">
+       <size>
+        <width>0</width>
+        <height>16</height>
+       </size>
+      </property>
+      <property name="contextMenuPolicy">
+       <enum>Qt::DefaultContextMenu</enum>
+      </property>
+      <property name="verticalScrollBarPolicy">
+       <enum>Qt::ScrollBarAlwaysOff</enum>
+      </property>
+      <property name="horizontalScrollBarPolicy">
+       <enum>Qt::ScrollBarAlwaysOff</enum>
+      </property>
+      <property name="textInteractionFlags">
+       <set>Qt::NoTextInteraction</set>
+      </property>
+     </widget>
+    </item>
+    <item row="1" column="0">
+     <widget class="QFrame" name="horizontalFrame_2">
+      <property name="enabled">
+       <bool>true</bool>
+      </property>
+      <property name="sizePolicy">
+       <sizepolicy hsizetype="Expanding" vsizetype="Fixed">
+        <horstretch>0</horstretch>
+        <verstretch>0</verstretch>
+       </sizepolicy>
+      </property>
+      <property name="minimumSize">
+       <size>
+        <width>330</width>
+        <height>0</height>
+       </size>
+      </property>
+      <property name="contextMenuPolicy">
+       <enum>Qt::ActionsContextMenu</enum>
+      </property>
+      <property name="autoFillBackground">
+       <bool>false</bool>
+      </property>
+      <property name="frameShape">
+       <enum>QFrame::Panel</enum>
       </property>
       <property name="frameShadow">
        <enum>QFrame::Raised</enum>
       </property>
       <layout class="QHBoxLayout" name="horizontalLayout_2">
        <property name="spacing">
-        <number>1</number>
+        <number>3</number>
        </property>
        <property name="leftMargin">
-        <number>1</number>
+        <number>3</number>
        </property>
        <property name="topMargin">
-        <number>1</number>
+        <number>3</number>
        </property>
        <property name="rightMargin">
-        <number>1</number>
+        <number>3</number>
        </property>
        <property name="bottomMargin">
-        <number>1</number>
+        <number>3</number>
        </property>
        <item>
         <widget class="QLabel" name="label_4">
@@ -615,12 +912,6 @@
            <height>48</height>
           </size>
          </property>
-         <property name="iconSize">
-          <size>
-           <width>48</width>
-           <height>48</height>
-          </size>
-         </property>
         </widget>
        </item>
        <item>
@@ -640,12 +931,6 @@
            <height>48</height>
           </size>
          </property>
-         <property name="iconSize">
-          <size>
-           <width>48</width>
-           <height>48</height>
-          </size>
-         </property>
         </widget>
        </item>
        <item>
@@ -660,12 +945,6 @@
           </size>
          </property>
          <property name="maximumSize">
-          <size>
-           <width>48</width>
-           <height>48</height>
-          </size>
-         </property>
-         <property name="iconSize">
           <size>
            <width>48</width>
            <height>48</height>
@@ -696,12 +975,6 @@
          <property name="text">
           <string/>
          </property>
-         <property name="iconSize">
-          <size>
-           <width>48</width>
-           <height>48</height>
-          </size>
-         </property>
          <property name="checkable">
           <bool>false</bool>
          </property>
@@ -719,12 +992,6 @@
           </size>
          </property>
          <property name="maximumSize">
-          <size>
-           <width>48</width>
-           <height>48</height>
-          </size>
-         </property>
-         <property name="iconSize">
           <size>
            <width>48</width>
            <height>48</height>
@@ -760,7 +1027,7 @@
            <property name="font">
             <font>
              <family>MS Shell Dlg 2</family>
-             <pointsize>12</pointsize>
+             <pointsize>8</pointsize>
              <weight>50</weight>
              <italic>false</italic>
              <bold>false</bold>
@@ -855,11 +1122,6 @@
              </disabled>
             </palette>
            </property>
-           <property name="font">
-            <font>
-             <pointsize>12</pointsize>
-            </font>
-           </property>
            <property name="textFormat">
             <enum>Qt::PlainText</enum>
            </property>
@@ -890,418 +1152,6 @@
            <height>48</height>
           </size>
          </property>
-         <property name="iconSize">
-          <size>
-           <width>64</width>
-           <height>64</height>
-          </size>
-         </property>
-        </widget>
-       </item>
-      </layout>
-     </widget>
-    </item>
-    <item row="5" column="0">
-     <widget class="QFrame" name="horizontalFrame_6">
-      <property name="enabled">
-       <bool>true</bool>
-      </property>
-      <property name="sizePolicy">
-       <sizepolicy hsizetype="Expanding" vsizetype="Expanding">
-        <horstretch>0</horstretch>
-        <verstretch>0</verstretch>
-       </sizepolicy>
-      </property>
-      <property name="minimumSize">
-       <size>
-        <width>330</width>
-        <height>0</height>
-       </size>
-      </property>
-      <property name="contextMenuPolicy">
-       <enum>Qt::ActionsContextMenu</enum>
-      </property>
-      <property name="autoFillBackground">
-       <bool>false</bool>
-      </property>
-      <property name="frameShape">
-       <enum>QFrame::Box</enum>
-      </property>
-      <property name="frameShadow">
-       <enum>QFrame::Raised</enum>
-      </property>
-      <layout class="QHBoxLayout" name="horizontalLayout_6">
-       <property name="spacing">
-        <number>1</number>
-       </property>
-       <property name="leftMargin">
-        <number>1</number>
-       </property>
-       <property name="topMargin">
-        <number>1</number>
-       </property>
-       <property name="rightMargin">
-        <number>1</number>
-       </property>
-       <property name="bottomMargin">
-        <number>1</number>
-       </property>
-       <item>
-        <widget class="QLabel" name="label_16">
-         <property name="enabled">
-          <bool>true</bool>
-         </property>
-         <property name="sizePolicy">
-          <sizepolicy hsizetype="Fixed" vsizetype="Fixed">
-           <horstretch>0</horstretch>
-           <verstretch>0</verstretch>
-          </sizepolicy>
-         </property>
-         <property name="palette">
-          <palette>
-           <active>
-            <colorrole role="WindowText">
-             <brush brushstyle="SolidPattern">
-              <color alpha="255">
-               <red>104</red>
-               <green>104</green>
-               <blue>104</blue>
-              </color>
-             </brush>
-            </colorrole>
-           </active>
-           <inactive>
-            <colorrole role="WindowText">
-             <brush brushstyle="SolidPattern">
-              <color alpha="255">
-               <red>104</red>
-               <green>104</green>
-               <blue>104</blue>
-              </color>
-             </brush>
-            </colorrole>
-           </inactive>
-           <disabled>
-            <colorrole role="WindowText">
-             <brush brushstyle="SolidPattern">
-              <color alpha="255">
-               <red>120</red>
-               <green>120</green>
-               <blue>120</blue>
-              </color>
-             </brush>
-            </colorrole>
-           </disabled>
-          </palette>
-         </property>
-         <property name="font">
-          <font>
-           <weight>75</weight>
-           <bold>true</bold>
-          </font>
-         </property>
-         <property name="text">
-          <string>6:</string>
-         </property>
-         <property name="margin">
-          <number>5</number>
-         </property>
-        </widget>
-       </item>
-       <item>
-        <widget class="QToolButton" name="buttonMountDisk_6">
-         <property name="enabled">
-          <bool>true</bool>
-         </property>
-         <property name="minimumSize">
-          <size>
-           <width>48</width>
-           <height>48</height>
-          </size>
-         </property>
-         <property name="maximumSize">
-          <size>
-           <width>48</width>
-           <height>48</height>
-          </size>
-         </property>
-         <property name="iconSize">
-          <size>
-           <width>48</width>
-           <height>48</height>
-          </size>
-         </property>
-        </widget>
-       </item>
-       <item>
-        <widget class="QToolButton" name="buttonMountFolder_6">
-         <property name="enabled">
-          <bool>true</bool>
-         </property>
-         <property name="minimumSize">
-          <size>
-           <width>48</width>
-           <height>48</height>
-          </size>
-         </property>
-         <property name="maximumSize">
-          <size>
-           <width>48</width>
-           <height>48</height>
-          </size>
-         </property>
-         <property name="iconSize">
-          <size>
-           <width>48</width>
-           <height>48</height>
-          </size>
-         </property>
-        </widget>
-       </item>
-       <item>
-        <widget class="QToolButton" name="buttonSave_6">
-         <property name="enabled">
-          <bool>true</bool>
-         </property>
-         <property name="minimumSize">
-          <size>
-           <width>48</width>
-           <height>48</height>
-          </size>
-         </property>
-         <property name="maximumSize">
-          <size>
-           <width>48</width>
-           <height>48</height>
-          </size>
-         </property>
-         <property name="iconSize">
-          <size>
-           <width>48</width>
-           <height>48</height>
-          </size>
-         </property>
-         <property name="checkable">
-          <bool>true</bool>
-         </property>
-        </widget>
-       </item>
-       <item>
-        <widget class="QToolButton" name="autoSave_6">
-         <property name="enabled">
-          <bool>true</bool>
-         </property>
-         <property name="minimumSize">
-          <size>
-           <width>48</width>
-           <height>48</height>
-          </size>
-         </property>
-         <property name="maximumSize">
-          <size>
-           <width>48</width>
-           <height>48</height>
-          </size>
-         </property>
-         <property name="text">
-          <string/>
-         </property>
-         <property name="iconSize">
-          <size>
-           <width>48</width>
-           <height>48</height>
-          </size>
-         </property>
-         <property name="checkable">
-          <bool>false</bool>
-         </property>
-        </widget>
-       </item>
-       <item>
-        <widget class="QToolButton" name="buttonEditDisk_6">
-         <property name="enabled">
-          <bool>true</bool>
-         </property>
-         <property name="minimumSize">
-          <size>
-           <width>48</width>
-           <height>48</height>
-          </size>
-         </property>
-         <property name="maximumSize">
-          <size>
-           <width>48</width>
-           <height>48</height>
-          </size>
-         </property>
-         <property name="iconSize">
-          <size>
-           <width>48</width>
-           <height>48</height>
-          </size>
-         </property>
-         <property name="checkable">
-          <bool>false</bool>
-         </property>
-        </widget>
-       </item>
-       <item>
-        <layout class="QVBoxLayout" name="verticalLayout_6">
-         <property name="spacing">
-          <number>0</number>
-         </property>
-         <property name="leftMargin">
-          <number>5</number>
-         </property>
-         <property name="rightMargin">
-          <number>5</number>
-         </property>
-         <item>
-          <widget class="QLabel" name="labelFileName_6">
-           <property name="enabled">
-            <bool>true</bool>
-           </property>
-           <property name="sizePolicy">
-            <sizepolicy hsizetype="Ignored" vsizetype="Fixed">
-             <horstretch>0</horstretch>
-             <verstretch>0</verstretch>
-            </sizepolicy>
-           </property>
-           <property name="font">
-            <font>
-             <pointsize>12</pointsize>
-            </font>
-           </property>
-           <property name="autoFillBackground">
-            <bool>false</bool>
-           </property>
-           <property name="text">
-            <string/>
-           </property>
-           <property name="textFormat">
-            <enum>Qt::PlainText</enum>
-           </property>
-           <property name="wordWrap">
-            <bool>false</bool>
-           </property>
-          </widget>
-         </item>
-         <item>
-          <widget class="QLabel" name="labelImageProperties_6">
-           <property name="enabled">
-            <bool>true</bool>
-           </property>
-           <property name="sizePolicy">
-            <sizepolicy hsizetype="Preferred" vsizetype="Fixed">
-             <horstretch>0</horstretch>
-             <verstretch>0</verstretch>
-            </sizepolicy>
-           </property>
-           <property name="palette">
-            <palette>
-             <active>
-              <colorrole role="WindowText">
-               <brush brushstyle="SolidPattern">
-                <color alpha="255">
-                 <red>128</red>
-                 <green>128</green>
-                 <blue>128</blue>
-                </color>
-               </brush>
-              </colorrole>
-              <colorrole role="Mid">
-               <brush brushstyle="SolidPattern">
-                <color alpha="255">
-                 <red>157</red>
-                 <green>155</green>
-                 <blue>144</blue>
-                </color>
-               </brush>
-              </colorrole>
-             </active>
-             <inactive>
-              <colorrole role="WindowText">
-               <brush brushstyle="SolidPattern">
-                <color alpha="255">
-                 <red>128</red>
-                 <green>128</green>
-                 <blue>128</blue>
-                </color>
-               </brush>
-              </colorrole>
-              <colorrole role="Mid">
-               <brush brushstyle="SolidPattern">
-                <color alpha="255">
-                 <red>157</red>
-                 <green>155</green>
-                 <blue>144</blue>
-                </color>
-               </brush>
-              </colorrole>
-             </inactive>
-             <disabled>
-              <colorrole role="WindowText">
-               <brush brushstyle="SolidPattern">
-                <color alpha="255">
-                 <red>118</red>
-                 <green>116</green>
-                 <blue>108</blue>
-                </color>
-               </brush>
-              </colorrole>
-              <colorrole role="Mid">
-               <brush brushstyle="SolidPattern">
-                <color alpha="255">
-                 <red>157</red>
-                 <green>155</green>
-                 <blue>144</blue>
-                </color>
-               </brush>
-              </colorrole>
-             </disabled>
-            </palette>
-           </property>
-           <property name="font">
-            <font>
-             <pointsize>12</pointsize>
-            </font>
-           </property>
-           <property name="textFormat">
-            <enum>Qt::PlainText</enum>
-           </property>
-           <property name="alignment">
-            <set>Qt::AlignLeading|Qt::AlignLeft|Qt::AlignVCenter</set>
-           </property>
-           <property name="wordWrap">
-            <bool>false</bool>
-           </property>
-          </widget>
-         </item>
-        </layout>
-       </item>
-       <item>
-        <widget class="QToolButton" name="buttonEject_6">
-         <property name="enabled">
-          <bool>true</bool>
-         </property>
-         <property name="minimumSize">
-          <size>
-           <width>48</width>
-           <height>48</height>
-          </size>
-         </property>
-         <property name="maximumSize">
-          <size>
-           <width>48</width>
-           <height>48</height>
-          </size>
-         </property>
-         <property name="iconSize">
-          <size>
-           <width>64</width>
-           <height>64</height>
-          </size>
-         </property>
         </widget>
        </item>
       </layout>
@@ -1313,7 +1163,7 @@
        <bool>true</bool>
       </property>
       <property name="sizePolicy">
-       <sizepolicy hsizetype="Expanding" vsizetype="Expanding">
+       <sizepolicy hsizetype="Expanding" vsizetype="Fixed">
         <horstretch>0</horstretch>
         <verstretch>0</verstretch>
        </sizepolicy>
@@ -1331,26 +1181,26 @@
        <bool>false</bool>
       </property>
       <property name="frameShape">
-       <enum>QFrame::Box</enum>
+       <enum>QFrame::Panel</enum>
       </property>
       <property name="frameShadow">
        <enum>QFrame::Raised</enum>
       </property>
       <layout class="QHBoxLayout" name="horizontalLayout_3">
        <property name="spacing">
-        <number>1</number>
+        <number>3</number>
        </property>
        <property name="leftMargin">
-        <number>1</number>
+        <number>3</number>
        </property>
        <property name="topMargin">
-        <number>1</number>
+        <number>3</number>
        </property>
        <property name="rightMargin">
-        <number>1</number>
+        <number>3</number>
        </property>
        <property name="bottomMargin">
-        <number>1</number>
+        <number>3</number>
        </property>
        <item>
         <widget class="QLabel" name="label_7">
@@ -1431,12 +1281,6 @@
            <height>48</height>
           </size>
          </property>
-         <property name="iconSize">
-          <size>
-           <width>48</width>
-           <height>48</height>
-          </size>
-         </property>
         </widget>
        </item>
        <item>
@@ -1456,12 +1300,6 @@
            <height>48</height>
           </size>
          </property>
-         <property name="iconSize">
-          <size>
-           <width>48</width>
-           <height>48</height>
-          </size>
-         </property>
         </widget>
        </item>
        <item>
@@ -1476,12 +1314,6 @@
           </size>
          </property>
          <property name="maximumSize">
-          <size>
-           <width>48</width>
-           <height>48</height>
-          </size>
-         </property>
-         <property name="iconSize">
           <size>
            <width>48</width>
            <height>48</height>
@@ -1512,12 +1344,6 @@
          <property name="text">
           <string/>
          </property>
-         <property name="iconSize">
-          <size>
-           <width>48</width>
-           <height>48</height>
-          </size>
-         </property>
          <property name="checkable">
           <bool>false</bool>
          </property>
@@ -1535,12 +1361,6 @@
           </size>
          </property>
          <property name="maximumSize">
-          <size>
-           <width>48</width>
-           <height>48</height>
-          </size>
-         </property>
-         <property name="iconSize">
           <size>
            <width>48</width>
            <height>48</height>
@@ -1576,7 +1396,7 @@
            <property name="font">
             <font>
              <family>MS Shell Dlg 2</family>
-             <pointsize>12</pointsize>
+             <pointsize>8</pointsize>
              <weight>50</weight>
              <italic>false</italic>
              <bold>false</bold>
@@ -1671,11 +1491,6 @@
              </disabled>
             </palette>
            </property>
-           <property name="font">
-            <font>
-             <pointsize>12</pointsize>
-            </font>
-           </property>
            <property name="textFormat">
             <enum>Qt::PlainText</enum>
            </property>
@@ -1706,24 +1521,18 @@
            <height>48</height>
           </size>
          </property>
-         <property name="iconSize">
-          <size>
-           <width>64</width>
-           <height>64</height>
-          </size>
-         </property>
         </widget>
        </item>
       </layout>
      </widget>
     </item>
-    <item row="4" column="0">
-     <widget class="QFrame" name="horizontalFrame_5">
+    <item row="3" column="0">
+     <widget class="QFrame" name="horizontalFrame_4">
       <property name="enabled">
        <bool>true</bool>
       </property>
       <property name="sizePolicy">
-       <sizepolicy hsizetype="Expanding" vsizetype="Expanding">
+       <sizepolicy hsizetype="Expanding" vsizetype="Fixed">
         <horstretch>0</horstretch>
         <verstretch>0</verstretch>
        </sizepolicy>
@@ -1741,29 +1550,29 @@
        <bool>false</bool>
       </property>
       <property name="frameShape">
-       <enum>QFrame::Box</enum>
+       <enum>QFrame::Panel</enum>
       </property>
       <property name="frameShadow">
        <enum>QFrame::Raised</enum>
       </property>
-      <layout class="QHBoxLayout" name="horizontalLayout_5">
+      <layout class="QHBoxLayout" name="horizontalLayout_4">
        <property name="spacing">
-        <number>1</number>
+        <number>3</number>
        </property>
        <property name="leftMargin">
-        <number>1</number>
+        <number>3</number>
        </property>
        <property name="topMargin">
-        <number>1</number>
+        <number>3</number>
        </property>
        <property name="rightMargin">
-        <number>1</number>
+        <number>3</number>
        </property>
        <property name="bottomMargin">
-        <number>1</number>
+        <number>3</number>
        </property>
        <item>
-        <widget class="QLabel" name="label_13">
+        <widget class="QLabel" name="label_10">
          <property name="enabled">
           <bool>true</bool>
          </property>
@@ -1817,7 +1626,7 @@
           </font>
          </property>
          <property name="text">
-          <string>5:</string>
+          <string>4:</string>
          </property>
          <property name="margin">
           <number>5</number>
@@ -1825,7 +1634,7 @@
         </widget>
        </item>
        <item>
-        <widget class="QToolButton" name="buttonMountDisk_5">
+        <widget class="QToolButton" name="buttonMountDisk_4">
          <property name="enabled">
           <bool>true</bool>
          </property>
@@ -1836,12 +1645,6 @@
           </size>
          </property>
          <property name="maximumSize">
-          <size>
-           <width>48</width>
-           <height>48</height>
-          </size>
-         </property>
-         <property name="iconSize">
           <size>
            <width>48</width>
            <height>48</height>
@@ -1850,7 +1653,7 @@
         </widget>
        </item>
        <item>
-        <widget class="QToolButton" name="buttonMountFolder_5">
+        <widget class="QToolButton" name="buttonMountFolder_4">
          <property name="enabled">
           <bool>true</bool>
          </property>
@@ -1861,12 +1664,6 @@
           </size>
          </property>
          <property name="maximumSize">
-          <size>
-           <width>48</width>
-           <height>48</height>
-          </size>
-         </property>
-         <property name="iconSize">
           <size>
            <width>48</width>
            <height>48</height>
@@ -1875,7 +1672,7 @@
         </widget>
        </item>
        <item>
-        <widget class="QToolButton" name="buttonSave_5">
+        <widget class="QToolButton" name="buttonSave_4">
          <property name="enabled">
           <bool>true</bool>
          </property>
@@ -1886,12 +1683,6 @@
           </size>
          </property>
          <property name="maximumSize">
-          <size>
-           <width>48</width>
-           <height>48</height>
-          </size>
-         </property>
-         <property name="iconSize">
           <size>
            <width>48</width>
            <height>48</height>
@@ -1903,7 +1694,7 @@
         </widget>
        </item>
        <item>
-        <widget class="QToolButton" name="autoSave_5">
+        <widget class="QToolButton" name="autoSave_4">
          <property name="enabled">
           <bool>true</bool>
          </property>
@@ -1922,19 +1713,13 @@
          <property name="text">
           <string/>
          </property>
-         <property name="iconSize">
-          <size>
-           <width>48</width>
-           <height>48</height>
-          </size>
-         </property>
          <property name="checkable">
           <bool>false</bool>
          </property>
         </widget>
        </item>
        <item>
-        <widget class="QToolButton" name="buttonEditDisk_5">
+        <widget class="QToolButton" name="buttonEditDisk_4">
          <property name="enabled">
           <bool>true</bool>
          </property>
@@ -1950,19 +1735,13 @@
            <height>48</height>
           </size>
          </property>
-         <property name="iconSize">
-          <size>
-           <width>48</width>
-           <height>48</height>
-          </size>
-         </property>
          <property name="checkable">
           <bool>false</bool>
          </property>
         </widget>
        </item>
        <item>
-        <layout class="QVBoxLayout" name="verticalLayout_5">
+        <layout class="QVBoxLayout" name="verticalLayout_4">
          <property name="spacing">
           <number>0</number>
          </property>
@@ -1973,7 +1752,7 @@
           <number>5</number>
          </property>
          <item>
-          <widget class="QLabel" name="labelFileName_5">
+          <widget class="QLabel" name="labelFileName_4">
            <property name="enabled">
             <bool>true</bool>
            </property>
@@ -1982,11 +1761,6 @@
              <horstretch>0</horstretch>
              <verstretch>0</verstretch>
             </sizepolicy>
-           </property>
-           <property name="font">
-            <font>
-             <pointsize>12</pointsize>
-            </font>
            </property>
            <property name="autoFillBackground">
             <bool>false</bool>
@@ -2003,7 +1777,7 @@
           </widget>
          </item>
          <item>
-          <widget class="QLabel" name="labelImageProperties_5">
+          <widget class="QLabel" name="labelImageProperties_4">
            <property name="enabled">
             <bool>true</bool>
            </property>
@@ -2077,11 +1851,6 @@
              </disabled>
             </palette>
            </property>
-           <property name="font">
-            <font>
-             <pointsize>12</pointsize>
-            </font>
-           </property>
            <property name="textFormat">
             <enum>Qt::PlainText</enum>
            </property>
@@ -2096,7 +1865,7 @@
         </layout>
        </item>
        <item>
-        <widget class="QToolButton" name="buttonEject_5">
+        <widget class="QToolButton" name="buttonEject_4">
          <property name="enabled">
           <bool>true</bool>
          </property>
@@ -2112,12 +1881,6 @@
            <height>48</height>
           </size>
          </property>
-         <property name="iconSize">
-          <size>
-           <width>64</width>
-           <height>64</height>
-          </size>
-         </property>
         </widget>
        </item>
       </layout>
@@ -2126,7 +1889,7 @@
     <item row="0" column="0">
      <widget class="QFrame" name="horizontalFrame_1">
       <property name="sizePolicy">
-       <sizepolicy hsizetype="Expanding" vsizetype="Expanding">
+       <sizepolicy hsizetype="Expanding" vsizetype="Fixed">
         <horstretch>0</horstretch>
         <verstretch>0</verstretch>
        </sizepolicy>
@@ -2144,26 +1907,26 @@
        <bool>false</bool>
       </property>
       <property name="frameShape">
-       <enum>QFrame::Box</enum>
+       <enum>QFrame::Panel</enum>
       </property>
       <property name="frameShadow">
        <enum>QFrame::Raised</enum>
       </property>
       <layout class="QHBoxLayout" name="horizontalLayout">
        <property name="spacing">
-        <number>1</number>
+        <number>3</number>
        </property>
        <property name="leftMargin">
-        <number>1</number>
+        <number>3</number>
        </property>
        <property name="topMargin">
-        <number>1</number>
+        <number>3</number>
        </property>
        <property name="rightMargin">
-        <number>1</number>
+        <number>3</number>
        </property>
        <property name="bottomMargin">
-        <number>1</number>
+        <number>3</number>
        </property>
        <item>
         <widget class="QLabel" name="label_3">
@@ -2271,12 +2034,6 @@
            <height>48</height>
           </size>
          </property>
-         <property name="iconSize">
-          <size>
-           <width>48</width>
-           <height>48</height>
-          </size>
-         </property>
         </widget>
        </item>
        <item>
@@ -2296,12 +2053,6 @@
            <height>48</height>
           </size>
          </property>
-         <property name="iconSize">
-          <size>
-           <width>48</width>
-           <height>48</height>
-          </size>
-         </property>
         </widget>
        </item>
        <item>
@@ -2316,12 +2067,6 @@
           </size>
          </property>
          <property name="maximumSize">
-          <size>
-           <width>48</width>
-           <height>48</height>
-          </size>
-         </property>
-         <property name="iconSize">
           <size>
            <width>48</width>
            <height>48</height>
@@ -2358,12 +2103,6 @@
          <property name="text">
           <string/>
          </property>
-         <property name="iconSize">
-          <size>
-           <width>48</width>
-           <height>48</height>
-          </size>
-         </property>
          <property name="checkable">
           <bool>false</bool>
          </property>
@@ -2384,12 +2123,6 @@
           </size>
          </property>
          <property name="maximumSize">
-          <size>
-           <width>48</width>
-           <height>48</height>
-          </size>
-         </property>
-         <property name="iconSize">
           <size>
            <width>48</width>
            <height>48</height>
@@ -2425,7 +2158,7 @@
            <property name="font">
             <font>
              <family>MS Shell Dlg 2</family>
-             <pointsize>12</pointsize>
+             <pointsize>8</pointsize>
              <weight>50</weight>
              <italic>false</italic>
              <bold>false</bold>
@@ -2520,11 +2253,6 @@
              </disabled>
             </palette>
            </property>
-           <property name="font">
-            <font>
-             <pointsize>12</pointsize>
-            </font>
-           </property>
            <property name="textFormat">
             <enum>Qt::PlainText</enum>
            </property>
@@ -2555,12 +2283,6 @@
            <height>48</height>
           </size>
          </property>
-         <property name="iconSize">
-          <size>
-           <width>64</width>
-           <height>64</height>
-          </size>
-         </property>
         </widget>
        </item>
       </layout>
@@ -2573,12 +2295,9 @@
     <rect>
      <x>0</x>
      <y>0</y>
-     <width>1024</width>
+     <width>684</width>
      <height>21</height>
     </rect>
-   </property>
-   <property name="nativeMenuBar">
-    <bool>true</bool>
    </property>
    <widget class="QMenu" name="menu_Disk">
     <property name="title">
@@ -2780,6 +2499,168 @@
     <string>Alt+6</string>
    </property>
   </action>
+  <action name="actionMountDisk_7">
+   <property name="icon">
+    <iconset resource="icons.qrc">
+     <normaloff>:/icons/silk-icons/icons/disk.png</normaloff>:/icons/silk-icons/icons/disk.png</iconset>
+   </property>
+   <property name="text">
+    <string>Mount disk image...</string>
+   </property>
+   <property name="toolTip">
+    <string>Mount a disk image to D7</string>
+   </property>
+   <property name="statusTip">
+    <string>Mount a disk image to D7</string>
+   </property>
+   <property name="shortcut">
+    <string>Alt+7</string>
+   </property>
+  </action>
+  <action name="actionMountDisk_8">
+   <property name="icon">
+    <iconset resource="icons.qrc">
+     <normaloff>:/icons/silk-icons/icons/disk.png</normaloff>:/icons/silk-icons/icons/disk.png</iconset>
+   </property>
+   <property name="text">
+    <string>Mount disk image...</string>
+   </property>
+   <property name="toolTip">
+    <string>Mount a disk image to D8</string>
+   </property>
+   <property name="statusTip">
+    <string>Mount a disk image to D8</string>
+   </property>
+   <property name="shortcut">
+    <string>Alt+8</string>
+   </property>
+  </action>
+  <action name="actionMountDisk_9">
+   <property name="icon">
+    <iconset resource="icons.qrc">
+     <normaloff>:/icons/silk-icons/icons/disk.png</normaloff>:/icons/silk-icons/icons/disk.png</iconset>
+   </property>
+   <property name="text">
+    <string>Mount disk image...</string>
+   </property>
+   <property name="toolTip">
+    <string>Mount a disk image to D9</string>
+   </property>
+   <property name="statusTip">
+    <string>Mount a disk image to D9</string>
+   </property>
+   <property name="shortcut">
+    <string>Alt+9</string>
+   </property>
+  </action>
+  <action name="actionMountDisk_10">
+   <property name="icon">
+    <iconset resource="icons.qrc">
+     <normaloff>:/icons/silk-icons/icons/disk.png</normaloff>:/icons/silk-icons/icons/disk.png</iconset>
+   </property>
+   <property name="text">
+    <string>Mount disk image...</string>
+   </property>
+   <property name="toolTip">
+    <string>Mount a disk image to D10</string>
+   </property>
+   <property name="statusTip">
+    <string>Mount a disk image to D10</string>
+   </property>
+   <property name="shortcut">
+    <string>Alt+=</string>
+   </property>
+  </action>
+  <action name="actionMountDisk_11">
+   <property name="icon">
+    <iconset resource="icons.qrc">
+     <normaloff>:/icons/silk-icons/icons/disk.png</normaloff>:/icons/silk-icons/icons/disk.png</iconset>
+   </property>
+   <property name="text">
+    <string>Mount disk image...</string>
+   </property>
+   <property name="toolTip">
+    <string>Mount a disk image to D11</string>
+   </property>
+   <property name="statusTip">
+    <string>Mount a disk image to D11</string>
+   </property>
+   <property name="shortcut">
+    <string>Alt+!</string>
+   </property>
+  </action>
+  <action name="actionMountDisk_12">
+   <property name="icon">
+    <iconset resource="icons.qrc">
+     <normaloff>:/icons/silk-icons/icons/disk.png</normaloff>:/icons/silk-icons/icons/disk.png</iconset>
+   </property>
+   <property name="text">
+    <string>Mount disk image...</string>
+   </property>
+   <property name="toolTip">
+    <string>Mount a disk image to D12</string>
+   </property>
+   <property name="statusTip">
+    <string>Mount a disk image to D12</string>
+   </property>
+   <property name="shortcut">
+    <string>Alt+'</string>
+   </property>
+  </action>
+  <action name="actionMountDisk_13">
+   <property name="icon">
+    <iconset resource="icons.qrc">
+     <normaloff>:/icons/silk-icons/icons/disk.png</normaloff>:/icons/silk-icons/icons/disk.png</iconset>
+   </property>
+   <property name="text">
+    <string>Mount disk image...</string>
+   </property>
+   <property name="toolTip">
+    <string>Mount a disk image to D13</string>
+   </property>
+   <property name="statusTip">
+    <string>Mount a disk image to D13</string>
+   </property>
+   <property name="shortcut">
+    <string>Alt+#</string>
+   </property>
+  </action>
+  <action name="actionMountDisk_14">
+   <property name="icon">
+    <iconset resource="icons.qrc">
+     <normaloff>:/icons/silk-icons/icons/disk.png</normaloff>:/icons/silk-icons/icons/disk.png</iconset>
+   </property>
+   <property name="text">
+    <string>Mount disk image...</string>
+   </property>
+   <property name="toolTip">
+    <string>Mount a disk image to D14</string>
+   </property>
+   <property name="statusTip">
+    <string>Mount a disk image to D14</string>
+   </property>
+   <property name="shortcut">
+    <string>Alt+$</string>
+   </property>
+  </action>
+  <action name="actionMountDisk_15">
+   <property name="icon">
+    <iconset resource="icons.qrc">
+     <normaloff>:/icons/silk-icons/icons/disk.png</normaloff>:/icons/silk-icons/icons/disk.png</iconset>
+   </property>
+   <property name="text">
+    <string>Mount disk image...</string>
+   </property>
+   <property name="toolTip">
+    <string>Mount a disk image to D15</string>
+   </property>
+   <property name="statusTip">
+    <string>Mount a disk image to D15</string>
+   </property>
+   <property name="shortcut">
+    <string>Alt+%</string>
+   </property>
+  </action>
   <action name="actionMountFolder_1">
    <property name="icon">
     <iconset resource="icons.qrc">
@@ -2888,6 +2769,168 @@
     <string>Ctrl+6</string>
    </property>
   </action>
+  <action name="actionMountFolder_7">
+   <property name="icon">
+    <iconset resource="icons.qrc">
+     <normaloff>:/icons/silk-icons/icons/folder.png</normaloff>:/icons/silk-icons/icons/folder.png</iconset>
+   </property>
+   <property name="text">
+    <string>Mount folder image...</string>
+   </property>
+   <property name="toolTip">
+    <string>Mount a folder image to D7</string>
+   </property>
+   <property name="statusTip">
+    <string>Mount a folder image to D7</string>
+   </property>
+   <property name="shortcut">
+    <string>Ctrl+7</string>
+   </property>
+  </action>
+  <action name="actionMountFolder_8">
+   <property name="icon">
+    <iconset resource="icons.qrc">
+     <normaloff>:/icons/silk-icons/icons/folder.png</normaloff>:/icons/silk-icons/icons/folder.png</iconset>
+   </property>
+   <property name="text">
+    <string>Mount folder image...</string>
+   </property>
+   <property name="toolTip">
+    <string>Mount a folder image to D8</string>
+   </property>
+   <property name="statusTip">
+    <string>Mount a folder image to D8</string>
+   </property>
+   <property name="shortcut">
+    <string>Ctrl+8</string>
+   </property>
+  </action>
+  <action name="actionMountFolder_9">
+   <property name="icon">
+    <iconset resource="icons.qrc">
+     <normaloff>:/icons/silk-icons/icons/folder.png</normaloff>:/icons/silk-icons/icons/folder.png</iconset>
+   </property>
+   <property name="text">
+    <string>Mount folder image...</string>
+   </property>
+   <property name="toolTip">
+    <string>Mount a folder image to D9</string>
+   </property>
+   <property name="statusTip">
+    <string>Mount a folder image to D9</string>
+   </property>
+   <property name="shortcut">
+    <string>Ctrl+9</string>
+   </property>
+  </action>
+  <action name="actionMountFolder_10">
+   <property name="icon">
+    <iconset resource="icons.qrc">
+     <normaloff>:/icons/silk-icons/icons/folder.png</normaloff>:/icons/silk-icons/icons/folder.png</iconset>
+   </property>
+   <property name="text">
+    <string>Mount folder image...</string>
+   </property>
+   <property name="toolTip">
+    <string>Mount a folder image to D10</string>
+   </property>
+   <property name="statusTip">
+    <string>Mount a folder image to D10</string>
+   </property>
+   <property name="shortcut">
+    <string>Ctrl+0</string>
+   </property>
+  </action>
+  <action name="actionMountFolder_11">
+   <property name="icon">
+    <iconset resource="icons.qrc">
+     <normaloff>:/icons/silk-icons/icons/folder.png</normaloff>:/icons/silk-icons/icons/folder.png</iconset>
+   </property>
+   <property name="text">
+    <string>Mount folder image...</string>
+   </property>
+   <property name="toolTip">
+    <string>Mount a folder image to D11</string>
+   </property>
+   <property name="statusTip">
+    <string>Mount a folder image to D11</string>
+   </property>
+   <property name="shortcut">
+    <string>Ctrl+Alt+1</string>
+   </property>
+  </action>
+  <action name="actionMountFolder_12">
+   <property name="icon">
+    <iconset resource="icons.qrc">
+     <normaloff>:/icons/silk-icons/icons/folder.png</normaloff>:/icons/silk-icons/icons/folder.png</iconset>
+   </property>
+   <property name="text">
+    <string>Mount folder image...</string>
+   </property>
+   <property name="toolTip">
+    <string>Mount a folder image to D12</string>
+   </property>
+   <property name="statusTip">
+    <string>Mount a folder image to D12</string>
+   </property>
+   <property name="shortcut">
+    <string>Ctrl+Alt+2</string>
+   </property>
+  </action>
+  <action name="actionMountFolder_13">
+   <property name="icon">
+    <iconset resource="icons.qrc">
+     <normaloff>:/icons/silk-icons/icons/folder.png</normaloff>:/icons/silk-icons/icons/folder.png</iconset>
+   </property>
+   <property name="text">
+    <string>Mount folder image...</string>
+   </property>
+   <property name="toolTip">
+    <string>Mount a folder image to D13</string>
+   </property>
+   <property name="statusTip">
+    <string>Mount a folder image to D13</string>
+   </property>
+   <property name="shortcut">
+    <string>Ctrl+Alt+3</string>
+   </property>
+  </action>
+  <action name="actionMountFolder_14">
+   <property name="icon">
+    <iconset resource="icons.qrc">
+     <normaloff>:/icons/silk-icons/icons/folder.png</normaloff>:/icons/silk-icons/icons/folder.png</iconset>
+   </property>
+   <property name="text">
+    <string>Mount folder image...</string>
+   </property>
+   <property name="toolTip">
+    <string>Mount a folder image to D14</string>
+   </property>
+   <property name="statusTip">
+    <string>Mount a folder image to D14</string>
+   </property>
+   <property name="shortcut">
+    <string>Ctrl+Alt+4</string>
+   </property>
+  </action>
+  <action name="actionMountFolder_15">
+   <property name="icon">
+    <iconset resource="icons.qrc">
+     <normaloff>:/icons/silk-icons/icons/folder.png</normaloff>:/icons/silk-icons/icons/folder.png</iconset>
+   </property>
+   <property name="text">
+    <string>Mount folder image...</string>
+   </property>
+   <property name="toolTip">
+    <string>Mount a folder image to D15</string>
+   </property>
+   <property name="statusTip">
+    <string>Mount a folder image to D15</string>
+   </property>
+   <property name="shortcut">
+    <string>Ctrl+Alt+5</string>
+   </property>
+  </action>
   <action name="actionEject_1">
    <property name="enabled">
     <bool>false</bool>
@@ -2994,6 +3037,168 @@
    </property>
    <property name="statusTip">
     <string>Unmount D6</string>
+   </property>
+  </action>
+  <action name="actionEject_7">
+   <property name="enabled">
+    <bool>false</bool>
+   </property>
+   <property name="icon">
+    <iconset resource="icons.qrc">
+     <normaloff>:/icons/silk-icons/icons/control_eject.png</normaloff>:/icons/silk-icons/icons/control_eject.png</iconset>
+   </property>
+   <property name="text">
+    <string>Unmount</string>
+   </property>
+   <property name="toolTip">
+    <string>Unmount D7</string>
+   </property>
+   <property name="statusTip">
+    <string>Unmount D7</string>
+   </property>
+  </action>
+  <action name="actionEject_8">
+   <property name="enabled">
+    <bool>false</bool>
+   </property>
+   <property name="icon">
+    <iconset resource="icons.qrc">
+     <normaloff>:/icons/silk-icons/icons/control_eject.png</normaloff>:/icons/silk-icons/icons/control_eject.png</iconset>
+   </property>
+   <property name="text">
+    <string>Unmount</string>
+   </property>
+   <property name="toolTip">
+    <string>Unmount D8</string>
+   </property>
+   <property name="statusTip">
+    <string>Unmount D8</string>
+   </property>
+  </action>
+  <action name="actionEject_9">
+   <property name="enabled">
+    <bool>false</bool>
+   </property>
+   <property name="icon">
+    <iconset resource="icons.qrc">
+     <normaloff>:/icons/silk-icons/icons/control_eject.png</normaloff>:/icons/silk-icons/icons/control_eject.png</iconset>
+   </property>
+   <property name="text">
+    <string>Unmount</string>
+   </property>
+   <property name="toolTip">
+    <string>Unmount D9</string>
+   </property>
+   <property name="statusTip">
+    <string>Unmount D9</string>
+   </property>
+  </action>
+  <action name="actionEject_10">
+   <property name="enabled">
+    <bool>false</bool>
+   </property>
+   <property name="icon">
+    <iconset resource="icons.qrc">
+     <normaloff>:/icons/silk-icons/icons/control_eject.png</normaloff>:/icons/silk-icons/icons/control_eject.png</iconset>
+   </property>
+   <property name="text">
+    <string>Unmount</string>
+   </property>
+   <property name="toolTip">
+    <string>Unmount D10</string>
+   </property>
+   <property name="statusTip">
+    <string>Unmount D10</string>
+   </property>
+  </action>
+  <action name="actionEject_11">
+   <property name="enabled">
+    <bool>false</bool>
+   </property>
+   <property name="icon">
+    <iconset resource="icons.qrc">
+     <normaloff>:/icons/silk-icons/icons/control_eject.png</normaloff>:/icons/silk-icons/icons/control_eject.png</iconset>
+   </property>
+   <property name="text">
+    <string>Unmount</string>
+   </property>
+   <property name="toolTip">
+    <string>Unmount D11</string>
+   </property>
+   <property name="statusTip">
+    <string>Unmount D11</string>
+   </property>
+  </action>
+  <action name="actionEject_12">
+   <property name="enabled">
+    <bool>false</bool>
+   </property>
+   <property name="icon">
+    <iconset resource="icons.qrc">
+     <normaloff>:/icons/silk-icons/icons/control_eject.png</normaloff>:/icons/silk-icons/icons/control_eject.png</iconset>
+   </property>
+   <property name="text">
+    <string>Unmount</string>
+   </property>
+   <property name="toolTip">
+    <string>Unmount D12</string>
+   </property>
+   <property name="statusTip">
+    <string>Unmount D12</string>
+   </property>
+  </action>
+  <action name="actionEject_13">
+   <property name="enabled">
+    <bool>false</bool>
+   </property>
+   <property name="icon">
+    <iconset resource="icons.qrc">
+     <normaloff>:/icons/silk-icons/icons/control_eject.png</normaloff>:/icons/silk-icons/icons/control_eject.png</iconset>
+   </property>
+   <property name="text">
+    <string>Unmount</string>
+   </property>
+   <property name="toolTip">
+    <string>Unmount D13</string>
+   </property>
+   <property name="statusTip">
+    <string>Unmount D13</string>
+   </property>
+  </action>
+  <action name="actionEject_14">
+   <property name="enabled">
+    <bool>false</bool>
+   </property>
+   <property name="icon">
+    <iconset resource="icons.qrc">
+     <normaloff>:/icons/silk-icons/icons/control_eject.png</normaloff>:/icons/silk-icons/icons/control_eject.png</iconset>
+   </property>
+   <property name="text">
+    <string>Unmount</string>
+   </property>
+   <property name="toolTip">
+    <string>Unmount D14</string>
+   </property>
+   <property name="statusTip">
+    <string>Unmount D14</string>
+   </property>
+  </action>
+  <action name="actionEject_15">
+   <property name="enabled">
+    <bool>false</bool>
+   </property>
+   <property name="icon">
+    <iconset resource="icons.qrc">
+     <normaloff>:/icons/silk-icons/icons/control_eject.png</normaloff>:/icons/silk-icons/icons/control_eject.png</iconset>
+   </property>
+   <property name="text">
+    <string>Unmount</string>
+   </property>
+   <property name="toolTip">
+    <string>Unmount D15</string>
+   </property>
+   <property name="statusTip">
+    <string>Unmount D15</string>
    </property>
   </action>
   <action name="actionWriteProtect_1">
@@ -3126,6 +3331,207 @@
    </property>
    <property name="statusTip">
     <string>Toggle write protection for D6</string>
+   </property>
+  </action>
+  <action name="actionWriteProtect_7">
+   <property name="checkable">
+    <bool>true</bool>
+   </property>
+   <property name="enabled">
+    <bool>false</bool>
+   </property>
+   <property name="icon">
+    <iconset resource="icons.qrc">
+     <normaloff>:/icons/silk-icons/icons/lock_open.png</normaloff>
+     <normalon>:/icons/silk-icons/icons/lock.png</normalon>:/icons/silk-icons/icons/lock_open.png</iconset>
+   </property>
+   <property name="text">
+    <string>Write protected</string>
+   </property>
+   <property name="toolTip">
+    <string>Toggle write protection for D7</string>
+   </property>
+   <property name="statusTip">
+    <string>Toggle write protection for D7</string>
+   </property>
+  </action>
+  <action name="actionWriteProtect_8">
+   <property name="checkable">
+    <bool>true</bool>
+   </property>
+   <property name="checked">
+    <bool>false</bool>
+   </property>
+   <property name="enabled">
+    <bool>false</bool>
+   </property>
+   <property name="icon">
+    <iconset resource="icons.qrc">
+     <normaloff>:/icons/silk-icons/icons/lock_open.png</normaloff>
+     <normalon>:/icons/silk-icons/icons/lock.png</normalon>:/icons/silk-icons/icons/lock_open.png</iconset>
+   </property>
+   <property name="text">
+    <string>Write protected</string>
+   </property>
+   <property name="toolTip">
+    <string>Toggle write protection for D8</string>
+   </property>
+   <property name="statusTip">
+    <string>Toggle write protection for D8</string>
+   </property>
+  </action>
+  <action name="actionWriteProtect_9">
+   <property name="checkable">
+    <bool>true</bool>
+   </property>
+   <property name="enabled">
+    <bool>false</bool>
+   </property>
+   <property name="icon">
+    <iconset resource="icons.qrc">
+     <normaloff>:/icons/silk-icons/icons/lock_open.png</normaloff>
+     <normalon>:/icons/silk-icons/icons/lock.png</normalon>:/icons/silk-icons/icons/lock_open.png</iconset>
+   </property>
+   <property name="text">
+    <string>Write protected</string>
+   </property>
+   <property name="toolTip">
+    <string>Toggle write protection for D9</string>
+   </property>
+   <property name="statusTip">
+    <string>Toggle write protection for D9</string>
+   </property>
+  </action>
+  <action name="actionWriteProtect_10">
+   <property name="checkable">
+    <bool>true</bool>
+   </property>
+   <property name="enabled">
+    <bool>false</bool>
+   </property>
+   <property name="icon">
+    <iconset resource="icons.qrc">
+     <normaloff>:/icons/silk-icons/icons/lock_open.png</normaloff>
+     <normalon>:/icons/silk-icons/icons/lock.png</normalon>:/icons/silk-icons/icons/lock_open.png</iconset>
+   </property>
+   <property name="text">
+    <string>Write protected</string>
+   </property>
+   <property name="toolTip">
+    <string>Toggle write protection for D10</string>
+   </property>
+   <property name="statusTip">
+    <string>Toggle write protection for D10</string>
+   </property>
+  </action>
+  <action name="actionWriteProtect_11">
+   <property name="checkable">
+    <bool>true</bool>
+   </property>
+   <property name="enabled">
+    <bool>false</bool>
+   </property>
+   <property name="icon">
+    <iconset resource="icons.qrc">
+     <normaloff>:/icons/silk-icons/icons/lock_open.png</normaloff>
+     <normalon>:/icons/silk-icons/icons/lock.png</normalon>:/icons/silk-icons/icons/lock_open.png</iconset>
+   </property>
+   <property name="text">
+    <string>Write protected</string>
+   </property>
+   <property name="toolTip">
+    <string>Toggle write protection for D11</string>
+   </property>
+   <property name="statusTip">
+    <string>Toggle write protection for D11</string>
+   </property>
+  </action>
+  <action name="actionWriteProtect_12">
+   <property name="checkable">
+    <bool>true</bool>
+   </property>
+   <property name="enabled">
+    <bool>false</bool>
+   </property>
+   <property name="icon">
+    <iconset resource="icons.qrc">
+     <normaloff>:/icons/silk-icons/icons/lock_open.png</normaloff>
+     <normalon>:/icons/silk-icons/icons/lock.png</normalon>:/icons/silk-icons/icons/lock_open.png</iconset>
+   </property>
+   <property name="text">
+    <string>Write protected</string>
+   </property>
+   <property name="toolTip">
+    <string>Toggle write protection for D12</string>
+   </property>
+   <property name="statusTip">
+    <string>Toggle write protection for D12</string>
+   </property>
+  </action>
+  <action name="actionWriteProtect_13">
+   <property name="checkable">
+    <bool>true</bool>
+   </property>
+   <property name="enabled">
+    <bool>false</bool>
+   </property>
+   <property name="icon">
+    <iconset resource="icons.qrc">
+     <normaloff>:/icons/silk-icons/icons/lock_open.png</normaloff>
+     <normalon>:/icons/silk-icons/icons/lock.png</normalon>:/icons/silk-icons/icons/lock_open.png</iconset>
+   </property>
+   <property name="text">
+    <string>Write protected</string>
+   </property>
+   <property name="toolTip">
+    <string>Toggle write protection for D13</string>
+   </property>
+   <property name="statusTip">
+    <string>Toggle write protection for D13</string>
+   </property>
+  </action>
+  <action name="actionWriteProtect_14">
+   <property name="checkable">
+    <bool>true</bool>
+   </property>
+   <property name="enabled">
+    <bool>false</bool>
+   </property>
+   <property name="icon">
+    <iconset resource="icons.qrc">
+     <normaloff>:/icons/silk-icons/icons/lock_open.png</normaloff>
+     <normalon>:/icons/silk-icons/icons/lock.png</normalon>:/icons/silk-icons/icons/lock_open.png</iconset>
+   </property>
+   <property name="text">
+    <string>Write protected</string>
+   </property>
+   <property name="toolTip">
+    <string>Toggle write protection for D14</string>
+   </property>
+   <property name="statusTip">
+    <string>Toggle write protection for D14</string>
+   </property>
+  </action>
+  <action name="actionWriteProtect_15">
+   <property name="checkable">
+    <bool>true</bool>
+   </property>
+   <property name="enabled">
+    <bool>false</bool>
+   </property>
+   <property name="icon">
+    <iconset resource="icons.qrc">
+     <normaloff>:/icons/silk-icons/icons/lock_open.png</normaloff>
+     <normalon>:/icons/silk-icons/icons/lock.png</normalon>:/icons/silk-icons/icons/lock_open.png</iconset>
+   </property>
+   <property name="text">
+    <string>Write protected</string>
+   </property>
+   <property name="toolTip">
+    <string>Toggle write protection for D15</string>
+   </property>
+   <property name="statusTip">
+    <string>Toggle write protection for D15</string>
    </property>
   </action>
   <action name="actionOptions">
@@ -3467,6 +3873,195 @@
     <string>Show D6's properties</string>
    </property>
   </action>
+  <action name="actionEditDisk_7">
+   <property name="checkable">
+    <bool>true</bool>
+   </property>
+   <property name="enabled">
+    <bool>false</bool>
+   </property>
+   <property name="icon">
+    <iconset resource="icons.qrc">
+     <normaloff>:/icons/silk-icons/icons/folder_edit.png</normaloff>:/icons/silk-icons/icons/folder_edit.png</iconset>
+   </property>
+   <property name="text">
+    <string>Explore..</string>
+   </property>
+   <property name="toolTip">
+    <string>Show D7's properties</string>
+   </property>
+   <property name="statusTip">
+    <string>Show D7's properties</string>
+   </property>
+  </action>
+  <action name="actionEditDisk_8">
+   <property name="checkable">
+    <bool>true</bool>
+   </property>
+   <property name="enabled">
+    <bool>false</bool>
+   </property>
+   <property name="icon">
+    <iconset resource="icons.qrc">
+     <normaloff>:/icons/silk-icons/icons/folder_edit.png</normaloff>:/icons/silk-icons/icons/folder_edit.png</iconset>
+   </property>
+   <property name="text">
+    <string>Explore..</string>
+   </property>
+   <property name="toolTip">
+    <string>Show D8's properties</string>
+   </property>
+   <property name="statusTip">
+    <string>Show D8's properties</string>
+   </property>
+  </action>
+  <action name="actionEditDisk_9">
+   <property name="checkable">
+    <bool>true</bool>
+   </property>
+   <property name="enabled">
+    <bool>false</bool>
+   </property>
+   <property name="icon">
+    <iconset resource="icons.qrc">
+     <normaloff>:/icons/silk-icons/icons/folder_edit.png</normaloff>:/icons/silk-icons/icons/folder_edit.png</iconset>
+   </property>
+   <property name="text">
+    <string>Explore..</string>
+   </property>
+   <property name="toolTip">
+    <string>Show D9's properties</string>
+   </property>
+   <property name="statusTip">
+    <string>Show D9's properties</string>
+   </property>
+  </action>
+  <action name="actionEditDisk_10">
+   <property name="checkable">
+    <bool>true</bool>
+   </property>
+   <property name="enabled">
+    <bool>false</bool>
+   </property>
+   <property name="icon">
+    <iconset resource="icons.qrc">
+     <normaloff>:/icons/silk-icons/icons/folder_edit.png</normaloff>:/icons/silk-icons/icons/folder_edit.png</iconset>
+   </property>
+   <property name="text">
+    <string>Explore..</string>
+   </property>
+   <property name="toolTip">
+    <string>Show D10's properties</string>
+   </property>
+   <property name="statusTip">
+    <string>Show D10's properties</string>
+   </property>
+  </action>
+  <action name="actionEditDisk_11">
+   <property name="checkable">
+    <bool>true</bool>
+   </property>
+   <property name="enabled">
+    <bool>false</bool>
+   </property>
+   <property name="icon">
+    <iconset resource="icons.qrc">
+     <normaloff>:/icons/silk-icons/icons/folder_edit.png</normaloff>:/icons/silk-icons/icons/folder_edit.png</iconset>
+   </property>
+   <property name="text">
+    <string>Explore..</string>
+   </property>
+   <property name="toolTip">
+    <string>Show D11's properties</string>
+   </property>
+   <property name="statusTip">
+    <string>Show D11's properties</string>
+   </property>
+  </action>
+  <action name="actionEditDisk_12">
+   <property name="checkable">
+    <bool>true</bool>
+   </property>
+   <property name="enabled">
+    <bool>false</bool>
+   </property>
+   <property name="icon">
+    <iconset resource="icons.qrc">
+     <normaloff>:/icons/silk-icons/icons/folder_edit.png</normaloff>:/icons/silk-icons/icons/folder_edit.png</iconset>
+   </property>
+   <property name="text">
+    <string>Explore..</string>
+   </property>
+   <property name="toolTip">
+    <string>Show D12's properties</string>
+   </property>
+   <property name="statusTip">
+    <string>Show D12's properties</string>
+   </property>
+  </action>
+  <action name="actionEditDisk_13">
+   <property name="checkable">
+    <bool>true</bool>
+   </property>
+   <property name="enabled">
+    <bool>false</bool>
+   </property>
+   <property name="icon">
+    <iconset resource="icons.qrc">
+     <normaloff>:/icons/silk-icons/icons/folder_edit.png</normaloff>:/icons/silk-icons/icons/folder_edit.png</iconset>
+   </property>
+   <property name="text">
+    <string>Explore..</string>
+   </property>
+   <property name="toolTip">
+    <string>Show D13's properties</string>
+   </property>
+   <property name="statusTip">
+    <string>Show D13's properties</string>
+   </property>
+  </action>
+  <action name="actionEditDisk_14">
+   <property name="checkable">
+    <bool>true</bool>
+   </property>
+   <property name="enabled">
+    <bool>false</bool>
+   </property>
+   <property name="icon">
+    <iconset resource="icons.qrc">
+     <normaloff>:/icons/silk-icons/icons/folder_edit.png</normaloff>:/icons/silk-icons/icons/folder_edit.png</iconset>
+   </property>
+   <property name="text">
+    <string>Explore..</string>
+   </property>
+   <property name="toolTip">
+    <string>Show D14's properties</string>
+   </property>
+   <property name="statusTip">
+    <string>Show D14's properties</string>
+   </property>
+  </action>
+  <action name="actionEditDisk_15">
+   <property name="checkable">
+    <bool>true</bool>
+   </property>
+   <property name="enabled">
+    <bool>false</bool>
+   </property>
+   <property name="icon">
+    <iconset resource="icons.qrc">
+     <normaloff>:/icons/silk-icons/icons/folder_edit.png</normaloff>:/icons/silk-icons/icons/folder_edit.png</iconset>
+   </property>
+   <property name="text">
+    <string>Explore..</string>
+   </property>
+   <property name="toolTip">
+    <string>Show D15's properties</string>
+   </property>
+   <property name="statusTip">
+    <string>Show D15's properties</string>
+   </property>
+  </action>
   <action name="actionSaveSession">
    <property name="icon">
     <iconset resource="icons.qrc">
@@ -3635,6 +4230,42 @@
     <string>Save D6</string>
    </property>
   </action>
+  <action name="actionSave_7">
+   <property name="enabled">
+    <bool>false</bool>
+   </property>
+   <property name="icon">
+    <iconset resource="icons.qrc">
+     <normaloff>:/icons/silk-icons/icons/drive_disk.png</normaloff>:/icons/silk-icons/icons/drive_disk.png</iconset>
+   </property>
+   <property name="text">
+    <string>Save</string>
+   </property>
+   <property name="toolTip">
+    <string>Save D7</string>
+   </property>
+   <property name="statusTip">
+    <string>Save D7</string>
+   </property>
+  </action>
+  <action name="actionSave_8">
+   <property name="enabled">
+    <bool>false</bool>
+   </property>
+   <property name="icon">
+    <iconset resource="icons.qrc">
+     <normaloff>:/icons/silk-icons/icons/drive_disk.png</normaloff>:/icons/silk-icons/icons/drive_disk.png</iconset>
+   </property>
+   <property name="text">
+    <string>Save</string>
+   </property>
+   <property name="toolTip">
+    <string>Save D8</string>
+   </property>
+   <property name="statusTip">
+    <string>Save D8</string>
+   </property>
+  </action>
   <action name="actionRevert_1">
    <property name="enabled">
     <bool>false</bool>
@@ -3743,6 +4374,168 @@
     <string>Revert D6 to its last saved state</string>
    </property>
   </action>
+  <action name="actionRevert_7">
+   <property name="enabled">
+    <bool>false</bool>
+   </property>
+   <property name="icon">
+    <iconset resource="icons.qrc">
+     <normaloff>:/icons/silk-icons/icons/arrow_undo.png</normaloff>:/icons/silk-icons/icons/arrow_undo.png</iconset>
+   </property>
+   <property name="text">
+    <string>Revert to original</string>
+   </property>
+   <property name="toolTip">
+    <string>Revert D7 to its last saved state</string>
+   </property>
+   <property name="statusTip">
+    <string>Revert D7 to its last saved state</string>
+   </property>
+  </action>
+  <action name="actionRevert_8">
+   <property name="enabled">
+    <bool>false</bool>
+   </property>
+   <property name="icon">
+    <iconset resource="icons.qrc">
+     <normaloff>:/icons/silk-icons/icons/arrow_undo.png</normaloff>:/icons/silk-icons/icons/arrow_undo.png</iconset>
+   </property>
+   <property name="text">
+    <string>Revert to original</string>
+   </property>
+   <property name="toolTip">
+    <string>Revert D8 to its last saved state</string>
+   </property>
+   <property name="statusTip">
+    <string>Revert D8 to its last saved state</string>
+   </property>
+  </action>
+  <action name="actionRevert_9">
+   <property name="enabled">
+    <bool>false</bool>
+   </property>
+   <property name="icon">
+    <iconset resource="icons.qrc">
+     <normaloff>:/icons/silk-icons/icons/arrow_undo.png</normaloff>:/icons/silk-icons/icons/arrow_undo.png</iconset>
+   </property>
+   <property name="text">
+    <string>Revert to original</string>
+   </property>
+   <property name="toolTip">
+    <string>Revert D9 to its last saved state</string>
+   </property>
+   <property name="statusTip">
+    <string>Revert D9 to its last saved state</string>
+   </property>
+  </action>
+  <action name="actionRevert_10">
+   <property name="enabled">
+    <bool>false</bool>
+   </property>
+   <property name="icon">
+    <iconset resource="icons.qrc">
+     <normaloff>:/icons/silk-icons/icons/arrow_undo.png</normaloff>:/icons/silk-icons/icons/arrow_undo.png</iconset>
+   </property>
+   <property name="text">
+    <string>Revert to original</string>
+   </property>
+   <property name="toolTip">
+    <string>Revert D10 to its last saved state</string>
+   </property>
+   <property name="statusTip">
+    <string>Revert D10 to its last saved state</string>
+   </property>
+  </action>
+  <action name="actionRevert_11">
+   <property name="enabled">
+    <bool>false</bool>
+   </property>
+   <property name="icon">
+    <iconset resource="icons.qrc">
+     <normaloff>:/icons/silk-icons/icons/arrow_undo.png</normaloff>:/icons/silk-icons/icons/arrow_undo.png</iconset>
+   </property>
+   <property name="text">
+    <string>Revert to original</string>
+   </property>
+   <property name="toolTip">
+    <string>Revert D11 to its last saved state</string>
+   </property>
+   <property name="statusTip">
+    <string>Revert D11 to its last saved state</string>
+   </property>
+  </action>
+  <action name="actionRevert_12">
+   <property name="enabled">
+    <bool>false</bool>
+   </property>
+   <property name="icon">
+    <iconset resource="icons.qrc">
+     <normaloff>:/icons/silk-icons/icons/arrow_undo.png</normaloff>:/icons/silk-icons/icons/arrow_undo.png</iconset>
+   </property>
+   <property name="text">
+    <string>Revert to original</string>
+   </property>
+   <property name="toolTip">
+    <string>Revert D12 to its last saved state</string>
+   </property>
+   <property name="statusTip">
+    <string>Revert D12 to its last saved state</string>
+   </property>
+  </action>
+  <action name="actionRevert_13">
+   <property name="enabled">
+    <bool>false</bool>
+   </property>
+   <property name="icon">
+    <iconset resource="icons.qrc">
+     <normaloff>:/icons/silk-icons/icons/arrow_undo.png</normaloff>:/icons/silk-icons/icons/arrow_undo.png</iconset>
+   </property>
+   <property name="text">
+    <string>Revert to original</string>
+   </property>
+   <property name="toolTip">
+    <string>Revert D13 to its last saved state</string>
+   </property>
+   <property name="statusTip">
+    <string>Revert D13 to its last saved state</string>
+   </property>
+  </action>
+  <action name="actionRevert_14">
+   <property name="enabled">
+    <bool>false</bool>
+   </property>
+   <property name="icon">
+    <iconset resource="icons.qrc">
+     <normaloff>:/icons/silk-icons/icons/arrow_undo.png</normaloff>:/icons/silk-icons/icons/arrow_undo.png</iconset>
+   </property>
+   <property name="text">
+    <string>Revert to original</string>
+   </property>
+   <property name="toolTip">
+    <string>Revert D14 to its last saved state</string>
+   </property>
+   <property name="statusTip">
+    <string>Revert D14 to its last saved state</string>
+   </property>
+  </action>
+  <action name="actionRevert_15">
+   <property name="enabled">
+    <bool>false</bool>
+   </property>
+   <property name="icon">
+    <iconset resource="icons.qrc">
+     <normaloff>:/icons/silk-icons/icons/arrow_undo.png</normaloff>:/icons/silk-icons/icons/arrow_undo.png</iconset>
+   </property>
+   <property name="text">
+    <string>Revert to original</string>
+   </property>
+   <property name="toolTip">
+    <string>Revert D15 to its last saved state</string>
+   </property>
+   <property name="statusTip">
+    <string>Revert D15 to its last saved state</string>
+   </property>
+  </action>
   <action name="actionSaveAs_1">
    <property name="enabled">
     <bool>false</bool>
@@ -3849,6 +4642,294 @@
    </property>
    <property name="statusTip">
     <string>Save D6 to a file</string>
+   </property>
+  </action>
+  <action name="actionSaveAs_7">
+   <property name="enabled">
+    <bool>false</bool>
+   </property>
+   <property name="icon">
+    <iconset resource="icons.qrc">
+     <normaloff>:/icons/silk-icons/icons/drive_rename.png</normaloff>:/icons/silk-icons/icons/drive_rename.png</iconset>
+   </property>
+   <property name="text">
+    <string>Save as...</string>
+   </property>
+   <property name="toolTip">
+    <string>Save D7 to a file</string>
+   </property>
+   <property name="statusTip">
+    <string>Save D7 to a file</string>
+   </property>
+  </action>
+  <action name="actionSaveAs_8">
+   <property name="enabled">
+    <bool>false</bool>
+   </property>
+   <property name="icon">
+    <iconset resource="icons.qrc">
+     <normaloff>:/icons/silk-icons/icons/drive_rename.png</normaloff>:/icons/silk-icons/icons/drive_rename.png</iconset>
+   </property>
+   <property name="text">
+    <string>Save as...</string>
+   </property>
+   <property name="toolTip">
+    <string>Save D8 to a file</string>
+   </property>
+   <property name="statusTip">
+    <string>Save D8 to a file</string>
+   </property>
+  </action>
+  <action name="actionSaveAs_9">
+   <property name="enabled">
+    <bool>false</bool>
+   </property>
+   <property name="icon">
+    <iconset resource="icons.qrc">
+     <normaloff>:/icons/silk-icons/icons/drive_rename.png</normaloff>:/icons/silk-icons/icons/drive_rename.png</iconset>
+   </property>
+   <property name="text">
+    <string>Save as...</string>
+   </property>
+   <property name="toolTip">
+    <string>Save D9 to a file</string>
+   </property>
+   <property name="statusTip">
+    <string>Save D9 to a file</string>
+   </property>
+  </action>
+  <action name="actionSaveAs_10">
+   <property name="enabled">
+    <bool>false</bool>
+   </property>
+   <property name="icon">
+    <iconset resource="icons.qrc">
+     <normaloff>:/icons/silk-icons/icons/drive_rename.png</normaloff>:/icons/silk-icons/icons/drive_rename.png</iconset>
+   </property>
+   <property name="text">
+    <string>Save as...</string>
+   </property>
+   <property name="toolTip">
+    <string>Save D10 to a file</string>
+   </property>
+   <property name="statusTip">
+    <string>Save D10 to a file</string>
+   </property>
+  </action>
+  <action name="actionSaveAs_11">
+   <property name="enabled">
+    <bool>false</bool>
+   </property>
+   <property name="icon">
+    <iconset resource="icons.qrc">
+     <normaloff>:/icons/silk-icons/icons/drive_rename.png</normaloff>:/icons/silk-icons/icons/drive_rename.png</iconset>
+   </property>
+   <property name="text">
+    <string>Save as...</string>
+   </property>
+   <property name="toolTip">
+    <string>Save D11 to a file</string>
+   </property>
+   <property name="statusTip">
+    <string>Save D11 to a file</string>
+   </property>
+  </action>
+  <action name="actionSaveAs_12">
+   <property name="enabled">
+    <bool>false</bool>
+   </property>
+   <property name="icon">
+    <iconset resource="icons.qrc">
+     <normaloff>:/icons/silk-icons/icons/drive_rename.png</normaloff>:/icons/silk-icons/icons/drive_rename.png</iconset>
+   </property>
+   <property name="text">
+    <string>Save as...</string>
+   </property>
+   <property name="toolTip">
+    <string>Save D12 to a file</string>
+   </property>
+   <property name="statusTip">
+    <string>Save D12 to a file</string>
+   </property>
+  </action>
+  <action name="actionSaveAs_13">
+   <property name="enabled">
+    <bool>false</bool>
+   </property>
+   <property name="icon">
+    <iconset resource="icons.qrc">
+     <normaloff>:/icons/silk-icons/icons/drive_rename.png</normaloff>:/icons/silk-icons/icons/drive_rename.png</iconset>
+   </property>
+   <property name="text">
+    <string>Save as...</string>
+   </property>
+   <property name="toolTip">
+    <string>Save D13 to a file</string>
+   </property>
+   <property name="statusTip">
+    <string>Save D13 to a file</string>
+   </property>
+  </action>
+  <action name="actionSaveAs_14">
+   <property name="enabled">
+    <bool>false</bool>
+   </property>
+   <property name="icon">
+    <iconset resource="icons.qrc">
+     <normaloff>:/icons/silk-icons/icons/drive_rename.png</normaloff>:/icons/silk-icons/icons/drive_rename.png</iconset>
+   </property>
+   <property name="text">
+    <string>Save as...</string>
+   </property>
+   <property name="toolTip">
+    <string>Save D14 to a file</string>
+   </property>
+   <property name="statusTip">
+    <string>Save D14 to a file</string>
+   </property>
+  </action>
+  <action name="actionSaveAs_15">
+   <property name="enabled">
+    <bool>false</bool>
+   </property>
+   <property name="icon">
+    <iconset resource="icons.qrc">
+     <normaloff>:/icons/silk-icons/icons/drive_rename.png</normaloff>:/icons/silk-icons/icons/drive_rename.png</iconset>
+   </property>
+   <property name="text">
+    <string>Save as...</string>
+   </property>
+   <property name="toolTip">
+    <string>Save D15 to a file</string>
+   </property>
+   <property name="statusTip">
+    <string>Save D15 to a file</string>
+   </property>
+  </action>
+  <action name="actionSave_9">
+   <property name="enabled">
+    <bool>false</bool>
+   </property>
+   <property name="icon">
+    <iconset resource="icons.qrc">
+     <normaloff>:/icons/silk-icons/icons/drive_disk.png</normaloff>:/icons/silk-icons/icons/drive_disk.png</iconset>
+   </property>
+   <property name="text">
+    <string>Save</string>
+   </property>
+   <property name="toolTip">
+    <string>Save D9</string>
+   </property>
+   <property name="statusTip">
+    <string>Save D9</string>
+   </property>
+  </action>
+  <action name="actionSave_10">
+   <property name="enabled">
+    <bool>false</bool>
+   </property>
+   <property name="icon">
+    <iconset resource="icons.qrc">
+     <normaloff>:/icons/silk-icons/icons/drive_disk.png</normaloff>:/icons/silk-icons/icons/drive_disk.png</iconset>
+   </property>
+   <property name="text">
+    <string>Save</string>
+   </property>
+   <property name="toolTip">
+    <string>Save D10</string>
+   </property>
+   <property name="statusTip">
+    <string>Save D10</string>
+   </property>
+  </action>
+  <action name="actionSave_11">
+   <property name="enabled">
+    <bool>false</bool>
+   </property>
+   <property name="icon">
+    <iconset resource="icons.qrc">
+     <normaloff>:/icons/silk-icons/icons/drive_disk.png</normaloff>:/icons/silk-icons/icons/drive_disk.png</iconset>
+   </property>
+   <property name="text">
+    <string>Save</string>
+   </property>
+   <property name="toolTip">
+    <string>Save D11</string>
+   </property>
+   <property name="statusTip">
+    <string>Save D11</string>
+   </property>
+  </action>
+  <action name="actionSave_12">
+   <property name="enabled">
+    <bool>false</bool>
+   </property>
+   <property name="icon">
+    <iconset resource="icons.qrc">
+     <normaloff>:/icons/silk-icons/icons/drive_disk.png</normaloff>:/icons/silk-icons/icons/drive_disk.png</iconset>
+   </property>
+   <property name="text">
+    <string>Save</string>
+   </property>
+   <property name="toolTip">
+    <string>Save D12</string>
+   </property>
+   <property name="statusTip">
+    <string>Save D12</string>
+   </property>
+  </action>
+  <action name="actionSave_13">
+   <property name="enabled">
+    <bool>false</bool>
+   </property>
+   <property name="icon">
+    <iconset resource="icons.qrc">
+     <normaloff>:/icons/silk-icons/icons/drive_disk.png</normaloff>:/icons/silk-icons/icons/drive_disk.png</iconset>
+   </property>
+   <property name="text">
+    <string>Save</string>
+   </property>
+   <property name="toolTip">
+    <string>Save D13</string>
+   </property>
+   <property name="statusTip">
+    <string>Save D13</string>
+   </property>
+  </action>
+  <action name="actionSave_14">
+   <property name="enabled">
+    <bool>false</bool>
+   </property>
+   <property name="icon">
+    <iconset resource="icons.qrc">
+     <normaloff>:/icons/silk-icons/icons/drive_disk.png</normaloff>:/icons/silk-icons/icons/drive_disk.png</iconset>
+   </property>
+   <property name="text">
+    <string>Save</string>
+   </property>
+   <property name="toolTip">
+    <string>Save D14</string>
+   </property>
+   <property name="statusTip">
+    <string>Save D14</string>
+   </property>
+  </action>
+  <action name="actionSave_15">
+   <property name="enabled">
+    <bool>false</bool>
+   </property>
+   <property name="icon">
+    <iconset resource="icons.qrc">
+     <normaloff>:/icons/silk-icons/icons/drive_disk.png</normaloff>:/icons/silk-icons/icons/drive_disk.png</iconset>
+   </property>
+   <property name="text">
+    <string>Save</string>
+   </property>
+   <property name="toolTip">
+    <string>Save D15</string>
+   </property>
+   <property name="statusTip">
+    <string>Save D15</string>
    </property>
   </action>
   <action name="actionShowPrinterTextOutput">
@@ -4062,6 +5143,195 @@
    </property>
   </action>
   <action name="actionAutoSave_6">
+   <property name="checkable">
+    <bool>true</bool>
+   </property>
+   <property name="enabled">
+    <bool>false</bool>
+   </property>
+   <property name="icon">
+    <iconset resource="icons.qrc">
+     <normaloff>:/icons/silk-icons/icons/drive_go.png</normaloff>:/icons/silk-icons/icons/drive_go.png</iconset>
+   </property>
+   <property name="text">
+    <string>Auto Commit</string>
+   </property>
+   <property name="toolTip">
+    <string>Commit changes to this disk automatically</string>
+   </property>
+   <property name="statusTip">
+    <string>Toggle Auto Commit ON/OFF</string>
+   </property>
+  </action>
+  <action name="actionAutoSave_7">
+   <property name="checkable">
+    <bool>true</bool>
+   </property>
+   <property name="enabled">
+    <bool>false</bool>
+   </property>
+   <property name="icon">
+    <iconset resource="icons.qrc">
+     <normaloff>:/icons/silk-icons/icons/drive_go.png</normaloff>:/icons/silk-icons/icons/drive_go.png</iconset>
+   </property>
+   <property name="text">
+    <string>Auto Commit</string>
+   </property>
+   <property name="toolTip">
+    <string>Commit changes to this disk automatically</string>
+   </property>
+   <property name="statusTip">
+    <string>Toggle Auto Commit ON/OFF</string>
+   </property>
+  </action>
+  <action name="actionAutoSave_8">
+   <property name="checkable">
+    <bool>true</bool>
+   </property>
+   <property name="enabled">
+    <bool>false</bool>
+   </property>
+   <property name="icon">
+    <iconset resource="icons.qrc">
+     <normaloff>:/icons/silk-icons/icons/drive_go.png</normaloff>:/icons/silk-icons/icons/drive_go.png</iconset>
+   </property>
+   <property name="text">
+    <string>Auto Commit</string>
+   </property>
+   <property name="toolTip">
+    <string>Commit changes to this disk automatically</string>
+   </property>
+   <property name="statusTip">
+    <string>Toggle Auto Commit ON/OFF</string>
+   </property>
+  </action>
+  <action name="actionAutoSave_9">
+   <property name="checkable">
+    <bool>true</bool>
+   </property>
+   <property name="enabled">
+    <bool>false</bool>
+   </property>
+   <property name="icon">
+    <iconset resource="icons.qrc">
+     <normaloff>:/icons/silk-icons/icons/drive_go.png</normaloff>:/icons/silk-icons/icons/drive_go.png</iconset>
+   </property>
+   <property name="text">
+    <string>Auto Commit</string>
+   </property>
+   <property name="toolTip">
+    <string>Commit changes to this disk automatically</string>
+   </property>
+   <property name="statusTip">
+    <string>Toggle Auto Commit ON/OFF</string>
+   </property>
+  </action>
+  <action name="actionAutoSave_10">
+   <property name="checkable">
+    <bool>true</bool>
+   </property>
+   <property name="enabled">
+    <bool>false</bool>
+   </property>
+   <property name="icon">
+    <iconset resource="icons.qrc">
+     <normaloff>:/icons/silk-icons/icons/drive_go.png</normaloff>:/icons/silk-icons/icons/drive_go.png</iconset>
+   </property>
+   <property name="text">
+    <string>Auto Commit</string>
+   </property>
+   <property name="toolTip">
+    <string>Commit changes to this disk automatically</string>
+   </property>
+   <property name="statusTip">
+    <string>Toggle Auto Commit ON/OFF</string>
+   </property>
+  </action>
+  <action name="actionAutoSave_11">
+   <property name="checkable">
+    <bool>true</bool>
+   </property>
+   <property name="enabled">
+    <bool>false</bool>
+   </property>
+   <property name="icon">
+    <iconset resource="icons.qrc">
+     <normaloff>:/icons/silk-icons/icons/drive_go.png</normaloff>:/icons/silk-icons/icons/drive_go.png</iconset>
+   </property>
+   <property name="text">
+    <string>Auto Commit</string>
+   </property>
+   <property name="toolTip">
+    <string>Commit changes to this disk automatically</string>
+   </property>
+   <property name="statusTip">
+    <string>Toggle Auto Commit ON/OFF</string>
+   </property>
+  </action>
+  <action name="actionAutoSave_12">
+   <property name="checkable">
+    <bool>true</bool>
+   </property>
+   <property name="enabled">
+    <bool>false</bool>
+   </property>
+   <property name="icon">
+    <iconset resource="icons.qrc">
+     <normaloff>:/icons/silk-icons/icons/drive_go.png</normaloff>:/icons/silk-icons/icons/drive_go.png</iconset>
+   </property>
+   <property name="text">
+    <string>Auto Commit</string>
+   </property>
+   <property name="toolTip">
+    <string>Commit changes to this disk automatically</string>
+   </property>
+   <property name="statusTip">
+    <string>Toggle Auto Commit ON/OFF</string>
+   </property>
+  </action>
+  <action name="actionAutoSave_13">
+   <property name="checkable">
+    <bool>true</bool>
+   </property>
+   <property name="enabled">
+    <bool>false</bool>
+   </property>
+   <property name="icon">
+    <iconset resource="icons.qrc">
+     <normaloff>:/icons/silk-icons/icons/drive_go.png</normaloff>:/icons/silk-icons/icons/drive_go.png</iconset>
+   </property>
+   <property name="text">
+    <string>Auto Commit</string>
+   </property>
+   <property name="toolTip">
+    <string>Commit changes to this disk automatically</string>
+   </property>
+   <property name="statusTip">
+    <string>Toggle Auto Commit ON/OFF</string>
+   </property>
+  </action>
+  <action name="actionAutoSave_14">
+   <property name="checkable">
+    <bool>true</bool>
+   </property>
+   <property name="enabled">
+    <bool>false</bool>
+   </property>
+   <property name="icon">
+    <iconset resource="icons.qrc">
+     <normaloff>:/icons/silk-icons/icons/drive_go.png</normaloff>:/icons/silk-icons/icons/drive_go.png</iconset>
+   </property>
+   <property name="text">
+    <string>Auto Commit</string>
+   </property>
+   <property name="toolTip">
+    <string>Commit changes to this disk automatically</string>
+   </property>
+   <property name="statusTip">
+    <string>Toggle Auto Commit ON/OFF</string>
+   </property>
+  </action>
+  <action name="actionAutoSave_15">
    <property name="checkable">
     <bool>true</bool>
    </property>
