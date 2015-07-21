@@ -14,9 +14,9 @@ AutoBootDialog::AutoBootDialog(QWidget *parent) :
 {
     ui->setupUi(this);
     ui->progressBar->setVisible(false);
-    connect(ui->reloadButton, SIGNAL(clicked()), this, SLOT(reject()));
-    connect(ui->buttonBox, SIGNAL(clicked(QAbstractButton*)), this, SLOT(onClick(QAbstractButton*)));
-    connect(ui->reloadButton, SIGNAL(clicked()), this, SLOT(reloadExe));
+    connect(ui->pushButton_2, SIGNAL(clicked()), this, SLOT(reject()));
+//    connect(ui->buttonBox, SIGNAL(clicked(QAbstractButton*)), this, SLOT(onClick(QAbstractButton*)));
+    connect(ui->pushButton, SIGNAL(clicked()), this, SLOT(reloadExe));
     reload = false;
     ui->progressBar->setVisible(true);
 }

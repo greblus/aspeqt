@@ -41,6 +41,7 @@ public class MyActivity extends QtActivity
     public static native void sendBufAddr(ByteBuffer buf);
     private static boolean debug = false;
     public static String m_chosen;
+    public static int m_filter;
 
     public static MyActivity s_activity = null;
 
@@ -60,9 +61,10 @@ public class MyActivity extends QtActivity
                 sendBufAddr(bbuf);
         }
 
-        public static void runFileChooser() {
+        public static void runFileChooser(int filter) {
 
             m_chosen = "None";
+            m_filter = filter;
             MyActivity.s_activity.runOnUiThread( new FileChooser() );
 
          }
@@ -70,6 +72,7 @@ public class MyActivity extends QtActivity
          public static void runDirChooser() {
 
             m_chosen = "None";
+            m_filter = 0;
             MyActivity.s_activity.runOnUiThread( new DirChooser() );
 
           }
@@ -85,7 +88,7 @@ public class MyActivity extends QtActivity
 
         public void fileChooser()
         {
-            SimpleFileDialog FileOpenDialog =  new SimpleFileDialog(MyActivity.this, "FileOpen",
+            SimpleFileDialog FileOpenDialog =  new SimpleFileDialog(MyActivity.this, "FileOpen", m_filter,
                                                             new SimpleFileDialog.SimpleFileDialogListener()
             {
                     @Override
@@ -105,7 +108,7 @@ public class MyActivity extends QtActivity
 
         public void dirChooser()
         {
-            SimpleFileDialog FileOpenDialog =  new SimpleFileDialog(MyActivity.this, "FolderChoose",
+            SimpleFileDialog FileOpenDialog =  new SimpleFileDialog(MyActivity.this, "FolderChoose", m_filter,
                                                             new SimpleFileDialog.SimpleFileDialogListener()
             {
                     @Override

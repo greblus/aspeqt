@@ -71,6 +71,7 @@ public class SimpleFileDialog
 	private List<String> m_subdirs = null;
 	private SimpleFileDialogListener m_SimpleFileDialogListener = null;
 	private ArrayAdapter<String> m_listAdapter = null;
+        private int m_filter;
 
 	//////////////////////////////////////////////////////
 	// Callback interface for selected directory
@@ -81,7 +82,7 @@ public class SimpleFileDialog
 	}
 
 
-	public SimpleFileDialog(Context context, String file_select_type, SimpleFileDialogListener SimpleFileDialogListener)
+        public SimpleFileDialog(Context context, String file_select_type, int filter, SimpleFileDialogListener SimpleFileDialogListener)
 	{
 		if (file_select_type.equals("FileOpen"))          Select_type = FileOpen;
 		else if (file_select_type.equals("FileSave"))     Select_type = FileSave;
@@ -91,6 +92,7 @@ public class SimpleFileDialog
 		m_context = context;
 		m_sdcardDirectory = Environment.getExternalStorageDirectory().getAbsolutePath();
 		m_SimpleFileDialogListener = SimpleFileDialogListener;
+                m_filter = filter;
 
 		try
 		{
@@ -239,8 +241,24 @@ public class SimpleFileDialog
 				else if (Select_type == FileSave || Select_type == FileOpen)
 				{
 
-                                        // Add file names to the list if we are doing a file save or file open operation
-                                        List<String> extensions = Arrays.asList(".atr", ".xfd", ".pro", ".xex", ".exe", ".com", ".cas");
+                                    List<String> extensions;
+
+                                    switch (m_filter) {
+                                        case 1:
+                                            extensions = Arrays.asList(".atr", ".xfd", ".pro");
+                                            break;
+                                        case 2:
+                                            extensions = Arrays.asList(".xex", ".exe", ".com");
+                                            break;
+                                        case 3:
+                                            extensions = Arrays.asList(".cas");
+                                            break;
+                                        default:
+                                            extensions = Arrays.asList("*");
+                                            break;
+                                        }
+
+                                       // Add file names to the list if we are doing a file save or file open operation
 
                                         for (String ext: extensions)
                                         {

@@ -1299,7 +1299,7 @@ void MainWindow::mountDiskImage(int no)
 //        dir = QFileInfo(diskWidgets[no].fileNameLabel->text()).absolutePath();
 //    }
 
-    QAndroidJniObject::callStaticMethod<void>("net/greblus/MyActivity", "runFileChooser", "()V");
+    QAndroidJniObject::callStaticMethod<void>("net/greblus/MyActivity", "runFileChooser", "(I)V", 1);
 
     QString fileName = NULL;
     do
@@ -1854,7 +1854,7 @@ void MainWindow::on_actionSaveSession_triggered()
 
 void MainWindow::on_actionBootExe_triggered()
 {
-    QAndroidJniObject::callStaticMethod<void>("net/greblus/MyActivity", "runFileChooser", "()V");
+    QAndroidJniObject::callStaticMethod<void>("net/greblus/MyActivity", "runFileChooser", "(I)V", 2);
 
     QString fileName = NULL;
     do
@@ -1891,7 +1891,7 @@ void MainWindow::textPrinterWindowClosed()
 
 void MainWindow::on_actionPlaybackCassette_triggered()
 {
-    QAndroidJniObject::callStaticMethod<void>("net/greblus/MyActivity", "runFileChooser", "()V");
+    QAndroidJniObject::callStaticMethod<void>("net/greblus/MyActivity", "runFileChooser", "(I)V", 3);
 
     QString fileName = NULL;
     do
