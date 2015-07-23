@@ -267,7 +267,7 @@ public class MyActivity extends QtActivity
             return ret;
     }
 
-    public static int getQueueStatus(int line) {
+    public static int getQueueStatus() {
 
         if (!ftDevice.isOpen()) {
             ftdiOpenDevice();
@@ -278,7 +278,7 @@ public class MyActivity extends QtActivity
         if (debug) {
             counter +=1;
             if (counter < 3) {
-                Log.i("FTDI", "getQueueStatus " + line + " " + ret );
+                Log.i("FTDI", "getQueueStatus: " + ret );
             } else {
                  if (counter == 3) Log.i("FTDI", "getQueueStatus! called too many times!");
                  if (counter > 50000) counter = 0;
@@ -287,29 +287,29 @@ public class MyActivity extends QtActivity
         return ret;
     }
 
-    public static boolean purge(int line) {
+    public static boolean purge() {
 
         if (!ftDevice.isOpen()) {
             ftdiOpenDevice();
         }
 
         boolean ret = ftDevice.purge((byte)(D2xxManager.FT_PURGE_TX | D2xxManager.FT_PURGE_RX));
-        if (debug) Log.i("FTDI", "purge " + line + " " + ret);
+        if (debug) Log.i("FTDI", "purge: " + ret);
         return ret;
     }
 
-    public static boolean purgeTX(int line) {
+    public static boolean purgeTX() {
 
         if (!ftDevice.isOpen()) {
             ftdiOpenDevice();
         }
 
         boolean ret = ftDevice.purge((byte)(D2xxManager.FT_PURGE_TX));
-        if (debug) Log.i("FTDI", "purgeTX " + line + " " + ret);
+        if (debug) Log.i("FTDI", "purgeTX: " + ret);
         return ret;
     }
 
-    public static boolean purgeRX(int line) {
+    public static boolean purgeRX() {
 
         boolean ret = false;
 
@@ -319,7 +319,7 @@ public class MyActivity extends QtActivity
 
         ret = ftDevice.purge((byte)(D2xxManager.FT_PURGE_RX));
 
-        if (debug) Log.i("FTDI", "purgeRX " + line + " " + ret);
+        if (debug) Log.i("FTDI", "purgeRX: " + ret);
 
         return ret;
     }
@@ -333,7 +333,7 @@ public class MyActivity extends QtActivity
         }
         try {
             ret = ftDevice.resetDevice();
-            if (debug) Log.i("FTDI", "resetDevice " + line + " " + ret);
+            if (debug) Log.i("FTDI", "resetDevice: " + ret);
         }
         catch(Exception e) {
             if (debug) Log.i("FTDI", e.getMessage(), e);
@@ -348,7 +348,7 @@ public class MyActivity extends QtActivity
         if (debug) Log.i("FTDI", msg);
     }
 
-    public static int getModemStatus(int line) {
+    public static int getModemStatus() {
 
         if (!ftDevice.isOpen()) {
             ftdiOpenDevice();
@@ -359,7 +359,7 @@ public class MyActivity extends QtActivity
         if (debug) {
             counter +=1;
             if (counter < 3) {
-                Log.i("FTDI", "getModemStatus " + line + ": " + ret);
+                Log.i("FTDI", "getModemStatus: " + ret);
             } else {
                  if (counter == 3 ) Log.i("FTDI", "getModemStatus called too many times!");
                  if (counter > 50000) counter = 0;
