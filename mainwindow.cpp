@@ -29,6 +29,8 @@
 #include "miscutils.h"
 #include <QAndroidJniObject>
 #include <jni.h>
+#include <QScreen>
+#include "math.h"
 
 AspeqtSettings *aspeqtSettings;
 MainWindow *mainWindow;
@@ -169,7 +171,16 @@ MainWindow::MainWindow(QWidget *parent)
     /* Setup UI */
     ui->setupUi(this);
 
-    /* Parse command line arguments:
+    /* I love ugly hacks */
+    QScreen *screen = qApp->screens().at(0);
+    float resx = screen->size().width()/screen->physicalDotsPerInchX();
+    float resy = screen->size().height()/screen->physicalDotsPerInchY();
+
+    float size = sqrt(resx*resx + resy*resy);
+
+    if (size < 4.5) ui->textEdit->setVisible(false);
+
+     /* Parse command line arguments:
       arg(1): session file (xxxxxxxx.aspeqt)   */
 
     QStringList AspeQtArgs = QCoreApplication::arguments();
