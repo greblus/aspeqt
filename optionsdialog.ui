@@ -116,9 +116,9 @@
   <widget class="QStackedWidget" name="stackedWidget">
    <property name="geometry">
     <rect>
-     <x>480</x>
-     <y>1</y>
-     <width>430</width>
+     <x>420</x>
+     <y>10</y>
+     <width>550</width>
      <height>600</height>
     </rect>
    </property>
@@ -129,7 +129,7 @@
     </sizepolicy>
    </property>
    <property name="currentIndex">
-    <number>0</number>
+    <number>2</number>
    </property>
    <widget class="QWidget" name="page_serialPort">
     <layout class="QVBoxLayout" name="verticalLayout_2">
@@ -299,7 +299,7 @@
           </property>
           <property name="font">
            <font>
-            <pointsize>8</pointsize>
+            <pointsize>12</pointsize>
            </font>
           </property>
           <property name="frame">
@@ -783,6 +783,10 @@
     <set>QDialogButtonBox::Cancel|QDialogButtonBox::Save</set>
    </property>
   </widget>
+  <zorder>treeWidget</zorder>
+  <zorder>stackedWidget</zorder>
+  <zorder>buttonBox</zorder>
+  <zorder>serialPortGroup</zorder>
  </widget>
  <resources/>
  <connections>

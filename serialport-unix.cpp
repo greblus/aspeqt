@@ -379,8 +379,7 @@ bool StandardSerialPortBackend::writeDataNak()
 bool StandardSerialPortBackend::writeComplete()
 {
     if (debug) qWarning() << "!i" << tr("writeComplete");
-    //SioWorker::usleep(300);
-    SioWorker::usleep(50);
+    SioWorker::usleep(300);
     return writeRawFrame(QByteArray(1, 67));
 }
 
