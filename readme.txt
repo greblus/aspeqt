@@ -3,8 +3,8 @@ AspeQt, Atari Serial Peripheral Emulator for Qt
 Android
 =======
 
-It's really a work in progress. Currently it supports 19200 bps only, booting atr files and xex 
-files works. Cas loading is not working yet.
+It's really a work in progress. Currently it supports booting atr and xex 
+files. Cas loading is not working yet, but it's on top of my TODO list now.
 
 What's necessary to use it:
 
@@ -17,7 +17,9 @@ What's necessary to use it:
 6. No drivers necessary (d2xx java driver is in the package).
 7. After you connect the SIO2PC-USB to your Android device it'll automatically
    launch AspeQt. If you have SIO2PC-USB from Lotharek, select DSR flow control
-   method and 19200 (won't work with faster speeds, I'm working on it).
+   method and set speed to 19200bps first, to see if it works at all. Feel free to 
+   experiment with higher speeds and Pokey divisors. Speed greatly depends on your 
+   device CPU speed and I/O performance.
 
 For the brave ones, who would like to compile or experiment with the code:
 
@@ -28,6 +30,8 @@ some videos of AspeQt on Android:
 
 https://www.youtube.com/watch?v=4nPa-w399y0
 https://www.youtube.com/watch?v=c8BRUNzVarc
+https://www.youtube.com/watch?v=JZhYxHLi-I8
+https://www.youtube.com/watch?v=x4FylJJehdA
 
 Summary
 =======
