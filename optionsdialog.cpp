@@ -21,14 +21,14 @@ OptionsDialog::OptionsDialog(QWidget *parent) :
     itemEmulation = m_ui->treeWidget->topLevelItem(1);
     itemI18n = m_ui->treeWidget->topLevelItem(2);
 
-#ifndef Q_OS_LINUX
-    m_ui->treeWidget->topLevelItem(0)->removeChild(itemAtariSio);
-#endif
+//#ifndef Q_OS_LINUX
+//    m_ui->treeWidget->topLevelItem(0)->removeChild(itemAtariSio);
+//#endif
 
     connect(this, SIGNAL(accepted()), this, SLOT(OptionsDialog_accepted()));
 
     /* Retrieve application settings */
-    m_ui->serialPortDeviceNameEdit->setText(aspeqtSettings->serialPortName());
+    //m_ui->serialPortDeviceNameEdit->setText(aspeqtSettings->serialPortName());
     m_ui->serialPortHandshakeCombo->setCurrentIndex(aspeqtSettings->serialPortHandshakingMethod());
     m_ui->serialPortBaudCombo->setCurrentIndex(aspeqtSettings->serialPortMaximumSpeed());
     m_ui->serialPortUseDivisorsBox->setChecked(aspeqtSettings->serialPortUsePokeyDivisors());
@@ -38,12 +38,12 @@ OptionsDialog::OptionsDialog(QWidget *parent) :
     m_ui->emulationHighSpeedExeLoaderBox->setChecked(aspeqtSettings->useHighSpeedExeLoader());
     m_ui->emulationUseCustomCasBaudBox->setChecked(aspeqtSettings->useCustomCasBaud());
     m_ui->emulationCustomCasBaudSpin->setValue(aspeqtSettings->customCasBaud());
-    m_ui->minimizeToTrayBox->setChecked(aspeqtSettings->minimizeToTray());    
+//    m_ui->minimizeToTrayBox->setChecked(aspeqtSettings->minimizeToTray());
     m_ui->saveWinPosBox->setChecked(aspeqtSettings->saveWindowsPos());
-    m_ui->saveDiskVisBox->setChecked(aspeqtSettings->saveDiskVis());
+//    m_ui->saveDiskVisBox->setChecked(aspeqtSettings->saveDiskVis());
     m_ui->filterUscore->setChecked(aspeqtSettings->filterUnderscore());
     m_ui->useLargerFont->setChecked(aspeqtSettings->useLargeFont());
-    m_ui->enableShade->setChecked(aspeqtSettings->enableShade());
+//    m_ui->enableShade->setChecked(aspeqtSettings->enableShade());
 
     switch (aspeqtSettings->backend()) {
         case 0:
@@ -57,7 +57,7 @@ OptionsDialog::OptionsDialog(QWidget *parent) :
             m_ui->treeWidget->setCurrentItem(itemAtariSio);
             break;
     }
-    m_ui->serialPortBox->setCheckState(itemStandard->checkState(0));
+   // m_ui->serialPortBox->setCheckState(itemStandard->checkState(0));
     m_ui->atariSioBox->setCheckState(itemAtariSio->checkState(0));
     
     /* list available translations */
@@ -101,7 +101,7 @@ void OptionsDialog::changeEvent(QEvent *e)
 
 void OptionsDialog::OptionsDialog_accepted()
 {
-    aspeqtSettings->setSerialPortName(m_ui->serialPortDeviceNameEdit->text());
+    //aspeqtSettings->setSerialPortName(m_ui->serialPortDeviceNameEdit->text());
     aspeqtSettings->setSerialPortHandshakingMethod(m_ui->serialPortHandshakeCombo->currentIndex());
     aspeqtSettings->setSerialPortMaximumSpeed(m_ui->serialPortBaudCombo->currentIndex());
     aspeqtSettings->setSerialPortUsePokeyDivisors(m_ui->serialPortUseDivisorsBox->isChecked());
@@ -111,12 +111,12 @@ void OptionsDialog::OptionsDialog_accepted()
     aspeqtSettings->setUseHighSpeedExeLoader(m_ui->emulationHighSpeedExeLoaderBox->isChecked());
     aspeqtSettings->setUseCustomCasBaud(m_ui->emulationUseCustomCasBaudBox->isChecked());
     aspeqtSettings->setCustomCasBaud(m_ui->emulationCustomCasBaudSpin->value());
-    aspeqtSettings->setMinimizeToTray(m_ui->minimizeToTrayBox->isChecked());
+//    aspeqtSettings->setMinimizeToTray(m_ui->minimizeToTrayBox->isChecked());
     aspeqtSettings->setsaveWindowsPos(m_ui->saveWinPosBox->isChecked());
-    aspeqtSettings->setsaveDiskVis(m_ui->saveDiskVisBox->isChecked());
+//    aspeqtSettings->setsaveDiskVis(m_ui->saveDiskVisBox->isChecked());
     aspeqtSettings->setfilterUnderscore(m_ui->filterUscore->isChecked());
     aspeqtSettings->setUseLargeFont(m_ui->useLargerFont->isChecked());
-    aspeqtSettings->setEnableShade(m_ui->enableShade->isChecked());
+//    aspeqtSettings->setEnableShade(m_ui->enableShade->isChecked());
 
     int backend = 0;
     if (itemAtariSio->checkState(0) == Qt::Checked) {
@@ -154,7 +154,7 @@ void OptionsDialog::on_treeWidget_itemClicked(QTreeWidgetItem* item, int /*colum
                (itemAtariSio->checkState(0) == Qt::Unchecked)) {
         item->setCheckState(0, Qt::Checked);
     }
-    m_ui->serialPortBox->setCheckState(itemStandard->checkState(0));
+    //m_ui->serialPortBox->setCheckState(itemStandard->checkState(0));
     m_ui->atariSioBox->setCheckState(itemAtariSio->checkState(0));
 }
 
