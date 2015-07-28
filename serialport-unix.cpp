@@ -481,7 +481,7 @@ bool StandardSerialPortBackend::writeRawFrame(const QByteArray &data)
     rest = data.count();
 
     for (int i = 0; i<rest; i++)
-        arr[i] = (quint8)(data.data()[i]&0xff);
+        arr[i] = (quint8)(data.at(i)&0xff);
 
     if (debug) {
      QAndroidJniObject msg = QAndroidJniObject::fromString("data.count():" + QString::number(rest));

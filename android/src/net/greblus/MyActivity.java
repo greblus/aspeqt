@@ -247,7 +247,7 @@ public class MyActivity extends QtActivity
 
         bbuf.position(total);
         for (int i=0; i<size; i++)
-            b[i] = (byte) (bbuf.get(i) & 0xff);
+            b[i] = (byte) (bbuf.get() & 0xff);
 
         ret = ftDevice.write(b, size, true);
 
