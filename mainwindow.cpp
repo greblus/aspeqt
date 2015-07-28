@@ -701,6 +701,19 @@ void MainWindow::on_actionToggleShade_triggered()
 void MainWindow::on_actionToggleMiniMode_triggered()
 {
     if(g_miniMode){
+        ui->horizontalFrame_1->setFixedHeight(56);
+        ui->buttonMountDisk_1->setFixedHeight(48);
+        ui->buttonMountDisk_1->setFixedWidth(48);
+        ui->buttonMountFolder_1->setFixedHeight(48);
+        ui->buttonMountFolder_1->setFixedWidth(48);
+        ui->buttonSave_1->setFixedHeight(48);
+        ui->buttonSave_1->setFixedWidth(48);
+        ui->autoSave_1->setFixedHeight(48);
+        ui->autoSave_1->setFixedWidth(48);
+        ui->buttonEditDisk_1->setFixedHeight(48);
+        ui->buttonEditDisk_1->setFixedWidth(48);
+        ui->buttonEject_1->setFixedHeight(48);
+        ui->buttonEject_1->setFixedWidth(48);
         ui->horizontalFrame_2->setVisible(true);
         ui->horizontalFrame_3->setVisible(true);
         ui->horizontalFrame_4->setVisible(true);
@@ -727,6 +740,19 @@ void MainWindow::on_actionToggleMiniMode_triggered()
         g_shadeMode = false;
     } else {
         g_savedGeometry = geometry();
+        ui->horizontalFrame_1->setFixedHeight(112);
+        ui->buttonMountDisk_1->setFixedHeight(96);
+        ui->buttonMountDisk_1->setFixedWidth(96);
+        ui->buttonMountFolder_1->setFixedHeight(96);
+        ui->buttonMountFolder_1->setFixedWidth(96);
+        ui->buttonSave_1->setFixedHeight(96);
+        ui->buttonSave_1->setFixedWidth(96);
+        ui->autoSave_1->setFixedHeight(96);
+        ui->autoSave_1->setFixedWidth(96);
+        ui->buttonEditDisk_1->setFixedHeight(96);
+        ui->buttonEditDisk_1->setFixedWidth(96);
+        ui->buttonEject_1->setFixedHeight(96);
+        ui->buttonEject_1->setFixedWidth(96);
         ui->horizontalFrame_2->setVisible(false);
         ui->horizontalFrame_3->setVisible(false);
         ui->horizontalFrame_4->setVisible(false);
@@ -1037,7 +1063,6 @@ void MainWindow::changeFonts()
         ui->labelImageProperties_4->setFont(font);
         ui->labelImageProperties_5->setFont(font);
         ui->labelImageProperties_6->setFont(font);
-
 } else {
         QFont font("MS Shell Dlg 2,10", 10, QFont::Normal);
         ui->labelFileName_1->setFont(font);
