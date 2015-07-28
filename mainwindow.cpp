@@ -1023,13 +1023,21 @@ void MainWindow::on_actionOptions_triggered()
 void MainWindow::changeFonts()
 {
     if (aspeqtSettings->useLargeFont()) {
-        QFont font("Arial Black", 12, QFont::Normal);
+        QFont font("Arial Black", 16, QFont::Normal);
         ui->labelFileName_1->setFont(font);
         ui->labelFileName_2->setFont(font);
         ui->labelFileName_3->setFont(font);
         ui->labelFileName_4->setFont(font);
         ui->labelFileName_5->setFont(font);
         ui->labelFileName_6->setFont(font);
+        font = QFont("Arial Black", 14, QFont::Normal);
+        ui->labelImageProperties_1->setFont(font);
+        ui->labelImageProperties_2->setFont(font);
+        ui->labelImageProperties_3->setFont(font);
+        ui->labelImageProperties_4->setFont(font);
+        ui->labelImageProperties_5->setFont(font);
+        ui->labelImageProperties_6->setFont(font);
+
 } else {
         QFont font("MS Shell Dlg 2,10", 10, QFont::Normal);
         ui->labelFileName_1->setFont(font);
