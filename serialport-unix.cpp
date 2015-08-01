@@ -492,12 +492,6 @@ bool StandardSerialPortBackend::writeRawFrame(const QByteArray &data)
     int timeOut = data.count() * 120000 / mSpeed + 10;
     int elapsed;
 
-    bool ret = QAndroidJniObject::callStaticMethod<jint>("net/greblus/MyActivity", "purge", "()Z");
-    if (!ret) {
-        if (debug) qCritical() << "!e" << tr("Cannot clear serial port: %1")
-                       .arg(lastErrorMessage());
-    }
-
     do {
         result = QAndroidJniObject::callStaticMethod<jint>("net/greblus/MyActivity", "ftdiWrite", "(II)I", rest, total);
 

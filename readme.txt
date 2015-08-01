@@ -3,12 +3,14 @@ AspeQt, Atari Serial Peripheral Emulator for Qt
 Android
 =======
 
-It's really a work in progress. Currently it supports booting atr and xex 
-files. Cas loading is not working yet, but it's on top of my TODO list now.
+It's a work in progress. Currently it already supports booting atr, xex 
+and cas file loading.
 
 What's necessary to use it:
 
-1. Android device with USB Host support (OTG support != USB Host support)
+1. Android device with USB Host Support.
+   Check USB Host Support with this tool:
+   https://play.google.com/store/apps/details?id=eu.chainfire.usbhostdiagnostics
 2. OTG cable.
 3. Sio2PC-USB (I used the one made by Lotharek, it has DSR line connected).
 4. I've tested it on Lark FreeMe 8" Android 4.2.2 tablet and Kazam 345 4.5"
@@ -18,8 +20,8 @@ What's necessary to use it:
 7. After you connect the SIO2PC-USB to your Android device it'll automatically
    launch AspeQt. If you have SIO2PC-USB from Lotharek, select DSR flow control
    method and set speed to 19200bps first, to see if it works at all. Feel free to 
-   experiment with higher speeds and Pokey divisors. Speed greatly depends on your 
-   device CPU speed and I/O performance.
+   experiment with higher speeds and Pokey divisors (HiSpeed OS required). Speed 
+   greatly depends on your device CPU speed and I/O performance.
 
 For the brave ones, who would like to compile or experiment with the code:
 
