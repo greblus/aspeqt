@@ -422,12 +422,6 @@ QByteArray StandardSerialPortBackend::readRawFrame(uint size, bool verbose)
     int timeOut = data.count() * 12000 / mSpeed + 10;
     int elapsed;
 
-    bool ret = QAndroidJniObject::callStaticMethod<jint>("net/greblus/MyActivity", "purge", "()Z");
-    if (!ret) {
-        if (debug) qCritical() << "!e" << tr("Cannot clear serial port read buffer: %1")
-                       .arg(lastErrorMessage());
-    }
-
     do {
         result =  QAndroidJniObject::callStaticMethod<jint>("net/greblus/MyActivity", "ftdiRead", "(II)I", rest, total);
 
@@ -443,7 +437,7 @@ QByteArray StandardSerialPortBackend::readRawFrame(uint size, bool verbose)
     data.clear();
     for (int i=0; i<size; i++)
     {
-        data[i] = (quint8)(arr[i] & 0xff);
+        data.insert(i, (quint8)(arr[i] & 0xff));
     }
 
     if (debug) {
