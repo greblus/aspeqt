@@ -137,16 +137,15 @@ public class MyActivity extends QtActivity
             HashMap<String, UsbDevice> deviceList = manager.getDeviceList();
             Iterator<UsbDevice> deviceIterator = deviceList.values().iterator();
 
-            if (deviceIterator.hasNext())
-                device = deviceIterator.next();
-            else
+            if (!deviceIterator.hasNext())
                 return 0;
 
-            while (deviceIterator.hasNext()) {
-                if ((device.getProductId()) == 24577 && (device.getVendorId() == 1027))
-                    break;
+            do {
                 device = deviceIterator.next();
-            }
+                if ((device.getVendorId() == 1027) && ((device.getProductId() == 24577) || (device.getProductId() == 33712)))
+                    break;
+            } while (deviceIterator.hasNext());
+
             if (debug) Log.i("USB", "Requesting permissions");
 
             manager.requestPermission(device, pintent);
