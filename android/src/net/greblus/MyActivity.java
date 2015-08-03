@@ -146,14 +146,13 @@ public class MyActivity extends QtActivity
                     break;
             } while (deviceIterator.hasNext());
 
-            if (debug) Log.i("USB", "Requesting permissions");
-
-            manager.requestPermission(device, pintent);
-
             try {
                 ftdid2xx = D2xxManager.getInstance(s_activity);
+                if (!ftdid2xx.isFtDevice(device))
+                    return 0;
+                if (debug) Log.i("USB", "Requesting permissions");
+                manager.requestPermission(device, pintent);
                 devCount = (int)ftdid2xx.createDeviceInfoList(s_activity);
-
                         if (devCount > 0) {
                             try {
                                 ftDevice = ftdid2xx.openByUsbDevice(s_activity, device);
