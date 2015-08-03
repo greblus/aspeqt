@@ -22,6 +22,7 @@ import android.app.PendingIntent;
 import android.content.Intent;
 import android.content.IntentFilter;
 import android.content.BroadcastReceiver;
+import android.widget.Toast;
 
 public class MyActivity extends QtActivity
 {
@@ -149,7 +150,7 @@ public class MyActivity extends QtActivity
             try {
                 ftdid2xx = D2xxManager.getInstance(s_activity);
                 if (!ftdid2xx.isFtDevice(device))
-                    return 0;
+                    return -1;
                 if (debug) Log.i("USB", "Requesting permissions");
                 manager.requestPermission(device, pintent);
                 devCount = (int)ftdid2xx.createDeviceInfoList(s_activity);

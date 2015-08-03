@@ -79,12 +79,14 @@ bool StandardSerialPortBackend::open()
 
     mHandle = QAndroidJniObject::callStaticMethod<jint>("net/greblus/MyActivity", "ftdiOpenDevice", "()I");
 
-
     if (mHandle == 0 || mHandle > 1000000) {
     if (debug) qCritical() << "!e" << tr("Cannot open serial port '%1': %2")
                        .arg(name, "No device connected!");
         return false;
     }
+
+    if (mHandle == -1)
+        qCritical() << "!e" << tr("No FTDI chip detected!");
 
     mMethod = aspeqtSettings->serialPortHandshakingMethod();
     mCanceled = false;
