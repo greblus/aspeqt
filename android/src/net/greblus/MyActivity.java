@@ -9,7 +9,7 @@ import org.qtproject.qt5.android.bindings.QtActivity;
 
 import com.ftdi.j2xx.D2xxManager;
 import com.ftdi.j2xx.FT_Device;
-import com.ftdi.j2xx.FT_EEPROM_232R;
+
 import android.content.Context;
 import java.nio.ByteBuffer;
 import java.nio.ByteOrder;
@@ -140,6 +140,7 @@ public class MyActivity extends QtActivity
 
             if (!deviceIterator.hasNext())
                 return 0;
+
             int ft2xx_pid;
             do {
                 device = deviceIterator.next();
@@ -157,16 +158,18 @@ public class MyActivity extends QtActivity
 
             try {
                 ftdid2xx = D2xxManager.getInstance(s_activity);
-                ftdid2xx.setVIDPID(1027, 33712);
+                devCount = (int)ftdid2xx.createDeviceInfoList(s_activity);
+
                 ftdid2xx.setVIDPID(1027, 33713);
                 ftdid2xx.setVIDPID(1027, 24597);
+                ftdid2xx.setVIDPID(1027, 33712);
 
                 if (!ftdid2xx.isFtDevice(device))
                     return -1;
 
                 if (debug) Log.i("USB", "Requesting permissions");
                 manager.requestPermission(device, pintent);
-                devCount = (int)ftdid2xx.createDeviceInfoList(s_activity);
+
                         if (devCount > 0) {
                             try {
                                 ftDevice = ftdid2xx.openByUsbDevice(s_activity, device);
