@@ -26,32 +26,29 @@ import android.widget.Toast;
 
 public class MyActivity extends QtActivity
 {
-    public static D2xxManager ftdid2xx=null;
-    public static FT_Device ftDevice = null;
-    public static int devCount = 0;
-    public static UsbManager manager;
-    public static PendingIntent pintent;
-    private static final String ACTION_USB_PERMISSION =
-        "com.android.example.USB_PERMISSION";
-    public static D2xxManager.FtDeviceInfoListNode devInfo;
-    public static ByteBuffer bbuf = ByteBuffer.allocateDirect(16384);
-    public static byte b[] = new byte [16384];
-    public static int ret;
-    public static int counter;
-    public static UsbDevice device;
-    public static native void sendBufAddr(ByteBuffer buf);
-    private static boolean debug = false;
-    public static String m_chosen;
-    public static int m_filter;
+        public static D2xxManager ftdid2xx=null;
+        public static FT_Device ftDevice = null;
+        public static int devCount = 0;
+        public static UsbManager manager;
+        public static PendingIntent pintent;
+        private static final String ACTION_USB_PERMISSION =
+            "com.android.example.USB_PERMISSION";
+        public static D2xxManager.FtDeviceInfoListNode devInfo;
+        public static ByteBuffer bbuf = ByteBuffer.allocateDirect(16384);
+        public static byte b[] = new byte [16384];
+        public static int ret;
+        public static int counter;
+        public static UsbDevice device;
+        public static native void sendBufAddr(ByteBuffer buf);
+        private static boolean debug = false;
+        public static String m_chosen;
+        public static int m_filter;
 
-    public static MyActivity s_activity = null;
+        public static MyActivity s_activity = null;
 
-        // every time you override a method, always make sure you
-	// then call super method as well
-	@Override
+        @Override
 	public void onCreate(Bundle savedInstanceState)
  	{
-
 		s_activity = this;
                 super.onCreate(savedInstanceState);
 
@@ -63,7 +60,6 @@ public class MyActivity extends QtActivity
         }
 
         public static void runFileChooser(int filter) {
-
             m_chosen = "None";
             m_filter = filter;
             MyActivity.s_activity.runOnUiThread( new FileChooser() );
@@ -71,7 +67,6 @@ public class MyActivity extends QtActivity
          }
 
          public static void runDirChooser() {
-
             m_chosen = "None";
             m_filter = 0;
             MyActivity.s_activity.runOnUiThread( new DirChooser() );
@@ -85,7 +80,6 @@ public class MyActivity extends QtActivity
                 s_activity = null;
                 ftdiCloseDevice();
 	}
-
 
         public void fileChooser()
         {
@@ -178,7 +172,7 @@ public class MyActivity extends QtActivity
                                     }
                                     finally {
                                         if (ftDevice == null) {
-                                            if (debug) Log.i("FTDI", "No Devices found");
+                                            if (debug) Log.i("FTDI", "No Devices opened!");
                                             return devCount;
                                         }
                                     }
@@ -214,52 +208,37 @@ public class MyActivity extends QtActivity
        }
 
      public static void ftdiCloseDevice() {
-        ftDevice.close();
+        if (ftDevice != null) ftDevice.close();
      }
 
      public static boolean setSpeed(int speed) {
          if (debug) Log.i("FTDI", "setBaudrate: " + speed);
+         if (ftDevice == null) return false;
          return ftDevice.setBaudRate(speed);
      }
 
-    public static int ftdiRead(int size, int total) {
+    public static int ftdiRead(int size, int total)
+    {
+        ret = ftDevice.read(b, size);
+        if (debug) Log.i("FTDI", "ftdiRead() size: " + size + " total: " + total + " ret: " + ret);
+        if (ret > 0) {
+            bbuf.position(total);
+            for (int i=0; i<ret; i++)
+                bbuf.put((byte) (b[i] & 0xff));
 
-    if (!ftDevice.isOpen()) {
-        ftdiOpenDevice();
-    }
-
-    ret = ftDevice.read(b, size);
-    if (debug) Log.i("FTDI", "ftdiRead() size: " + size + " total: " + total + " ret: " + ret);
-
-    if (ret > 0) {
-
-        bbuf.position(total);
-        for (int i=0; i<ret; i++)
-            bbuf.put((byte) (b[i] & 0xff));
-
-        //bbuf.put(b, total, ret);
-
-        if (debug) {
-            String tmp = "Java side buf = ";
-            for (int i=0; i<size-1; i++)
-                {
+            if (debug) {
+                String tmp = "Java side buf = ";
+                for (int i=0; i<size-1; i++) {
                     tmp +=  Integer.toString(0xff & b[i]) + ", ";
                 }
                 tmp = tmp.substring(0, tmp.length()-2);
-            Log.i("FTDI", tmp);
+                Log.i("FTDI", tmp);
+            }
         }
-    }
-
-    return ret;
-
+        return ret;
     }
 
     public static int ftdiWrite(int size, int total) {
-
-        if (!ftDevice.isOpen()) {
-            ftdiOpenDevice();
-        }
-
         bbuf.position(total);
         for (int i=0; i<size; i++)
             b[i] = (byte) (bbuf.get() & 0xff);
@@ -278,18 +257,11 @@ public class MyActivity extends QtActivity
                 Log.i("FTDI", tmp);
             }
         }
-
-            return ret;
+        return ret;
     }
 
     public static int getQueueStatus() {
-
-        if (!ftDevice.isOpen()) {
-            ftdiOpenDevice();
-        }
-
         int ret = ftDevice.getQueueStatus();
-
         if (debug) {
             counter +=1;
             if (counter < 3) {
@@ -303,49 +275,26 @@ public class MyActivity extends QtActivity
     }
 
     public static boolean purge() {
-
-        if (!ftDevice.isOpen()) {
-            ftdiOpenDevice();
-        }
-
         boolean ret = ftDevice.purge((byte)(D2xxManager.FT_PURGE_TX | D2xxManager.FT_PURGE_RX));
         if (debug) Log.i("FTDI", "purge: " + ret);
         return ret;
     }
 
     public static boolean purgeTX() {
-
-        if (!ftDevice.isOpen()) {
-            ftdiOpenDevice();
-        }
-
         boolean ret = ftDevice.purge((byte)(D2xxManager.FT_PURGE_TX));
         if (debug) Log.i("FTDI", "purgeTX: " + ret);
         return ret;
     }
 
     public static boolean purgeRX() {
-
         boolean ret = false;
-
-        if (!ftDevice.isOpen()) {
-            ftdiOpenDevice();
-        }
-
         ret = ftDevice.purge((byte)(D2xxManager.FT_PURGE_RX));
-
         if (debug) Log.i("FTDI", "purgeRX: " + ret);
-
         return ret;
     }
 
     public static boolean resetDevice(int line) {
-
         boolean ret = false;
-
-        if (!ftDevice.isOpen()) {
-            ftdiOpenDevice();
-        }
         try {
             ret = ftDevice.resetDevice();
             if (debug) Log.i("FTDI", "resetDevice: " + ret);
@@ -353,24 +302,15 @@ public class MyActivity extends QtActivity
         catch(Exception e) {
             if (debug) Log.i("FTDI", e.getMessage(), e);
         }
-
         return ret;
     }
 
-
     public static void qLog(String msg) {
-
         if (debug) Log.i("FTDI", msg);
     }
 
     public static int getModemStatus() {
-
-        if (!ftDevice.isOpen()) {
-            ftdiOpenDevice();
-        }
-
         ret = ftDevice.getModemStatus();
-
         if (debug) {
             counter +=1;
             if (counter < 3) {
@@ -384,19 +324,11 @@ public class MyActivity extends QtActivity
     }
 
     public static void restartInTask() {
-        if (!ftDevice.isOpen()) {
-            ftdiOpenDevice();
-        }
-
         if (debug) Log.i("FTDI", "restartInTask!");
         ftDevice.restartInTask();
     }
     
     public static void stopInTask() {
-        if (!ftDevice.isOpen()) {
-            ftdiOpenDevice();
-        }
-
         if (debug) Log.i("FTDI", "stopInTask!");
         ftDevice.stopInTask();
     }
@@ -443,7 +375,7 @@ class USBReceiver extends BroadcastReceiver {
                     Log.i("USB", "Device OK");
                 }
                 else {
-                    Log.i("USB", "permission denied for device " + device);
+                    Log.i("USB", "Permission denied for device " + device);
                 }
             }
         }
