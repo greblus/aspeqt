@@ -140,17 +140,30 @@ public class MyActivity extends QtActivity
 
             if (!deviceIterator.hasNext())
                 return 0;
-
+            int ft2xx_pid;
             do {
                 device = deviceIterator.next();
-                if ((device.getVendorId() == 1027) && ((device.getProductId() == 24577) || (device.getProductId() == 33712)))
+                ft2xx_pid = device.getProductId();
+                if ((device.getVendorId() == 1027) &&
+                   (
+                     (ft2xx_pid == 24577) || //Lotharek's Sio2PC-USB
+                     (ft2xx_pid == 33712) || //Ray's Sio2USB-1050PC
+                     (ft2xx_pid == 33713) ||
+                     (ft2xx_pid == 24597)    //Ray's Sio2PC-USB
+                   )
+                )
                     break;
             } while (deviceIterator.hasNext());
 
             try {
                 ftdid2xx = D2xxManager.getInstance(s_activity);
+                ftdid2xx.setVIDPID(1027, 33712);
+                ftdid2xx.setVIDPID(1027, 33713);
+                ftdid2xx.setVIDPID(1027, 24597);
+
                 if (!ftdid2xx.isFtDevice(device))
                     return -1;
+
                 if (debug) Log.i("USB", "Requesting permissions");
                 manager.requestPermission(device, pintent);
                 devCount = (int)ftdid2xx.createDeviceInfoList(s_activity);
