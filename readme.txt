@@ -20,15 +20,17 @@ What's necessary to use it:
 7. After you connect the SIO2PC-USB to your Android device it'll automatically
    launch AspeQt. If you have SIO2PC-USB from Lotharek, select DSR flow control
    method and set speed to 19200bps first, to see if it works at all. Feel free to 
-   experiment with higher speeds and Pokey divisors (HiSpeed OS required). Speed 
-   greatly depends on your device CPU speed and I/O performance.
+   experiment with higher speeds and Pokey divisors (HiSpeed OS, SDX or Qmeg 
+   is required for fast SIO routines). 
+   Speed greatly depends on your device CPU speed and I/O performance:
+   https://www.youtube.com/watch?v=-w4mppTym1I
 
 For the brave ones, who would like to compile or experiment with the code:
 
     * Use qt-opensource-windows-android-5.4.2, on Windows Qt5.5 has some JNI issues. 
       On Linux Qt5.5 works flawlessly.
 
-some videos of AspeQt on Android:
+some more videos of AspeQt on Android:
 
 https://www.youtube.com/watch?v=4nPa-w399y0
 https://www.youtube.com/watch?v=c8BRUNzVarc
@@ -64,8 +66,15 @@ Copyright Matthias Reichl <hias@horus.com>. Used in this package under GPL 2.0 l
 Atascii Fonts by Mark Simonson (http://members.bitstream.net/~marksim/atarimac).
 Used in this package under Freeware License.
 
-Contact concering this Android port:
+Contact concerning this Android port:
 ====================================
+
 Wiktor Grebla: greblus@gmail.com
 
-For SIO2PC-USB hardware purchase visit www.lotharek.pl
+For SIO2PC-USB hardware purchase visit: 
+
+www.lotharek.pl 
+
+or: 
+
+http://www.atari8warez.com/
