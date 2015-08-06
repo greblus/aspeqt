@@ -23,6 +23,7 @@ import android.content.Intent;
 import android.content.IntentFilter;
 import android.content.BroadcastReceiver;
 import android.widget.Toast;
+import android.view.WindowManager;
 
 public class MyActivity extends QtActivity
 {
@@ -55,6 +56,7 @@ public class MyActivity extends QtActivity
                 manager = (UsbManager)getSystemService(Context.USB_SERVICE);
                 pintent = PendingIntent.getBroadcast(this, 0, new Intent(ACTION_USB_PERMISSION), 0);
                 registerBroadcastReceiver();
+                getWindow().addFlags(WindowManager.LayoutParams.FLAG_KEEP_SCREEN_ON);
 
                 sendBufAddr(bbuf);
         }
