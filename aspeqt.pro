@@ -7,7 +7,7 @@ DEFINES += VERSION=\\\"1.00.Preview_6\\\"
 TARGET = AspeQt
 TEMPLATE = app
 CONFIG += qt
-QT += core gui network widgets printsupport androidextras
+QT += core gui network widgets printsupport
 CONFIG += mobility
 CONFIG += static
 MOBILITY = bearer
@@ -37,7 +37,19 @@ SOURCES += main.cpp \
 win32:LIBS += -lwinmm
 unix:LIBS += -lz
 win32:SOURCES += serialport-win32.cpp
-unix:SOURCES += serialport-unix.cpp
+unix:
+{
+    android: {
+    QT += androidextras
+    SOURCES += serialport-android.cpp
+    HEADERS += serialport-android.h
+    }
+
+    !android: {
+    SOURCES += serialport-unix.cpp
+    HEADERS += serialport-unix.h
+    }
+}
 HEADERS += mainwindow.h \
     serialport.h \
     sioworker.h \
@@ -62,7 +74,6 @@ HEADERS += mainwindow.h \
     logdisplaydialog.h \
 
 win32:HEADERS += serialport-win32.h
-unix:HEADERS += serialport-unix.h
 FORMS += mainwindow.ui \
     optionsdialog.ui \
     aboutdialog.ui \

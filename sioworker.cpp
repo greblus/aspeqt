@@ -71,9 +71,11 @@ void SioWorker::start(Priority p)
         case 0:
             mPort = new StandardSerialPortBackend(0);
             break;
+        #ifndef Q_OS_ANDROID
         case 1:
             mPort = new AtariSioBackend(0);
             break;
+        #endif
     }
 
     mustTerminate = false;
@@ -409,9 +411,11 @@ void CassetteWorker::start(Priority p)
         case 0:
             mPort = new StandardSerialPortBackend(0);
             break;
+        #ifndef Q_OS_ANDROID
         case 1:
             mPort = new AtariSioBackend(0);
             break;
+        #endif
     }
     QThread::start(p);
 }
