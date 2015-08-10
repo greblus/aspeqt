@@ -43,6 +43,11 @@ unix:
         QT += androidextras
         SOURCES += serialport-android.cpp
         HEADERS += serialport-android.h
+        FORMS += \
+            android/optionsdialog.ui \
+            android/autobootdialog.ui \
+            android/cassettedialog.ui \
+
         DISTFILES += \
             android/AndroidManifest.xml \
             android/gradle/wrapper/gradle-wrapper.jar \
@@ -56,7 +61,7 @@ unix:
         ANDROID_PACKAGE_SOURCE_DIR = $$PWD/android
     }
 
-    !android: {
+    linux:macx: {
     SOURCES += serialport-unix.cpp
     HEADERS += serialport-unix.h
     }
@@ -85,22 +90,27 @@ HEADERS += mainwindow.h \
     logdisplaydialog.h \
 
 win32:HEADERS += serialport-win32.h
-FORMS += mainwindow.ui \
+
+!android:FORMS += \
     optionsdialog.ui \
+    autobootdialog.ui \
+    cassettedialog.ui \
+
+FORMS += mainwindow.ui \
     aboutdialog.ui \
     createimagedialog.ui \
     diskeditdialog.ui \
-    autobootdialog.ui \
     textprinterwindow.ui \
-    cassettedialog.ui \
     docdisplaywindow.ui \
     bootoptionsdialog.ui \
     logdisplaydialog.ui
+
 RESOURCES += icons.qrc \
     atarifiles.qrc \
     i18n.qrc \
     documentation.qrc \
     images.qrc
+
 OTHER_FILES += \
     license.txt \
     history.txt \
@@ -108,6 +118,7 @@ OTHER_FILES += \
     AspeQt.rc \
     about.html \
     compile.txt \
+
 TRANSLATIONS = i18n/aspeqt_pl.ts \
                i18n/aspeqt_tr.ts \
                i18n/aspeqt_ru.ts \

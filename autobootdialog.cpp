@@ -14,9 +14,13 @@ AutoBootDialog::AutoBootDialog(QWidget *parent) :
 {
     ui->setupUi(this);
     ui->progressBar->setVisible(false);
+
+    #ifdef Q_OS_ANDROID
     connect(ui->pushButton_2, SIGNAL(clicked()), this, SLOT(reject()));
-//    connect(ui->buttonBox, SIGNAL(clicked(QAbstractButton*)), this, SLOT(onClick(QAbstractButton*)));
     connect(ui->pushButton, SIGNAL(clicked()), this, SLOT(reloadExe));
+    #else
+    connect(ui->buttonBox, SIGNAL(clicked(QAbstractButton*)), this, SLOT(onClick(QAbstractButton*)));
+    #endif
     reload = false;
     ui->progressBar->setVisible(true);
 }

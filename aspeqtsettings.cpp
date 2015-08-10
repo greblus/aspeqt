@@ -29,8 +29,9 @@ AspeqtSettings::AspeqtSettings()
     mSerialPortPokeyDivisor = mSettings->value("SerialPortPokeyDivisor", 6).toInt();
 
     mUseHighSpeedExeLoader = mSettings->value("UseHighSpeedExeLoader", false).toBool();
-
+    #ifndef Q_OS_ANDROID
     mAtariSioDriverName = mSettings->value("AtariSioDriverName", AtariSioBackend::defaultPortName()).toString();
+    #endif
     mAtariSioHandshakingMethod = mSettings->value("AtariSioHandshakingMethod", 0).toInt();
 
     mBackend = mSettings->value("Backend", 0).toInt();
@@ -147,7 +148,9 @@ void AspeqtSettings::saveSessionToFile(const QString &fileName)
     QSettings s(fileName, QSettings::IniFormat);
     s.beginGroup("AspeQt");
         mBackend = s.value("Backend", 0).toInt();
+        #ifndef Q_OS_ANDROID
         mAtariSioDriverName = s.value("AtariSioDriverName", AtariSioBackend::defaultPortName()).toString();
+        #endif
         mAtariSioHandshakingMethod = s.value("AtariSioHandshakingMethod", 0).toInt();
         mSerialPortName = s.value("SerialPortName", StandardSerialPortBackend::defaultPortName()).toString();
         mSerialPortHandshakingMethod = s.value("HandshakingMethod", 0).toInt();

@@ -27,8 +27,12 @@
 
 #include "atarifilesystem.h"
 #include "miscutils.h"
+
+#ifdef Q_OS_ANDROID
 #include <QAndroidJniObject>
 #include <jni.h>
+#endif
+
 #include <QScreen>
 #include "math.h"
 
@@ -50,6 +54,7 @@ bool g_shadeMode = false;
 int g_savedWidth;
 bool g_logOpen;
 
+#ifdef Q_OS_ANDROID
 jbyte *bbuf = NULL;
 char * arr;
 
@@ -74,6 +79,7 @@ JNIEXPORT void JNICALL
 
     }
 }
+#endif
 
 void logMessageOutput(QtMsgType type, const QMessageLogContext &context, const QString &msg)
 // void logMessageOutput(QtMsgType type, const char *msg)
@@ -1342,7 +1348,7 @@ void MainWindow::mountDiskImage(int no)
 //    } else {
 //        dir = QFileInfo(diskWidgets[no].fileNameLabel->text()).absolutePath();
 //    }
-
+#ifdef Q_OS_ANDROID
     QAndroidJniObject::callStaticMethod<void>("net/greblus/MyActivity", "runFileChooser", "(I)V", 1);
 
     QString fileName = NULL;
@@ -1355,7 +1361,19 @@ void MainWindow::mountDiskImage(int no)
         if (fileName == "None") QThread::yieldCurrentThread();
       }
     while (fileName == "None");
-
+#else
+        QString fileName = QFileDialog::getOpenFileName(this,
+                                                        tr("Open a disk image"),
+                                                        dir,
+                                                        tr(
+    //                                                    "All Atari disk images (*.atr *.xfd *.atx *.pro);;"
+                                                        "All Atari disk images (*.atr *.xfd *.pro);;"
+                                                        "SIO2PC ATR images (*.atr);;"
+                                                        "XFormer XFD images (*.xfd);;"
+    //                                                    "ATX images (*.atx);;"
+                                                        "Pro images (*.pro);;"
+                                                        "All files (*)"));
+#endif
     if (fileName.isEmpty()) {
         return;
     }
@@ -1369,8 +1387,7 @@ void MainWindow::mountFolderImage(int no)
     QString dir;
 // Always mount from "last folder dir" //
     dir = aspeqtSettings->lastFolderImageDir();
-//    QString fileName = QFileDialog::getExistingDirectory(this, tr("Open a folder image"), dir);
-
+#ifdef Q_OS_ANDROID
     QAndroidJniObject::callStaticMethod<void>("net/greblus/MyActivity", "runDirChooser", "()V");
 
     QString fileName = NULL;
@@ -1383,8 +1400,10 @@ void MainWindow::mountFolderImage(int no)
         if (fileName == "None") QThread::yieldCurrentThread();
       }
     while (fileName == "None");
-
-    fileName = QDir::fromNativeSeparators(fileName);    //
+#else
+    QString fileName = QFileDialog::getExistingDirectory(this, tr("Open a folder image"), dir);
+#endif
+    fileName = QDir::fromNativeSeparators(fileName);
     if (fileName.isEmpty()) {
         return;
     }
@@ -1898,9 +1917,11 @@ void MainWindow::on_actionSaveSession_triggered()
 
 void MainWindow::on_actionBootExe_triggered()
 {
-    QAndroidJniObject::callStaticMethod<void>("net/greblus/MyActivity", "runFileChooser", "(I)V", 2);
-
+    QString dir = aspeqtSettings->lastExeDir();
     QString fileName = NULL;
+
+    #ifdef Q_OS_ANDROID
+    QAndroidJniObject::callStaticMethod<void>("net/greblus/MyActivity", "runFileChooser", "(I)V", 2);
     do
       {
         QAndroidJniObject jFileName = QAndroidJniObject::getStaticObjectField<jstring>("net/greblus/MyActivity", "m_chosen");
@@ -1910,7 +1931,13 @@ void MainWindow::on_actionBootExe_triggered()
         if (fileName == "None") QThread::yieldCurrentThread();
       }
     while (fileName == "None");
-
+    #else
+    fileName = QFileDialog::getOpenFileName(this, tr("Open executable"),
+                                 dir,
+                                 tr(
+                                         "Atari executables (*.xex *.com *.exe);;"
+                                         "All files (*)"));
+    #endif
     if (fileName.isEmpty()) {
         return;
     }
@@ -1935,9 +1962,9 @@ void MainWindow::textPrinterWindowClosed()
 
 void MainWindow::on_actionPlaybackCassette_triggered()
 {
-    QAndroidJniObject::callStaticMethod<void>("net/greblus/MyActivity", "runFileChooser", "(I)V", 3);
-
     QString fileName = NULL;
+    #ifdef Q_OS_ANDROID
+    QAndroidJniObject::callStaticMethod<void>("net/greblus/MyActivity", "runFileChooser", "(I)V", 3);
     do
       {
         QAndroidJniObject jFileName = QAndroidJniObject::getStaticObjectField<jstring>("net/greblus/MyActivity", "m_chosen");
@@ -1947,7 +1974,14 @@ void MainWindow::on_actionPlaybackCassette_triggered()
         if (fileName == "None") QThread::yieldCurrentThread();
       }
     while (fileName == "None");
-
+    #else
+    fileName = QFileDialog::getOpenFileName(this,
+                                                    tr("Open a cassette image"),
+                                                    aspeqtSettings->lastCasDir(),
+                                                    tr(
+                                                    "CAS images (*.cas);;"
+                                                    "All files (*)"));
+    #endif
     if (fileName.isEmpty()) {
         return;
     }
