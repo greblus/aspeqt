@@ -61,11 +61,12 @@ unix:
         ANDROID_PACKAGE_SOURCE_DIR = $$PWD/android
     }
 
-    linux:macx: {
+    linux||macx: {
     SOURCES += serialport-unix.cpp
     HEADERS += serialport-unix.h
     }
 }
+
 HEADERS += mainwindow.h \
     serialport.h \
     sioworker.h \
