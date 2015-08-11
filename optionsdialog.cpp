@@ -28,7 +28,9 @@ OptionsDialog::OptionsDialog(QWidget *parent) :
     connect(this, SIGNAL(accepted()), this, SLOT(OptionsDialog_accepted()));
 
     /* Retrieve application settings */
-    //m_ui->serialPortDeviceNameEdit->setText(aspeqtSettings->serialPortName());
+    #ifndef Q_OS_ANDROID
+    m_ui->serialPortDeviceNameEdit->setText(aspeqtSettings->serialPortName());
+    #endif
     m_ui->serialPortHandshakeCombo->setCurrentIndex(aspeqtSettings->serialPortHandshakingMethod());
     m_ui->serialPortBaudCombo->setCurrentIndex(aspeqtSettings->serialPortMaximumSpeed());
     m_ui->serialPortUseDivisorsBox->setChecked(aspeqtSettings->serialPortUsePokeyDivisors());
@@ -101,7 +103,9 @@ void OptionsDialog::changeEvent(QEvent *e)
 
 void OptionsDialog::OptionsDialog_accepted()
 {
-    //aspeqtSettings->setSerialPortName(m_ui->serialPortDeviceNameEdit->text());
+    #ifndef Q_OS_ANDROID
+    aspeqtSettings->setSerialPortName(m_ui->serialPortDeviceNameEdit->text());
+    #endif
     aspeqtSettings->setSerialPortHandshakingMethod(m_ui->serialPortHandshakeCombo->currentIndex());
     aspeqtSettings->setSerialPortMaximumSpeed(m_ui->serialPortBaudCombo->currentIndex());
     aspeqtSettings->setSerialPortUsePokeyDivisors(m_ui->serialPortUseDivisorsBox->isChecked());
