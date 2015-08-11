@@ -24,6 +24,7 @@
 #include <QtDebug>
 #include <QDesktopWidget>
 #include <QFont>
+#include <QTextCodec>
 
 #include "atarifilesystem.h"
 #include "miscutils.h"
@@ -173,6 +174,13 @@ MainWindow::MainWindow(QWidget *parent)
        
     /* Load translators */
     loadTranslators();
+
+    /* set codec for locale on Windows */
+    #ifdef Q_OS_WIN32
+    QTextCodec *codec = QTextCodec::codecForName("UTF-8");
+    QTextCodec::setCodecForLocale(codec);
+    #endif
+
     
     /* Setup UI */
     ui->setupUi(this);
@@ -973,6 +981,7 @@ void MainWindow::deviceStatusChanged(int deviceNo)
 
 void MainWindow::uiMessage(int t, QString message)
 {
+
     if (message.at(0) == '"') {
         message.remove(0, 1);
     }
