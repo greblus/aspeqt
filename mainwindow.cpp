@@ -269,8 +269,6 @@ MainWindow::MainWindow(QWidget *parent)
     ui->statusBar->addPermanentWidget(clearMessagesLabel);
     ui->textEdit->installEventFilter(mainWindow);
     changeFonts();
-    g_D9DOVisible =  aspeqtSettings->D9DOVisible();
-    showHideDrives();
 
     /* Connect to the network */
     QString netInterface;
@@ -790,39 +788,6 @@ void MainWindow::on_actionToggleMiniMode_triggered()
         QMainWindow::show();
         g_miniMode = true;
     }
-}
-void MainWindow::showHideDrives()
-{
-    if(!g_D9DOVisible) {
-        ui->actionHideShowDrives->setText(QApplication::translate("MainWindow", "Show drives D9-DO", 0));
-        ui->actionHideShowDrives->setStatusTip(QApplication::translate("MainWindow", "Show drives D9-DO", 0));
-        ui->actionHideShowDrives->setIcon(QIcon(":/icons/silk-icons/icons/drive_delete.png").pixmap(32, 32, QIcon::Normal, QIcon::On));
-     }
-}
-
-// Toggle Hide/Show drives D9-DO  //
-void MainWindow::on_actionHideShowDrives_triggered()
-{
-
-    if(g_D9DOVisible) {
-        ui->actionHideShowDrives->setText(QApplication::translate("MainWindow", "Show drives D9-DO", 0));
-        ui->actionHideShowDrives->setStatusTip(QApplication::translate("MainWindow", "Show drives D9-DO", 0));
-        ui->actionHideShowDrives->setIcon(QIcon(":/icons/silk-icons/icons/drive_delete.png").pixmap(32, 32, QIcon::Normal, QIcon::On));
-        //clear it later
-        setMinimumWidth(344);
-        setGeometry(geometry().x(), geometry().y(), 0, geometry().height());
-        saveWindowGeometry();
-        g_D9DOVisible = false;
-     } else {
-        ui->actionHideShowDrives->setText(QApplication::translate("MainWindow", "Hide drives D9-DO", 0));
-        ui->actionHideShowDrives->setStatusTip(QApplication::translate("MainWindow", "Hide drives D9-DO", 0));
-        ui->actionHideShowDrives->setIcon(QIcon(":/icons/silk-icons/icons/drive_add.png").pixmap(32, 32, QIcon::Normal, QIcon::On));
-        //clear it later
-        setMinimumWidth(688);
-        setGeometry(geometry().x(), geometry().y(), 0, geometry().height());
-        g_D9DOVisible = true;
-      }
-      g_miniMode = false;
 }
 
 // Toggle printer Emulation ON/OFF //
@@ -1896,8 +1861,6 @@ void MainWindow::on_actionOpenSession_triggered()
         is = aspeqtSettings->mountedImageSetting(i);
         mountFile(i, is.fileName, is.isWriteProtected);
     }
-    g_D9DOVisible =  aspeqtSettings->D9DOVisible();
-    on_actionHideShowDrives_triggered();
     setSession();
 }
 void MainWindow::on_actionSaveSession_triggered()

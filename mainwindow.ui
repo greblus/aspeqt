@@ -2522,7 +2522,6 @@
     <addaction name="actionNewImage"/>
     <addaction name="actionMountDisk"/>
     <addaction name="actionMountFolder"/>
-    <addaction name="actionHideShowDrives"/>
     <addaction name="actionEjectAll"/>
     <addaction name="separator"/>
     <addaction name="actionMountRecent_0"/>

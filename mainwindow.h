@@ -134,7 +134,6 @@ private slots:
     void on_actionOptions_triggered();
     void on_actionStartEmulation_triggered();
     void on_actionPrinterEmulation_triggered();
-    void on_actionHideShowDrives_triggered();
     void on_actionQuit_triggered();
     void on_actionAbout_triggered();
     void on_actionDocumentation_triggered();
@@ -216,7 +215,6 @@ private slots:
     void on_actionToggleMiniMode_triggered();
     void on_actionToggleShade_triggered();
     void on_actionLogWindow_triggered();
-    void showHideDrives();
     void sioFinished();
     void sioStarted();
     void sioStatusChanged(QString status);
