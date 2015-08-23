@@ -5629,7 +5629,7 @@
      <normaloff>:/icons/other-icons/MiniCooper 22.ico</normaloff>:/icons/other-icons/MiniCooper 22.ico</iconset>
    </property>
    <property name="text">
-    <string>Toggle mini mode</string>
+    <string>Toggle single slot mode</string>
    </property>
    <property name="shortcut">
     <string>Ctrl+M</string>

@@ -732,16 +732,9 @@ void MainWindow::on_actionToggleMiniMode_triggered()
         ui->horizontalFrame_5->setVisible(true);
         ui->horizontalFrame_6->setVisible(true);
 
-        if (g_D9DOVisible) {
-           //clear it later
-            setMinimumWidth(688);
-        } else {
-            setMinimumWidth(344);
-        }
         setMinimumHeight(426);
         setMaximumHeight(QWIDGETSIZE_MAX);
         ui->textEdit->setVisible(true);
-        ui->actionHideShowDrives->setEnabled(true);
         saveMiniWindowGeometry();
         setGeometry(g_savedGeometry);
         setWindowOpacity(1.0);
@@ -771,9 +764,9 @@ void MainWindow::on_actionToggleMiniMode_triggered()
         ui->horizontalFrame_5->setVisible(false);
         ui->horizontalFrame_6->setVisible(false);
         ui->textEdit->setVisible(false);
-        setMinimumWidth(400);
-        setMinimumHeight(100);
-        setMaximumHeight(100);
+        setMinimumWidth(1000);
+        setMinimumHeight(200);
+//        setMaximumHeight(100);
         setGeometry(aspeqtSettings->lastMiniHorizontalPos(), aspeqtSettings->lastMiniVerticalPos(),
                     minimumWidth(), minimumHeight());
         ui->actionHideShowDrives->setDisabled(true);
@@ -1861,6 +1854,7 @@ void MainWindow::on_actionOpenSession_triggered()
         is = aspeqtSettings->mountedImageSetting(i);
         mountFile(i, is.fileName, is.isWriteProtected);
     }
+
     setSession();
 }
 void MainWindow::on_actionSaveSession_triggered()
