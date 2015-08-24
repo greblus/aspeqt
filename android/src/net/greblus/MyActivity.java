@@ -225,8 +225,7 @@ public class MyActivity extends QtActivity
         if (debug) Log.i("FTDI", "ftdiRead() size: " + size + " total: " + total + " ret: " + ret);
         if (ret > 0) {
             bbuf.position(total);
-            for (int i=0; i<ret; i++)
-                bbuf.put((byte) (b[i] & 0xff));
+            bbuf.put(b, 0, ret);
 
             if (debug) {
                 String tmp = "Java side buf = ";
@@ -242,11 +241,8 @@ public class MyActivity extends QtActivity
 
     public static int ftdiWrite(int size, int total) {
         bbuf.position(total);
-        for (int i=0; i<size; i++)
-            b[i] = (byte) (bbuf.get() & 0xff);
-
-        ret = ftDevice.write(b, size, true);
-
+        bbuf.get(b, 0, size);
+        ret = ftDevice.write(b, size);
         if (ret > 0) {
             if (debug) {
                 String tmp = "Java side ftdiWrite(): ret= " + Integer.toString(ret) + " data: ";
@@ -255,7 +251,6 @@ public class MyActivity extends QtActivity
                     tmp +=  Integer.toString(b[i] & 0xff)  + " ";
 
                 }
-
                 Log.i("FTDI", tmp);
             }
         }
