@@ -1315,7 +1315,7 @@ void MainWindow::mountDiskImage(int no)
 //        dir = QFileInfo(diskWidgets[no].fileNameLabel->text()).absolutePath();
 //    }
 #ifdef Q_OS_ANDROID
-    QAndroidJniObject::callStaticMethod<void>("net/greblus/MyActivity", "runFileChooser", "(I)V", 1);
+    QAndroidJniObject::callStaticMethod<void>("net/greblus/MyActivity", "runFileChooser", "(II)V", 1, 0);
 
     QString fileName = NULL;
     do
@@ -1596,6 +1596,18 @@ void MainWindow::saveDiskAs(int no)
     }
 
     do {
+        #ifdef Q_OS_ANDROID
+            QAndroidJniObject::callStaticMethod<void>("net/greblus/MyActivity", "runFileChooser", "(II)V", 1, 1);
+            do
+              {
+                QAndroidJniObject jFileName = QAndroidJniObject::getStaticObjectField<jstring>("net/greblus/MyActivity", "m_chosen");
+                fileName = jFileName.toString();
+
+                if (fileName == "Cancelled") {fileName.clear(); break;}
+                if (fileName == "None") QThread::yieldCurrentThread();
+              }
+            while (fileName == "None");
+        #else
         fileName = QFileDialog::getSaveFileName(this, tr("Save image as"),
                                  dir,
                                  tr(
@@ -1606,6 +1618,7 @@ void MainWindow::saveDiskAs(int no)
 //                                                    "ATX images (*.atx);;"
                                                     "Pro images (*.pro);;"
                                                     "All files (*)"));
+        #endif
         if (fileName.isEmpty()) {
             return;
         }
@@ -1824,12 +1837,26 @@ void MainWindow::on_actionNewImage_triggered()
 
 void MainWindow::on_actionOpenSession_triggered()
 {
+    #ifdef Q_OS_ANDROID
+    QAndroidJniObject::callStaticMethod<void>("net/greblus/MyActivity", "runFileChooser", "(II)V", 4, 0);
+    QString fileName;
+    do
+      {
+        QAndroidJniObject jFileName = QAndroidJniObject::getStaticObjectField<jstring>("net/greblus/MyActivity", "m_chosen");
+        fileName = jFileName.toString();
+
+        if (fileName == "Cancelled") {fileName.clear(); break;}
+        if (fileName == "None") QThread::yieldCurrentThread();
+      }
+    while (fileName == "None");
+    #else
     QString dir = aspeqtSettings->lastSessionDir();
     QString fileName = QFileDialog::getOpenFileName(this, tr("Open session"),
                                  dir,
                                  tr(
                                          "AspeQt sessions (*.aspeqt);;"
                                          "All files (*)"));
+    #endif
     if (fileName.isEmpty()) {
         return;
     }
@@ -1859,12 +1886,26 @@ void MainWindow::on_actionOpenSession_triggered()
 }
 void MainWindow::on_actionSaveSession_triggered()
 {
+    #ifdef Q_OS_ANDROID
+    QAndroidJniObject::callStaticMethod<void>("net/greblus/MyActivity", "runFileChooser", "(II)V", 4, 1);
+    QString fileName;
+    do
+      {
+        QAndroidJniObject jFileName = QAndroidJniObject::getStaticObjectField<jstring>("net/greblus/MyActivity", "m_chosen");
+        fileName = jFileName.toString();
+
+        if (fileName == "Cancelled") {fileName.clear(); break;}
+        if (fileName == "None") QThread::yieldCurrentThread();
+      }
+    while (fileName == "None");
+    #else
     QString dir = aspeqtSettings->lastSessionDir();
     QString fileName = QFileDialog::getSaveFileName(this, tr("Save session as"),
                                  dir,
                                  tr(
                                          "AspeQt sessions (*.aspeqt);;"
                                          "All files (*)"));
+    #endif
     if (fileName.isEmpty()) {
         return;
     }
@@ -1886,7 +1927,7 @@ void MainWindow::on_actionBootExe_triggered()
     QString fileName = NULL;
 
     #ifdef Q_OS_ANDROID
-    QAndroidJniObject::callStaticMethod<void>("net/greblus/MyActivity", "runFileChooser", "(I)V", 2);
+    QAndroidJniObject::callStaticMethod<void>("net/greblus/MyActivity", "runFileChooser", "(II)V", 2, 0);
     do
       {
         QAndroidJniObject jFileName = QAndroidJniObject::getStaticObjectField<jstring>("net/greblus/MyActivity", "m_chosen");
@@ -1929,7 +1970,7 @@ void MainWindow::on_actionPlaybackCassette_triggered()
 {
     QString fileName = NULL;
     #ifdef Q_OS_ANDROID
-    QAndroidJniObject::callStaticMethod<void>("net/greblus/MyActivity", "runFileChooser", "(I)V", 3);
+    QAndroidJniObject::callStaticMethod<void>("net/greblus/MyActivity", "runFileChooser", "(II)V", 3, 0);
     do
       {
         QAndroidJniObject jFileName = QAndroidJniObject::getStaticObjectField<jstring>("net/greblus/MyActivity", "m_chosen");

@@ -44,6 +44,7 @@ public class MyActivity extends QtActivity
         private static boolean debug = false;
         public static String m_chosen;
         public static int m_filter;
+        public static String m_action;
 
         public static MyActivity s_activity = null;
 
@@ -61,9 +62,15 @@ public class MyActivity extends QtActivity
                 sendBufAddr(bbuf);
         }
 
-        public static void runFileChooser(int filter) {
+        public static void runFileChooser(int filter, int action) {
             m_chosen = "None";
             m_filter = filter;
+
+            if (action == 0)
+                m_action = "FileOpen";
+            else
+                m_action = "FileSave";
+
             MyActivity.s_activity.runOnUiThread( new FileChooser() );
 
          }
@@ -85,7 +92,7 @@ public class MyActivity extends QtActivity
 
         public void fileChooser()
         {
-            SimpleFileDialog FileOpenDialog =  new SimpleFileDialog(MyActivity.this, "FileOpen", m_filter,
+            SimpleFileDialog FileOpenDialog =  new SimpleFileDialog(MyActivity.this, m_action, m_filter,
                                                             new SimpleFileDialog.SimpleFileDialogListener()
             {
                     @Override

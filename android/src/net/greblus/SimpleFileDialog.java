@@ -253,6 +253,9 @@ public class SimpleFileDialog
                                         case 3:
                                             extensions = Arrays.asList(".cas");
                                             break;
+                                        case 4:
+                                            extensions = Arrays.asList(".aspeqt");
+                                            break;
                                         default:
                                             extensions = Arrays.asList("*");
                                             break;
