@@ -3,6 +3,10 @@ AspeQt, Atari Serial Peripheral Emulator for Qt
 Android
 =======
 
+Experimental branch using modified usb-serial-for-android driver:
+
+https://github.com/mik3y/usb-serial-for-android 
+
 It's a work in progress. Currently it already supports booting atr, xex 
 and cas file loading.
 

@@ -244,16 +244,11 @@ QByteArray StandardSerialPortBackend::readCommandFrame()
                 return data;
             }
 
-            bool ret = QAndroidJniObject::callStaticMethod<jint>("net/greblus/MyActivity", "purge", "()Z");
+            bool ret = QAndroidJniObject::callStaticMethod<jint>("net/greblus/MyActivity", "purgeRX", "()Z");
             if (!ret) {
                 if (debug) qCritical() << "!e" << tr("Cannot clear serial port: %1")
                                .arg(lastErrorMessage());
             }
-
-            status = 0;
-            do {
-                status = QAndroidJniObject::callStaticMethod<jint>("net/greblus/MyActivity", "getQueueStatus", "()I");
-            } while (status < 4);
 
             data = readDataFrame(4, false);
 
@@ -261,7 +256,7 @@ QByteArray StandardSerialPortBackend::readCommandFrame()
                 do {
                    status = QAndroidJniObject::callStaticMethod<jint>("net/greblus/MyActivity", "getModemStatus", "()I");
                     if (status < 0) {
-                        if (debug) qCritical() << "!e" << tr("Cannot retrieve serial port status: %1 368").arg(lastErrorMessage());
+                        if (debug) qCritical() << "!e" << tr("Cannot retrieve serial port status: %1").arg(lastErrorMessage());
                         return data;
                     }
                 } while ((status & mask) && !mCanceled);

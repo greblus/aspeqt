@@ -3,19 +3,25 @@ package net.greblus;
 import android.widget.Toast;
 import android.os.Bundle;
 import java.lang.String;
+import java.util.List;
 import android.util.Log;
 
 import org.qtproject.qt5.android.bindings.QtActivity;
 
-import com.ftdi.j2xx.D2xxManager;
-import com.ftdi.j2xx.FT_Device;
+import com.hoho.android.usbserial.driver.UsbSerialPort;
+import com.hoho.android.usbserial.driver.UsbSerialProber;
+import com.hoho.android.usbserial.driver.UsbSerialDriver;
+import com.hoho.android.usbserial.driver.UsbSerialPort;
+import com.hoho.android.usbserial.driver.UsbId;
 
 import android.content.Context;
+import java.io.IOException;
 import java.nio.ByteBuffer;
 import java.nio.ByteOrder;
 
 import android.hardware.usb.UsbManager;
 import android.hardware.usb.UsbDevice;
+import android.hardware.usb.UsbDeviceConnection;
 import java.util.HashMap;
 import java.util.Iterator;
 import android.app.PendingIntent;
@@ -27,19 +33,18 @@ import android.view.WindowManager;
 
 public class MyActivity extends QtActivity
 {
-        public static D2xxManager ftdid2xx=null;
-        public static FT_Device ftDevice = null;
         public static int devCount = 0;
         public static UsbManager manager;
         public static PendingIntent pintent;
         private static final String ACTION_USB_PERMISSION =
             "com.android.example.USB_PERMISSION";
-        public static D2xxManager.FtDeviceInfoListNode devInfo;
         public static ByteBuffer bbuf = ByteBuffer.allocateDirect(16384);
         public static byte b[] = new byte [16384];
         public static int ret;
         public static int counter;
         public static UsbDevice device;
+        public static UsbSerialDriver driver;
+        public static UsbSerialPort sPort;
         public static native void sendBufAddr(ByteBuffer buf);
         private static boolean debug = false;
         public static String m_chosen;
@@ -159,76 +164,64 @@ public class MyActivity extends QtActivity
                     break;
             } while (deviceIterator.hasNext());
 
+            List<UsbSerialDriver> availableDrivers = UsbSerialProber.getDefaultProber().findAllDrivers(manager);
+
+            if (availableDrivers.isEmpty()) {
+                Log.i("FTDI", "No drivers found for attached usb devices");
+                return 0;
+            }
+
+            Log.i("FTDI", "Driver found for attached usb device");
+            driver = availableDrivers.get(0);
+
+            Log.i("FTDI", "Requesting permissions");
+            //device = driver.getDevice();
+            manager.requestPermission(device, pintent);
+            UsbDeviceConnection connection = manager.openDevice(device);
+
+            if (connection == null) Log.i("USB", "No permissions to open device");
+
+            sPort = driver.getPorts().get(0);
+
             try {
-                ftdid2xx = D2xxManager.getInstance(s_activity);
-                devCount = (int)ftdid2xx.createDeviceInfoList(s_activity);
-
-                ftdid2xx.setVIDPID(1027, 33713);
-                ftdid2xx.setVIDPID(1027, 24597);
-                ftdid2xx.setVIDPID(1027, 33712);
-
-                if (!ftdid2xx.isFtDevice(device))
-                    return -1;
-
-                if (debug) Log.i("USB", "Requesting permissions");
-                manager.requestPermission(device, pintent);
-
-                        if (devCount > 0) {
-                            try {
-                                ftDevice = ftdid2xx.openByUsbDevice(s_activity, device);
-                             } catch(NullPointerException e){
-                                        if (debug) Log.i("FTDI", e.getMessage(), e);
-                                    }
-                                    finally {
-                                        if (ftDevice == null) {
-                                            if (debug) Log.i("FTDI", "No Devices opened!");
-                                            return devCount;
-                                        }
-                                    }
-                            if (ftDevice.isOpen()) {
-                                devInfo = ftDevice.getDeviceInfo();
-                                ftDevice.setBitMode((byte)0, D2xxManager.FT_BITMODE_RESET);
-
-                                boolean ret = ftDevice.setFlowControl(D2xxManager.FT_FLOW_NONE, (byte) 0x00, (byte)0x00 );
-                                //boolean ret = ftDevice.setFlowControl(D2xxManager.FT_FLOW_DTR_DSR, (byte) 0x00, (byte)0x00 );
-                                if (debug) Log.i("FTDI", "setFlowControl " + ret);
-
-                                ftDevice.setDataCharacteristics(D2xxManager.FT_DATA_BITS_8, D2xxManager.FT_STOP_BITS_1,
-                                    D2xxManager.FT_PARITY_NONE);
-
-                                ftDevice.clrDtr();
-                                ftDevice.clrRts();
-
-                                ftDevice.setLatencyTimer((byte)16);
-                                //ftdid2xx.DriverParameters.setReadTimeout(5000);
-                                ftDevice.purge((byte)(D2xxManager.FT_PURGE_TX | D2xxManager.FT_PURGE_RX));
-                                ftDevice.restartInTask();
-
-                                if (debug) Log.i("FTDI", "Opened device " + devInfo.description);
-                            } else { if (debug) Log.i("FTDI", "No device opened!"); return 0; }
-                        } else  if (debug) Log.i("FTDI", "No device connected!");
- 		} catch (D2xxManager.D2xxException ex) {
-                        ex.printStackTrace();
-                        //ftDevice.close();
-                    	}
-
-                    if (debug) Log.i("FTDI", "devCount: " + devCount);
-                    return devCount;
+                sPort.open(connection);
+                sPort.setParameters(19200, 8, UsbSerialPort.STOPBITS_1, UsbSerialPort.PARITY_NONE);
+            } catch (IOException e) {
+                Log.i("USB", "Can't open port");
+            }
+            Log.i("USB", "Device opened");
+            return 1;
        }
 
      public static void ftdiCloseDevice() {
-        if (ftDevice != null) ftDevice.close();
+         try {
+            if (sPort != null) sPort.close();
+         } catch (IOException e) {
+            Log.i("USB", "Can't close port");
+        }
      }
 
      public static boolean setSpeed(int speed) {
+         boolean ret = true;
          if (debug) Log.i("FTDI", "setBaudrate: " + speed);
-         if (ftDevice == null) return false;
-         return ftDevice.setBaudRate(speed);
+         try {
+            sPort.setBaudRate(speed);
+         } catch (IOException e) {
+           Log.i("USB", "Can't set speed");
+           ret = false;
+       }
+       return ret;
      }
 
     public static int ftdiRead(int size, int total)
     {
-        ret = ftDevice.read(b, size);
+        int ret = 0;
+        try {
+            ret = sPort.read(b, 5000);
+        } catch (IOException e) {
+           Log.i("USB", "Can't read");
+        }
+
         if (debug) Log.i("FTDI", "ftdiRead() size: " + size + " total: " + total + " ret: " + ret);
         if (ret > 0) {
             bbuf.position(total);
@@ -247,9 +240,17 @@ public class MyActivity extends QtActivity
     }
 
     public static int ftdiWrite(int size, int total) {
+        int ret = 0;
+        byte[] tb = new byte[size];
+
         bbuf.position(total);
-        bbuf.get(b, 0, size);
-        ret = ftDevice.write(b, size);
+        bbuf.get(tb, 0, size);
+
+        try {
+            ret = sPort.write(tb, 1000);
+        } catch (IOException e) {
+           Log.i("USB", "Can't write");
+       }
         if (ret > 0) {
             if (debug) {
                 String tmp = "Java side ftdiWrite(): ret= " + Integer.toString(ret) + " data: ";
@@ -264,48 +265,39 @@ public class MyActivity extends QtActivity
         return ret;
     }
 
-    public static int getQueueStatus() {
-        int ret = ftDevice.getQueueStatus();
-        if (debug) {
-            counter +=1;
-            if (counter < 3) {
-                Log.i("FTDI", "getQueueStatus: " + ret );
-            } else {
-                 if (counter == 3) Log.i("FTDI", "getQueueStatus! called too many times!");
-                 if (counter > 50000) counter = 0;
-            }
-        }
-        return ret;
-    }
-
     public static boolean purge() {
-        boolean ret = ftDevice.purge((byte)(D2xxManager.FT_PURGE_TX | D2xxManager.FT_PURGE_RX));
+        boolean ret;
+        try {
+            ret = sPort.purgeHwBuffers(true, true);
+        } catch (IOException e) {
+            Log.i("USB", "Can't purge");
+            ret = false;
+        }
         if (debug) Log.i("FTDI", "purge: " + ret);
         return ret;
     }
 
     public static boolean purgeTX() {
-        boolean ret = ftDevice.purge((byte)(D2xxManager.FT_PURGE_TX));
+        boolean ret;
+        try {
+            ret = sPort.purgeHwBuffers(false, true);
+        } catch (IOException e) {
+            Log.i("USB", "Can't purge TX buffer");
+            ret = false;
+        }
         if (debug) Log.i("FTDI", "purgeTX: " + ret);
         return ret;
     }
 
     public static boolean purgeRX() {
-        boolean ret = false;
-        ret = ftDevice.purge((byte)(D2xxManager.FT_PURGE_RX));
-        if (debug) Log.i("FTDI", "purgeRX: " + ret);
-        return ret;
-    }
-
-    public static boolean resetDevice(int line) {
-        boolean ret = false;
+        boolean ret;
         try {
-            ret = ftDevice.resetDevice();
-            if (debug) Log.i("FTDI", "resetDevice: " + ret);
-        }
-        catch(Exception e) {
-            if (debug) Log.i("FTDI", e.getMessage(), e);
-        }
+            ret = sPort.purgeHwBuffers(true, false);
+        } catch (IOException e) {
+            Log.i("USB", "Can't purge RX buffer");
+            ret = false;
+       }
+        if (debug) Log.i("FTDI", "purgeRX: " + ret);
         return ret;
     }
 
@@ -314,7 +306,13 @@ public class MyActivity extends QtActivity
     }
 
     public static int getModemStatus() {
-        ret = ftDevice.getModemStatus();
+        int ret = -2;
+        try {
+            ret = sPort.getStatus();
+        } catch (IOException e) {
+            Log.i("USB", "Can't get modem status");
+            ret = -1;
+        }
         if (debug) {
             counter +=1;
             if (counter < 3) {
@@ -325,16 +323,6 @@ public class MyActivity extends QtActivity
             }
         }
         return ret;
-    }
-
-    public static void restartInTask() {
-        if (debug) Log.i("FTDI", "restartInTask!");
-        ftDevice.restartInTask();
-    }
-    
-    public static void stopInTask() {
-        if (debug) Log.i("FTDI", "stopInTask!");
-        ftDevice.stopInTask();
     }
 }
 
