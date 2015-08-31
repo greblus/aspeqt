@@ -54,7 +54,7 @@ bool StandardSerialPortBackend::open()
 
     QString name = aspeqtSettings->serialPortName();
 
-    mHandle = QAndroidJniObject::callStaticMethod<jint>("net/greblus/MyActivity", "ftdiOpenDevice", "()I");
+    mHandle = QAndroidJniObject::callStaticMethod<jint>("net/greblus/MyActivity", "openDevice", "()I");
 
     if (mHandle == 0 || mHandle > 1000000) {
     if (debug) qCritical() << "!e" << tr("Cannot open serial port '%1': %2")
@@ -63,7 +63,7 @@ bool StandardSerialPortBackend::open()
     }
 
     if (mHandle == -1)
-        qCritical() << "!e" << tr("No FTDI chip detected!");
+        qCritical() << "!e" << tr("No SIO2PC device detected!");
 
     mMethod = aspeqtSettings->serialPortHandshakingMethod();
     mCanceled = false;
@@ -105,7 +105,7 @@ void StandardSerialPortBackend::close()
 {
     if (debug) qWarning() << "!i" << tr("close");
     cancel();
-    QAndroidJniObject::callStaticMethod<jint>("net/greblus/MyActivity", "ftdiCloseDevice", "()V");
+    QAndroidJniObject::callStaticMethod<jint>("net/greblus/MyActivity", "closeDevice", "()V");
     mHandle = -1;
 }
 
@@ -199,16 +199,19 @@ QByteArray StandardSerialPortBackend::readCommandFrame()
 
     switch (mMethod) {
     case 0:
-        mask = 64;
+        //RI: FTDI:64 PL2303:8
+        mask = 64 | 8;
         break;
     case 1:
-        mask = 32;
+        //DSR: FTDI:32 PL2303:2
+        mask = 32 | 2;
         break;
     case 2:
-        mask = 16;
+        //CTS: FTDI:16 PL2303:128
+        mask = 16 | 128;
         break;
     default:
-        mask = 32;
+        mask = 32 | 2;
     }
 
         int status = -1;
@@ -394,7 +397,7 @@ QByteArray StandardSerialPortBackend::readRawFrame(uint size, bool verbose)
     int elapsed;
 
     do {
-        result =  QAndroidJniObject::callStaticMethod<jint>("net/greblus/MyActivity", "ftdiRead", "(II)I", rest, total);
+        result =  QAndroidJniObject::callStaticMethod<jint>("net/greblus/MyActivity", "read", "(II)I", rest, total);
 
         if (result < 0) {
             result = 0;
@@ -458,10 +461,10 @@ bool StandardSerialPortBackend::writeRawFrame(const QByteArray &data)
     int elapsed;
 
     do {
-        result = QAndroidJniObject::callStaticMethod<jint>("net/greblus/MyActivity", "ftdiWrite", "(II)I", rest, total);
+        result = QAndroidJniObject::callStaticMethod<jint>("net/greblus/MyActivity", "write", "(II)I", rest, total);
 
         if (debug) {
-            QAndroidJniObject msg = QAndroidJniObject::fromString("Qt5 side: ftdiWrite() result:" + QString::number(result));
+            QAndroidJniObject msg = QAndroidJniObject::fromString("Qt5 side: Write() result:" + QString::number(result));
             QAndroidJniObject::callStaticMethod<void>("net/greblus/MyActivity", "qLog", "(Ljava/lang/String;)V", msg.object<jstring>() );
         }
 

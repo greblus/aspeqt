@@ -42,7 +42,7 @@ public class MyActivity extends QtActivity
         public static byte b[] = new byte [16384];
         public static int ret;
         public static int counter;
-        public static UsbDevice device;
+        public static UsbDevice device = null;
         public static UsbSerialDriver driver;
         public static UsbSerialPort sPort;
         public static native void sendBufAddr(ByteBuffer buf);
@@ -92,7 +92,7 @@ public class MyActivity extends QtActivity
 	{
                 super.onDestroy();
                 s_activity = null;
-                ftdiCloseDevice();
+                closeDevice();
 	}
 
         public void fileChooser()
@@ -142,44 +142,49 @@ public class MyActivity extends QtActivity
                 }
         }
 
-        public static int ftdiOpenDevice() {
+        public static int openDevice() {
             HashMap<String, UsbDevice> deviceList = manager.getDeviceList();
             Iterator<UsbDevice> deviceIterator = deviceList.values().iterator();
 
             if (!deviceIterator.hasNext())
                 return 0;
 
-            int ft2xx_pid;
-            do {
-                device = deviceIterator.next();
-                ft2xx_pid = device.getProductId();
-                if ((device.getVendorId() == 1027) &&
-                   (
-                     (ft2xx_pid == 24577) || //Lotharek's Sio2PC-USB
-                     (ft2xx_pid == 33712) || //Ray's Sio2USB-1050PC
-                     (ft2xx_pid == 33713) ||
-                     (ft2xx_pid == 24597)    //Ray's Sio2PC-USB
-                   )
-                )
-                    break;
+                int dev_pid, dev_vid;
+                boolean dev_found = false;
+                 do {
+                     device = deviceIterator.next();
+                     dev_pid = device.getProductId();
+                     dev_vid = device.getVendorId();
+                     if ((dev_vid == 1027) &&
+                        (
+                          (dev_pid == 24577) || //Lotharek's Sio2PC-USB
+                          (dev_pid == 33712) || //Ray's Sio2USB-1050PC
+                          (dev_pid == 33713) ||
+                          (dev_pid == 24597)    //Ray's Sio2PC-USB
+                        )
+                    ) { dev_found = true; break; }
+
+                     if ((dev_vid  == 1659) && (dev_pid == 8963)) //PL2303
+                        { dev_found = true; break;}
+
             } while (deviceIterator.hasNext());
+
+            if (dev_found)
+                manager.requestPermission(device, pintent);
+            else
+                return 0;
 
             List<UsbSerialDriver> availableDrivers = UsbSerialProber.getDefaultProber().findAllDrivers(manager);
 
             if (availableDrivers.isEmpty()) {
-                Log.i("FTDI", "No drivers found for attached usb devices");
+                Log.i("USB", "No drivers found for attached usb devices");
                 return 0;
             }
 
-            Log.i("FTDI", "Driver found for attached usb device");
+            Log.i("USB", "Driver found for attached usb device");
             driver = availableDrivers.get(0);
 
-            Log.i("FTDI", "Requesting permissions");
-            //device = driver.getDevice();
-            manager.requestPermission(device, pintent);
             UsbDeviceConnection connection = manager.openDevice(device);
-
-            if (connection == null) Log.i("USB", "No permissions to open device");
 
             sPort = driver.getPorts().get(0);
 
@@ -193,7 +198,7 @@ public class MyActivity extends QtActivity
             return 1;
        }
 
-     public static void ftdiCloseDevice() {
+     public static void closeDevice() {
          try {
             if (sPort != null) sPort.close();
          } catch (IOException e) {
@@ -203,7 +208,7 @@ public class MyActivity extends QtActivity
 
      public static boolean setSpeed(int speed) {
          boolean ret = true;
-         if (debug) Log.i("FTDI", "setBaudrate: " + speed);
+         if (debug) Log.i("USB", "setBaudrate: " + speed);
          try {
             sPort.setBaudRate(speed);
          } catch (IOException e) {
@@ -213,7 +218,7 @@ public class MyActivity extends QtActivity
        return ret;
      }
 
-    public static int ftdiRead(int size, int total)
+    public static int read(int size, int total)
     {
         int ret = 0;
         try {
@@ -222,7 +227,7 @@ public class MyActivity extends QtActivity
            Log.i("USB", "Can't read");
         }
 
-        if (debug) Log.i("FTDI", "ftdiRead() size: " + size + " total: " + total + " ret: " + ret);
+        if (debug) Log.i("USB", "Read() size: " + size + " total: " + total + " ret: " + ret);
         if (ret > 0) {
             bbuf.position(total);
             bbuf.put(b, 0, ret);
@@ -233,13 +238,13 @@ public class MyActivity extends QtActivity
                     tmp +=  Integer.toString(0xff & b[i]) + ", ";
                 }
                 tmp = tmp.substring(0, tmp.length()-2);
-                Log.i("FTDI", tmp);
+                Log.i("USB", tmp);
             }
         }
         return ret;
     }
 
-    public static int ftdiWrite(int size, int total) {
+    public static int write(int size, int total) {
         int ret = 0;
         byte[] tb = new byte[size];
 
@@ -253,13 +258,13 @@ public class MyActivity extends QtActivity
        }
         if (ret > 0) {
             if (debug) {
-                String tmp = "Java side ftdiWrite(): ret= " + Integer.toString(ret) + " data: ";
+                String tmp = "Java side Write(): ret= " + Integer.toString(ret) + " data: ";
                 for (int i=0; i<size; i++)
                 {
                     tmp +=  Integer.toString(b[i] & 0xff)  + " ";
 
                 }
-                Log.i("FTDI", tmp);
+                Log.i("USB", tmp);
             }
         }
         return ret;
@@ -273,7 +278,7 @@ public class MyActivity extends QtActivity
             Log.i("USB", "Can't purge");
             ret = false;
         }
-        if (debug) Log.i("FTDI", "purge: " + ret);
+        if (debug) Log.i("USB", "purge: " + ret);
         return ret;
     }
 
@@ -285,7 +290,7 @@ public class MyActivity extends QtActivity
             Log.i("USB", "Can't purge TX buffer");
             ret = false;
         }
-        if (debug) Log.i("FTDI", "purgeTX: " + ret);
+        if (debug) Log.i("USB", "purgeTX: " + ret);
         return ret;
     }
 
@@ -297,12 +302,12 @@ public class MyActivity extends QtActivity
             Log.i("USB", "Can't purge RX buffer");
             ret = false;
        }
-        if (debug) Log.i("FTDI", "purgeRX: " + ret);
+        if (debug) Log.i("USB", "purgeRX: " + ret);
         return ret;
     }
 
     public static void qLog(String msg) {
-        if (debug) Log.i("FTDI", msg);
+        if (debug) Log.i("USB", msg);
     }
 
     public static int getModemStatus() {
@@ -316,9 +321,9 @@ public class MyActivity extends QtActivity
         if (debug) {
             counter +=1;
             if (counter < 3) {
-                Log.i("FTDI", "getModemStatus: " + ret);
+                Log.i("USB", "getModemStatus: " + ret);
             } else {
-                 if (counter == 3 ) Log.i("FTDI", "getModemStatus called too many times!");
+                 if (counter == 3 ) Log.i("USB", "getModemStatus called too many times!");
                  if (counter > 50000) counter = 0;
             }
         }

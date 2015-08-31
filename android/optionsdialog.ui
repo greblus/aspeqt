@@ -75,7 +75,7 @@
     </property>
     <item>
      <property name="text">
-      <string>Sio2PC-USB (FT232)</string>
+      <string>Sio2PC-USB</string>
      </property>
      <property name="checkState">
       <enum>Checked</enum>
@@ -143,7 +143,7 @@
     </sizepolicy>
    </property>
    <property name="currentIndex">
-    <number>1</number>
+    <number>3</number>
    </property>
    <widget class="QWidget" name="page_serialPort">
     <layout class="QVBoxLayout" name="verticalLayout_2">
