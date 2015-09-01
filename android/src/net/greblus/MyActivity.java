@@ -222,7 +222,7 @@ public class MyActivity extends QtActivity
     {
         int ret = 0;
         try {
-            ret = sPort.read(b, 5000);
+            ret = sPort.read(b, 1000);
         } catch (IOException e) {
            Log.i("USB", "Can't read");
         }

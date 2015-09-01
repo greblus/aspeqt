@@ -31,7 +31,6 @@
 
 #ifdef Q_OS_ANDROID
 #include <QAndroidJniObject>
-#include <jni.h>
 #endif
 
 #include <QScreen>
@@ -55,10 +54,6 @@ bool g_shadeMode = false;
 int g_savedWidth;
 bool g_logOpen;
 
-#ifdef Q_OS_ANDROID
-jbyte *bbuf = NULL;
-char * arr;
-
 // ****************************** END OF GLOBALS ************************************//
 
 // Displayed only in debug mode    "!d"
@@ -67,20 +62,6 @@ char * arr;
 // Important       (blue)          "!i"
 // Warning         (brown)         "!w"
 // Error           (red)           "!e"
-
-extern "C" {
-
-JNIEXPORT void JNICALL
-    Java_net_greblus_MyActivity_sendBufAddr(JNIEnv *env/*env*/,
-    jobject /*obj*/, jobject buf)
-    {
-
-        bbuf = (jbyte *)env->GetDirectBufferAddress(buf);
-        arr = reinterpret_cast<char *>(bbuf);
-
-    }
-}
-#endif
 
 void logMessageOutput(QtMsgType type, const QMessageLogContext &context, const QString &msg)
 // void logMessageOutput(QtMsgType type, const char *msg)

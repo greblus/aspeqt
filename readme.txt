@@ -46,15 +46,13 @@ What's necessary to use it:
    Speed greatly depends on your CPU possibilities and I/O performance:
    https://www.youtube.com/watch?v=-w4mppTym1I
 
-   PL2303 I have won't open faster than at 34800bps and Pokey divisors do 
+   My PL2303 won't open with speed higher than 34800bps and also Pokey divisors do 
    not work.
 
 Videos of AspeQt on Android:
 ============================
 
 https://www.youtube.com/watch?v=xw8QZHCt5BY&list=PL_0_k9JuZLPiox8zAklF3qvG3SbsZ08g8
-
-https://www.youtube.com/watch?v=x4FylJJehdA
 
 Summary
 =======

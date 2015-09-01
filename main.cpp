@@ -4,9 +4,28 @@
 #include <QLibraryInfo>
 #include "mainwindow.h"
 
+#ifdef Q_OS_ANDROID
+#include <QAndroidJniObject>
+#include <jni.h>
+#endif
+
 #ifdef Q_OS_WIN
 #include <windows.h>
 #include <Mmsystem.h>
+#endif
+
+#ifdef Q_OS_ANDROID
+jbyte *jbuf = NULL;
+char *bbuf;
+extern "C" {
+    JNIEXPORT void JNICALL
+    Java_net_greblus_MyActivity_sendBufAddr(JNIEnv *env/*env*/,
+    jobject /*obj*/, jobject buf)
+        {
+            jbuf = (jbyte *)env->GetDirectBufferAddress(buf);
+            bbuf = reinterpret_cast<char *>(jbuf);
+        }
+}
 #endif
 
 int main(int argc, char *argv[])

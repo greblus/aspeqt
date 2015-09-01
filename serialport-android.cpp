@@ -13,7 +13,7 @@
 #include <unistd.h>
 #include <QAndroidJniObject>
 
-extern char * arr;
+extern char *bbuf;
 static bool debug = false;
 
 AbstractSerialPortBackend::AbstractSerialPortBackend(QObject *parent)
@@ -196,24 +196,22 @@ QByteArray StandardSerialPortBackend::readCommandFrame()
     QByteArray data;
 
     int mask;
-
     switch (mMethod) {
     case 0:
         //RI: FTDI:64 PL2303:8
-        mask = 64 | 8;
+        mask = 72;
         break;
     case 1:
         //DSR: FTDI:32 PL2303:2
-        mask = 32 | 2;
+        mask = 34;
         break;
     case 2:
         //CTS: FTDI:16 PL2303:128
-        mask = 16 | 128;
+        mask = 144;
         break;
     default:
-        mask = 32 | 2;
+        mask = 34;
     }
-
         int status = -1;
         int retries = 0, totalRetries = 0;
 
@@ -279,7 +277,7 @@ QByteArray StandardSerialPortBackend::readCommandFrame()
             } else {
                 retries++;
                 totalRetries++;
-                if (retries == 2) {
+                if (retries == 4) {
                     retries = 0;
                     if (mHighSpeed) {
                         setNormalSpeed();
@@ -411,14 +409,14 @@ QByteArray StandardSerialPortBackend::readRawFrame(uint size, bool verbose)
     data.clear();
     for (int i=0; i<size; i++)
     {
-        data.insert(i, (quint8)(arr[i] & 0xff));
+        data.insert(i, (quint8)(bbuf[i] & 0xff));
     }
 
     if (debug) {
         QString tmp;
         for (int i=0; i<data.count(); i++)
         {
-            tmp += QString::number(arr[i] & 0xff) + " ";
+            tmp += QString::number(bbuf[i] & 0xff) + " ";
         }
 
          qCritical() << "!e" << tr("readRawFrame: %1").arg(tmp);
@@ -449,7 +447,7 @@ bool StandardSerialPortBackend::writeRawFrame(const QByteArray &data)
     rest = data.count();
 
     for (int i = 0; i<rest; i++)
-        arr[i] = (quint8)(data.at(i)&0xff);
+        bbuf[i] = (quint8)(data.at(i)&0xff);
 
     if (debug) {
      QAndroidJniObject msg = QAndroidJniObject::fromString("data.count():" + QString::number(rest));
@@ -457,7 +455,7 @@ bool StandardSerialPortBackend::writeRawFrame(const QByteArray &data)
     }
 
     QTime startTime = QTime::currentTime();
-    int timeOut = data.count() * 120000 / mSpeed + 10;
+    int timeOut = data.count() * 12000 / mSpeed + 10;
     int elapsed;
 
     do {
@@ -479,7 +477,7 @@ bool StandardSerialPortBackend::writeRawFrame(const QByteArray &data)
 
             for (int i=0; i<data.count(); i++)
             {
-                tmp += QString::number(arr[i] & 0xff) + " ";
+                tmp += QString::number(bbuf[i] & 0xff) + " ";
             }
 
             qCritical() << "!e" << tr("writeRawFrame: %1").arg(tmp);
