@@ -277,7 +277,7 @@ QByteArray StandardSerialPortBackend::readCommandFrame()
             } else {
                 retries++;
                 totalRetries++;
-                if (retries == 4) {
+                if (retries == 2) {
                     retries = 0;
                     if (mHighSpeed) {
                         setNormalSpeed();
