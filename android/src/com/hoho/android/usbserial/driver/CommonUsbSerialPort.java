@@ -126,6 +126,12 @@ abstract class CommonUsbSerialPort implements UsbSerialPort {
     public abstract void close() throws IOException;
 
     @Override
+    public abstract int sread(final byte[] dest, final int size, final int timeoutMillis) throws IOException;
+
+    @Override
+    public abstract int swrite(final byte[] src, final int size, final int timeoutMillis) throws IOException;
+
+    @Override
     public abstract int read(final byte[] dest, final int timeoutMillis) throws IOException;
 
     @Override

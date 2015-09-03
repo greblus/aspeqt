@@ -220,54 +220,58 @@ public class MyActivity extends QtActivity
 
     public static int read(int size, int total)
     {
-        int ret = 0;
-        try {
-            ret = sPort.read(b, 1000);
-        } catch (IOException e) {
-           Log.i("USB", "Can't read");
-        }
+        int ret = 0, s = size;
+        do {
+            try {
+                ret = sPort.sread(b, size, 1000);
+                s -= ret;
+            } catch (IOException e) {
+               Log.i("USB", "Can't read");
+            }
+        } while(s > 0);
 
         if (debug) Log.i("USB", "Read() size: " + size + " total: " + total + " ret: " + ret);
-        if (ret > 0) {
-            bbuf.position(total);
-            bbuf.put(b, 0, ret);
 
-            if (debug) {
-                String tmp = "Java side buf = ";
-                for (int i=0; i<size-1; i++) {
-                    tmp +=  Integer.toString(0xff & b[i]) + ", ";
-                }
-                tmp = tmp.substring(0, tmp.length()-2);
+        bbuf.position(total);
+        bbuf.put(b, 0, size);
+
+        if (debug) {
+        String tmp = "Java side buf = ";
+        for (int i=0; i<size-1; i++)
+            tmp +=  Integer.toString(0xff & b[i]) + ", ";
+
+        tmp = tmp.substring(0, tmp.length()-2);
                 Log.i("USB", tmp);
-            }
         }
-        return ret;
+        return size;
     }
 
     public static int write(int size, int total) {
-        int ret = 0;
-        byte[] tb = new byte[size];
+        int ret = 0, s = size;
 
         bbuf.position(total);
-        bbuf.get(tb, 0, size);
+        bbuf.get(b, 0, size);
 
-        try {
-            ret = sPort.write(tb, 1000);
-        } catch (IOException e) {
-           Log.i("USB", "Can't write");
-       }
-        if (ret > 0) {
-            if (debug) {
-                String tmp = "Java side Write(): ret= " + Integer.toString(ret) + " data: ";
-                for (int i=0; i<size; i++)
-                {
-                    tmp +=  Integer.toString(b[i] & 0xff)  + " ";
 
-                }
-                Log.i("USB", tmp);
+        do {
+            try {
+                ret = sPort.swrite(b, size, 1000);
+                s -= ret;
+            } catch (IOException e) {
+               Log.i("USB", "Can't write");
             }
+        } while(s > 0);
+
+        if (debug) {
+           String tmp = "Java side Write(): ret= " + Integer.toString(ret) + " data: ";
+           for (int i=0; i<size; i++)
+           {
+                tmp +=  Integer.toString(b[i] & 0xff)  + " ";
+
+           }
+                Log.i("USB", tmp);
         }
-        return ret;
+        return size;
     }
 
     public static boolean purge() {

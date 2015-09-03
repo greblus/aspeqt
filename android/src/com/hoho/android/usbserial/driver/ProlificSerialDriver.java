@@ -375,8 +375,14 @@ public class ProlificSerialDriver implements UsbSerialDriver {
 
         @Override
         public int read(byte[] dest, int timeoutMillis) throws IOException {
+            int size = dest.length;
+            return sread(dest, size, timeoutMillis);
+        }
+
+        @Override
+        public int sread(byte[] dest, int size, int timeoutMillis) throws IOException {
             synchronized (mReadBufferLock) {
-                int readAmt = Math.min(dest.length, mReadBuffer.length);
+                int readAmt = Math.min(size, mReadBuffer.length);
                 int numBytesRead = mConnection.bulkTransfer(mReadEndpoint, mReadBuffer,
                         readAmt, timeoutMillis);
                 if (numBytesRead < 0) {
@@ -389,16 +395,22 @@ public class ProlificSerialDriver implements UsbSerialDriver {
 
         @Override
         public int write(byte[] src, int timeoutMillis) throws IOException {
+            int size = src.length;
+            return swrite(src, size, timeoutMillis);
+        }
+
+        @Override
+        public int swrite(byte[] src, int size, int timeoutMillis) throws IOException {
             int offset = 0;
 
-            while (offset < src.length) {
+            while (offset < size) {
                 final int writeLength;
                 final int amtWritten;
 
                 synchronized (mWriteBufferLock) {
                     final byte[] writeBuffer;
 
-                    writeLength = Math.min(src.length - offset, mWriteBuffer.length);
+                    writeLength = Math.min(size - offset, mWriteBuffer.length);
                     if (offset == 0) {
                         writeBuffer = src;
                     } else {
@@ -414,7 +426,7 @@ public class ProlificSerialDriver implements UsbSerialDriver {
                 if (amtWritten <= 0) {
                     throw new IOException("Error writing " + writeLength
                             + " bytes at offset " + offset + " length="
-                            + src.length);
+                            + size);
                 }
 
                 offset += amtWritten;

@@ -241,14 +241,12 @@ public class FtdiSerialDriver implements UsbSerialDriver {
         }
 
 	@Override
-        public int getStatus() throws IOException {
+        public final int getStatus() throws IOException {
             byte[] buf = new byte[2];
-            int result = mConnection.controlTransfer(FTDI_DEVICE_IN_REQTYPE, SIO_POLL_MODEM_STATUS_REQUEST,
-                    0, 0, buf, 2, USB_READ_TIMEOUT_MILLIS);
-            Log.i("USB", "getStatus result=" + result + " buf=" + (buf[0]-1));
-            if (result < 0) {
-                throw new IOException("getStatus failed: result=" + result);
-            }
+            int result = -1;
+            do { result = mConnection.controlTransfer(FTDI_DEVICE_IN_REQTYPE, SIO_POLL_MODEM_STATUS_REQUEST,
+                        0, 0, buf, 2, USB_READ_TIMEOUT_MILLIS);
+            } while (result < 0);
             return buf[0]-1;
         }
 
@@ -291,14 +289,14 @@ public class FtdiSerialDriver implements UsbSerialDriver {
         }
 
         @Override
-        public int read(byte[] dest, int timeoutMillis) throws IOException {
+        public int sread(byte[] dest, int size, int timeoutMillis) throws IOException {
             final UsbEndpoint endpoint = mDevice.getInterface(0).getEndpoint(0);
 
             if (ENABLE_ASYNC_READS) {
                 final int readAmt;
                 synchronized (mReadBufferLock) {
                     // mReadBuffer is only used for maximum read size.
-                    readAmt = Math.min(dest.length, mReadBuffer.length);
+                    readAmt = Math.min(size, mReadBuffer.length);
                 }
 
                 final UsbRequest request = new UsbRequest();
@@ -316,7 +314,7 @@ public class FtdiSerialDriver implements UsbSerialDriver {
 
                 final int payloadBytesRead = buf.position() - MODEM_STATUS_HEADER_LENGTH;
                 if (payloadBytesRead > 0) {
-                    Log.d(TAG, HexDump.dumpHexString(dest, 0, Math.min(32, dest.length)));
+                    Log.d(TAG, HexDump.dumpHexString(dest, 0, Math.min(32, size)));
                     return payloadBytesRead;
                 } else {
                     return 0;
@@ -325,7 +323,7 @@ public class FtdiSerialDriver implements UsbSerialDriver {
                 final int totalBytesRead;
 
                 synchronized (mReadBufferLock) {
-                    final int readAmt = Math.min(dest.length, mReadBuffer.length);
+                    final int readAmt = Math.min(size, mReadBuffer.length);
                     totalBytesRead = mConnection.bulkTransfer(endpoint, mReadBuffer,
                             readAmt, timeoutMillis);
 
@@ -339,12 +337,19 @@ public class FtdiSerialDriver implements UsbSerialDriver {
         }
 
         @Override
-        public int write(byte[] src, int timeoutMillis) throws IOException {
+        public int read(byte[] dest, int timeoutMillis) throws IOException {
+            final int size = dest.length;
+            return sread(dest, size, timeoutMillis);
+        }
+
+
+        @Override
+        public int swrite(byte[] src, int size, int timeoutMillis) throws IOException {
             final UsbEndpoint endpoint = mDevice.getInterface(0).getEndpoint(1);
             Log.i("FTDI", "endpoints: " + mDevice.getInterface(0).getEndpointCount());
             int offset = 0;
 
-            while (offset < src.length) {
+            while (offset < size) {
                 final int writeLength;
                 final int amtWritten;
 
@@ -352,7 +357,7 @@ public class FtdiSerialDriver implements UsbSerialDriver {
 
                     final byte[] writeBuffer;
 
-                    writeLength = Math.min(src.length - offset, mWriteBuffer.length);
+                    writeLength = Math.min(size - offset, mWriteBuffer.length);
                     if (offset == 0) {
                         writeBuffer = src;
                     } else {
@@ -367,13 +372,19 @@ public class FtdiSerialDriver implements UsbSerialDriver {
 
                 if (amtWritten <= 0) {
                     throw new IOException("Error writing " + writeLength
-                            + " bytes at offset " + offset + " length=" + src.length);
+                            + " bytes at offset " + offset + " length=" + size);
                 }
 
                 Log.d(TAG, "Wrote amtWritten=" + amtWritten + " attempted=" + writeLength);
                 offset += amtWritten;
             }
             return offset;
+        }
+
+        @Override
+        public int write(byte[] src, int timeoutMillis) throws IOException {
+            final int size = src.length;
+            return swrite(src, size, timeoutMillis);
         }
 
         @Override

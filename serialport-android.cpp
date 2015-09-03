@@ -245,7 +245,7 @@ QByteArray StandardSerialPortBackend::readCommandFrame()
                 return data;
             }
 
-            bool ret = QAndroidJniObject::callStaticMethod<jint>("net/greblus/MyActivity", "purgeRX", "()Z");
+            bool ret = QAndroidJniObject::callStaticMethod<jint>("net/greblus/MyActivity", "purge", "()Z");
             if (!ret) {
                 if (debug) qCritical() << "!e" << tr("Cannot clear serial port: %1")
                                .arg(lastErrorMessage());

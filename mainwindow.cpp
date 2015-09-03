@@ -173,7 +173,7 @@ MainWindow::MainWindow(QWidget *parent)
 
     float size = sqrt(resx*resx + resy*resy);
 
-    if (size < 4.5) ui->textEdit->setVisible(false);
+    if (size < 5) ui->textEdit->setVisible(false);
 
      /* Parse command line arguments:
       arg(1): session file (xxxxxxxx.aspeqt)   */
