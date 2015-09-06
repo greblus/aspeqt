@@ -4,7 +4,9 @@ AspeQt, Atari Serial Peripheral Emulator for Android
 Experimental branch using modified usb-serial-for-android driver:
 https://github.com/mik3y/usb-serial-for-android 
 
-Supports FTDI's FT232 and Prolific's PL2303 chips.
+Supports FTDI's FT232 and Prolific's PL2303 chips (support for PL2303 is 
+currently broken. What works for FTDI doesn't work for Prolific, have 
+to find a good timing for both).
 
 Previous version with FT232 support only using ftd2xx Java driver 
 is available here: https://github.com/greblus/aspeqt/tree/ftd2xx
