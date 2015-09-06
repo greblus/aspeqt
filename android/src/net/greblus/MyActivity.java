@@ -252,7 +252,6 @@ public class MyActivity extends QtActivity
         bbuf.position(total);
         bbuf.get(b, 0, size);
 
-
         do {
             try {
                 ret = sPort.swrite(b, size, 1000);

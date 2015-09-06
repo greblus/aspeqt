@@ -46,7 +46,7 @@
        <bool>true</bool>
       </property>
       <property name="sizePolicy">
-       <sizepolicy hsizetype="Expanding" vsizetype="Fixed">
+       <sizepolicy hsizetype="Expanding" vsizetype="Expanding">
         <horstretch>0</horstretch>
         <verstretch>0</verstretch>
        </sizepolicy>
@@ -55,6 +55,12 @@
        <size>
         <width>330</width>
         <height>0</height>
+       </size>
+      </property>
+      <property name="maximumSize">
+       <size>
+        <width>16777215</width>
+        <height>100</height>
        </size>
       </property>
       <property name="contextMenuPolicy">
@@ -152,6 +158,12 @@
          <property name="enabled">
           <bool>true</bool>
          </property>
+         <property name="sizePolicy">
+          <sizepolicy hsizetype="Expanding" vsizetype="Expanding">
+           <horstretch>0</horstretch>
+           <verstretch>0</verstretch>
+          </sizepolicy>
+         </property>
          <property name="minimumSize">
           <size>
            <width>48</width>
@@ -160,8 +172,14 @@
          </property>
          <property name="maximumSize">
           <size>
-           <width>48</width>
-           <height>48</height>
+           <width>80</width>
+           <height>80</height>
+          </size>
+         </property>
+         <property name="sizeIncrement">
+          <size>
+           <width>1</width>
+           <height>1</height>
           </size>
          </property>
          <property name="iconSize">
@@ -177,6 +195,12 @@
          <property name="enabled">
           <bool>true</bool>
          </property>
+         <property name="sizePolicy">
+          <sizepolicy hsizetype="Expanding" vsizetype="Expanding">
+           <horstretch>0</horstretch>
+           <verstretch>0</verstretch>
+          </sizepolicy>
+         </property>
          <property name="minimumSize">
           <size>
            <width>48</width>
@@ -185,8 +209,14 @@
          </property>
          <property name="maximumSize">
           <size>
-           <width>48</width>
-           <height>48</height>
+           <width>80</width>
+           <height>80</height>
+          </size>
+         </property>
+         <property name="sizeIncrement">
+          <size>
+           <width>1</width>
+           <height>1</height>
           </size>
          </property>
          <property name="iconSize">
@@ -202,6 +232,12 @@
          <property name="enabled">
           <bool>true</bool>
          </property>
+         <property name="sizePolicy">
+          <sizepolicy hsizetype="Expanding" vsizetype="Expanding">
+           <horstretch>0</horstretch>
+           <verstretch>0</verstretch>
+          </sizepolicy>
+         </property>
          <property name="minimumSize">
           <size>
            <width>48</width>
@@ -210,8 +246,14 @@
          </property>
          <property name="maximumSize">
           <size>
-           <width>48</width>
-           <height>48</height>
+           <width>80</width>
+           <height>80</height>
+          </size>
+         </property>
+         <property name="sizeIncrement">
+          <size>
+           <width>1</width>
+           <height>1</height>
           </size>
          </property>
          <property name="iconSize">
@@ -230,6 +272,12 @@
          <property name="enabled">
           <bool>true</bool>
          </property>
+         <property name="sizePolicy">
+          <sizepolicy hsizetype="Expanding" vsizetype="Expanding">
+           <horstretch>0</horstretch>
+           <verstretch>0</verstretch>
+          </sizepolicy>
+         </property>
          <property name="minimumSize">
           <size>
            <width>48</width>
@@ -238,8 +286,14 @@
          </property>
          <property name="maximumSize">
           <size>
-           <width>48</width>
-           <height>48</height>
+           <width>80</width>
+           <height>80</height>
+          </size>
+         </property>
+         <property name="sizeIncrement">
+          <size>
+           <width>1</width>
+           <height>1</height>
           </size>
          </property>
          <property name="text">
@@ -261,6 +315,12 @@
          <property name="enabled">
           <bool>true</bool>
          </property>
+         <property name="sizePolicy">
+          <sizepolicy hsizetype="Expanding" vsizetype="Expanding">
+           <horstretch>0</horstretch>
+           <verstretch>0</verstretch>
+          </sizepolicy>
+         </property>
          <property name="minimumSize">
           <size>
            <width>48</width>
@@ -269,8 +329,14 @@
          </property>
          <property name="maximumSize">
           <size>
-           <width>48</width>
-           <height>48</height>
+           <width>80</width>
+           <height>80</height>
+          </size>
+         </property>
+         <property name="sizeIncrement">
+          <size>
+           <width>1</width>
+           <height>1</height>
           </size>
          </property>
          <property name="iconSize">
@@ -413,6 +479,12 @@
          <property name="enabled">
           <bool>true</bool>
          </property>
+         <property name="sizePolicy">
+          <sizepolicy hsizetype="Expanding" vsizetype="Expanding">
+           <horstretch>0</horstretch>
+           <verstretch>0</verstretch>
+          </sizepolicy>
+         </property>
          <property name="minimumSize">
           <size>
            <width>48</width>
@@ -421,8 +493,14 @@
          </property>
          <property name="maximumSize">
           <size>
-           <width>48</width>
-           <height>48</height>
+           <width>80</width>
+           <height>80</height>
+          </size>
+         </property>
+         <property name="sizeIncrement">
+          <size>
+           <width>1</width>
+           <height>1</height>
           </size>
          </property>
          <property name="iconSize">
@@ -442,7 +520,7 @@
        <bool>true</bool>
       </property>
       <property name="sizePolicy">
-       <sizepolicy hsizetype="Expanding" vsizetype="Fixed">
+       <sizepolicy hsizetype="Expanding" vsizetype="Expanding">
         <horstretch>0</horstretch>
         <verstretch>0</verstretch>
        </sizepolicy>
@@ -451,6 +529,12 @@
        <size>
         <width>330</width>
         <height>0</height>
+       </size>
+      </property>
+      <property name="maximumSize">
+       <size>
+        <width>16777215</width>
+        <height>100</height>
        </size>
       </property>
       <property name="contextMenuPolicy">
@@ -548,6 +632,12 @@
          <property name="enabled">
           <bool>true</bool>
          </property>
+         <property name="sizePolicy">
+          <sizepolicy hsizetype="Expanding" vsizetype="Expanding">
+           <horstretch>0</horstretch>
+           <verstretch>0</verstretch>
+          </sizepolicy>
+         </property>
          <property name="minimumSize">
           <size>
            <width>48</width>
@@ -556,8 +646,14 @@
          </property>
          <property name="maximumSize">
           <size>
-           <width>48</width>
-           <height>48</height>
+           <width>80</width>
+           <height>80</height>
+          </size>
+         </property>
+         <property name="sizeIncrement">
+          <size>
+           <width>1</width>
+           <height>1</height>
           </size>
          </property>
          <property name="iconSize">
@@ -573,6 +669,12 @@
          <property name="enabled">
           <bool>true</bool>
          </property>
+         <property name="sizePolicy">
+          <sizepolicy hsizetype="Expanding" vsizetype="Expanding">
+           <horstretch>0</horstretch>
+           <verstretch>0</verstretch>
+          </sizepolicy>
+         </property>
          <property name="minimumSize">
           <size>
            <width>48</width>
@@ -581,8 +683,14 @@
          </property>
          <property name="maximumSize">
           <size>
-           <width>48</width>
-           <height>48</height>
+           <width>80</width>
+           <height>80</height>
+          </size>
+         </property>
+         <property name="sizeIncrement">
+          <size>
+           <width>1</width>
+           <height>1</height>
           </size>
          </property>
          <property name="iconSize">
@@ -598,6 +706,12 @@
          <property name="enabled">
           <bool>true</bool>
          </property>
+         <property name="sizePolicy">
+          <sizepolicy hsizetype="Expanding" vsizetype="Expanding">
+           <horstretch>0</horstretch>
+           <verstretch>0</verstretch>
+          </sizepolicy>
+         </property>
          <property name="minimumSize">
           <size>
            <width>48</width>
@@ -606,8 +720,14 @@
          </property>
          <property name="maximumSize">
           <size>
-           <width>48</width>
-           <height>48</height>
+           <width>80</width>
+           <height>80</height>
+          </size>
+         </property>
+         <property name="sizeIncrement">
+          <size>
+           <width>1</width>
+           <height>1</height>
           </size>
          </property>
          <property name="iconSize">
@@ -626,6 +746,12 @@
          <property name="enabled">
           <bool>true</bool>
          </property>
+         <property name="sizePolicy">
+          <sizepolicy hsizetype="Expanding" vsizetype="Expanding">
+           <horstretch>0</horstretch>
+           <verstretch>0</verstretch>
+          </sizepolicy>
+         </property>
          <property name="minimumSize">
           <size>
            <width>48</width>
@@ -634,8 +760,14 @@
          </property>
          <property name="maximumSize">
           <size>
-           <width>48</width>
-           <height>48</height>
+           <width>80</width>
+           <height>80</height>
+          </size>
+         </property>
+         <property name="sizeIncrement">
+          <size>
+           <width>1</width>
+           <height>1</height>
           </size>
          </property>
          <property name="text">
@@ -657,6 +789,12 @@
          <property name="enabled">
           <bool>true</bool>
          </property>
+         <property name="sizePolicy">
+          <sizepolicy hsizetype="Expanding" vsizetype="Expanding">
+           <horstretch>0</horstretch>
+           <verstretch>0</verstretch>
+          </sizepolicy>
+         </property>
          <property name="minimumSize">
           <size>
            <width>48</width>
@@ -665,8 +803,14 @@
          </property>
          <property name="maximumSize">
           <size>
-           <width>48</width>
-           <height>48</height>
+           <width>80</width>
+           <height>80</height>
+          </size>
+         </property>
+         <property name="sizeIncrement">
+          <size>
+           <width>1</width>
+           <height>1</height>
           </size>
          </property>
          <property name="iconSize">
@@ -809,6 +953,12 @@
          <property name="enabled">
           <bool>true</bool>
          </property>
+         <property name="sizePolicy">
+          <sizepolicy hsizetype="Expanding" vsizetype="Expanding">
+           <horstretch>0</horstretch>
+           <verstretch>0</verstretch>
+          </sizepolicy>
+         </property>
          <property name="minimumSize">
           <size>
            <width>48</width>
@@ -817,8 +967,14 @@
          </property>
          <property name="maximumSize">
           <size>
-           <width>48</width>
-           <height>48</height>
+           <width>80</width>
+           <height>80</height>
+          </size>
+         </property>
+         <property name="sizeIncrement">
+          <size>
+           <width>1</width>
+           <height>1</height>
           </size>
          </property>
          <property name="iconSize">
@@ -835,7 +991,7 @@
     <item row="6" column="0" colspan="2">
      <widget class="QTextEdit" name="textEdit">
       <property name="sizePolicy">
-       <sizepolicy hsizetype="Ignored" vsizetype="Ignored">
+       <sizepolicy hsizetype="Expanding" vsizetype="Maximum">
         <horstretch>0</horstretch>
         <verstretch>0</verstretch>
        </sizepolicy>
@@ -843,7 +999,19 @@
       <property name="minimumSize">
        <size>
         <width>0</width>
-        <height>16</height>
+        <height>32</height>
+       </size>
+      </property>
+      <property name="maximumSize">
+       <size>
+        <width>16777215</width>
+        <height>80</height>
+       </size>
+      </property>
+      <property name="sizeIncrement">
+       <size>
+        <width>1</width>
+        <height>1</height>
        </size>
       </property>
       <property name="contextMenuPolicy">
@@ -866,7 +1034,7 @@
        <bool>true</bool>
       </property>
       <property name="sizePolicy">
-       <sizepolicy hsizetype="Expanding" vsizetype="Fixed">
+       <sizepolicy hsizetype="Expanding" vsizetype="Expanding">
         <horstretch>0</horstretch>
         <verstretch>0</verstretch>
        </sizepolicy>
@@ -875,6 +1043,12 @@
        <size>
         <width>330</width>
         <height>0</height>
+       </size>
+      </property>
+      <property name="maximumSize">
+       <size>
+        <width>16777215</width>
+        <height>100</height>
        </size>
       </property>
       <property name="contextMenuPolicy">
@@ -972,6 +1146,12 @@
          <property name="enabled">
           <bool>true</bool>
          </property>
+         <property name="sizePolicy">
+          <sizepolicy hsizetype="Expanding" vsizetype="Expanding">
+           <horstretch>0</horstretch>
+           <verstretch>0</verstretch>
+          </sizepolicy>
+         </property>
          <property name="minimumSize">
           <size>
            <width>48</width>
@@ -980,8 +1160,14 @@
          </property>
          <property name="maximumSize">
           <size>
-           <width>48</width>
-           <height>48</height>
+           <width>80</width>
+           <height>80</height>
+          </size>
+         </property>
+         <property name="sizeIncrement">
+          <size>
+           <width>1</width>
+           <height>1</height>
           </size>
          </property>
          <property name="iconSize">
@@ -997,6 +1183,12 @@
          <property name="enabled">
           <bool>true</bool>
          </property>
+         <property name="sizePolicy">
+          <sizepolicy hsizetype="Expanding" vsizetype="Expanding">
+           <horstretch>0</horstretch>
+           <verstretch>0</verstretch>
+          </sizepolicy>
+         </property>
          <property name="minimumSize">
           <size>
            <width>48</width>
@@ -1005,8 +1197,14 @@
          </property>
          <property name="maximumSize">
           <size>
-           <width>48</width>
-           <height>48</height>
+           <width>80</width>
+           <height>80</height>
+          </size>
+         </property>
+         <property name="sizeIncrement">
+          <size>
+           <width>1</width>
+           <height>1</height>
           </size>
          </property>
          <property name="iconSize">
@@ -1022,6 +1220,12 @@
          <property name="enabled">
           <bool>true</bool>
          </property>
+         <property name="sizePolicy">
+          <sizepolicy hsizetype="Expanding" vsizetype="Expanding">
+           <horstretch>0</horstretch>
+           <verstretch>0</verstretch>
+          </sizepolicy>
+         </property>
          <property name="minimumSize">
           <size>
            <width>48</width>
@@ -1030,8 +1234,14 @@
          </property>
          <property name="maximumSize">
           <size>
-           <width>48</width>
-           <height>48</height>
+           <width>80</width>
+           <height>80</height>
+          </size>
+         </property>
+         <property name="sizeIncrement">
+          <size>
+           <width>1</width>
+           <height>1</height>
           </size>
          </property>
          <property name="iconSize">
@@ -1050,6 +1260,12 @@
          <property name="enabled">
           <bool>true</bool>
          </property>
+         <property name="sizePolicy">
+          <sizepolicy hsizetype="Expanding" vsizetype="Expanding">
+           <horstretch>0</horstretch>
+           <verstretch>0</verstretch>
+          </sizepolicy>
+         </property>
          <property name="minimumSize">
           <size>
            <width>48</width>
@@ -1058,8 +1274,14 @@
          </property>
          <property name="maximumSize">
           <size>
-           <width>48</width>
-           <height>48</height>
+           <width>80</width>
+           <height>80</height>
+          </size>
+         </property>
+         <property name="sizeIncrement">
+          <size>
+           <width>1</width>
+           <height>1</height>
           </size>
          </property>
          <property name="text">
@@ -1081,6 +1303,12 @@
          <property name="enabled">
           <bool>true</bool>
          </property>
+         <property name="sizePolicy">
+          <sizepolicy hsizetype="Expanding" vsizetype="Expanding">
+           <horstretch>0</horstretch>
+           <verstretch>0</verstretch>
+          </sizepolicy>
+         </property>
          <property name="minimumSize">
           <size>
            <width>48</width>
@@ -1089,8 +1317,14 @@
          </property>
          <property name="maximumSize">
           <size>
-           <width>48</width>
-           <height>48</height>
+           <width>80</width>
+           <height>80</height>
+          </size>
+         </property>
+         <property name="sizeIncrement">
+          <size>
+           <width>1</width>
+           <height>1</height>
           </size>
          </property>
          <property name="iconSize">
@@ -1242,6 +1476,12 @@
          <property name="enabled">
           <bool>true</bool>
          </property>
+         <property name="sizePolicy">
+          <sizepolicy hsizetype="Expanding" vsizetype="Expanding">
+           <horstretch>0</horstretch>
+           <verstretch>0</verstretch>
+          </sizepolicy>
+         </property>
          <property name="minimumSize">
           <size>
            <width>48</width>
@@ -1250,8 +1490,14 @@
          </property>
          <property name="maximumSize">
           <size>
-           <width>48</width>
-           <height>48</height>
+           <width>80</width>
+           <height>80</height>
+          </size>
+         </property>
+         <property name="sizeIncrement">
+          <size>
+           <width>1</width>
+           <height>1</height>
           </size>
          </property>
          <property name="iconSize">
@@ -1271,7 +1517,7 @@
        <bool>true</bool>
       </property>
       <property name="sizePolicy">
-       <sizepolicy hsizetype="Expanding" vsizetype="Fixed">
+       <sizepolicy hsizetype="Expanding" vsizetype="Expanding">
         <horstretch>0</horstretch>
         <verstretch>0</verstretch>
        </sizepolicy>
@@ -1280,6 +1526,12 @@
        <size>
         <width>330</width>
         <height>0</height>
+       </size>
+      </property>
+      <property name="maximumSize">
+       <size>
+        <width>16777215</width>
+        <height>100</height>
        </size>
       </property>
       <property name="contextMenuPolicy">
@@ -1377,6 +1629,12 @@
          <property name="enabled">
           <bool>true</bool>
          </property>
+         <property name="sizePolicy">
+          <sizepolicy hsizetype="Expanding" vsizetype="Expanding">
+           <horstretch>0</horstretch>
+           <verstretch>0</verstretch>
+          </sizepolicy>
+         </property>
          <property name="minimumSize">
           <size>
            <width>48</width>
@@ -1385,8 +1643,14 @@
          </property>
          <property name="maximumSize">
           <size>
-           <width>48</width>
-           <height>48</height>
+           <width>80</width>
+           <height>80</height>
+          </size>
+         </property>
+         <property name="sizeIncrement">
+          <size>
+           <width>1</width>
+           <height>1</height>
           </size>
          </property>
          <property name="iconSize">
@@ -1402,6 +1666,12 @@
          <property name="enabled">
           <bool>true</bool>
          </property>
+         <property name="sizePolicy">
+          <sizepolicy hsizetype="Expanding" vsizetype="Expanding">
+           <horstretch>0</horstretch>
+           <verstretch>0</verstretch>
+          </sizepolicy>
+         </property>
          <property name="minimumSize">
           <size>
            <width>48</width>
@@ -1410,8 +1680,14 @@
          </property>
          <property name="maximumSize">
           <size>
-           <width>48</width>
-           <height>48</height>
+           <width>80</width>
+           <height>80</height>
+          </size>
+         </property>
+         <property name="sizeIncrement">
+          <size>
+           <width>1</width>
+           <height>1</height>
           </size>
          </property>
          <property name="iconSize">
@@ -1427,6 +1703,12 @@
          <property name="enabled">
           <bool>true</bool>
          </property>
+         <property name="sizePolicy">
+          <sizepolicy hsizetype="Expanding" vsizetype="Expanding">
+           <horstretch>0</horstretch>
+           <verstretch>0</verstretch>
+          </sizepolicy>
+         </property>
          <property name="minimumSize">
           <size>
            <width>48</width>
@@ -1435,8 +1717,14 @@
          </property>
          <property name="maximumSize">
           <size>
-           <width>48</width>
-           <height>48</height>
+           <width>80</width>
+           <height>80</height>
+          </size>
+         </property>
+         <property name="sizeIncrement">
+          <size>
+           <width>1</width>
+           <height>1</height>
           </size>
          </property>
          <property name="iconSize">
@@ -1455,6 +1743,12 @@
          <property name="enabled">
           <bool>true</bool>
          </property>
+         <property name="sizePolicy">
+          <sizepolicy hsizetype="Expanding" vsizetype="Expanding">
+           <horstretch>0</horstretch>
+           <verstretch>0</verstretch>
+          </sizepolicy>
+         </property>
          <property name="minimumSize">
           <size>
            <width>48</width>
@@ -1463,8 +1757,14 @@
          </property>
          <property name="maximumSize">
           <size>
-           <width>48</width>
-           <height>48</height>
+           <width>80</width>
+           <height>80</height>
+          </size>
+         </property>
+         <property name="sizeIncrement">
+          <size>
+           <width>1</width>
+           <height>1</height>
           </size>
          </property>
          <property name="text">
@@ -1486,6 +1786,12 @@
          <property name="enabled">
           <bool>true</bool>
          </property>
+         <property name="sizePolicy">
+          <sizepolicy hsizetype="Expanding" vsizetype="Expanding">
+           <horstretch>0</horstretch>
+           <verstretch>0</verstretch>
+          </sizepolicy>
+         </property>
          <property name="minimumSize">
           <size>
            <width>48</width>
@@ -1494,8 +1800,14 @@
          </property>
          <property name="maximumSize">
           <size>
-           <width>48</width>
-           <height>48</height>
+           <width>80</width>
+           <height>80</height>
+          </size>
+         </property>
+         <property name="sizeIncrement">
+          <size>
+           <width>1</width>
+           <height>1</height>
           </size>
          </property>
          <property name="iconSize">
@@ -1647,6 +1959,12 @@
          <property name="enabled">
           <bool>true</bool>
          </property>
+         <property name="sizePolicy">
+          <sizepolicy hsizetype="Expanding" vsizetype="Expanding">
+           <horstretch>0</horstretch>
+           <verstretch>0</verstretch>
+          </sizepolicy>
+         </property>
          <property name="minimumSize">
           <size>
            <width>48</width>
@@ -1655,8 +1973,14 @@
          </property>
          <property name="maximumSize">
           <size>
-           <width>48</width>
-           <height>48</height>
+           <width>80</width>
+           <height>80</height>
+          </size>
+         </property>
+         <property name="sizeIncrement">
+          <size>
+           <width>1</width>
+           <height>1</height>
           </size>
          </property>
          <property name="iconSize">
@@ -1676,7 +2000,7 @@
        <bool>true</bool>
       </property>
       <property name="sizePolicy">
-       <sizepolicy hsizetype="Expanding" vsizetype="Fixed">
+       <sizepolicy hsizetype="Expanding" vsizetype="Expanding">
         <horstretch>0</horstretch>
         <verstretch>0</verstretch>
        </sizepolicy>
@@ -1685,6 +2009,12 @@
        <size>
         <width>330</width>
         <height>0</height>
+       </size>
+      </property>
+      <property name="maximumSize">
+       <size>
+        <width>16777215</width>
+        <height>100</height>
        </size>
       </property>
       <property name="contextMenuPolicy">
@@ -1782,6 +2112,12 @@
          <property name="enabled">
           <bool>true</bool>
          </property>
+         <property name="sizePolicy">
+          <sizepolicy hsizetype="Expanding" vsizetype="Expanding">
+           <horstretch>0</horstretch>
+           <verstretch>0</verstretch>
+          </sizepolicy>
+         </property>
          <property name="minimumSize">
           <size>
            <width>48</width>
@@ -1790,8 +2126,14 @@
          </property>
          <property name="maximumSize">
           <size>
-           <width>48</width>
-           <height>48</height>
+           <width>80</width>
+           <height>80</height>
+          </size>
+         </property>
+         <property name="sizeIncrement">
+          <size>
+           <width>1</width>
+           <height>1</height>
           </size>
          </property>
          <property name="iconSize">
@@ -1807,6 +2149,12 @@
          <property name="enabled">
           <bool>true</bool>
          </property>
+         <property name="sizePolicy">
+          <sizepolicy hsizetype="Expanding" vsizetype="Expanding">
+           <horstretch>0</horstretch>
+           <verstretch>0</verstretch>
+          </sizepolicy>
+         </property>
          <property name="minimumSize">
           <size>
            <width>48</width>
@@ -1815,8 +2163,14 @@
          </property>
          <property name="maximumSize">
           <size>
-           <width>48</width>
-           <height>48</height>
+           <width>80</width>
+           <height>80</height>
+          </size>
+         </property>
+         <property name="sizeIncrement">
+          <size>
+           <width>1</width>
+           <height>1</height>
           </size>
          </property>
          <property name="iconSize">
@@ -1832,6 +2186,12 @@
          <property name="enabled">
           <bool>true</bool>
          </property>
+         <property name="sizePolicy">
+          <sizepolicy hsizetype="Expanding" vsizetype="Expanding">
+           <horstretch>0</horstretch>
+           <verstretch>0</verstretch>
+          </sizepolicy>
+         </property>
          <property name="minimumSize">
           <size>
            <width>48</width>
@@ -1840,8 +2200,14 @@
          </property>
          <property name="maximumSize">
           <size>
-           <width>48</width>
-           <height>48</height>
+           <width>80</width>
+           <height>80</height>
+          </size>
+         </property>
+         <property name="sizeIncrement">
+          <size>
+           <width>1</width>
+           <height>1</height>
           </size>
          </property>
          <property name="iconSize">
@@ -1860,6 +2226,12 @@
          <property name="enabled">
           <bool>true</bool>
          </property>
+         <property name="sizePolicy">
+          <sizepolicy hsizetype="Expanding" vsizetype="Expanding">
+           <horstretch>0</horstretch>
+           <verstretch>0</verstretch>
+          </sizepolicy>
+         </property>
          <property name="minimumSize">
           <size>
            <width>48</width>
@@ -1868,8 +2240,14 @@
          </property>
          <property name="maximumSize">
           <size>
-           <width>48</width>
-           <height>48</height>
+           <width>80</width>
+           <height>80</height>
+          </size>
+         </property>
+         <property name="sizeIncrement">
+          <size>
+           <width>1</width>
+           <height>1</height>
           </size>
          </property>
          <property name="text">
@@ -1891,6 +2269,12 @@
          <property name="enabled">
           <bool>true</bool>
          </property>
+         <property name="sizePolicy">
+          <sizepolicy hsizetype="Expanding" vsizetype="Expanding">
+           <horstretch>0</horstretch>
+           <verstretch>0</verstretch>
+          </sizepolicy>
+         </property>
          <property name="minimumSize">
           <size>
            <width>48</width>
@@ -1899,8 +2283,14 @@
          </property>
          <property name="maximumSize">
           <size>
-           <width>48</width>
-           <height>48</height>
+           <width>80</width>
+           <height>80</height>
+          </size>
+         </property>
+         <property name="sizeIncrement">
+          <size>
+           <width>1</width>
+           <height>1</height>
           </size>
          </property>
          <property name="iconSize">
@@ -2043,6 +2433,12 @@
          <property name="enabled">
           <bool>true</bool>
          </property>
+         <property name="sizePolicy">
+          <sizepolicy hsizetype="Expanding" vsizetype="Expanding">
+           <horstretch>0</horstretch>
+           <verstretch>0</verstretch>
+          </sizepolicy>
+         </property>
          <property name="minimumSize">
           <size>
            <width>48</width>
@@ -2051,8 +2447,14 @@
          </property>
          <property name="maximumSize">
           <size>
-           <width>48</width>
-           <height>48</height>
+           <width>80</width>
+           <height>80</height>
+          </size>
+         </property>
+         <property name="sizeIncrement">
+          <size>
+           <width>1</width>
+           <height>1</height>
           </size>
          </property>
          <property name="iconSize">
@@ -2069,7 +2471,7 @@
     <item row="0" column="0">
      <widget class="QFrame" name="horizontalFrame_1">
       <property name="sizePolicy">
-       <sizepolicy hsizetype="Expanding" vsizetype="Fixed">
+       <sizepolicy hsizetype="Expanding" vsizetype="Expanding">
         <horstretch>0</horstretch>
         <verstretch>0</verstretch>
        </sizepolicy>
@@ -2078,6 +2480,12 @@
        <size>
         <width>330</width>
         <height>0</height>
+       </size>
+      </property>
+      <property name="maximumSize">
+       <size>
+        <width>16777215</width>
+        <height>100</height>
        </size>
       </property>
       <property name="contextMenuPolicy">
@@ -2202,6 +2610,12 @@
          <property name="enabled">
           <bool>true</bool>
          </property>
+         <property name="sizePolicy">
+          <sizepolicy hsizetype="Expanding" vsizetype="Expanding">
+           <horstretch>0</horstretch>
+           <verstretch>0</verstretch>
+          </sizepolicy>
+         </property>
          <property name="minimumSize">
           <size>
            <width>48</width>
@@ -2210,8 +2624,14 @@
          </property>
          <property name="maximumSize">
           <size>
-           <width>48</width>
-           <height>48</height>
+           <width>80</width>
+           <height>80</height>
+          </size>
+         </property>
+         <property name="sizeIncrement">
+          <size>
+           <width>1</width>
+           <height>1</height>
           </size>
          </property>
          <property name="iconSize">
@@ -2227,6 +2647,12 @@
          <property name="enabled">
           <bool>true</bool>
          </property>
+         <property name="sizePolicy">
+          <sizepolicy hsizetype="Expanding" vsizetype="Expanding">
+           <horstretch>0</horstretch>
+           <verstretch>0</verstretch>
+          </sizepolicy>
+         </property>
          <property name="minimumSize">
           <size>
            <width>48</width>
@@ -2235,8 +2661,14 @@
          </property>
          <property name="maximumSize">
           <size>
-           <width>48</width>
-           <height>48</height>
+           <width>80</width>
+           <height>80</height>
+          </size>
+         </property>
+         <property name="sizeIncrement">
+          <size>
+           <width>1</width>
+           <height>1</height>
           </size>
          </property>
          <property name="iconSize">
@@ -2252,6 +2684,12 @@
          <property name="enabled">
           <bool>true</bool>
          </property>
+         <property name="sizePolicy">
+          <sizepolicy hsizetype="Expanding" vsizetype="Expanding">
+           <horstretch>0</horstretch>
+           <verstretch>0</verstretch>
+          </sizepolicy>
+         </property>
          <property name="minimumSize">
           <size>
            <width>48</width>
@@ -2260,8 +2698,14 @@
          </property>
          <property name="maximumSize">
           <size>
-           <width>48</width>
-           <height>48</height>
+           <width>80</width>
+           <height>80</height>
+          </size>
+         </property>
+         <property name="sizeIncrement">
+          <size>
+           <width>1</width>
+           <height>1</height>
           </size>
          </property>
          <property name="iconSize">
@@ -2280,6 +2724,12 @@
          <property name="enabled">
           <bool>true</bool>
          </property>
+         <property name="sizePolicy">
+          <sizepolicy hsizetype="Expanding" vsizetype="Expanding">
+           <horstretch>0</horstretch>
+           <verstretch>0</verstretch>
+          </sizepolicy>
+         </property>
          <property name="minimumSize">
           <size>
            <width>48</width>
@@ -2288,8 +2738,14 @@
          </property>
          <property name="maximumSize">
           <size>
-           <width>48</width>
-           <height>48</height>
+           <width>80</width>
+           <height>80</height>
+          </size>
+         </property>
+         <property name="sizeIncrement">
+          <size>
+           <width>1</width>
+           <height>1</height>
           </size>
          </property>
          <property name="toolTip">
@@ -2320,6 +2776,12 @@
          <property name="enabled">
           <bool>true</bool>
          </property>
+         <property name="sizePolicy">
+          <sizepolicy hsizetype="Expanding" vsizetype="Expanding">
+           <horstretch>0</horstretch>
+           <verstretch>0</verstretch>
+          </sizepolicy>
+         </property>
          <property name="minimumSize">
           <size>
            <width>48</width>
@@ -2328,8 +2790,14 @@
          </property>
          <property name="maximumSize">
           <size>
-           <width>48</width>
-           <height>48</height>
+           <width>80</width>
+           <height>80</height>
+          </size>
+         </property>
+         <property name="sizeIncrement">
+          <size>
+           <width>1</width>
+           <height>1</height>
           </size>
          </property>
          <property name="iconSize">
@@ -2481,6 +2949,12 @@
          <property name="enabled">
           <bool>true</bool>
          </property>
+         <property name="sizePolicy">
+          <sizepolicy hsizetype="Expanding" vsizetype="Expanding">
+           <horstretch>0</horstretch>
+           <verstretch>0</verstretch>
+          </sizepolicy>
+         </property>
          <property name="minimumSize">
           <size>
            <width>48</width>
@@ -2489,8 +2963,14 @@
          </property>
          <property name="maximumSize">
           <size>
-           <width>48</width>
-           <height>48</height>
+           <width>80</width>
+           <height>80</height>
+          </size>
+         </property>
+         <property name="sizeIncrement">
+          <size>
+           <width>1</width>
+           <height>1</height>
           </size>
          </property>
          <property name="iconSize">
