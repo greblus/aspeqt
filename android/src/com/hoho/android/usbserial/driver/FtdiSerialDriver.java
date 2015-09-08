@@ -218,11 +218,13 @@ public class FtdiSerialDriver implements UsbSerialDriver {
                         ? (totalBytesRead % maxPacketSize) - MODEM_STATUS_HEADER_LENGTH
                         : maxPacketSize - MODEM_STATUS_HEADER_LENGTH;
                 if (count > 0) {
+                    try {
                     System.arraycopy(src,
                             packetIdx * maxPacketSize + MODEM_STATUS_HEADER_LENGTH,
                             dest,
                             packetIdx * (maxPacketSize - MODEM_STATUS_HEADER_LENGTH),
                             count);
+                        } catch (ArrayIndexOutOfBoundsException e) {};
                 }
             }
 

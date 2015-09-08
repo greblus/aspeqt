@@ -10,7 +10,7 @@
     <x>0</x>
     <y>0</y>
     <width>684</width>
-    <height>445</height>
+    <height>461</height>
    </rect>
   </property>
   <property name="sizePolicy">
@@ -40,7 +40,7 @@
     <bool>true</bool>
    </property>
    <layout class="QGridLayout" name="gridLayout">
-    <item row="4" column="0">
+    <item row="5" column="0">
      <widget class="QFrame" name="horizontalFrame_5">
       <property name="enabled">
        <bool>true</bool>
@@ -166,14 +166,14 @@
          </property>
          <property name="minimumSize">
           <size>
-           <width>48</width>
-           <height>48</height>
+           <width>70</width>
+           <height>70</height>
           </size>
          </property>
          <property name="maximumSize">
           <size>
-           <width>80</width>
-           <height>80</height>
+           <width>70</width>
+           <height>70</height>
           </size>
          </property>
          <property name="sizeIncrement">
@@ -203,14 +203,14 @@
          </property>
          <property name="minimumSize">
           <size>
-           <width>48</width>
-           <height>48</height>
+           <width>70</width>
+           <height>70</height>
           </size>
          </property>
          <property name="maximumSize">
           <size>
-           <width>80</width>
-           <height>80</height>
+           <width>70</width>
+           <height>70</height>
           </size>
          </property>
          <property name="sizeIncrement">
@@ -240,14 +240,14 @@
          </property>
          <property name="minimumSize">
           <size>
-           <width>48</width>
-           <height>48</height>
+           <width>70</width>
+           <height>70</height>
           </size>
          </property>
          <property name="maximumSize">
           <size>
-           <width>80</width>
-           <height>80</height>
+           <width>70</width>
+           <height>70</height>
           </size>
          </property>
          <property name="sizeIncrement">
@@ -280,14 +280,14 @@
          </property>
          <property name="minimumSize">
           <size>
-           <width>48</width>
-           <height>48</height>
+           <width>70</width>
+           <height>70</height>
           </size>
          </property>
          <property name="maximumSize">
           <size>
-           <width>80</width>
-           <height>80</height>
+           <width>70</width>
+           <height>70</height>
           </size>
          </property>
          <property name="sizeIncrement">
@@ -323,14 +323,14 @@
          </property>
          <property name="minimumSize">
           <size>
-           <width>48</width>
-           <height>48</height>
+           <width>70</width>
+           <height>70</height>
           </size>
          </property>
          <property name="maximumSize">
           <size>
-           <width>80</width>
-           <height>80</height>
+           <width>70</width>
+           <height>70</height>
           </size>
          </property>
          <property name="sizeIncrement">
@@ -487,14 +487,14 @@
          </property>
          <property name="minimumSize">
           <size>
-           <width>48</width>
-           <height>48</height>
+           <width>70</width>
+           <height>70</height>
           </size>
          </property>
          <property name="maximumSize">
           <size>
-           <width>80</width>
-           <height>80</height>
+           <width>70</width>
+           <height>70</height>
           </size>
          </property>
          <property name="sizeIncrement">
@@ -514,7 +514,7 @@
       </layout>
      </widget>
     </item>
-    <item row="5" column="0">
+    <item row="6" column="0">
      <widget class="QFrame" name="horizontalFrame_6">
       <property name="enabled">
        <bool>true</bool>
@@ -640,14 +640,14 @@
          </property>
          <property name="minimumSize">
           <size>
-           <width>48</width>
-           <height>48</height>
+           <width>70</width>
+           <height>70</height>
           </size>
          </property>
          <property name="maximumSize">
           <size>
-           <width>80</width>
-           <height>80</height>
+           <width>70</width>
+           <height>70</height>
           </size>
          </property>
          <property name="sizeIncrement">
@@ -677,14 +677,14 @@
          </property>
          <property name="minimumSize">
           <size>
-           <width>48</width>
-           <height>48</height>
+           <width>70</width>
+           <height>70</height>
           </size>
          </property>
          <property name="maximumSize">
           <size>
-           <width>80</width>
-           <height>80</height>
+           <width>70</width>
+           <height>70</height>
           </size>
          </property>
          <property name="sizeIncrement">
@@ -714,14 +714,14 @@
          </property>
          <property name="minimumSize">
           <size>
-           <width>48</width>
-           <height>48</height>
+           <width>70</width>
+           <height>70</height>
           </size>
          </property>
          <property name="maximumSize">
           <size>
-           <width>80</width>
-           <height>80</height>
+           <width>70</width>
+           <height>70</height>
           </size>
          </property>
          <property name="sizeIncrement">
@@ -754,14 +754,14 @@
          </property>
          <property name="minimumSize">
           <size>
-           <width>48</width>
-           <height>48</height>
+           <width>70</width>
+           <height>70</height>
           </size>
          </property>
          <property name="maximumSize">
           <size>
-           <width>80</width>
-           <height>80</height>
+           <width>70</width>
+           <height>70</height>
           </size>
          </property>
          <property name="sizeIncrement">
@@ -797,14 +797,14 @@
          </property>
          <property name="minimumSize">
           <size>
-           <width>48</width>
-           <height>48</height>
+           <width>70</width>
+           <height>70</height>
           </size>
          </property>
          <property name="maximumSize">
           <size>
-           <width>80</width>
-           <height>80</height>
+           <width>70</width>
+           <height>70</height>
           </size>
          </property>
          <property name="sizeIncrement">
@@ -961,14 +961,14 @@
          </property>
          <property name="minimumSize">
           <size>
-           <width>48</width>
-           <height>48</height>
+           <width>70</width>
+           <height>70</height>
           </size>
          </property>
          <property name="maximumSize">
           <size>
-           <width>80</width>
-           <height>80</height>
+           <width>70</width>
+           <height>70</height>
           </size>
          </property>
          <property name="sizeIncrement">
@@ -988,10 +988,10 @@
       </layout>
      </widget>
     </item>
-    <item row="6" column="0" colspan="2">
+    <item row="8" column="0" colspan="2">
      <widget class="QTextEdit" name="textEdit">
       <property name="sizePolicy">
-       <sizepolicy hsizetype="Expanding" vsizetype="Maximum">
+       <sizepolicy hsizetype="Expanding" vsizetype="Expanding">
         <horstretch>0</horstretch>
         <verstretch>0</verstretch>
        </sizepolicy>
@@ -1028,7 +1028,7 @@
       </property>
      </widget>
     </item>
-    <item row="1" column="0">
+    <item row="2" column="0">
      <widget class="QFrame" name="horizontalFrame_2">
       <property name="enabled">
        <bool>true</bool>
@@ -1154,14 +1154,14 @@
          </property>
          <property name="minimumSize">
           <size>
-           <width>48</width>
-           <height>48</height>
+           <width>70</width>
+           <height>70</height>
           </size>
          </property>
          <property name="maximumSize">
           <size>
-           <width>80</width>
-           <height>80</height>
+           <width>70</width>
+           <height>70</height>
           </size>
          </property>
          <property name="sizeIncrement">
@@ -1191,14 +1191,14 @@
          </property>
          <property name="minimumSize">
           <size>
-           <width>48</width>
-           <height>48</height>
+           <width>70</width>
+           <height>70</height>
           </size>
          </property>
          <property name="maximumSize">
           <size>
-           <width>80</width>
-           <height>80</height>
+           <width>70</width>
+           <height>70</height>
           </size>
          </property>
          <property name="sizeIncrement">
@@ -1228,14 +1228,14 @@
          </property>
          <property name="minimumSize">
           <size>
-           <width>48</width>
-           <height>48</height>
+           <width>70</width>
+           <height>70</height>
           </size>
          </property>
          <property name="maximumSize">
           <size>
-           <width>80</width>
-           <height>80</height>
+           <width>70</width>
+           <height>70</height>
           </size>
          </property>
          <property name="sizeIncrement">
@@ -1268,14 +1268,14 @@
          </property>
          <property name="minimumSize">
           <size>
-           <width>48</width>
-           <height>48</height>
+           <width>70</width>
+           <height>70</height>
           </size>
          </property>
          <property name="maximumSize">
           <size>
-           <width>80</width>
-           <height>80</height>
+           <width>70</width>
+           <height>70</height>
           </size>
          </property>
          <property name="sizeIncrement">
@@ -1311,14 +1311,14 @@
          </property>
          <property name="minimumSize">
           <size>
-           <width>48</width>
-           <height>48</height>
+           <width>70</width>
+           <height>70</height>
           </size>
          </property>
          <property name="maximumSize">
           <size>
-           <width>80</width>
-           <height>80</height>
+           <width>70</width>
+           <height>70</height>
           </size>
          </property>
          <property name="sizeIncrement">
@@ -1484,14 +1484,14 @@
          </property>
          <property name="minimumSize">
           <size>
-           <width>48</width>
-           <height>48</height>
+           <width>70</width>
+           <height>70</height>
           </size>
          </property>
          <property name="maximumSize">
           <size>
-           <width>80</width>
-           <height>80</height>
+           <width>70</width>
+           <height>70</height>
           </size>
          </property>
          <property name="sizeIncrement">
@@ -1511,7 +1511,7 @@
       </layout>
      </widget>
     </item>
-    <item row="2" column="0">
+    <item row="3" column="0">
      <widget class="QFrame" name="horizontalFrame_3">
       <property name="enabled">
        <bool>true</bool>
@@ -1637,14 +1637,14 @@
          </property>
          <property name="minimumSize">
           <size>
-           <width>48</width>
-           <height>48</height>
+           <width>70</width>
+           <height>70</height>
           </size>
          </property>
          <property name="maximumSize">
           <size>
-           <width>80</width>
-           <height>80</height>
+           <width>70</width>
+           <height>70</height>
           </size>
          </property>
          <property name="sizeIncrement">
@@ -1674,14 +1674,14 @@
          </property>
          <property name="minimumSize">
           <size>
-           <width>48</width>
-           <height>48</height>
+           <width>70</width>
+           <height>70</height>
           </size>
          </property>
          <property name="maximumSize">
           <size>
-           <width>80</width>
-           <height>80</height>
+           <width>70</width>
+           <height>70</height>
           </size>
          </property>
          <property name="sizeIncrement">
@@ -1711,14 +1711,14 @@
          </property>
          <property name="minimumSize">
           <size>
-           <width>48</width>
-           <height>48</height>
+           <width>70</width>
+           <height>70</height>
           </size>
          </property>
          <property name="maximumSize">
           <size>
-           <width>80</width>
-           <height>80</height>
+           <width>70</width>
+           <height>70</height>
           </size>
          </property>
          <property name="sizeIncrement">
@@ -1751,14 +1751,14 @@
          </property>
          <property name="minimumSize">
           <size>
-           <width>48</width>
-           <height>48</height>
+           <width>70</width>
+           <height>70</height>
           </size>
          </property>
          <property name="maximumSize">
           <size>
-           <width>80</width>
-           <height>80</height>
+           <width>70</width>
+           <height>70</height>
           </size>
          </property>
          <property name="sizeIncrement">
@@ -1794,14 +1794,14 @@
          </property>
          <property name="minimumSize">
           <size>
-           <width>48</width>
-           <height>48</height>
+           <width>70</width>
+           <height>70</height>
           </size>
          </property>
          <property name="maximumSize">
           <size>
-           <width>80</width>
-           <height>80</height>
+           <width>70</width>
+           <height>70</height>
           </size>
          </property>
          <property name="sizeIncrement">
@@ -1967,14 +1967,14 @@
          </property>
          <property name="minimumSize">
           <size>
-           <width>48</width>
-           <height>48</height>
+           <width>70</width>
+           <height>70</height>
           </size>
          </property>
          <property name="maximumSize">
           <size>
-           <width>80</width>
-           <height>80</height>
+           <width>70</width>
+           <height>70</height>
           </size>
          </property>
          <property name="sizeIncrement">
@@ -1994,7 +1994,7 @@
       </layout>
      </widget>
     </item>
-    <item row="3" column="0">
+    <item row="4" column="0">
      <widget class="QFrame" name="horizontalFrame_4">
       <property name="enabled">
        <bool>true</bool>
@@ -2120,14 +2120,14 @@
          </property>
          <property name="minimumSize">
           <size>
-           <width>48</width>
-           <height>48</height>
+           <width>70</width>
+           <height>70</height>
           </size>
          </property>
          <property name="maximumSize">
           <size>
-           <width>80</width>
-           <height>80</height>
+           <width>70</width>
+           <height>70</height>
           </size>
          </property>
          <property name="sizeIncrement">
@@ -2157,14 +2157,14 @@
          </property>
          <property name="minimumSize">
           <size>
-           <width>48</width>
-           <height>48</height>
+           <width>70</width>
+           <height>70</height>
           </size>
          </property>
          <property name="maximumSize">
           <size>
-           <width>80</width>
-           <height>80</height>
+           <width>70</width>
+           <height>70</height>
           </size>
          </property>
          <property name="sizeIncrement">
@@ -2194,14 +2194,14 @@
          </property>
          <property name="minimumSize">
           <size>
-           <width>48</width>
-           <height>48</height>
+           <width>70</width>
+           <height>70</height>
           </size>
          </property>
          <property name="maximumSize">
           <size>
-           <width>80</width>
-           <height>80</height>
+           <width>70</width>
+           <height>70</height>
           </size>
          </property>
          <property name="sizeIncrement">
@@ -2234,14 +2234,14 @@
          </property>
          <property name="minimumSize">
           <size>
-           <width>48</width>
-           <height>48</height>
+           <width>70</width>
+           <height>70</height>
           </size>
          </property>
          <property name="maximumSize">
           <size>
-           <width>80</width>
-           <height>80</height>
+           <width>70</width>
+           <height>70</height>
           </size>
          </property>
          <property name="sizeIncrement">
@@ -2277,14 +2277,14 @@
          </property>
          <property name="minimumSize">
           <size>
-           <width>48</width>
-           <height>48</height>
+           <width>70</width>
+           <height>70</height>
           </size>
          </property>
          <property name="maximumSize">
           <size>
-           <width>80</width>
-           <height>80</height>
+           <width>70</width>
+           <height>70</height>
           </size>
          </property>
          <property name="sizeIncrement">
@@ -2441,14 +2441,14 @@
          </property>
          <property name="minimumSize">
           <size>
-           <width>48</width>
-           <height>48</height>
+           <width>70</width>
+           <height>70</height>
           </size>
          </property>
          <property name="maximumSize">
           <size>
-           <width>80</width>
-           <height>80</height>
+           <width>70</width>
+           <height>70</height>
           </size>
          </property>
          <property name="sizeIncrement">
@@ -2468,7 +2468,7 @@
       </layout>
      </widget>
     </item>
-    <item row="0" column="0">
+    <item row="1" column="0">
      <widget class="QFrame" name="horizontalFrame_1">
       <property name="sizePolicy">
        <sizepolicy hsizetype="Expanding" vsizetype="Expanding">
@@ -2618,14 +2618,14 @@
          </property>
          <property name="minimumSize">
           <size>
-           <width>48</width>
-           <height>48</height>
+           <width>70</width>
+           <height>70</height>
           </size>
          </property>
          <property name="maximumSize">
           <size>
-           <width>80</width>
-           <height>80</height>
+           <width>70</width>
+           <height>70</height>
           </size>
          </property>
          <property name="sizeIncrement">
@@ -2655,14 +2655,14 @@
          </property>
          <property name="minimumSize">
           <size>
-           <width>48</width>
-           <height>48</height>
+           <width>70</width>
+           <height>70</height>
           </size>
          </property>
          <property name="maximumSize">
           <size>
-           <width>80</width>
-           <height>80</height>
+           <width>70</width>
+           <height>70</height>
           </size>
          </property>
          <property name="sizeIncrement">
@@ -2692,14 +2692,14 @@
          </property>
          <property name="minimumSize">
           <size>
-           <width>48</width>
-           <height>48</height>
+           <width>70</width>
+           <height>70</height>
           </size>
          </property>
          <property name="maximumSize">
           <size>
-           <width>80</width>
-           <height>80</height>
+           <width>70</width>
+           <height>70</height>
           </size>
          </property>
          <property name="sizeIncrement">
@@ -2732,14 +2732,14 @@
          </property>
          <property name="minimumSize">
           <size>
-           <width>48</width>
-           <height>48</height>
+           <width>70</width>
+           <height>70</height>
           </size>
          </property>
          <property name="maximumSize">
           <size>
-           <width>80</width>
-           <height>80</height>
+           <width>70</width>
+           <height>70</height>
           </size>
          </property>
          <property name="sizeIncrement">
@@ -2784,14 +2784,14 @@
          </property>
          <property name="minimumSize">
           <size>
-           <width>48</width>
-           <height>48</height>
+           <width>70</width>
+           <height>70</height>
           </size>
          </property>
          <property name="maximumSize">
           <size>
-           <width>80</width>
-           <height>80</height>
+           <width>70</width>
+           <height>70</height>
           </size>
          </property>
          <property name="sizeIncrement">
@@ -2957,14 +2957,14 @@
          </property>
          <property name="minimumSize">
           <size>
-           <width>48</width>
-           <height>48</height>
+           <width>70</width>
+           <height>70</height>
           </size>
          </property>
          <property name="maximumSize">
           <size>
-           <width>80</width>
-           <height>80</height>
+           <width>70</width>
+           <height>70</height>
           </size>
          </property>
          <property name="sizeIncrement">
@@ -2983,6 +2983,32 @@
        </item>
       </layout>
      </widget>
+    </item>
+    <item row="7" column="0">
+     <spacer name="verticalSpacer">
+      <property name="orientation">
+       <enum>Qt::Vertical</enum>
+      </property>
+      <property name="sizeHint" stdset="0">
+       <size>
+        <width>20</width>
+        <height>40</height>
+       </size>
+      </property>
+     </spacer>
+    </item>
+    <item row="0" column="0">
+     <spacer name="verticalSpacer_2">
+      <property name="orientation">
+       <enum>Qt::Vertical</enum>
+      </property>
+      <property name="sizeHint" stdset="0">
+       <size>
+        <width>20</width>
+        <height>40</height>
+       </size>
+      </property>
+     </spacer>
     </item>
    </layout>
   </widget>

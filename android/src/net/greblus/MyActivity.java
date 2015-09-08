@@ -39,7 +39,7 @@ public class MyActivity extends QtActivity
         private static final String ACTION_USB_PERMISSION =
             "com.android.example.USB_PERMISSION";
         public static ByteBuffer bbuf = ByteBuffer.allocateDirect(16384);
-        public static byte b[] = new byte [16384];
+//        public static byte b[] = new byte [16384];
         public static int ret;
         public static int counter;
         public static UsbDevice device = null;
@@ -220,15 +220,14 @@ public class MyActivity extends QtActivity
 
     public static int read(int size, int total)
     {
-        int ret = 0, s = size;
-        do {
-            try {
-                ret = sPort.sread(b, size, 1000);
-                s -= ret;
-            } catch (IOException e) {
-               Log.i("USB", "Can't read");
-            }
-        } while(s > 0);
+        int ret = 0;
+        byte[] b = new byte[size];
+
+        try {
+            ret = sPort.sread(b, size, 1000);
+        } catch (IOException e) {
+           Log.i("USB", "Can't read");
+        }
 
         if (debug) Log.i("USB", "Read() size: " + size + " total: " + total + " ret: " + ret);
 
@@ -243,23 +242,21 @@ public class MyActivity extends QtActivity
         tmp = tmp.substring(0, tmp.length()-2);
                 Log.i("USB", tmp);
         }
-        return size;
+        return ret;
     }
 
     public static int write(int size, int total) {
-        int ret = 0, s = size;
+        int ret = 0;
+        byte[] b = new byte[size];
 
         bbuf.position(total);
         bbuf.get(b, 0, size);
 
-        do {
-            try {
-                ret = sPort.swrite(b, size, 1000);
-                s -= ret;
-            } catch (IOException e) {
-               Log.i("USB", "Can't write");
-            }
-        } while(s > 0);
+        try {
+            ret = sPort.swrite(b, size, 1000);
+       } catch (IOException e) {
+           Log.i("USB", "Can't write");
+        }
 
         if (debug) {
            String tmp = "Java side Write(): ret= " + Integer.toString(ret) + " data: ";
@@ -270,7 +267,7 @@ public class MyActivity extends QtActivity
            }
                 Log.i("USB", tmp);
         }
-        return size;
+        return ret;
     }
 
     public static boolean purge() {
