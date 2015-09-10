@@ -4,12 +4,22 @@ AspeQt, Atari Serial Peripheral Emulator for Android
 Experimental branch using modified usb-serial-for-android driver:
 https://github.com/mik3y/usb-serial-for-android 
 
-Supports FTDI's FT232 and Prolific's PL2303 chips (support for PL2303 is 
-currently broken. What works for FTDI doesn't work for Prolific, have 
-to find a good timing for both).
+This branch works best with my KitKat phone (both PL2303 and FTDI chips 
+are supported):
 
-Previous version with FT232 support only using ftd2xx Java driver 
-is available here: https://github.com/greblus/aspeqt/tree/ftd2xx
+https://github.com/greblus/aspeqt/raw/android/android/apk/aspeqt.apk
+
+there is another branch (same GUI) which works better on JellyBean
+and some other devices:
+
+https://github.com/greblus/aspeqt/raw/us4a/android/apk/aspeqt.apk
+
+Unfortunately it's hard to find proper timing and device handling 
+for different versions of Android and different RS232 adapters, but 
+I'll work on it ;)
+
+Previous version with ftd2xx Java driver is still available here: 
+https://github.com/greblus/aspeqt/tree/ftd2xx.
 
 It's a work in progress. Currently it already handles atr and xex 
 booting and cas files loading.
@@ -48,8 +58,7 @@ What's necessary to use it:
    Speed greatly depends on your CPU possibilities and I/O performance:
    https://www.youtube.com/watch?v=-w4mppTym1I
 
-   My PL2303 won't open with speed higher than 34800bps and also Pokey divisors do 
-   not work.
+   If you have PL2303 chip in your Sio2PC-USB set speed to 19200bps. 
 
 Videos of AspeQt on Android:
 ============================
