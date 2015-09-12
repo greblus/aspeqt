@@ -39,8 +39,8 @@ public class MyActivity extends QtActivity
         private static final String ACTION_USB_PERMISSION =
             "com.android.example.USB_PERMISSION";
         public static ByteBuffer bbuf = ByteBuffer.allocateDirect(16384);
-//        public static byte b[] = new byte [16384];
-        public static int ret;
+        private static byte b[] = new byte [16384];
+        private static byte t[] = new byte [16384];
         public static int counter;
         public static UsbDevice device = null;
         public static UsbSerialDriver driver;
@@ -221,7 +221,7 @@ public class MyActivity extends QtActivity
     public static int read(int size, int total)
     {
         int ret = 0;
-        byte[] b = new byte[size];
+//        byte[] b = new byte[size];
 
         try {
             ret = sPort.sread(b, size, 1000);
@@ -247,13 +247,13 @@ public class MyActivity extends QtActivity
 
     public static int write(int size, int total) {
         int ret = 0;
-        byte[] b = new byte[size];
+        byte[] tb = new byte[size];
 
         bbuf.position(total);
-        bbuf.get(b, 0, size);
+        bbuf.get(tb, 0, size);
 
         try {
-            ret = sPort.swrite(b, size, 1000);
+            ret = sPort.swrite(tb, size, 1000);
        } catch (IOException e) {
            Log.i("USB", "Can't write");
         }
@@ -262,7 +262,7 @@ public class MyActivity extends QtActivity
            String tmp = "Java side Write(): ret= " + Integer.toString(ret) + " data: ";
            for (int i=0; i<size; i++)
            {
-                tmp +=  Integer.toString(b[i] & 0xff)  + " ";
+                tmp +=  Integer.toString(tb[i] & 0xff)  + " ";
 
            }
                 Log.i("USB", tmp);
@@ -328,6 +328,98 @@ public class MyActivity extends QtActivity
             }
         }
         return ret;
+    }
+
+
+    public static int getCommandFrame() {
+        int expected = 0, sync_attempts = 0, got = 1;
+        do {
+            try {
+                int ret = 0, total = 0;
+                do {
+                     ret = sPort.sread(t, 5, 5000);
+                     for (int i=0; i<ret; i++) {
+                        b[total] = t[i];
+                        total += 1;
+                    }
+                } while (total<5);
+
+                if (debug) {
+                    String data = "";
+                    for (int i=0; i<5; i++)
+                        data += Integer.toString(b[i]) + " ";
+                    Log.i("USB", "Read 5 bytes, looking for Command Frame: " + data);
+                }
+
+                expected = b[4] & 0xff;
+                got = sioChecksum(b, 4) & 0xff;
+
+                if (expected == 0 )
+                    continue;
+
+            } catch (IOException e) {};
+
+            if (checkDesync(b, got, expected) > 0) {
+                Log.i("USB", "Apparent desync");
+                /* Apparent desync */
+                if (sync_attempts < 4) {
+                        sync_attempts++;
+                        for (int i = 0; i < 4; i++)
+                                b[i] = b[i+1];
+                        int ret = 0;
+                        do {
+                            try {
+                                ret = sPort.sread(t, 1, 5000);
+                            } catch (IOException e) {};
+                        } while (ret < 1);
+                        b[4] = t[0];
+                } else {
+                    sync_attempts = 0;
+                    continue;
+                }
+            } else {
+                Log.i("USB", "No desync");
+                break;
+            }
+        } while (got != expected);
+
+        if (debug) Log.i("USB", "got=" + got + " expected= " + expected);
+        bbuf.position(0);
+        bbuf.put(b, 0, 5);
+        return 1;
+    }
+
+    public static int sioChecksum(byte[] data, int size) {
+        {
+            int sum = 0;
+            for (int i=0; i < size; i++) {
+
+                sum += data[i];
+                if (sum > 255) {
+                    sum -= 255;
+                }
+            }
+            return sum;
+        }
+    }
+
+    public static int checkDesync(byte[] cmd, int got, int expected) {
+
+        if (got != expected)
+            return 1;
+
+        int ccom = cmd[1];
+
+        if (ccom < 0x21)
+            return 1;
+
+        int cdev = cmd[0];
+        int cid = cmd[0] & 0xf0;
+
+        if ((cid != 0x20) && (cid != 0x30) && (cid != 0x40) && (cid != 0x50) && (cdev != 0x6f))
+            return 1;
+
+        return 0;
     }
 }
 

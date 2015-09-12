@@ -1,6 +1,8 @@
 #ifndef SERIALPORT_H
 #define SERIALPORT_H
 
+#define SOFTWARE_HANDSHAKE 3
+
 #include <QObject>
 #include <QByteArray>
 
