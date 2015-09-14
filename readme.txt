@@ -9,7 +9,11 @@ are supported):
 
 https://github.com/greblus/aspeqt/raw/android/android/apk/aspeqt.apk
 
-there is another branch (same GUI) which works better on JellyBean
+I've added an initial implementation of software command frame
+detection which should work with anything @19200bps. It's now set 
+as default method when AspeQt is started first time. 
+
+There is another branch (same GUI) which works better on JellyBean
 and some other devices:
 
 https://github.com/greblus/aspeqt/raw/us4a/android/apk/aspeqt.apk
