@@ -118,7 +118,7 @@ public class FtdiSerialDriver implements UsbSerialDriver {
         return Collections.singletonList(mPort);
     }
 
-    private class FtdiSerialPort extends CommonUsbSerialPort {
+    public class FtdiSerialPort extends CommonUsbSerialPort {
 
         public static final int USB_TYPE_STANDARD = 0x00 << 5;
         public static final int USB_TYPE_CLASS = 0x00 << 5;

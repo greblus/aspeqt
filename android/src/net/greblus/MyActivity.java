@@ -193,6 +193,7 @@ public class MyActivity extends QtActivity
                 sPort.setParameters(19200, 8, UsbSerialPort.STOPBITS_1, UsbSerialPort.PARITY_NONE);
             } catch (IOException e) {
                 Log.i("USB", "Can't open port");
+                return -1;
             }
             Log.i("USB", "Device opened");
             return 1;
@@ -200,9 +201,10 @@ public class MyActivity extends QtActivity
 
      public static void closeDevice() {
          try {
-            if (sPort != null) sPort.close();
+           if (sPort != null)
+                sPort.close();
          } catch (IOException e) {
-            Log.i("USB", "Can't close port");
+                Log.i("USB", "Can't close port");
         }
      }
 
@@ -220,11 +222,15 @@ public class MyActivity extends QtActivity
 
     public static int read(int size, int total)
     {
-        int ret = 0;
-//        byte[] b = new byte[size];
-
+        int ret = 0, tot = 0;
         try {
-            ret = sPort.sread(b, size, 1000);
+            do {
+                 ret = sPort.sread(t, size, 5000);
+                 for (int i=0; i<ret; i++) {
+                    b[tot] = (byte) (t[i] & 0xff);
+                    tot += 1;
+                }
+            } while (tot < size);
         } catch (IOException e) {
            Log.i("USB", "Can't read");
         }
@@ -332,31 +338,32 @@ public class MyActivity extends QtActivity
 
 
     public static int getCommandFrame() {
-        int expected = 0, sync_attempts = 0, got = 1;
-        do {
+        int expected = 0, sync_attempts = 0, got = 1, total_retries = 0;
+
+        while (true) {
             try {
-                int ret = 0, total = 0;
+                int ret = 0, total = 0; total_retries = 0;
                 do {
-                     ret = sPort.sread(t, 5, 5000);
-                     for (int i=0; i<ret; i++) {
-                        b[total] = t[i];
-                        total += 1;
+                    if (total_retries > 2) return 2;
+                     ret = sPort.sread(t, 5, 1000);
+                     if (ret > 0) {
+                         for (int i=0; i<ret; i++) {
+                            b[total] = (byte)(t[i] & 0xff);
+                            total += 1;
+                        }
+                    } else {
+                        total_retries++;
                     }
                 } while (total<5);
 
                 if (debug) {
                     String data = "";
                     for (int i=0; i<5; i++)
-                        data += Integer.toString(b[i]) + " ";
+                        data += Integer.toString(b[i] & 0xff) + " ";
                     Log.i("USB", "Read 5 bytes, looking for Command Frame: " + data);
                 }
-
                 expected = b[4] & 0xff;
                 got = sioChecksum(b, 4) & 0xff;
-
-                if (expected == 0 )
-                    continue;
-
             } catch (IOException e) {};
 
             if (checkDesync(b, got, expected) > 0) {
@@ -369,7 +376,7 @@ public class MyActivity extends QtActivity
                         int ret = 0;
                         do {
                             try {
-                                ret = sPort.sread(t, 1, 5000);
+                                ret = sPort.sread(t, 1, 1000);
                             } catch (IOException e) {};
                         } while (ret < 1);
                         b[4] = t[0];
@@ -381,7 +388,7 @@ public class MyActivity extends QtActivity
                 Log.i("USB", "No desync");
                 break;
             }
-        } while (got != expected);
+         };
 
         if (debug) Log.i("USB", "got=" + got + " expected= " + expected);
         bbuf.position(0);
@@ -389,22 +396,21 @@ public class MyActivity extends QtActivity
         return 1;
     }
 
-    public static int sioChecksum(byte[] data, int size) {
-        {
+    public static int sioChecksum(byte[] data, int size)
+    {
             int sum = 0;
             for (int i=0; i < size; i++) {
 
-                sum += data[i];
+                sum += data[i] & 0xff;
                 if (sum > 255) {
                     sum -= 255;
                 }
             }
             return sum;
-        }
     }
 
-    public static int checkDesync(byte[] cmd, int got, int expected) {
-
+    public static int checkDesync(byte[] cmd, int got, int expected)
+    {
         if (got != expected)
             return 1;
 

@@ -56,7 +56,7 @@ bool StandardSerialPortBackend::open()
 
     mHandle = QAndroidJniObject::callStaticMethod<jint>("net/greblus/MyActivity", "openDevice", "()I");
 
-    if (mHandle == 0 || mHandle > 1000000) {
+    if (mHandle == 0) {
     if (debug) qCritical() << "!e" << tr("Cannot open serial port '%1': %2")
                        .arg(name, "No device connected!");
         return false;
@@ -86,8 +86,9 @@ bool StandardSerialPortBackend::open()
             break;
         case 3:
             m = "SOFT";
+            break;
         default:
-            m = "DSR";
+            m = "SOFT";
     }
     /* Notify the user that emulation is started */
     qWarning() << "!i" << tr("Emulation started through standard serial port backend on '%1' with %2 handshaking.")
@@ -107,8 +108,8 @@ void StandardSerialPortBackend::close()
 {
     if (debug) qWarning() << "!i" << tr("close");
     cancel();
-    QAndroidJniObject::callStaticMethod<jint>("net/greblus/MyActivity", "closeDevice", "()V");
     mHandle = -1;
+    QAndroidJniObject::callStaticMethod<jint>("net/greblus/MyActivity", "closeDevice", "()V");
 }
 
 void StandardSerialPortBackend::cancel()
@@ -204,14 +205,18 @@ QByteArray StandardSerialPortBackend::readCommandFrame()
     {
         do {
             int result =  QAndroidJniObject::callStaticMethod<jint>("net/greblus/MyActivity", "getCommandFrame", "()I");
-            if (result == 1)
-            {
-                data.resize(4);
-                for (int i=0; i<4; i++)
-                    data[i] = (quint8) (bbuf[i] & 0xff);
+            switch (result) {
+                case 1:
+                    data.resize(4);
+                    for (int i=0; i<4; i++)
+                        data[i] = (bbuf[i] & 0xff);
+                    break;
+                case 2:
+                    continue;
+                    break;
+                default:
+                    data.clear();
             }
-            else
-                data.clear();
 
             if (!data.isEmpty()) {
                 break;
@@ -227,7 +232,7 @@ QByteArray StandardSerialPortBackend::readCommandFrame()
                     }
                 }
             }
-        } while (1);
+        } while (data.isEmpty() && !mCanceled);
     }
     else
     {
