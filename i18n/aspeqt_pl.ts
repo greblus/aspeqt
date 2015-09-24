@@ -9,26 +9,29 @@
         <translation>wersja %1</translation>
     </message>
     <message>
-        <location filename="../aboutdialog.ui" line="14"/>
+        <location filename="../aboutdialog.ui" line="20"/>
         <source>About AspeQt</source>
         <translation>O programie AspeQt</translation>
     </message>
     <message>
-        <location filename="../aboutdialog.ui" line="55"/>
+        <location filename="../aboutdialog.ui" line="70"/>
         <source>&lt;!DOCTYPE HTML PUBLIC &quot;-//W3C//DTD HTML 4.0//EN&quot; &quot;http://www.w3.org/TR/REC-html40/strict.dtd&quot;&gt;
 &lt;html&gt;&lt;head&gt;&lt;meta name=&quot;qrichtext&quot; content=&quot;1&quot; /&gt;&lt;title&gt;AspeQt&lt;/title&gt;&lt;style type=&quot;text/css&quot;&gt;
 p, li { white-space: pre-wrap; }
 &lt;/style&gt;&lt;/head&gt;&lt;body style=&quot; font-family:&apos;MS Shell Dlg 2&apos;; font-size:8.25pt; font-weight:400; font-style:normal;&quot;&gt;
-&lt;p style=&quot; margin-top:12px; margin-bottom:12px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt; &lt;img src=&quot;main-icon/AspeQt.png&quot; width=&quot;66&quot; height=&quot;72&quot; /&gt;&lt;span style=&quot; font-weight:600; color:#4c920e;&quot;&gt;  &lt;/span&gt;&lt;span style=&quot; font-family:&apos;Arial,Helvetica,sans-serif&apos;; font-weight:600; font-style:italic; color:#4c920e;&quot;&gt;AspeQt, Atari Serial Peripheral Emulator for Qt&lt;/span&gt;&lt;/p&gt;
-&lt;p style=&quot; margin-top:12px; margin-bottom:12px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;span style=&quot; font-weight:600; font-style:italic; color:#4c920e;&quot;&gt;	ANDROID VERSION (BETA)&lt;br /&gt;&lt;/span&gt;&lt;br /&gt;&lt;span style=&quot; font-family:&apos;Arial,Helvetica,sans-serif&apos;; font-weight:600;&quot;&gt;Summary&lt;/span&gt;&lt;span style=&quot; font-family:&apos;Arial,Helvetica,sans-serif&apos;;&quot;&gt;&lt;br /&gt;AspeQt emulates Atari SIO peripherals when connected to an Atari 8-bit computer with an SIO2PC cable.&lt;br /&gt;In that respect it&apos;s similar to programs like APE and Atari810. The main difference is that it&apos;s free (unlike APE) and it&apos;s cross-platform (unlike Atari810 and APE).&lt;br /&gt;&lt;br /&gt;&lt;/span&gt;&lt;span style=&quot; font-family:&apos;Arial,Helvetica,sans-serif&apos;; font-weight:600;&quot;&gt;Some features&lt;/span&gt;&lt;span style=&quot; font-family:&apos;Arial,Helvetica,sans-serif&apos;;&quot;&gt;&lt;br /&gt;* Qt based GUI with drag and drop support.&lt;br /&gt;* Cross-platform&lt;/span&gt;&lt;span style=&quot; font-family:&apos;Arial,Helvetica,sans-serif&apos;; font-style:italic;&quot;&gt; (currently Windows and x86-Linux)&lt;/span&gt;&lt;span style=&quot; font-family:&apos;Arial,Helvetica,sans-serif&apos;;&quot;&gt;&lt;br /&gt;* 15 disk drive emulation &lt;/span&gt;&lt;span style=&quot; font-family:&apos;Arial,Helvetica,sans-serif&apos;; font-style:italic;&quot;&gt;(drives 9-15 are only supported by SpartaDOS X)&lt;/span&gt;&lt;span style=&quot; font-family:&apos;Arial,Helvetica,sans-serif&apos;;&quot;&gt;&lt;br /&gt;* Text-only printer emulation with saving and printing of the output&lt;br /&gt;* Cassette image playback&lt;br /&gt;* Folders can be mounted as simulated Dos20s disks. &lt;/span&gt;&lt;span style=&quot; font-family:&apos;Arial,Helvetica,sans-serif&apos;; font-style:italic;&quot;&gt;(read-only, now with SDX compatibility, and bootable)&lt;/span&gt;&lt;span style=&quot; font-family:&apos;Arial,Helvetica,sans-serif&apos;;&quot;&gt;&lt;br /&gt;* Atari executables can be booted directly, optionally with high speed.&lt;br /&gt;* Contents of image files can be viewed / changed&lt;br /&gt;* AspeQt Client module ASPECL.COM. Runs on the Atari and is used to get/set Date/Time on the Atari plus a variety of other remote tasks.&lt;br /&gt;* Upto 6xSIO speed and more if the serial port adaptor supports it &lt;/span&gt;&lt;span style=&quot; font-family:&apos;Arial,Helvetica,sans-serif&apos;; font-style:italic;&quot;&gt;(FTDI chip based cables are recommanded).&lt;/span&gt;&lt;span style=&quot; font-family:&apos;Arial,Helvetica,sans-serif&apos;;&quot;&gt;&lt;br /&gt;* Localization support (Currently for English, German, Polish, Russian, Slovak, Spanish and Turkish)&lt;br /&gt;* Multi-session support&lt;br /&gt;&lt;br /&gt;&lt;/span&gt;&lt;span style=&quot; font-family:&apos;Arial,Helvetica,sans-serif&apos;; font-weight:600;&quot;&gt;License&lt;/span&gt;&lt;span style=&quot; font-family:&apos;Arial,Helvetica,sans-serif&apos;;&quot;&gt;&lt;br /&gt;Original code up to version 0.6.0 &lt;/span&gt;&lt;span style=&quot; font-family:&apos;Arial,Helvetica,sans-serif&apos;; font-style:italic;&quot;&gt;Copyright 2009 by Fatih Aygün. &lt;/span&gt;&lt;span style=&quot; font-family:&apos;Arial,Helvetica,sans-serif&apos;;&quot;&gt;&lt;br /&gt;Updates since v0.6.0 &lt;/span&gt;&lt;span style=&quot; font-family:&apos;Arial,Helvetica,sans-serif&apos;; font-style:italic;&quot;&gt;Copyright 2012 by Ray Ataergin&lt;/span&gt; &lt;br /&gt;Android port by Wiktor Grębla &lt;/p&gt;
+&lt;p style=&quot; margin-top:12px; margin-bottom:12px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt; &lt;img src=&quot;main-icon/AspeQt.png&quot; width=&quot;66&quot; height=&quot;72&quot; /&gt;&lt;span style=&quot; font-weight:600; color:#4c920e;&quot;&gt;  &lt;/span&gt;&lt;span style=&quot; font-family:&apos;Arial,Helvetica,sans-serif&apos;; font-size:large; font-weight:600; font-style:italic; color:#4c920e;&quot;&gt;AspeQt, Atari Serial Peripheral Emulator for Qt&lt;/span&gt;&lt;span style=&quot; font-weight:600; font-style:italic; color:#4c920e;&quot;&gt;&lt;br /&gt;&lt;/span&gt;&lt;br /&gt;&lt;span style=&quot; font-family:&apos;Arial,Helvetica,sans-serif&apos;; font-weight:600;&quot;&gt;Summary&lt;/span&gt;&lt;span style=&quot; font-family:&apos;Arial,Helvetica,sans-serif&apos;;&quot;&gt;&lt;br /&gt;AspeQt emulates Atari SIO peripherals when connected to an Atari 8-bit computer with an SIO2PC cable.&lt;br /&gt;In that respect it&apos;s similar to programs like APE and Atari810. The main difference is that it&apos;s free (unlike APE) and it&apos;s cross-platform (unlike Atari810 and APE).&lt;br /&gt;&lt;br /&gt;&lt;/span&gt;&lt;span style=&quot; font-family:&apos;Arial,Helvetica,sans-serif&apos;; font-weight:600;&quot;&gt;Some features&lt;/span&gt;&lt;span style=&quot; font-family:&apos;Arial,Helvetica,sans-serif&apos;;&quot;&gt;&lt;br /&gt;* Qt based GUI with drag and drop support.&lt;br /&gt;* Cross-platform&lt;/span&gt;&lt;span style=&quot; font-family:&apos;Arial,Helvetica,sans-serif&apos;; font-style:italic;&quot;&gt; (currently Windows and x86-Linux)&lt;/span&gt;&lt;span style=&quot; font-family:&apos;Arial,Helvetica,sans-serif&apos;;&quot;&gt;&lt;br /&gt;* 15 disk drive emulation &lt;/span&gt;&lt;span style=&quot; font-family:&apos;Arial,Helvetica,sans-serif&apos;; font-style:italic;&quot;&gt;(drives 9-15 are only supported by SpartaDOS X)&lt;/span&gt;&lt;span style=&quot; font-family:&apos;Arial,Helvetica,sans-serif&apos;;&quot;&gt;&lt;br /&gt;* Text-only printer emulation with saving and printing of the output&lt;br /&gt;* Cassette image playback&lt;br /&gt;* Folders can be mounted as simulated Dos20s disks. &lt;/span&gt;&lt;span style=&quot; font-family:&apos;Arial,Helvetica,sans-serif&apos;; font-style:italic;&quot;&gt;(read-only, now with SDX compatibility, and bootable)&lt;/span&gt;&lt;span style=&quot; font-family:&apos;Arial,Helvetica,sans-serif&apos;;&quot;&gt;&lt;br /&gt;* Atari executables can be booted directly, optionally with high speed.&lt;br /&gt;* Contents of image files can be viewed / changed&lt;br /&gt;* AspeQt Client module ASPECL.COM. Runs on the Atari and is used to get/set Date/Time on the Atari plus a variety of other remote tasks.&lt;br /&gt;* Upto 6xSIO speed and more if the serial port adaptor supports it &lt;/span&gt;&lt;span style=&quot; font-family:&apos;Arial,Helvetica,sans-serif&apos;; font-style:italic;&quot;&gt;(FTDI chip based cables are recommanded).&lt;/span&gt;&lt;span style=&quot; font-family:&apos;Arial,Helvetica,sans-serif&apos;;&quot;&gt;&lt;br /&gt;* Localization support (Currently for English, German, Polish, Russian, Slovak, Spanish and Turkish)&lt;br /&gt;* Multi-session support&lt;br /&gt;&lt;br /&gt;&lt;/span&gt;&lt;span style=&quot; font-family:&apos;Arial,Helvetica,sans-serif&apos;; font-weight:600;&quot;&gt;License&lt;/span&gt;&lt;span style=&quot; font-family:&apos;Arial,Helvetica,sans-serif&apos;;&quot;&gt;&lt;br /&gt;Original code up to version 0.6.0 &lt;/span&gt;&lt;span style=&quot; font-family:&apos;Arial,Helvetica,sans-serif&apos;; font-style:italic;&quot;&gt;Copyright 2009 by Fatih Aygün. &lt;/span&gt;&lt;span style=&quot; font-family:&apos;Arial,Helvetica,sans-serif&apos;;&quot;&gt;&lt;br /&gt;Updates since v0.6.0 &lt;/span&gt;&lt;span style=&quot; font-family:&apos;Arial,Helvetica,sans-serif&apos;; font-style:italic;&quot;&gt;Copyright 2012 by Ray Ataergin&lt;/span&gt;&lt;span style=&quot; font-family:&apos;Arial,Helvetica,sans-serif&apos;;&quot;&gt; &lt;br /&gt;Android port&lt;/span&gt;&lt;span style=&quot; font-family:&apos;Arial,Helvetica,sans-serif&apos;; font-style:italic;&quot;&gt; by Wiktor Grebla&lt;/span&gt; &lt;/p&gt;
 &lt;p style=&quot; margin-top:12px; margin-bottom:12px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;span style=&quot; font-family:&apos;Arial,Helvetica,sans-serif&apos;;&quot;&gt;You can freely copy, use, modify and distribute AspeQt under the GPL 2.0 license. Please see license.txt for details.&lt;/span&gt; &lt;/p&gt;
 &lt;p style=&quot; margin-top:12px; margin-bottom:12px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;span style=&quot; font-family:&apos;Arial,Helvetica,sans-serif&apos;;&quot;&gt;Qt libraries: &lt;/span&gt;&lt;span style=&quot; font-family:&apos;Arial,Helvetica,sans-serif&apos;; font-style:italic;&quot;&gt;Copyright 2009 Nokia Corporation&lt;/span&gt;&lt;span style=&quot; font-family:&apos;Arial,Helvetica,sans-serif&apos;;&quot;&gt; and/or its subsidiary(-ies). Used in this package under LGPL 2.0 license.&lt;br /&gt;&lt;br /&gt;Silk Icons: &lt;/span&gt;&lt;span style=&quot; font-family:&apos;Arial,Helvetica,sans-serif&apos;; font-style:italic;&quot;&gt;Copyright &lt;/span&gt;&lt;a href=&quot;www.famfamfam.com&quot;&gt;&lt;span style=&quot; font-family:&apos;Arial,Helvetica,sans-serif&apos;; font-style:italic; text-decoration: underline; color:#0000ff;&quot;&gt;Mark James&lt;/span&gt;&lt;/a&gt;&lt;span style=&quot; font-family:&apos;Arial,Helvetica,sans-serif&apos;; font-style:italic;&quot;&gt;.&lt;/span&gt;&lt;span style=&quot; font-family:&apos;Arial,Helvetica,sans-serif&apos;;&quot;&gt; Used in this package under Creative Commons Attribution 3.0 license.&lt;br /&gt;&lt;br /&gt;Additional Icons by &lt;/span&gt;&lt;a href=&quot;http://www.oxygen-icons.org/&quot;&gt;&lt;span style=&quot; font-family:&apos;Arial,Helvetica,sans-serif&apos;; font-style:italic; text-decoration: underline; color:#0000ff;&quot;&gt;Oxygen Team&lt;/span&gt;&lt;/a&gt;&lt;span style=&quot; font-family:&apos;Arial,Helvetica,sans-serif&apos;;&quot;&gt;. Used in this package under Creative Commons Attribution-ShareAlike 3.0 license.&lt;br /&gt;&lt;br /&gt;AtariSIO Linux kernel module and high speed code used in the EXE loader &lt;/span&gt;&lt;span style=&quot; font-family:&apos;Arial,Helvetica,sans-serif&apos;; font-style:italic;&quot;&gt;Copyright &lt;/span&gt;&lt;a href=&quot;http://www.horus.com/~hias/atari/&quot;&gt;&lt;span style=&quot; font-family:&apos;Arial,Helvetica,sans-serif&apos;; font-style:italic; text-decoration: underline; color:#0000ff;&quot;&gt;Matthias Reichl.&lt;/span&gt;&lt;/a&gt;&lt;span style=&quot; font-family:&apos;Arial,Helvetica,sans-serif&apos;;&quot;&gt; Used in this package under GPL 2.0 license.&lt;br /&gt;&lt;br /&gt;Atascii Fonts by &lt;/span&gt;&lt;a href=&quot;http://members.bitstream.net/~marksim/atarimac&quot;&gt;&lt;span style=&quot; font-family:&apos;Arial,Helvetica,sans-serif&apos;; font-style:italic; text-decoration: underline; color:#0000ff;&quot;&gt;Mark Simonson&lt;/span&gt;&lt;/a&gt;&lt;span style=&quot; font-family:&apos;Arial,Helvetica,sans-serif&apos;;&quot;&gt;. Used in this package under Freeware License.&lt;/span&gt;&lt;br /&gt;&lt;br /&gt;&lt;span style=&quot; font-family:&apos;Arial,Helvetica,sans-serif&apos;; font-weight:600; font-style:italic;&quot;&gt;DOS files distributed with AspeQt&lt;/span&gt;&lt;span style=&quot; font-family:&apos;Arial,Helvetica,sans-serif&apos;; font-style:italic;&quot;&gt; are copyright of their respective owners, Atari8Warez and AspeQt distributes those files with the understanding that they are either abandonware or public domain, and are widely available for download through the internet. If you are the copyright holder of one or more of these files, and believe that distribution of these files constitutes a breach of your rights please contact &lt;/span&gt;&lt;a href=&quot;mailto:ray@atari8warez.com&quot;&gt;&lt;span style=&quot; font-family:&apos;Arial,Helvetica,sans-serif&apos;; font-style:italic; text-decoration: underline; color:#0000ff;&quot;&gt;Atari8Warez&lt;/span&gt;&lt;/a&gt;&lt;span style=&quot; font-family:&apos;Arial,Helvetica,sans-serif&apos;; font-style:italic;&quot;&gt;. We respect the rights of copyright holders and won&apos;t distribute copyrighted work without the rights holder&apos;s consent. &lt;/span&gt;&lt;/p&gt;
-&lt;p style=&quot; margin-top:12px; margin-bottom:12px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;span style=&quot; font-family:&apos;Arial,Helvetica,sans-serif&apos;; font-weight:600;&quot;&gt;Contact&lt;/span&gt;&lt;span style=&quot; font-family:&apos;Arial,Helvetica,sans-serif&apos;;&quot;&gt;&lt;br /&gt;Ray Ataergin, &lt;/span&gt;&lt;a href=&quot;mailto:ray@atari8warez.com&quot;&gt;&lt;span style=&quot; font-family:&apos;Arial,Helvetica,sans-serif&apos;; text-decoration: underline; color:#0000ff;&quot;&gt;email&lt;/span&gt;&lt;/a&gt;&lt;span style=&quot; font-family:&apos;Arial,Helvetica,sans-serif&apos;;&quot;&gt;, &lt;/span&gt;&lt;span style=&quot; font-family:&apos;Arial,Helvetica,sans-serif&apos;; font-style:italic;&quot;&gt;Please include the word &amp;quot;aspeqt&amp;quot; in the subject field (keep in mind that Ray maintains his own forked version of AspeQt now)&lt;/span&gt;&lt;span style=&quot; font-family:&apos;Arial,Helvetica,sans-serif&apos;;&quot;&gt;&lt;br /&gt;&lt;br /&gt;Fatih Aygun, &lt;/span&gt;&lt;a href=&quot;mailto:cyco130@yahoo.com&quot;&gt;&lt;span style=&quot; font-family:&apos;Arial,Helvetica,sans-serif&apos;; text-decoration: underline; color:#0000ff;&quot;&gt;email&lt;/span&gt;&lt;/a&gt;&lt;span style=&quot; font-family:&apos;Arial,Helvetica,sans-serif&apos;;&quot;&gt;, &lt;/span&gt;&lt;span style=&quot; font-family:&apos;Arial,Helvetica,sans-serif&apos;; font-style:italic;&quot;&gt;Please include the word &amp;quot;aspeqt&amp;quot; in the subject field.&lt;/span&gt;&lt;/p&gt;
-&lt;p style=&quot; margin-top:12px; margin-bottom:12px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;span style=&quot; font-family:&apos;Arial,Helvetica,sans-serif&apos;;&quot;&gt;Wiktor Grębla, &lt;/span&gt;&lt;a href=&quot;mailto:greblus@gmail.com&quot;&gt;&lt;span style=&quot; font-size:8pt; text-decoration: underline; color:#0000ff;&quot;&gt;email&lt;/span&gt;&lt;/a&gt;&lt;span style=&quot; font-family:&apos;Arial,Helvetica,sans-serif&apos;;&quot;&gt;, Please include whatever you want, can be a beer or my favourite Dewar&apos;s White Label ;).&lt;br /&gt;&lt;br /&gt;For SIO2PC-USB hardware purchase/support visit &lt;/span&gt;&lt;a href=&quot;www.lotharek.pl&quot;&gt;&lt;span style=&quot; font-size:8pt; text-decoration: underline; color:#0000ff;&quot;&gt;Lotharek&apos;s shop&lt;/span&gt;&lt;/a&gt;&lt;span style=&quot; font-family:&apos;Arial,Helvetica,sans-serif&apos;;&quot;&gt;.&lt;br /&gt;&lt;/span&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
+&lt;p style=&quot; margin-top:12px; margin-bottom:12px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;span style=&quot; font-family:&apos;Arial,Helvetica,sans-serif&apos;; font-weight:600;&quot;&gt;Contact&lt;/span&gt;&lt;span style=&quot; font-family:&apos;Arial,Helvetica,sans-serif&apos;;&quot;&gt;&lt;br /&gt;Ray Ataergin, &lt;/span&gt;&lt;a href=&quot;mailto:ray@atari8warez.com&quot;&gt;&lt;span style=&quot; font-family:&apos;Arial,Helvetica,sans-serif&apos;; text-decoration: underline; color:#0000ff;&quot;&gt;email&lt;/span&gt;&lt;/a&gt;&lt;span style=&quot; font-family:&apos;Arial,Helvetica,sans-serif&apos;;&quot;&gt;, &lt;br /&gt;Fatih Aygun, &lt;/span&gt;&lt;a href=&quot;mailto:cyco130@yahoo.com&quot;&gt;&lt;span style=&quot; font-family:&apos;Arial,Helvetica,sans-serif&apos;; text-decoration: underline; color:#0000ff;&quot;&gt;email&lt;/span&gt;&lt;/a&gt;&lt;span style=&quot; font-family:&apos;Arial,Helvetica,sans-serif&apos;;&quot;&gt;, &lt;br /&gt;Wiktor Grebla, &lt;/span&gt;&lt;a href=&quot;mailto:greblus@gmail.com&quot;&gt;&lt;span style=&quot; font-family:&apos;Arial,Helvetica,sans-serif&apos;; text-decoration: underline; color:#0000ff;&quot;&gt;email&lt;/span&gt;&lt;/a&gt;&lt;span style=&quot; font-family:&apos;Arial,Helvetica,sans-serif&apos;;&quot;&gt;, &lt;br /&gt;For SIO2PC-USB hardware purchase/support visit &lt;/span&gt;&lt;a href=&quot;http://www.lotharek.pl&quot;&gt;&lt;span style=&quot; font-family:&apos;Arial,Helvetica,sans-serif&apos;; text-decoration: underline; color:#0000ff;&quot;&gt;Lotharek&apos;s store&lt;/span&gt;&lt;/a&gt;&lt;span style=&quot; font-family:&apos;Arial,Helvetica,sans-serif&apos;;&quot;&gt;&lt;br /&gt;&lt;/span&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../aboutdialog.ui" line="68"/>
+        <location filename="../aboutdialog.ui" line="111"/>
+        <source>(Use two finger scrolling)</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../aboutdialog.ui" line="84"/>
         <source>qrc:/documentation/about.html</source>
         <translation type="unfinished"></translation>
     </message>
@@ -99,7 +102,7 @@ p, li { white-space: pre-wrap; }
 </translation>
     </message>
     <message>
-        <location filename="../aboutdialog.ui" line="32"/>
+        <location filename="../aboutdialog.ui" line="38"/>
         <source>AspeQt: Atari Serial Peripheral Emulator for Qt</source>
         <oldsource>AspeQt : Atari Serial Peripheral Emulator for Qt</oldsource>
         <translation>AspeQt: Emulator Szeregowych Peryferiów Atari dla Qt</translation>
@@ -1606,27 +1609,27 @@ p, li { white-space: pre-wrap; }
 <context>
     <name>MainWindow</name>
     <message>
-        <location filename="../mainwindow.cpp" line="260"/>
+        <location filename="../mainwindow.cpp" line="241"/>
         <source>Clear messages</source>
         <translation>Usuń wiadomości</translation>
     </message>
     <message>
-        <location filename="../mainwindow.cpp" line="482"/>
+        <location filename="../mainwindow.cpp" line="463"/>
         <source>Swapped disk %1 with disk %2.</source>
         <translation>Zamieniono dysk %1 z dyskiem %2.</translation>
     </message>
     <message>
-        <location filename="../mainwindow.cpp" line="536"/>
+        <location filename="../mainwindow.cpp" line="517"/>
         <source>Cannot mount &apos;%1&apos;: No empty disk slots.</source>
         <translation>Nie można zamontować &apos;%1&apos;: Brak wolnych slotów.</translation>
     </message>
     <message>
-        <location filename="../mainwindow.cpp" line="621"/>
+        <location filename="../mainwindow.cpp" line="602"/>
         <source>First run</source>
         <translation>Pierwsze uruchomienie</translation>
     </message>
     <message>
-        <location filename="../mainwindow.cpp" line="622"/>
+        <location filename="../mainwindow.cpp" line="603"/>
         <source>You are running AspeQt for the first time.
 
 Do you want to open the options dialog?</source>
@@ -1635,87 +1638,87 @@ Do you want to open the options dialog?</source>
 Czy chcesz otworzyć opcje?</translation>
     </message>
     <message>
-        <location filename="../mainwindow.cpp" line="797"/>
+        <location filename="../mainwindow.cpp" line="778"/>
         <source>Printer emulation stopped.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../mainwindow.cpp" line="806"/>
+        <location filename="../mainwindow.cpp" line="787"/>
         <source>Printer emulation started.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../mainwindow.cpp" line="823"/>
+        <location filename="../mainwindow.cpp" line="804"/>
         <source>&amp;Stop emulation</source>
         <translation>&amp;Zatrzymaj emulację</translation>
     </message>
     <message>
-        <location filename="../mainwindow.cpp" line="824"/>
-        <location filename="../mainwindow.cpp" line="825"/>
+        <location filename="../mainwindow.cpp" line="805"/>
+        <location filename="../mainwindow.cpp" line="806"/>
         <source>Stop SIO peripheral emulation</source>
         <translation>Zatrzymaj emulację peryferiów SIO</translation>
     </message>
     <message>
-        <location filename="../mainwindow.ui" line="3782"/>
-        <location filename="../mainwindow.cpp" line="833"/>
+        <location filename="../mainwindow.ui" line="4288"/>
+        <location filename="../mainwindow.cpp" line="814"/>
         <source>&amp;Start emulation</source>
         <translation>&amp;Rozpocznij emulację</translation>
     </message>
     <message>
-        <location filename="../mainwindow.ui" line="3785"/>
-        <location filename="../mainwindow.ui" line="3788"/>
-        <location filename="../mainwindow.cpp" line="834"/>
-        <location filename="../mainwindow.cpp" line="835"/>
+        <location filename="../mainwindow.ui" line="4291"/>
+        <location filename="../mainwindow.ui" line="4294"/>
+        <location filename="../mainwindow.cpp" line="815"/>
+        <location filename="../mainwindow.cpp" line="816"/>
         <source>Start SIO peripheral emulation</source>
         <translation>Uruchom emulację peryferiów SIO</translation>
     </message>
     <message>
-        <location filename="../mainwindow.cpp" line="842"/>
+        <location filename="../mainwindow.cpp" line="823"/>
         <source>Emulation stopped.</source>
         <translation>Emulacja zatrzymana.</translation>
     </message>
     <message>
-        <location filename="../mainwindow.cpp" line="142"/>
+        <location filename="../mainwindow.cpp" line="123"/>
         <source>AspeQt started at %1.</source>
         <translation>AspeQt uruchomiono %1.</translation>
     </message>
     <message>
-        <location filename="../mainwindow.cpp" line="159"/>
-        <location filename="../mainwindow.cpp" line="167"/>
+        <location filename="../mainwindow.cpp" line="140"/>
+        <location filename="../mainwindow.cpp" line="148"/>
         <source>Migrate Settings</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../mainwindow.cpp" line="159"/>
+        <location filename="../mainwindow.cpp" line="140"/>
         <source>This version of AspeQt uses a different repository for storing its global settings.
 We will now migrate the existing settings to their new repository, note that settings stored in your existing AspeQt session files are not affected by this change.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../mainwindow.cpp" line="167"/>
+        <location filename="../mainwindow.cpp" line="148"/>
         <source>Setting were migrated successfuly.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../mainwindow.cpp" line="213"/>
-        <location filename="../mainwindow.cpp" line="223"/>
+        <location filename="../mainwindow.cpp" line="194"/>
+        <location filename="../mainwindow.cpp" line="204"/>
         <source>Session file error</source>
         <translation>Błąd pliku sesji</translation>
     </message>
     <message>
-        <location filename="../mainwindow.cpp" line="214"/>
+        <location filename="../mainwindow.cpp" line="195"/>
         <source>Requested session file not found in the given directory path or the path is incorrect. AspeQt will continue with default session configuration.</source>
         <translation>Plik sesji nie znaleziony w podanej ścieżce dostępu, bądź ścieżka dostępu jest błędna. AspeQt będzie kontynuował z domyślną konfiguracją.</translation>
     </message>
     <message>
-        <location filename="../mainwindow.cpp" line="224"/>
+        <location filename="../mainwindow.cpp" line="205"/>
         <source>Requested session file not found in the application&apos;s current directory path
  (No path was specified). AspeQt will continue with default session configuration.</source>
         <translation>Plik sesji nie znaleziony w aktualnym katalogu aplikacji (ścieżka dostępu nie została podana). AspeQt będzie kontynuował z domyślną konfiguracją.</translation>
     </message>
     <message>
-        <location filename="../mainwindow.cpp" line="237"/>
-        <location filename="../mainwindow.cpp" line="1849"/>
+        <location filename="../mainwindow.cpp" line="218"/>
+        <location filename="../mainwindow.cpp" line="1857"/>
         <source> -- Session: </source>
         <translation> -- Sesja:</translation>
     </message>
@@ -1724,47 +1727,47 @@ We will now migrate the existing settings to their new repository, note that set
         <translation type="vanished">19200 bps</translation>
     </message>
     <message>
-        <location filename="../mainwindow.cpp" line="282"/>
+        <location filename="../mainwindow.cpp" line="263"/>
         <source>No network connection</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../mainwindow.cpp" line="382"/>
+        <location filename="../mainwindow.cpp" line="363"/>
         <source>AspeQt stopped at %1.</source>
         <translation>AspeQt zatrzymano %1.</translation>
     </message>
     <message>
-        <location filename="../mainwindow.cpp" line="790"/>
-        <location filename="../mainwindow.cpp" line="791"/>
-        <location filename="../mainwindow.cpp" line="794"/>
+        <location filename="../mainwindow.cpp" line="771"/>
+        <location filename="../mainwindow.cpp" line="772"/>
+        <location filename="../mainwindow.cpp" line="775"/>
         <source>Start printer emulation</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../mainwindow.cpp" line="860"/>
-        <location filename="../mainwindow.cpp" line="882"/>
+        <location filename="../mainwindow.cpp" line="841"/>
+        <location filename="../mainwindow.cpp" line="863"/>
         <source>Folder image</source>
         <translation>Folder</translation>
     </message>
     <message>
-        <location filename="../mainwindow.cpp" line="1143"/>
+        <location filename="../mainwindow.cpp" line="1124"/>
         <source>Unmounted disk %1</source>
         <translation>Odmontowany dysk %1</translation>
     </message>
     <message>
-        <location filename="../mainwindow.cpp" line="1299"/>
-        <location filename="../mainwindow.cpp" line="1819"/>
+        <location filename="../mainwindow.cpp" line="1280"/>
+        <location filename="../mainwindow.cpp" line="1813"/>
         <source>[%1] Mounted &apos;%2&apos; as &apos;%3&apos;.</source>
         <translation>[%1] Zamontowe &apos;%2&apos; jako &apos;%3&apos;.</translation>
     </message>
     <message>
-        <location filename="../mainwindow.cpp" line="1332"/>
+        <location filename="../mainwindow.cpp" line="1313"/>
         <source>Open a disk image</source>
         <translation>Otwórz obraz dysku</translation>
     </message>
     <message>
-        <location filename="../mainwindow.cpp" line="1334"/>
-        <location filename="../mainwindow.cpp" line="1601"/>
+        <location filename="../mainwindow.cpp" line="1315"/>
+        <location filename="../mainwindow.cpp" line="1594"/>
         <source>All Atari disk images (*.atr *.xfd *.pro);;SIO2PC ATR images (*.atr);;XFormer XFD images (*.xfd);;Pro images (*.pro);;All files (*)</source>
         <translation type="unfinished">Wszystkie obrazy dysku (*.atr *.xfd *.pro);;Obrazy SIO2PC ATR (*.atr);;Obrazy XFormer XFD (*.xfd);;Obrazy Pro (*.pro);;Wszystkie pliki (*)</translation>
     </message>
@@ -1773,30 +1776,30 @@ We will now migrate the existing settings to their new repository, note that set
         <translation type="obsolete">Wszystkie obrazy dysku (*.atr *.xfd *.atx *.pro);;Obrazy SIO2PC ATR (*.atr);;Obrazy XFormer XFD (*.xfd);;Obrazy ATX (*.atx);;Obrazy Pro (*.pro);;Wszystkie pliki (*)</translation>
     </message>
     <message>
-        <location filename="../mainwindow.cpp" line="1370"/>
+        <location filename="../mainwindow.cpp" line="1351"/>
         <source>Open a folder image</source>
         <translation>Otwórz folder</translation>
     </message>
     <message>
-        <location filename="../mainwindow.cpp" line="1414"/>
+        <location filename="../mainwindow.cpp" line="1395"/>
         <source>Image file unsaved</source>
         <translation>Plik obrazu zawiera niezapisane zmiany</translation>
     </message>
     <message>
-        <location filename="../mainwindow.cpp" line="1414"/>
+        <location filename="../mainwindow.cpp" line="1395"/>
         <source>&apos;%1&apos; has unsaved changes, do you want to save it?</source>
         <translation>&apos;%1&apos; zawiera niezapisane zmiany. Czy chcesz go zapisać?</translation>
     </message>
     <message>
-        <location filename="../mainwindow.cpp" line="908"/>
-        <location filename="../mainwindow.cpp" line="1459"/>
-        <location filename="../mainwindow.cpp" line="1575"/>
-        <location filename="../mainwindow.cpp" line="1618"/>
+        <location filename="../mainwindow.cpp" line="889"/>
+        <location filename="../mainwindow.cpp" line="1440"/>
+        <location filename="../mainwindow.cpp" line="1556"/>
+        <location filename="../mainwindow.cpp" line="1612"/>
         <source>Save failed</source>
         <translation>Zapis nie powiódł się</translation>
     </message>
     <message>
-        <location filename="../mainwindow.cpp" line="278"/>
+        <location filename="../mainwindow.cpp" line="259"/>
         <source>Connected to the network via: </source>
         <translation>Połączono z siecią przez:</translation>
     </message>
@@ -1809,70 +1812,70 @@ We will now migrate the existing settings to their new repository, note that set
         <translation type="obsolete">Nie znaleziono karty sieciowej!</translation>
     </message>
     <message>
-        <location filename="../mainwindow.cpp" line="908"/>
-        <location filename="../mainwindow.cpp" line="1459"/>
-        <location filename="../mainwindow.cpp" line="1575"/>
-        <location filename="../mainwindow.cpp" line="1618"/>
+        <location filename="../mainwindow.cpp" line="889"/>
+        <location filename="../mainwindow.cpp" line="1440"/>
+        <location filename="../mainwindow.cpp" line="1556"/>
+        <location filename="../mainwindow.cpp" line="1612"/>
         <source>&apos;%1&apos; cannot be saved, do you want to save the image with another name?</source>
         <translation>&apos;%1&apos; nie może zostać zapisany. Czy chcesz zapisać obraz pod inną nazwą?</translation>
     </message>
     <message>
-        <location filename="../mainwindow.cpp" line="1522"/>
+        <location filename="../mainwindow.cpp" line="1503"/>
         <source>[Disk 1] Auto-commit ON.</source>
         <translation>[Disk 1] Automatyczny zapis włączony.</translation>
     </message>
     <message>
-        <location filename="../mainwindow.cpp" line="1524"/>
+        <location filename="../mainwindow.cpp" line="1505"/>
         <source>[Disk 1] Auto-commit OFF.</source>
         <translation>[Disk 1] Automatyczny zapis wyłączony.</translation>
     </message>
     <message>
-        <location filename="../mainwindow.cpp" line="1530"/>
+        <location filename="../mainwindow.cpp" line="1511"/>
         <source>[Disk 2] Auto-commit ON.</source>
         <translation>[Disk 2] Automatyczny zapis włączony.</translation>
     </message>
     <message>
-        <location filename="../mainwindow.cpp" line="1532"/>
+        <location filename="../mainwindow.cpp" line="1513"/>
         <source>[Disk 2] Auto-commit OFF.</source>
         <translation>[Disk 2] Automatyczny zapis wyłączony.</translation>
     </message>
     <message>
-        <location filename="../mainwindow.cpp" line="1538"/>
+        <location filename="../mainwindow.cpp" line="1519"/>
         <source>[Disk 3] Auto-commit ON.</source>
         <translation>[Disk 3] Automatyczny zapis włączony.</translation>
     </message>
     <message>
-        <location filename="../mainwindow.cpp" line="1540"/>
+        <location filename="../mainwindow.cpp" line="1521"/>
         <source>[Disk 3] Auto-commit OFF.</source>
         <translation>[Disk 3] Automatyczny zapis wyłączony.</translation>
     </message>
     <message>
-        <location filename="../mainwindow.cpp" line="1546"/>
+        <location filename="../mainwindow.cpp" line="1527"/>
         <source>[Disk 4] Auto-commit ON.</source>
         <translation>[Disk 4] Automatyczny zapis włączony.</translation>
     </message>
     <message>
-        <location filename="../mainwindow.cpp" line="1548"/>
+        <location filename="../mainwindow.cpp" line="1529"/>
         <source>[Disk 4] Auto-commit OFF.</source>
         <translation>[Disk 4] Automatyczny zapis wyłączony.</translation>
     </message>
     <message>
-        <location filename="../mainwindow.cpp" line="1554"/>
+        <location filename="../mainwindow.cpp" line="1535"/>
         <source>[Disk 5] Auto-commit ON.</source>
         <translation>[Disk 5] Automatyczny zapis włączony.</translation>
     </message>
     <message>
-        <location filename="../mainwindow.cpp" line="1556"/>
+        <location filename="../mainwindow.cpp" line="1537"/>
         <source>[Disk 5] Auto-commit OFF.</source>
         <translation>[Disk 5] Automatyczny zapis wyłączony.</translation>
     </message>
     <message>
-        <location filename="../mainwindow.cpp" line="1562"/>
+        <location filename="../mainwindow.cpp" line="1543"/>
         <source>[Disk 6] Auto-commit ON.</source>
         <translation>[Disk 6] Automatyczny zapis włączony.</translation>
     </message>
     <message>
-        <location filename="../mainwindow.cpp" line="1564"/>
+        <location filename="../mainwindow.cpp" line="1545"/>
         <source>[Disk 6] Auto-commit OFF.</source>
         <translation>[Disk 6] Automatyczny zapis wyłączony.</translation>
     </message>
@@ -1949,58 +1952,58 @@ We will now migrate the existing settings to their new repository, note that set
         <translation type="vanished">[Disk 15] Automatyczny zapis wyłączony.</translation>
     </message>
     <message>
-        <location filename="../mainwindow.cpp" line="1599"/>
+        <location filename="../mainwindow.cpp" line="1592"/>
         <source>Save image as</source>
         <translation>Zapisz obraz jako</translation>
     </message>
     <message>
-        <location filename="../mainwindow.cpp" line="1636"/>
+        <location filename="../mainwindow.cpp" line="1630"/>
         <source>Revert to last saved</source>
         <translation>Przywracanie do ostatnio zapisanego stanu</translation>
     </message>
     <message>
-        <location filename="../mainwindow.cpp" line="1637"/>
+        <location filename="../mainwindow.cpp" line="1631"/>
         <source>Do you really want to revert &apos;%1&apos; to its last saved state? You will lose the changes that has been made.</source>
         <translation>Czy na pewno chcesz przywrócić &apos;%1&apos; do ostatnio zapisanego stanu? Stracisz wszystkie wprowadzone zmiany.</translation>
     </message>
     <message>
-        <location filename="../mainwindow.cpp" line="1828"/>
+        <location filename="../mainwindow.cpp" line="1835"/>
         <source>Open session</source>
         <translation>Otwórz sesję</translation>
     </message>
     <message>
-        <location filename="../mainwindow.cpp" line="1830"/>
-        <location filename="../mainwindow.cpp" line="1865"/>
+        <location filename="../mainwindow.cpp" line="1837"/>
+        <location filename="../mainwindow.cpp" line="1886"/>
         <source>AspeQt sessions (*.aspeqt);;All files (*)</source>
         <translation>Sesje AspeQt (*.aspeqt);;Wszystkie pliki (*)</translation>
     </message>
     <message>
-        <location filename="../mainwindow.cpp" line="1863"/>
+        <location filename="../mainwindow.cpp" line="1884"/>
         <source>Save session as</source>
         <translation>Zapisz sesję jako</translation>
     </message>
     <message>
-        <location filename="../mainwindow.cpp" line="1900"/>
+        <location filename="../mainwindow.cpp" line="1922"/>
         <source>Open executable</source>
         <translation>Otwórz plik wykonywalny</translation>
     </message>
     <message>
-        <location filename="../mainwindow.cpp" line="1902"/>
+        <location filename="../mainwindow.cpp" line="1924"/>
         <source>Atari executables (*.xex *.com *.exe);;All files (*)</source>
         <translation>Pliki wykonywalne Atari (*.xex *.com *.exe);;Wszystkie pliki (*)</translation>
     </message>
     <message>
-        <location filename="../mainwindow.cpp" line="1944"/>
+        <location filename="../mainwindow.cpp" line="1966"/>
         <source>Open a cassette image</source>
         <translation>Otwórz obraz kasety</translation>
     </message>
     <message>
-        <location filename="../mainwindow.cpp" line="1946"/>
+        <location filename="../mainwindow.cpp" line="1968"/>
         <source>CAS images (*.cas);;All files (*)</source>
         <translation>Obrazy CAS (*.cas);;Wszystkie pliki (*)</translation>
     </message>
     <message>
-        <location filename="../mainwindow.cpp" line="235"/>
+        <location filename="../mainwindow.cpp" line="216"/>
         <source>AspeQt - Atari Serial Peripheral Emulator for Qt</source>
         <translation>AspeQt - Emulator Szeregowych Peryferiów Atari dla Qt</translation>
     </message>
@@ -2009,718 +2012,718 @@ We will now migrate the existing settings to their new repository, note that set
         <translation type="obsolete">Stacje dyskietek D9-DO dostępne są tylko z poziomu SDX i innych kompatybilnych systemów DOS</translation>
     </message>
     <message>
-        <location filename="../mainwindow.ui" line="2520"/>
+        <location filename="../mainwindow.ui" line="3026"/>
         <source>&amp;Disk</source>
         <translation>&amp;Dysk</translation>
     </message>
     <message>
-        <location filename="../mainwindow.ui" line="2540"/>
+        <location filename="../mainwindow.ui" line="3046"/>
         <source>&amp;File</source>
         <translation>&amp;Plik</translation>
     </message>
     <message>
-        <location filename="../mainwindow.ui" line="2556"/>
+        <location filename="../mainwindow.ui" line="3062"/>
         <source>&amp;Tools</source>
         <translation>&amp;Narzędzia</translation>
     </message>
     <message>
-        <location filename="../mainwindow.ui" line="2562"/>
+        <location filename="../mainwindow.ui" line="3068"/>
         <source>&amp;Help</source>
         <oldsource>Help</oldsource>
         <translation>P&amp;omoc</translation>
     </message>
     <message>
-        <location filename="../mainwindow.ui" line="2596"/>
+        <location filename="../mainwindow.ui" line="3102"/>
         <source>Unmount &amp;all</source>
         <translation>Odmontuj &amp;wszystko</translation>
     </message>
     <message>
-        <location filename="../mainwindow.ui" line="2599"/>
+        <location filename="../mainwindow.ui" line="3105"/>
         <source>Unmount all</source>
         <translation>Odmontuj wszystko</translation>
     </message>
     <message>
-        <location filename="../mainwindow.ui" line="2614"/>
-        <location filename="../mainwindow.ui" line="2632"/>
-        <location filename="../mainwindow.ui" line="2650"/>
-        <location filename="../mainwindow.ui" line="2668"/>
-        <location filename="../mainwindow.ui" line="2686"/>
-        <location filename="../mainwindow.ui" line="2704"/>
-        <location filename="../mainwindow.ui" line="2722"/>
-        <location filename="../mainwindow.ui" line="2740"/>
-        <location filename="../mainwindow.ui" line="2758"/>
-        <location filename="../mainwindow.ui" line="2776"/>
-        <location filename="../mainwindow.ui" line="2794"/>
-        <location filename="../mainwindow.ui" line="2812"/>
-        <location filename="../mainwindow.ui" line="2830"/>
-        <location filename="../mainwindow.ui" line="2848"/>
-        <location filename="../mainwindow.ui" line="2866"/>
+        <location filename="../mainwindow.ui" line="3120"/>
+        <location filename="../mainwindow.ui" line="3138"/>
+        <location filename="../mainwindow.ui" line="3156"/>
+        <location filename="../mainwindow.ui" line="3174"/>
+        <location filename="../mainwindow.ui" line="3192"/>
+        <location filename="../mainwindow.ui" line="3210"/>
+        <location filename="../mainwindow.ui" line="3228"/>
+        <location filename="../mainwindow.ui" line="3246"/>
+        <location filename="../mainwindow.ui" line="3264"/>
+        <location filename="../mainwindow.ui" line="3282"/>
+        <location filename="../mainwindow.ui" line="3300"/>
+        <location filename="../mainwindow.ui" line="3318"/>
+        <location filename="../mainwindow.ui" line="3336"/>
+        <location filename="../mainwindow.ui" line="3354"/>
+        <location filename="../mainwindow.ui" line="3372"/>
         <source>Mount disk image...</source>
         <translation>Montowanie obrazu dysku...</translation>
     </message>
     <message>
-        <location filename="../mainwindow.ui" line="2617"/>
-        <location filename="../mainwindow.ui" line="2620"/>
+        <location filename="../mainwindow.ui" line="3123"/>
+        <location filename="../mainwindow.ui" line="3126"/>
         <source>Mount a disk image to D1</source>
         <translation>Zamontuj obraz dysku do D1</translation>
     </message>
     <message>
-        <location filename="../mainwindow.ui" line="2623"/>
+        <location filename="../mainwindow.ui" line="3129"/>
         <source>Alt+1</source>
         <translation></translation>
     </message>
     <message>
-        <location filename="../mainwindow.ui" line="2635"/>
-        <location filename="../mainwindow.ui" line="2638"/>
+        <location filename="../mainwindow.ui" line="3141"/>
+        <location filename="../mainwindow.ui" line="3144"/>
         <source>Mount a disk image to D2</source>
         <translation>Zamontuj obraz dysku do D2</translation>
     </message>
     <message>
-        <location filename="../mainwindow.ui" line="2641"/>
+        <location filename="../mainwindow.ui" line="3147"/>
         <source>Alt+2</source>
         <translation></translation>
     </message>
     <message>
-        <location filename="../mainwindow.ui" line="2653"/>
-        <location filename="../mainwindow.ui" line="2656"/>
+        <location filename="../mainwindow.ui" line="3159"/>
+        <location filename="../mainwindow.ui" line="3162"/>
         <source>Mount a disk image to D3</source>
         <translation>Zamontuj obraz dysku do D3</translation>
     </message>
     <message>
-        <location filename="../mainwindow.ui" line="2659"/>
+        <location filename="../mainwindow.ui" line="3165"/>
         <source>Alt+3</source>
         <translation></translation>
     </message>
     <message>
-        <location filename="../mainwindow.ui" line="2671"/>
-        <location filename="../mainwindow.ui" line="2674"/>
+        <location filename="../mainwindow.ui" line="3177"/>
+        <location filename="../mainwindow.ui" line="3180"/>
         <source>Mount a disk image to D4</source>
         <translation>Zamontuj obraz dysku do D4</translation>
     </message>
     <message>
-        <location filename="../mainwindow.ui" line="2677"/>
+        <location filename="../mainwindow.ui" line="3183"/>
         <source>Alt+4</source>
         <translation></translation>
     </message>
     <message>
-        <location filename="../mainwindow.ui" line="2689"/>
-        <location filename="../mainwindow.ui" line="2692"/>
+        <location filename="../mainwindow.ui" line="3195"/>
+        <location filename="../mainwindow.ui" line="3198"/>
         <source>Mount a disk image to D5</source>
         <translation>Zamontuj obraz dysku do D5</translation>
     </message>
     <message>
-        <location filename="../mainwindow.ui" line="2695"/>
+        <location filename="../mainwindow.ui" line="3201"/>
         <source>Alt+5</source>
         <translation></translation>
     </message>
     <message>
-        <location filename="../mainwindow.ui" line="2707"/>
-        <location filename="../mainwindow.ui" line="2710"/>
+        <location filename="../mainwindow.ui" line="3213"/>
+        <location filename="../mainwindow.ui" line="3216"/>
         <source>Mount a disk image to D6</source>
         <translation>Zamontuj obraz dysku do D6</translation>
     </message>
     <message>
-        <location filename="../mainwindow.ui" line="2713"/>
+        <location filename="../mainwindow.ui" line="3219"/>
         <source>Alt+6</source>
         <translation></translation>
     </message>
     <message>
-        <location filename="../mainwindow.ui" line="2725"/>
-        <location filename="../mainwindow.ui" line="2728"/>
+        <location filename="../mainwindow.ui" line="3231"/>
+        <location filename="../mainwindow.ui" line="3234"/>
         <source>Mount a disk image to D7</source>
         <translation>Zamontuj obraz dysku do D7</translation>
     </message>
     <message>
-        <location filename="../mainwindow.ui" line="2731"/>
+        <location filename="../mainwindow.ui" line="3237"/>
         <source>Alt+7</source>
         <translation></translation>
     </message>
     <message>
-        <location filename="../mainwindow.ui" line="2743"/>
-        <location filename="../mainwindow.ui" line="2746"/>
+        <location filename="../mainwindow.ui" line="3249"/>
+        <location filename="../mainwindow.ui" line="3252"/>
         <source>Mount a disk image to D8</source>
         <translation>Zamontuj obraz dysku do D8</translation>
     </message>
     <message>
-        <location filename="../mainwindow.ui" line="2749"/>
+        <location filename="../mainwindow.ui" line="3255"/>
         <source>Alt+8</source>
         <translation></translation>
     </message>
     <message>
-        <location filename="../mainwindow.ui" line="2761"/>
-        <location filename="../mainwindow.ui" line="2764"/>
+        <location filename="../mainwindow.ui" line="3267"/>
+        <location filename="../mainwindow.ui" line="3270"/>
         <source>Mount a disk image to D9</source>
         <translation>Zamontuj obraz dysku do D9</translation>
     </message>
     <message>
-        <location filename="../mainwindow.ui" line="2767"/>
+        <location filename="../mainwindow.ui" line="3273"/>
         <source>Alt+9</source>
         <translation></translation>
     </message>
     <message>
-        <location filename="../mainwindow.ui" line="2779"/>
-        <location filename="../mainwindow.ui" line="2782"/>
+        <location filename="../mainwindow.ui" line="3285"/>
+        <location filename="../mainwindow.ui" line="3288"/>
         <source>Mount a disk image to D10</source>
         <translation>Zamontuj obraz dysku do D10</translation>
     </message>
     <message>
-        <location filename="../mainwindow.ui" line="2797"/>
-        <location filename="../mainwindow.ui" line="2800"/>
+        <location filename="../mainwindow.ui" line="3303"/>
+        <location filename="../mainwindow.ui" line="3306"/>
         <source>Mount a disk image to D11</source>
         <translation>Zamontuj obraz dysku do D11</translation>
     </message>
     <message>
-        <location filename="../mainwindow.ui" line="2815"/>
-        <location filename="../mainwindow.ui" line="2818"/>
+        <location filename="../mainwindow.ui" line="3321"/>
+        <location filename="../mainwindow.ui" line="3324"/>
         <source>Mount a disk image to D12</source>
         <translation>Zamontuj obraz dysku do D12</translation>
     </message>
     <message>
-        <location filename="../mainwindow.ui" line="2833"/>
-        <location filename="../mainwindow.ui" line="2836"/>
+        <location filename="../mainwindow.ui" line="3339"/>
+        <location filename="../mainwindow.ui" line="3342"/>
         <source>Mount a disk image to D13</source>
         <translation>Zamontuj obraz dysku do D13</translation>
     </message>
     <message>
-        <location filename="../mainwindow.ui" line="2851"/>
-        <location filename="../mainwindow.ui" line="2854"/>
+        <location filename="../mainwindow.ui" line="3357"/>
+        <location filename="../mainwindow.ui" line="3360"/>
         <source>Mount a disk image to D14</source>
         <translation>Zamontuj obraz dysku do D14</translation>
     </message>
     <message>
-        <location filename="../mainwindow.ui" line="2869"/>
-        <location filename="../mainwindow.ui" line="2872"/>
+        <location filename="../mainwindow.ui" line="3375"/>
+        <location filename="../mainwindow.ui" line="3378"/>
         <source>Mount a disk image to D15</source>
         <translation>Zamontuj obraz dysku do D15</translation>
     </message>
     <message>
-        <location filename="../mainwindow.ui" line="4312"/>
+        <location filename="../mainwindow.ui" line="4818"/>
         <source>Alt+O</source>
         <translation></translation>
     </message>
     <message>
-        <location filename="../mainwindow.ui" line="2884"/>
-        <location filename="../mainwindow.ui" line="2902"/>
-        <location filename="../mainwindow.ui" line="2920"/>
-        <location filename="../mainwindow.ui" line="2938"/>
-        <location filename="../mainwindow.ui" line="2956"/>
-        <location filename="../mainwindow.ui" line="2974"/>
-        <location filename="../mainwindow.ui" line="2992"/>
-        <location filename="../mainwindow.ui" line="3010"/>
-        <location filename="../mainwindow.ui" line="3028"/>
-        <location filename="../mainwindow.ui" line="3046"/>
-        <location filename="../mainwindow.ui" line="3064"/>
-        <location filename="../mainwindow.ui" line="3082"/>
-        <location filename="../mainwindow.ui" line="3100"/>
-        <location filename="../mainwindow.ui" line="3118"/>
-        <location filename="../mainwindow.ui" line="3136"/>
+        <location filename="../mainwindow.ui" line="3390"/>
+        <location filename="../mainwindow.ui" line="3408"/>
+        <location filename="../mainwindow.ui" line="3426"/>
+        <location filename="../mainwindow.ui" line="3444"/>
+        <location filename="../mainwindow.ui" line="3462"/>
+        <location filename="../mainwindow.ui" line="3480"/>
+        <location filename="../mainwindow.ui" line="3498"/>
+        <location filename="../mainwindow.ui" line="3516"/>
+        <location filename="../mainwindow.ui" line="3534"/>
+        <location filename="../mainwindow.ui" line="3552"/>
+        <location filename="../mainwindow.ui" line="3570"/>
+        <location filename="../mainwindow.ui" line="3588"/>
+        <location filename="../mainwindow.ui" line="3606"/>
+        <location filename="../mainwindow.ui" line="3624"/>
+        <location filename="../mainwindow.ui" line="3642"/>
         <source>Mount folder image...</source>
         <translation>Montowanie folderu...</translation>
     </message>
     <message>
-        <location filename="../mainwindow.ui" line="2887"/>
-        <location filename="../mainwindow.ui" line="2890"/>
+        <location filename="../mainwindow.ui" line="3393"/>
+        <location filename="../mainwindow.ui" line="3396"/>
         <source>Mount a folder image to D1</source>
         <translation>Zamontuj folder do D1</translation>
     </message>
     <message>
-        <location filename="../mainwindow.ui" line="2893"/>
+        <location filename="../mainwindow.ui" line="3399"/>
         <source>Ctrl+1</source>
         <translation></translation>
     </message>
     <message>
-        <location filename="../mainwindow.ui" line="2905"/>
-        <location filename="../mainwindow.ui" line="2908"/>
+        <location filename="../mainwindow.ui" line="3411"/>
+        <location filename="../mainwindow.ui" line="3414"/>
         <source>Mount a folder image to D2</source>
         <translation>Zamontuj folder do D2</translation>
     </message>
     <message>
-        <location filename="../mainwindow.ui" line="2911"/>
+        <location filename="../mainwindow.ui" line="3417"/>
         <source>Ctrl+2</source>
         <translation></translation>
     </message>
     <message>
-        <location filename="../mainwindow.ui" line="2923"/>
-        <location filename="../mainwindow.ui" line="2926"/>
+        <location filename="../mainwindow.ui" line="3429"/>
+        <location filename="../mainwindow.ui" line="3432"/>
         <source>Mount a folder image to D3</source>
         <translation>Zamontuj folder do D3</translation>
     </message>
     <message>
-        <location filename="../mainwindow.ui" line="2929"/>
+        <location filename="../mainwindow.ui" line="3435"/>
         <source>Ctrl+3</source>
         <translation></translation>
     </message>
     <message>
-        <location filename="../mainwindow.ui" line="2941"/>
-        <location filename="../mainwindow.ui" line="2944"/>
+        <location filename="../mainwindow.ui" line="3447"/>
+        <location filename="../mainwindow.ui" line="3450"/>
         <source>Mount a folder image to D4</source>
         <translation>Zamontuj folder do D4</translation>
     </message>
     <message>
-        <location filename="../mainwindow.ui" line="2947"/>
+        <location filename="../mainwindow.ui" line="3453"/>
         <source>Ctrl+4</source>
         <translation></translation>
     </message>
     <message>
-        <location filename="../mainwindow.ui" line="2959"/>
-        <location filename="../mainwindow.ui" line="2962"/>
+        <location filename="../mainwindow.ui" line="3465"/>
+        <location filename="../mainwindow.ui" line="3468"/>
         <source>Mount a folder image to D5</source>
         <translation>Zamontuj folder do D5</translation>
     </message>
     <message>
-        <location filename="../mainwindow.ui" line="2965"/>
+        <location filename="../mainwindow.ui" line="3471"/>
         <source>Ctrl+5</source>
         <translation></translation>
     </message>
     <message>
-        <location filename="../mainwindow.ui" line="2977"/>
-        <location filename="../mainwindow.ui" line="2980"/>
+        <location filename="../mainwindow.ui" line="3483"/>
+        <location filename="../mainwindow.ui" line="3486"/>
         <source>Mount a folder image to D6</source>
         <translation>Zamontuj folder do D6</translation>
     </message>
     <message>
-        <location filename="../mainwindow.ui" line="2983"/>
+        <location filename="../mainwindow.ui" line="3489"/>
         <source>Ctrl+6</source>
         <translation></translation>
     </message>
     <message>
-        <location filename="../mainwindow.ui" line="2995"/>
-        <location filename="../mainwindow.ui" line="2998"/>
+        <location filename="../mainwindow.ui" line="3501"/>
+        <location filename="../mainwindow.ui" line="3504"/>
         <source>Mount a folder image to D7</source>
         <translation>Zamontuj folder do D7</translation>
     </message>
     <message>
-        <location filename="../mainwindow.ui" line="3001"/>
+        <location filename="../mainwindow.ui" line="3507"/>
         <source>Ctrl+7</source>
         <translation></translation>
     </message>
     <message>
-        <location filename="../mainwindow.ui" line="3013"/>
-        <location filename="../mainwindow.ui" line="3016"/>
+        <location filename="../mainwindow.ui" line="3519"/>
+        <location filename="../mainwindow.ui" line="3522"/>
         <source>Mount a folder image to D8</source>
         <translation>Zamontuj folder do D8</translation>
     </message>
     <message>
-        <location filename="../mainwindow.ui" line="3019"/>
+        <location filename="../mainwindow.ui" line="3525"/>
         <source>Ctrl+8</source>
         <translation></translation>
     </message>
     <message>
-        <location filename="../mainwindow.ui" line="3031"/>
-        <location filename="../mainwindow.ui" line="3034"/>
+        <location filename="../mainwindow.ui" line="3537"/>
+        <location filename="../mainwindow.ui" line="3540"/>
         <source>Mount a folder image to D9</source>
         <translation>Zamontuj folder do D9</translation>
     </message>
     <message>
-        <location filename="../mainwindow.ui" line="3037"/>
+        <location filename="../mainwindow.ui" line="3543"/>
         <source>Ctrl+9</source>
         <translation></translation>
     </message>
     <message>
-        <location filename="../mainwindow.ui" line="3049"/>
-        <location filename="../mainwindow.ui" line="3052"/>
+        <location filename="../mainwindow.ui" line="3555"/>
+        <location filename="../mainwindow.ui" line="3558"/>
         <source>Mount a folder image to D10</source>
         <translation>Zamontuj folder do D10</translation>
     </message>
     <message>
-        <location filename="../mainwindow.ui" line="3067"/>
-        <location filename="../mainwindow.ui" line="3070"/>
+        <location filename="../mainwindow.ui" line="3573"/>
+        <location filename="../mainwindow.ui" line="3576"/>
         <source>Mount a folder image to D11</source>
         <translation>Zamontuj folder do D11</translation>
     </message>
     <message>
-        <location filename="../mainwindow.ui" line="3085"/>
-        <location filename="../mainwindow.ui" line="3088"/>
+        <location filename="../mainwindow.ui" line="3591"/>
+        <location filename="../mainwindow.ui" line="3594"/>
         <source>Mount a folder image to D12</source>
         <translation>Zamontuj folder do D12</translation>
     </message>
     <message>
-        <location filename="../mainwindow.ui" line="5659"/>
-        <location filename="../mainwindow.ui" line="5662"/>
-        <location filename="../mainwindow.ui" line="5665"/>
+        <location filename="../mainwindow.ui" line="6165"/>
+        <location filename="../mainwindow.ui" line="6168"/>
+        <location filename="../mainwindow.ui" line="6171"/>
         <source>Open log window</source>
         <translation>Otwórz okno dziennika</translation>
     </message>
     <message>
-        <location filename="../mainwindow.ui" line="5668"/>
+        <location filename="../mainwindow.ui" line="6174"/>
         <source>Ctrl+L</source>
         <translation></translation>
     </message>
     <message>
-        <location filename="../mainwindow.ui" line="3103"/>
-        <location filename="../mainwindow.ui" line="3106"/>
+        <location filename="../mainwindow.ui" line="3609"/>
+        <location filename="../mainwindow.ui" line="3612"/>
         <source>Mount a folder image to D13</source>
         <translation>Zamontuj folder do D13</translation>
     </message>
     <message>
-        <location filename="../mainwindow.ui" line="5635"/>
+        <location filename="../mainwindow.ui" line="6141"/>
         <source>Ctrl+M</source>
         <translation></translation>
     </message>
     <message>
-        <location filename="../mainwindow.ui" line="3121"/>
-        <location filename="../mainwindow.ui" line="3124"/>
+        <location filename="../mainwindow.ui" line="3627"/>
+        <location filename="../mainwindow.ui" line="3630"/>
         <source>Mount a folder image to D14</source>
         <translation>Zamontuj folder do D14</translation>
     </message>
     <message>
-        <location filename="../mainwindow.ui" line="3139"/>
-        <location filename="../mainwindow.ui" line="3142"/>
+        <location filename="../mainwindow.ui" line="3645"/>
+        <location filename="../mainwindow.ui" line="3648"/>
         <source>Mount a folder image to D15</source>
         <translation>Zamontuj folder do D15</translation>
     </message>
     <message>
-        <location filename="../mainwindow.ui" line="3157"/>
-        <location filename="../mainwindow.ui" line="3175"/>
-        <location filename="../mainwindow.ui" line="3193"/>
-        <location filename="../mainwindow.ui" line="3211"/>
-        <location filename="../mainwindow.ui" line="3229"/>
-        <location filename="../mainwindow.ui" line="3247"/>
-        <location filename="../mainwindow.ui" line="3265"/>
-        <location filename="../mainwindow.ui" line="3283"/>
-        <location filename="../mainwindow.ui" line="3301"/>
-        <location filename="../mainwindow.ui" line="3319"/>
-        <location filename="../mainwindow.ui" line="3337"/>
-        <location filename="../mainwindow.ui" line="3355"/>
-        <location filename="../mainwindow.ui" line="3373"/>
-        <location filename="../mainwindow.ui" line="3391"/>
-        <location filename="../mainwindow.ui" line="3409"/>
+        <location filename="../mainwindow.ui" line="3663"/>
+        <location filename="../mainwindow.ui" line="3681"/>
+        <location filename="../mainwindow.ui" line="3699"/>
+        <location filename="../mainwindow.ui" line="3717"/>
+        <location filename="../mainwindow.ui" line="3735"/>
+        <location filename="../mainwindow.ui" line="3753"/>
+        <location filename="../mainwindow.ui" line="3771"/>
+        <location filename="../mainwindow.ui" line="3789"/>
+        <location filename="../mainwindow.ui" line="3807"/>
+        <location filename="../mainwindow.ui" line="3825"/>
+        <location filename="../mainwindow.ui" line="3843"/>
+        <location filename="../mainwindow.ui" line="3861"/>
+        <location filename="../mainwindow.ui" line="3879"/>
+        <location filename="../mainwindow.ui" line="3897"/>
+        <location filename="../mainwindow.ui" line="3915"/>
         <source>Unmount</source>
         <translation>Odmontuj</translation>
     </message>
     <message>
-        <location filename="../mainwindow.ui" line="3160"/>
-        <location filename="../mainwindow.ui" line="3163"/>
+        <location filename="../mainwindow.ui" line="3666"/>
+        <location filename="../mainwindow.ui" line="3669"/>
         <source>Unmount D1</source>
         <translation>Odmontuj D1</translation>
     </message>
     <message>
-        <location filename="../mainwindow.ui" line="3178"/>
-        <location filename="../mainwindow.ui" line="3181"/>
+        <location filename="../mainwindow.ui" line="3684"/>
+        <location filename="../mainwindow.ui" line="3687"/>
         <source>Unmount D2</source>
         <translation>Odmontuj D2</translation>
     </message>
     <message>
-        <location filename="../mainwindow.ui" line="3196"/>
-        <location filename="../mainwindow.ui" line="3199"/>
+        <location filename="../mainwindow.ui" line="3702"/>
+        <location filename="../mainwindow.ui" line="3705"/>
         <source>Unmount D3</source>
         <translation>Odmontuj D3</translation>
     </message>
     <message>
-        <location filename="../mainwindow.ui" line="3214"/>
-        <location filename="../mainwindow.ui" line="3217"/>
+        <location filename="../mainwindow.ui" line="3720"/>
+        <location filename="../mainwindow.ui" line="3723"/>
         <source>Unmount D4</source>
         <translation>Odmontuj D4</translation>
     </message>
     <message>
-        <location filename="../mainwindow.ui" line="3232"/>
-        <location filename="../mainwindow.ui" line="3235"/>
+        <location filename="../mainwindow.ui" line="3738"/>
+        <location filename="../mainwindow.ui" line="3741"/>
         <source>Unmount D5</source>
         <translation>Odmontuj D5</translation>
     </message>
     <message>
-        <location filename="../mainwindow.ui" line="3250"/>
-        <location filename="../mainwindow.ui" line="3253"/>
+        <location filename="../mainwindow.ui" line="3756"/>
+        <location filename="../mainwindow.ui" line="3759"/>
         <source>Unmount D6</source>
         <translation>Odmontuj D6</translation>
     </message>
     <message>
-        <location filename="../mainwindow.ui" line="3268"/>
-        <location filename="../mainwindow.ui" line="3271"/>
+        <location filename="../mainwindow.ui" line="3774"/>
+        <location filename="../mainwindow.ui" line="3777"/>
         <source>Unmount D7</source>
         <translation>Odmontuj D7</translation>
     </message>
     <message>
-        <location filename="../mainwindow.ui" line="3286"/>
-        <location filename="../mainwindow.ui" line="3289"/>
+        <location filename="../mainwindow.ui" line="3792"/>
+        <location filename="../mainwindow.ui" line="3795"/>
         <source>Unmount D8</source>
         <translation>Odmontuj D8</translation>
     </message>
     <message>
-        <location filename="../mainwindow.ui" line="3304"/>
-        <location filename="../mainwindow.ui" line="3307"/>
+        <location filename="../mainwindow.ui" line="3810"/>
+        <location filename="../mainwindow.ui" line="3813"/>
         <source>Unmount D9</source>
         <translation>Odmontuj D9</translation>
     </message>
     <message>
-        <location filename="../mainwindow.ui" line="3322"/>
-        <location filename="../mainwindow.ui" line="3325"/>
+        <location filename="../mainwindow.ui" line="3828"/>
+        <location filename="../mainwindow.ui" line="3831"/>
         <source>Unmount D10</source>
         <translation>Odmontuj D10</translation>
     </message>
     <message>
-        <location filename="../mainwindow.ui" line="3340"/>
-        <location filename="../mainwindow.ui" line="3343"/>
+        <location filename="../mainwindow.ui" line="3846"/>
+        <location filename="../mainwindow.ui" line="3849"/>
         <source>Unmount D11</source>
         <translation>Odmontuj D11</translation>
     </message>
     <message>
-        <location filename="../mainwindow.ui" line="3358"/>
-        <location filename="../mainwindow.ui" line="3361"/>
+        <location filename="../mainwindow.ui" line="3864"/>
+        <location filename="../mainwindow.ui" line="3867"/>
         <source>Unmount D12</source>
         <translation>Odmontuj D12</translation>
     </message>
     <message>
-        <location filename="../mainwindow.ui" line="3376"/>
-        <location filename="../mainwindow.ui" line="3379"/>
+        <location filename="../mainwindow.ui" line="3882"/>
+        <location filename="../mainwindow.ui" line="3885"/>
         <source>Unmount D13</source>
         <translation>Odmontuj D13</translation>
     </message>
     <message>
-        <location filename="../mainwindow.ui" line="3394"/>
-        <location filename="../mainwindow.ui" line="3397"/>
+        <location filename="../mainwindow.ui" line="3900"/>
+        <location filename="../mainwindow.ui" line="3903"/>
         <source>Unmount D14</source>
         <translation>Odmontuj D14</translation>
     </message>
     <message>
-        <location filename="../mainwindow.ui" line="3412"/>
-        <location filename="../mainwindow.ui" line="3415"/>
+        <location filename="../mainwindow.ui" line="3918"/>
+        <location filename="../mainwindow.ui" line="3921"/>
         <source>Unmount D15</source>
         <translation>Odmontuj D15</translation>
     </message>
     <message>
-        <location filename="../mainwindow.ui" line="3431"/>
-        <location filename="../mainwindow.ui" line="3453"/>
-        <location filename="../mainwindow.ui" line="3475"/>
-        <location filename="../mainwindow.ui" line="3497"/>
-        <location filename="../mainwindow.ui" line="3519"/>
-        <location filename="../mainwindow.ui" line="3541"/>
-        <location filename="../mainwindow.ui" line="3563"/>
-        <location filename="../mainwindow.ui" line="3588"/>
-        <location filename="../mainwindow.ui" line="3610"/>
-        <location filename="../mainwindow.ui" line="3632"/>
-        <location filename="../mainwindow.ui" line="3654"/>
-        <location filename="../mainwindow.ui" line="3676"/>
-        <location filename="../mainwindow.ui" line="3698"/>
-        <location filename="../mainwindow.ui" line="3720"/>
-        <location filename="../mainwindow.ui" line="3742"/>
+        <location filename="../mainwindow.ui" line="3937"/>
+        <location filename="../mainwindow.ui" line="3959"/>
+        <location filename="../mainwindow.ui" line="3981"/>
+        <location filename="../mainwindow.ui" line="4003"/>
+        <location filename="../mainwindow.ui" line="4025"/>
+        <location filename="../mainwindow.ui" line="4047"/>
+        <location filename="../mainwindow.ui" line="4069"/>
+        <location filename="../mainwindow.ui" line="4094"/>
+        <location filename="../mainwindow.ui" line="4116"/>
+        <location filename="../mainwindow.ui" line="4138"/>
+        <location filename="../mainwindow.ui" line="4160"/>
+        <location filename="../mainwindow.ui" line="4182"/>
+        <location filename="../mainwindow.ui" line="4204"/>
+        <location filename="../mainwindow.ui" line="4226"/>
+        <location filename="../mainwindow.ui" line="4248"/>
         <source>Write protected</source>
         <translation>Ochrona przed zapisem</translation>
     </message>
     <message>
-        <location filename="../mainwindow.ui" line="3434"/>
-        <location filename="../mainwindow.ui" line="3437"/>
+        <location filename="../mainwindow.ui" line="3940"/>
+        <location filename="../mainwindow.ui" line="3943"/>
         <source>Toggle write protection for D1</source>
         <translation>Przełącz ochronę przed zapisem dla D1</translation>
     </message>
     <message>
-        <location filename="../mainwindow.ui" line="3456"/>
-        <location filename="../mainwindow.ui" line="3459"/>
+        <location filename="../mainwindow.ui" line="3962"/>
+        <location filename="../mainwindow.ui" line="3965"/>
         <source>Toggle write protection for D2</source>
         <translation>Przełącz ochronę przed zapisem dla D2</translation>
     </message>
     <message>
-        <location filename="../mainwindow.ui" line="3478"/>
-        <location filename="../mainwindow.ui" line="3481"/>
+        <location filename="../mainwindow.ui" line="3984"/>
+        <location filename="../mainwindow.ui" line="3987"/>
         <source>Toggle write protection for D3</source>
         <translation>Przełącz ochronę przed zapisem dla D3</translation>
     </message>
     <message>
-        <location filename="../mainwindow.ui" line="3500"/>
-        <location filename="../mainwindow.ui" line="3503"/>
+        <location filename="../mainwindow.ui" line="4006"/>
+        <location filename="../mainwindow.ui" line="4009"/>
         <source>Toggle write protection for D4</source>
         <translation>Przełącz ochronę przed zapisem dla D4</translation>
     </message>
     <message>
-        <location filename="../mainwindow.ui" line="3522"/>
-        <location filename="../mainwindow.ui" line="3525"/>
+        <location filename="../mainwindow.ui" line="4028"/>
+        <location filename="../mainwindow.ui" line="4031"/>
         <source>Toggle write protection for D5</source>
         <translation>Przełącz ochronę przed zapisem dla D5</translation>
     </message>
     <message>
-        <location filename="../mainwindow.ui" line="3544"/>
-        <location filename="../mainwindow.ui" line="3547"/>
+        <location filename="../mainwindow.ui" line="4050"/>
+        <location filename="../mainwindow.ui" line="4053"/>
         <source>Toggle write protection for D6</source>
         <translation>Przełącz ochronę przed zapisem dla D6</translation>
     </message>
     <message>
-        <location filename="../mainwindow.ui" line="3566"/>
-        <location filename="../mainwindow.ui" line="3569"/>
+        <location filename="../mainwindow.ui" line="4072"/>
+        <location filename="../mainwindow.ui" line="4075"/>
         <source>Toggle write protection for D7</source>
         <translation>Przełącz ochronę przed zapisem dla D7</translation>
     </message>
     <message>
-        <location filename="../mainwindow.ui" line="3591"/>
-        <location filename="../mainwindow.ui" line="3594"/>
+        <location filename="../mainwindow.ui" line="4097"/>
+        <location filename="../mainwindow.ui" line="4100"/>
         <source>Toggle write protection for D8</source>
         <translation>Przełącz ochronę przed zapisem dla D8</translation>
     </message>
     <message>
-        <location filename="../mainwindow.ui" line="3613"/>
-        <location filename="../mainwindow.ui" line="3616"/>
+        <location filename="../mainwindow.ui" line="4119"/>
+        <location filename="../mainwindow.ui" line="4122"/>
         <source>Toggle write protection for D9</source>
         <translation>Przełącz ochronę przed zapisem dla D9</translation>
     </message>
     <message>
-        <location filename="../mainwindow.ui" line="3635"/>
-        <location filename="../mainwindow.ui" line="3638"/>
+        <location filename="../mainwindow.ui" line="4141"/>
+        <location filename="../mainwindow.ui" line="4144"/>
         <source>Toggle write protection for D10</source>
         <translation>Przełącz ochronę przed zapisem dla D10</translation>
     </message>
     <message>
-        <location filename="../mainwindow.ui" line="3657"/>
-        <location filename="../mainwindow.ui" line="3660"/>
+        <location filename="../mainwindow.ui" line="4163"/>
+        <location filename="../mainwindow.ui" line="4166"/>
         <source>Toggle write protection for D11</source>
         <translation>Przełącz ochronę przed zapisem dla D11</translation>
     </message>
     <message>
-        <location filename="../mainwindow.ui" line="3679"/>
-        <location filename="../mainwindow.ui" line="3682"/>
+        <location filename="../mainwindow.ui" line="4185"/>
+        <location filename="../mainwindow.ui" line="4188"/>
         <source>Toggle write protection for D12</source>
         <translation>Przełącz ochronę przed zapisem dla D12</translation>
     </message>
     <message>
-        <location filename="../mainwindow.ui" line="3701"/>
-        <location filename="../mainwindow.ui" line="3704"/>
+        <location filename="../mainwindow.ui" line="4207"/>
+        <location filename="../mainwindow.ui" line="4210"/>
         <source>Toggle write protection for D13</source>
         <translation>Przełącz ochronę przed zapisem dla D13</translation>
     </message>
     <message>
-        <location filename="../mainwindow.ui" line="3723"/>
-        <location filename="../mainwindow.ui" line="3726"/>
+        <location filename="../mainwindow.ui" line="4229"/>
+        <location filename="../mainwindow.ui" line="4232"/>
         <source>Toggle write protection for D14</source>
         <translation>Przełącz ochronę przed zapisem dla D14</translation>
     </message>
     <message>
-        <location filename="../mainwindow.ui" line="3745"/>
-        <location filename="../mainwindow.ui" line="3748"/>
+        <location filename="../mainwindow.ui" line="4251"/>
+        <location filename="../mainwindow.ui" line="4254"/>
         <source>Toggle write protection for D15</source>
         <translation>Przełącz ochronę przed zapisem dla D15</translation>
     </message>
     <message>
-        <location filename="../mainwindow.ui" line="3757"/>
+        <location filename="../mainwindow.ui" line="4263"/>
         <source>&amp;Options...</source>
         <translation>&amp;Opcje...</translation>
     </message>
     <message>
-        <location filename="../mainwindow.ui" line="3760"/>
-        <location filename="../mainwindow.ui" line="3763"/>
+        <location filename="../mainwindow.ui" line="4266"/>
+        <location filename="../mainwindow.ui" line="4269"/>
         <source>Open options dialog</source>
         <translation>Otwórz opcje</translation>
     </message>
     <message>
-        <location filename="../mainwindow.ui" line="4294"/>
+        <location filename="../mainwindow.ui" line="4800"/>
         <source>Alt+S</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../mainwindow.ui" line="3802"/>
-        <location filename="../mainwindow.ui" line="3805"/>
-        <location filename="../mainwindow.ui" line="3813"/>
-        <location filename="../mainwindow.ui" line="3816"/>
-        <location filename="../mainwindow.ui" line="3824"/>
-        <location filename="../mainwindow.ui" line="3827"/>
-        <location filename="../mainwindow.ui" line="3835"/>
-        <location filename="../mainwindow.ui" line="3838"/>
-        <location filename="../mainwindow.ui" line="3846"/>
-        <location filename="../mainwindow.ui" line="3849"/>
-        <location filename="../mainwindow.ui" line="3857"/>
-        <location filename="../mainwindow.ui" line="3860"/>
-        <location filename="../mainwindow.ui" line="3868"/>
-        <location filename="../mainwindow.ui" line="3871"/>
-        <location filename="../mainwindow.ui" line="3879"/>
-        <location filename="../mainwindow.ui" line="3882"/>
-        <location filename="../mainwindow.ui" line="3890"/>
-        <location filename="../mainwindow.ui" line="3893"/>
-        <location filename="../mainwindow.ui" line="3901"/>
-        <location filename="../mainwindow.ui" line="3904"/>
+        <location filename="../mainwindow.ui" line="4308"/>
+        <location filename="../mainwindow.ui" line="4311"/>
+        <location filename="../mainwindow.ui" line="4319"/>
+        <location filename="../mainwindow.ui" line="4322"/>
+        <location filename="../mainwindow.ui" line="4330"/>
+        <location filename="../mainwindow.ui" line="4333"/>
+        <location filename="../mainwindow.ui" line="4341"/>
+        <location filename="../mainwindow.ui" line="4344"/>
+        <location filename="../mainwindow.ui" line="4352"/>
+        <location filename="../mainwindow.ui" line="4355"/>
+        <location filename="../mainwindow.ui" line="4363"/>
+        <location filename="../mainwindow.ui" line="4366"/>
+        <location filename="../mainwindow.ui" line="4374"/>
+        <location filename="../mainwindow.ui" line="4377"/>
+        <location filename="../mainwindow.ui" line="4385"/>
+        <location filename="../mainwindow.ui" line="4388"/>
+        <location filename="../mainwindow.ui" line="4396"/>
+        <location filename="../mainwindow.ui" line="4399"/>
+        <location filename="../mainwindow.ui" line="4407"/>
+        <location filename="../mainwindow.ui" line="4410"/>
         <source>Mount to the first available slot</source>
         <translation>Zamontuj w pierwszym wolnym slocie</translation>
     </message>
     <message>
-        <location filename="../mainwindow.ui" line="3913"/>
+        <location filename="../mainwindow.ui" line="4419"/>
         <source>Mount &amp;disk image...</source>
         <translation>Montowanie obrazu &amp;dysku...</translation>
     </message>
     <message>
-        <location filename="../mainwindow.ui" line="3916"/>
-        <location filename="../mainwindow.ui" line="3919"/>
+        <location filename="../mainwindow.ui" line="4422"/>
+        <location filename="../mainwindow.ui" line="4425"/>
         <source>Mount a disk image to the first available slot</source>
         <translation>Zamontuj obraz dysku w pierwszym wolnym slocie</translation>
     </message>
     <message>
-        <location filename="../mainwindow.ui" line="3922"/>
+        <location filename="../mainwindow.ui" line="4428"/>
         <source>Ctrl+D</source>
         <translation></translation>
     </message>
     <message>
-        <location filename="../mainwindow.ui" line="3931"/>
+        <location filename="../mainwindow.ui" line="4437"/>
         <source>Mount &amp;folder image...</source>
         <translation>Montowanie &amp;katalogu...</translation>
     </message>
     <message>
-        <location filename="../mainwindow.ui" line="3934"/>
-        <location filename="../mainwindow.ui" line="3937"/>
+        <location filename="../mainwindow.ui" line="4440"/>
+        <location filename="../mainwindow.ui" line="4443"/>
         <source>Mount a folder image to the first available slot</source>
         <translation>Zamontuj folder w pierwszym wolnym slocie</translation>
     </message>
     <message>
-        <location filename="../mainwindow.ui" line="3940"/>
+        <location filename="../mainwindow.ui" line="4446"/>
         <source>Ctrl+F</source>
         <translation></translation>
     </message>
     <message>
-        <location filename="../mainwindow.ui" line="3949"/>
+        <location filename="../mainwindow.ui" line="4455"/>
         <source>New disk image...</source>
         <translation>Nowy obraz dysku...</translation>
     </message>
     <message>
-        <location filename="../mainwindow.ui" line="3952"/>
-        <location filename="../mainwindow.ui" line="3955"/>
+        <location filename="../mainwindow.ui" line="4458"/>
+        <location filename="../mainwindow.ui" line="4461"/>
         <source>Create a new disk image file and mount it to the first available slot</source>
         <translation>Utwórz nowy obraz dysku i zamontuj w pierwszym wolnym slocie</translation>
     </message>
     <message>
-        <location filename="../mainwindow.ui" line="5167"/>
+        <location filename="../mainwindow.ui" line="5673"/>
         <source>Alt+Shift+T</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../mainwindow.ui" line="5200"/>
+        <location filename="../mainwindow.ui" line="5706"/>
         <source>Alt+Q</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../mainwindow.ui" line="5212"/>
+        <location filename="../mainwindow.ui" line="5718"/>
         <source>Ctrl+A</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../mainwindow.ui" line="5251"/>
+        <location filename="../mainwindow.ui" line="5757"/>
         <source>Ctrl+Shift+U</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../mainwindow.ui" line="5587"/>
+        <location filename="../mainwindow.ui" line="6093"/>
         <source>Folder Boot Options</source>
         <translation>Opcje startowe folderu</translation>
     </message>
     <message>
-        <location filename="../mainwindow.ui" line="5590"/>
+        <location filename="../mainwindow.ui" line="6096"/>
         <source>Change Boot Options</source>
         <translation>Zmień opcje startowe</translation>
     </message>
     <message>
-        <location filename="../mainwindow.ui" line="5605"/>
-        <location filename="../mainwindow.ui" line="5608"/>
-        <location filename="../mainwindow.cpp" line="799"/>
-        <location filename="../mainwindow.cpp" line="800"/>
-        <location filename="../mainwindow.cpp" line="803"/>
+        <location filename="../mainwindow.ui" line="6111"/>
+        <location filename="../mainwindow.ui" line="6114"/>
+        <location filename="../mainwindow.cpp" line="780"/>
+        <location filename="../mainwindow.cpp" line="781"/>
+        <location filename="../mainwindow.cpp" line="784"/>
         <source>Stop printer emulation</source>
         <translation>Zatrzymaj emulację drukarki</translation>
     </message>
     <message>
-        <location filename="../mainwindow.ui" line="5611"/>
+        <location filename="../mainwindow.ui" line="6117"/>
         <source>Alt+P</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../mainwindow.ui" line="5623"/>
+        <location filename="../mainwindow.ui" line="6129"/>
         <source>Ctrl+H</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../mainwindow.ui" line="3958"/>
+        <location filename="../mainwindow.ui" line="4464"/>
         <source>Ctrl+N</source>
         <translation></translation>
     </message>
@@ -2729,78 +2732,78 @@ We will now migrate the existing settings to their new repository, note that set
         <translation type="obsolete">Właściwości...</translation>
     </message>
     <message>
-        <location filename="../mainwindow.ui" line="3979"/>
-        <location filename="../mainwindow.ui" line="3982"/>
+        <location filename="../mainwindow.ui" line="4485"/>
+        <location filename="../mainwindow.ui" line="4488"/>
         <source>Show D1&apos;s properties</source>
         <translation>Pokaż właściwości D1</translation>
     </message>
     <message>
-        <location filename="../mainwindow.ui" line="4000"/>
-        <location filename="../mainwindow.ui" line="4003"/>
+        <location filename="../mainwindow.ui" line="4506"/>
+        <location filename="../mainwindow.ui" line="4509"/>
         <source>Show D2&apos;s properties</source>
         <translation>Pokaż właściwości D2</translation>
     </message>
     <message>
-        <location filename="../mainwindow.ui" line="4021"/>
-        <location filename="../mainwindow.ui" line="4024"/>
+        <location filename="../mainwindow.ui" line="4527"/>
+        <location filename="../mainwindow.ui" line="4530"/>
         <source>Show D3&apos;s properties</source>
         <translation>Pokaż właściwości D3</translation>
     </message>
     <message>
-        <location filename="../mainwindow.ui" line="4042"/>
-        <location filename="../mainwindow.ui" line="4045"/>
+        <location filename="../mainwindow.ui" line="4548"/>
+        <location filename="../mainwindow.ui" line="4551"/>
         <source>Show D4&apos;s properties</source>
         <translation>Pokaż właściwości D4</translation>
     </message>
     <message>
-        <location filename="../mainwindow.ui" line="4063"/>
-        <location filename="../mainwindow.ui" line="4066"/>
+        <location filename="../mainwindow.ui" line="4569"/>
+        <location filename="../mainwindow.ui" line="4572"/>
         <source>Show D5&apos;s properties</source>
         <translation>Pokaż właściwości D5</translation>
     </message>
     <message>
-        <location filename="../mainwindow.ui" line="4084"/>
-        <location filename="../mainwindow.ui" line="4087"/>
+        <location filename="../mainwindow.ui" line="4590"/>
+        <location filename="../mainwindow.ui" line="4593"/>
         <source>Show D6&apos;s properties</source>
         <translation>Pokaż właściwości D6</translation>
     </message>
     <message>
-        <location filename="../mainwindow.ui" line="4105"/>
-        <location filename="../mainwindow.ui" line="4108"/>
+        <location filename="../mainwindow.ui" line="4611"/>
+        <location filename="../mainwindow.ui" line="4614"/>
         <source>Show D7&apos;s properties</source>
         <translation>Pokaż właściwości D7</translation>
     </message>
     <message>
-        <location filename="../mainwindow.ui" line="4126"/>
-        <location filename="../mainwindow.ui" line="4129"/>
+        <location filename="../mainwindow.ui" line="4632"/>
+        <location filename="../mainwindow.ui" line="4635"/>
         <source>Show D8&apos;s properties</source>
         <translation>Pokaż właściwości D8</translation>
     </message>
     <message>
-        <location filename="../mainwindow.ui" line="4285"/>
+        <location filename="../mainwindow.ui" line="4791"/>
         <source>&amp;Save session</source>
         <translation>&amp;Zapisz sesję</translation>
     </message>
     <message>
-        <location filename="../mainwindow.ui" line="5287"/>
-        <location filename="../mainwindow.ui" line="5308"/>
-        <location filename="../mainwindow.ui" line="5329"/>
-        <location filename="../mainwindow.ui" line="5350"/>
-        <location filename="../mainwindow.ui" line="5371"/>
-        <location filename="../mainwindow.ui" line="5392"/>
-        <location filename="../mainwindow.ui" line="5413"/>
-        <location filename="../mainwindow.ui" line="5434"/>
-        <location filename="../mainwindow.ui" line="5455"/>
-        <location filename="../mainwindow.ui" line="5476"/>
-        <location filename="../mainwindow.ui" line="5497"/>
-        <location filename="../mainwindow.ui" line="5518"/>
-        <location filename="../mainwindow.ui" line="5539"/>
-        <location filename="../mainwindow.ui" line="5560"/>
+        <location filename="../mainwindow.ui" line="5793"/>
+        <location filename="../mainwindow.ui" line="5814"/>
+        <location filename="../mainwindow.ui" line="5835"/>
+        <location filename="../mainwindow.ui" line="5856"/>
+        <location filename="../mainwindow.ui" line="5877"/>
+        <location filename="../mainwindow.ui" line="5898"/>
+        <location filename="../mainwindow.ui" line="5919"/>
+        <location filename="../mainwindow.ui" line="5940"/>
+        <location filename="../mainwindow.ui" line="5961"/>
+        <location filename="../mainwindow.ui" line="5982"/>
+        <location filename="../mainwindow.ui" line="6003"/>
+        <location filename="../mainwindow.ui" line="6024"/>
+        <location filename="../mainwindow.ui" line="6045"/>
+        <location filename="../mainwindow.ui" line="6066"/>
         <source>Auto Commit</source>
         <translation>Automatyczny zapis</translation>
     </message>
     <message>
-        <location filename="../mainwindow.ui" line="5575"/>
+        <location filename="../mainwindow.ui" line="6081"/>
         <source>Save mounted image group as default</source>
         <translation>Zapisz grupę zamontowanych obrazów jako domyślną</translation>
     </message>
@@ -2809,612 +2812,612 @@ We will now migrate the existing settings to their new repository, note that set
         <translation type="obsolete">&amp;Zapisz sesję jako...</translation>
     </message>
     <message>
-        <location filename="../mainwindow.ui" line="4288"/>
+        <location filename="../mainwindow.ui" line="4794"/>
         <source>Save current session to a file</source>
         <oldsource>Save current sesison to a file</oldsource>
         <translation>Zapisz aktualną sesję do pliku</translation>
     </message>
     <message>
-        <location filename="../mainwindow.ui" line="4291"/>
+        <location filename="../mainwindow.ui" line="4797"/>
         <source>Save current session</source>
         <oldsource>Save current sesison</oldsource>
         <translation>Zapisz aktualną sesję</translation>
     </message>
     <message>
-        <location filename="../mainwindow.ui" line="5620"/>
+        <location filename="../mainwindow.ui" line="6126"/>
         <source>Hide drives D9-DO</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../mainwindow.ui" line="5632"/>
+        <location filename="../mainwindow.ui" line="6138"/>
         <source>Toggle single slot mode</source>
         <translation>Włącz tryb pojedynczego slotu</translation>
     </message>
     <message>
-        <location filename="../mainwindow.ui" line="5647"/>
+        <location filename="../mainwindow.ui" line="6153"/>
         <source>Toggle shade mode</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../mainwindow.ui" line="5650"/>
+        <location filename="../mainwindow.ui" line="6156"/>
         <source>Ctrl+S</source>
         <translation></translation>
     </message>
     <message>
-        <location filename="../mainwindow.ui" line="4303"/>
+        <location filename="../mainwindow.ui" line="4809"/>
         <source>&amp;Open session...</source>
         <translation>&amp;Otwórz sesję...</translation>
     </message>
     <message>
-        <location filename="../mainwindow.ui" line="4306"/>
-        <location filename="../mainwindow.ui" line="4309"/>
+        <location filename="../mainwindow.ui" line="4812"/>
+        <location filename="../mainwindow.ui" line="4815"/>
         <source>Open a previously saved session</source>
         <translation>Otwórz zapisaną sesję</translation>
     </message>
     <message>
-        <location filename="../mainwindow.ui" line="3766"/>
+        <location filename="../mainwindow.ui" line="4272"/>
         <source>Ctrl+O</source>
         <translation></translation>
     </message>
     <message>
-        <location filename="../mainwindow.ui" line="143"/>
+        <location filename="../mainwindow.ui" line="149"/>
         <source>5:</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../mainwindow.ui" line="539"/>
+        <location filename="../mainwindow.ui" line="623"/>
         <source>6:</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../mainwindow.ui" line="963"/>
+        <location filename="../mainwindow.ui" line="1137"/>
         <source>2:</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../mainwindow.ui" line="1368"/>
+        <location filename="../mainwindow.ui" line="1620"/>
         <source>3:</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../mainwindow.ui" line="1773"/>
+        <location filename="../mainwindow.ui" line="2103"/>
         <source>4:</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../mainwindow.ui" line="2193"/>
+        <location filename="../mainwindow.ui" line="2601"/>
         <source>1:</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../mainwindow.ui" line="2572"/>
+        <location filename="../mainwindow.ui" line="3078"/>
         <source>Window</source>
         <translation>Widok</translation>
     </message>
     <message>
-        <location filename="../mainwindow.ui" line="2602"/>
+        <location filename="../mainwindow.ui" line="3108"/>
         <source>Ctrl+U</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../mainwindow.ui" line="2785"/>
+        <location filename="../mainwindow.ui" line="3291"/>
         <source>Alt+=</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../mainwindow.ui" line="2803"/>
+        <location filename="../mainwindow.ui" line="3309"/>
         <source>Alt+!</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../mainwindow.ui" line="2821"/>
+        <location filename="../mainwindow.ui" line="3327"/>
         <source>Alt+&apos;</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../mainwindow.ui" line="2839"/>
+        <location filename="../mainwindow.ui" line="3345"/>
         <source>Alt+#</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../mainwindow.ui" line="2857"/>
+        <location filename="../mainwindow.ui" line="3363"/>
         <source>Alt+$</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../mainwindow.ui" line="2875"/>
+        <location filename="../mainwindow.ui" line="3381"/>
         <source>Alt+%</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../mainwindow.ui" line="3055"/>
+        <location filename="../mainwindow.ui" line="3561"/>
         <source>Ctrl+0</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../mainwindow.ui" line="3073"/>
+        <location filename="../mainwindow.ui" line="3579"/>
         <source>Ctrl+Alt+1</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../mainwindow.ui" line="3091"/>
+        <location filename="../mainwindow.ui" line="3597"/>
         <source>Ctrl+Alt+2</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../mainwindow.ui" line="3109"/>
+        <location filename="../mainwindow.ui" line="3615"/>
         <source>Ctrl+Alt+3</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../mainwindow.ui" line="3127"/>
+        <location filename="../mainwindow.ui" line="3633"/>
         <source>Ctrl+Alt+4</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../mainwindow.ui" line="3145"/>
+        <location filename="../mainwindow.ui" line="3651"/>
         <source>Ctrl+Alt+5</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../mainwindow.ui" line="3791"/>
+        <location filename="../mainwindow.ui" line="4297"/>
         <source>Alt+E</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../mainwindow.ui" line="3976"/>
-        <location filename="../mainwindow.ui" line="3997"/>
-        <location filename="../mainwindow.ui" line="4018"/>
-        <location filename="../mainwindow.ui" line="4039"/>
-        <location filename="../mainwindow.ui" line="4060"/>
-        <location filename="../mainwindow.ui" line="4081"/>
-        <location filename="../mainwindow.ui" line="4102"/>
-        <location filename="../mainwindow.ui" line="4123"/>
-        <location filename="../mainwindow.ui" line="4144"/>
-        <location filename="../mainwindow.ui" line="4165"/>
-        <location filename="../mainwindow.ui" line="4186"/>
-        <location filename="../mainwindow.ui" line="4207"/>
-        <location filename="../mainwindow.ui" line="4228"/>
-        <location filename="../mainwindow.ui" line="4249"/>
-        <location filename="../mainwindow.ui" line="4270"/>
+        <location filename="../mainwindow.ui" line="4482"/>
+        <location filename="../mainwindow.ui" line="4503"/>
+        <location filename="../mainwindow.ui" line="4524"/>
+        <location filename="../mainwindow.ui" line="4545"/>
+        <location filename="../mainwindow.ui" line="4566"/>
+        <location filename="../mainwindow.ui" line="4587"/>
+        <location filename="../mainwindow.ui" line="4608"/>
+        <location filename="../mainwindow.ui" line="4629"/>
+        <location filename="../mainwindow.ui" line="4650"/>
+        <location filename="../mainwindow.ui" line="4671"/>
+        <location filename="../mainwindow.ui" line="4692"/>
+        <location filename="../mainwindow.ui" line="4713"/>
+        <location filename="../mainwindow.ui" line="4734"/>
+        <location filename="../mainwindow.ui" line="4755"/>
+        <location filename="../mainwindow.ui" line="4776"/>
         <source>Explore..</source>
         <translation>Eksploruj.</translation>
     </message>
     <message>
-        <location filename="../mainwindow.ui" line="4147"/>
-        <location filename="../mainwindow.ui" line="4150"/>
+        <location filename="../mainwindow.ui" line="4653"/>
+        <location filename="../mainwindow.ui" line="4656"/>
         <source>Show D9&apos;s properties</source>
         <translation>Pokaż właściwości D9</translation>
     </message>
     <message>
-        <location filename="../mainwindow.ui" line="4168"/>
-        <location filename="../mainwindow.ui" line="4171"/>
+        <location filename="../mainwindow.ui" line="4674"/>
+        <location filename="../mainwindow.ui" line="4677"/>
         <source>Show D10&apos;s properties</source>
         <translation>Pokaż właściwości D10</translation>
     </message>
     <message>
-        <location filename="../mainwindow.ui" line="4189"/>
-        <location filename="../mainwindow.ui" line="4192"/>
+        <location filename="../mainwindow.ui" line="4695"/>
+        <location filename="../mainwindow.ui" line="4698"/>
         <source>Show D11&apos;s properties</source>
         <translation>Pokaż właściwości D11</translation>
     </message>
     <message>
-        <location filename="../mainwindow.ui" line="4210"/>
-        <location filename="../mainwindow.ui" line="4213"/>
+        <location filename="../mainwindow.ui" line="4716"/>
+        <location filename="../mainwindow.ui" line="4719"/>
         <source>Show D12&apos;s properties</source>
         <translation>Pokaż właściwości D12</translation>
     </message>
     <message>
-        <location filename="../mainwindow.ui" line="4231"/>
-        <location filename="../mainwindow.ui" line="4234"/>
+        <location filename="../mainwindow.ui" line="4737"/>
+        <location filename="../mainwindow.ui" line="4740"/>
         <source>Show D13&apos;s properties</source>
         <translation>Pokaż właściwości D13</translation>
     </message>
     <message>
-        <location filename="../mainwindow.ui" line="4252"/>
-        <location filename="../mainwindow.ui" line="4255"/>
+        <location filename="../mainwindow.ui" line="4758"/>
+        <location filename="../mainwindow.ui" line="4761"/>
         <source>Show D14&apos;s properties</source>
         <translation>Pokaż właściwości D14</translation>
     </message>
     <message>
-        <location filename="../mainwindow.ui" line="4273"/>
-        <location filename="../mainwindow.ui" line="4276"/>
+        <location filename="../mainwindow.ui" line="4779"/>
+        <location filename="../mainwindow.ui" line="4782"/>
         <source>Show D15&apos;s properties</source>
         <translation>Pokaż właściwości D15</translation>
     </message>
     <message>
-        <location filename="../mainwindow.ui" line="4321"/>
+        <location filename="../mainwindow.ui" line="4827"/>
         <source>&amp;Boot Atari executable...</source>
         <translation>&amp;Inicjuj plik wykonywalny Atari...</translation>
     </message>
     <message>
-        <location filename="../mainwindow.ui" line="4324"/>
-        <location filename="../mainwindow.ui" line="4327"/>
+        <location filename="../mainwindow.ui" line="4830"/>
+        <location filename="../mainwindow.ui" line="4833"/>
         <source>Boot an Atari executable</source>
         <translation>Inicjuj plik wykonywalny Atari</translation>
     </message>
     <message>
-        <location filename="../mainwindow.ui" line="4330"/>
+        <location filename="../mainwindow.ui" line="4836"/>
         <source>Alt+B</source>
         <translation></translation>
     </message>
     <message>
-        <location filename="../mainwindow.ui" line="4348"/>
-        <location filename="../mainwindow.ui" line="4366"/>
-        <location filename="../mainwindow.ui" line="4384"/>
-        <location filename="../mainwindow.ui" line="4402"/>
-        <location filename="../mainwindow.ui" line="4420"/>
-        <location filename="../mainwindow.ui" line="4438"/>
-        <location filename="../mainwindow.ui" line="4456"/>
-        <location filename="../mainwindow.ui" line="4474"/>
-        <location filename="../mainwindow.ui" line="5032"/>
-        <location filename="../mainwindow.ui" line="5050"/>
-        <location filename="../mainwindow.ui" line="5068"/>
-        <location filename="../mainwindow.ui" line="5086"/>
-        <location filename="../mainwindow.ui" line="5104"/>
-        <location filename="../mainwindow.ui" line="5122"/>
-        <location filename="../mainwindow.ui" line="5140"/>
+        <location filename="../mainwindow.ui" line="4854"/>
+        <location filename="../mainwindow.ui" line="4872"/>
+        <location filename="../mainwindow.ui" line="4890"/>
+        <location filename="../mainwindow.ui" line="4908"/>
+        <location filename="../mainwindow.ui" line="4926"/>
+        <location filename="../mainwindow.ui" line="4944"/>
+        <location filename="../mainwindow.ui" line="4962"/>
+        <location filename="../mainwindow.ui" line="4980"/>
+        <location filename="../mainwindow.ui" line="5538"/>
+        <location filename="../mainwindow.ui" line="5556"/>
+        <location filename="../mainwindow.ui" line="5574"/>
+        <location filename="../mainwindow.ui" line="5592"/>
+        <location filename="../mainwindow.ui" line="5610"/>
+        <location filename="../mainwindow.ui" line="5628"/>
+        <location filename="../mainwindow.ui" line="5646"/>
         <source>Save</source>
         <translation>Zapisz</translation>
     </message>
     <message>
-        <location filename="../mainwindow.ui" line="4351"/>
-        <location filename="../mainwindow.ui" line="4354"/>
+        <location filename="../mainwindow.ui" line="4857"/>
+        <location filename="../mainwindow.ui" line="4860"/>
         <source>Save D1</source>
         <translation>Zapisz D1</translation>
     </message>
     <message>
-        <location filename="../mainwindow.ui" line="4369"/>
-        <location filename="../mainwindow.ui" line="4372"/>
+        <location filename="../mainwindow.ui" line="4875"/>
+        <location filename="../mainwindow.ui" line="4878"/>
         <source>Save D2</source>
         <translation>Zapisz D2</translation>
     </message>
     <message>
-        <location filename="../mainwindow.ui" line="4387"/>
-        <location filename="../mainwindow.ui" line="4390"/>
+        <location filename="../mainwindow.ui" line="4893"/>
+        <location filename="../mainwindow.ui" line="4896"/>
         <source>Save D3</source>
         <translation>Zapisz D3</translation>
     </message>
     <message>
-        <location filename="../mainwindow.ui" line="4405"/>
-        <location filename="../mainwindow.ui" line="4408"/>
+        <location filename="../mainwindow.ui" line="4911"/>
+        <location filename="../mainwindow.ui" line="4914"/>
         <source>Save D4</source>
         <translation>Zapisz D4</translation>
     </message>
     <message>
-        <location filename="../mainwindow.ui" line="4423"/>
-        <location filename="../mainwindow.ui" line="4426"/>
+        <location filename="../mainwindow.ui" line="4929"/>
+        <location filename="../mainwindow.ui" line="4932"/>
         <source>Save D5</source>
         <translation>Zapisz D5</translation>
     </message>
     <message>
-        <location filename="../mainwindow.ui" line="4441"/>
-        <location filename="../mainwindow.ui" line="4444"/>
+        <location filename="../mainwindow.ui" line="4947"/>
+        <location filename="../mainwindow.ui" line="4950"/>
         <source>Save D6</source>
         <translation>Zapisz D6</translation>
     </message>
     <message>
-        <location filename="../mainwindow.ui" line="4459"/>
-        <location filename="../mainwindow.ui" line="4462"/>
+        <location filename="../mainwindow.ui" line="4965"/>
+        <location filename="../mainwindow.ui" line="4968"/>
         <source>Save D7</source>
         <translation>Zapisz D7</translation>
     </message>
     <message>
-        <location filename="../mainwindow.ui" line="4477"/>
-        <location filename="../mainwindow.ui" line="4480"/>
+        <location filename="../mainwindow.ui" line="4983"/>
+        <location filename="../mainwindow.ui" line="4986"/>
         <source>Save D8</source>
         <translation>Zapisz D8</translation>
     </message>
     <message>
-        <location filename="../mainwindow.ui" line="4492"/>
-        <location filename="../mainwindow.ui" line="4510"/>
-        <location filename="../mainwindow.ui" line="4528"/>
-        <location filename="../mainwindow.ui" line="4546"/>
-        <location filename="../mainwindow.ui" line="4564"/>
-        <location filename="../mainwindow.ui" line="4582"/>
-        <location filename="../mainwindow.ui" line="4600"/>
-        <location filename="../mainwindow.ui" line="4618"/>
-        <location filename="../mainwindow.ui" line="4636"/>
-        <location filename="../mainwindow.ui" line="4654"/>
-        <location filename="../mainwindow.ui" line="4672"/>
-        <location filename="../mainwindow.ui" line="4690"/>
-        <location filename="../mainwindow.ui" line="4708"/>
-        <location filename="../mainwindow.ui" line="4726"/>
-        <location filename="../mainwindow.ui" line="4744"/>
+        <location filename="../mainwindow.ui" line="4998"/>
+        <location filename="../mainwindow.ui" line="5016"/>
+        <location filename="../mainwindow.ui" line="5034"/>
+        <location filename="../mainwindow.ui" line="5052"/>
+        <location filename="../mainwindow.ui" line="5070"/>
+        <location filename="../mainwindow.ui" line="5088"/>
+        <location filename="../mainwindow.ui" line="5106"/>
+        <location filename="../mainwindow.ui" line="5124"/>
+        <location filename="../mainwindow.ui" line="5142"/>
+        <location filename="../mainwindow.ui" line="5160"/>
+        <location filename="../mainwindow.ui" line="5178"/>
+        <location filename="../mainwindow.ui" line="5196"/>
+        <location filename="../mainwindow.ui" line="5214"/>
+        <location filename="../mainwindow.ui" line="5232"/>
+        <location filename="../mainwindow.ui" line="5250"/>
         <source>Revert to original</source>
         <translation>Przywróć do oryginału</translation>
     </message>
     <message>
-        <location filename="../mainwindow.ui" line="4495"/>
-        <location filename="../mainwindow.ui" line="4498"/>
+        <location filename="../mainwindow.ui" line="5001"/>
+        <location filename="../mainwindow.ui" line="5004"/>
         <source>Revert D1 to its last saved state</source>
         <translation>Przywróć D1 do ostatnio zapisanego stanu</translation>
     </message>
     <message>
-        <location filename="../mainwindow.ui" line="4513"/>
-        <location filename="../mainwindow.ui" line="4516"/>
+        <location filename="../mainwindow.ui" line="5019"/>
+        <location filename="../mainwindow.ui" line="5022"/>
         <source>Revert D2 to its last saved state</source>
         <translation>Przywróć D2 do ostatnio zapisanego stanu</translation>
     </message>
     <message>
-        <location filename="../mainwindow.ui" line="4531"/>
-        <location filename="../mainwindow.ui" line="4534"/>
+        <location filename="../mainwindow.ui" line="5037"/>
+        <location filename="../mainwindow.ui" line="5040"/>
         <source>Revert D3 to its last saved state</source>
         <translation>Przywróć D3 do ostatnio zapisanego stanu</translation>
     </message>
     <message>
-        <location filename="../mainwindow.ui" line="4549"/>
-        <location filename="../mainwindow.ui" line="4552"/>
+        <location filename="../mainwindow.ui" line="5055"/>
+        <location filename="../mainwindow.ui" line="5058"/>
         <source>Revert D4 to its last saved state</source>
         <translation>Przywróć D4 do ostatnio zapisanego stanu</translation>
     </message>
     <message>
-        <location filename="../mainwindow.ui" line="4567"/>
-        <location filename="../mainwindow.ui" line="4570"/>
+        <location filename="../mainwindow.ui" line="5073"/>
+        <location filename="../mainwindow.ui" line="5076"/>
         <source>Revert D5 to its last saved state</source>
         <translation>Przywróć D5 do ostatnio zapisanego stanu</translation>
     </message>
     <message>
-        <location filename="../mainwindow.ui" line="4585"/>
-        <location filename="../mainwindow.ui" line="4588"/>
+        <location filename="../mainwindow.ui" line="5091"/>
+        <location filename="../mainwindow.ui" line="5094"/>
         <source>Revert D6 to its last saved state</source>
         <translation>Przywróć D6 do ostatnio zapisanego stanu</translation>
     </message>
     <message>
-        <location filename="../mainwindow.ui" line="4603"/>
-        <location filename="../mainwindow.ui" line="4606"/>
+        <location filename="../mainwindow.ui" line="5109"/>
+        <location filename="../mainwindow.ui" line="5112"/>
         <source>Revert D7 to its last saved state</source>
         <translation>Przywróć D7 do ostatnio zapisanego stanu</translation>
     </message>
     <message>
-        <location filename="../mainwindow.ui" line="4621"/>
-        <location filename="../mainwindow.ui" line="4624"/>
+        <location filename="../mainwindow.ui" line="5127"/>
+        <location filename="../mainwindow.ui" line="5130"/>
         <source>Revert D8 to its last saved state</source>
         <translation>Przywróć D8 do ostatnio zapisanego stanu</translation>
     </message>
     <message>
-        <location filename="../mainwindow.ui" line="4639"/>
-        <location filename="../mainwindow.ui" line="4642"/>
+        <location filename="../mainwindow.ui" line="5145"/>
+        <location filename="../mainwindow.ui" line="5148"/>
         <source>Revert D9 to its last saved state</source>
         <translation>Przywróć D9 do ostatnio zapisanego stanu</translation>
     </message>
     <message>
-        <location filename="../mainwindow.ui" line="4657"/>
-        <location filename="../mainwindow.ui" line="4660"/>
+        <location filename="../mainwindow.ui" line="5163"/>
+        <location filename="../mainwindow.ui" line="5166"/>
         <source>Revert D10 to its last saved state</source>
         <translation>Przywróć D10 do ostatnio zapisanego stanu</translation>
     </message>
     <message>
-        <location filename="../mainwindow.ui" line="4675"/>
-        <location filename="../mainwindow.ui" line="4678"/>
+        <location filename="../mainwindow.ui" line="5181"/>
+        <location filename="../mainwindow.ui" line="5184"/>
         <source>Revert D11 to its last saved state</source>
         <translation>Przywróć D11 do ostatnio zapisanego stanu</translation>
     </message>
     <message>
-        <location filename="../mainwindow.ui" line="4693"/>
-        <location filename="../mainwindow.ui" line="4696"/>
+        <location filename="../mainwindow.ui" line="5199"/>
+        <location filename="../mainwindow.ui" line="5202"/>
         <source>Revert D12 to its last saved state</source>
         <translation>Przywróć D12 do ostatnio zapisanego stanu</translation>
     </message>
     <message>
-        <location filename="../mainwindow.ui" line="4711"/>
-        <location filename="../mainwindow.ui" line="4714"/>
+        <location filename="../mainwindow.ui" line="5217"/>
+        <location filename="../mainwindow.ui" line="5220"/>
         <source>Revert D13 to its last saved state</source>
         <translation>Przywróć D13 do ostatnio zapisanego stanu</translation>
     </message>
     <message>
-        <location filename="../mainwindow.ui" line="4729"/>
-        <location filename="../mainwindow.ui" line="4732"/>
+        <location filename="../mainwindow.ui" line="5235"/>
+        <location filename="../mainwindow.ui" line="5238"/>
         <source>Revert D14 to its last saved state</source>
         <translation>Przywróć D14 do ostatnio zapisanego stanu</translation>
     </message>
     <message>
-        <location filename="../mainwindow.ui" line="4747"/>
-        <location filename="../mainwindow.ui" line="4750"/>
+        <location filename="../mainwindow.ui" line="5253"/>
+        <location filename="../mainwindow.ui" line="5256"/>
         <source>Revert D15 to its last saved state</source>
         <translation>Przywróć D15 do ostatnio zapisanego stanu</translation>
     </message>
     <message>
-        <location filename="../mainwindow.ui" line="4762"/>
-        <location filename="../mainwindow.ui" line="4780"/>
-        <location filename="../mainwindow.ui" line="4798"/>
-        <location filename="../mainwindow.ui" line="4816"/>
-        <location filename="../mainwindow.ui" line="4834"/>
-        <location filename="../mainwindow.ui" line="4852"/>
-        <location filename="../mainwindow.ui" line="4870"/>
-        <location filename="../mainwindow.ui" line="4888"/>
-        <location filename="../mainwindow.ui" line="4906"/>
-        <location filename="../mainwindow.ui" line="4924"/>
-        <location filename="../mainwindow.ui" line="4942"/>
-        <location filename="../mainwindow.ui" line="4960"/>
-        <location filename="../mainwindow.ui" line="4978"/>
-        <location filename="../mainwindow.ui" line="4996"/>
-        <location filename="../mainwindow.ui" line="5014"/>
+        <location filename="../mainwindow.ui" line="5268"/>
+        <location filename="../mainwindow.ui" line="5286"/>
+        <location filename="../mainwindow.ui" line="5304"/>
+        <location filename="../mainwindow.ui" line="5322"/>
+        <location filename="../mainwindow.ui" line="5340"/>
+        <location filename="../mainwindow.ui" line="5358"/>
+        <location filename="../mainwindow.ui" line="5376"/>
+        <location filename="../mainwindow.ui" line="5394"/>
+        <location filename="../mainwindow.ui" line="5412"/>
+        <location filename="../mainwindow.ui" line="5430"/>
+        <location filename="../mainwindow.ui" line="5448"/>
+        <location filename="../mainwindow.ui" line="5466"/>
+        <location filename="../mainwindow.ui" line="5484"/>
+        <location filename="../mainwindow.ui" line="5502"/>
+        <location filename="../mainwindow.ui" line="5520"/>
         <source>Save as...</source>
         <translation>Zapisz jako...</translation>
     </message>
     <message>
-        <location filename="../mainwindow.ui" line="4765"/>
-        <location filename="../mainwindow.ui" line="4768"/>
+        <location filename="../mainwindow.ui" line="5271"/>
+        <location filename="../mainwindow.ui" line="5274"/>
         <source>Save D1 to a file</source>
         <translation>Zapisz D1 do pliku</translation>
     </message>
     <message>
-        <location filename="../mainwindow.ui" line="4783"/>
-        <location filename="../mainwindow.ui" line="4786"/>
+        <location filename="../mainwindow.ui" line="5289"/>
+        <location filename="../mainwindow.ui" line="5292"/>
         <source>Save D2 to a file</source>
         <translation>Zapisz D2 do pliku</translation>
     </message>
     <message>
-        <location filename="../mainwindow.ui" line="4801"/>
-        <location filename="../mainwindow.ui" line="4804"/>
+        <location filename="../mainwindow.ui" line="5307"/>
+        <location filename="../mainwindow.ui" line="5310"/>
         <source>Save D3 to a file</source>
         <translation>Zapisz D3 do pliku</translation>
     </message>
     <message>
-        <location filename="../mainwindow.ui" line="4819"/>
-        <location filename="../mainwindow.ui" line="4822"/>
+        <location filename="../mainwindow.ui" line="5325"/>
+        <location filename="../mainwindow.ui" line="5328"/>
         <source>Save D4 to a file</source>
         <translation>Zapisz D4 do pliku</translation>
     </message>
     <message>
-        <location filename="../mainwindow.ui" line="4837"/>
-        <location filename="../mainwindow.ui" line="4840"/>
+        <location filename="../mainwindow.ui" line="5343"/>
+        <location filename="../mainwindow.ui" line="5346"/>
         <source>Save D5 to a file</source>
         <translation>Zapisz D5 do pliku</translation>
     </message>
     <message>
-        <location filename="../mainwindow.ui" line="4855"/>
-        <location filename="../mainwindow.ui" line="4858"/>
+        <location filename="../mainwindow.ui" line="5361"/>
+        <location filename="../mainwindow.ui" line="5364"/>
         <source>Save D6 to a file</source>
         <translation>Zapisz D6 do pliku</translation>
     </message>
     <message>
-        <location filename="../mainwindow.ui" line="4873"/>
-        <location filename="../mainwindow.ui" line="4876"/>
+        <location filename="../mainwindow.ui" line="5379"/>
+        <location filename="../mainwindow.ui" line="5382"/>
         <source>Save D7 to a file</source>
         <translation>Zapisz D7 do pliku</translation>
     </message>
     <message>
-        <location filename="../mainwindow.ui" line="4891"/>
-        <location filename="../mainwindow.ui" line="4894"/>
+        <location filename="../mainwindow.ui" line="5397"/>
+        <location filename="../mainwindow.ui" line="5400"/>
         <source>Save D8 to a file</source>
         <translation>Zapisz D8 do pliku</translation>
     </message>
     <message>
-        <location filename="../mainwindow.ui" line="4909"/>
-        <location filename="../mainwindow.ui" line="4912"/>
+        <location filename="../mainwindow.ui" line="5415"/>
+        <location filename="../mainwindow.ui" line="5418"/>
         <source>Save D9 to a file</source>
         <translation>Zapisz D9 do pliku</translation>
     </message>
     <message>
-        <location filename="../mainwindow.ui" line="4927"/>
-        <location filename="../mainwindow.ui" line="4930"/>
+        <location filename="../mainwindow.ui" line="5433"/>
+        <location filename="../mainwindow.ui" line="5436"/>
         <source>Save D10 to a file</source>
         <translation>Zapisz D10 do pliku</translation>
     </message>
     <message>
-        <location filename="../mainwindow.ui" line="4945"/>
-        <location filename="../mainwindow.ui" line="4948"/>
+        <location filename="../mainwindow.ui" line="5451"/>
+        <location filename="../mainwindow.ui" line="5454"/>
         <source>Save D11 to a file</source>
         <translation>Zapisz D11 do pliku</translation>
     </message>
     <message>
-        <location filename="../mainwindow.ui" line="4963"/>
-        <location filename="../mainwindow.ui" line="4966"/>
+        <location filename="../mainwindow.ui" line="5469"/>
+        <location filename="../mainwindow.ui" line="5472"/>
         <source>Save D12 to a file</source>
         <translation>Zapisz D12 do pliku</translation>
     </message>
     <message>
-        <location filename="../mainwindow.ui" line="4981"/>
-        <location filename="../mainwindow.ui" line="4984"/>
+        <location filename="../mainwindow.ui" line="5487"/>
+        <location filename="../mainwindow.ui" line="5490"/>
         <source>Save D13 to a file</source>
         <translation>Zapisz D13 do pliku</translation>
     </message>
     <message>
-        <location filename="../mainwindow.ui" line="4999"/>
-        <location filename="../mainwindow.ui" line="5002"/>
+        <location filename="../mainwindow.ui" line="5505"/>
+        <location filename="../mainwindow.ui" line="5508"/>
         <source>Save D14 to a file</source>
         <translation>Zapisz D14 do pliku</translation>
     </message>
     <message>
-        <location filename="../mainwindow.ui" line="5017"/>
-        <location filename="../mainwindow.ui" line="5020"/>
+        <location filename="../mainwindow.ui" line="5523"/>
+        <location filename="../mainwindow.ui" line="5526"/>
         <source>Save D15 to a file</source>
         <translation>Zapisz D15 do pliku</translation>
     </message>
     <message>
-        <location filename="../mainwindow.ui" line="5035"/>
-        <location filename="../mainwindow.ui" line="5038"/>
+        <location filename="../mainwindow.ui" line="5541"/>
+        <location filename="../mainwindow.ui" line="5544"/>
         <source>Save D9</source>
         <translation>Zapisz D9</translation>
     </message>
     <message>
-        <location filename="../mainwindow.ui" line="5053"/>
-        <location filename="../mainwindow.ui" line="5056"/>
+        <location filename="../mainwindow.ui" line="5559"/>
+        <location filename="../mainwindow.ui" line="5562"/>
         <source>Save D10</source>
         <translation>Zapisz D10</translation>
     </message>
     <message>
-        <location filename="../mainwindow.ui" line="5071"/>
-        <location filename="../mainwindow.ui" line="5074"/>
+        <location filename="../mainwindow.ui" line="5577"/>
+        <location filename="../mainwindow.ui" line="5580"/>
         <source>Save D11</source>
         <translation>Zapisz D11</translation>
     </message>
     <message>
-        <location filename="../mainwindow.ui" line="5089"/>
-        <location filename="../mainwindow.ui" line="5092"/>
+        <location filename="../mainwindow.ui" line="5595"/>
+        <location filename="../mainwindow.ui" line="5598"/>
         <source>Save D12</source>
         <translation>Zapisz D12</translation>
     </message>
     <message>
-        <location filename="../mainwindow.ui" line="5107"/>
-        <location filename="../mainwindow.ui" line="5110"/>
+        <location filename="../mainwindow.ui" line="5613"/>
+        <location filename="../mainwindow.ui" line="5616"/>
         <source>Save D13</source>
         <translation>Zapisz D13</translation>
     </message>
     <message>
-        <location filename="../mainwindow.ui" line="5125"/>
-        <location filename="../mainwindow.ui" line="5128"/>
+        <location filename="../mainwindow.ui" line="5631"/>
+        <location filename="../mainwindow.ui" line="5634"/>
         <source>Save D14</source>
         <translation>Zapisz D14</translation>
     </message>
     <message>
-        <location filename="../mainwindow.ui" line="5143"/>
-        <location filename="../mainwindow.ui" line="5146"/>
+        <location filename="../mainwindow.ui" line="5649"/>
+        <location filename="../mainwindow.ui" line="5652"/>
         <source>Save D15</source>
         <translation>Zapisz D15</translation>
     </message>
     <message>
-        <location filename="../mainwindow.ui" line="5158"/>
-        <location filename="../mainwindow.ui" line="5161"/>
-        <location filename="../mainwindow.ui" line="5164"/>
+        <location filename="../mainwindow.ui" line="5664"/>
+        <location filename="../mainwindow.ui" line="5667"/>
+        <location filename="../mainwindow.ui" line="5670"/>
         <source>Show printer text output</source>
         <translation>Pokaż znakowe wyjście drukarki</translation>
     </message>
     <message>
-        <location filename="../mainwindow.ui" line="5176"/>
+        <location filename="../mainwindow.ui" line="5682"/>
         <source>Playback cassette image...</source>
         <translation>Odtwórz obraz kasety...</translation>
     </message>
     <message>
-        <location filename="../mainwindow.ui" line="5179"/>
-        <location filename="../mainwindow.ui" line="5182"/>
+        <location filename="../mainwindow.ui" line="5685"/>
+        <location filename="../mainwindow.ui" line="5688"/>
         <source>Playback a cassette image</source>
         <translation>Odtwórz obraz kasety</translation>
     </message>
     <message>
-        <location filename="../mainwindow.ui" line="5185"/>
+        <location filename="../mainwindow.ui" line="5691"/>
         <source>Alt+C</source>
         <translation></translation>
     </message>
     <message>
-        <location filename="../mainwindow.ui" line="5194"/>
+        <location filename="../mainwindow.ui" line="5700"/>
         <source>&amp;Quit</source>
         <translation>Za&amp;kończ</translation>
     </message>
     <message>
-        <location filename="../mainwindow.ui" line="5197"/>
+        <location filename="../mainwindow.ui" line="5703"/>
         <source>Quit AspeQt</source>
         <translation>Opuść AspeQt</translation>
     </message>
     <message>
-        <location filename="../mainwindow.ui" line="5209"/>
+        <location filename="../mainwindow.ui" line="5715"/>
         <source>&amp;About AspeQt</source>
         <translation>&amp;O programie AspeQt</translation>
     </message>
     <message>
-        <location filename="../mainwindow.ui" line="5217"/>
+        <location filename="../mainwindow.ui" line="5723"/>
         <source>Help</source>
         <translation>Pomoc</translation>
     </message>
     <message>
-        <location filename="../mainwindow.ui" line="5225"/>
+        <location filename="../mainwindow.ui" line="5731"/>
         <source>Contents</source>
         <translation>Zawartość</translation>
     </message>
     <message>
-        <location filename="../mainwindow.ui" line="5230"/>
+        <location filename="../mainwindow.ui" line="5736"/>
         <source>Index</source>
         <translation>Indeks</translation>
     </message>
@@ -3423,47 +3426,47 @@ We will now migrate the existing settings to their new repository, note that set
         <translation type="vanished">Instrukcja &amp;Użytkownika AspeQt</translation>
     </message>
     <message>
-        <location filename="../mainwindow.ui" line="5242"/>
-        <location filename="../mainwindow.ui" line="5245"/>
-        <location filename="../mainwindow.ui" line="5248"/>
+        <location filename="../mainwindow.ui" line="5748"/>
+        <location filename="../mainwindow.ui" line="5751"/>
+        <location filename="../mainwindow.ui" line="5754"/>
         <source>User Manual</source>
         <translation>Instrukcja Użytkownika</translation>
     </message>
     <message>
-        <location filename="../mainwindow.ui" line="5269"/>
-        <location filename="../mainwindow.ui" line="5290"/>
-        <location filename="../mainwindow.ui" line="5311"/>
-        <location filename="../mainwindow.ui" line="5332"/>
-        <location filename="../mainwindow.ui" line="5353"/>
-        <location filename="../mainwindow.ui" line="5374"/>
-        <location filename="../mainwindow.ui" line="5395"/>
-        <location filename="../mainwindow.ui" line="5416"/>
-        <location filename="../mainwindow.ui" line="5437"/>
-        <location filename="../mainwindow.ui" line="5458"/>
-        <location filename="../mainwindow.ui" line="5479"/>
-        <location filename="../mainwindow.ui" line="5500"/>
-        <location filename="../mainwindow.ui" line="5521"/>
-        <location filename="../mainwindow.ui" line="5542"/>
-        <location filename="../mainwindow.ui" line="5563"/>
+        <location filename="../mainwindow.ui" line="5775"/>
+        <location filename="../mainwindow.ui" line="5796"/>
+        <location filename="../mainwindow.ui" line="5817"/>
+        <location filename="../mainwindow.ui" line="5838"/>
+        <location filename="../mainwindow.ui" line="5859"/>
+        <location filename="../mainwindow.ui" line="5880"/>
+        <location filename="../mainwindow.ui" line="5901"/>
+        <location filename="../mainwindow.ui" line="5922"/>
+        <location filename="../mainwindow.ui" line="5943"/>
+        <location filename="../mainwindow.ui" line="5964"/>
+        <location filename="../mainwindow.ui" line="5985"/>
+        <location filename="../mainwindow.ui" line="6006"/>
+        <location filename="../mainwindow.ui" line="6027"/>
+        <location filename="../mainwindow.ui" line="6048"/>
+        <location filename="../mainwindow.ui" line="6069"/>
         <source>Commit changes to this disk automatically</source>
         <translation>Automatyczny zapis zmian dysku</translation>
     </message>
     <message>
-        <location filename="../mainwindow.ui" line="5272"/>
-        <location filename="../mainwindow.ui" line="5293"/>
-        <location filename="../mainwindow.ui" line="5314"/>
-        <location filename="../mainwindow.ui" line="5335"/>
-        <location filename="../mainwindow.ui" line="5356"/>
-        <location filename="../mainwindow.ui" line="5377"/>
-        <location filename="../mainwindow.ui" line="5398"/>
-        <location filename="../mainwindow.ui" line="5419"/>
-        <location filename="../mainwindow.ui" line="5440"/>
-        <location filename="../mainwindow.ui" line="5461"/>
-        <location filename="../mainwindow.ui" line="5482"/>
-        <location filename="../mainwindow.ui" line="5503"/>
-        <location filename="../mainwindow.ui" line="5524"/>
-        <location filename="../mainwindow.ui" line="5545"/>
-        <location filename="../mainwindow.ui" line="5566"/>
+        <location filename="../mainwindow.ui" line="5778"/>
+        <location filename="../mainwindow.ui" line="5799"/>
+        <location filename="../mainwindow.ui" line="5820"/>
+        <location filename="../mainwindow.ui" line="5841"/>
+        <location filename="../mainwindow.ui" line="5862"/>
+        <location filename="../mainwindow.ui" line="5883"/>
+        <location filename="../mainwindow.ui" line="5904"/>
+        <location filename="../mainwindow.ui" line="5925"/>
+        <location filename="../mainwindow.ui" line="5946"/>
+        <location filename="../mainwindow.ui" line="5967"/>
+        <location filename="../mainwindow.ui" line="5988"/>
+        <location filename="../mainwindow.ui" line="6009"/>
+        <location filename="../mainwindow.ui" line="6030"/>
+        <location filename="../mainwindow.ui" line="6051"/>
+        <location filename="../mainwindow.ui" line="6072"/>
         <source>Toggle Auto Commit ON/OFF</source>
         <translation>Przełącz automatyczny zapis: włączony/wyłączony</translation>
     </message>
@@ -3504,7 +3507,6 @@ We will now migrate the existing settings to their new repository, note that set
 <context>
     <name>OptionsDialog</name>
     <message>
-        <location filename="../android/optionsdialog.ui" line="29"/>
         <location filename="../optionsdialog.ui" line="23"/>
         <source>Options</source>
         <translation>Opcje</translation>
@@ -3516,73 +3518,57 @@ We will now migrate the existing settings to their new repository, note that set
         <translation>Standardowy port szeregowy</translation>
     </message>
     <message>
-        <location filename="../android/optionsdialog.ui" line="66"/>
         <location filename="../optionsdialog.ui" line="51"/>
         <source>1</source>
         <translation></translation>
     </message>
     <message>
-        <location filename="../android/optionsdialog.ui" line="71"/>
         <location filename="../optionsdialog.ui" line="56"/>
         <source>Serial I/O backends</source>
         <translation>Rodzaj łącza szeregowego</translation>
     </message>
     <message>
-        <location filename="../android/optionsdialog.ui" line="78"/>
-        <source>Sio2PC-USB (FT232)</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="../android/optionsdialog.ui" line="86"/>
         <location filename="../optionsdialog.ui" line="71"/>
         <source>AtariSIO</source>
         <translation></translation>
     </message>
     <message>
-        <location filename="../android/optionsdialog.ui" line="121"/>
-        <location filename="../android/optionsdialog.ui" line="448"/>
         <location filename="../optionsdialog.ui" line="80"/>
         <location filename="../optionsdialog.ui" line="427"/>
         <source>Emulation</source>
         <translation>Emulacja</translation>
     </message>
     <message>
-        <location filename="../android/optionsdialog.ui" line="126"/>
         <location filename="../optionsdialog.ui" line="85"/>
         <source>User interface</source>
         <translation>Interfejs użytkownika</translation>
     </message>
     <message>
-        <location filename="../android/optionsdialog.ui" line="179"/>
         <location filename="../optionsdialog.ui" line="127"/>
         <source>Standard serial port backend options</source>
         <translation>Standardowy port szeregowy</translation>
     </message>
     <message>
-        <location filename="../android/optionsdialog.ui" line="213"/>
         <location filename="../optionsdialog.ui" line="198"/>
         <source>NONE (Windows ONLY - Experimental)</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../android/optionsdialog.ui" line="249"/>
         <source>Use non-standard speeds (divisor):</source>
-        <translation>Użyj dzielnika POKEY </translation>
+        <translation type="vanished">Użyj dzielnika POKEY </translation>
     </message>
     <message>
-        <location filename="../android/optionsdialog.ui" line="342"/>
         <location filename="../optionsdialog.ui" line="136"/>
         <location filename="../optionsdialog.ui" line="321"/>
         <source>Use this backend</source>
         <translation>Użyj tego interfejsu</translation>
     </message>
     <message>
-        <location filename="../android/optionsdialog.ui" line="498"/>
         <source>Use custom baud rate for cas emulation</source>
-        <translation>Własna prędkość dla emulacji kaset (bps)</translation>
+        <translation type="vanished">Własna prędkość dla emulacji kaset (bps)</translation>
     </message>
     <message>
-        <location filename="../android/optionsdialog.ui" line="700"/>
+        <location filename="../android/optionsdialog.ui" line="135"/>
         <location filename="../optionsdialog.ui" line="706"/>
         <source>Use larger font in drive slot descriptions</source>
         <translation>Duża czcionka opisu slotu</translation>
@@ -3598,47 +3584,77 @@ We will now migrate the existing settings to their new repository, note that set
         <translation></translation>
     </message>
     <message>
-        <location filename="../android/optionsdialog.ui" line="375"/>
+        <location filename="../android/optionsdialog.ui" line="530"/>
         <location filename="../optionsdialog.ui" line="175"/>
         <location filename="../optionsdialog.ui" line="354"/>
         <source>Handshake method:</source>
         <translation>Metoda synchronizacji:</translation>
     </message>
     <message>
-        <location filename="../android/optionsdialog.ui" line="198"/>
-        <location filename="../android/optionsdialog.ui" line="383"/>
+        <location filename="../android/optionsdialog.ui" line="480"/>
         <location filename="../optionsdialog.ui" line="183"/>
         <location filename="../optionsdialog.ui" line="362"/>
         <source>RI</source>
         <translation></translation>
     </message>
     <message>
-        <location filename="../android/optionsdialog.ui" line="203"/>
-        <location filename="../android/optionsdialog.ui" line="388"/>
+        <location filename="../android/optionsdialog.ui" line="20"/>
+        <source>Dialog</source>
+        <translation type="unfinished">Okno dialogowe</translation>
+    </message>
+    <message>
+        <location filename="../android/optionsdialog.ui" line="119"/>
+        <source>Save</source>
+        <translation type="unfinished">Zapisz</translation>
+    </message>
+    <message>
+        <location filename="../android/optionsdialog.ui" line="233"/>
+        <source>User interface:</source>
+        <translation>Interfejs użytkownika:</translation>
+    </message>
+    <message>
+        <location filename="../android/optionsdialog.ui" line="314"/>
+        <source>Emulation settings:</source>
+        <translation>Ustawienia emulacji:</translation>
+    </message>
+    <message>
+        <location filename="../android/optionsdialog.ui" line="485"/>
         <location filename="../optionsdialog.ui" line="188"/>
         <location filename="../optionsdialog.ui" line="367"/>
         <source>DSR</source>
         <translation></translation>
     </message>
     <message>
-        <location filename="../android/optionsdialog.ui" line="208"/>
-        <location filename="../android/optionsdialog.ui" line="393"/>
+        <location filename="../android/optionsdialog.ui" line="490"/>
         <location filename="../optionsdialog.ui" line="193"/>
         <location filename="../optionsdialog.ui" line="372"/>
         <source>CTS</source>
         <translation></translation>
     </message>
     <message>
+        <location filename="../android/optionsdialog.ui" line="495"/>
+        <source>SOFT</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../android/optionsdialog.ui" line="511"/>
+        <source>SIO port emulation:</source>
+        <translation>Emulacja portu SIO:</translation>
+    </message>
+    <message>
+        <location filename="../android/optionsdialog.ui" line="157"/>
         <location filename="../optionsdialog.ui" line="212"/>
         <source>High speed mode baud rate:</source>
         <translation>Prędkość trybu przyspieszonego (bps):</translation>
     </message>
     <message>
+        <location filename="../android/optionsdialog.ui" line="274"/>
         <location filename="../optionsdialog.ui" line="241"/>
         <source>Use non-standard speeds</source>
         <translation>Użyj niestandardowych prędkości</translation>
     </message>
     <message>
+        <location filename="../android/optionsdialog.ui" line="218"/>
         <location filename="../optionsdialog.ui" line="257"/>
         <source>High speed mode POKEY divisor:</source>
         <translation>Dzielnik POKEYa dla trybu przyspieszonego:</translation>
@@ -3654,61 +3670,58 @@ We will now migrate the existing settings to their new repository, note that set
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../android/optionsdialog.ui" line="333"/>
         <location filename="../optionsdialog.ui" line="312"/>
         <source>AtariSIO backend options</source>
         <translation>Opcje AtariSIO</translation>
     </message>
     <message>
-        <location filename="../android/optionsdialog.ui" line="355"/>
         <location filename="../optionsdialog.ui" line="334"/>
         <source>Device name:</source>
         <translation>Nazwa urządzenia:</translation>
     </message>
     <message>
-        <location filename="../android/optionsdialog.ui" line="362"/>
         <location filename="../optionsdialog.ui" line="341"/>
         <source>/dev/atarisio0</source>
         <translation></translation>
     </message>
     <message>
-        <location filename="../android/optionsdialog.ui" line="460"/>
+        <location filename="../android/optionsdialog.ui" line="333"/>
         <location filename="../optionsdialog.ui" line="439"/>
         <source>Use high speed executable loader</source>
         <translation>Szybkie ładowanie plików wykonywalnych</translation>
     </message>
     <message>
+        <location filename="../android/optionsdialog.ui" line="299"/>
         <location filename="../optionsdialog.ui" line="477"/>
         <source>Use custom baud rate for cassette emulation</source>
         <oldsource>Use cutom baud rate for cassette emulation</oldsource>
         <translation>Własna prędkość dla emulacji kaset (bps)</translation>
     </message>
     <message>
-        <location filename="../android/optionsdialog.ui" line="554"/>
+        <location filename="../android/optionsdialog.ui" line="466"/>
         <location filename="../optionsdialog.ui" line="533"/>
         <source> Folder Images:</source>
         <translation>Obrazy katalogów</translation>
     </message>
     <message>
-        <location filename="../android/optionsdialog.ui" line="573"/>
+        <location filename="../android/optionsdialog.ui" line="384"/>
         <location filename="../optionsdialog.ui" line="552"/>
         <source>Filter out underscore character from file names</source>
         <translation>Filtruj podkreślenia z nazw plików</translation>
     </message>
     <message>
-        <location filename="../android/optionsdialog.ui" line="594"/>
+        <location filename="../android/optionsdialog.ui" line="356"/>
         <location filename="../optionsdialog.ui" line="573"/>
         <source>        (Required for AtariDOS compatibility)</source>
         <translation>        (Dla zgodności z AtariDOS)</translation>
     </message>
     <message>
-        <location filename="../android/optionsdialog.ui" line="642"/>
         <location filename="../optionsdialog.ui" line="621"/>
         <source>User inteface</source>
         <translation>Interfejs użytkownika</translation>
     </message>
     <message>
-        <location filename="../android/optionsdialog.ui" line="648"/>
+        <location filename="../android/optionsdialog.ui" line="186"/>
         <location filename="../optionsdialog.ui" line="627"/>
         <source>Language:</source>
         <translation>Język:</translation>
@@ -3719,42 +3732,41 @@ We will now migrate the existing settings to their new repository, note that set
         <translation>Minimalizuj do tacki systemowej</translation>
     </message>
     <message>
-        <location filename="../android/optionsdialog.ui" line="658"/>
+        <location filename="../android/optionsdialog.ui" line="170"/>
         <location filename="../optionsdialog.ui" line="644"/>
         <source>Save window positions and sizes</source>
         <translation>Zapisz pozycje i rozmiar okien</translation>
     </message>
     <message>
-        <location filename="../android/optionsdialog.ui" line="723"/>
         <location filename="../optionsdialog.ui" line="729"/>
         <source>Save/Commit or Cancel/Ignore changes made to the settings</source>
         <translation>Zapisz lub odwołaj zmiany wprowadzone do ustawień</translation>
     </message>
     <message>
-        <location filename="../optionsdialog.cpp" line="68"/>
+        <location filename="../optionsdialog.cpp" line="86"/>
         <source>Automatic</source>
         <translation>Automatycznie</translation>
     </message>
     <message>
-        <location filename="../optionsdialog.cpp" line="71"/>
-        <location filename="../optionsdialog.cpp" line="80"/>
+        <location filename="../optionsdialog.cpp" line="89"/>
+        <location filename="../optionsdialog.cpp" line="98"/>
         <source>English</source>
         <translation>Polski</translation>
     </message>
     <message>
-        <location filename="../android/optionsdialog.ui" line="231"/>
+        <location filename="../android/optionsdialog.ui" line="250"/>
         <location filename="../optionsdialog.ui" line="223"/>
         <source>19200 (1x)</source>
         <translation></translation>
     </message>
     <message>
-        <location filename="../android/optionsdialog.ui" line="236"/>
+        <location filename="../android/optionsdialog.ui" line="255"/>
         <location filename="../optionsdialog.ui" line="228"/>
         <source>38400 (2x)</source>
         <translation></translation>
     </message>
     <message>
-        <location filename="../android/optionsdialog.ui" line="241"/>
+        <location filename="../android/optionsdialog.ui" line="260"/>
         <location filename="../optionsdialog.ui" line="233"/>
         <source>57600 (3x)</source>
         <translation></translation>
@@ -4193,7 +4205,7 @@ We will now migrate the existing settings to their new repository, note that set
         <translation>Nie można skasować linii DTR i RTS w porcie szeregowym &apos;%1&apos;: %2</translation>
     </message>
     <message>
-        <location filename="../serialport-android.cpp" line="91"/>
+        <location filename="../serialport-android.cpp" line="94"/>
         <location filename="../serialport-unix.cpp" line="114"/>
         <source>Emulation started through standard serial port backend on &apos;%1&apos; with %2 handshaking.</source>
         <translation>Emulacja rozpoczęta przez standardowy port szeregowy na &apos;%1&apos; z synchronizacją %2.</translation>
@@ -4228,7 +4240,7 @@ We will now migrate the existing settings to their new repository, note that set
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../serialport-android.cpp" line="182"/>
+        <location filename="../serialport-android.cpp" line="185"/>
         <location filename="../serialport-unix.cpp" line="248"/>
         <location filename="../serialport-unix.cpp" line="304"/>
         <location filename="../serialport-win32.cpp" line="241"/>
@@ -4236,8 +4248,8 @@ We will now migrate the existing settings to their new repository, note that set
         <translation>%1 bps</translation>
     </message>
     <message>
-        <location filename="../serialport-android.cpp" line="173"/>
-        <location filename="../serialport-android.cpp" line="183"/>
+        <location filename="../serialport-android.cpp" line="176"/>
+        <location filename="../serialport-android.cpp" line="186"/>
         <location filename="../serialport-unix.cpp" line="249"/>
         <location filename="../serialport-unix.cpp" line="305"/>
         <location filename="../serialport-win32.cpp" line="242"/>
@@ -4250,48 +4262,44 @@ We will now migrate the existing settings to their new repository, note that set
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../serialport-android.cpp" line="66"/>
-        <source>No FTDI chip detected!</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="../serialport-android.cpp" line="100"/>
+        <location filename="../serialport-android.cpp" line="103"/>
         <source>isOpen %1</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../serialport-android.cpp" line="106"/>
+        <location filename="../serialport-android.cpp" line="109"/>
         <source>close</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../serialport-android.cpp" line="114"/>
+        <location filename="../serialport-android.cpp" line="117"/>
         <source>cancel</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../serialport-android.cpp" line="120"/>
+        <location filename="../serialport-android.cpp" line="123"/>
         <source>speedByte</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../serialport-android.cpp" line="142"/>
+        <location filename="../serialport-android.cpp" line="145"/>
         <source>setNormalSpeed</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../serialport-android.cpp" line="149"/>
+        <location filename="../serialport-android.cpp" line="152"/>
         <source>setHighSpeed</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../serialport-android.cpp" line="177"/>
+        <location filename="../serialport-android.cpp" line="180"/>
         <source>Cannot set serial port speed: %1</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../serialport-android.cpp" line="223"/>
-        <location filename="../serialport-android.cpp" line="235"/>
+        <location filename="../serialport-android.cpp" line="263"/>
+        <location filename="../serialport-android.cpp" line="275"/>
+        <location filename="../serialport-android.cpp" line="299"/>
         <location filename="../serialport-unix.cpp" line="342"/>
         <location filename="../serialport-unix.cpp" line="352"/>
         <location filename="../serialport-unix.cpp" line="375"/>
@@ -4299,67 +4307,71 @@ We will now migrate the existing settings to their new repository, note that set
         <translation>Nie można pobrać stanu portu szeregowego: %1</translation>
     </message>
     <message>
-        <location filename="../serialport-android.cpp" line="249"/>
+        <location filename="../serialport-android.cpp" line="289"/>
         <source>Cannot clear serial port: %1</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../serialport-android.cpp" line="264"/>
         <source>Cannot retrieve serial port status: %1 368</source>
-        <translation type="unfinished">Nie można pobrać stanu portu szeregowego: %1 368</translation>
+        <translation type="obsolete">Nie można pobrać stanu portu szeregowego: %1 368</translation>
     </message>
     <message>
-        <location filename="../serialport-android.cpp" line="333"/>
+        <location filename="../serialport-android.cpp" line="66"/>
+        <source>No SIO2PC device detected!</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../serialport-android.cpp" line="368"/>
         <source>writeCommandAck</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../serialport-android.cpp" line="339"/>
+        <location filename="../serialport-android.cpp" line="374"/>
         <source>writeCommandNak</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../serialport-android.cpp" line="345"/>
+        <location filename="../serialport-android.cpp" line="380"/>
         <source>writeDataAck</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../serialport-android.cpp" line="351"/>
+        <location filename="../serialport-android.cpp" line="386"/>
         <source>writeDataNak</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../serialport-android.cpp" line="357"/>
+        <location filename="../serialport-android.cpp" line="392"/>
         <source>writeComplete</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../serialport-android.cpp" line="364"/>
+        <location filename="../serialport-android.cpp" line="399"/>
         <source>writeError</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../serialport-android.cpp" line="371"/>
+        <location filename="../serialport-android.cpp" line="406"/>
         <source>sioChecksum</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../serialport-android.cpp" line="387"/>
+        <location filename="../serialport-android.cpp" line="422"/>
         <source>readRawFrame</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../serialport-android.cpp" line="426"/>
+        <location filename="../serialport-android.cpp" line="461"/>
         <source>readRawFrame: %1</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../serialport-android.cpp" line="487"/>
+        <location filename="../serialport-android.cpp" line="522"/>
         <source>writeRawFrame: %1</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../serialport-android.cpp" line="499"/>
+        <location filename="../serialport-android.cpp" line="534"/>
         <location filename="../serialport-unix.cpp" line="550"/>
         <source>Serial port write timeout. (%1 of %2 written)</source>
         <translation type="unfinished"></translation>
@@ -4371,7 +4383,7 @@ We will now migrate the existing settings to their new repository, note that set
         <translation>Nie można opróżnic buforu odczytu portu szeregowego: %1</translation>
     </message>
     <message>
-        <location filename="../serialport-android.cpp" line="311"/>
+        <location filename="../serialport-android.cpp" line="346"/>
         <location filename="../serialport-unix.cpp" line="410"/>
         <location filename="../serialport-win32.cpp" line="361"/>
         <source>Data frame checksum error, expected: %1, got: %2. (%3)</source>
@@ -4443,7 +4455,7 @@ We will now migrate the existing settings to their new repository, note that set
         <translation>Nie można wyczyścić buforu zapisu portu szeregowego: %1</translation>
     </message>
     <message>
-        <location filename="../serialport-android.cpp" line="474"/>
+        <location filename="../serialport-android.cpp" line="509"/>
         <location filename="../serialport-win32.cpp" line="502"/>
         <location filename="../serialport-win32.cpp" line="507"/>
         <source>Cannot write to serial port: %1</source>
