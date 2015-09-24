@@ -4,6 +4,8 @@
 
 #include <QTranslator>
 #include <QDir>
+#include <QScreen>
+#include <QSize>
 
 OptionsDialog::OptionsDialog(QWidget *parent) :
     QDialog(parent),
@@ -12,14 +14,26 @@ OptionsDialog::OptionsDialog(QWidget *parent) :
     Qt::WindowFlags flags = windowFlags();
     flags = flags & (~Qt::WindowContextHelpButtonHint);
     setWindowFlags(flags);
+    setWindowState(Qt::WindowFullScreen);
 
     m_ui->setupUi(this);
 
+    QScreen *screen = qApp->screens().at(0);
+    int rx = screen->availableSize().width();
+    int ry = screen->availableSize().height();
+
+    this->setMinimumWidth(rx);
+    this->setMinimumHeight(ry);
+
+    m_ui->scrollArea->resize(rx,ry);
+
+#ifndef Q_OS_ANDROID
     m_ui->treeWidget->expandAll();
     itemStandard = m_ui->treeWidget->topLevelItem(0)->child(0);
     itemAtariSio = m_ui->treeWidget->topLevelItem(0)->child(1);
     itemEmulation = m_ui->treeWidget->topLevelItem(1);
     itemI18n = m_ui->treeWidget->topLevelItem(2);
+#endif
 
 //#ifndef Q_OS_LINUX
 //    m_ui->treeWidget->topLevelItem(0)->removeChild(itemAtariSio);
@@ -35,8 +49,10 @@ OptionsDialog::OptionsDialog(QWidget *parent) :
     m_ui->serialPortBaudCombo->setCurrentIndex(aspeqtSettings->serialPortMaximumSpeed());
     m_ui->serialPortUseDivisorsBox->setChecked(aspeqtSettings->serialPortUsePokeyDivisors());
     m_ui->serialPortDivisorEdit->setValue(aspeqtSettings->serialPortPokeyDivisor());
+    #ifndef Q_OS_ANDROID
     m_ui->atariSioDriverNameEdit->setText(aspeqtSettings->atariSioDriverName());
     m_ui->atariSioHandshakingMethodCombo->setCurrentIndex(aspeqtSettings->atariSioHandshakingMethod());
+    #endif
     m_ui->emulationHighSpeedExeLoaderBox->setChecked(aspeqtSettings->useHighSpeedExeLoader());
     m_ui->emulationUseCustomCasBaudBox->setChecked(aspeqtSettings->useCustomCasBaud());
     m_ui->emulationCustomCasBaudSpin->setValue(aspeqtSettings->customCasBaud());
@@ -47,6 +63,7 @@ OptionsDialog::OptionsDialog(QWidget *parent) :
     m_ui->useLargerFont->setChecked(aspeqtSettings->useLargeFont());
 //    m_ui->enableShade->setChecked(aspeqtSettings->enableShade());
 
+#ifndef Q_OS_ANDROID
     switch (aspeqtSettings->backend()) {
         case 0:
             itemStandard->setCheckState(0, Qt::Checked);
@@ -61,6 +78,7 @@ OptionsDialog::OptionsDialog(QWidget *parent) :
     }
    // m_ui->serialPortBox->setCheckState(itemStandard->checkState(0));
     m_ui->atariSioBox->setCheckState(itemAtariSio->checkState(0));
+#endif
     
     /* list available translations */
     QTranslator local_translator;
@@ -105,13 +123,17 @@ void OptionsDialog::OptionsDialog_accepted()
 {
     #ifndef Q_OS_ANDROID
     aspeqtSettings->setSerialPortName(m_ui->serialPortDeviceNameEdit->text());
+    #else
+    aspeqtSettings->setSerialPortName("SIO2PC-USB");
     #endif
     aspeqtSettings->setSerialPortHandshakingMethod(m_ui->serialPortHandshakeCombo->currentIndex());
     aspeqtSettings->setSerialPortMaximumSpeed(m_ui->serialPortBaudCombo->currentIndex());
     aspeqtSettings->setSerialPortUsePokeyDivisors(m_ui->serialPortUseDivisorsBox->isChecked());
     aspeqtSettings->setSerialPortPokeyDivisor(m_ui->serialPortDivisorEdit->value());
+    #ifndef Q_OS_ANDROID
     aspeqtSettings->setAtariSioDriverName(m_ui->atariSioDriverNameEdit->text());
     aspeqtSettings->setAtariSioHandshakingMethod(m_ui->atariSioHandshakingMethodCombo->currentIndex());
+    #endif
     aspeqtSettings->setUseHighSpeedExeLoader(m_ui->emulationHighSpeedExeLoaderBox->isChecked());
     aspeqtSettings->setUseCustomCasBaud(m_ui->emulationUseCustomCasBaudBox->isChecked());
     aspeqtSettings->setCustomCasBaud(m_ui->emulationCustomCasBaudSpin->value());
@@ -123,17 +145,19 @@ void OptionsDialog::OptionsDialog_accepted()
 //    aspeqtSettings->setEnableShade(m_ui->enableShade->isChecked());
 
     int backend = 0;
+#ifndef Q_OS_ANDROID
     if (itemAtariSio->checkState(0) == Qt::Checked) {
         backend = 1;
     }
+#endif
 
     aspeqtSettings->setBackend(backend);
-
     aspeqtSettings->setI18nLanguage(m_ui->i18nLanguageCombo->itemData(m_ui->i18nLanguageCombo->currentIndex()).toString());
 }
 
 void OptionsDialog::on_treeWidget_currentItemChanged(QTreeWidgetItem* current, QTreeWidgetItem* /*previous*/)
 {
+#ifndef Q_OS_ANDROID
     if (current == itemStandard) {
         m_ui->stackedWidget->setCurrentIndex(0);
     } else if (current == itemAtariSio) {
@@ -143,10 +167,12 @@ void OptionsDialog::on_treeWidget_currentItemChanged(QTreeWidgetItem* current, Q
     } else if (current == itemI18n) {
 	m_ui->stackedWidget->setCurrentIndex(3);
     }
+#endif
 }
 
 void OptionsDialog::on_treeWidget_itemClicked(QTreeWidgetItem* item, int /*column*/)
 {
+#ifndef Q_OS_ANDROID
     if (item->checkState(0) == Qt::Checked) {
         if (item != itemStandard) {
             itemStandard->setCheckState(0, Qt::Unchecked);
@@ -160,13 +186,14 @@ void OptionsDialog::on_treeWidget_itemClicked(QTreeWidgetItem* item, int /*colum
     }
     //m_ui->serialPortBox->setCheckState(itemStandard->checkState(0));
     m_ui->atariSioBox->setCheckState(itemAtariSio->checkState(0));
+#endif
 }
 
 void OptionsDialog::on_serialPortUseDivisorsBox_toggled(bool checked)
 {
 //    m_ui->serialPortBaudLabel->setEnabled(!checked);
     m_ui->serialPortBaudCombo->setEnabled(!checked);
-//    m_ui->serialPortDivisorLabel->setEnabled(checked);
+    m_ui->serialPortDivisorLabel->setEnabled(checked);
     m_ui->serialPortDivisorEdit->setEnabled(checked);
 }
 
