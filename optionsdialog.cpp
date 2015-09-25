@@ -22,10 +22,11 @@ OptionsDialog::OptionsDialog(QWidget *parent) :
     int rx = screen->availableSize().width();
     int ry = screen->availableSize().height();
 
-    this->setMinimumWidth(rx);
-    this->setMinimumHeight(ry);
+    this->setMaximumWidth(rx);
+    this->setMaximumHeight(ry);
 
-    m_ui->scrollArea->resize(rx,ry);
+    m_ui->scrollArea->setMinimumWidth(rx);
+    m_ui->scrollArea->setMinimumHeight(ry);
 
 #ifndef Q_OS_ANDROID
     m_ui->treeWidget->expandAll();

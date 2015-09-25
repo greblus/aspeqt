@@ -5,6 +5,7 @@
 #include <QTranslator>
 #include <QDir>
 #include <QMessageBox>
+#include <QScreen>
 
 QString g_savedLog, g_filter;
 extern bool g_logOpen;
@@ -16,8 +17,19 @@ LogDisplayDialog::LogDisplayDialog(QWidget *parent) :
     Qt::WindowFlags flags = windowFlags();
     flags = flags & (~Qt::WindowContextHelpButtonHint);
     setWindowFlags(flags);
+    setWindowState(Qt::WindowFullScreen);
 
     l_ui->setupUi(this);
+
+    QScreen *screen = qApp->screens().at(0);
+    int rx = screen->availableSize().width();
+    int ry = screen->availableSize().height();
+
+    this->setMaximumWidth(rx);
+    this->setMaximumHeight(ry-200);
+
+    l_ui->textEdit->setMinimumWidth(rx-30);
+    l_ui->textEdit->setMinimumHeight(ry-200);
 
     connect(l_ui->listByDisk, SIGNAL(currentIndexChanged(QString)), this, SLOT(diskFilter()));
     connect(l_ui->buttonBox, SIGNAL(clicked(QAbstractButton*)), this, SLOT(onClick(QAbstractButton*)));
