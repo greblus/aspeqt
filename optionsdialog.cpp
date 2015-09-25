@@ -14,10 +14,11 @@ OptionsDialog::OptionsDialog(QWidget *parent) :
     Qt::WindowFlags flags = windowFlags();
     flags = flags & (~Qt::WindowContextHelpButtonHint);
     setWindowFlags(flags);
-    setWindowState(Qt::WindowFullScreen);
 
     m_ui->setupUi(this);
 
+#ifdef Q_OS_ANDROID
+    setWindowState(Qt::WindowFullScreen);
     QScreen *screen = qApp->screens().at(0);
     int rx = screen->availableSize().width();
     int ry = screen->availableSize().height();
@@ -26,8 +27,7 @@ OptionsDialog::OptionsDialog(QWidget *parent) :
     this->setMinimumHeight(ry);
 
     m_ui->scrollArea->resize(rx,ry);
-
-#ifndef Q_OS_ANDROID
+#else
     m_ui->treeWidget->expandAll();
     itemStandard = m_ui->treeWidget->topLevelItem(0)->child(0);
     itemAtariSio = m_ui->treeWidget->topLevelItem(0)->child(1);

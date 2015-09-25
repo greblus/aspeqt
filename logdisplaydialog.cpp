@@ -17,10 +17,11 @@ LogDisplayDialog::LogDisplayDialog(QWidget *parent) :
     Qt::WindowFlags flags = windowFlags();
     flags = flags & (~Qt::WindowContextHelpButtonHint);
     setWindowFlags(flags);
-    setWindowState(Qt::WindowFullScreen);
 
     l_ui->setupUi(this);
 
+#ifdef Q_OS_ANDROID
+    setWindowState(Qt::WindowFullScreen);
     QScreen *screen = qApp->screens().at(0);
     int rx = screen->availableSize().width();
     int ry = screen->availableSize().height();
@@ -30,6 +31,7 @@ LogDisplayDialog::LogDisplayDialog(QWidget *parent) :
 
     l_ui->textEdit->setMinimumWidth(rx-30);
     l_ui->textEdit->setMinimumHeight(ry-200);
+#endif
 
     connect(l_ui->listByDisk, SIGNAL(currentIndexChanged(QString)), this, SLOT(diskFilter()));
     connect(l_ui->buttonBox, SIGNAL(clicked(QAbstractButton*)), this, SLOT(onClick(QAbstractButton*)));

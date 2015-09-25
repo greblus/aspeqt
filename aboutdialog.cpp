@@ -9,12 +9,13 @@ AboutDialog::AboutDialog(QWidget *parent, QString version) :
     Qt::WindowFlags flags = windowFlags();
     flags = flags & (~Qt::WindowContextHelpButtonHint);
     setWindowFlags(flags);
-    setWindowState(Qt::WindowFullScreen);
 
     m_ui->setupUi(this);
 
     m_ui->versionLabel->setText(tr("version %1").arg(version));
 
+#ifdef Q_OS_ANDROID
+    setWindowState(Qt::WindowFullScreen);
     QScreen *screen = qApp->screens().at(0);
     int rx = screen->availableSize().width();
     int ry = screen->availableSize().height();
@@ -24,6 +25,7 @@ AboutDialog::AboutDialog(QWidget *parent, QString version) :
 
     m_ui->textBrowser->setMinimumWidth(rx-20);
     m_ui->textBrowser->setMinimumHeight(ry-200);
+#endif
 
     //connect(this, SIGNAL(accepted()), this, SLOT(AboutDialog_accepted()));
 }
