@@ -53,6 +53,7 @@ bool g_miniMode = false;
 bool g_shadeMode = false;
 int g_savedWidth;
 bool g_logOpen;
+float ssize = 0;
 
 // ****************************** END OF GLOBALS ************************************//
 
@@ -171,9 +172,9 @@ MainWindow::MainWindow(QWidget *parent)
     float resx = screen->size().width()/screen->physicalDotsPerInchX();
     float resy = screen->size().height()/screen->physicalDotsPerInchY();
 
-    float size = sqrt(resx*resx + resy*resy);
+    ssize = sqrt(resx*resx + resy*resy);
 
-    if (size < 5) ui->textEdit->setVisible(false);
+    if (ssize < 5) ui->textEdit->setVisible(false);
 
      /* Parse command line arguments:
       arg(1): session file (xxxxxxxx.aspeqt)   */
@@ -694,19 +695,19 @@ void MainWindow::on_actionToggleShade_triggered()
 void MainWindow::on_actionToggleMiniMode_triggered()
 {
     if(g_miniMode){
-        ui->horizontalFrame_1->setFixedHeight(56);
-        ui->buttonMountDisk_1->setFixedHeight(48);
-        ui->buttonMountDisk_1->setFixedWidth(48);
-        ui->buttonMountFolder_1->setFixedHeight(48);
-        ui->buttonMountFolder_1->setFixedWidth(48);
-        ui->buttonSave_1->setFixedHeight(48);
-        ui->buttonSave_1->setFixedWidth(48);
-        ui->autoSave_1->setFixedHeight(48);
-        ui->autoSave_1->setFixedWidth(48);
-        ui->buttonEditDisk_1->setFixedHeight(48);
-        ui->buttonEditDisk_1->setFixedWidth(48);
-        ui->buttonEject_1->setFixedHeight(48);
-        ui->buttonEject_1->setFixedWidth(48);
+        ui->horizontalFrame_1->setFixedHeight(100);
+        ui->buttonMountDisk_1->setFixedHeight(70);
+        ui->buttonMountDisk_1->setFixedWidth(70);
+        ui->buttonMountFolder_1->setFixedHeight(70);
+        ui->buttonMountFolder_1->setFixedWidth(70);
+        ui->buttonSave_1->setFixedHeight(70);
+        ui->buttonSave_1->setFixedWidth(70);
+        ui->autoSave_1->setFixedHeight(70);
+        ui->autoSave_1->setFixedWidth(70);
+        ui->buttonEditDisk_1->setFixedHeight(70);
+        ui->buttonEditDisk_1->setFixedWidth(70);
+        ui->buttonEject_1->setFixedHeight(70);
+        ui->buttonEject_1->setFixedWidth(70);
         ui->horizontalFrame_2->setVisible(true);
         ui->horizontalFrame_3->setVisible(true);
         ui->horizontalFrame_4->setVisible(true);
@@ -715,7 +716,9 @@ void MainWindow::on_actionToggleMiniMode_triggered()
 
         setMinimumHeight(426);
         setMaximumHeight(QWIDGETSIZE_MAX);
-        ui->textEdit->setVisible(true);
+        if (ssize > 5) {
+            ui->textEdit->setVisible(true);
+        }
         saveMiniWindowGeometry();
         setGeometry(g_savedGeometry);
         setWindowOpacity(1.0);
