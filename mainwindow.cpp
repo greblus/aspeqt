@@ -175,6 +175,7 @@ MainWindow::MainWindow(QWidget *parent)
     ssize = sqrt(resx*resx + resy*resy);
 
     if (ssize < 5) ui->textEdit->setVisible(false);
+        else ui->verticalSpacer->changeSize(0, 0, QSizePolicy::Fixed, QSizePolicy::Fixed);
 
      /* Parse command line arguments:
       arg(1): session file (xxxxxxxx.aspeqt)   */
