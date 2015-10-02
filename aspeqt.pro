@@ -7,7 +7,7 @@ DEFINES += VERSION=\\\"1.0-rc1\\\"
 TARGET = AspeQt
 TEMPLATE = app
 CONFIG += qt
-QT += core gui network widgets printsupport
+QT += core gui widgets printsupport
 CONFIG += mobility
 CONFIG += static
 MOBILITY = bearer
@@ -32,7 +32,6 @@ SOURCES += main.cpp \
     cassettedialog.cpp \
     docdisplaywindow.cpp \
     bootoptionsdialog.cpp \
-    network.cpp \
     logdisplaydialog.cpp
 win32:LIBS += -lwinmm
 unix:LIBS += -lz
@@ -86,7 +85,6 @@ HEADERS += mainwindow.h \
     cassettedialog.h \
     docdisplaywindow.h \
     bootoptionsdialog.h \
-    network.h \
     logdisplaydialog.h \
 
 win32:HEADERS += serialport-win32.h

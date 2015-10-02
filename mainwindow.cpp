@@ -229,7 +229,6 @@ MainWindow::MainWindow(QWidget *parent)
     speedLabel = new QLabel(this);
     onOffLabel = new QLabel(this);
     prtOnOffLabel = new QLabel(this);
-    netLabel = new QLabel(this);
     clearMessagesLabel = new QLabel(this);
     speedLabel->setText(tr(""));
     onOffLabel->setMinimumWidth(21);
@@ -237,7 +236,6 @@ MainWindow::MainWindow(QWidget *parent)
     prtOnOffLabel->setPixmap(QIcon(":/icons/silk-icons/icons/printer.png").pixmap(32, 32, QIcon::Normal));  //
     prtOnOffLabel->setToolTip(ui->actionPrinterEmulation->toolTip());
     prtOnOffLabel->setStatusTip(ui->actionPrinterEmulation->statusTip());
-    netLabel->setMinimumWidth(18);
 
     clearMessagesLabel->setMinimumWidth(21);
     clearMessagesLabel->setPixmap(QIcon(":/icons/silk-icons/icons/page_white_c.png").pixmap(32, 32, QIcon::Normal));
@@ -249,25 +247,9 @@ MainWindow::MainWindow(QWidget *parent)
     ui->statusBar->addPermanentWidget(speedLabel);
     ui->statusBar->addPermanentWidget(onOffLabel);
     ui->statusBar->addPermanentWidget(prtOnOffLabel);
-    ui->statusBar->addPermanentWidget(netLabel);
     ui->statusBar->addPermanentWidget(clearMessagesLabel);
     ui->textEdit->installEventFilter(mainWindow);
     changeFonts();
-
-    /* Connect to the network */
-    QString netInterface;
-    Network *oNet = new Network();
-    if (oNet->openConnection(netInterface)) {
-        netLabel->setPixmap(QIcon(":/icons/oxygen-icons/16x16/actions/network_connect.png").pixmap(32, 32, QIcon::Normal));
-        netLabel->setToolTip(tr("Connected to the network via: ") +  netInterface);
-        netLabel->setStatusTip(netLabel->toolTip());
-    } else {
-        netLabel->setPixmap(QIcon(":/icons/oxygen-icons/16x16/actions/network_disconnect.png").pixmap(32, 32, QIcon::Normal));
-        netLabel->setToolTip(tr("No network connection"));
-        netLabel->setStatusTip(netLabel->toolTip());
-
-        //        QMessageBox::information(this,tr("Network connection cannot be opened"), tr("No network interface was found!"));
-    }
 
     /* Initialize diskWidgets array and tool button actions */
     

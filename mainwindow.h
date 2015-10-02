@@ -20,7 +20,6 @@
 #include "sioworker.h"
 #include "textprinterwindow.h"
 #include "docdisplaywindow.h"
-#include "network.h"
 
 #define g_numberOfDisks 6
 
