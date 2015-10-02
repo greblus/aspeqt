@@ -31,27 +31,27 @@ import android.content.BroadcastReceiver;
 import android.widget.Toast;
 import android.view.WindowManager;
 
-public class MyActivity extends QtActivity
+public class SerialActivity extends QtActivity
 {
-        public static int devCount = 0;
-        public static UsbManager manager;
-        public static PendingIntent pintent;
+        private static int devCount = 0;
+        private static UsbManager manager;
+        private static PendingIntent pintent;
         private static final String ACTION_USB_PERMISSION =
             "com.android.example.USB_PERMISSION";
-        public static ByteBuffer bbuf = ByteBuffer.allocateDirect(16384);
+        private static ByteBuffer bbuf = ByteBuffer.allocateDirect(16384);
         private static byte b[] = new byte [16384];
         private static byte t[] = new byte [16384];
-        public static int counter;
-        public static UsbDevice device = null;
-        public static UsbSerialDriver driver;
-        public static UsbSerialPort sPort;
+        private static int counter;
+        private static UsbDevice device = null;
+        private static UsbSerialDriver driver;
+        private static UsbSerialPort sPort;
         public static native void sendBufAddr(ByteBuffer buf);
         private static boolean debug = false;
         public static String m_chosen;
-        public static int m_filter;
-        public static String m_action;
+        private static int m_filter;
+        private static String m_action;
 
-        public static MyActivity s_activity = null;
+        public static SerialActivity s_activity = null;
 
         @Override
 	public void onCreate(Bundle savedInstanceState)
@@ -76,14 +76,14 @@ public class MyActivity extends QtActivity
             else
                 m_action = "FileSave";
 
-            MyActivity.s_activity.runOnUiThread( new FileChooser() );
+            SerialActivity.s_activity.runOnUiThread( new FileChooser() );
 
          }
 
          public static void runDirChooser() {
             m_chosen = "None";
             m_filter = 0;
-            MyActivity.s_activity.runOnUiThread( new DirChooser() );
+            SerialActivity.s_activity.runOnUiThread( new DirChooser() );
 
           }
 
@@ -97,7 +97,7 @@ public class MyActivity extends QtActivity
 
         public void fileChooser()
         {
-            SimpleFileDialog FileOpenDialog =  new SimpleFileDialog(MyActivity.this, m_action, m_filter,
+            SimpleFileDialog FileOpenDialog =  new SimpleFileDialog(SerialActivity.this, m_action, m_filter,
                                                             new SimpleFileDialog.SimpleFileDialogListener()
             {
                     @Override
@@ -105,7 +105,7 @@ public class MyActivity extends QtActivity
                     {
                             // The code in this function will be executed when the dialog OK button is pushed
                             m_chosen = chosenDir;
-                            if (m_chosen != "Cancelled") Toast.makeText(MyActivity.this, "Chosen File: " +
+                            if (m_chosen != "Cancelled") Toast.makeText(SerialActivity.this, "Chosen File: " +
                                             m_chosen, Toast.LENGTH_LONG).show();
                     }
             });
@@ -117,7 +117,7 @@ public class MyActivity extends QtActivity
 
         public void dirChooser()
         {
-            SimpleFileDialog FileOpenDialog =  new SimpleFileDialog(MyActivity.this, "FolderChoose", m_filter,
+            SimpleFileDialog FileOpenDialog =  new SimpleFileDialog(SerialActivity.this, "FolderChoose", m_filter,
                                                             new SimpleFileDialog.SimpleFileDialogListener()
             {
                     @Override
@@ -125,7 +125,7 @@ public class MyActivity extends QtActivity
                     {
                             // The code in this function will be executed when the dialog OK button is pushed
                             m_chosen = chosenDir;
-                            if (m_chosen != "Cancelled") Toast.makeText(MyActivity.this, "Chosen Directory: " +
+                            if (m_chosen != "Cancelled") Toast.makeText(SerialActivity.this, "Chosen Directory: " +
                                             m_chosen, Toast.LENGTH_LONG).show();
                     }
             });
@@ -134,10 +134,10 @@ public class MyActivity extends QtActivity
         }
 
         public static void registerBroadcastReceiver() {
-                if (MyActivity.s_activity != null) {
+                if (SerialActivity.s_activity != null) {
                         // Qt is running on a different thread than Android. (step 2)
                         // In order to register the receiver we need to execute it in the UI thread
-                        MyActivity.s_activity.runOnUiThread( new RegisterReceiverRunnable());
+                        SerialActivity.s_activity.runOnUiThread( new RegisterReceiverRunnable());
                         Log.i("USB", "Broadcast Receiver registered");
                 }
         }
@@ -437,7 +437,7 @@ class RegisterReceiverRunnable implements Runnable
                 IntentFilter filter = new IntentFilter();
                 filter.addAction("com.android.example.USB_PERMISSION");
                 // this method must be called on Android Ui Thread
-                MyActivity.s_activity.registerReceiver(new USBReceiver(), filter);
+                SerialActivity.s_activity.registerReceiver(new USBReceiver(), filter);
                 }
 }
 
@@ -445,7 +445,7 @@ class FileChooser implements Runnable
 {
     @Override
     public void run() {
-        MyActivity.s_activity.fileChooser();
+        SerialActivity.s_activity.fileChooser();
     }
 }
 
@@ -453,7 +453,7 @@ class DirChooser implements Runnable
 {
     @Override
     public void run() {
-        MyActivity.s_activity.dirChooser();
+        SerialActivity.s_activity.dirChooser();
     }
 }
 

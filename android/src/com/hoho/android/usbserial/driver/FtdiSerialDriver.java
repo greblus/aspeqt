@@ -348,7 +348,6 @@ public class FtdiSerialDriver implements UsbSerialDriver {
         @Override
         public int swrite(byte[] src, int size, int timeoutMillis) throws IOException {
             final UsbEndpoint endpoint = mDevice.getInterface(0).getEndpoint(1);
-            Log.i("FTDI", "endpoints: " + mDevice.getInterface(0).getEndpointCount());
             int offset = 0;
 
             while (offset < size) {

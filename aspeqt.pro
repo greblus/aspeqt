@@ -55,8 +55,7 @@ unix:
             android/res/values/libs.xml \
             android/build.gradle \
             android/gradle/wrapper/gradle-wrapper.properties \
-            android/gradlew.bat \
-            android/src/net/greblus/MyActivity.java
+            android/gradlew.bat
 
         ANDROID_PACKAGE_SOURCE_DIR = $$PWD/android
     }
@@ -144,7 +143,9 @@ DISTFILES += \
     android/src/com/hoho/android/usbserial/driver/UsbSerialDriver.java \
     android/src/com/hoho/android/usbserial/driver/UsbSerialPort.java \
     android/src/com/hoho/android/usbserial/driver/UsbSerialProber.java \
-    android/src/com/hoho/android/usbserial/driver/UsbSerialRuntimeException.java
+    android/src/com/hoho/android/usbserial/driver/UsbSerialRuntimeException.java \
+    android/src/net/greblus/SerialActivity.java \
+    android/src/net/greblus/SimpleFileDialog.java
 
 
 

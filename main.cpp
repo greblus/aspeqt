@@ -19,7 +19,7 @@ jbyte *jbuf = NULL;
 char *bbuf;
 extern "C" {
     JNIEXPORT void JNICALL
-    Java_net_greblus_MyActivity_sendBufAddr(JNIEnv *env/*env*/,
+    Java_net_greblus_SerialActivity_sendBufAddr(JNIEnv *env/*env*/,
     jobject /*obj*/, jobject buf)
         {
             jbuf = (jbyte *)env->GetDirectBufferAddress(buf);
