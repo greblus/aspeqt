@@ -1,32 +1,35 @@
 AspeQt, Atari Serial Peripheral Emulator for Android
 ====================================================
 
-Experimental branch using modified usb-serial-for-android driver:
+In this port I'm using slightly modified and absolutely great 
+usb-serial-for-android driver:
+
 https://github.com/mik3y/usb-serial-for-android 
 
-This branch works best with my KitKat phone (both PL2303 and FTDI chips 
-are supported):
+This branch works best with my KitKat phone and Jellybean tablet 
+(both PL2303 and FTDI chips are supported):
 
 https://github.com/greblus/aspeqt/raw/android/android/apk/aspeqt.apk
 
-I've added an initial implementation of software command frame
-detection which should work with anything @19200bps. It's now set 
-as default method when AspeQt is started first time. 
+* I've added an initial implementation of software command frame
+  detection which should work with anything @19200bps. 
 
-There is another branch (same GUI) which works better on JellyBean
-and some other devices:
+* For me SOFT mode works best with Pokey divisor set to 6. And by _the best_
+  I mean really, it's fast!
 
-https://github.com/greblus/aspeqt/raw/us4a/android/apk/aspeqt.apk
-
-Unfortunately it's hard to find proper timing and device handling 
-for different versions of Android and different RS232 adapters, but 
-I'll work on it ;)
+SOFT command frame detection is now set as default method when AspeQt is 
+started first time. 
 
 Previous version with ftd2xx Java driver is still available here: 
 https://github.com/greblus/aspeqt/tree/ftd2xx.
 
-It's a work in progress. Currently it already handles atr and xex 
-booting and cas files loading.
+What doesn't work yet?
+----------------------
+
+- Xex file loading in SOFT command frame detection (will fix some 
+  time soon).
+- Loading atr files stalls occassionally in DSR handshaking mode.
+  Haven't noticed it in SOFT mode. Hopefully Will fix it soon.
 
 What's necessary to use it:
 ===========================

@@ -35,6 +35,7 @@ private:
     int mHandle;
     int mSpeed;
     int mMethod;
+    bool mSpdChanged;
 
     bool setNormalSpeed();
     bool setHighSpeed();

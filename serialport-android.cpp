@@ -175,17 +175,16 @@ bool StandardSerialPortBackend::setSpeed(int speed)
 {
     if (debug) qWarning() << "!i" << tr("Serial port speed set to %1.").arg(speed);
 
-    bool ret = QAndroidJniObject::callStaticMethod<jint>("net/greblus/SerialActivity", "setSpeed", "(I)Z", speed);
-    if (!ret) {
+    int ret = QAndroidJniObject::callStaticMethod<jint>("net/greblus/SerialActivity", "setSpeed", "(I)I", speed);
+    if (ret < 0) {
         if (debug) qCritical() << "!e" << tr("Cannot set serial port speed: %1")
                        .arg(lastErrorMessage());
     return false;
     }
+    if (mSpdChanged)
+        emit statusChanged(tr("%1 bits/sec").arg(ret));
 
-    emit statusChanged(tr("%1 bits/sec").arg(speed));
-    qWarning() << "!i" << tr("Serial port speed set to %1.").arg(speed);
-
-    mSpeed = speed;
+    mSpeed = ret;
     return true;
 }
 
@@ -199,134 +198,46 @@ QByteArray StandardSerialPortBackend::readCommandFrame()
     QByteArray data;
 
     int status = -1;
-    int retries = 0, totalRetries = 0;
+    int retries = 0, result = 0;
 
-    if (mMethod == SOFTWARE_HANDSHAKE)
-    {
-        do {
-            int result =  QAndroidJniObject::callStaticMethod<jint>("net/greblus/SerialActivity", "getCommandFrame", "()I");
-            switch (result) {
-                case 1:
-                    data.resize(4);
-                    for (int i=0; i<4; i++)
-                        data[i] = (bbuf[i] & 0xff);
-                    break;
-                case 2:
-                    continue;
-                    break;
-                default:
-                    data.clear();
-            }
+    do {
+        data.clear();
+        if (mMethod == SOFTWARE_HANDSHAKE)
+            result = QAndroidJniObject::callStaticMethod<jint>("net/greblus/SerialActivity", "getSWCommandFrame", "()I");
+        else
+            result = QAndroidJniObject::callStaticMethod<jint>("net/greblus/SerialActivity", "getHWCommandFrame", "(I)I", mMethod);
 
-            if (!data.isEmpty()) {
-                break;
-            } else {
-                retries++;
-                totalRetries++;
-                if (retries == 2) {
-                    retries = 0;
-                    if (mHighSpeed) {
-                        setNormalSpeed();
-                    } else {
-                        setHighSpeed();
-                    }
-                }
-            }
-        } while (data.isEmpty() && !mCanceled);
-    }
-    else
-    {
-        int mask;
-        switch (mMethod) {
-            case 0:
-                //RI: FTDI:64 PL2303:8
-                mask = 72;
-                break;
+        switch (result) {
             case 1:
-                //DSR: FTDI:32 PL2303:2
-                mask = 34;
+                data.resize(4);
+                for (int i=0; i<4; i++)
+                    data[i] = (bbuf[i] & 0xff);
                 break;
             case 2:
-                //CTS: FTDI:16 PL2303:128
-                mask = 144;
+                data.clear();
                 break;
             default:
-                mask = 34;
-            }
+                data.clear();                
+        }
 
-            do {
-                data.clear();
-                /* First, wait until command line goes off */
-                do {
-                    status = QAndroidJniObject::callStaticMethod<jint>("net/greblus/SerialActivity", "getModemStatus", "()I");
-                    if (status < 0) {
-                        if (debug) qCritical() << "!e" << tr("Cannot retrieve serial port status: %1").arg(lastErrorMessage());
-                        return data;
-                    }
-                    if (status & mask) {
-                        QThread::yieldCurrentThread();
-                    }
-                } while ((status & mask) && !mCanceled);
+        if (!data.isEmpty()) {
+            break;
+        } else {
+            retries++;
+            if (retries == 2) {
+                retries = 0;
+                if (mHighSpeed) {
+                    mSpdChanged = false;
+                    setNormalSpeed();
 
-                /* Now wait for it to go on again */
-                do {
-                    status = QAndroidJniObject::callStaticMethod<jint>("net/greblus/SerialActivity", "getModemStatus", "()I");
-                    if (status < 0) {
-                        if (debug) qCritical() << "!e" << tr("Cannot retrieve serial port status: %1").arg(lastErrorMessage());
-                        return data;
-                    }
-                    if (!(status & mask)) {
-                        QThread::yieldCurrentThread();
-                    }
-                } while (!(status & mask) && !mCanceled );
-
-                if (mCanceled) {
-                    return data;
-                }
-
-                bool ret = QAndroidJniObject::callStaticMethod<jint>("net/greblus/SerialActivity", "purge", "()Z");
-                if (!ret) {
-                    if (debug) qCritical() << "!e" << tr("Cannot clear serial port: %1")
-                                   .arg(lastErrorMessage());
-                }
-
-                data = readDataFrame(4, false);
-
-                if (!data.isEmpty()) {
-                    do {
-                       status = QAndroidJniObject::callStaticMethod<jint>("net/greblus/SerialActivity", "getModemStatus", "()I");
-                        if (status < 0) {
-                            if (debug) qCritical() << "!e" << tr("Cannot retrieve serial port status: %1").arg(lastErrorMessage());
-                            return data;
-                        }
-                    } while ((status & mask) && !mCanceled);
-
-                    if (debug) {
-                        QString tmp="";
-                        for (int i=0; i<4; i++) {
-                            tmp+=QString::number(data[i]) + ", ";
-                        }
-                        if (tmp.length() > 2)
-                            tmp = tmp.left(tmp.length()-2);
-
-                        QAndroidJniObject msg = QAndroidJniObject::fromString("Qt side buf = "+tmp);
-                        QAndroidJniObject::callStaticMethod<void>("net/greblus/SerialActivity", "qLog", "(Ljava/lang/String;)V", msg.object<jstring>() );
-                    }
-                    break;
                 } else {
-                    retries++;
-                    totalRetries++;
-                    if (retries == 2) {
-                        retries = 0;
-                        if (mHighSpeed) {
-                            setNormalSpeed();
-                        } else {
-                            setHighSpeed();
-                        }
-                    }
+                    mSpdChanged = true;
+                    setHighSpeed();
                 }
-         } while (1);
-    }
+            }
+        }
+    } while (!mCanceled);
+
     return data;
 }
 
@@ -390,14 +301,14 @@ bool StandardSerialPortBackend::writeDataNak()
 bool StandardSerialPortBackend::writeComplete()
 {
     if (debug) qWarning() << "!i" << tr("writeComplete");
-    SioWorker::usleep(800);
+    SioWorker::usleep(700);
     return writeRawFrame(QByteArray(1, 67));
 }
 
 bool StandardSerialPortBackend::writeError()
 {
     if (debug) qWarning() << "!i" << tr("writeError");
-    SioWorker::usleep(800);
+    SioWorker::usleep(700);
     return writeRawFrame(QByteArray(1, 78));
 }
 
@@ -447,9 +358,7 @@ QByteArray StandardSerialPortBackend::readRawFrame(uint size, bool verbose)
 
     data.clear();
     for (int i=0; i<size; i++)
-    {
         data.insert(i, (quint8)(bbuf[i] & 0xff));
-    }
 
     if (debug) {
         QString tmp;
