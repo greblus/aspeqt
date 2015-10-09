@@ -35,7 +35,7 @@ void Printer::handleCommand(quint8 command, quint16 aux)
                 status[3] = 0;
                 sio->port()->writeComplete();
                 sio->port()->writeDataFrame(status);
-                qDebug() << "!n" << tr("[%1] Get status.").arg(deviceName());
+                qDebug().noquote() << "!n" << tr("[%1] Get status.").arg(deviceName());
                 break;
             }
         case 0x57:
@@ -66,7 +66,7 @@ void Printer::handleCommand(quint8 command, quint16 aux)
                 }
                 // Display Info message once  // 
                 if (!conversionMsgdisplayedOnce) {
-                    qDebug() << "!n" << tr("[%1] Converting Inverse Video Characters for ASCII viewing").arg(deviceName()).arg(len);
+                    qDebug().noquote() << "!n" << tr("[%1] Converting Inverse Video Characters for ASCII viewing").arg(deviceName()).arg(len);
                     conversionMsgdisplayedOnce = true;
                 }
                 sio->port()->writeCommandAck();
@@ -79,7 +79,7 @@ void Printer::handleCommand(quint8 command, quint16 aux)
                     return;
                 }
                 sio->port()->writeDataAck();
-                qDebug() << "!n" << tr("[%1] Print (%2 chars)").arg(deviceName()).arg(len);
+                qDebug().noquote() << "!n" << tr("[%1] Print (%2 chars)").arg(deviceName()).arg(len);
                 int n = data.indexOf('\x9b');
                 if (n == -1) {
                     n = len;
@@ -101,7 +101,7 @@ void Printer::handleCommand(quint8 command, quint16 aux)
                            .arg(aux, 4, 16, QChar('0'));
         }
     } else {
-        qDebug() << "!u" << tr("[%1] ignored").arg(deviceName());
+        qDebug().noquote() << "!u" << tr("[%1] ignored").arg(deviceName());
     }
 }
 
@@ -125,7 +125,7 @@ void AspeCl::handleCommand(quint8 command, quint16 aux)
             data[3] = dateTime.time().hour();
             data[4] = dateTime.time().minute();
             data[5] = dateTime.time().second();
-            qDebug() << "!n" << tr("[%1] Date/time sent to client (%2).")
+            qDebug().noquote() << "!n" << tr("[%1] Date/time sent to client (%2).")
                        .arg(deviceName())
                        .arg(dateTime.toString(Qt::SystemLocaleShortDate));
 
@@ -147,13 +147,13 @@ void AspeCl::handleCommand(quint8 command, quint16 aux)
             if (swapDisk1 >= 0 and swapDisk1 < 15 and swapDisk2 >=0 and swapDisk2 < 15 and swapDisk1 != swapDisk2) {
                 sio->swapDevices(swapDisk1 + 0x31, swapDisk2 + 0x31);
                 aspeqtSettings->swapImages(swapDisk1, swapDisk2);
-                qDebug() << "!n" << tr("[%1] Swapped disk %2 with disk %3.")
+                qDebug().noquote() << "!n" << tr("[%1] Swapped disk %2 with disk %3.")
                                 .arg(deviceName())
                                 .arg(swapDisk2 + 1)
                                 .arg(swapDisk1 + 1);
             } else {
                 sio->port()->writeCommandNak();
-                qDebug() << "!e" << tr("[%1] Invalid swap request for drives: (%2)-(%3).")
+                qDebug().noquote() << "!e" << tr("[%1] Invalid swap request for drives: (%2)-(%3).")
                            .arg(deviceName())
                            .arg(swapDisk2 + 1)
                            .arg(swapDisk1 + 1);
@@ -187,15 +187,15 @@ void AspeCl::handleCommand(quint8 command, quint16 aux)
                           sio->uninstallDevice(i + 0x31);
                           delete img;
                           aspeqtSettings->unmountImage(i);
-                          qDebug() << "!n" << tr("[%1] Unmounted disk %2")
+                          qDebug().noquote() << "!n" << tr("[%1] Unmounted disk %2")
                                         .arg(deviceName())
                                         .arg(i + 1);
                       }
-                      qDebug() << "!n" << tr("[%1] ALL images were remotely unmounted")
+                      qDebug().noquote() << "!n" << tr("[%1] ALL images were remotely unmounted")
                                 .arg(deviceName());
                   } else {
                       sio->port()->writeCommandNak();
-                      qDebug() << "!e" << tr("[%1] Can not remotely unmount ALL images due to pending changes.")
+                      qDebug().noquote() << "!e" << tr("[%1] Can not remotely unmount ALL images due to pending changes.")
                                 .arg(deviceName());
                   }
               } else {
@@ -204,14 +204,14 @@ void AspeCl::handleCommand(quint8 command, quint16 aux)
 
                   if (img && img->isModified()) {
                       sio->port()->writeCommandNak();
-                      qDebug() << "!e" << tr("[%1] Can not remotely unmount disk %2 due to pending changes.")
+                      qDebug().noquote() << "!e" << tr("[%1] Can not remotely unmount disk %2 due to pending changes.")
                                 .arg(deviceName())
                                 .arg(unmountDisk);
                   } else {
                       sio->uninstallDevice(unmountDisk - 1 + 0x31);
                       delete img;
                       aspeqtSettings->unmountImage(unmountDisk - 1);
-                      qDebug() << "!n" << tr("[%1] Remotely unmounted disk %2")
+                      qDebug().noquote() << "!n" << tr("[%1] Remotely unmounted disk %2")
                                   .arg(deviceName())
                                   .arg(unmountDisk);
                   }
@@ -219,7 +219,7 @@ void AspeCl::handleCommand(quint8 command, quint16 aux)
 
               } else {
                   sio->port()->writeCommandNak();
-                  qDebug() << "!e" << tr("[%1] Invalid drive number: %2 for remote unmount")
+                  qDebug().noquote() << "!e" << tr("[%1] Invalid drive number: %2 for remote unmount")
                          .arg(deviceName())
                          .arg(unmountDisk);
             }
@@ -434,7 +434,7 @@ void AspeCl::fileMounted(bool mounted)
 {
     if (mounted) {
         sio->port()->writeComplete();
-        qDebug() << "!n" << tr("[%1] Image %2 mounted")
+        qDebug().noquote() << "!n" << tr("[%1] Image %2 mounted")
                    .arg(deviceName())
                     .arg(imageFileName.mid(1,imageFileName.size()-1));
     } else {

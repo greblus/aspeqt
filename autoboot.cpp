@@ -34,7 +34,7 @@ void AutoBoot::handleCommand(quint8 command, quint16 aux)
                 QByteArray speed(1, 0);
                 speed[0] = sio->port()->speedByte();
                 sio->port()->writeDataFrame(speed);
-                qDebug() << "!n" << tr("[%1] Speed poll.").arg(deviceName());
+                qDebug().noquote() << "!n" << tr("[%1] Speed poll.").arg(deviceName());
                 break;
             }
         case 0x52:
@@ -55,7 +55,7 @@ void AutoBoot::handleCommand(quint8 command, quint16 aux)
                     if (readSector(aux, data)) {
                         sio->port()->writeComplete();
                         sio->port()->writeDataFrame(data);
-                        qDebug() << "!n" << tr("[%1] Read sector %2 (%3 bytes).")
+                        qDebug().noquote() << "!n" << tr("[%1] Read sector %2 (%3 bytes).")
                                        .arg(deviceName())
                                        .arg(aux)
                                        .arg(data.size());
@@ -85,7 +85,7 @@ void AutoBoot::handleCommand(quint8 command, quint16 aux)
                 status[3] = 1;
                 sio->port()->writeComplete();
                 sio->port()->writeDataFrame(status);
-                qDebug() << "!n" << tr("[%1] Get status.")
+                qDebug().noquote() << "!n" << tr("[%1] Get status.")
                                .arg(deviceName());
                 break;
             }
@@ -94,7 +94,7 @@ void AutoBoot::handleCommand(quint8 command, quint16 aux)
                 if (!sio->port()->writeCommandAck()) {
                     return;
                 }
-                qDebug() << "!n" << tr("[%1] Atari is jumping to %2.")
+                qDebug().noquote() << "!n" << tr("[%1] Atari is jumping to %2.")
                                .arg(deviceName())
                                .arg(aux);
                 emit loaderDone();
@@ -106,7 +106,7 @@ void AutoBoot::handleCommand(quint8 command, quint16 aux)
                 if (!sio->port()->writeCommandAck()) {
                     return;
                 }
-                qDebug() << "!n" << tr("[%1] Get chunk %2 (%3 bytes).")
+                qDebug().noquote() << "!n" << tr("[%1] Get chunk %2 (%3 bytes).")
                                .arg(deviceName())
                                .arg(aux)
                                .arg(chunks.at(aux).data.size());
@@ -131,7 +131,7 @@ void AutoBoot::handleCommand(quint8 command, quint16 aux)
                 data[3] = chunks.size() != aux + 1;
                 data[4] = chunks.at(aux).data.size() % 256;
                 data[5] = chunks.at(aux).data.size() / 256;
-                qDebug() << "!d" << tr("[%1] Get chunk info %2 (%3 bytes at %4).")
+                qDebug().noquote() << "!d" << tr("[%1] Get chunk info %2 (%3 bytes at %4).")
                                .arg(deviceName())
                                .arg(aux)
                                .arg(chunks.at(aux).data.size())
@@ -223,7 +223,7 @@ bool AutoBoot::readExecutable(const QString &fileName)
         }
         end = (quint8) data.at(0) + (quint8) data.at(1) * 256;
 
-        qDebug() << "!d" << "Exe segment" << start << ".." << end;
+        qDebug().noquote() << "!d" << "Exe segment" << start << ".." << end;
 
         if (end < start) {
             qWarning() << tr("The executable '%1' is broken: The end address is less than the start address.")
