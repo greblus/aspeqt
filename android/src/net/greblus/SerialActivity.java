@@ -320,22 +320,11 @@ public class SerialActivity extends QtActivity
                 do {                    
                     if (total_retries > 2) return 2;
                      ret = sPort.sread(rb, 5, 1000);
-                     if (ret > 0) {
-                         for (int i=0; i<ret; i++) {
-                            bbuf.put((byte)(rb[i] & 0xff));
-                            total += 1;
-                        }                        
-                    } else {
-                        total_retries++;
-                    }
+                     if (ret > 0)
+                        total += ret;
+                     else
+                        total_retries++;                    
                 } while (total<5);
-
-                if (debug) {
-                    String data = "";
-                    for (int i=0; i<5; i++)
-                        data += Integer.toString(rb[i] & 0xff) + " ";
-                    Log.i("USB", "Read 5 bytes, looking for Command Frame: " + data);
-                }
                 expected = rb[4] & 0xff;
                 got = sioChecksum(rb, 4) & 0xff;
             } catch (IOException e) {};
@@ -348,9 +337,9 @@ public class SerialActivity extends QtActivity
                                 rb[i] = rb[i+1];
                         int ret = 0;
                         do {
-                            try {
+                             try {
                                 ret = sPort.sread(t, 1, 1000);
-                            } catch (IOException e) {};
+                           } catch (IOException e) {};
                         } while (ret < 1);
                         rb[4] = t[0];
                 } else {
@@ -358,14 +347,24 @@ public class SerialActivity extends QtActivity
                     continue;
                 }
             } else {
-                Log.i("USB", "No desync");
+                if (debug) Log.i("USB", "No desync");
+
+                for (int i=0; i<5; i++)
+                   bbuf.put((byte)(rb[i] & 0xff));
+
+                   if (debug) {
+                       String data = "";
+                       for (int i=0; i<5; i++)
+                           data += Integer.toString(rb[i] & 0xff) + " ";
+                       Log.i("USB", "Read 5 bytes, looking for Command Frame: " + data);
+                   }
                 break;
             }
          };
 
-        if (debug) Log.i("USB", "got=" + got + " expected= " + expected);
+         if (debug) Log.i("USB", "got=" + got + " expected= " + expected);
 
-        return 1;
+         return 1;
     }
 
     public static int getHWCommandFrame(int mMethod) {
