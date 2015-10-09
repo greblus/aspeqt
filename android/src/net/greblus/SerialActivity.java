@@ -473,7 +473,8 @@ public class SerialActivity extends QtActivity
         int cdev = cmd[0];
         int cid = cmd[0] & 0xf0;
 
-        if ((cid != 0x20) && (cid != 0x30) && (cid != 0x40) && (cid != 0x50) && (cdev != 0x6f))
+        if ((cid != 0x20) && (cid != 0x30) && (cid != 0x40) && (cid != 0x50) &&
+            (cid != 0x60) && (cid != 0xf0))
             return 1;
 
         return 0;
