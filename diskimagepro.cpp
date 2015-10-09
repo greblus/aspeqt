@@ -114,7 +114,7 @@ bool DiskImagePro::readSector(quint16 sector, QByteArray &data)
     {
         int dupnum = count[sector];
 
-        qDebug() << "!e" << tr("Duplicate sector: %1 dupnum: %2").arg(sector).arg(dupnum);
+        qDebug().noquote() << "!e" << tr("Duplicate sector: %1 dupnum: %2").arg(sector).arg(dupnum);
 
         count[sector] = (count[sector]+1) % ((quint8)header[5]+1);
         if (dupnum != 0)  {
@@ -134,7 +134,7 @@ bool DiskImagePro::readSector(quint16 sector, QByteArray &data)
     wd1772status = header[1];
     if (wd1772status != 0xff)
     {
-        qDebug() << "!e" << tr("Bad sector");
+        qDebug().noquote() << "!e" << tr("Bad sector");
         return false;
     }
     
