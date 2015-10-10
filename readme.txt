@@ -4,7 +4,7 @@ AspeQt, Atari Serial Peripheral Emulator for Android
 In this port I'm using slightly modified and absolutely great 
 usb-serial-for-android driver:
 
-https://github.com/mik3y/usb-serial-for-android 
+https://github.com/greblus/usb-serial-for-android
 
 This branch works best with my KitKat phone and Jellybean tablet 
 (both PL2303 and FTDI chips are supported):
@@ -12,10 +12,10 @@ This branch works best with my KitKat phone and Jellybean tablet
 https://github.com/greblus/aspeqt/raw/android/android/apk/aspeqt.apk
 
 * I've added an initial implementation of software command frame
-  detection which should work with anything @19200bps. 
+  detection which should work with anything @19200bps and is also
+  behaving very nicely with Pokey divisor set to 6. 
 
-* For me SOFT mode works best with Pokey divisor set to 6. And by _the best_
-  I mean really, it's fast!
+* Try it also with "use high speed executable loader" option turned on ;)
 
 SOFT command frame detection is now set as default method when AspeQt is 
 started first time. 
@@ -26,8 +26,6 @@ https://github.com/greblus/aspeqt/tree/ftd2xx.
 What doesn't work yet?
 ----------------------
 
-- Xex file loading in SOFT command frame detection (will fix some 
-  time soon).
 - Loading atr files stalls occassionally in DSR handshaking mode.
   Haven't noticed it in SOFT mode. Hopefully Will fix it soon.
 
