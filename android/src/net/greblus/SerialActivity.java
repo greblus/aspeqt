@@ -464,17 +464,14 @@ public class SerialActivity extends QtActivity
         if (got != expected)
             return 1;
 
-        int ccom = cmd[1];
+        int ccom = (byte) cmd[1] & 0xff;
 
-        if (ccom < 0x21)
-            return 1;
-
-        int cdev = cmd[0];
+        int cdev = (byte) cmd[0] & 0xff;
         int cid = cmd[0] & 0xf0;
 
         if ((cid != 0x20) && (cid != 0x30) && (cid != 0x40) && (cid != 0x50) &&
             (cid != 0x60) && (cid != 0xf0))
-            return 1;
+             return 1;
 
         return 0;
     }
