@@ -122,7 +122,7 @@ MainWindow::MainWindow(QWidget *parent)
     logMutex = new QMutex();
     connect(this, SIGNAL(logMessage(int,QString)), this, SLOT(uiMessage(int,QString)), Qt::QueuedConnection);
     qInstallMessageHandler(logMessageOutput);
-    qDebug().noquote() << "!d" << tr("AspeQt started at %1.").arg(QDateTime::currentDateTime().toString());
+    qDebug() << "!d" << tr("AspeQt started at %1.").arg(QDateTime::currentDateTime().toString());
 
     /* Remove old temporaries */
     QDir tempDir = QDir::temp();
@@ -345,7 +345,7 @@ MainWindow::~MainWindow()
 
     delete ui;
 
-    qDebug().noquote() << "!d" << tr("AspeQt stopped at %1.").arg(QDateTime::currentDateTime().toString());
+    qDebug() << "!d" << tr("AspeQt stopped at %1.").arg(QDateTime::currentDateTime().toString());
     qInstallMessageHandler(0);
     delete logMutex;
     delete logFile;
@@ -445,7 +445,7 @@ void MainWindow::dropEvent(QDropEvent *event)
 
         aspeqtSettings->swapImages(slot, source);
 
-        qDebug().noquote() << "!n" << tr("Swapped disk %1 with disk %2.").arg(slot + 1).arg(source + 1);
+        qDebug() << "!n" << tr("Swapped disk %1 with disk %2.").arg(slot + 1).arg(source + 1);
 
         return;
     }
@@ -590,7 +590,7 @@ void MainWindow::show()
                 ui->actionOptions->trigger();
             }
         }
-        qDebug().noquote() << "!d" << "Starting emulation";
+        qDebug() << "!d" << "Starting emulation";
 
         ui->actionStartEmulation->trigger();
     }
@@ -762,7 +762,7 @@ void MainWindow::on_actionPrinterEmulation_triggered()
         prtOnOffLabel->setToolTip(tr("Start printer emulation"));
         prtOnOffLabel->setStatusTip(prtOnOffLabel->toolTip());
         g_printerEmu = false;
-        qWarning() << "!i" << tr("Printer emulation stopped.");
+        qWarning().noquote() << "!i" << tr("Printer emulation stopped.");
     } else {
         ui->actionPrinterEmulation->setText(QApplication::translate("MainWindow", "Stop printer emulation", 0));
         ui->actionPrinterEmulation->setStatusTip(QApplication::translate("MainWindow", "Stop printer emulation", 0));
@@ -771,7 +771,7 @@ void MainWindow::on_actionPrinterEmulation_triggered()
         prtOnOffLabel->setToolTip(tr("Stop printer emulation"));
         prtOnOffLabel->setStatusTip(prtOnOffLabel->toolTip());
         g_printerEmu = true;
-        qWarning() << "!i" << tr("Printer emulation started.");
+        qWarning().noquote() << "!i" << tr("Printer emulation started.");
     }
 }
 
@@ -807,7 +807,7 @@ void MainWindow::sioFinished()
     onOffLabel->setStatusTip(ui->actionStartEmulation->statusTip());
     speedLabel->hide();
     speedLabel->clear();
-    qWarning() << "!i" << tr("Emulation stopped.");
+    qWarning().noquote() << "!i" << tr("Emulation stopped.");
 }
 
 void MainWindow::sioStatusChanged(QString status)
@@ -1108,7 +1108,7 @@ bool MainWindow::ejectImage(int no, bool ask)
     aspeqtSettings->unmountImage(no);
     updateRecentFileActions();
     deviceStatusChanged(no + 0x31);
-    qDebug().noquote() << "!n" << tr("Unmounted disk %1").arg(no + 1);
+    qDebug() << "!n" << tr("Unmounted disk %1").arg(no + 1);
     return true;
 }
 
@@ -1264,7 +1264,7 @@ void MainWindow::mountFile(int no, const QString &fileName, bool /*prot*/)
             filenamelabel = fileName.right(fileName.size() - i);
         }
 
-        qDebug().noquote() << "!n" << tr("[%1] Mounted '%2' as '%3'.")
+        qDebug() << "!n" << tr("[%1] Mounted '%2' as '%3'.")
                 .arg(disk->deviceName())
                 .arg(filenamelabel)
                 .arg(disk->description());
@@ -1487,49 +1487,49 @@ void MainWindow::autoSaveDisk(int no)
     switch (no) {
         case 0 :
             if (ui->autoSave_1->isChecked()) {
-                qDebug().noquote() << "!n" << tr("[Disk 1] Auto-commit ON.");
+                qDebug() << "!n" << tr("[Disk 1] Auto-commit ON.");
             } else {
-                qDebug().noquote() << "!n" << tr("[Disk 1] Auto-commit OFF.");
+                qDebug() << "!n" << tr("[Disk 1] Auto-commit OFF.");
               }
             break;
 
         case 1 :
             if (ui->autoSave_2->isChecked()) {
-                qDebug().noquote() << "!n" << tr("[Disk 2] Auto-commit ON.");
+                qDebug() << "!n" << tr("[Disk 2] Auto-commit ON.");
             } else {
-                qDebug().noquote() << "!n" << tr("[Disk 2] Auto-commit OFF.");
+                qDebug() << "!n" << tr("[Disk 2] Auto-commit OFF.");
               }
             break;
 
         case 2 :
             if (ui->autoSave_3->isChecked()) {
-                qDebug().noquote() << "!n" << tr("[Disk 3] Auto-commit ON.");
+                qDebug() << "!n" << tr("[Disk 3] Auto-commit ON.");
             } else {
-                qDebug().noquote() << "!n" << tr("[Disk 3] Auto-commit OFF.");
+                qDebug() << "!n" << tr("[Disk 3] Auto-commit OFF.");
               }
             break;
 
         case 3 :
             if (ui->autoSave_4->isChecked()) {
-                qDebug().noquote() << "!n" << tr("[Disk 4] Auto-commit ON.");
+                qDebug() << "!n" << tr("[Disk 4] Auto-commit ON.");
             } else {
-                qDebug().noquote() << "!n" << tr("[Disk 4] Auto-commit OFF.");
+                qDebug() << "!n" << tr("[Disk 4] Auto-commit OFF.");
               }
             break;
 
         case 4 :
             if (ui->autoSave_5->isChecked()) {
-                qDebug().noquote() << "!n" << tr("[Disk 5] Auto-commit ON.");
+                qDebug() << "!n" << tr("[Disk 5] Auto-commit ON.");
             } else {
-                qDebug().noquote() << "!n" << tr("[Disk 5] Auto-commit OFF.");
+                qDebug() << "!n" << tr("[Disk 5] Auto-commit OFF.");
               }
             break;
 
         case 5 :
             if (ui->autoSave_6->isChecked()) {
-                qDebug().noquote() << "!n" << tr("[Disk 6] Auto-commit ON.");
+                qDebug() << "!n" << tr("[Disk 6] Auto-commit ON.");
             } else {
-                qDebug().noquote() << "!n" << tr("[Disk 6] Auto-commit OFF.");
+                qDebug() << "!n" << tr("[Disk 6] Auto-commit OFF.");
               }
             break;
     }
@@ -1797,7 +1797,7 @@ void MainWindow::on_actionNewImage_triggered()
 
     sio->installDevice(0x31 + no, disk);
     deviceStatusChanged(0x31 + no);
-    qDebug().noquote() << "!n" << tr("[%1] Mounted '%2' as '%3'.")
+    qDebug() << "!n" << tr("[%1] Mounted '%2' as '%3'.")
             .arg(disk->deviceName())
             .arg(disk->originalFileName())
             .arg(disk->description());

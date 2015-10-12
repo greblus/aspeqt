@@ -104,7 +104,7 @@ void FolderImage::buildDirectory()
             if (l == 1000000) {baseName = name.left(1);}
             if (l == 10000000) {baseName = "";}
             if (l == 100000000) {
-                qWarning() << "!w" << tr("Cannot mirror '%1' in '%2': No suitable Atari name can be found.")
+                qWarning().noquote() << "!w" << tr("Cannot mirror '%1' in '%2': No suitable Atari name can be found.")
                                .arg(info.fileName())
                                .arg(dir.path());
             }
@@ -125,7 +125,7 @@ void FolderImage::buildDirectory()
     }
 
     if (i < infos.count()) {
-        qWarning() << "!w" << tr("Cannot mirror %1 of %2 files in '%3': Atari directory is full.")
+        qWarning().noquote() << "!w" << tr("Cannot mirror %1 of %2 files in '%3': Atari directory is full.")
                        .arg(infos.count() - i)
                        .arg(infos.count())
                        .arg(dir.path());

@@ -58,7 +58,7 @@ void Printer::handleCommand(quint8 command, quint16 aux)
                     break;
                 default:
                     sio->port()->writeCommandNak();
-                    qWarning() << "!w" << tr("[%1] command: $%2, aux: $%3 NAKed.")
+                    qWarning().noquote() << "!w" << tr("[%1] command: $%2, aux: $%3 NAKed.")
                                    .arg(deviceName())
                                    .arg(command, 2, 16, QChar('0'))
                                    .arg(aux, 4, 16, QChar('0'));
@@ -95,7 +95,7 @@ void Printer::handleCommand(quint8 command, quint16 aux)
             }
         default:
             sio->port()->writeCommandNak();
-            qWarning() << "!w" << tr("[%1] command: $%2, aux: $%3 NAKed.")
+            qWarning().noquote() << "!w" << tr("[%1] command: $%2, aux: $%3 NAKed.")
                            .arg(deviceName())
                            .arg(command, 2, 16, QChar('0'))
                            .arg(aux, 4, 16, QChar('0'));
@@ -414,7 +414,7 @@ void AspeCl::handleCommand(quint8 command, quint16 aux)
       default :
       // Invalid Command
          sio->port()->writeCommandNak();
-         qWarning() << "!e" << tr("[%1] command: $%2, aux: $%3 NAKed.")
+         qWarning().noquote() << "!e" << tr("[%1] command: $%2, aux: $%3 NAKed.")
                        .arg(deviceName())
                        .arg(command, 2, 16, QChar('0'))
                        .arg(aux, 4, 16, QChar('0'));

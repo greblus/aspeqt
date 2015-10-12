@@ -111,7 +111,7 @@ bool StandardSerialPortBackend::open()
         m = "DSR";
     }
     /* Notify the user that emulation is started */
-    qWarning() << "!i" << tr("Emulation started through standard serial port backend on '%1' with %2 handshaking.")
+    qWarning().noquote() << "!i" << tr("Emulation started through standard serial port backend on '%1' with %2 handshaking.")
                   .arg(aspeqtSettings->serialPortName())
                   .arg(m);
 
@@ -246,7 +246,7 @@ bool StandardSerialPortBackend::setSpeed(int speed)
     }
 
     emit statusChanged(tr("%1 bits/sec").arg(speed));
-    qWarning() << "!i" << tr("Serial port speed set to %1.").arg(speed);
+    qWarning().noquote() << "!i" << tr("Serial port speed set to %1.").arg(speed);
     mSpeed = speed;
     return true;
 }
@@ -302,7 +302,7 @@ bool StandardSerialPortBackend::setSpeed(int speed)
         return false;
     }
    emit statusChanged(tr("%1 bits/sec").arg(speed));
-    qWarning() << "!i" << tr("Serial port speed set to %1.").arg(speed);
+    qWarning().noquote() << "!i" << tr("Serial port speed set to %1.").arg(speed);
     mSpeed = speed;
     return true;
 }
@@ -407,7 +407,7 @@ QByteArray StandardSerialPortBackend::readDataFrame(uint size, bool verbose)
         return data;
     } else {
         if (verbose) {
-            qWarning() << "!w" << tr("Data frame checksum error, expected: %1, got: %2. (%3)")
+            qWarning().noquote() << "!w" << tr("Data frame checksum error, expected: %1, got: %2. (%3)")
                            .arg(expected)
                            .arg(got)
                            .arg(QString(data.toHex()));
@@ -661,7 +661,7 @@ bool AtariSioBackend::open()
     }
 
     /* Notify the user that emulation is started */
-    qWarning() << "!i" << tr("Emulation started through AtariSIO backend on '%1' with %2 handshaking.")
+    qWarning().noquote() << "!i" << tr("Emulation started through AtariSIO backend on '%1' with %2 handshaking.")
                   .arg(aspeqtSettings->atariSioDriverName())
                   .arg(m);
 
@@ -699,7 +699,7 @@ bool AtariSioBackend::setSpeed(int speed)
         return false;
     } else {
         emit statusChanged(tr("%1 bits/sec").arg(speed));
-        qWarning() << "!i" << tr("Serial port speed set to %1.").arg(speed);
+        qWarning().noquote() << "!i" << tr("Serial port speed set to %1.").arg(speed);
         return true;
     }
 }
@@ -745,7 +745,7 @@ QByteArray AtariSioBackend::readCommandFrame()
         int sp = ioctl(mHandle, ATARISIO_IOC_GET_BAUDRATE);
         if (sp >= 0 && mSpeed != sp) {
             emit statusChanged(tr("%1 bits/sec").arg(sp));
-            qWarning() << "!i" << tr("Serial port speed set to %1.").arg(sp);
+            qWarning().noquote() << "!i" << tr("Serial port speed set to %1.").arg(sp);
             mSpeed = sp;
         }
 

@@ -116,7 +116,7 @@ void SioWorker::run()
                 devices[no]->handleCommand(command, aux);
                 devices[no]->unlock();
             } else {
-                qWarning() << "!w" << tr("[%1] command: $%2, aux: $%3 ignored because the image explorer is open.")
+                qWarning().noquote() << "!w" << tr("[%1] command: $%2, aux: $%3 ignored because the image explorer is open.")
                                .arg(deviceName(no))
                                .arg(command, 2, 16, QChar('0'))
                                .arg(aux, 4, 16, QChar('0'));

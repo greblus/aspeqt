@@ -14,7 +14,7 @@ void AutoBoot::passToOldHandler(quint8 command, quint16 aux)
         oldDevice->handleCommand(command, aux);
     } else {
         sio->port()->writeCommandNak();
-        qWarning() << "!w" << tr("[%1] command: $%2, aux: $%3 NAKed.")
+        qWarning().noquote() << "!w" << tr("[%1] command: $%2, aux: $%3 NAKed.")
                        .arg(deviceName())
                        .arg(command, 2, 16, QChar('0'))
                        .arg(aux, 4, 16, QChar('0'));
@@ -226,7 +226,7 @@ bool AutoBoot::readExecutable(const QString &fileName)
         qDebug().noquote() << "!d" << "Exe segment" << start << ".." << end;
 
         if (end < start) {
-            qWarning() << tr("The executable '%1' is broken: The end address is less than the start address.")
+            qWarning().noquote() << tr("The executable '%1' is broken: The end address is less than the start address.")
                           .arg(fileName);
             break;
         }
@@ -236,11 +236,11 @@ bool AutoBoot::readExecutable(const QString &fileName)
         data = file.read(size);
         if (data.size() < size) {
             if (file.atEnd()) {
-                qWarning() << "!w" << tr("The executable '%1' is broken: Unexpected end of file, needed %2 more.")
+                qWarning().noquote() << "!w" << tr("The executable '%1' is broken: Unexpected end of file, needed %2 more.")
                                .arg(fileName)
                                .arg(size - data.size());
             } else {
-                qWarning() << "!w" << tr("Cannot read from file '%1': %2.")
+                qWarning().noquote() << "!w" << tr("Cannot read from file '%1': %2.")
                                .arg(fileName)
                                .arg(file.errorString());
                 return false;
@@ -265,7 +265,7 @@ bool AutoBoot::readExecutable(const QString &fileName)
         data = file.read(2);
         if (data.size() < 2) {
             if (file.atEnd()) {
-                qWarning() << "!w" << tr("The executable '%1' is broken: Unexpected end of file, needed %2 more.")
+                qWarning().noquote() << "!w" << tr("The executable '%1' is broken: Unexpected end of file, needed %2 more.")
                                .arg(fileName)
                                .arg(2 - data.size());
                 break;
@@ -283,7 +283,7 @@ bool AutoBoot::readExecutable(const QString &fileName)
             data = file.read(2);
             if (data.size() < 2) {
                 if (file.atEnd()) {
-                    qWarning() << "!w" << tr("The executable '%1' is broken: Unexpected end of file, needed %2 more.")
+                    qWarning().noquote() << "!w" << tr("The executable '%1' is broken: Unexpected end of file, needed %2 more.")
                                    .arg(fileName)
                                    .arg(2 - data.size());
                     break;
