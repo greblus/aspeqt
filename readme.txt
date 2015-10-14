@@ -6,14 +6,18 @@ usb-serial-for-android driver:
 
 https://github.com/greblus/usb-serial-for-android
 
-This branch works best with my KitKat phone and Jellybean tablet 
-(both PL2303 and FTDI chips are supported):
+This software was tested and works for me on KitKat and JellyBean. 
+
+I've decided to remove support for Prolific PL2303, therefore 
+converters based on FT232 chips are not only recommended, but required 
+to use this software.
 
 https://github.com/greblus/aspeqt/raw/android/android/apk/aspeqt.apk
 
 * I've added an initial implementation of software command frame
   detection which should work with anything @19200bps and is also
-  behaving very nicely with Pokey divisor set to 6. 
+  behaving very nicely with non-standard speeds and Pokey divisor 
+  set eg. to 6. 
 
 * Try it also with "use high speed executable loader" option turned on ;)
 
@@ -38,15 +42,10 @@ What's necessary to use it:
 
 2. OTG cable.
 
-3. Sio2PC-USB. I recommend this one made by Lotharek:
+3. Sio2PC-USB converter. I recommend this one made by Lotharek:
 
    http://lotharek.pl/product.php?pid=98
 
-   it has DSR line connected and for Prolific tests I have a converter which I made 
-   by myself (with RI line connected) using PL2303 according to this diagram:
-
-   http://blog.greblus.net/2012/02/19/sio2pc-minimalistycznie/
-   
 4. I've tested it on Lark FreeMe 8" Android 4.2.2 tablet and Kazam 345 4.5"
    phone with KitKat 4.4 (should work on anything from 3.1 up)
 
@@ -55,15 +54,14 @@ What's necessary to use it:
 6. No drivers necessary (usb-serial-for-android java driver is in the package).
 
 7. After you connect the SIO2PC-USB to your Android device it'll automatically
-   launch AspeQt. If you have SIO2PC-USB from Lotharek, select DSR flow control
-   method and set speed to 19200bps first, to see if it works at all. Feel free to 
-   experiment with higher speeds and Pokey divisors (HiSpeed OS, SDX or Qmeg 
-   is required for fast SIO routines). 
+   launch AspeQt. If you have SIO2PC-USB from Lotharek, select SOFT or DSR flow 
+   control method and set speed to 19200bps first, to see if it works at all. 
+   Feel free to experiment with higher speeds and Pokey divisors (HiSpeed OS, 
+   SDX or Qmeg is required for fast SIO routines). 
 
    Speed greatly depends on your CPU possibilities and I/O performance:
    https://www.youtube.com/watch?v=-w4mppTym1I
 
-   If you have PL2303 chip in your Sio2PC-USB set speed to 19200bps. 
 
 Videos of AspeQt on Android:
 ============================
@@ -86,11 +84,10 @@ Android port of aspeqt-1.0.0.Preview_6 by Wiktor Grebla.
 You can freely copy, use, modify and distribute it under the GPL 2.0
 license. Please see license.txt for details.
 
-Qt libraries: Copyright 2009 Nokia Corporation and/or its subsidiary(-ies).
-Used in this package under LGPL 2.0 license.
+Qt libraries: Copyright by The Qt Company. Used in this package under LGPL 2.0 license.
 
-usb-serial-for-Android with support for FTDI and PL2303 chips is 
-based on this project: https://github.com/mik3y/usb-serial-for-android
+usb-serial-for-Android with support for FTDI chips is based on this project: 
+https://github.com/mik3y/usb-serial-for-android
 
 Silk Icons: Copyright by Mark James (famfamfam.com).
 Used in this package under Creative Commons Attribution 3.0 license.

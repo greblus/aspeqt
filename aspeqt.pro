@@ -136,14 +136,14 @@ DISTFILES += \
     android/src/com/hoho/android/usbserial/driver/CommonUsbSerialPort.java \
     android/src/com/hoho/android/usbserial/driver/FtdiSerialDriver.java \
     android/src/com/hoho/android/usbserial/driver/ProbeTable.java \
-    android/src/com/hoho/android/usbserial/driver/ProlificSerialDriver.java \
     android/src/com/hoho/android/usbserial/driver/UsbId.java \
     android/src/com/hoho/android/usbserial/driver/UsbSerialDriver.java \
     android/src/com/hoho/android/usbserial/driver/UsbSerialPort.java \
     android/src/com/hoho/android/usbserial/driver/UsbSerialProber.java \
     android/src/com/hoho/android/usbserial/driver/UsbSerialRuntimeException.java \
     android/src/net/greblus/SerialActivity.java \
-    android/src/net/greblus/SimpleFileDialog.java
+    android/src/net/greblus/SimpleFileDialog.java \
+    android/res/xml/device_filter.xml
 
 
 

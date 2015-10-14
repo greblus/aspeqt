@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE QtCreatorProject>
-<!-- Written by QtCreator 3.4.1, 2015-10-09T15:52:05. -->
+<!-- Written by QtCreator 3.4.1, 2015-10-15T00:15:17. -->
 <qtcreator>
  <data>
   <variable>EnvironmentId</variable>
@@ -249,7 +249,7 @@
   <valuemap type="QVariantMap">
    <value type="QString" key="ProjectExplorer.ProjectConfiguration.DefaultDisplayName">Android dla armeabi-v7a (GCC 4.9, Qt 5.4.2)</value>
    <value type="QString" key="ProjectExplorer.ProjectConfiguration.DisplayName">Android dla armeabi-v7a (GCC 4.9, Qt 5.4.2)</value>
-   <value type="QString" key="ProjectExplorer.ProjectConfiguration.Id">{2664bd10-22de-4e91-bf3c-777a4176d8e7}</value>
+   <value type="QString" key="ProjectExplorer.ProjectConfiguration.Id">{b83f96a0-54cd-4368-895f-8b434a6fd8e4}</value>
    <value type="int" key="ProjectExplorer.Target.ActiveBuildConfiguration">1</value>
    <value type="int" key="ProjectExplorer.Target.ActiveDeployConfiguration">0</value>
    <value type="int" key="ProjectExplorer.Target.ActiveRunConfiguration">0</value>
@@ -288,7 +288,7 @@
       <value type="QString" key="ProjectExplorer.ProjectConfiguration.Id">Qt4ProjectManager.AndroidPackageInstallationStep</value>
      </valuemap>
      <valuemap type="QVariantMap" key="ProjectExplorer.BuildStepList.Step.3">
-      <value type="QString" key="BuildTargetSdk">android-19</value>
+      <value type="QString" key="BuildTargetSdk">android-22</value>
       <value type="QString" key="KeystoreLocation"></value>
       <value type="bool" key="ProjectExplorer.BuildStep.Enabled">true</value>
       <value type="QString" key="ProjectExplorer.ProjectConfiguration.DefaultDisplayName">Build Android APK</value>
@@ -367,7 +367,7 @@
      </valuemap>
      <valuemap type="QVariantMap" key="ProjectExplorer.BuildStepList.Step.3">
       <value type="QString" key="BuildTargetSdk">android-22</value>
-      <value type="QString" key="KeystoreLocation"></value>
+      <value type="QString" key="KeystoreLocation">E:/android_release.keystore</value>
       <value type="bool" key="ProjectExplorer.BuildStep.Enabled">true</value>
       <value type="QString" key="ProjectExplorer.ProjectConfiguration.DefaultDisplayName">Build Android APK</value>
       <value type="QString" key="ProjectExplorer.ProjectConfiguration.DisplayName"></value>
@@ -431,7 +431,7 @@
    </valuemap>
    <value type="int" key="ProjectExplorer.Target.DeployConfigurationCount">1</value>
    <valuemap type="QVariantMap" key="ProjectExplorer.Target.PluginSettings">
-    <value type="QString" key="AndroidDeviceSerialNumber">W9TLJRLJAL</value>
+    <value type="QString" key="AndroidDeviceSerialNumber">PVSCTOT4SOOFPNUG</value>
    </valuemap>
    <valuemap type="QVariantMap" key="ProjectExplorer.Target.RunConfiguration.0">
     <valuelist type="QVariantList" key="Analyzer.Valgrind.AddedSuppressionFiles"/>
