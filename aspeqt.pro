@@ -3,7 +3,7 @@
 # Last Update: Apr 10, 2014
 # -------------------------------------------------
 #CONFIG(release, debug|release):DEFINES += QT_NO_DEBUG_OUTPUT
-DEFINES += VERSION=\\\"1.0-rc1\\\"
+DEFINES += VERSION=\\\"1.0\\\"
 TARGET = AspeQt
 TEMPLATE = app
 CONFIG += qt

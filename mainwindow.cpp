@@ -178,6 +178,8 @@ MainWindow::MainWindow(QWidget *parent)
     if (ssize < 5) ui->textEdit->setVisible(false);
         else ui->verticalSpacer->changeSize(0, 0, QSizePolicy::Fixed, QSizePolicy::Fixed);
 
+    ui->buttonMountDisk_1->setFocus();
+
      /* Parse command line arguments:
       arg(1): session file (xxxxxxxx.aspeqt)   */
 
