@@ -197,11 +197,9 @@ QByteArray StandardSerialPortBackend::readCommandFrame()
 {
     QByteArray data;
 
-    int status = -1;
     int retries = 0, result = 0;
 
     do {
-        data.clear();
         if (mMethod == SOFTWARE_HANDSHAKE)
             result = QAndroidJniObject::callStaticMethod<jint>("net/greblus/SerialActivity", "getSWCommandFrame", "()I");
         else
@@ -212,9 +210,6 @@ QByteArray StandardSerialPortBackend::readCommandFrame()
                 data.resize(4);
                 for (int i=0; i<4; i++)
                     data[i] = (bbuf[i] & 0xff);
-                break;
-            case 2:
-                data.clear();
                 break;
             default:
                 data.clear();                

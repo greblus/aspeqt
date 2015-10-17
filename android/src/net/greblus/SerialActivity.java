@@ -314,12 +314,13 @@ public class SerialActivity extends QtActivity
         int expected = 0, sync_attempts = 0, got = 1, total_retries = 0;
         bbuf.position(0);
 
+        mainloop:
         while (true) {
             try {
                 int ret = 0, total = 0; total_retries = 0;
                 do {                    
                     if (total_retries > 2) return 2;
-                     ret = sPort.sread(rb, 5, 1000);
+                     ret = sPort.sread(rb, 5-total, 1000);
                      if (ret > 0)
                         total += ret;
                      else
@@ -342,10 +343,8 @@ public class SerialActivity extends QtActivity
                            } catch (IOException e) {};
                         } while (ret < 1);
                         rb[4] = t[0];
-                } else {
-                    sync_attempts = 0;
-                    continue;
-                }
+                } else
+                    continue mainloop;
             } else {
                 if (debug) Log.i("USB", "No desync");
 
@@ -356,7 +355,7 @@ public class SerialActivity extends QtActivity
                        String data = "";
                        for (int i=0; i<5; i++)
                            data += Integer.toString(rb[i] & 0xff) + " ";
-                       Log.i("USB", "Read 5 bytes, looking for Command Frame: " + data);
+                       Log.i("USB", "Command Frame: " + data);
                    }
                 break;
             }
