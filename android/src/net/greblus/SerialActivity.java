@@ -313,22 +313,22 @@ public class SerialActivity extends QtActivity
     public static int getSWCommandFrame() {
         int expected = 0, sync_attempts = 0, got = 1, total_retries = 0;
         bbuf.position(0);
-
         mainloop:
         while (true) {
-            try {
-                int ret = 0, total = 0; total_retries = 0;
-                do {                    
-                    if (total_retries > 2) return 2;
-                     ret = sPort.sread(rb, 5-total, 1000);
-                     if (ret > 0)
-                        total += ret;
-                     else
-                        total_retries++;                    
-                } while (total<5);
-                expected = rb[4] & 0xff;
-                got = sioChecksum(rb, 4) & 0xff;
-            } catch (IOException e) {};
+            int ret = 0, total = 0; total_retries = 0;
+            do {
+                if (total_retries > 2) return 2;
+                try {
+                    ret = sPort.sread(rb, 5-total, 1000); }
+                catch (IOException e) {};
+                if (ret > 0)
+                    total += ret;
+                else
+                    total_retries++;
+            } while (total<5);
+
+            expected = rb[4] & 0xff;
+            got = sioChecksum(rb, 4) & 0xff;
 
             if (checkDesync(rb, got, expected) > 0) {
                 Log.i("USB", "Apparent desync");                
@@ -336,11 +336,11 @@ public class SerialActivity extends QtActivity
                         sync_attempts++;
                         for (int i = 0; i < 4; i++)
                                 rb[i] = rb[i+1];
-                        int ret = 0;
+                        ret = 0;
                         do {
-                             try {
-                                ret = sPort.sread(t, 1, 1000);
-                           } catch (IOException e) {};
+                            try {
+                                ret = sPort.sread(t, 1, 1000); }
+                            catch (IOException e) {};
                         } while (ret < 1);
                         rb[4] = t[0];
                 } else
@@ -360,9 +360,7 @@ public class SerialActivity extends QtActivity
                 break;
             }
          };
-
          if (debug) Log.i("USB", "got=" + got + " expected= " + expected);
-
          return 1;
     }
 
