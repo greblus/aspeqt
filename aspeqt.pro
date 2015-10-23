@@ -11,7 +11,6 @@ QT += core gui widgets printsupport
 CONFIG += mobility
 CONFIG += static
 MOBILITY = bearer
-INCLUDEPATH += $$[QT_INSTALL_HEADERS]/QtZlib
 SOURCES += main.cpp \
     mainwindow.cpp \
     sioworker.cpp \
@@ -34,7 +33,6 @@ SOURCES += main.cpp \
     bootoptionsdialog.cpp \
     logdisplaydialog.cpp
 win32:LIBS += -lwinmm
-unix:LIBS += -lz
 win32:SOURCES += serialport-win32.cpp
 unix:
 {
