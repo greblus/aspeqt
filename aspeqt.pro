@@ -32,7 +32,7 @@ SOURCES += main.cpp \
     docdisplaywindow.cpp \
     bootoptionsdialog.cpp \
     logdisplaydialog.cpp
-win32:LIBS += -lwinmm
+win32:LIBS += -lwinmm -lz
 win32:SOURCES += serialport-win32.cpp
 unix:
 {
