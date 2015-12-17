@@ -68,6 +68,13 @@ public class SerialActivity extends QtActivity
                 sendBufAddr(bbuf);
         }
 
+       @Override
+       public void onPause() {
+           m_chosen = "Cancelled";
+           super.onPause();
+        }
+
+
         public static void runFileChooser(int filter, int action) {
             m_chosen = "None";
             m_filter = filter;
