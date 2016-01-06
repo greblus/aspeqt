@@ -197,6 +197,9 @@
            <height>1</height>
           </size>
          </property>
+         <property name="focusPolicy">
+          <enum>Qt::NoFocus</enum>
+         </property>
          <property name="iconSize">
           <size>
            <width>40</width>
@@ -234,6 +237,9 @@
            <height>1</height>
           </size>
          </property>
+         <property name="focusPolicy">
+          <enum>Qt::NoFocus</enum>
+         </property>
          <property name="iconSize">
           <size>
            <width>40</width>
@@ -270,6 +276,9 @@
            <width>1</width>
            <height>1</height>
           </size>
+         </property>
+         <property name="focusPolicy">
+          <enum>Qt::NoFocus</enum>
          </property>
          <property name="iconSize">
           <size>
@@ -310,6 +319,9 @@
            <width>1</width>
            <height>1</height>
           </size>
+         </property>
+         <property name="focusPolicy">
+          <enum>Qt::NoFocus</enum>
          </property>
          <property name="text">
           <string/>
@@ -354,6 +366,9 @@
            <height>1</height>
           </size>
          </property>
+         <property name="focusPolicy">
+          <enum>Qt::NoFocus</enum>
+         </property>
          <property name="iconSize">
           <size>
            <width>40</width>
@@ -384,7 +399,7 @@
            <property name="sizeHint" stdset="0">
             <size>
              <width>600</width>
-             <height>20</height>
+             <height>0</height>
             </size>
            </property>
           </spacer>
@@ -530,6 +545,9 @@
            <width>1</width>
            <height>1</height>
           </size>
+         </property>
+         <property name="focusPolicy">
+          <enum>Qt::NoFocus</enum>
          </property>
          <property name="iconSize">
           <size>
@@ -740,6 +758,9 @@
            <height>1</height>
           </size>
          </property>
+         <property name="focusPolicy">
+          <enum>Qt::NoFocus</enum>
+         </property>
          <property name="iconSize">
           <size>
            <width>40</width>
@@ -777,6 +798,9 @@
            <height>1</height>
           </size>
          </property>
+         <property name="focusPolicy">
+          <enum>Qt::NoFocus</enum>
+         </property>
          <property name="iconSize">
           <size>
            <width>40</width>
@@ -813,6 +837,9 @@
            <width>1</width>
            <height>1</height>
           </size>
+         </property>
+         <property name="focusPolicy">
+          <enum>Qt::NoFocus</enum>
          </property>
          <property name="iconSize">
           <size>
@@ -853,6 +880,9 @@
            <width>1</width>
            <height>1</height>
           </size>
+         </property>
+         <property name="focusPolicy">
+          <enum>Qt::NoFocus</enum>
          </property>
          <property name="text">
           <string/>
@@ -897,6 +927,9 @@
            <height>1</height>
           </size>
          </property>
+         <property name="focusPolicy">
+          <enum>Qt::NoFocus</enum>
+         </property>
          <property name="iconSize">
           <size>
            <width>40</width>
@@ -927,7 +960,7 @@
            <property name="sizeHint" stdset="0">
             <size>
              <width>600</width>
-             <height>20</height>
+             <height>0</height>
             </size>
            </property>
           </spacer>
@@ -1073,6 +1106,9 @@
            <width>1</width>
            <height>1</height>
           </size>
+         </property>
+         <property name="focusPolicy">
+          <enum>Qt::NoFocus</enum>
          </property>
          <property name="iconSize">
           <size>
@@ -1243,6 +1279,9 @@
            <height>1</height>
           </size>
          </property>
+         <property name="focusPolicy">
+          <enum>Qt::NoFocus</enum>
+         </property>
          <property name="iconSize">
           <size>
            <width>40</width>
@@ -1280,6 +1319,9 @@
            <height>1</height>
           </size>
          </property>
+         <property name="focusPolicy">
+          <enum>Qt::NoFocus</enum>
+         </property>
          <property name="iconSize">
           <size>
            <width>40</width>
@@ -1316,6 +1358,9 @@
            <width>1</width>
            <height>1</height>
           </size>
+         </property>
+         <property name="focusPolicy">
+          <enum>Qt::NoFocus</enum>
          </property>
          <property name="iconSize">
           <size>
@@ -1356,6 +1401,9 @@
            <width>1</width>
            <height>1</height>
           </size>
+         </property>
+         <property name="focusPolicy">
+          <enum>Qt::NoFocus</enum>
          </property>
          <property name="text">
           <string/>
@@ -1400,6 +1448,9 @@
            <height>1</height>
           </size>
          </property>
+         <property name="focusPolicy">
+          <enum>Qt::NoFocus</enum>
+         </property>
          <property name="iconSize">
           <size>
            <width>40</width>
@@ -1430,7 +1481,7 @@
            <property name="sizeHint" stdset="0">
             <size>
              <width>600</width>
-             <height>20</height>
+             <height>0</height>
             </size>
            </property>
           </spacer>
@@ -1576,6 +1627,9 @@
            <width>1</width>
            <height>1</height>
           </size>
+         </property>
+         <property name="focusPolicy">
+          <enum>Qt::NoFocus</enum>
          </property>
          <property name="iconSize">
           <size>
@@ -1775,6 +1829,9 @@
            <height>1</height>
           </size>
          </property>
+         <property name="focusPolicy">
+          <enum>Qt::NoFocus</enum>
+         </property>
          <property name="iconSize">
           <size>
            <width>40</width>
@@ -1812,6 +1869,9 @@
            <height>1</height>
           </size>
          </property>
+         <property name="focusPolicy">
+          <enum>Qt::NoFocus</enum>
+         </property>
          <property name="iconSize">
           <size>
            <width>40</width>
@@ -1848,6 +1908,9 @@
            <width>1</width>
            <height>1</height>
           </size>
+         </property>
+         <property name="focusPolicy">
+          <enum>Qt::NoFocus</enum>
          </property>
          <property name="iconSize">
           <size>
@@ -1888,6 +1951,9 @@
            <width>1</width>
            <height>1</height>
           </size>
+         </property>
+         <property name="focusPolicy">
+          <enum>Qt::NoFocus</enum>
          </property>
          <property name="text">
           <string/>
@@ -1932,6 +1998,9 @@
            <height>1</height>
           </size>
          </property>
+         <property name="focusPolicy">
+          <enum>Qt::NoFocus</enum>
+         </property>
          <property name="iconSize">
           <size>
            <width>40</width>
@@ -1965,7 +2034,7 @@
            <property name="sizeHint" stdset="0">
             <size>
              <width>600</width>
-             <height>20</height>
+             <height>0</height>
             </size>
            </property>
           </spacer>
@@ -2120,6 +2189,9 @@
            <width>1</width>
            <height>1</height>
           </size>
+         </property>
+         <property name="focusPolicy">
+          <enum>Qt::NoFocus</enum>
          </property>
          <property name="iconSize">
           <size>
@@ -2290,6 +2362,9 @@
            <height>1</height>
           </size>
          </property>
+         <property name="focusPolicy">
+          <enum>Qt::NoFocus</enum>
+         </property>
          <property name="iconSize">
           <size>
            <width>40</width>
@@ -2327,6 +2402,9 @@
            <height>1</height>
           </size>
          </property>
+         <property name="focusPolicy">
+          <enum>Qt::NoFocus</enum>
+         </property>
          <property name="iconSize">
           <size>
            <width>40</width>
@@ -2363,6 +2441,9 @@
            <width>1</width>
            <height>1</height>
           </size>
+         </property>
+         <property name="focusPolicy">
+          <enum>Qt::NoFocus</enum>
          </property>
          <property name="iconSize">
           <size>
@@ -2403,6 +2484,9 @@
            <width>1</width>
            <height>1</height>
           </size>
+         </property>
+         <property name="focusPolicy">
+          <enum>Qt::NoFocus</enum>
          </property>
          <property name="text">
           <string/>
@@ -2447,6 +2531,9 @@
            <height>1</height>
           </size>
          </property>
+         <property name="focusPolicy">
+          <enum>Qt::NoFocus</enum>
+         </property>
          <property name="iconSize">
           <size>
            <width>40</width>
@@ -2477,7 +2564,7 @@
            <property name="sizeHint" stdset="0">
             <size>
              <width>600</width>
-             <height>20</height>
+             <height>0</height>
             </size>
            </property>
           </spacer>
@@ -2632,6 +2719,9 @@
            <width>1</width>
            <height>1</height>
           </size>
+         </property>
+         <property name="focusPolicy">
+          <enum>Qt::NoFocus</enum>
          </property>
          <property name="iconSize">
           <size>
@@ -2826,6 +2916,9 @@
            <height>1</height>
           </size>
          </property>
+         <property name="focusPolicy">
+          <enum>Qt::NoFocus</enum>
+         </property>
          <property name="iconSize">
           <size>
            <width>40</width>
@@ -2863,6 +2956,9 @@
            <height>1</height>
           </size>
          </property>
+         <property name="focusPolicy">
+          <enum>Qt::NoFocus</enum>
+         </property>
          <property name="iconSize">
           <size>
            <width>40</width>
@@ -2899,6 +2995,9 @@
            <width>1</width>
            <height>1</height>
           </size>
+         </property>
+         <property name="focusPolicy">
+          <enum>Qt::NoFocus</enum>
          </property>
          <property name="iconSize">
           <size>
@@ -2939,6 +3038,9 @@
            <width>1</width>
            <height>1</height>
           </size>
+         </property>
+         <property name="focusPolicy">
+          <enum>Qt::NoFocus</enum>
          </property>
          <property name="toolTip">
           <string/>
@@ -2992,6 +3094,9 @@
            <height>1</height>
           </size>
          </property>
+         <property name="focusPolicy">
+          <enum>Qt::NoFocus</enum>
+         </property>
          <property name="iconSize">
           <size>
            <width>40</width>
@@ -3025,7 +3130,7 @@
            <property name="sizeHint" stdset="0">
             <size>
              <width>600</width>
-             <height>20</height>
+             <height>0</height>
             </size>
            </property>
           </spacer>
@@ -3180,6 +3285,9 @@
            <width>1</width>
            <height>1</height>
           </size>
+         </property>
+         <property name="focusPolicy">
+          <enum>Qt::NoFocus</enum>
          </property>
          <property name="iconSize">
           <size>
