@@ -13,6 +13,10 @@
 #include "aspeqtsettings.h"
 #include "miscutils.h"
 
+#ifdef Q_OS_ANDROID
+#include <QAndroidJniObject>
+#endif
+
 /* MyModel */
 
 MyModel::MyModel(QObject *parent)
@@ -464,12 +468,12 @@ DiskEditDialog::DiskEditDialog(QWidget *parent) :
     connect(m_fileSystemBox, SIGNAL(currentIndexChanged(int)), SLOT(fileSystemChanged(int)));
     connect(m_ui->aView->selectionModel(), SIGNAL(currentChanged(QModelIndex,QModelIndex)), SLOT(currentChanged(QModelIndex,QModelIndex)));
     connect(m_ui->aView->selectionModel(), SIGNAL(selectionChanged(QItemSelection,QItemSelection)), SLOT(selectionChanged(QItemSelection,QItemSelection)));
-    connect(m_ui->onTopBox, SIGNAL(stateChanged(int)), SLOT(onTopChanged()));
+//    connect(m_ui->onTopBox, SIGNAL(stateChanged(int)), SLOT(onTopChanged()));
     m_ui->aView->viewport()->setAcceptDrops(true);
-    if(aspeqtSettings->explorerOnTop()) {
-            m_ui->onTopBox->setChecked(true);
-            setWindowFlags(Qt::WindowStaysOnTopHint);
-    }
+//    if(aspeqtSettings->explorerOnTop()) {
+//            m_ui->onTopBox->setChecked(true);
+//            setWindowFlags(Qt::WindowStaysOnTopHint);
+//    }
 }
 
 DiskEditDialog::~DiskEditDialog()
@@ -596,8 +600,23 @@ void DiskEditDialog::on_actionExtractFiles_triggered()
     if (indexes.isEmpty()) {
         return;
     }
+    #ifdef Q_OS_ANDROID
+    QAndroidJniObject::callStaticMethod<void>("net/greblus/SerialActivity", "runDirChooser", "()V");
 
+    QString target = NULL;
+    do
+      {
+        QAndroidJniObject jFileName = QAndroidJniObject::getStaticObjectField<jstring>("net/greblus/SerialActivity", "m_chosen");
+        target = jFileName.toString();
+
+        if (target == "Cancelled") { target.clear(); break;}
+        if (target == "None") QThread::yieldCurrentThread();
+      }
+    while (target == "None");
+
+    #else
     QString target = QFileDialog::getExistingDirectory(this, tr("Extract files"), aspeqtSettings->lastExtractDir());
+    #endif
 
     if (target.isEmpty()) {
         return;
@@ -639,7 +658,27 @@ void DiskEditDialog::on_actionDeleteSelectedFiles_triggered()
 
 void DiskEditDialog::on_actionAddFiles_triggered()
 {
-    QStringList files = QFileDialog::getOpenFileNames(this, tr("Add files"), aspeqtSettings->lastExtractDir());
+    QStringList files;
+
+    #ifdef Q_OS_ANDROID
+    QString fileName;
+    QAndroidJniObject::callStaticMethod<void>("net/greblus/SerialActivity", "runFileChooser", "(II)V", 0, 0);
+    do
+      {
+        QAndroidJniObject jFileName = QAndroidJniObject::getStaticObjectField<jstring>("net/greblus/SerialActivity", "m_chosen");
+        fileName = jFileName.toString();
+
+        if (fileName == "Cancelled") {fileName.clear(); break;}
+        if (fileName == "None") QThread::yieldCurrentThread();
+      }
+    while (fileName == "None");
+
+    if (fileName == "Cancelled") {
+        return;
+    } else { files.append(fileName); }
+    #else
+    files = QFileDialog::getOpenFileNames(this, tr("Add files"), aspeqtSettings->lastExtractDir());
+    #endif
     if (files.empty()) {
         return;
     }
@@ -674,13 +713,13 @@ void DiskEditDialog::on_actionPrint_triggered()
 }
 void DiskEditDialog::onTopChanged()
 {
-    if(m_ui->onTopBox->isChecked())
-    {
-       setWindowFlags(Qt::WindowStaysOnTopHint);
-       aspeqtSettings->setExplorerOnTop(true);
-    } else {
-       setWindowFlags(Qt::WindowStaysOnBottomHint);
-       aspeqtSettings->setExplorerOnTop(false);
-    }
-    show();
+//    if(m_ui->onTopBox->isChecked())
+//    {
+//       setWindowFlags(Qt::WindowStaysOnTopHint);
+//       aspeqtSettings->setExplorerOnTop(true);
+//    } else {
+//       setWindowFlags(Qt::WindowStaysOnBottomHint);
+//       aspeqtSettings->setExplorerOnTop(false);
+//    }
+//    show();
 }

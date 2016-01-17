@@ -257,7 +257,7 @@ public class SimpleFileDialog
                                             extensions = Arrays.asList(".aspeqt");
                                             break;
                                         default:
-                                            extensions = Arrays.asList("*");
+                                            extensions = Arrays.asList(".");
                                             break;
                                         }
 

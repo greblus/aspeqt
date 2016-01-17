@@ -44,6 +44,7 @@ unix:
             android/optionsdialog.ui \
             android/autobootdialog.ui \
             android/cassettedialog.ui \
+            android/diskeditdialog.ui
 
         DISTFILES += \
             android/AndroidManifest.xml \
@@ -91,11 +92,11 @@ win32:HEADERS += serialport-win32.h
     optionsdialog.ui \
     autobootdialog.ui \
     cassettedialog.ui \
+    diskeditdialog.ui \
 
 FORMS += mainwindow.ui \
     aboutdialog.ui \
     createimagedialog.ui \
-    diskeditdialog.ui \
     textprinterwindow.ui \
     docdisplaywindow.ui \
     bootoptionsdialog.ui \
