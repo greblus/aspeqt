@@ -160,7 +160,7 @@
      <x>0</x>
      <y>0</y>
      <width>504</width>
-     <height>19</height>
+     <height>21</height>
     </rect>
    </property>
   </widget>
@@ -209,7 +209,7 @@
   <action name="actionToParent">
    <property name="icon">
     <iconset resource="../icons.qrc">
-     <normaloff>:/icons/silk-icons/icons/arrow_up.png</normaloff>:/icons/silk-icons/icons/arrow_up.png</iconset>
+     <normaloff>:/icons/tango-icons/actions/go-up.svg</normaloff>:/icons/tango-icons/actions/go-up.svg</iconset>
    </property>
    <property name="text">
     <string>Go to the parent directory</string>
@@ -224,7 +224,7 @@
   <action name="actionAddFiles">
    <property name="icon">
     <iconset resource="../icons.qrc">
-     <normaloff>:/icons/silk-icons/icons/add.png</normaloff>:/icons/silk-icons/icons/add.png</iconset>
+     <normaloff>:/icons/tango-icons/actions/list-add.svg</normaloff>:/icons/tango-icons/actions/list-add.svg</iconset>
    </property>
    <property name="text">
     <string>Add files...</string>
@@ -242,7 +242,7 @@
    </property>
    <property name="icon">
     <iconset resource="../icons.qrc">
-     <normaloff>:/icons/silk-icons/icons/page_white_go.png</normaloff>:/icons/silk-icons/icons/page_white_go.png</iconset>
+     <normaloff>:/icons/tango-icons/actions/edit-redo.svg</normaloff>:/icons/tango-icons/actions/edit-redo.svg</iconset>
    </property>
    <property name="text">
     <string>Extract files...</string>
@@ -260,7 +260,7 @@
    </property>
    <property name="icon">
     <iconset resource="../icons.qrc">
-     <normaloff>:/icons/silk-icons/icons/page_white_text.png</normaloff>:/icons/silk-icons/icons/page_white_text.png</iconset>
+     <normaloff>:/icons/tango-icons/mimetypes/text-x-generic.svg</normaloff>:/icons/tango-icons/mimetypes/text-x-generic.svg</iconset>
    </property>
    <property name="text">
     <string>Text conversion</string>
@@ -278,7 +278,7 @@
    </property>
    <property name="icon">
     <iconset resource="../icons.qrc">
-     <normaloff>:/icons/silk-icons/icons/delete.png</normaloff>:/icons/silk-icons/icons/delete.png</iconset>
+     <normaloff>:/icons/tango-icons/actions/list-remove.svg</normaloff>:/icons/tango-icons/actions/list-remove.svg</iconset>
    </property>
    <property name="text">
     <string>Delete</string>
@@ -296,7 +296,7 @@
   <action name="actionPrint">
    <property name="icon">
     <iconset resource="../icons.qrc">
-     <normaloff>:/icons/silk-icons/icons/printer.png</normaloff>:/icons/silk-icons/icons/printer.png</iconset>
+     <normaloff>:/icons/tango-icons/devices/printer.svg</normaloff>:/icons/tango-icons/devices/printer.svg</iconset>
    </property>
    <property name="text">
     <string>Print</string>

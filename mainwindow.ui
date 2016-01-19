@@ -2916,6 +2916,12 @@
            <height>1</height>
           </size>
          </property>
+         <property name="baseSize">
+          <size>
+           <width>0</width>
+           <height>0</height>
+          </size>
+         </property>
          <property name="focusPolicy">
           <enum>Qt::NoFocus</enum>
          </property>
@@ -3419,7 +3425,7 @@
   <action name="actionMountDisk_1">
    <property name="icon">
     <iconset resource="icons.qrc">
-     <normaloff>:/icons/silk-icons/icons/disk.png</normaloff>:/icons/silk-icons/icons/disk.png</iconset>
+     <normaloff>:/icons/tango-icons/devices/drive-optical.svg</normaloff>:/icons/tango-icons/devices/drive-optical.svg</iconset>
    </property>
    <property name="text">
     <string>Mount disk image...</string>
@@ -3437,7 +3443,7 @@
   <action name="actionMountDisk_2">
    <property name="icon">
     <iconset resource="icons.qrc">
-     <normaloff>:/icons/silk-icons/icons/disk.png</normaloff>:/icons/silk-icons/icons/disk.png</iconset>
+     <normaloff>:/icons/tango-icons/devices/drive-optical.svg</normaloff>:/icons/tango-icons/devices/drive-optical.svg</iconset>
    </property>
    <property name="text">
     <string>Mount disk image...</string>
@@ -3455,7 +3461,7 @@
   <action name="actionMountDisk_3">
    <property name="icon">
     <iconset resource="icons.qrc">
-     <normaloff>:/icons/silk-icons/icons/disk.png</normaloff>:/icons/silk-icons/icons/disk.png</iconset>
+     <normaloff>:/icons/tango-icons/devices/drive-optical.svg</normaloff>:/icons/tango-icons/devices/drive-optical.svg</iconset>
    </property>
    <property name="text">
     <string>Mount disk image...</string>
@@ -3473,7 +3479,7 @@
   <action name="actionMountDisk_4">
    <property name="icon">
     <iconset resource="icons.qrc">
-     <normaloff>:/icons/silk-icons/icons/disk.png</normaloff>:/icons/silk-icons/icons/disk.png</iconset>
+     <normaloff>:/icons/tango-icons/devices/drive-optical.svg</normaloff>:/icons/tango-icons/devices/drive-optical.svg</iconset>
    </property>
    <property name="text">
     <string>Mount disk image...</string>
@@ -3491,7 +3497,7 @@
   <action name="actionMountDisk_5">
    <property name="icon">
     <iconset resource="icons.qrc">
-     <normaloff>:/icons/silk-icons/icons/disk.png</normaloff>:/icons/silk-icons/icons/disk.png</iconset>
+     <normaloff>:/icons/tango-icons/devices/drive-optical.svg</normaloff>:/icons/tango-icons/devices/drive-optical.svg</iconset>
    </property>
    <property name="text">
     <string>Mount disk image...</string>
@@ -3509,7 +3515,7 @@
   <action name="actionMountDisk_6">
    <property name="icon">
     <iconset resource="icons.qrc">
-     <normaloff>:/icons/silk-icons/icons/disk.png</normaloff>:/icons/silk-icons/icons/disk.png</iconset>
+     <normaloff>:/icons/tango-icons/devices/drive-optical.svg</normaloff>:/icons/tango-icons/devices/drive-optical.svg</iconset>
    </property>
    <property name="text">
     <string>Mount disk image...</string>
@@ -3689,7 +3695,7 @@
   <action name="actionMountFolder_1">
    <property name="icon">
     <iconset resource="icons.qrc">
-     <normaloff>:/icons/silk-icons/icons/folder.png</normaloff>:/icons/silk-icons/icons/folder.png</iconset>
+     <normaloff>:/icons/tango-icons/places/folder.svg</normaloff>:/icons/tango-icons/places/folder.svg</iconset>
    </property>
    <property name="text">
     <string>Mount folder image...</string>
@@ -3707,7 +3713,7 @@
   <action name="actionMountFolder_2">
    <property name="icon">
     <iconset resource="icons.qrc">
-     <normaloff>:/icons/silk-icons/icons/folder.png</normaloff>:/icons/silk-icons/icons/folder.png</iconset>
+     <normaloff>:/icons/tango-icons/places/folder.svg</normaloff>:/icons/tango-icons/places/folder.svg</iconset>
    </property>
    <property name="text">
     <string>Mount folder image...</string>
@@ -3725,7 +3731,7 @@
   <action name="actionMountFolder_3">
    <property name="icon">
     <iconset resource="icons.qrc">
-     <normaloff>:/icons/silk-icons/icons/folder.png</normaloff>:/icons/silk-icons/icons/folder.png</iconset>
+     <normaloff>:/icons/tango-icons/places/folder.svg</normaloff>:/icons/tango-icons/places/folder.svg</iconset>
    </property>
    <property name="text">
     <string>Mount folder image...</string>
@@ -3743,7 +3749,7 @@
   <action name="actionMountFolder_4">
    <property name="icon">
     <iconset resource="icons.qrc">
-     <normaloff>:/icons/silk-icons/icons/folder.png</normaloff>:/icons/silk-icons/icons/folder.png</iconset>
+     <normaloff>:/icons/tango-icons/places/folder.svg</normaloff>:/icons/tango-icons/places/folder.svg</iconset>
    </property>
    <property name="text">
     <string>Mount folder image...</string>
@@ -3761,7 +3767,7 @@
   <action name="actionMountFolder_5">
    <property name="icon">
     <iconset resource="icons.qrc">
-     <normaloff>:/icons/silk-icons/icons/folder.png</normaloff>:/icons/silk-icons/icons/folder.png</iconset>
+     <normaloff>:/icons/tango-icons/places/folder.svg</normaloff>:/icons/tango-icons/places/folder.svg</iconset>
    </property>
    <property name="text">
     <string>Mount folder image...</string>
@@ -3779,7 +3785,7 @@
   <action name="actionMountFolder_6">
    <property name="icon">
     <iconset resource="icons.qrc">
-     <normaloff>:/icons/silk-icons/icons/folder.png</normaloff>:/icons/silk-icons/icons/folder.png</iconset>
+     <normaloff>:/icons/tango-icons/places/folder.svg</normaloff>:/icons/tango-icons/places/folder.svg</iconset>
    </property>
    <property name="text">
     <string>Mount folder image...</string>
@@ -3962,7 +3968,7 @@
    </property>
    <property name="icon">
     <iconset resource="icons.qrc">
-     <normaloff>:/icons/silk-icons/icons/control_eject.png</normaloff>:/icons/silk-icons/icons/control_eject.png</iconset>
+     <normaloff>:/icons/tango-icons/actions/media-eject.svg</normaloff>:/icons/tango-icons/actions/media-eject.svg</iconset>
    </property>
    <property name="text">
     <string>Unmount</string>
@@ -3980,7 +3986,7 @@
    </property>
    <property name="icon">
     <iconset resource="icons.qrc">
-     <normaloff>:/icons/silk-icons/icons/control_eject.png</normaloff>:/icons/silk-icons/icons/control_eject.png</iconset>
+     <normaloff>:/icons/tango-icons/actions/media-eject.svg</normaloff>:/icons/tango-icons/actions/media-eject.svg</iconset>
    </property>
    <property name="text">
     <string>Unmount</string>
@@ -3998,7 +4004,7 @@
    </property>
    <property name="icon">
     <iconset resource="icons.qrc">
-     <normaloff>:/icons/silk-icons/icons/control_eject.png</normaloff>:/icons/silk-icons/icons/control_eject.png</iconset>
+     <normaloff>:/icons/tango-icons/actions/media-eject.svg</normaloff>:/icons/tango-icons/actions/media-eject.svg</iconset>
    </property>
    <property name="text">
     <string>Unmount</string>
@@ -4016,7 +4022,7 @@
    </property>
    <property name="icon">
     <iconset resource="icons.qrc">
-     <normaloff>:/icons/silk-icons/icons/control_eject.png</normaloff>:/icons/silk-icons/icons/control_eject.png</iconset>
+     <normaloff>:/icons/tango-icons/actions/media-eject.svg</normaloff>:/icons/tango-icons/actions/media-eject.svg</iconset>
    </property>
    <property name="text">
     <string>Unmount</string>
@@ -4034,7 +4040,7 @@
    </property>
    <property name="icon">
     <iconset resource="icons.qrc">
-     <normaloff>:/icons/silk-icons/icons/control_eject.png</normaloff>:/icons/silk-icons/icons/control_eject.png</iconset>
+     <normaloff>:/icons/tango-icons/actions/media-eject.svg</normaloff>:/icons/tango-icons/actions/media-eject.svg</iconset>
    </property>
    <property name="text">
     <string>Unmount</string>
@@ -4052,7 +4058,7 @@
    </property>
    <property name="icon">
     <iconset resource="icons.qrc">
-     <normaloff>:/icons/silk-icons/icons/control_eject.png</normaloff>:/icons/silk-icons/icons/control_eject.png</iconset>
+     <normaloff>:/icons/tango-icons/actions/media-eject.svg</normaloff>:/icons/tango-icons/actions/media-eject.svg</iconset>
    </property>
    <property name="text">
     <string>Unmount</string>
@@ -4781,7 +4787,7 @@
    </property>
    <property name="icon">
     <iconset resource="icons.qrc">
-     <normaloff>:/icons/silk-icons/icons/folder_edit.png</normaloff>:/icons/silk-icons/icons/folder_edit.png</iconset>
+     <normaloff>:/icons/tango-icons/apps/system-file-manager.svg</normaloff>:/icons/tango-icons/apps/system-file-manager.svg</iconset>
    </property>
    <property name="text">
     <string>Explore..</string>
@@ -4802,7 +4808,7 @@
    </property>
    <property name="icon">
     <iconset resource="icons.qrc">
-     <normaloff>:/icons/silk-icons/icons/folder_edit.png</normaloff>:/icons/silk-icons/icons/folder_edit.png</iconset>
+     <normaloff>:/icons/tango-icons/apps/system-file-manager.svg</normaloff>:/icons/tango-icons/apps/system-file-manager.svg</iconset>
    </property>
    <property name="text">
     <string>Explore..</string>
@@ -4823,7 +4829,7 @@
    </property>
    <property name="icon">
     <iconset resource="icons.qrc">
-     <normaloff>:/icons/silk-icons/icons/folder_edit.png</normaloff>:/icons/silk-icons/icons/folder_edit.png</iconset>
+     <normaloff>:/icons/tango-icons/apps/system-file-manager.svg</normaloff>:/icons/tango-icons/apps/system-file-manager.svg</iconset>
    </property>
    <property name="text">
     <string>Explore..</string>
@@ -4844,7 +4850,7 @@
    </property>
    <property name="icon">
     <iconset resource="icons.qrc">
-     <normaloff>:/icons/silk-icons/icons/folder_edit.png</normaloff>:/icons/silk-icons/icons/folder_edit.png</iconset>
+     <normaloff>:/icons/tango-icons/apps/system-file-manager.svg</normaloff>:/icons/tango-icons/apps/system-file-manager.svg</iconset>
    </property>
    <property name="text">
     <string>Explore..</string>
@@ -4865,7 +4871,7 @@
    </property>
    <property name="icon">
     <iconset resource="icons.qrc">
-     <normaloff>:/icons/silk-icons/icons/folder_edit.png</normaloff>:/icons/silk-icons/icons/folder_edit.png</iconset>
+     <normaloff>:/icons/tango-icons/apps/system-file-manager.svg</normaloff>:/icons/tango-icons/apps/system-file-manager.svg</iconset>
    </property>
    <property name="text">
     <string>Explore..</string>
@@ -4886,7 +4892,7 @@
    </property>
    <property name="icon">
     <iconset resource="icons.qrc">
-     <normaloff>:/icons/silk-icons/icons/folder_edit.png</normaloff>:/icons/silk-icons/icons/folder_edit.png</iconset>
+     <normaloff>:/icons/tango-icons/apps/system-file-manager.svg</normaloff>:/icons/tango-icons/apps/system-file-manager.svg</iconset>
    </property>
    <property name="text">
     <string>Explore..</string>
@@ -5153,7 +5159,7 @@
    </property>
    <property name="icon">
     <iconset resource="icons.qrc">
-     <normaloff>:/icons/silk-icons/icons/drive_disk.png</normaloff>:/icons/silk-icons/icons/drive_disk.png</iconset>
+     <normaloff>:/icons/tango-icons/devices/media-floppy.svg</normaloff>:/icons/tango-icons/devices/media-floppy.svg</iconset>
    </property>
    <property name="text">
     <string>Save</string>
@@ -5171,7 +5177,7 @@
    </property>
    <property name="icon">
     <iconset resource="icons.qrc">
-     <normaloff>:/icons/silk-icons/icons/drive_disk.png</normaloff>:/icons/silk-icons/icons/drive_disk.png</iconset>
+     <normaloff>:/icons/tango-icons/devices/media-floppy.svg</normaloff>:/icons/tango-icons/devices/media-floppy.svg</iconset>
    </property>
    <property name="text">
     <string>Save</string>
@@ -5189,7 +5195,7 @@
    </property>
    <property name="icon">
     <iconset resource="icons.qrc">
-     <normaloff>:/icons/silk-icons/icons/drive_disk.png</normaloff>:/icons/silk-icons/icons/drive_disk.png</iconset>
+     <normaloff>:/icons/tango-icons/devices/media-floppy.svg</normaloff>:/icons/tango-icons/devices/media-floppy.svg</iconset>
    </property>
    <property name="text">
     <string>Save</string>
@@ -5207,7 +5213,7 @@
    </property>
    <property name="icon">
     <iconset resource="icons.qrc">
-     <normaloff>:/icons/silk-icons/icons/drive_disk.png</normaloff>:/icons/silk-icons/icons/drive_disk.png</iconset>
+     <normaloff>:/icons/tango-icons/devices/media-floppy.svg</normaloff>:/icons/tango-icons/devices/media-floppy.svg</iconset>
    </property>
    <property name="text">
     <string>Save</string>
@@ -5225,7 +5231,7 @@
    </property>
    <property name="icon">
     <iconset resource="icons.qrc">
-     <normaloff>:/icons/silk-icons/icons/drive_disk.png</normaloff>:/icons/silk-icons/icons/drive_disk.png</iconset>
+     <normaloff>:/icons/tango-icons/devices/media-floppy.svg</normaloff>:/icons/tango-icons/devices/media-floppy.svg</iconset>
    </property>
    <property name="text">
     <string>Save</string>
@@ -5243,7 +5249,7 @@
    </property>
    <property name="icon">
     <iconset resource="icons.qrc">
-     <normaloff>:/icons/silk-icons/icons/drive_disk.png</normaloff>:/icons/silk-icons/icons/drive_disk.png</iconset>
+     <normaloff>:/icons/tango-icons/devices/media-floppy.svg</normaloff>:/icons/tango-icons/devices/media-floppy.svg</iconset>
    </property>
    <property name="text">
     <string>Save</string>
@@ -6074,7 +6080,7 @@
    </property>
    <property name="icon">
     <iconset resource="icons.qrc">
-     <normaloff>:/icons/silk-icons/icons/drive_go.png</normaloff>:/icons/silk-icons/icons/drive_go.png</iconset>
+     <normaloff>:/icons/tango-icons/actions/document-save-as.svg</normaloff>:/icons/tango-icons/actions/document-save-as.svg</iconset>
    </property>
    <property name="toolTip">
     <string>Commit changes to this disk automatically</string>
@@ -6092,7 +6098,7 @@
    </property>
    <property name="icon">
     <iconset resource="icons.qrc">
-     <normaloff>:/icons/silk-icons/icons/drive_go.png</normaloff>:/icons/silk-icons/icons/drive_go.png</iconset>
+     <normaloff>:/icons/tango-icons/actions/document-save-as.svg</normaloff>:/icons/tango-icons/actions/document-save-as.svg</iconset>
    </property>
    <property name="text">
     <string>Auto Commit</string>
@@ -6113,7 +6119,7 @@
    </property>
    <property name="icon">
     <iconset resource="icons.qrc">
-     <normaloff>:/icons/silk-icons/icons/drive_go.png</normaloff>:/icons/silk-icons/icons/drive_go.png</iconset>
+     <normaloff>:/icons/tango-icons/actions/document-save-as.svg</normaloff>:/icons/tango-icons/actions/document-save-as.svg</iconset>
    </property>
    <property name="text">
     <string>Auto Commit</string>
@@ -6134,7 +6140,7 @@
    </property>
    <property name="icon">
     <iconset resource="icons.qrc">
-     <normaloff>:/icons/silk-icons/icons/drive_go.png</normaloff>:/icons/silk-icons/icons/drive_go.png</iconset>
+     <normaloff>:/icons/tango-icons/actions/document-save-as.svg</normaloff>:/icons/tango-icons/actions/document-save-as.svg</iconset>
    </property>
    <property name="text">
     <string>Auto Commit</string>
@@ -6155,7 +6161,7 @@
    </property>
    <property name="icon">
     <iconset resource="icons.qrc">
-     <normaloff>:/icons/silk-icons/icons/drive_go.png</normaloff>:/icons/silk-icons/icons/drive_go.png</iconset>
+     <normaloff>:/icons/tango-icons/actions/document-save-as.svg</normaloff>:/icons/tango-icons/actions/document-save-as.svg</iconset>
    </property>
    <property name="text">
     <string>Auto Commit</string>
@@ -6176,7 +6182,7 @@
    </property>
    <property name="icon">
     <iconset resource="icons.qrc">
-     <normaloff>:/icons/silk-icons/icons/drive_go.png</normaloff>:/icons/silk-icons/icons/drive_go.png</iconset>
+     <normaloff>:/icons/tango-icons/actions/document-save-as.svg</normaloff>:/icons/tango-icons/actions/document-save-as.svg</iconset>
    </property>
    <property name="text">
     <string>Auto Commit</string>

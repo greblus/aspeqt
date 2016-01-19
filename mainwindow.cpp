@@ -233,12 +233,12 @@ MainWindow::MainWindow(QWidget *parent)
     speedLabel->setText(tr(""));
     onOffLabel->setMinimumWidth(21);
     prtOnOffLabel->setMinimumWidth(18);
-    prtOnOffLabel->setPixmap(QIcon(":/icons/silk-icons/icons/printer.png").pixmap(32, 32, QIcon::Normal));  //
+    prtOnOffLabel->setPixmap(QIcon(":/icons/tango-icons/devices/printer.svg").pixmap(32, 32, QIcon::Normal));  //
     prtOnOffLabel->setToolTip(ui->actionPrinterEmulation->toolTip());
     prtOnOffLabel->setStatusTip(ui->actionPrinterEmulation->statusTip());
 
     clearMessagesLabel->setMinimumWidth(21);
-    clearMessagesLabel->setPixmap(QIcon(":/icons/silk-icons/icons/page_white_c.png").pixmap(32, 32, QIcon::Normal));
+    clearMessagesLabel->setPixmap(QIcon(":/icons/tango-icons/actions/edit-clear.svg").pixmap(32, 32, QIcon::Normal));
     clearMessagesLabel->setToolTip(tr("Clear messages"));
     clearMessagesLabel->setStatusTip(clearMessagesLabel->toolTip());
 
@@ -757,8 +757,8 @@ void MainWindow::on_actionPrinterEmulation_triggered()
     if (g_printerEmu) {
         ui->actionPrinterEmulation->setText(QApplication::translate("MainWindow", "Start printer emulation", 0));
         ui->actionPrinterEmulation->setStatusTip(QApplication::translate("MainWindow", "Start printer emulation", 0));
-        ui->actionPrinterEmulation->setIcon(QIcon(":/icons/silk-icons/icons/printer_delete.png").pixmap(32, 32, QIcon::Normal, QIcon::On));
-        prtOnOffLabel->setPixmap(QIcon(":/icons/silk-icons/icons/printer_delete.png").pixmap(32, 32, QIcon::Normal, QIcon::On));
+        ui->actionPrinterEmulation->setIcon(QIcon(":/icons/tango-icons/status/printer-error.svg").pixmap(32, 32, QIcon::Normal, QIcon::On));
+        prtOnOffLabel->setPixmap(QIcon(":/icons/tango-icons/status/printer-error.svg").pixmap(32, 32, QIcon::Normal, QIcon::On));
         prtOnOffLabel->setToolTip(tr("Start printer emulation"));
         prtOnOffLabel->setStatusTip(prtOnOffLabel->toolTip());
         g_printerEmu = false;
@@ -766,8 +766,8 @@ void MainWindow::on_actionPrinterEmulation_triggered()
     } else {
         ui->actionPrinterEmulation->setText(QApplication::translate("MainWindow", "Stop printer emulation", 0));
         ui->actionPrinterEmulation->setStatusTip(QApplication::translate("MainWindow", "Stop printer emulation", 0));
-        ui->actionPrinterEmulation->setIcon(QIcon(":/icons/silk-icons/icons/printer.png").pixmap(32, 32, QIcon::Normal, QIcon::On));
-        prtOnOffLabel->setPixmap(QIcon(":/icons/silk-icons/icons/printer.png").pixmap(32, 32, QIcon::Normal, QIcon::On));
+        ui->actionPrinterEmulation->setIcon(QIcon(":/icons/tango-icons/devices/printer.svg").pixmap(32, 32, QIcon::Normal, QIcon::On));
+        prtOnOffLabel->setPixmap(QIcon(":/icons/tango-icons/devices/printer.svg").pixmap(32, 32, QIcon::Normal, QIcon::On));
         prtOnOffLabel->setToolTip(tr("Stop printer emulation"));
         prtOnOffLabel->setStatusTip(prtOnOffLabel->toolTip());
         g_printerEmu = true;
@@ -791,7 +791,7 @@ void MainWindow::sioStarted()
     ui->actionStartEmulation->setText(tr("&Stop emulation"));
     ui->actionStartEmulation->setToolTip(tr("Stop SIO peripheral emulation"));
     ui->actionStartEmulation->setStatusTip(tr("Stop SIO peripheral emulation"));
-    onOffLabel->setPixmap(ui->actionStartEmulation->icon().pixmap(32, QIcon::Normal, QIcon::On));
+    onOffLabel->setPixmap(QIcon(":/icons/tango-icons/actions/media-playback-start.svg").pixmap(48, 48, QIcon::Normal, QIcon::On));
     onOffLabel->setToolTip(ui->actionStartEmulation->toolTip());
     onOffLabel->setStatusTip(ui->actionStartEmulation->statusTip());
 }
@@ -802,7 +802,7 @@ void MainWindow::sioFinished()
     ui->actionStartEmulation->setToolTip(tr("Start SIO peripheral emulation"));
     ui->actionStartEmulation->setStatusTip(tr("Start SIO peripheral emulation"));
     ui->actionStartEmulation->setChecked(false);
-    onOffLabel->setPixmap(ui->actionStartEmulation->icon().pixmap(32, QIcon::Normal, QIcon::Off));
+    onOffLabel->setPixmap(QIcon(":/icons/tango-icons/actions/media-playback-stop.svg").pixmap(48, 48, QIcon::Normal, QIcon::On));
     onOffLabel->setToolTip(ui->actionStartEmulation->toolTip());
     onOffLabel->setStatusTip(ui->actionStartEmulation->statusTip());
     speedLabel->hide();
