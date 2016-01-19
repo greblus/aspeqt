@@ -791,7 +791,7 @@ void MainWindow::sioStarted()
     ui->actionStartEmulation->setText(tr("&Stop emulation"));
     ui->actionStartEmulation->setToolTip(tr("Stop SIO peripheral emulation"));
     ui->actionStartEmulation->setStatusTip(tr("Stop SIO peripheral emulation"));
-    onOffLabel->setPixmap(QIcon(":/icons/tango-icons/actions/media-playback-start.svg").pixmap(48, 48, QIcon::Normal, QIcon::On));
+    onOffLabel->setPixmap(QIcon(":/icons/tango-icons/actions/media-playback-stop.svg").pixmap(48, 48, QIcon::Normal, QIcon::On));
     onOffLabel->setToolTip(ui->actionStartEmulation->toolTip());
     onOffLabel->setStatusTip(ui->actionStartEmulation->statusTip());
 }
@@ -802,7 +802,7 @@ void MainWindow::sioFinished()
     ui->actionStartEmulation->setToolTip(tr("Start SIO peripheral emulation"));
     ui->actionStartEmulation->setStatusTip(tr("Start SIO peripheral emulation"));
     ui->actionStartEmulation->setChecked(false);
-    onOffLabel->setPixmap(QIcon(":/icons/tango-icons/actions/media-playback-stop.svg").pixmap(48, 48, QIcon::Normal, QIcon::On));
+    onOffLabel->setPixmap(QIcon(":/icons/tango-icons/actions/media-playback-start.svg").pixmap(48, 48, QIcon::Normal, QIcon::On));
     onOffLabel->setToolTip(ui->actionStartEmulation->toolTip());
     onOffLabel->setStatusTip(ui->actionStartEmulation->statusTip());
     speedLabel->hide();
