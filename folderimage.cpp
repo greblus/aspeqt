@@ -202,7 +202,8 @@ bool FolderImage::readSector(quint16 sector, QByteArray &data)
                      QFile picoName(dir.path() + "/piconame.txt");
                      picoName.open(QFile::WriteOnly);
                      QByteArray nameLine;
-                     nameLine.append(dir.dirName() + '\x9B');
+                     nameLine.append(dir.dirName());
+                     nameLine.append('\x9b');
                      picoName.write(nameLine);
                      for(int i=0; i<64; i++){
                      if(atariFiles[i].exists) {
