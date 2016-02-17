@@ -12,10 +12,6 @@ DocDisplayWindow::DocDisplayWindow(QWidget *parent) :
     ui(new Ui::DocDisplayWindow)
 {
     ui->setupUi(this);
-    QFont f;
-    f.setFixedPitch(true);
-    f.setFamily("monospace");
-    ui->docDisplay->setFont(f);
 }
 
 DocDisplayWindow::~DocDisplayWindow()
