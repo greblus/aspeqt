@@ -1,105 +1,75 @@
-﻿<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
-<html xmlns="http://www.w3.org/1999/xhtml">
-
-<head>
-<meta content="en-us" http-equiv="Content-Language" />
-<meta content="text/html; charset=utf-8" http-equiv="Content-Type" />
-<title>AspeQt</title>
-<style type="text/css">
-.auto-style1 {
-	color: #4C920E;
-}
-.auto-style6 {
-	font-family: Arial, Helvetica, sans-serif;
-}
-.auto-style7 {
-	font-family: Arial, Helvetica, sans-serif;
-	font-size: large;
-}
-</style>
-</head>
-
+<html>
 <body>
+<h1>AspeQt for Android.</h1> This software was tested on various Android devices running Lollipop (5.0.1), KitKat (4.4.2) and JellyBean (4.2.2).
 
-<p style="height: 484px">&nbsp;<strong><span class="auto-style1"><img alt="AspeQt" height="72" src="main-icon/AspeQt.png" width="66" />&nbsp; 
-<span class="auto-style7"><em>AspeQt, Atari Serial Peripheral Emulator for Qt</em></span></span><em><br class="auto-style1" />
-</em>
-</strong><br />
-<span class="auto-style6">
-<strong>Summary</strong></span><br class="auto-style6" />
-<span class="auto-style6">AspeQt emulates Atari SIO peripherals when connected to an Atari 8-bit computer 
-with an SIO2PC cable.</span><br class="auto-style6" />
-<span class="auto-style6">In that respect it's similar to programs like APE and Atari810. The main 
-difference is that it's free (unlike APE) and it's cross-platform (unlike 
-Atari810 and APE).</span><br class="auto-style6" />
-<br class="auto-style6" />
-<span class="auto-style6">
-<strong>Some features</strong></span><br class="auto-style6" />
-<span class="auto-style6">* Qt based GUI with drag and drop support.</span><br class="auto-style6" />
-<span class="auto-style6">* Cross-platform<em> (currently Windows and x86-Linux)</em></span><br class="auto-style6" />
-<span class="auto-style6">* 15 disk drive emulation <em>(drives 9-15 are only supported by SpartaDOS X)</em></span><br class="auto-style6" />
-<span class="auto-style6">* Text-only printer emulation with saving and printing of the output</span><br class="auto-style6" />
-<span class="auto-style6">* Cassette image playback</span><br class="auto-style6" />
-<span class="auto-style6">* Folders can be mounted as simulated Dos20s disks. <em>(read-only, now with SDX 
-compatibility, and bootable)</em></span><br class="auto-style6" />
-<span class="auto-style6">* Atari executables can be booted directly, optionally with high speed.</span><br class="auto-style6" />
-<span class="auto-style6">* Contents of image files can be viewed / changed</span><br class="auto-style6" />
-<span class="auto-style6">* AspeQt Client module ASPECL.COM. Runs on the Atari and is used to get/set 
-Date/Time on the Atari plus a variety of other remote tasks.</span><br class="auto-style6" />
-<span class="auto-style6">* Upto 6xSIO speed and more if the serial port adaptor supports it <em>(FTDI 
-chip based cables are recommanded).</em></span><br class="auto-style6" />
-<span class="auto-style6">* Localization support (Currently for English, German, 
-Polish, Russian, Slovak, Spanish and Turkish)</span><br class="auto-style6" />
-<span class="auto-style6">* Multi-session support</span><br class="auto-style6" />
-<br class="auto-style6" />
-<span class="auto-style6">
-<strong>License</strong></span><br class="auto-style6" />
-<span class="auto-style6">Original code up to version 0.6.0 <em>Copyright 2009 by Fatih Aygün. </em>
-</span><br class="auto-style6" />
-<span class="auto-style6">Updates since v0.6.0 <em>Copyright 2012 by Ray Ataergin</em>
-</span><br class="auto-style6" />
-<span class="auto-style6">Android port<em> by Wiktor Grebla</em></span></p>
-<p style="height: 47px"><span class="auto-style6">You can freely copy, use, modify and distribute 
-AspeQt under the GPL 2.0 license. 
-Please see license.txt for details.</span></p>
-<p style="height: 304px"><span class="auto-style6">Qt libraries: <em>Copyright 2009 Nokia Corporation</em> and/or its 
-subsidiary(-ies). Used in this package under LGPL 2.0 license.</span><br class="auto-style6" />
-<br class="auto-style6" />
-<span class="auto-style6">Silk Icons: </span> <em><span class="auto-style6">Copyright <a href="www.famfamfam.com">Mark James</a>.</span></em><span class="auto-style6"> Used 
-in this package under Creative Commons Attribution 3.0 license.</span><br class="auto-style6" />
-<br class="auto-style6" />
-<span class="auto-style6">Additional Icons by <em><a href="http://www.oxygen-icons.org/">Oxygen Team</a></em>. 
-Used in this package under Creative Commons Attribution-ShareAlike 3.0 license.</span><br class="auto-style6" />
-<br class="auto-style6" />
-<span class="auto-style6">AtariSIO Linux kernel module and high speed code used in the EXE loader 
-</span> <em>
-<span class="auto-style6">Copyright <a href="http://www.horus.com/~hias/atari/">Matthias Reichl.</a></span></em><span class="auto-style6"> 
-Used in this package under GPL 2.0 license.</span><br class="auto-style6" />
-<br class="auto-style6" />
-<span class="auto-style6">Atascii Fonts by <em><a href="http://members.bitstream.net/~marksim/atarimac">
-Mark Simonson</a></em>. Used in this package under Freeware License.</span><br />
-<br />
-<span class="auto-style6"><em><strong>DOS files distributed with AspeQt</strong> 
-are copyright of their respective owners, Atari8Warez and AspeQt distributes 
-those files with the understanding that they are either abandonware or public 
-domain, and are widely available for download through the internet. If you are 
-the copyright holder of one or more of these files, and believe that 
-distribution of these files constitutes a breach of your rights please contact
-</em><a href="mailto:ray@atari8warez.com"><em>Atari8Warez</em></a><em>. We 
-respect the rights of copyright holders and won't distribute copyrighted work 
-without the rights holder's consent. </em></span>
-</p>
-<p><span class="auto-style6"><strong>Contact</strong></span><br class="auto-style6" />
-<span class="auto-style6">Ray Ataergin, <a href="mailto:ray@atari8warez.com">email</a>, 
-</span><br class="auto-style6" />
-<span class="auto-style6">Fatih Aygun, <a href="mailto:cyco130@yahoo.com">email</a>, 
-</span><br class="auto-style6" />
-<span class="auto-style6">Wiktor Grebla, <a href="mailto:greblus@gmail.com">email</a>, 
-<br class="auto-style6" />
-<span class="auto-style6">For SIO2PC-USB hardware purchase/support visit
-<a href="http://www.lotharek.pl">Lotharek's store</a></span><br class="auto-style6" />
-</p>
+Software command frame detection (SOFT - default handshake method) should work with anything @19200bps and is also behaving very nicely with non-standard speeds and Pokey divisor set eg. to 6 or 5.
 
+Try it also with "use high speed executable loader" option turned on ;)
+
+In this port a slightly modified and absolutely great <a href="https://github.com/greblus/usb-serial-for-android">usb-serial-for-android</a> driver is being used.
+
+<b>SOFT command frame detection is now set as default method when AspeQt is started first time.</b>
+
+Previous version with ftd2xx Java driver is still available <a href="https://github.com/greblus/aspeqt/tree/ftd2xx">here</a>.
+
+<h1>Downloads</h1>
+
+<b>AspeQt</b> is available through <a href="https://play.google.com/store/search?q=aspeqt">Google Play Store</a>.
+
+All releases (including previous ones) are available <a href="https://github.com/greblus/aspeqt/releases">here</a>.
+
+<b>Lastest compiled apk</b> is always <a href="https://github.com/greblus/aspeqt/raw/android/android/apk/aspeqt.apk">here</a>. And of course all apk files which were uploaded to android/apk can be found in the repo (there is a "Browse Files" button which will show you a snapshot of the repository at a time of the particular commit).
+
+What doesn't work yet?
+
+Loading atr files stalls occassionally in DSR handshaking mode. Haven't noticed it in SOFT mode. Hopefully Will fix it soon.
+<h1>What's necessary to use it:</h1>
+
+<ul>
+	<li>Android device with USB Host Support. Check USB Host Support with this tool.</li>
+  <li>OTG cable</li>.
+  <li>Sio2PC-USB converter. I recommend <a href="http://lotharek.pl/product.php?pid=98">this one made by Lotharek</a>.</li>
+<li>AspeQt for Android should work on anything starting from 3.1. I've tested it on Lark FreeMe 8" Android 4.2.2 tablet, Kazam 345 & Kazam Tornado phones with KitKat 4.4, Lenovo Tab 2 A10-70L and Lenovo
+Tab 2 A7 tablets with Lollipop 5.0.1</li>
+<li><b>No root necessary.</b></li>
+<li><b>No drivers necessary.</b> usb-serial-for-android java driver is in the package.</li>
+<li>After you connect the SIO2PC-USB to your Android device it'll automatically launch AspeQt. If you have SIO2PC-USB from Lotharek, select SOFT or DSR flow control method and set speed to 19200bps first, to see if it works at all. Feel free to experiment with higher speeds and Pokey divisors (HiSpeed OS, SDX or Qmeg is required for fast SIO routines).</li>
+</ul>
+Alternatively (on an unmodified Atari) it's enough to mount the folder with xex files and copy these two files: $boot.bin and picodos.sys which can be dowloaded <a href="https://github.com/greblus/aspeqt/tree/android/%24bootpic">from here</a>.
+
+
+This way all xex files, e.g. just downloaded from the internet on your mobile or tablet) to some mounted folder eg. Download/Atari can be nicely loaded in high speed using MyPicoDos. All you have to do is to boot your Atari from this folder.
+
+Speed greatly depends on your CPU possibilities and I/O performance, but Pokey divisor 6 works nicely on dual core 1.2GHz RK3066.
+
+<a href="https://www.youtube.com/watch?v=GEkwZM_Cr_M&list=PL_0_k9JuZLPiox8zAklF3qvG3SbsZ08g8"><h2>Videos of AspeQt on Android</h2></a>
+
+<h1>Summary</h1>
+
+AspeQt emulates Atari SIO peripherals when connected to an Atari 8-bit computer with an SIO2PC cable. In that respect it's similar to programs like APE and Atari810. The main difference is that it's free (unlike APE) and it's cross-platform (unlike Atari810 and APE).
+
+<h1>License (see license.txt file for more details)</h1> 
+
+Original code up to version 0.6.0 Copyright 2009 by Fatih Ayg�n.<br> Updates since v0.6.0 Copyright 2012 by Ray Ataergin.<br> Android port of aspeqt-1.0.0.Preview_6 by Wiktor Grebla.<br>
+
+You can freely copy, use, modify and distribute it under the GPL 2.0 license. Please see license.txt for details.
+<br>
+Qt libraries: Copyright by The Qt Company.
+<br>
+usb-serial-for-Android with support for FTDI chips is based <a href="https://github.com/mik3y/usb-serial-for-android">on this project</a>. 
+<br>
+<a href="http://tango.freedesktop.org/Tango_Icon_Library">Tango Icons</a>. 
+<br>
+High speed code used in the EXE loader was written by Matthias Reichl <a href="mailto:hias@horus.com">hias@horus.com</a>.
+<br>
+<a href="http://www.scorchworks.com/Blog/simple-file-dialog-for-android-applications/">Simple Filedialog for Android.</a> 
+<br>
+<h1>Questions about this Android port? Drop me an e-mail ;)</h1>
+
+Wiktor Grebla: <a href="mailto:greblus@gmail.com">greblus@gmail.com</a>
+
+<h1>SIO2PC-USB adapters:</h1>
+
+For SIO2PC-USB hardware purchase visit: <a href="www.lotharek.pl">www.lotharek.pl</a> or: <a href="http://www.atari8warez.com/">http://www.atari8warez.com/</a>
 </body>
-
 </html>
