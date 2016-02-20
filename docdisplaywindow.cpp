@@ -6,12 +6,17 @@
 #include <QFileDialog>
 #include <QPrintDialog>
 #include <QPrinter>
+#include <QScroller>
 
 DocDisplayWindow::DocDisplayWindow(QWidget *parent) :
     QMainWindow(parent),
     ui(new Ui::DocDisplayWindow)
 {
     ui->setupUi(this);
+#ifdef Q_OS_ANDROID
+    QWidget *w = ui->docDisplay;
+    QScroller::grabGesture(w, QScroller::TouchGesture);
+#endif
 }
 
 DocDisplayWindow::~DocDisplayWindow()

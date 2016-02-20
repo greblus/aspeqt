@@ -6,6 +6,7 @@
 #include <QDir>
 #include <QScreen>
 #include <QSize>
+#include <QScroller>
 
 OptionsDialog::OptionsDialog(QWidget *parent) :
     QDialog(parent),
@@ -18,6 +19,8 @@ OptionsDialog::OptionsDialog(QWidget *parent) :
     m_ui->setupUi(this);
 
 #ifdef Q_OS_ANDROID
+    QWidget *w = m_ui->scrollArea->viewport();
+    QScroller::grabGesture(w, QScroller::LeftMouseButtonGesture);
     setWindowState(Qt::WindowFullScreen);
     QScreen *screen = qApp->screens().at(0);
     int rx = screen->availableSize().width();

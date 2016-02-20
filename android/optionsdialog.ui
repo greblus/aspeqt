@@ -88,7 +88,7 @@
     <enum>QFrame::NoFrame</enum>
    </property>
    <property name="verticalScrollBarPolicy">
-    <enum>Qt::ScrollBarAlwaysOn</enum>
+    <enum>Qt::ScrollBarAlwaysOff</enum>
    </property>
    <property name="sizeAdjustPolicy">
     <enum>QAbstractScrollArea::AdjustToContentsOnFirstShow</enum>
@@ -101,7 +101,7 @@
      <rect>
       <x>0</x>
       <y>0</y>
-      <width>441</width>
+      <width>481</width>
       <height>893</height>
      </rect>
     </property>

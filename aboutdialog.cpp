@@ -1,6 +1,7 @@
 #include "aboutdialog.h"
 #include "ui_aboutdialog.h"
 #include <QScreen>
+#include <QScroller>
 
 AboutDialog::AboutDialog(QWidget *parent, QString version) :
     QDialog(parent),
@@ -24,7 +25,10 @@ AboutDialog::AboutDialog(QWidget *parent, QString version) :
     this->setMaximumHeight(ry);
 
     m_ui->textBrowser->setMinimumWidth(rx-20);
-    m_ui->textBrowser->setMinimumHeight(ry-200);
+    m_ui->textBrowser->setMinimumHeight(ry-40);
+
+    QWidget *w = m_ui->textBrowser;
+    QScroller::grabGesture(w, QScroller::TouchGesture);
 #endif
 
     //connect(this, SIGNAL(accepted()), this, SLOT(AboutDialog_accepted()));
