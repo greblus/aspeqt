@@ -134,9 +134,9 @@ MainWindow::MainWindow(QWidget *parent)
     }
     
     // Check to see if settings repository is already migrated, if not invoke migration process
-    QSettings oldSettings("TrayGun Software", "AspeQt");
+    QSettings oldSettings("greblus.net", "AspeQt");
     oldSettings.setFallbacksEnabled(false);
-    QSettings newSettings("atari8warez.com", "AspeQt");
+    QSettings newSettings("greblus.net", "AspeQt");
     QStringList oldKeys = oldSettings.allKeys();
     if(oldKeys.size()>0){
         QMessageBox::information(this, tr("Migrate Settings"), tr("This version of AspeQt uses a different repository "
@@ -150,8 +150,8 @@ MainWindow::MainWindow(QWidget *parent)
         QMessageBox::information(this, tr("Migrate Settings"), tr("Setting were migrated successfuly."), QMessageBox::Ok);
     }
     /* Set application properties */
-    QCoreApplication::setOrganizationName("atari8warez.com");
-    QCoreApplication::setOrganizationDomain("atari8warez.com");
+    QCoreApplication::setOrganizationName("Atari Forever!");
+    QCoreApplication::setOrganizationDomain("greblus.net");
     QCoreApplication::setApplicationName("AspeQt");
     aspeqtSettings = new AspeqtSettings();
        
@@ -316,7 +316,6 @@ MainWindow::MainWindow(QWidget *parent)
     docDisplayWindow = new DocDisplayWindow();
 
     connect(textPrinterWindow, SIGNAL(closed()), this, SLOT(textPrinterWindowClosed()));
-    connect(docDisplayWindow, SIGNAL(closed()), this, SLOT(docDisplayWindowClosed()));
 
     Printer *printer = new Printer(sio);
     connect(printer, SIGNAL(print(QString)), textPrinterWindow, SLOT(print(QString)));
@@ -1022,19 +1021,9 @@ void MainWindow::on_actionAbout_triggered()
 //
 void MainWindow::on_actionDocumentation_triggered()
 {
-    QString dir = aspeqtSettings->lastSessionDir();
+    docDisplayWindow->show();
+}
 
-    if (ui->actionDocumentation->isChecked()) {
-        docDisplayWindow->show();
-    } else {
-        docDisplayWindow->hide();
-    }
-}
-//
-void MainWindow::docDisplayWindowClosed()
-{
-     ui->actionDocumentation->setChecked(false);
-}
 // Restart emulation and re-translate following a session load //
 void MainWindow::setSession()
 {

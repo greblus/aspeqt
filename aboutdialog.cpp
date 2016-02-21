@@ -24,8 +24,8 @@ AboutDialog::AboutDialog(QWidget *parent, QString version) :
     this->setMaximumWidth(rx);
     this->setMaximumHeight(ry);
 
-    m_ui->textBrowser->setMinimumWidth(rx-20);
-    m_ui->textBrowser->setMinimumHeight(ry-40);
+    m_ui->textBrowser->setMinimumWidth(rx);
+    m_ui->textBrowser->setMinimumHeight(ry);
 
     QWidget *w = m_ui->textBrowser;
     QScroller::grabGesture(w, QScroller::TouchGesture);

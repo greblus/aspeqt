@@ -218,7 +218,6 @@ private slots:
     void sioStarted();
     void sioStatusChanged(QString status);
     void textPrinterWindowClosed();
-    void docDisplayWindowClosed();
     void deviceStatusChanged(int deviceNo);
     void uiMessage(int t, const QString message);
     void trayIconActivated(QSystemTrayIcon::ActivationReason reason);
