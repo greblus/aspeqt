@@ -6,6 +6,7 @@
 #include <QDir>
 #include <QMessageBox>
 #include <QScreen>
+#include <QScroller>
 
 QString g_savedLog, g_filter;
 extern bool g_logOpen;
@@ -20,6 +21,7 @@ LogDisplayDialog::LogDisplayDialog(QWidget *parent) :
 
     l_ui->setupUi(this);
 
+
 #ifdef Q_OS_ANDROID
     setWindowState(Qt::WindowFullScreen);
     QScreen *screen = qApp->screens().at(0);
@@ -31,6 +33,9 @@ LogDisplayDialog::LogDisplayDialog(QWidget *parent) :
 
     l_ui->textEdit->setMinimumWidth(rx-30);
     l_ui->textEdit->setMinimumHeight(ry-200);
+
+    QWidget *w = l_ui->textEdit;
+    QScroller::grabGesture(w, QScroller::TouchGesture);
 #endif
 
     connect(l_ui->listByDisk, SIGNAL(currentIndexChanged(QString)), this, SLOT(diskFilter()));

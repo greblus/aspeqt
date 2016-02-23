@@ -23,7 +23,7 @@
    <string>MainWindow</string>
   </property>
   <property name="windowIcon">
-   <iconset resource="../icons.qrc">
+   <iconset>
     <normaloff>:/icons/silk-icons/icons/folder_edit.png</normaloff>:/icons/silk-icons/icons/folder_edit.png</iconset>
   </property>
   <widget class="QWidget" name="centralwidget">
@@ -86,6 +86,9 @@
       background: none;
 }
 </string>
+      </property>
+      <property name="verticalScrollBarPolicy">
+       <enum>Qt::ScrollBarAlwaysOn</enum>
       </property>
       <property name="horizontalScrollBarPolicy">
        <enum>Qt::ScrollBarAlwaysOff</enum>

@@ -450,8 +450,8 @@ DiskEditDialog::DiskEditDialog(QWidget *parent) :
     m_ui(new Ui::DiskEditDialog)
 {
     m_ui->setupUi(this);
-    setAttribute(Qt::WA_DeleteOnClose);
 
+    setAttribute(Qt::WA_DeleteOnClose);
     m_fileSystemBox = new QComboBox(this);
     m_fileSystemBox->addItem(tr("No file system"));
     m_fileSystemBox->addItem(tr("Atari Dos 1.0"));
