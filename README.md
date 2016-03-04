@@ -3,6 +3,5 @@
 
 AspeQt for Android is also available from [Google Play Store.](https://play.google.com/store/apps/details?id=org.qtproject.example.AspeQt)  
 
-![AspeQt for Android](https://lh3.googleusercontent.com/qv7hwZgxWfVRO1MYtMm0sBkEiE-2f1HmQTJbQr7voDCwbOT5CQYaSKFy036RX4Ebhg=h900)
 
 

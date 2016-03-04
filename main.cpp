@@ -1,13 +1,7 @@
-//#include <QtWidgets/QApplication>
 #include <QApplication>
 #include <QTextCodec>
 #include <QLibraryInfo>
 #include "mainwindow.h"
-
-#ifdef Q_OS_ANDROID
-#include <QAndroidJniObject>
-#include <jni.h>
-#endif
 
 #ifdef Q_OS_WIN
 #include <windows.h>
@@ -15,6 +9,9 @@
 #endif
 
 #ifdef Q_OS_ANDROID
+#include <QAndroidJniObject>
+#include <jni.h>
+
 jbyte *jbuf = NULL;
 char *bbuf;
 extern "C" {
@@ -34,11 +31,11 @@ int main(int argc, char *argv[])
 #ifdef Q_OS_WIN
     timeBeginPeriod(1);
 #endif
-
     QApplication a(argc, argv);
-//    QTextCodec::setCodecForTr(QTextCodec::codecForName("utf8"));
     MainWindow w;
+#if QT_VERSION >= 0x050600
     a.setAttribute(Qt::AA_EnableHighDpiScaling, true);
+#endif
     w.show();
     ret = a.exec();
 #ifdef Q_OS_WIN
