@@ -196,7 +196,6 @@ int StandardSerialPortBackend::speed()
 QByteArray StandardSerialPortBackend::readCommandFrame()
 {
     QByteArray data;
-
     int retries = 0, result = 0;
 
     do {
@@ -207,12 +206,10 @@ QByteArray StandardSerialPortBackend::readCommandFrame()
 
         switch (result) {
             case 1:
-                data.resize(4);
-                for (int i=0; i<4; i++)
-                    data[i] = (bbuf[i] & 0xff);
+                data.setRawData(bbuf, 4);
                 break;
             default:
-                data.clear();                
+                data.clear();
         }
 
         if (!data.isEmpty()) {
@@ -352,8 +349,7 @@ QByteArray StandardSerialPortBackend::readRawFrame(uint size, bool verbose)
     } while (total < size && elapsed > -timeOut);
 
     data.clear();
-    for (int i=0; i<size; i++)
-        data.insert(i, (quint8)(bbuf[i] & 0xff));
+    data.setRawData(bbuf, size);
 
     if (debug) {
         QString tmp;
@@ -390,7 +386,7 @@ bool StandardSerialPortBackend::writeRawFrame(const QByteArray &data)
     rest = data.count();
 
     for (int i = 0; i<rest; i++)
-        bbuf[i] = (quint8)(data.at(i)&0xff);
+        bbuf[i] = data.at(i)&0xff;
 
     if (debug) {
      QAndroidJniObject msg = QAndroidJniObject::fromString("data.count():" + QString::number(rest));

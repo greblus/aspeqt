@@ -143,7 +143,7 @@ public class SerialActivity extends QtActivity
 
         public static void registerBroadcastReceiver() {
                 if (SerialActivity.s_activity != null) {
-                        // Qt is running on a different thread than Android. (step 2)
+                        // Qt is running on a different thread than Android.
                         // In order to register the receiver we need to execute it in the UI thread
                         SerialActivity.s_activity.runOnUiThread( new RegisterReceiverRunnable());
                         Log.i("USB", "Broadcast Receiver registered");
@@ -230,12 +230,13 @@ public class SerialActivity extends QtActivity
     public static int read(int size, int total)
     {
         bbuf.position(total);
-        int ret = 0;
+        int ret = 0, rd = 0;
+
         try {
             do {
-                 ret = sPort.sread(rb, size, 5000);
-                 bbuf.put(rb, 0, ret);
-                 size -= ret;
+                 rd = sPort.sread(rb, size, 5000);
+                 bbuf.put(rb, 0, rd);
+                 size -= rd; ret += rd;
             } while (size > 0);
         } catch (IOException e) {
            Log.i("USB", "Can't read");
@@ -244,12 +245,15 @@ public class SerialActivity extends QtActivity
     }
 
     public static int write(int size, int total) {
-        int ret = 0;
+        int ret = 0, wn = 0;
         bbuf.position(total);
         bbuf.get(wb, 0, size);
 
         try {
-            ret = sPort.swrite(wb, size, 5000);
+            do {
+                wn = sPort.swrite(wb, size, 5000);
+                size -= wn; ret += wn;
+            } while (size > 0);
         } catch (IOException e) {
            Log.i("USB", "Can't write");
         }
@@ -372,30 +376,24 @@ public class SerialActivity extends QtActivity
     }
 
     public static int getHWCommandFrame(int mMethod) {
-        int mask = 0, retries = 0, totalRetries = 0;
+        int mask, total_retries, status;
 
         switch (mMethod) {
             case 0:
-                //RI: FTDI:64 PL2303:8
-                mask = 72;
+                mask = 64;
                 break;
             case 1:
-                //DSR: FTDI:32 PL2303:2
-                mask = 34;
+                mask = 32;
                 break;
             case 2:
-                //CTS: FTDI:16 PL2303:128
-                mask = 144;
+                mask = 16;
                 break;
             default:
-                mask = 34; }
+                mask = 32; }
 
-            bbuf.position(0);
-            int total_retries = 0, status = 0;
-
+        bbuf.position(0);
         do {
-            status = 0;
-            total_retries = 0;
+            status = 0; total_retries = 0;
             do {
                 if (total_retries > 10e2) return 2;
                 status = getModemStatus();
@@ -407,7 +405,7 @@ public class SerialActivity extends QtActivity
                 }
             } while (!((status & mask) > 0));
 
-            boolean ret = purgeRX();
+            boolean ret = purge();
             if (!ret) if (debug) Log.i("USB", "Cannot clear serial port");
 
             int result = 0, total = 0;
