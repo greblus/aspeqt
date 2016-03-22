@@ -326,9 +326,7 @@ QByteArray StandardSerialPortBackend::readRawFrame(uint size, bool verbose)
 
     int result;
     uint total, rest;
-
     QByteArray data;
-    data.resize(size);
 
     total = 0;
     rest = size;
@@ -338,17 +336,12 @@ QByteArray StandardSerialPortBackend::readRawFrame(uint size, bool verbose)
 
     do {
         result =  QAndroidJniObject::callStaticMethod<jint>("net/greblus/SerialActivity", "read", "(II)I", rest, total);
-
-        if (result < 0) {
-            result = 0;
-        }
-
+        if (result < 0) result = 0;
         total += result;
         rest -= result;
         elapsed = QTime::currentTime().msecsTo(startTime);
     } while (total < size && elapsed > -timeOut);
 
-    data.clear();
     data.setRawData(bbuf, size);
 
     if (debug) {
