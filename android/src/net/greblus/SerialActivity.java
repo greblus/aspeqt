@@ -323,10 +323,12 @@ public class SerialActivity extends QtActivity
 
     public static int getSWCommandFrame() {
         int expected = 0, sync_attempts = 0, got = 1, total_retries = 0;
+        int ret = 0, total = 0;
+
         bbuf.position(0);
         mainloop:
         while (true) {
-            int ret = 0, total = 0; total_retries = 0;
+            ret = 0; total = 0; total_retries = 0;
             do {
                 if (total_retries > 2) return 2;
                 try {
@@ -376,7 +378,8 @@ public class SerialActivity extends QtActivity
     }
 
     public static int getHWCommandFrame(int mMethod) {
-        int mask, total_retries, status;
+        int mask, total_retries, status, total, res = 0;
+        boolean ret;
 
         switch (mMethod) {
             case 0:
@@ -405,13 +408,12 @@ public class SerialActivity extends QtActivity
                 }
             } while (!((status & mask) > 0));
 
-            boolean ret = purge();
+            ret = purge();
             if (!ret) if (debug) Log.i("USB", "Cannot clear serial port");
 
-            int result = 0, total = 0;
-            total_retries = 0;
+            total = 0; total_retries = 0;
             do {
-                int res = 0;
+                res = 0;
                 try {
                     if (total_retries > 4) return 2;
                     res = sPort.sread(rb, 5-total, 1000); }
@@ -419,7 +421,7 @@ public class SerialActivity extends QtActivity
 
                 if (res > 0) {
                     for (int i=0; i<res; i++) {
-                       Log.i("USB", "CF: " + (rb[i] & 0xff));
+                       if (debug) Log.i("USB", "CF: " + (rb[i] & 0xff));
                        bbuf.put((byte)(rb[i] & 0xff));
                        total += 1;
                     }
