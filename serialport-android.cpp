@@ -348,7 +348,7 @@ QByteArray StandardSerialPortBackend::readRawFrame(uint size, bool verbose)
         QString tmp;
         for (int i=0; i<data.count(); i++)
         {
-            tmp += QString::number(bbuf[i] & 0xff) + " ";
+            tmp += QString::number(bbuf[i]) + " ";
         }
 
          qCritical() << "!e" << tr("readRawFrame: %1").arg(tmp);
@@ -375,16 +375,9 @@ bool StandardSerialPortBackend::writeRawFrame(const QByteArray &data)
     uint total, rest;
 
     total = 0;
-
     rest = data.count();
 
-    for (int i = 0; i<rest; i++)
-        bbuf[i] = data.at(i)&0xff;
-
-    if (debug) {
-     QAndroidJniObject msg = QAndroidJniObject::fromString("data.count():" + QString::number(rest));
-     QAndroidJniObject::callStaticMethod<void>("net/greblus/SerialActivity", "qLog", "(Ljava/lang/String;)V", msg.object<jstring>() );
-    }
+    std::copy(data.constData(), data.constData()+rest, bbuf);
 
     QTime startTime = QTime::currentTime();
     int timeOut = data.count() * 12000 / mSpeed + 10;
@@ -393,26 +386,10 @@ bool StandardSerialPortBackend::writeRawFrame(const QByteArray &data)
     do {
         result = QAndroidJniObject::callStaticMethod<jint>("net/greblus/SerialActivity", "write", "(II)I", rest, total);
 
-        if (debug) {
-            QAndroidJniObject msg = QAndroidJniObject::fromString("Qt5 side: Write() result:" + QString::number(result));
-            QAndroidJniObject::callStaticMethod<void>("net/greblus/SerialActivity", "qLog", "(Ljava/lang/String;)V", msg.object<jstring>() );
-        }
-
         if (result < 0 ) {
             if (debug) qCritical() << "!e" << tr("Cannot write to serial port: %1")
                            .arg(lastErrorMessage());
             return false;
-        }
-
-        if (debug) {
-            QString tmp;
-
-            for (int i=0; i<data.count(); i++)
-            {
-                tmp += QString::number(bbuf[i] & 0xff) + " ";
-            }
-
-            qCritical() << "!e" << tr("writeRawFrame: %1").arg(tmp);
         }
 
         if (result < 0) {
