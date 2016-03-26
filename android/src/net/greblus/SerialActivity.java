@@ -332,7 +332,7 @@ public class SerialActivity extends QtActivity
             do {
                 if (total_retries > 2) return 2;
                 try {
-                    ret = sPort.sread(rb, 5-total, 1000); }
+                    ret = sPort.sread(rb, 5-total, 5000); }
                 catch (IOException e) {};
                 if (ret > 0)
                     total += ret;

@@ -256,14 +256,12 @@ QByteArray StandardSerialPortBackend::readDataFrame(uint size, bool verbose)
     }
 }
 
-bool StandardSerialPortBackend::writeDataFrame(const QByteArray &data)
+bool StandardSerialPortBackend::writeDataFrame(QByteArray &data)
 {
-    QByteArray copy(data);
-    copy.resize(copy.size() + 1);
-    copy[copy.size() - 1] = sioChecksum(copy, copy.size() - 1);
-    SioWorker::usleep(50);
+    data.resize(data.size() + 1);
+    data[data.size() - 1] = sioChecksum(data, data.size() - 1);
 
-    return writeRawFrame(copy);
+    return writeRawFrame(data);
 }
 
 bool StandardSerialPortBackend::writeCommandAck()
@@ -293,14 +291,14 @@ bool StandardSerialPortBackend::writeDataNak()
 bool StandardSerialPortBackend::writeComplete()
 {
     if (debug) qWarning().noquote() << "!i" << tr("writeComplete");
-    SioWorker::usleep(700);
+    SioWorker::usleep(900);
     return writeRawFrame(QByteArray(1, 67));
 }
 
 bool StandardSerialPortBackend::writeError()
 {
     if (debug) qWarning().noquote() << "!i" << tr("writeError");
-    SioWorker::usleep(700);
+    SioWorker::usleep(900);
     return writeRawFrame(QByteArray(1, 78));
 }
 
@@ -357,10 +355,6 @@ QByteArray StandardSerialPortBackend::readRawFrame(uint size, bool verbose)
     if ((uint)total != size) {
         if (verbose) {
             data.resize(total);
-            if (debug) {
-             QAndroidJniObject msg = QAndroidJniObject::fromString("Serial port read timeout.");
-             QAndroidJniObject::callStaticMethod<void>("net/greblus/SerialActivity", "qLog", "(Ljava/lang/String;)V", msg.object<jstring>() );
-            }
         }
         data.clear();
         return data;

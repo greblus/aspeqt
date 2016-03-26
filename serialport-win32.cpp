@@ -368,15 +368,14 @@ QByteArray StandardSerialPortBackend::readDataFrame(uint size, bool verbose)
     }
 }
 
-bool StandardSerialPortBackend::writeDataFrame(const QByteArray &data)
+bool StandardSerialPortBackend::writeDataFrame(QByteArray &data)
 {
 //    qDebug() << "!d" << tr("DBG -- Serial Port writeDataFrame...");
 
-    QByteArray copy(data);
-    copy.resize(copy.size() + 1);
-    copy[copy.size() - 1] = sioChecksum(copy, copy.size() - 1);
-    SioWorker::usleep(50);
-    return writeRawFrame(copy);
+    data.resize(data.size() + 1);
+    data[data.size() - 1] = sioChecksum(data, data.size() - 1);
+
+    return writeRawFrame(data);
 }
 
 bool StandardSerialPortBackend::writeCommandAck()
@@ -559,7 +558,7 @@ void AtariSioBackend::cancel() {}
 int AtariSioBackend::speedByte() {return 0;}
 QByteArray AtariSioBackend::readCommandFrame() {return QByteArray();}
 QByteArray AtariSioBackend::readDataFrame(uint, bool) {return QByteArray();}
-bool AtariSioBackend::writeDataFrame(const QByteArray &) {return false;}
+bool AtariSioBackend::writeDataFrame(QByteArray &) {return false;}
 bool AtariSioBackend::writeCommandAck() {return false;}
 bool AtariSioBackend::writeCommandNak() {return false;}
 bool AtariSioBackend::writeDataAck() {return false;}

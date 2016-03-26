@@ -111,7 +111,7 @@ void AutoBoot::handleCommand(quint8 command, quint16 aux)
                                .arg(aux)
                                .arg(chunks.at(aux).data.size());
                 sio->port()->writeComplete();
-                sio->port()->writeDataFrame(chunks.at(aux).data);
+                sio->port()->writeDataFrame(chunks[aux].data);
                 emit blockRead(aux + 1, chunks.count());
                 break;
             }

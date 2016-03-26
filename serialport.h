@@ -41,7 +41,7 @@ public:
     virtual int speedByte() = 0;
     virtual QByteArray readCommandFrame() = 0;
     virtual QByteArray readDataFrame(uint size, bool verbose = true) = 0;
-    virtual bool writeDataFrame(const QByteArray &data) = 0;
+    virtual bool writeDataFrame(QByteArray &data) = 0;
     virtual bool writeCommandAck() = 0;
     virtual bool writeCommandNak() = 0;
     virtual bool writeDataAck() = 0;
@@ -57,8 +57,14 @@ signals:
 #ifdef Q_OS_WIN
 #include "serialport-win32.h"
 #endif
-#ifdef Q_OS_UNIX
+
+
+#if defined (Q_OS_UNIX) && ! defined (Q_OS_ANDROID)
 #include "serialport-unix.h"
+#endif
+
+#ifdef Q_OS_ANDROID
+#include "serialport-android.h"
 #endif
 
 #endif // SERIALPORT_H

@@ -20,7 +20,7 @@ public:
     int speedByte();
     QByteArray readCommandFrame();
     QByteArray readDataFrame(uint size, bool verbose = true);
-    bool writeDataFrame(const QByteArray &data);
+    bool writeDataFrame(QByteArray &data);
     bool writeCommandAck();
     bool writeCommandNak();
     bool writeDataAck();
@@ -63,7 +63,7 @@ public:
     int speedByte();
     QByteArray readCommandFrame();
     QByteArray readDataFrame(uint size, bool verbose = true);
-    bool writeDataFrame(const QByteArray &data);
+    bool writeDataFrame(QByteArray &data);
     bool writeCommandAck();
     bool writeCommandNak();
     bool writeDataAck();
