@@ -1,5 +1,6 @@
 package net.greblus;
 
+import java.lang.System;
 import android.widget.Toast;
 import android.os.Bundle;
 import java.lang.String;
@@ -324,6 +325,7 @@ public class SerialActivity extends QtActivity
     public static int getSWCommandFrame() {
         int expected = 0, sync_attempts = 0, got = 1, total_retries = 0;
         int ret = 0, total = 0;
+        boolean prtl = false;
 
         bbuf.position(0);
         mainloop:
@@ -332,11 +334,19 @@ public class SerialActivity extends QtActivity
             do {
                 if (total_retries > 2) return 2;
                 try {
-                    ret = sPort.sread(rb, 5-total, 5000); }
+                    ret = sPort.sread(rb, 5-total, 5000);
+                    if (ret == 5) break;
+                }
                 catch (IOException e) {};
-                if (ret > 0)
-                    total += ret;
-                else
+
+                if ((ret > 0) && (ret < 5)) {
+                    System.arraycopy(rb, 0, t, total, ret);
+                    prtl = true;
+                }
+                total += ret;
+                if ((total == 5) && (prtl == true))
+                        System.arraycopy(t, 0, rb, 0, 5);
+                if (ret <= 0)
                     total_retries++;
             } while (total<5);
 
@@ -352,7 +362,7 @@ public class SerialActivity extends QtActivity
                         ret = 0;
                         do {
                             try {
-                                ret = sPort.sread(t, 1, 1000); }
+                                ret = sPort.sread(t, 1, 5000); }
                             catch (IOException e) {};
                         } while (ret < 1);
                         rb[4] = t[0];
@@ -361,12 +371,12 @@ public class SerialActivity extends QtActivity
             } else {
                 if (debug) Log.i("USB", "No desync");
 
-                for (int i=0; i<5; i++)
+                for (int i=0; i<4; i++)
                    bbuf.put((byte)(rb[i] & 0xff));
 
                    if (debug) {
                        String data = "";
-                       for (int i=0; i<5; i++)
+                       for (int i=0; i<4; i++)
                            data += Integer.toString(rb[i] & 0xff) + " ";
                        Log.i("USB", "Command Frame: " + data);
                    }
@@ -416,7 +426,7 @@ public class SerialActivity extends QtActivity
                 res = 0;
                 try {
                     if (total_retries > 4) return 2;
-                    res = sPort.sread(rb, 5-total, 1000); }
+                    res = sPort.sread(rb, 5-total, 5000); }
                 catch (IOException e) {};
 
                 if (res > 0) {
