@@ -342,8 +342,8 @@ public class SerialActivity extends QtActivity
                 if ((ret > 0) && (ret < 5)) {
                     System.arraycopy(rb, 0, t, total, ret);
                     prtl = true;
+                    total += ret;
                 }
-                total += ret;
                 if ((total == 5) && (prtl == true))
                         System.arraycopy(t, 0, rb, 0, 5);
                 if (ret <= 0)
@@ -354,7 +354,7 @@ public class SerialActivity extends QtActivity
             got = sioChecksum(rb, 4) & 0xff;
 
             if (checkDesync(rb, got, expected) > 0) {
-                Log.i("USB", "Apparent desync");                
+                if (debug) Log.i("USB", "Apparent desync");
                 if (sync_attempts < 4) {
                         sync_attempts++;
                         for (int i = 0; i < 4; i++)
