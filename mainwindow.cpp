@@ -191,6 +191,13 @@ MainWindow::MainWindow(QWidget *parent)
     else
         btnsize = scrw*70/800;
 
+    ui->horizontalFrame_1->setMinimumHeight(btnsize+10);
+    ui->horizontalFrame_2->setMinimumHeight(btnsize+10);
+    ui->horizontalFrame_3->setMinimumHeight(btnsize+10);
+    ui->horizontalFrame_4->setMinimumHeight(btnsize+10);
+    ui->horizontalFrame_5->setMinimumHeight(btnsize+10);
+    ui->horizontalFrame_6->setMinimumHeight(btnsize+10);
+
     foreach(QToolButton* btn, allbtns) {
         btn->setMinimumHeight(btnsize);
         btn->setMinimumWidth(btnsize);
