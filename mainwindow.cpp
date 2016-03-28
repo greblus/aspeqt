@@ -180,7 +180,7 @@ MainWindow::MainWindow(QWidget *parent)
 
     ssize = sqrt(resx*resx + resy*resy);
 
-    if (ssize < 5) ui->textEdit->setVisible(false);
+    if (ssize < 6) ui->textEdit->setVisible(false);
         else ui->verticalSpacer->changeSize(0, 0, QSizePolicy::Fixed, QSizePolicy::Fixed);
 
     QWidget *central = ui->centralWidget;
