@@ -55,6 +55,7 @@ bool g_shadeMode = false;
 int g_savedWidth;
 bool g_logOpen;
 float ssize = 0;
+int btnsize = 0;
 
 // ****************************** END OF GLOBALS ************************************//
 
@@ -170,13 +171,33 @@ MainWindow::MainWindow(QWidget *parent)
 
     /* I love ugly hacks */
     QScreen *screen = qApp->screens().at(0);
-    float resx = screen->size().width()/screen->physicalDotsPerInchX();
-    float resy = screen->size().height()/screen->physicalDotsPerInchY();
+
+    int scrh = screen->size().height();
+    int scrw = screen->size().width();
+
+    float resx = scrw/screen->physicalDotsPerInchX();
+    float resy = scrh/screen->physicalDotsPerInchY();
 
     ssize = sqrt(resx*resx + resy*resy);
 
     if (ssize < 5) ui->textEdit->setVisible(false);
         else ui->verticalSpacer->changeSize(0, 0, QSizePolicy::Fixed, QSizePolicy::Fixed);
+
+    QWidget *central = ui->centralWidget;
+    QList<QToolButton *> allbtns = central->findChildren<QToolButton *>();
+
+    if (scrw > scrh)
+        btnsize = scrh*70/800;
+    else
+        btnsize = scrw*70/800;
+
+    foreach(QToolButton* btn, allbtns) {
+        btn->setMinimumHeight(btnsize);
+        btn->setMinimumWidth(btnsize);
+        btn->setMaximumHeight(btnsize);
+        btn->setMaximumWidth(btnsize);
+        btn->setIconSize(QSize(btnsize-5, btnsize-5));
+    }
 
      /* Parse command line arguments:
       arg(1): session file (xxxxxxxx.aspeqt)   */
@@ -233,12 +254,12 @@ MainWindow::MainWindow(QWidget *parent)
     speedLabel->setText(tr(""));
     onOffLabel->setMinimumWidth(21);
     prtOnOffLabel->setMinimumWidth(18);
-    prtOnOffLabel->setPixmap(QIcon(":/icons/tango-icons/devices/printer.svg").pixmap(48, 48, QIcon::Normal));  //
+    prtOnOffLabel->setPixmap(QIcon(":/icons/tango-icons/devices/printer.svg").pixmap(btnsize-5, btnsize-5, QIcon::Normal));  //
     prtOnOffLabel->setToolTip(ui->actionPrinterEmulation->toolTip());
     prtOnOffLabel->setStatusTip(ui->actionPrinterEmulation->statusTip());
 
     clearMessagesLabel->setMinimumWidth(21);
-    clearMessagesLabel->setPixmap(QIcon(":/icons/tango-icons/actions/edit-clear.svg").pixmap(48, 48, QIcon::Normal));
+    clearMessagesLabel->setPixmap(QIcon(":/icons/tango-icons/actions/edit-clear.svg").pixmap(btnsize-5, btnsize-5, QIcon::Normal));
     clearMessagesLabel->setToolTip(tr("Clear messages"));
     clearMessagesLabel->setStatusTip(clearMessagesLabel->toolTip());
 
@@ -756,8 +777,8 @@ void MainWindow::on_actionPrinterEmulation_triggered()
     if (g_printerEmu) {
         ui->actionPrinterEmulation->setText(QApplication::translate("MainWindow", "Start printer emulation", 0));
         ui->actionPrinterEmulation->setStatusTip(QApplication::translate("MainWindow", "Start printer emulation", 0));
-        ui->actionPrinterEmulation->setIcon(QIcon(":/icons/tango-icons/status/printer-error.svg").pixmap(48, 48, QIcon::Normal, QIcon::On));
-        prtOnOffLabel->setPixmap(QIcon(":/icons/tango-icons/status/printer-error.svg").pixmap(48, 48, QIcon::Normal, QIcon::On));
+        ui->actionPrinterEmulation->setIcon(QIcon(":/icons/tango-icons/status/printer-error.svg").pixmap(btnsize-5, btnsize-5, QIcon::Normal, QIcon::On));
+        prtOnOffLabel->setPixmap(QIcon(":/icons/tango-icons/status/printer-error.svg").pixmap(btnsize-5, btnsize-5, QIcon::Normal, QIcon::On));
         prtOnOffLabel->setToolTip(tr("Start printer emulation"));
         prtOnOffLabel->setStatusTip(prtOnOffLabel->toolTip());
         g_printerEmu = false;
@@ -765,8 +786,8 @@ void MainWindow::on_actionPrinterEmulation_triggered()
     } else {
         ui->actionPrinterEmulation->setText(QApplication::translate("MainWindow", "Stop printer emulation", 0));
         ui->actionPrinterEmulation->setStatusTip(QApplication::translate("MainWindow", "Stop printer emulation", 0));
-        ui->actionPrinterEmulation->setIcon(QIcon(":/icons/tango-icons/devices/printer.svg").pixmap(48, 48, QIcon::Normal, QIcon::On));
-        prtOnOffLabel->setPixmap(QIcon(":/icons/tango-icons/devices/printer.svg").pixmap(48, 48, QIcon::Normal, QIcon::On));
+        ui->actionPrinterEmulation->setIcon(QIcon(":/icons/tango-icons/devices/printer.svg").pixmap(btnsize-5, btnsize-5, QIcon::Normal, QIcon::On));
+        prtOnOffLabel->setPixmap(QIcon(":/icons/tango-icons/devices/printer.svg").pixmap(btnsize-5, btnsize-5, QIcon::Normal, QIcon::On));
         prtOnOffLabel->setToolTip(tr("Stop printer emulation"));
         prtOnOffLabel->setStatusTip(prtOnOffLabel->toolTip());
         g_printerEmu = true;
@@ -790,7 +811,7 @@ void MainWindow::sioStarted()
     ui->actionStartEmulation->setText(tr("&Stop emulation"));
     ui->actionStartEmulation->setToolTip(tr("Stop SIO peripheral emulation"));
     ui->actionStartEmulation->setStatusTip(tr("Stop SIO peripheral emulation"));
-    onOffLabel->setPixmap(QIcon(":/icons/tango-icons/actions/media-playback-stop.svg").pixmap(48, 48, QIcon::Normal, QIcon::On));
+    onOffLabel->setPixmap(QIcon(":/icons/tango-icons/actions/media-playback-stop.svg").pixmap(btnsize-5, btnsize-5, QIcon::Normal, QIcon::On));
     onOffLabel->setToolTip(ui->actionStartEmulation->toolTip());
     onOffLabel->setStatusTip(ui->actionStartEmulation->statusTip());
 }
@@ -801,7 +822,7 @@ void MainWindow::sioFinished()
     ui->actionStartEmulation->setToolTip(tr("Start SIO peripheral emulation"));
     ui->actionStartEmulation->setStatusTip(tr("Start SIO peripheral emulation"));
     ui->actionStartEmulation->setChecked(false);
-    onOffLabel->setPixmap(QIcon(":/icons/tango-icons/actions/media-playback-start.svg").pixmap(48, 48, QIcon::Normal, QIcon::On));
+    onOffLabel->setPixmap(QIcon(":/icons/tango-icons/actions/media-playback-start.svg").pixmap(btnsize-5, btnsize-5, QIcon::Normal, QIcon::On));
     onOffLabel->setToolTip(ui->actionStartEmulation->toolTip());
     onOffLabel->setStatusTip(ui->actionStartEmulation->statusTip());
     speedLabel->hide();

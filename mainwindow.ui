@@ -92,7 +92,7 @@
       </property>
       <layout class="QHBoxLayout" name="horizontalLayout_5">
        <property name="spacing">
-        <number>3</number>
+        <number>6</number>
        </property>
        <property name="leftMargin">
         <number>3</number>
@@ -602,6 +602,12 @@
         <height>0</height>
        </size>
       </property>
+      <property name="font">
+       <font>
+        <family>Arial</family>
+        <pointsize>11</pointsize>
+       </font>
+      </property>
       <property name="contextMenuPolicy">
        <enum>Qt::DefaultContextMenu</enum>
       </property>
@@ -653,7 +659,7 @@
       </property>
       <layout class="QHBoxLayout" name="horizontalLayout_6">
        <property name="spacing">
-        <number>3</number>
+        <number>6</number>
        </property>
        <property name="leftMargin">
         <number>3</number>
@@ -1174,7 +1180,7 @@
       </property>
       <layout class="QHBoxLayout" name="horizontalLayout_4">
        <property name="spacing">
-        <number>3</number>
+        <number>6</number>
        </property>
        <property name="leftMargin">
         <number>3</number>
@@ -1724,7 +1730,7 @@
       </property>
       <layout class="QHBoxLayout" name="horizontalLayout_2">
        <property name="spacing">
-        <number>3</number>
+        <number>6</number>
        </property>
        <property name="leftMargin">
         <number>3</number>
@@ -2257,7 +2263,7 @@
       </property>
       <layout class="QHBoxLayout" name="horizontalLayout_3">
        <property name="spacing">
-        <number>3</number>
+        <number>6</number>
        </property>
        <property name="leftMargin">
         <number>3</number>
@@ -2784,7 +2790,7 @@
       </property>
       <layout class="QHBoxLayout" name="horizontalLayout">
        <property name="spacing">
-        <number>3</number>
+        <number>6</number>
        </property>
        <property name="leftMargin">
         <number>3</number>

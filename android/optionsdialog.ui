@@ -139,8 +139,8 @@
        </property>
        <property name="font">
         <font>
-         <family>Verdana</family>
-         <pointsize>12</pointsize>
+         <family>Arial</family>
+         <pointsize>11</pointsize>
         </font>
        </property>
        <property name="buttonSymbols">
@@ -184,6 +184,12 @@
          <width>0</width>
          <height>80</height>
         </size>
+       </property>
+       <property name="font">
+        <font>
+         <family>Arial</family>
+         <pointsize>11</pointsize>
+        </font>
        </property>
        <item>
         <property name="text">
@@ -329,6 +335,12 @@
          <height>80</height>
         </size>
        </property>
+       <property name="font">
+        <font>
+         <family>Arial</family>
+         <pointsize>11</pointsize>
+        </font>
+       </property>
       </widget>
      </item>
      <item row="9" column="0">
@@ -417,8 +429,8 @@
        </property>
        <property name="font">
         <font>
-         <family>Verdana</family>
-         <pointsize>12</pointsize>
+         <family>Arial</family>
+         <pointsize>11</pointsize>
         </font>
        </property>
        <property name="buttonSymbols">
@@ -476,6 +488,12 @@
          <width>0</width>
          <height>80</height>
         </size>
+       </property>
+       <property name="font">
+        <font>
+         <family>Arial</family>
+         <pointsize>11</pointsize>
+        </font>
        </property>
        <property name="currentIndex">
         <number>2</number>
