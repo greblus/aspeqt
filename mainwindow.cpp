@@ -200,10 +200,10 @@ MainWindow::MainWindow(QWidget *parent)
 
     foreach(QToolButton* btn, allbtns) {
         btn->setMinimumHeight(btnsize);
-        btn->setMinimumWidth(btnsize);
+        btn->setMinimumWidth(btnsize+10);
         btn->setMaximumHeight(btnsize);
-        btn->setMaximumWidth(btnsize);
-        btn->setIconSize(QSize(btnsize-5, btnsize-5));
+        btn->setMaximumWidth(btnsize+10);
+        btn->setIconSize(QSize(btnsize-8, btnsize-8));
     }
 
      /* Parse command line arguments:
