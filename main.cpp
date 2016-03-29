@@ -33,9 +33,6 @@ int main(int argc, char *argv[])
 #endif
     QApplication a(argc, argv);
     MainWindow w;
-#if QT_VERSION >= 0x050600
-    a.setAttribute(Qt::AA_EnableHighDpiScaling, true);
-#endif
     w.show();
     ret = a.exec();
 #ifdef Q_OS_WIN

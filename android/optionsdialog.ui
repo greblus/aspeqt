@@ -140,7 +140,7 @@
        <property name="font">
         <font>
          <family>Arial</family>
-         <pointsize>11</pointsize>
+         <pointsize>12</pointsize>
         </font>
        </property>
        <property name="buttonSymbols">
@@ -188,7 +188,7 @@
        <property name="font">
         <font>
          <family>Arial</family>
-         <pointsize>11</pointsize>
+         <pointsize>12</pointsize>
         </font>
        </property>
        <item>
@@ -338,7 +338,7 @@
        <property name="font">
         <font>
          <family>Arial</family>
-         <pointsize>11</pointsize>
+         <pointsize>12</pointsize>
         </font>
        </property>
       </widget>
@@ -430,7 +430,7 @@
        <property name="font">
         <font>
          <family>Arial</family>
-         <pointsize>11</pointsize>
+         <pointsize>12</pointsize>
         </font>
        </property>
        <property name="buttonSymbols">
@@ -492,7 +492,7 @@
        <property name="font">
         <font>
          <family>Arial</family>
-         <pointsize>11</pointsize>
+         <pointsize>12</pointsize>
         </font>
        </property>
        <property name="currentIndex">

@@ -22,6 +22,7 @@ OptionsDialog::OptionsDialog(QWidget *parent) :
     QWidget *w = m_ui->scrollArea->viewport();
     QScroller::grabGesture(w, QScroller::LeftMouseButtonGesture);
     setWindowState(Qt::WindowFullScreen);
+    
     QScreen *screen = qApp->screens().at(0);
     int rx = screen->availableSize().width();
     int ry = screen->availableSize().height();
@@ -30,6 +31,19 @@ OptionsDialog::OptionsDialog(QWidget *parent) :
     this->setMinimumHeight(ry);
 
     m_ui->scrollArea->resize(rx,ry);
+    
+    int wsize;
+    if (rx > ry)
+        wsize = ry*90/800;
+    else
+        wsize = rx*90/800;
+
+    m_ui->serialPortHandshakeCombo->setMinimumHeight(wsize);
+    m_ui->serialPortBaudCombo->setMinimumHeight(wsize);
+    m_ui->serialPortDivisorEdit->setMinimumHeight(wsize);
+    m_ui->emulationCustomCasBaudSpin->setMinimumHeight(wsize);
+    m_ui->i18nLanguageCombo->setMinimumHeight(wsize);
+    m_ui->pushButton->setMinimumHeight(wsize);
 #else
     m_ui->treeWidget->expandAll();
     itemStandard = m_ui->treeWidget->topLevelItem(0)->child(0);
@@ -200,7 +214,7 @@ void OptionsDialog::on_serialPortUseDivisorsBox_toggled(bool checked)
     m_ui->serialPortDivisorEdit->setEnabled(checked);
 }
 
-void OptionsDialog::on_useEmulationCustomCasBaudBox_toggled(bool checked)
+void OptionsDialog::on_emulationUseCustomCasBaudBox_toggled(bool checked)
 {
     m_ui->emulationCustomCasBaudSpin->setEnabled(checked);
 }
