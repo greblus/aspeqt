@@ -4,6 +4,7 @@
 
 #include <QTime>
 #include <QDebug>
+#include <QScreen>
 
 extern QString g_exefileName;
 bool reload;
@@ -12,12 +13,39 @@ AutoBootDialog::AutoBootDialog(QWidget *parent) :
     QDialog(parent),
     ui(new Ui::AutoBootDialog)
 {
+    QScreen *screen = qApp->screens().at(0);
+
     ui->setupUi(this);
     ui->progressBar->setVisible(false);
 
     #ifdef Q_OS_ANDROID
-    connect(ui->pushButton_2, SIGNAL(clicked()), this, SLOT(reject()));
-    connect(ui->pushButton, SIGNAL(clicked()), this, SLOT(reloadExe));
+    int rx = screen->size().width();
+    int ry = screen->size().height();
+
+    int bs, ts, nx, ny;
+    ts = (rx > ry) ? ry : rx;
+    nx = ts*0.8; ny = ts;
+
+    this->resize(nx, ny);
+    this->setGeometry(rx/2-nx/2, ry/2-ny/2, nx, ny);
+
+    ui->verticalLayoutWidget->setGeometry(0, 0, nx, ny);
+    ui->verticalLayoutWidget->setMaximumWidth(nx);
+    ui->verticalLayoutWidget->setMaximumHeight(ny);
+
+    ui->progressBar->setMaximumWidth(nx*0.8);
+
+    bs = ts*70/800;
+    ui->pushButton1->setMaximumHeight(bs+30);
+    ui->pushButton1->setMaximumWidth(nx*0.8);
+    ui->pushButton2->setMaximumHeight(bs+30);
+    ui->pushButton2->setMaximumWidth(nx*0.8);
+
+    ui->label->setMaximumWidth(nx*0.8);
+
+    connect(ui->pushButton2, SIGNAL(clicked()), this, SLOT(reject()));
+    connect(ui->pushButton1, SIGNAL(clicked()), this, SLOT(reloadExe()));
+
     #else
     connect(ui->buttonBox, SIGNAL(clicked(QAbstractButton*)), this, SLOT(onClick(QAbstractButton*)));
     #endif
