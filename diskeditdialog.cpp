@@ -15,6 +15,7 @@
 
 #ifdef Q_OS_ANDROID
 #include <QAndroidJniObject>
+#include <QScreen>
 #endif
 
 /* MyModel */
@@ -451,6 +452,18 @@ DiskEditDialog::DiskEditDialog(QWidget *parent) :
 {
     m_ui->setupUi(this);
 
+#ifdef Q_OS_ANDROID
+    QScreen *screen = qApp->screens().at(0);
+    int rx = screen->size().width();
+    int ry = screen->size().height();
+    int bs, ts;
+    ts = (rx > ry) ? ry : rx;
+    bs = ts*90/800;
+    m_ui->toolBar->setIconSize(QSize(bs, bs));
+    m_ui->aView->verticalHeader()->setSectionResizeMode(QHeaderView::ResizeToContents);
+    m_ui->aView->horizontalHeader()->setSectionResizeMode(QHeaderView::ResizeToContents);
+
+#endif
     setAttribute(Qt::WA_DeleteOnClose);
     m_fileSystemBox = new QComboBox(this);
     m_fileSystemBox->addItem(tr("No file system"));
