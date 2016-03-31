@@ -3,6 +3,7 @@
 
 #include <QTimer>
 #include <QtDebug>
+#include <QScreen>
 
 CassetteDialog::CassetteDialog(QWidget *parent, const QString &fileName)
     : QDialog(parent), ui(new Ui::CassetteDialog)
@@ -15,6 +16,29 @@ CassetteDialog::CassetteDialog(QWidget *parent, const QString &fileName)
 
     ui->setupUi(this);
 
+#ifdef Q_OS_ANDROID
+    QScreen *screen = qApp->screens().at(0);
+    int rx = screen->size().width();
+    int ry = screen->size().height();
+
+    int bs, ts, nx, ny;
+    ts = (rx > ry) ? ry : rx;
+    nx = ts*0.8; ny = ts;
+
+    this->resize(nx, ny);
+    this->setGeometry(rx/2-nx/2, ry/2-ny/2, nx, ny);
+
+//    ui->verticalLayoutWidget->setGeometry(0, 0, nx, ny);
+//    ui->verticalLayoutWidget->setMaximumWidth(nx);
+//    ui->verticalLayoutWidget->setMaximumHeight(ny);
+
+    ui->progressBar->setMaximumWidth(nx*0.8);
+
+    bs = ts*70/800;
+    ui->buttonBox->setMaximumHeight(bs+30);
+    ui->buttonBox->setMaximumWidth(nx*0.8);
+    ui->label->setMaximumWidth(nx*0.8);
+#endif
     ui->progressBar->setVisible(false);
     worker = new CassetteWorker;
     mTotalDuration = worker->mTotalDuration;
