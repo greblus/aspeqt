@@ -20,20 +20,12 @@ CassetteDialog::CassetteDialog(QWidget *parent, const QString &fileName)
     QScreen *screen = qApp->screens().at(0);
     int rx = screen->size().width();
     int ry = screen->size().height();
-
     int bs, ts, nx, ny;
     ts = (rx > ry) ? ry : rx;
     nx = ts*0.8; ny = ts;
-
     this->resize(nx, ny);
-    this->setGeometry(rx/2-nx/2, ry/2-ny/2, nx, ny);
-
-//    ui->verticalLayoutWidget->setGeometry(0, 0, nx, ny);
-//    ui->verticalLayoutWidget->setMaximumWidth(nx);
-//    ui->verticalLayoutWidget->setMaximumHeight(ny);
-
+    this->setGeometry(rx/2-nx/2, ry/2-ny/2, nx, ny*0.8);
     ui->progressBar->setMaximumWidth(nx*0.8);
-
     bs = ts*70/800;
     ui->buttonBox->setMaximumHeight(bs+30);
     ui->buttonBox->setMaximumWidth(nx*0.8);
