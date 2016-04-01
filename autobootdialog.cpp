@@ -22,30 +22,28 @@ AutoBootDialog::AutoBootDialog(QWidget *parent) :
     int rx = screen->size().width();
     int ry = screen->size().height();
 
-    int bs, ts, nx, ny;
-    ts = (rx > ry) ? ry : rx;
-    nx = ts*0.8; ny = ts;
+    int ts = (rx > ry) ? ry : rx;
 
-    this->resize(nx, ny);
-    this->setGeometry(rx/2-nx/2, ry/2-ny/2, nx, ny);
+    //this->resize(nx, ny);
+    this->setGeometry(0, 0, rx, ry);
 
-    ui->verticalLayoutWidget->setGeometry(0, 0, nx, ny);
-    ui->verticalLayoutWidget->setMaximumWidth(nx);
-    ui->verticalLayoutWidget->setMaximumHeight(ny);
+    ui->verticalLayoutWidget->setGeometry(0, 0, rx, ry);
+    ui->verticalLayoutWidget->setMaximumWidth(rx);
+    ui->verticalLayoutWidget->setMaximumHeight(ry);
 
-    ui->progressBar->setMaximumWidth(nx*0.8);
+    ui->progressBar->setMaximumWidth(rx*0.8);
 
-    bs = ts*70/800;
+    int bs = ts*70/800;
     ui->pushButton1->setMaximumHeight(bs+30);
-    ui->pushButton1->setMaximumWidth(nx*0.8);
+    ui->pushButton1->setMaximumWidth(rx*0.8);
     ui->pushButton2->setMaximumHeight(bs+30);
-    ui->pushButton2->setMaximumWidth(nx*0.8);
+    ui->pushButton2->setMaximumWidth(rx*0.8);
 
-    ui->label->setMaximumWidth(nx*0.8);
+    ui->label->setMaximumWidth(rx*0.8);
+    ui->verticalLayoutWidget->setContentsMargins(int(rx*0.2/2), int(ry/8), int(rx*0.2/2), 0);
 
     connect(ui->pushButton2, SIGNAL(clicked()), this, SLOT(reject()));
     connect(ui->pushButton1, SIGNAL(clicked()), this, SLOT(reloadExe()));
-
     #else
     connect(ui->buttonBox, SIGNAL(clicked(QAbstractButton*)), this, SLOT(onClick(QAbstractButton*)));
     #endif

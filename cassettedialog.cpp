@@ -18,20 +18,27 @@ CassetteDialog::CassetteDialog(QWidget *parent, const QString &fileName)
 
 #ifdef Q_OS_ANDROID
     QScreen *screen = qApp->screens().at(0);
+
     int rx = screen->size().width();
     int ry = screen->size().height();
-    int bs, ts, nx, ny;
-    ts = (rx > ry) ? ry : rx;
-    nx = ts*0.8; ny = ts;
-    this->resize(nx, ny);
-    this->setGeometry(rx/2-nx/2, ry/2-ny/2, nx, ny*0.8);
-    ui->progressBar->setMaximumWidth(nx*0.8);
-    bs = ts*70/800;
+
+    int ts = (rx > ry) ? ry : rx;
+
+//    this->resize(nx, ny);
+    this->setGeometry(0, 0, rx, ry);
+
+    ui->verticalLayoutWidget->setGeometry(0, 0, rx, ry);
+    ui->verticalLayoutWidget->setMaximumWidth(rx);
+    ui->verticalLayoutWidget->setMaximumHeight(ry);
+
+    ui->progressBar->setMaximumWidth(rx*0.8);
+
+    int bs = ts*70/800;
     ui->buttonBox->setMaximumHeight(bs+30);
-    ui->buttonBox->setMaximumWidth(nx*0.8);
-    ui->label->setMaximumWidth(nx*0.8);
+    ui->label->setMaximumWidth(rx*0.8);
+    ui->verticalLayoutWidget->setContentsMargins(int(rx*0.2/2), int(ry/8), int(rx*0.2/2), int(ry/10));
 #endif
-    ui->progressBar->setVisible(false);
+//    ui->progressBar->setVisible(false);
     worker = new CassetteWorker;
     mTotalDuration = worker->mTotalDuration;
     mRemainingTime = mTotalDuration;
