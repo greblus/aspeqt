@@ -37,14 +37,13 @@ CassetteDialog::CassetteDialog(QWidget *parent, const QString &fileName)
     ui->label->setMaximumWidth(rx*0.8);
     ui->verticalLayoutWidget->setContentsMargins(int(rx*0.2/2), int(ry/8), int(rx*0.2/2), int(ry/10));
 #endif
-//    ui->progressBar->setVisible(false);
+    ui->progressBar->setVisible(true);
     worker = new CassetteWorker;
     mTotalDuration = worker->mTotalDuration;
     mRemainingTime = mTotalDuration;
     int minutes = mRemainingTime / 60000;
     int seconds = (mRemainingTime - minutes * 60000)/1000;
     ui->label->setText(tr("AspeQt is ready to playback the cassette image file '%1'.\n\n"
-                          "The estimated playback duration is: %2:%3\n\n"
                           "Do whatever is necessary in your Atari to load this cassette "
                           "image like rebooting while holding Option and Start buttons "
                           "or entering \"CLOAD\" in the BASIC prompt.\n\n"
@@ -93,11 +92,11 @@ int CassetteDialog::exec()
 void CassetteDialog::accept()
 {
     ui->buttonBox->setStandardButtons(QDialogButtonBox::Cancel);
+
     int minutes = mRemainingTime / 60000;
     int seconds = (mRemainingTime - minutes * 60000)/1000;
     ui->label->setText(tr("Playing back cassette image.\n\n"
                           "Estimated time left: %1:%2").arg(minutes).arg(seconds, 2, 10, QChar('0')));
-    ui->progressBar->setVisible(true);
 
     worker->start(QThread::TimeCriticalPriority);
     mTimer = new QTimer(this);
@@ -107,13 +106,14 @@ void CassetteDialog::accept()
 
 void CassetteDialog::progress(int remainingTime)
 {
+    mTotalDuration = worker->mTotalDuration;
     mRemainingTime = remainingTime;
     int minutes = mRemainingTime / 60000;
     int seconds = (mRemainingTime - minutes * 60000)/1000;
     ui->label->setText(tr("Playing back cassette image.\n\n"
                           "Estimated time left: %1:%2").arg(minutes).arg(seconds, 2, 10, QChar('0')));
     ui->progressBar->setMaximum(mTotalDuration);
-    ui->progressBar->setValue(mTotalDuration - mRemainingTime);
+    ui->progressBar->setValue(mRemainingTime);
 }
 
 void CassetteDialog::tick()

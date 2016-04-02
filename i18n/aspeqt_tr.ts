@@ -614,12 +614,12 @@ Kartuş(ları) çıkarmayı ve gerekiyorsa OPTION tuşunu basılı tutarak BASIC
         <translation type="obsolete">Ayni dosyayı birden fazla yeniden başlatmak için bu diyalogu açık tut</translation>
     </message>
     <message>
-        <location filename="../autobootdialog.cpp" line="78"/>
+        <location filename="../autobootdialog.cpp" line="77"/>
         <source>Atari is loading the booter.</source>
         <translation>Atari önyükleme programını yüklüyor.</translation>
     </message>
     <message>
-        <location filename="../autobootdialog.cpp" line="83"/>
+        <location filename="../autobootdialog.cpp" line="82"/>
         <source>Atari is loading the program.
 
 For some programs you may have to close this dialog manually when the program starts.</source>
@@ -700,7 +700,7 @@ Bazı programlar bu diyaloğu elle kapamanızı gerektirebilir.</translation>
         <translation>Kaset imajı yükleme</translation>
     </message>
     <message>
-        <location filename="../android/cassettedialog.ui" line="67"/>
+        <location filename="../android/cassettedialog.ui" line="76"/>
         <location filename="../cassettedialog.ui" line="35"/>
         <source>Do whatever is necessary in your Atari to load this cassette image like rebooting while holding Option and Start buttons or entering &quot;CLOAD&quot; in the BASIC prompt.
 
@@ -710,7 +710,6 @@ When you hear the beep sound, push the OK button below and press a key on your A
 Kaset uyarı biplemesini duyduğunuzda aşağıdaki OK tuşuna ve aynı anda da Atarinizde herhangi bir tuşa basın.</translation>
     </message>
     <message>
-        <location filename="../cassettedialog.cpp" line="47"/>
         <source>AspeQt is ready to playback the cassette image file &apos;%1&apos;.
 
 The estimated playback duration is: %2:%3
@@ -718,7 +717,7 @@ The estimated playback duration is: %2:%3
 Do whatever is necessary in your Atari to load this cassette image like rebooting while holding Option and Start buttons or entering &quot;CLOAD&quot; in the BASIC prompt.
 
 When you hear the beep sound, push the OK button below and press a key on your Atari at about the same time.</source>
-        <translation>AspeQt &apos;%1&apos; kaset imajını başlatmaya hazır.
+        <translation type="vanished">AspeQt &apos;%1&apos; kaset imajını başlatmaya hazır.
 
 Tahmini yükleme süresi: %2:%3
 
@@ -727,8 +726,17 @@ Bu kaset imajını yüklemek için Ataride gerekeni yapın (önyükleme için OP
 Kaset uyarı biplemesini duyduğunuzda aşağıdaki OK tuşuna ve aynı anda da Atarinizde herhangi bir tuşa basın.</translation>
     </message>
     <message>
-        <location filename="../cassettedialog.cpp" line="99"/>
-        <location filename="../cassettedialog.cpp" line="114"/>
+        <location filename="../cassettedialog.cpp" line="46"/>
+        <source>AspeQt is ready to playback the cassette image file &apos;%1&apos;.
+
+Do whatever is necessary in your Atari to load this cassette image like rebooting while holding Option and Start buttons or entering &quot;CLOAD&quot; in the BASIC prompt.
+
+When you hear the beep sound, push the OK button below and press a key on your Atari at about the same time.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../cassettedialog.cpp" line="98"/>
+        <location filename="../cassettedialog.cpp" line="113"/>
         <source>Playing back cassette image.
 
 Estimated time left: %1:%2</source>
@@ -1626,87 +1634,87 @@ p, li { white-space: pre-wrap; }
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../logdisplaydialog.ui" line="130"/>
+        <location filename="../logdisplaydialog.ui" line="117"/>
         <source>Filter log by:</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../logdisplaydialog.ui" line="146"/>
+        <location filename="../logdisplaydialog.ui" line="133"/>
         <source>ALL</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../logdisplaydialog.ui" line="151"/>
+        <location filename="../logdisplaydialog.ui" line="138"/>
         <source>Disk 1</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../logdisplaydialog.ui" line="156"/>
+        <location filename="../logdisplaydialog.ui" line="143"/>
         <source>Disk 2</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../logdisplaydialog.ui" line="161"/>
+        <location filename="../logdisplaydialog.ui" line="148"/>
         <source>Disk 3</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../logdisplaydialog.ui" line="166"/>
+        <location filename="../logdisplaydialog.ui" line="153"/>
         <source>Disk 4</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../logdisplaydialog.ui" line="171"/>
+        <location filename="../logdisplaydialog.ui" line="158"/>
         <source>Disk 5</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../logdisplaydialog.ui" line="176"/>
+        <location filename="../logdisplaydialog.ui" line="163"/>
         <source>Disk 6</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../logdisplaydialog.ui" line="181"/>
+        <location filename="../logdisplaydialog.ui" line="168"/>
         <source>Disk 7</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../logdisplaydialog.ui" line="186"/>
+        <location filename="../logdisplaydialog.ui" line="173"/>
         <source>Disk 8</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../logdisplaydialog.ui" line="191"/>
+        <location filename="../logdisplaydialog.ui" line="178"/>
         <source>Disk 9</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../logdisplaydialog.ui" line="196"/>
+        <location filename="../logdisplaydialog.ui" line="183"/>
         <source>Disk 10</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../logdisplaydialog.ui" line="201"/>
+        <location filename="../logdisplaydialog.ui" line="188"/>
         <source>Disk 11</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../logdisplaydialog.ui" line="206"/>
+        <location filename="../logdisplaydialog.ui" line="193"/>
         <source>Disk 12</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../logdisplaydialog.ui" line="211"/>
+        <location filename="../logdisplaydialog.ui" line="198"/>
         <source>Disk 13</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../logdisplaydialog.ui" line="216"/>
+        <location filename="../logdisplaydialog.ui" line="203"/>
         <source>Disk 14</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../logdisplaydialog.ui" line="221"/>
+        <location filename="../logdisplaydialog.ui" line="208"/>
         <source>Disk 15</source>
         <translation type="unfinished"></translation>
     </message>
@@ -4576,183 +4584,183 @@ We will now migrate the existing settings to their new repository, note that set
         <translation>ASCII Atari Çıktısı</translation>
     </message>
     <message>
-        <location filename="../textprinterwindow.ui" line="124"/>
+        <location filename="../textprinterwindow.ui" line="130"/>
         <source>toolBar</source>
         <translation>araç çubuğu</translation>
     </message>
     <message>
-        <location filename="../textprinterwindow.ui" line="160"/>
+        <location filename="../textprinterwindow.ui" line="166"/>
         <source>Save to a file...</source>
         <translation>Dosyaya kaydet...</translation>
     </message>
     <message>
-        <location filename="../textprinterwindow.ui" line="163"/>
+        <location filename="../textprinterwindow.ui" line="169"/>
         <source>Save contents to a file (Ctrl+S)</source>
         <translation>İçeriği dosyaya kaydet (Ctrl+S)</translation>
     </message>
     <message>
-        <location filename="../textprinterwindow.ui" line="166"/>
+        <location filename="../textprinterwindow.ui" line="172"/>
         <source>Save contents to a file</source>
         <translation>İçeriği dosyaya kaydet</translation>
     </message>
     <message>
-        <location filename="../textprinterwindow.ui" line="169"/>
-        <location filename="../textprinterwindow.ui" line="356"/>
+        <location filename="../textprinterwindow.ui" line="175"/>
+        <location filename="../textprinterwindow.ui" line="362"/>
         <source>Ctrl+S</source>
         <translation></translation>
     </message>
     <message>
-        <location filename="../textprinterwindow.ui" line="178"/>
+        <location filename="../textprinterwindow.ui" line="184"/>
         <source>Clear</source>
         <translation>Temizle</translation>
     </message>
     <message>
-        <location filename="../textprinterwindow.ui" line="181"/>
+        <location filename="../textprinterwindow.ui" line="187"/>
         <source>Clear contents (Ctrl+C)</source>
         <translation>İçeriği temizle (Ctrl+C)</translation>
     </message>
     <message>
-        <location filename="../textprinterwindow.ui" line="184"/>
+        <location filename="../textprinterwindow.ui" line="190"/>
         <source>Clear contents</source>
         <translation>İçeriği temizle</translation>
     </message>
     <message>
-        <location filename="../textprinterwindow.ui" line="187"/>
+        <location filename="../textprinterwindow.ui" line="193"/>
         <source>Ctrl+C</source>
         <translation>Ctrl+C</translation>
     </message>
     <message>
-        <location filename="../textprinterwindow.ui" line="202"/>
+        <location filename="../textprinterwindow.ui" line="208"/>
         <source>Word wrap</source>
         <translation>Kelime kaydırma</translation>
     </message>
     <message>
-        <location filename="../textprinterwindow.ui" line="205"/>
+        <location filename="../textprinterwindow.ui" line="211"/>
         <source>Toggle word wrapping (Ctrl+W)</source>
         <translation>Kelime kaydırma ayarı (Ctrl+W)</translation>
     </message>
     <message>
-        <location filename="../textprinterwindow.ui" line="208"/>
+        <location filename="../textprinterwindow.ui" line="214"/>
         <source>Toggle word wrapping</source>
         <translation>Kelime kaydırma ayarı</translation>
     </message>
     <message>
-        <location filename="../textprinterwindow.ui" line="211"/>
+        <location filename="../textprinterwindow.ui" line="217"/>
         <source>Ctrl+W</source>
         <translation></translation>
     </message>
     <message>
-        <location filename="../textprinterwindow.ui" line="220"/>
+        <location filename="../textprinterwindow.ui" line="226"/>
         <source>Print</source>
         <translation>Yazdır</translation>
     </message>
     <message>
-        <location filename="../textprinterwindow.ui" line="223"/>
+        <location filename="../textprinterwindow.ui" line="229"/>
         <source>Send contents to printer (Ctrl+P)</source>
         <translation>İçeriği yazıcıya gönder (Ctrl+P)</translation>
     </message>
     <message>
-        <location filename="../textprinterwindow.ui" line="226"/>
+        <location filename="../textprinterwindow.ui" line="232"/>
         <source>Send contents to printer</source>
         <translation>İçeriği yazıcıya gönder</translation>
     </message>
     <message>
-        <location filename="../textprinterwindow.ui" line="229"/>
+        <location filename="../textprinterwindow.ui" line="235"/>
         <source>Ctrl+P</source>
         <translation></translation>
     </message>
     <message>
-        <location filename="../textprinterwindow.ui" line="239"/>
+        <location filename="../textprinterwindow.ui" line="245"/>
         <source>Atascii Font</source>
         <translation>Atascii Yazıyüzü</translation>
     </message>
     <message>
-        <location filename="../textprinterwindow.ui" line="242"/>
+        <location filename="../textprinterwindow.ui" line="248"/>
         <source>Toggle ATASCII fonts (Alt+F)</source>
         <translation>Atascii Yazıyüzü Değiştir (Alt+F)</translation>
     </message>
     <message>
-        <location filename="../textprinterwindow.ui" line="245"/>
+        <location filename="../textprinterwindow.ui" line="251"/>
         <source>Toggle ATASCII fonts</source>
         <translation>Atascii Yazıyüzü Değiştir</translation>
     </message>
     <message>
-        <location filename="../textprinterwindow.ui" line="248"/>
+        <location filename="../textprinterwindow.ui" line="254"/>
         <source>Alt+F</source>
         <translation>Alt+F</translation>
     </message>
     <message>
-        <location filename="../textprinterwindow.ui" line="273"/>
+        <location filename="../textprinterwindow.ui" line="279"/>
         <source>Alt+Shift+F</source>
         <translation>Alt+Shift+F</translation>
     </message>
     <message>
-        <location filename="../textprinterwindow.ui" line="301"/>
+        <location filename="../textprinterwindow.ui" line="307"/>
         <source>Alt+Shift+H</source>
         <translation>Alt+Shift+H</translation>
     </message>
     <message>
-        <location filename="../textprinterwindow.ui" line="332"/>
+        <location filename="../textprinterwindow.ui" line="338"/>
         <source>Alt+H</source>
         <translation>Alt+H</translation>
     </message>
     <message>
-        <location filename="../textprinterwindow.ui" line="347"/>
+        <location filename="../textprinterwindow.ui" line="353"/>
         <source>Strip Line Numbers</source>
         <translation>Satır numaralarını kaldır</translation>
     </message>
     <message>
-        <location filename="../textprinterwindow.ui" line="350"/>
+        <location filename="../textprinterwindow.ui" line="356"/>
         <source>Strip Line numbers from the text output (Ctrl-S)</source>
         <translation>Çıktıdan satır numaralarını kaldır (Ctrl+S)</translation>
     </message>
     <message>
-        <location filename="../textprinterwindow.ui" line="353"/>
+        <location filename="../textprinterwindow.ui" line="359"/>
         <source>Strip Line numbers from the text output</source>
         <translation>Çıktıdan satır numaralarını kaldır</translation>
     </message>
     <message>
-        <location filename="../textprinterwindow.ui" line="264"/>
+        <location filename="../textprinterwindow.ui" line="270"/>
         <source>Font Size</source>
         <translation>Yazıyüzü boyu</translation>
     </message>
     <message>
-        <location filename="../textprinterwindow.ui" line="267"/>
+        <location filename="../textprinterwindow.ui" line="273"/>
         <source>Toggle Font Size (6, 9, 12 pt) (Alt+Shift+F)</source>
         <translation>Yazıyüzü boyu değiştir (6, 9, 12) (Alt+Shift+F)</translation>
     </message>
     <message>
-        <location filename="../textprinterwindow.ui" line="270"/>
+        <location filename="../textprinterwindow.ui" line="276"/>
         <source>Toggle Font Size (6, 9, 12 pt)</source>
         <translation>Yazıyüzü boyu değiştir (6, 9, 12)</translation>
     </message>
     <message>
-        <location filename="../textprinterwindow.ui" line="292"/>
+        <location filename="../textprinterwindow.ui" line="298"/>
         <source>Hide/Show Ascii</source>
         <translation>Ascii sayfasını Sakla/Göster</translation>
     </message>
     <message>
-        <location filename="../textprinterwindow.ui" line="295"/>
+        <location filename="../textprinterwindow.ui" line="301"/>
         <source>Hide/Show Ascii Printer Output (Alt+Shift+H)</source>
         <translation>Ascii çıktısını Sakla/Göster (Alt+Shıft+H)</translation>
     </message>
     <message>
-        <location filename="../textprinterwindow.ui" line="298"/>
+        <location filename="../textprinterwindow.ui" line="304"/>
         <source>Hide/Show Ascii Printer Output</source>
         <translation>Ascii çıktısını Sakla/Göster</translation>
     </message>
     <message>
-        <location filename="../textprinterwindow.ui" line="323"/>
+        <location filename="../textprinterwindow.ui" line="329"/>
         <source>HideShow_Atascii</source>
         <translation>Atascii sayfasını Sakla/Göster</translation>
     </message>
     <message>
-        <location filename="../textprinterwindow.ui" line="326"/>
+        <location filename="../textprinterwindow.ui" line="332"/>
         <source> Hide/Show Atascii Printer Output (Alt+H)</source>
         <translation>Atascii çıktısını Sakla/Göster (Alt+H)</translation>
     </message>
     <message>
-        <location filename="../textprinterwindow.ui" line="329"/>
+        <location filename="../textprinterwindow.ui" line="335"/>
         <source>Hide/Show Atascii Printer Output</source>
         <translation>Atascii çıktısını Sakla/Göster</translation>
     </message>

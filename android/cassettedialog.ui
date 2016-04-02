@@ -34,11 +34,20 @@
    <layout class="QVBoxLayout" name="verticalLayout">
     <item>
      <widget class="QProgressBar" name="progressBar">
-      <property name="value">
+      <property name="minimum">
        <number>0</number>
+      </property>
+      <property name="maximum">
+       <number>100</number>
+      </property>
+      <property name="value">
+       <number>100</number>
       </property>
       <property name="alignment">
        <set>Qt::AlignCenter</set>
+      </property>
+      <property name="invertedAppearance">
+       <bool>false</bool>
       </property>
      </widget>
     </item>

@@ -415,19 +415,17 @@ When you hear the beep sound, push the OK button below and press a key on your A
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <source>AspeQt is ready to playback the cassette image file &apos;%1&apos;.
+        <source>Playing back cassette image.
 
-The estimated playback duration is: %2:%3
+Estimated time left: %1:%2</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>AspeQt is ready to playback the cassette image file &apos;%1&apos;.
 
 Do whatever is necessary in your Atari to load this cassette image like rebooting while holding Option and Start buttons or entering &quot;CLOAD&quot; in the BASIC prompt.
 
 When you hear the beep sound, push the OK button below and press a key on your Atari at about the same time.</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Playing back cassette image.
-
-Estimated time left: %1:%2</source>
         <translation type="unfinished"></translation>
     </message>
 </context>

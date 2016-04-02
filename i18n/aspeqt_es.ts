@@ -467,12 +467,12 @@ Don&apos;t forget to remove any cartridges and disable BASIC by holding down the
 No se olvide de retirar los cartuchos y desactivar BASIC, mantenga pulsada la tecla OPTION del Atari si es necesario.</translation>
     </message>
     <message>
-        <location filename="../autobootdialog.cpp" line="78"/>
+        <location filename="../autobootdialog.cpp" line="77"/>
         <source>Atari is loading the booter.</source>
         <translation>Atari se carga el gestor de arranque.</translation>
     </message>
     <message>
-        <location filename="../autobootdialog.cpp" line="83"/>
+        <location filename="../autobootdialog.cpp" line="82"/>
         <source>Atari is loading the program.
 
 For some programs you may have to close this dialog manually when the program starts.</source>
@@ -553,7 +553,7 @@ Para algunos programas es posible que tenga que cerrar este cuadro de diálogo m
         <translation>Cassette de reproducción de imágenes</translation>
     </message>
     <message>
-        <location filename="../android/cassettedialog.ui" line="67"/>
+        <location filename="../android/cassettedialog.ui" line="76"/>
         <location filename="../cassettedialog.ui" line="35"/>
         <source>Do whatever is necessary in your Atari to load this cassette image like rebooting while holding Option and Start buttons or entering &quot;CLOAD&quot; in the BASIC prompt.
 
@@ -563,7 +563,6 @@ When you hear the beep sound, push the OK button below and press a key on your A
 Cuando oiga el pitido, pulse el botón OK y presione una tecla en el Atari o menos al mismo tiempo.</translation>
     </message>
     <message>
-        <location filename="../cassettedialog.cpp" line="47"/>
         <source>AspeQt is ready to playback the cassette image file &apos;%1&apos;.
 
 The estimated playback duration is: %2:%3
@@ -571,15 +570,24 @@ The estimated playback duration is: %2:%3
 Do whatever is necessary in your Atari to load this cassette image like rebooting while holding Option and Start buttons or entering &quot;CLOAD&quot; in the BASIC prompt.
 
 When you hear the beep sound, push the OK button below and press a key on your Atari at about the same time.</source>
-        <translation>AspeQt está listo para reproducir el archivo de imagen de casete &apos;%1&apos;.
+        <translation type="vanished">AspeQt está listo para reproducir el archivo de imagen de casete &apos;%1&apos;.
 
 La duración de reproducción estimada es: %2:%3
 
 Cuando oiga el pitido, pulse el botón OK y presione una tecla en el Atari al mismo tiempo.</translation>
     </message>
     <message>
-        <location filename="../cassettedialog.cpp" line="99"/>
-        <location filename="../cassettedialog.cpp" line="114"/>
+        <location filename="../cassettedialog.cpp" line="46"/>
+        <source>AspeQt is ready to playback the cassette image file &apos;%1&apos;.
+
+Do whatever is necessary in your Atari to load this cassette image like rebooting while holding Option and Start buttons or entering &quot;CLOAD&quot; in the BASIC prompt.
+
+When you hear the beep sound, push the OK button below and press a key on your Atari at about the same time.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../cassettedialog.cpp" line="98"/>
+        <location filename="../cassettedialog.cpp" line="113"/>
         <source>Playing back cassette image.
 
 Estimated time left: %1:%2</source>
@@ -1610,87 +1618,87 @@ p, li { white-space: pre-wrap; }
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../logdisplaydialog.ui" line="130"/>
+        <location filename="../logdisplaydialog.ui" line="117"/>
         <source>Filter log by:</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../logdisplaydialog.ui" line="146"/>
+        <location filename="../logdisplaydialog.ui" line="133"/>
         <source>ALL</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../logdisplaydialog.ui" line="151"/>
+        <location filename="../logdisplaydialog.ui" line="138"/>
         <source>Disk 1</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../logdisplaydialog.ui" line="156"/>
+        <location filename="../logdisplaydialog.ui" line="143"/>
         <source>Disk 2</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../logdisplaydialog.ui" line="161"/>
+        <location filename="../logdisplaydialog.ui" line="148"/>
         <source>Disk 3</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../logdisplaydialog.ui" line="166"/>
+        <location filename="../logdisplaydialog.ui" line="153"/>
         <source>Disk 4</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../logdisplaydialog.ui" line="171"/>
+        <location filename="../logdisplaydialog.ui" line="158"/>
         <source>Disk 5</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../logdisplaydialog.ui" line="176"/>
+        <location filename="../logdisplaydialog.ui" line="163"/>
         <source>Disk 6</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../logdisplaydialog.ui" line="181"/>
+        <location filename="../logdisplaydialog.ui" line="168"/>
         <source>Disk 7</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../logdisplaydialog.ui" line="186"/>
+        <location filename="../logdisplaydialog.ui" line="173"/>
         <source>Disk 8</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../logdisplaydialog.ui" line="191"/>
+        <location filename="../logdisplaydialog.ui" line="178"/>
         <source>Disk 9</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../logdisplaydialog.ui" line="196"/>
+        <location filename="../logdisplaydialog.ui" line="183"/>
         <source>Disk 10</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../logdisplaydialog.ui" line="201"/>
+        <location filename="../logdisplaydialog.ui" line="188"/>
         <source>Disk 11</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../logdisplaydialog.ui" line="206"/>
+        <location filename="../logdisplaydialog.ui" line="193"/>
         <source>Disk 12</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../logdisplaydialog.ui" line="211"/>
+        <location filename="../logdisplaydialog.ui" line="198"/>
         <source>Disk 13</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../logdisplaydialog.ui" line="216"/>
+        <location filename="../logdisplaydialog.ui" line="203"/>
         <source>Disk 14</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../logdisplaydialog.ui" line="221"/>
+        <location filename="../logdisplaydialog.ui" line="208"/>
         <source>Disk 15</source>
         <translation type="unfinished"></translation>
     </message>
@@ -4640,183 +4648,183 @@ Do you want to open the options dialog?</source>
         <translation>Atari Output (Ascii)</translation>
     </message>
     <message>
-        <location filename="../textprinterwindow.ui" line="124"/>
+        <location filename="../textprinterwindow.ui" line="130"/>
         <source>toolBar</source>
         <translation>Barra de Herramientas</translation>
     </message>
     <message>
-        <location filename="../textprinterwindow.ui" line="160"/>
+        <location filename="../textprinterwindow.ui" line="166"/>
         <source>Save to a file...</source>
         <translation>Guardar en un archivo...</translation>
     </message>
     <message>
-        <location filename="../textprinterwindow.ui" line="163"/>
+        <location filename="../textprinterwindow.ui" line="169"/>
         <source>Save contents to a file (Ctrl+S)</source>
         <translation>Guardar contenido en un archivo (Ctrl+S)</translation>
     </message>
     <message>
-        <location filename="../textprinterwindow.ui" line="166"/>
+        <location filename="../textprinterwindow.ui" line="172"/>
         <source>Save contents to a file</source>
         <translation>Guardar contenido en un archivo</translation>
     </message>
     <message>
-        <location filename="../textprinterwindow.ui" line="169"/>
-        <location filename="../textprinterwindow.ui" line="356"/>
+        <location filename="../textprinterwindow.ui" line="175"/>
+        <location filename="../textprinterwindow.ui" line="362"/>
         <source>Ctrl+S</source>
         <translation>Ctrl+S</translation>
     </message>
     <message>
-        <location filename="../textprinterwindow.ui" line="178"/>
+        <location filename="../textprinterwindow.ui" line="184"/>
         <source>Clear</source>
         <translation>Borrar</translation>
     </message>
     <message>
-        <location filename="../textprinterwindow.ui" line="181"/>
+        <location filename="../textprinterwindow.ui" line="187"/>
         <source>Clear contents (Ctrl+C)</source>
         <translation>Borrar el contenido (Ctrl+C)</translation>
     </message>
     <message>
-        <location filename="../textprinterwindow.ui" line="184"/>
+        <location filename="../textprinterwindow.ui" line="190"/>
         <source>Clear contents</source>
         <translation>Borrar el contenido</translation>
     </message>
     <message>
-        <location filename="../textprinterwindow.ui" line="187"/>
+        <location filename="../textprinterwindow.ui" line="193"/>
         <source>Ctrl+C</source>
         <translation>Ctrl+C</translation>
     </message>
     <message>
-        <location filename="../textprinterwindow.ui" line="202"/>
+        <location filename="../textprinterwindow.ui" line="208"/>
         <source>Word wrap</source>
         <translation>Ajuste de línea</translation>
     </message>
     <message>
-        <location filename="../textprinterwindow.ui" line="205"/>
+        <location filename="../textprinterwindow.ui" line="211"/>
         <source>Toggle word wrapping (Ctrl+W)</source>
         <translation>Activar ajuste de texto (Ctrl+W)</translation>
     </message>
     <message>
-        <location filename="../textprinterwindow.ui" line="208"/>
+        <location filename="../textprinterwindow.ui" line="214"/>
         <source>Toggle word wrapping</source>
         <translation>Activar ajuste de texto</translation>
     </message>
     <message>
-        <location filename="../textprinterwindow.ui" line="211"/>
+        <location filename="../textprinterwindow.ui" line="217"/>
         <source>Ctrl+W</source>
         <translation>Ctrl+W</translation>
     </message>
     <message>
-        <location filename="../textprinterwindow.ui" line="220"/>
+        <location filename="../textprinterwindow.ui" line="226"/>
         <source>Print</source>
         <translation>Imprimir</translation>
     </message>
     <message>
-        <location filename="../textprinterwindow.ui" line="223"/>
+        <location filename="../textprinterwindow.ui" line="229"/>
         <source>Send contents to printer (Ctrl+P)</source>
         <translation>Enviar contenido a la impresorar (Ctrl+P)</translation>
     </message>
     <message>
-        <location filename="../textprinterwindow.ui" line="226"/>
+        <location filename="../textprinterwindow.ui" line="232"/>
         <source>Send contents to printer</source>
         <translation>Enviar contenido a la impresora</translation>
     </message>
     <message>
-        <location filename="../textprinterwindow.ui" line="229"/>
+        <location filename="../textprinterwindow.ui" line="235"/>
         <source>Ctrl+P</source>
         <translation>Ctrl+P</translation>
     </message>
     <message>
-        <location filename="../textprinterwindow.ui" line="239"/>
+        <location filename="../textprinterwindow.ui" line="245"/>
         <source>Atascii Font</source>
         <translation>Atascii Font</translation>
     </message>
     <message>
-        <location filename="../textprinterwindow.ui" line="242"/>
+        <location filename="../textprinterwindow.ui" line="248"/>
         <source>Toggle ATASCII fonts (Alt+F)</source>
         <translation>Alternar las fuentes ATASCII (Alt+F)</translation>
     </message>
     <message>
-        <location filename="../textprinterwindow.ui" line="245"/>
+        <location filename="../textprinterwindow.ui" line="251"/>
         <source>Toggle ATASCII fonts</source>
         <translation>Alternar las fuentes ATASCII</translation>
     </message>
     <message>
-        <location filename="../textprinterwindow.ui" line="248"/>
+        <location filename="../textprinterwindow.ui" line="254"/>
         <source>Alt+F</source>
         <translation>Alt+F</translation>
     </message>
     <message>
-        <location filename="../textprinterwindow.ui" line="264"/>
+        <location filename="../textprinterwindow.ui" line="270"/>
         <source>Font Size</source>
         <translation>Tamaño de la Fuente</translation>
     </message>
     <message>
-        <location filename="../textprinterwindow.ui" line="267"/>
+        <location filename="../textprinterwindow.ui" line="273"/>
         <source>Toggle Font Size (6, 9, 12 pt) (Alt+Shift+F)</source>
         <translation>Cambiar tamaño de la fuente (6, 9, 12 pt) (Alt+Shift+F)</translation>
     </message>
     <message>
-        <location filename="../textprinterwindow.ui" line="270"/>
+        <location filename="../textprinterwindow.ui" line="276"/>
         <source>Toggle Font Size (6, 9, 12 pt)</source>
         <translation>Cambiar tamaño de la fuente (6, 9, 12 pt)</translation>
     </message>
     <message>
-        <location filename="../textprinterwindow.ui" line="273"/>
+        <location filename="../textprinterwindow.ui" line="279"/>
         <source>Alt+Shift+F</source>
         <translation>Alt+Shift+F</translation>
     </message>
     <message>
-        <location filename="../textprinterwindow.ui" line="292"/>
+        <location filename="../textprinterwindow.ui" line="298"/>
         <source>Hide/Show Ascii</source>
         <translation>Mostrar/Ocultar Ascii</translation>
     </message>
     <message>
-        <location filename="../textprinterwindow.ui" line="295"/>
+        <location filename="../textprinterwindow.ui" line="301"/>
         <source>Hide/Show Ascii Printer Output (Alt+Shift+H)</source>
         <translation>Ocultar/mostrar la salida por impresora Ascii (Alt+Shift+H)</translation>
     </message>
     <message>
-        <location filename="../textprinterwindow.ui" line="298"/>
+        <location filename="../textprinterwindow.ui" line="304"/>
         <source>Hide/Show Ascii Printer Output</source>
         <translation>Ocultar/mostrar la salida por impresora Ascii</translation>
     </message>
     <message>
-        <location filename="../textprinterwindow.ui" line="301"/>
+        <location filename="../textprinterwindow.ui" line="307"/>
         <source>Alt+Shift+H</source>
         <translation>Alt+Shift+H</translation>
     </message>
     <message>
-        <location filename="../textprinterwindow.ui" line="323"/>
+        <location filename="../textprinterwindow.ui" line="329"/>
         <source>HideShow_Atascii</source>
         <translation>Mostrar/Ocultar Ascii</translation>
     </message>
     <message>
-        <location filename="../textprinterwindow.ui" line="326"/>
+        <location filename="../textprinterwindow.ui" line="332"/>
         <source> Hide/Show Atascii Printer Output (Alt+H)</source>
         <translation>Ocultar/mostrar la salida por impresora Ascii (Alt+H)</translation>
     </message>
     <message>
-        <location filename="../textprinterwindow.ui" line="329"/>
+        <location filename="../textprinterwindow.ui" line="335"/>
         <source>Hide/Show Atascii Printer Output</source>
         <translation>Ocultar/mostrar la salida por impresora Ascii </translation>
     </message>
     <message>
-        <location filename="../textprinterwindow.ui" line="332"/>
+        <location filename="../textprinterwindow.ui" line="338"/>
         <source>Alt+H</source>
         <translation>Alt+H</translation>
     </message>
     <message>
-        <location filename="../textprinterwindow.ui" line="347"/>
+        <location filename="../textprinterwindow.ui" line="353"/>
         <source>Strip Line Numbers</source>
         <translation>Tira números de línea</translation>
     </message>
     <message>
-        <location filename="../textprinterwindow.ui" line="350"/>
+        <location filename="../textprinterwindow.ui" line="356"/>
         <source>Strip Line numbers from the text output (Ctrl-S)</source>
         <translation>Tira números de línea de la salida de texto (Ctrl-S)</translation>
     </message>
     <message>
-        <location filename="../textprinterwindow.ui" line="353"/>
+        <location filename="../textprinterwindow.ui" line="359"/>
         <source>Strip Line numbers from the text output</source>
         <translation>Tira números de línea de la salida de texto</translation>
     </message>
