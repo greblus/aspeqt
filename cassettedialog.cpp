@@ -19,12 +19,11 @@ CassetteDialog::CassetteDialog(QWidget *parent, const QString &fileName)
 #ifdef Q_OS_ANDROID
     QScreen *screen = qApp->screens().at(0);
 
-    int rx = screen->size().width();
-    int ry = screen->size().height();
+    int rx = screen->availableSize().width();
+    int ry = screen->availableSize().height();
 
     int ts = (rx > ry) ? ry : rx;
 
-//    this->resize(nx, ny);
     this->setGeometry(0, 0, rx, ry);
 
     ui->verticalLayoutWidget->setGeometry(0, 0, rx, ry);
