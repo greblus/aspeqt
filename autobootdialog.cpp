@@ -41,8 +41,9 @@ AutoBootDialog::AutoBootDialog(QWidget *parent) :
     ui->label->setMaximumWidth(rx*0.8);
     ui->verticalLayoutWidget->setContentsMargins(int(rx*0.2/2), int(ry/8), int(rx*0.2/2), 0);
 
-    connect(ui->pushButton2, SIGNAL(clicked()), this, SLOT(reject()));
     connect(ui->pushButton1, SIGNAL(clicked()), this, SLOT(reloadExe()));
+    connect(ui->pushButton2, SIGNAL(clicked(QAbstractButton*)), this, SLOT(onClick(QAbstractButton*)));
+    connect(ui->pushButton2, SIGNAL(clicked()), this, SLOT(close()));
     #else
     connect(ui->buttonBox, SIGNAL(clicked(QAbstractButton*)), this, SLOT(onClick(QAbstractButton*)));
     #endif

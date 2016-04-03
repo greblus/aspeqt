@@ -1909,31 +1909,30 @@ void MainWindow::on_actionSaveSession_triggered()
 void MainWindow::on_actionBootExe_triggered()
 {
     QString dir = aspeqtSettings->lastExeDir();
-    QString fileName = NULL;
 
     #ifdef Q_OS_ANDROID
     QAndroidJniObject::callStaticMethod<void>("net/greblus/SerialActivity", "runFileChooser", "(II)V", 2, 0);
     do
       {
         QAndroidJniObject jFileName = QAndroidJniObject::getStaticObjectField<jstring>("net/greblus/SerialActivity", "m_chosen");
-        fileName = jFileName.toString();
+        g_exefileName = jFileName.toString();
 
-        if (fileName == "Cancelled") {fileName.clear(); break;}
-        if (fileName == "None") QThread::yieldCurrentThread();
+        if (g_exefileName == "Cancelled") {g_exefileName.clear(); break;}
+        if (g_exefileName == "None") QThread::yieldCurrentThread();
       }
-    while (fileName == "None");
+    while (g_exefileName == "None");
     #else
-    fileName = QFileDialog::getOpenFileName(this, tr("Open executable"),
+    g_exefileName = QFileDialog::getOpenFileName(this, tr("Open executable"),
                                  dir,
                                  tr(
                                          "Atari executables (*.xex *.com *.exe);;"
                                          "All files (*)"));
     #endif
-    if (fileName.isEmpty()) {
+    if (g_exefileName.isEmpty()) {
         return;
     }
-        aspeqtSettings->setLastExeDir(QFileInfo(fileName).absolutePath());
-    bootExe(fileName);
+        aspeqtSettings->setLastExeDir(QFileInfo(g_exefileName).absolutePath());
+    bootExe(g_exefileName);
 }
 
 void MainWindow::on_actionShowPrinterTextOutput_triggered()
