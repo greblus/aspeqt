@@ -245,16 +245,16 @@ public class SimpleFileDialog
 
                                     switch (m_filter) {
                                         case 1:
-                                            extensions = Arrays.asList(".atr", ".xfd", ".pro");
+                                            extensions = Arrays.asList(".atr", ".xfd", ".pro", ".ATR", ".XFD", ".PRO");
                                             break;
                                         case 2:
-                                            extensions = Arrays.asList(".xex", ".exe", ".com");
+                                            extensions = Arrays.asList(".xex", ".exe", ".com", ".XEX", ".EXE", ".COM");
                                             break;
                                         case 3:
-                                            extensions = Arrays.asList(".cas");
+                                            extensions = Arrays.asList(".cas", ".CAS");
                                             break;
                                         case 4:
-                                            extensions = Arrays.asList(".aspeqt");
+                                            extensions = Arrays.asList(".aspeqt", ".ASPEQT");
                                             break;
                                         default:
                                             extensions = Arrays.asList(".");
