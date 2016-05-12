@@ -4,6 +4,7 @@
 #include "diskimage.h"
 #include "diskimagepro.h"
 #include "folderimage.h"
+#include "pclink.h"
 #include "miscdevices.h"
 #include "aspeqtsettings.h"
 #include "autobootdialog.h"
@@ -324,6 +325,9 @@ MainWindow::MainWindow(QWidget *parent)
     connect(sio, SIGNAL(finished()), this, SLOT(sioFinished()));
     connect(sio, SIGNAL(statusChanged(QString)), this, SLOT(sioStatusChanged(QString)));
     shownFirstTime = true;
+
+    PCLINK* pclink = new PCLINK(sio);
+    sio->installDevice(0x6F, pclink);
 
     /* Restore application state */
     for (int i = 0; i < g_numberOfDisks; i++) {      //
@@ -1261,6 +1265,22 @@ void MainWindow::mountFile(int no, const QString &fileName, bool /*prot*/)
         }
 
         sio->installDevice(0x31 + no, disk);
+
+        PCLINK* pclink = reinterpret_cast<PCLINK*>(sio->getDevice(0x6F));
+        if(isDir || pclink->hasLink(no))
+        {
+           sio->uninstallDevice(0x6F);
+           if(isDir)
+           {
+               pclink->setLink(no,QDir::toNativeSeparators(fileName));
+           }
+           else
+           {
+               pclink->resetLink(no);
+           }
+               sio->installDevice(0x6F,pclink);
+        }
+
         diskWidgets[no].ejectAction->setEnabled(true);
         diskWidgets[no].editAction->setEnabled(true);
         diskWidgets[no].writeProtectAction->setChecked(disk->isReadOnly());

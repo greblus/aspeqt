@@ -31,7 +31,8 @@ SOURCES += main.cpp \
     cassettedialog.cpp \
     docdisplaywindow.cpp \
     bootoptionsdialog.cpp \
-    logdisplaydialog.cpp
+    logdisplaydialog.cpp \
+    pclink.cpp
 win32:LIBS += -lwinmm -lz
 win32:SOURCES += serialport-win32.cpp
 unix:
@@ -85,6 +86,7 @@ HEADERS += mainwindow.h \
     docdisplaywindow.h \
     bootoptionsdialog.h \
     logdisplaydialog.h \
+    pclink.h
 
 win32:HEADERS += serialport-win32.h
 
