@@ -12,15 +12,20 @@
 #include <QAndroidJniObject>
 #include <jni.h>
 
-jbyte *jbuf = NULL;
-char *bbuf;
+jbyte *jrbuf = NULL;
+char *rbuf;
+jbyte *jwbuf = NULL;
+char *wbuf;
+
 extern "C" {
     JNIEXPORT void JNICALL
     Java_net_greblus_SerialActivity_sendBufAddr(JNIEnv *env/*env*/,
-    jobject /*obj*/, jobject buf)
+    jobject /*obj*/, jobject rbf, jobject wbf)
         {
-            jbuf = (jbyte *)env->GetDirectBufferAddress(buf);
-            bbuf = reinterpret_cast<char *>(jbuf);
+            jrbuf = (jbyte *)env->GetDirectBufferAddress(rbf);
+            rbuf = reinterpret_cast<char *>(jrbuf);
+            jwbuf = (jbyte *)env->GetDirectBufferAddress(wbf);
+            wbuf = reinterpret_cast<char *>(jwbuf);
         }
 }
 #endif

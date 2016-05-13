@@ -222,9 +222,12 @@ QString SioWorker::deviceName(int device)
 	case 0x53:
 	    result = tr("RS232 %1").arg((device & 0x0F) +1);
 	    break;
-        default:
-            result = tr("Device $%1").arg(device, 2, 16, QChar('0'));
-            break;
+    case 0x6F:
+        result = tr("PCLINK");
+        break;
+    default:
+        result = tr("Device $%1").arg(device, 2, 16, QChar('0'));
+        break;
     }
     return result;
 }

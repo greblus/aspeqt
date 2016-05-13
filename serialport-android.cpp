@@ -13,7 +13,8 @@
 #include <unistd.h>
 #include <QAndroidJniObject>
 
-extern char *bbuf;
+extern char *rbuf;
+extern char *wbuf;
 static bool debug = false;
 
 AbstractSerialPortBackend::AbstractSerialPortBackend(QObject *parent)
@@ -206,7 +207,7 @@ QByteArray StandardSerialPortBackend::readCommandFrame()
 
         switch (result) {
             case 1:
-                data.setRawData(bbuf, 4);
+                data.setRawData(rbuf, 4);
                 break;
             default:
                 data.clear();
@@ -340,13 +341,13 @@ QByteArray StandardSerialPortBackend::readRawFrame(uint size, bool verbose)
         elapsed = QTime::currentTime().msecsTo(startTime);
     } while (total < size && elapsed > -timeOut);
 
-    data.setRawData(bbuf, size);
+    data.setRawData(rbuf, size);
 
     if (debug) {
         QString tmp;
         for (int i=0; i<data.count(); i++)
         {
-            tmp += QString::number(bbuf[i]) + " ";
+            tmp += QString::number(rbuf[i]) + " ";
         }
 
          qCritical() << "!e" << tr("readRawFrame: %1").arg(tmp);
@@ -371,7 +372,7 @@ bool StandardSerialPortBackend::writeRawFrame(const QByteArray &data)
     total = 0;
     rest = data.count();
 
-    std::copy(data.constData(), data.constData()+rest, bbuf);
+    std::copy(data.constData(), data.constData()+rest, wbuf);
 
     QTime startTime = QTime::currentTime();
     int timeOut = data.count() * 12000 / mSpeed + 10;

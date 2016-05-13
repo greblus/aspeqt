@@ -39,16 +39,17 @@ public class SerialActivity extends QtActivity
         private static PendingIntent pintent;
         private static final String ACTION_USB_PERMISSION =
             "com.android.example.USB_PERMISSION";
-        private static ByteBuffer bbuf = ByteBuffer.allocateDirect(4096);
-        private static byte rb[] = new byte [4096];
-        private static byte wb[] = new byte [4096];
-        private static byte t[] = new byte [4096];
+        private static ByteBuffer rbuf = ByteBuffer.allocateDirect(1024);
+        private static ByteBuffer wbuf = ByteBuffer.allocateDirect(1024);
+        private static byte rb[] = new byte [1024];
+        private static byte wb[] = new byte [1024];
+        private static byte t[] = new byte [1024];
         private static int counter;
         private static UsbDevice device = null;
         private static UsbSerialDriver driver;
         private static UsbSerialPort sPort;
-        public static native void sendBufAddr(ByteBuffer buf);
-        private static boolean debug = false;
+        public static native void sendBufAddr(ByteBuffer rbuf, ByteBuffer wbuf);
+        private static boolean debug = true;
         public static String m_chosen;
         private static int m_filter;
         private static String m_action;
@@ -66,7 +67,7 @@ public class SerialActivity extends QtActivity
                 registerBroadcastReceiver();
                 getWindow().addFlags(WindowManager.LayoutParams.FLAG_KEEP_SCREEN_ON);
 
-                sendBufAddr(bbuf);
+                sendBufAddr(rbuf, wbuf);
         }
 
        @Override
@@ -230,13 +231,13 @@ public class SerialActivity extends QtActivity
 
     public static int read(int size, int total)
     {
-        bbuf.position(total);
+        rbuf.position(total);
         int ret = 0, rd = 0;
 
         try {
             do {
                  rd = sPort.sread(rb, size, 5000);
-                 bbuf.put(rb, 0, rd);
+                 rbuf.put(rb, 0, rd);
                  size -= rd; ret += rd;
             } while (size > 0);
         } catch (IOException e) {
@@ -247,8 +248,8 @@ public class SerialActivity extends QtActivity
 
     public static int write(int size, int total) {
         int ret = 0, wn = 0;
-        bbuf.position(total);
-        bbuf.get(wb, 0, size);
+        wbuf.position(total);
+        wbuf.get(wb, 0, size);
 
         try {
             do {
@@ -327,7 +328,7 @@ public class SerialActivity extends QtActivity
         int ret = 0, total = 0;
         boolean prtl = false;
 
-        bbuf.position(0);
+        rbuf.position(0);
         mainloop:
         while (true) {
             ret = 0; total = 0; total_retries = 0;
@@ -372,7 +373,7 @@ public class SerialActivity extends QtActivity
                 if (debug) Log.i("USB", "No desync");
 
                 for (int i=0; i<4; i++)
-                   bbuf.put((byte)(rb[i] & 0xff));
+                   rbuf.put((byte)(rb[i] & 0xff));
 
                    if (debug) {
                        String data = "";
@@ -404,7 +405,7 @@ public class SerialActivity extends QtActivity
             default:
                 mask = 32; }
 
-        bbuf.position(0);
+        rbuf.position(0);
         do {
             status = 0; total_retries = 0;
             do {
@@ -432,7 +433,7 @@ public class SerialActivity extends QtActivity
                 if (res > 0) {
                     for (int i=0; i<res; i++) {
                        if (debug) Log.i("USB", "CF: " + (rb[i] & 0xff));
-                       bbuf.put((byte)(rb[i] & 0xff));
+                       rbuf.put((byte)(rb[i] & 0xff));
                        total += 1;
                     }
                 } else

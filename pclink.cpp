@@ -111,7 +111,7 @@ static IODESC iodesc[16];
 static DEVICE device[16];	/* 1 PCLINK device with support for 15 units */
 static PCLDBF pcl_dbf;
 
-#ifndef WIN32
+#ifdef Q_OS_LINUX
 static uid_t our_uid = 0;
 #endif
 
@@ -128,7 +128,7 @@ PCLINK::PCLINK(SioWorker *worker)
     :SioDevice(worker)
 {
     do_pclink_init(1);
-#ifndef WIN32
+#ifdef Q_OS_LINUX
     our_uid = getuid();
 #endif
 }
@@ -312,6 +312,13 @@ void PCLINK::do_pclink(uchar devno, uchar ccom, uchar caux1, uchar caux2)
         else
         {
             memcpy(&pbuf, data.constData(), parsize);
+
+            if (D) {
+                QString t;
+                for (int i=0; i<parsize; i++)
+                    t.append(QString::number(data.at(i)) + ' ');
+                 qDebug() << "!n" << tr("%1").arg(t);
+            }
         }
 
         device[cunit].status.stat &= ~0x04;
@@ -774,19 +781,10 @@ void PCLINK::do_pclink(uchar devno, uchar ccom, uchar caux1, uchar caux2)
 
         if (mtime && (fpmode & 0x08))
         {
-#ifdef WIN32
             utimbuf ub;
             ub.actime = mtime;
             ub.modtime = mtime;
             utime(pathname,&ub);
-#else
-            struct timeval tv[2];
-            tv[0].tv_usec = 0;
-            tv[0].tv_sec = mtime;
-            tv[1].tv_usec = 0;
-            tv[1].tv_sec = mtime;
-            (void)utimes(pathname, (const timeval*)&tv);
-#endif
         }
         goto complete;
     }
@@ -1050,7 +1048,7 @@ void PCLINK::do_pclink(uchar devno, uchar ccom, uchar caux1, uchar caux2)
             {
                 pcl_dbf.handle = handle;
 
-                unix_time_2_sdx(&(long int&)iodesc[handle].fpstat.st_mtime, ob);
+                unix_time_2_sdx(&(long int &)iodesc[handle].fpstat.st_mtime, ob);
 
                 if(D) qDebug() << "!n" << tr("FOPEN: %1 handle %2").arg((iodesc[handle].fpmode & 0x08) ? "write" : "read").arg(handle);
 
@@ -1427,10 +1425,10 @@ complete_fopen:
             goto complete;
         }
 
-#ifdef WIN32
-        if (mkdir(newpath))
-#else
+#ifdef Q_OS_LINUX
         if (mkdir(newpath, S_IRWXU|S_IRWXG|S_IRWXO))
+#else
+        if (mkdir(newpath))
 #endif
         {
             if(D) qDebug() << "!n" << tr("MKDIR: cannot make dir '%1'").arg(newpath);
@@ -1442,19 +1440,10 @@ complete_fopen:
             device[cunit].status.err = 1;
             if (mtime)
             {
-#ifdef WIN32
                 utimbuf ub;
                 ub.actime = mtime;
                 ub.modtime = mtime;
                 utime(newpath,&ub);
-#else
-                struct timeval tv[2];
-                tv[0].tv_usec = 0;
-                tv[0].tv_sec = mtime;
-                tv[1].tv_usec = 0;
-                tv[1].tv_sec = mtime;
-                (void)utimes(newpath, (const timeval*)&tv);
-#endif
             }
         }
         goto complete;
@@ -1500,7 +1489,7 @@ complete_fopen:
             goto complete;
         }
 
-#ifndef WIN32
+#ifdef Q_OS_LINUX
         if (sb.st_uid != our_uid)
         {
             if(D) qDebug() << "!n" << tr("'%1' wrong uid").arg(newpath);
@@ -2006,7 +1995,7 @@ int PCLINK::check_dos_name(char *newpath, struct dirent *dp, struct stat *sb)
     if (!S_ISREG(sb->st_mode) && !S_ISDIR(sb->st_mode))
         return 1;
 
-#ifndef WIN32
+#ifdef Q_OS_LINUX
     if (sb->st_uid != our_uid)		/* belongs to us? */
         return 1;
 #endif
@@ -2268,7 +2257,7 @@ DIRENTRY * PCLINK::cache_dir(uchar handle)
         dir->map_h = (dirnode & 0x1f) << 3;
     }
 
-    unix_time_2_sdx(&(long int&)iodesc[handle].fpstat.st_mtime, dir->stamp);
+    unix_time_2_sdx(&(long int &)iodesc[handle].fpstat.st_mtime, dir->stamp);
 
     dir++;
     flen = sizeof(DIRENTRY);
@@ -2305,7 +2294,7 @@ DIRENTRY * PCLINK::cache_dir(uchar handle)
 
         ugefina(dp->d_name, (char *)dir->fname);
 
-        unix_time_2_sdx(&(long int&)sb.st_mtime, dir->stamp);
+        unix_time_2_sdx(&(long int &)sb.st_mtime, dir->stamp);
 
         node++;
         dir++;
@@ -2406,7 +2395,7 @@ int PCLINK::ispathsep(uchar c)
 
 long PCLINK::dos_2_allowed(uchar c)
 {
-#ifndef WIN32
+#ifdef Q_OS_LINUX
     if (upper_dir)
         return (isupper(c) || isdigit(c) || (c == '_') || (c == '@'));
 
