@@ -41,6 +41,7 @@
 # define DEVICE_LABEL	".PCLINK.VOLUME.LABEL"
 
 # define PCL_MAX_FNO	0x14
+# define PCL_MAX_DIR_LENGTH 1023
 
 /* Atari SIO status block */
 typedef struct
@@ -69,7 +70,7 @@ typedef struct
 {
     STATUS status;		/* the 4-byte status block */
     int on;			    /* PCLink mount flag */
-    char dirname[1024];	/* PCLink root directory path */
+    char dirname[PCL_MAX_DIR_LENGTH+1];	/* PCLink root directory path */
     uchar cwd[65];		/* PCLink current working dir, relative to the above */
     PARBUF parbuf;		/* PCLink parameter buffer */
 } DEVICE;
@@ -96,7 +97,7 @@ typedef struct
     long fppos;
     long fpread;
     int eof;
-    char pathname[1024];
+    char pathname[PCL_MAX_DIR_LENGTH+1];
 } IODESC;
 
 typedef struct
@@ -105,7 +106,7 @@ typedef struct
     uchar dirbuf[23];
 } PCLDBF;
 
-static bool D = false; // extended debug
+static bool D = true; // extended debug
 static ulong upper_dir = 0; // in PCLink dirs accept lowercase characters only
 static IODESC iodesc[16];
 static DEVICE device[16];	/* 1 PCLINK device with support for 15 units */
@@ -160,14 +161,14 @@ void PCLINK::handleCommand(quint8 command, quint16 aux)
         {
             case 'P':
             {
-                qDebug() << "!n" << tr("[%1] Parameters").arg(deviceName());
+                qDebug() << "!n" << tr("[%1] P").arg(deviceName());
                 do_pclink(0x6F, command, caux1, caux2);
                 break;
             }
 
             case 'R':
             {
-                qDebug() << "!n" << tr("[%1] Results").arg(deviceName());
+                qDebug() << "!n" << tr("[%1] R").arg(deviceName());
                 do_pclink(0x6F, command, caux1, caux2);
                 break;
             }
@@ -217,28 +218,67 @@ void PCLINK::handleCommand(quint8 command, quint16 aux)
 
 bool PCLINK::hasLink(int no)
 {
-    if(no<0 || no>14)return false;
-    return (device[no+1].on == 1);
+    if(no<1 || no>15)return false;
+
+    return (device[no].on == 1);
 }
 
 /*************************************************************************/
 
-void PCLINK::setLink(int no, const QString &fileName)
+void PCLINK::setLink(int no, const char* fileName)
 {
-    if(no<0 || no>14)return;
-    strncpy(device[no+1].dirname,fileName.toLatin1(),1023);
-    device[no+1].dirname[1023]=0;
-    device[no+1].on = 1;
+    if(no<1 || no>15)return;
+
+    fps_close(no);
+    memset(&device[no].parbuf, 0, sizeof(PARBUF));
+
+    strncpy(device[no].dirname,fileName,PCL_MAX_DIR_LENGTH);
+    device[no].dirname[PCL_MAX_DIR_LENGTH]=0;
+    device[no].cwd[0]=0;
+    device[no].on = 1;
+
     if(D) qDebug() << "!n" << tr("PCLINK[%1] Mount %2").arg(no).arg(fileName);
+}
+
+/*************************************************************************/
+
+void PCLINK::swapLinks(int from, int to)
+{
+    if(from<1 || from>15 || to<1 || to>15)return;
+
+    char tmp_dir_name[PCL_MAX_DIR_LENGTH];
+    if(hasLink(from))
+    {
+        strncpy(tmp_dir_name, device[from].dirname, PCL_MAX_DIR_LENGTH);
+        resetLink(from);
+        if(hasLink(to))
+        {
+            setLink(from,device[to].dirname);
+            resetLink(to);
+        }
+        setLink(to, tmp_dir_name);
+    }
+    else if(hasLink(to))
+    {
+        setLink(from,device[to].dirname);
+        resetLink(to);
+    }
 }
 
 /*************************************************************************/
 
 void PCLINK::resetLink(int no)
 {
-    if(no<0 || no>14)return;
-    device[no+1].on = 0;
-    device[no+1].dirname[0]=0;
+    if(no<1 || no>15)return;
+
+    fps_close(no);
+    memset(&device[no].parbuf, 0, sizeof(PARBUF));
+
+    device[no].on = 0;
+    device[no].dirname[0]=0;
+    device[no].cwd[0]=0;
+
+    if(D) qDebug() << "!n" << tr("PCLINK[%1] Unmount").arg(no);
 }
 
 /*************************************************************************/
@@ -312,13 +352,6 @@ void PCLINK::do_pclink(uchar devno, uchar ccom, uchar caux1, uchar caux2)
         else
         {
             memcpy(&pbuf, data.constData(), parsize);
-
-            if (D) {
-                QString t;
-                for (int i=0; i<parsize; i++)
-                    t.append(QString::number(data.at(i)) + ' ');
-                 qDebug() << "!n" << tr("%1").arg(t);
-            }
         }
 
         device[cunit].status.stat &= ~0x04;
@@ -751,7 +784,7 @@ void PCLINK::do_pclink(uchar devno, uchar ccom, uchar caux1, uchar caux2)
     {
         uchar fpmode;
         time_t mtime;
-        char pathname[1024];
+        char pathname[PCL_MAX_DIR_LENGTH+1];
 
         if (ccom == 'R')
         {
@@ -828,7 +861,7 @@ void PCLINK::do_pclink(uchar devno, uchar ccom, uchar caux1, uchar caux2)
             uchar i;
             long sl;
             struct stat tempstat;
-            char newpath[1024], raw_name[12];
+            char newpath[PCL_MAX_DIR_LENGTH+1], raw_name[12];
 
             if ((ccom == 'R') && (old_ccom == 'R'))
             {
@@ -1119,7 +1152,7 @@ complete_fopen:
 
     if (fno == 0x0b)	/* RENAME/RENDIR */
     {
-        char newpath[1024];
+        char newpath[PCL_MAX_DIR_LENGTH+1];
         DIR *renamedir;
         ulong fcnt = 0;
 
@@ -1168,7 +1201,7 @@ complete_fopen:
             if (match_dos_names(raw_name, (char *)device[cunit].parbuf.name, \
                 device[cunit].parbuf.fatr1 | RA_NO_PROTECT, &sb) == 0)
             {
-                char xpath[1024], xpath2[1024], newname[16];
+                char xpath[PCL_MAX_DIR_LENGTH+1], xpath2[PCL_MAX_DIR_LENGTH+1], newname[16];
                 uchar names[12];
                 struct stat dummy;
                 ushort x;
@@ -1219,7 +1252,7 @@ complete_fopen:
 
     if (fno == 0x0c)	/* REMOVE */
     {
-        char newpath[1024];
+        char newpath[PCL_MAX_DIR_LENGTH+1];
         DIR *deldir;
         ulong delcnt = 0;
 
@@ -1267,7 +1300,7 @@ complete_fopen:
             if (match_dos_names(raw_name, (char *)device[cunit].parbuf.name, \
                 RA_NO_PROTECT | RA_NO_SUBDIR | RA_NO_HIDDEN, &sb) == 0)
             {
-                char xpath[1024];
+                char xpath[PCL_MAX_DIR_LENGTH+1];
 
                 strcpy(xpath, newpath);
                 strcat(xpath, "/");
@@ -1293,7 +1326,7 @@ complete_fopen:
 
     if (fno == 0x0d)	/* CHMOD */
     {
-        char newpath[1024];
+        char newpath[PCL_MAX_DIR_LENGTH+1];
         DIR *chmdir;
         ulong fcnt = 0;
         uchar fatr2 = device[cunit].parbuf.fatr2;
@@ -1351,7 +1384,7 @@ complete_fopen:
             if (match_dos_names(raw_name, (char *)device[cunit].parbuf.name, \
                 device[cunit].parbuf.fatr1, &sb) == 0)
             {
-                char xpath[1024];
+                char xpath[PCL_MAX_DIR_LENGTH+1];
                 mode_t newmode = sb.st_mode;
 
                 strcpy(xpath, newpath);
@@ -1380,7 +1413,7 @@ complete_fopen:
 
     if (fno == 0x0e)	/* MKDIR - warning, fatr2 is bogus */
     {
-        char newpath[1024], fname[12];
+        char newpath[PCL_MAX_DIR_LENGTH+1], fname[12];
         uchar dt[6];
         struct stat dummy;
 
@@ -1451,7 +1484,7 @@ complete_fopen:
 
     if (fno == 0x0f)	/* RMDIR */
     {
-        char newpath[1024], fname[12];
+        char newpath[PCL_MAX_DIR_LENGTH+1], fname[12];
 
         if (ccom == 'R')
         {
@@ -1530,7 +1563,7 @@ complete_fopen:
     if (fno == 0x10)	/* CHDIR */
     {
         ulong i;
-        char newpath[1024], newwd[1024], oldwd[1024];
+        char newpath[PCL_MAX_DIR_LENGTH+1], newwd[PCL_MAX_DIR_LENGTH+1], oldwd[PCL_MAX_DIR_LENGTH+1];
 
         if (ccom == 'R')
         {
@@ -1617,7 +1650,7 @@ complete_fopen:
         FILE *vf;
         int x;
         uchar c = 0, volname[8];
-        char lpath[1024];
+        char lpath[PCL_MAX_DIR_LENGTH+1];
         static uchar dfree[65] =
         {
             0x21,		/* data format version */
@@ -1710,7 +1743,7 @@ complete_fopen:
     {
         FILE *vf;
         ulong nl;
-        char lpath[1024];
+        char lpath[PCL_MAX_DIR_LENGTH+1];
 
         device[cunit].status.err = 1;
 
@@ -1953,7 +1986,7 @@ void PCLINK::create_user_path(uchar cunit, char *newpath)
  */
 int PCLINK::validate_user_path(char *defwd, char *newpath)
 {
-    char *d, oldwd[1024], newwd[1024];
+    char *d, oldwd[PCL_MAX_DIR_LENGTH+1], newwd[PCL_MAX_DIR_LENGTH+1];
 
     (void)getcwd(oldwd, sizeof(oldwd));
     if (chdir(newpath) < 0)
@@ -1975,7 +2008,7 @@ int PCLINK::validate_user_path(char *defwd, char *newpath)
 
 int PCLINK::check_dos_name(char *newpath, struct dirent *dp, struct stat *sb)
 {
-    char temp_fspec[1024], fname[256];
+    char temp_fspec[PCL_MAX_DIR_LENGTH+1], fname[256];
 
     strcpy(fname, dp->d_name);
 

@@ -49,7 +49,7 @@ public class SerialActivity extends QtActivity
         private static UsbSerialDriver driver;
         private static UsbSerialPort sPort;
         public static native void sendBufAddr(ByteBuffer rbuf, ByteBuffer wbuf);
-        private static boolean debug = true;
+        private static boolean debug = false;
         public static String m_chosen;
         private static int m_filter;
         private static String m_action;

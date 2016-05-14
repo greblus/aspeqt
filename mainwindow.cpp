@@ -476,6 +476,14 @@ void MainWindow::dropEvent(QDropEvent *event)
 
         aspeqtSettings->swapImages(slot, source);
 
+        PCLINK* pclink = reinterpret_cast<PCLINK*>(sio->getDevice(0x6F));
+        if(pclink->hasLink(slot+1) || pclink->hasLink(source+1))
+        {
+            sio->uninstallDevice(0x6F);
+            pclink->swapLinks(slot+1, source+1);
+            sio->installDevice(0x6F, pclink);
+        }
+
         qDebug() << "!n" << tr("Swapped disk %1 with disk %2.").arg(slot + 1).arg(source + 1);
 
         return;
@@ -1267,18 +1275,18 @@ void MainWindow::mountFile(int no, const QString &fileName, bool /*prot*/)
         sio->installDevice(0x31 + no, disk);
 
         PCLINK* pclink = reinterpret_cast<PCLINK*>(sio->getDevice(0x6F));
-        if(isDir || pclink->hasLink(no))
+        if(isDir || pclink->hasLink(no+1))
         {
            sio->uninstallDevice(0x6F);
            if(isDir)
            {
-               pclink->setLink(no,QDir::toNativeSeparators(fileName));
+               pclink->setLink(no+1, QDir::toNativeSeparators(fileName).toLatin1());
            }
            else
            {
-               pclink->resetLink(no);
+               pclink->resetLink(no+1);
            }
-               sio->installDevice(0x6F,pclink);
+               sio->installDevice(0x6F, pclink);
         }
 
         diskWidgets[no].ejectAction->setEnabled(true);
