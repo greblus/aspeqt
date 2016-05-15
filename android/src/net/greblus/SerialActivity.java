@@ -39,10 +39,10 @@ public class SerialActivity extends QtActivity
         private static PendingIntent pintent;
         private static final String ACTION_USB_PERMISSION =
             "com.android.example.USB_PERMISSION";
-        private static ByteBuffer rbuf = ByteBuffer.allocateDirect(1024);
-        private static ByteBuffer wbuf = ByteBuffer.allocateDirect(1024);
-        private static byte rb[] = new byte [1024];
-        private static byte wb[] = new byte [1024];
+        private static ByteBuffer rbuf = ByteBuffer.allocateDirect(65535);
+        private static ByteBuffer wbuf = ByteBuffer.allocateDirect(65535);
+        private static byte rb[] = new byte [65535];
+        private static byte wb[] = new byte [65535];
         private static byte t[] = new byte [1024];
         private static int counter;
         private static UsbDevice device = null;
