@@ -106,7 +106,7 @@ typedef struct
     uchar dirbuf[23];
 } PCLDBF;
 
-static bool D = true; // extended debug
+static bool D = false; // extended debug
 static ulong upper_dir = 0; // in PCLink dirs accept lowercase characters only
 static IODESC iodesc[16];
 static DEVICE device[16];	/* 1 PCLINK device with support for 15 units */
@@ -161,14 +161,14 @@ void PCLINK::handleCommand(quint8 command, quint16 aux)
         {
             case 'P':
             {
-                qDebug() << "!n" << tr("[%1] P").arg(deviceName());
+                if(D) qDebug() << "!n" << tr("[%1] P").arg(deviceName());
                 do_pclink(0x6F, command, caux1, caux2);
                 break;
             }
 
             case 'R':
             {
-                qDebug() << "!n" << tr("[%1] R").arg(deviceName());
+                if(D) qDebug() << "!n" << tr("[%1] R").arg(deviceName());
                 do_pclink(0x6F, command, caux1, caux2);
                 break;
             }
@@ -186,7 +186,7 @@ void PCLINK::handleCommand(quint8 command, quint16 aux)
                 sio->port()->writeComplete();
                 sio->port()->writeDataFrame(status);
 
-                qDebug() << "!n" << tr("[%1] Get status for [%2]").arg(deviceName()).arg(cunit);
+                if(D) qDebug() << "!n" << tr("[%1] Get status for [%2]").arg(deviceName()).arg(cunit);
                 break;
             }
 
@@ -197,7 +197,7 @@ void PCLINK::handleCommand(quint8 command, quint16 aux)
                 QByteArray speed(1, 0);
                 speed[0] = sio->port()->speedByte();
                 sio->port()->writeDataFrame(speed);
-                qDebug() << "!n" << tr("[%1] Speed poll").arg(deviceName());
+                if(D) qDebug() << "!n" << tr("[%1] Speed poll").arg(deviceName());
                 break;
             }
 
@@ -2028,7 +2028,7 @@ int PCLINK::check_dos_name(char *newpath, struct dirent *dp, struct stat *sb)
     if (!S_ISREG(sb->st_mode) && !S_ISDIR(sb->st_mode))
         return 1;
 
-#ifdef Q_OS_LINUX
+#if defined(Q_OS_LINUX) && !defined(Q_OS_ANDROID)
     if (sb->st_uid != our_uid)		/* belongs to us? */
         return 1;
 #endif
