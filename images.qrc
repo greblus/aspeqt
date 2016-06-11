@@ -1,5 +1,6 @@
 <RCC>
     <qresource prefix="/images">
         <file>images/MainWindowBackGround.png</file>
+        <file>tape.gif</file>
     </qresource>
 </RCC>

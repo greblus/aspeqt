@@ -4,6 +4,9 @@
 #include <QTimer>
 #include <QtDebug>
 #include <QScreen>
+#include <QMovie>
+
+QMovie *movie = NULL;
 
 CassetteDialog::CassetteDialog(QWidget *parent, const QString &fileName)
     : QDialog(parent), ui(new Ui::CassetteDialog)
@@ -16,7 +19,6 @@ CassetteDialog::CassetteDialog(QWidget *parent, const QString &fileName)
 
     ui->setupUi(this);
 
-#ifdef Q_OS_ANDROID
     QScreen *screen = qApp->screens().at(0);
 
     int rx = screen->availableSize().width();
@@ -36,7 +38,14 @@ CassetteDialog::CassetteDialog(QWidget *parent, const QString &fileName)
     ui->buttonBox->setMaximumHeight(bs+30);
     ui->label->setMaximumWidth(rx*0.8);
     ui->verticalLayoutWidget->setContentsMargins(int(rx*0.2/2), int(ry/8), int(rx*0.2/2), int(ry/10));
-#endif
+
+    movie = new QMovie(":images/tape.gif");
+    movie->setScaledSize(QSize(1.33*170*ts/800, 120*ts/800));
+    ui->tape_label->setMovie(movie);
+    ui->tape_label->setAlignment(Qt::AlignCenter);
+    movie->start();
+    movie->setPaused(true);
+
     ui->progressBar->setVisible(true);
     worker = new CassetteWorker;
     mTotalDuration = worker->mTotalDuration;
@@ -102,6 +111,7 @@ void CassetteDialog::accept()
     mTimer = new QTimer(this);
     connect(mTimer, SIGNAL(timeout()), this, SLOT(tick()));
     mTimer->start(1000);
+    movie->setPaused(false);
 }
 
 void CassetteDialog::progress(int remainingTime)
