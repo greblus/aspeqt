@@ -53,6 +53,7 @@ public class SerialActivity extends QtActivity
         public static String m_chosen;
         private static int m_filter;
         private static String m_action;
+        private static String m_dir;
 
         public static SerialActivity s_activity = null;
 
@@ -77,9 +78,11 @@ public class SerialActivity extends QtActivity
         }
 
 
-        public static void runFileChooser(int filter, int action) {
+        public static void runFileChooser(int filter, int action, String dir) {
+            Log.i("ASPEQT:", "DIR:" + dir);
             m_chosen = "None";
             m_filter = filter;
+            m_dir = dir;
 
             if (action == 0)
                 m_action = "FileOpen";
@@ -90,7 +93,8 @@ public class SerialActivity extends QtActivity
 
          }
 
-         public static void runDirChooser() {
+         public static void runDirChooser(String dir) {
+            m_dir = dir;
             m_chosen = "None";
             m_filter = 0;
             SerialActivity.s_activity.runOnUiThread( new DirChooser() );
@@ -107,7 +111,7 @@ public class SerialActivity extends QtActivity
 
         public void fileChooser()
         {
-            SimpleFileDialog FileOpenDialog =  new SimpleFileDialog(SerialActivity.this, m_action, m_filter,
+            SimpleFileDialog FileOpenDialog =  new SimpleFileDialog(SerialActivity.this, m_action, m_filter, m_dir,
                                                             new SimpleFileDialog.SimpleFileDialogListener()
             {
                     @Override
@@ -127,7 +131,7 @@ public class SerialActivity extends QtActivity
 
         public void dirChooser()
         {
-            SimpleFileDialog FileOpenDialog =  new SimpleFileDialog(SerialActivity.this, "FolderChoose", m_filter,
+            SimpleFileDialog FileOpenDialog =  new SimpleFileDialog(SerialActivity.this, "FolderChoose", m_filter, m_dir,
                                                             new SimpleFileDialog.SimpleFileDialogListener()
             {
                     @Override

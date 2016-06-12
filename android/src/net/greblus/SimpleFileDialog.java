@@ -59,15 +59,16 @@ public class SimpleFileDialog
 	private int FileSave     = 1;
 	private int FolderChoose = 2;
 	private int Select_type = FileSave;
-	private String m_sdcardDirectory = "";
+        private String m_sdcardDirectory = "";
+        private String m_baseSdcardDirectory = "";
 	private Context m_context;
 	private TextView m_titleView1;
 	private TextView m_titleView;
-	public String Default_File_Name = "default.txt";
+        public String Default_File_Name = "default.txt";
 	private String Selected_File_Name = Default_File_Name;
 	private EditText input_text;
 	
-	private String m_dir = "";
+        private String m_dir = "";
 	private List<String> m_subdirs = null;
 	private SimpleFileDialogListener m_SimpleFileDialogListener = null;
 	private ArrayAdapter<String> m_listAdapter = null;
@@ -82,7 +83,7 @@ public class SimpleFileDialog
 	}
 
 
-        public SimpleFileDialog(Context context, String file_select_type, int filter, SimpleFileDialogListener SimpleFileDialogListener)
+        public SimpleFileDialog(Context context, String file_select_type, int filter, String m_dir, SimpleFileDialogListener SimpleFileDialogListener)
 	{
 		if (file_select_type.equals("FileOpen"))          Select_type = FileOpen;
 		else if (file_select_type.equals("FileSave"))     Select_type = FileSave;
@@ -90,7 +91,14 @@ public class SimpleFileDialog
 		else Select_type = FileOpen;
 		
 		m_context = context;
-		m_sdcardDirectory = Environment.getExternalStorageDirectory().getAbsolutePath();
+                m_baseSdcardDirectory = Environment.getExternalStorageDirectory().getAbsolutePath();
+
+                File f = new File(m_dir);
+                if (f.isDirectory())
+                    m_sdcardDirectory = m_dir;
+                else
+                    m_sdcardDirectory = m_baseSdcardDirectory;
+
 		m_SimpleFileDialogListener = SimpleFileDialogListener;
                 m_filter = filter;
 
@@ -224,7 +232,7 @@ public class SimpleFileDialog
 			File dirFile = new File(dir);
 			
 			// if directory is not the base sd card directory add ".." for going up one directory
-			if (! m_dir.equals(m_sdcardDirectory) ) dirs.add("..");
+                        if (! m_dir.equals(m_baseSdcardDirectory) ) dirs.add("..");
 			
 			if (! dirFile.exists() || ! dirFile.isDirectory())
 			{

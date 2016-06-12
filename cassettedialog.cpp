@@ -27,7 +27,7 @@ CassetteDialog::CassetteDialog(QWidget *parent, const QString &fileName)
     int ts = (rx > ry) ? ry : rx;
 
     this->setGeometry(0, 0, rx, ry);
-
+#ifdef Q_OS_ANDROID
     ui->verticalLayoutWidget->setGeometry(0, 0, rx, ry);
     ui->verticalLayoutWidget->setMaximumWidth(rx);
     ui->verticalLayoutWidget->setMaximumHeight(ry);
@@ -45,7 +45,7 @@ CassetteDialog::CassetteDialog(QWidget *parent, const QString &fileName)
     ui->tape_label->setAlignment(Qt::AlignCenter);
     movie->start();
     movie->setPaused(true);
-
+#endif
     ui->progressBar->setVisible(true);
     worker = new CassetteWorker;
     mTotalDuration = worker->mTotalDuration;

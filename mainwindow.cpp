@@ -1328,7 +1328,8 @@ void MainWindow::mountDiskImage(int no)
 //        dir = QFileInfo(diskWidgets[no].fileNameLabel->text()).absolutePath();
 //    }
 #ifdef Q_OS_ANDROID
-    QAndroidJniObject::callStaticMethod<void>("net/greblus/SerialActivity", "runFileChooser", "(II)V", 1, 0);
+    QAndroidJniObject jdir = QAndroidJniObject::fromString(dir);
+    QAndroidJniObject::callStaticMethod<void>("net/greblus/SerialActivity", "runFileChooser", "(IILjava/lang/String;)V", 1, 0, jdir.object<jstring>());
 
     QString fileName = NULL;
     do
@@ -1367,7 +1368,8 @@ void MainWindow::mountFolderImage(int no)
 // Always mount from "last folder dir" //
     dir = aspeqtSettings->lastFolderImageDir();
 #ifdef Q_OS_ANDROID
-    QAndroidJniObject::callStaticMethod<void>("net/greblus/SerialActivity", "runDirChooser", "()V");
+    QAndroidJniObject jdir = QAndroidJniObject::fromString(dir);
+    QAndroidJniObject::callStaticMethod<void>("net/greblus/SerialActivity", "runDirChooser", "(Ljava/lang/String;)V", jdir.object<jstring>());
 
     QString fileName = NULL;
     do
@@ -1610,7 +1612,8 @@ void MainWindow::saveDiskAs(int no)
 
     do {
         #ifdef Q_OS_ANDROID
-            QAndroidJniObject::callStaticMethod<void>("net/greblus/SerialActivity", "runFileChooser", "(II)V", 1, 1);
+            QAndroidJniObject jdir = QAndroidJniObject::fromString(dir);
+            QAndroidJniObject::callStaticMethod<void>("net/greblus/SerialActivity", "runFileChooser", "(IILjava/lang/String;)V", 1, 1, jdir.object<jstring>());
             do
               {
                 QAndroidJniObject jFileName = QAndroidJniObject::getStaticObjectField<jstring>("net/greblus/SerialActivity", "m_chosen");
@@ -1850,8 +1853,10 @@ void MainWindow::on_actionNewImage_triggered()
 
 void MainWindow::on_actionOpenSession_triggered()
 {
+    QString dir = aspeqtSettings->lastSessionDir();
     #ifdef Q_OS_ANDROID
-    QAndroidJniObject::callStaticMethod<void>("net/greblus/SerialActivity", "runFileChooser", "(II)V", 4, 0);
+    QAndroidJniObject jdir = QAndroidJniObject::fromString(dir);
+    QAndroidJniObject::callStaticMethod<void>("net/greblus/SerialActivity", "runFileChooser", "(IILjava/lang/String;)V", 4, 0, jdir.object<jstring>());
     QString fileName;
     do
       {
@@ -1899,8 +1904,10 @@ void MainWindow::on_actionOpenSession_triggered()
 }
 void MainWindow::on_actionSaveSession_triggered()
 {
+    QString dir = aspeqtSettings->lastSessionDir();
     #ifdef Q_OS_ANDROID
-    QAndroidJniObject::callStaticMethod<void>("net/greblus/SerialActivity", "runFileChooser", "(II)V", 4, 1);
+    QAndroidJniObject jdir = QAndroidJniObject::fromString(dir);
+    QAndroidJniObject::callStaticMethod<void>("net/greblus/SerialActivity", "runFileChooser", "(IILjava/lang/String;)V", 4, 1, jdir.object<jstring>());
     QString fileName;
     do
       {
@@ -1936,10 +1943,10 @@ void MainWindow::on_actionSaveSession_triggered()
 
 void MainWindow::on_actionBootExe_triggered()
 {
-    QString dir = aspeqtSettings->lastExeDir();
-
+    QString dir = aspeqtSettings->lastExeDir();    
     #ifdef Q_OS_ANDROID
-    QAndroidJniObject::callStaticMethod<void>("net/greblus/SerialActivity", "runFileChooser", "(II)V", 2, 0);
+    QAndroidJniObject jdir = QAndroidJniObject::fromString(dir);
+    QAndroidJniObject::callStaticMethod<void>("net/greblus/SerialActivity", "runFileChooser", "(IILjava/lang/String;)V", 2, 0, jdir.object<jstring>());
     do
       {
         QAndroidJniObject jFileName = QAndroidJniObject::getStaticObjectField<jstring>("net/greblus/SerialActivity", "m_chosen");
@@ -1980,9 +1987,11 @@ void MainWindow::textPrinterWindowClosed()
 
 void MainWindow::on_actionPlaybackCassette_triggered()
 {
-    QString fileName = NULL;
+    QString dir = aspeqtSettings->lastCasDir();
     #ifdef Q_OS_ANDROID
-    QAndroidJniObject::callStaticMethod<void>("net/greblus/SerialActivity", "runFileChooser", "(II)V", 3, 0);
+    QAndroidJniObject jdir = QAndroidJniObject::fromString(dir);
+    QAndroidJniObject::callStaticMethod<void>("net/greblus/SerialActivity", "runFileChooser", "(IILjava/lang/String;)V", 3, 0, jdir.object<jstring>());
+    QString fileName = NULL;
     do
       {
         QAndroidJniObject jFileName = QAndroidJniObject::getStaticObjectField<jstring>("net/greblus/SerialActivity", "m_chosen");
