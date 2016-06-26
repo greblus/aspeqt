@@ -91,7 +91,7 @@ public class SimpleFileDialog
 		else Select_type = FileOpen;
 		
 		m_context = context;
-                m_baseSdcardDirectory = Environment.getExternalStorageDirectory().getAbsolutePath();
+                m_baseSdcardDirectory = "/mnt/sdcard/"; // Environment.getExternalStorageDirectory().getAbsolutePath();
 
                 File f = new File(m_dir);
                 if (f.isDirectory())
