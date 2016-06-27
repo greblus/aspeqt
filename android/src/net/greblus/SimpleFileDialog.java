@@ -91,13 +91,19 @@ public class SimpleFileDialog
 		else Select_type = FileOpen;
 		
 		m_context = context;
-                m_baseSdcardDirectory = "/mnt/sdcard/"; // Environment.getExternalStorageDirectory().getAbsolutePath();
+                m_baseSdcardDirectory = "/mnt/sdcard/";
 
                 File f = new File(m_dir);
                 if (f.isDirectory())
                     m_sdcardDirectory = m_dir;
-                else
-                    m_sdcardDirectory = m_baseSdcardDirectory;
+                else {
+                    f = new File(m_baseSdcardDirectory);
+                    if (f.isDirectory())
+                        m_sdcardDirectory = m_baseSdcardDirectory;
+                    else
+                        m_sdcardDirectory = Environment.getExternalStorageDirectory().getAbsolutePath();
+                }
+                f = null;
 
 		m_SimpleFileDialogListener = SimpleFileDialogListener;
                 m_filter = filter;
@@ -231,9 +237,11 @@ public class SimpleFileDialog
 		{
 			File dirFile = new File(dir);
 			
-			// if directory is not the base sd card directory add ".." for going up one directory
-                        if (! m_dir.equals(m_baseSdcardDirectory) ) dirs.add("..");
-			
+                        int cnt = dir.length() - dir.replace("/", "").length();
+			// if directory is not the base sd card directory add ".." for going up one directory                        
+                        if (! m_dir.equals(m_baseSdcardDirectory) && (cnt > 1)) dirs.add("..");
+                        Log.i("QT:", "dir="+dir);
+
 			if (! dirFile.exists() || ! dirFile.isDirectory())
 			{
 				return dirs;
