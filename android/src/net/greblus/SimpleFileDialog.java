@@ -240,7 +240,6 @@ public class SimpleFileDialog
                         int cnt = dir.length() - dir.replace("/", "").length();
 			// if directory is not the base sd card directory add ".." for going up one directory                        
                         if (! m_dir.equals(m_baseSdcardDirectory) && (cnt > 1)) dirs.add("..");
-                        Log.i("QT:", "dir="+dir);
 
 			if (! dirFile.exists() || ! dirFile.isDirectory())
 			{
