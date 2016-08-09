@@ -26,9 +26,9 @@ AspeqtSettings::AspeqtSettings()
     mSerialPortHandshakingMethod = mSettings->value("HandshakingMethod", 3).toInt();
     mSerialPortMaximumSpeed = mSettings->value("MaximumSerialPortSpeed", 0).toInt();
     mSerialPortUsePokeyDivisors = mSettings->value("SerialPortUsePokeyDivisors", false).toBool();
-    mSerialPortPokeyDivisor = mSettings->value("SerialPortPokeyDivisor", 6).toInt();
+    mSerialPortPokeyDivisor = mSettings->value("SerialPortPokeyDivisor", 0).toInt();
 
-    mUseHighSpeedExeLoader = mSettings->value("UseHighSpeedExeLoader", false).toBool();
+    mUseHighSpeedExeLoader = mSettings->value("UseHighSpeedExeLoader", true).toBool();
     #ifndef Q_OS_ANDROID
     mAtariSioDriverName = mSettings->value("AtariSioDriverName", AtariSioBackend::defaultPortName()).toString();
     #endif
@@ -75,7 +75,7 @@ AspeqtSettings::AspeqtSettings()
     mdVis = mSettings->value("D9DOVisible",true).toBool();
     if (mMainW < 688 && mdVis) mMainW = 688;
     if (mMainH < 426 && mdVis) mMainH = 426;
-    mUseLargeFont = mSettings->value("UseLargeFont", false).toBool();
+    mUseLargeFont = mSettings->value("UseLargeFont", true).toBool();
     mExplorerOnTop = mSettings->value("ExplorerOnTop", false).toBool();
     mEnableShade = mSettings->value("EnableShadeByDefault", true).toBool();
 
