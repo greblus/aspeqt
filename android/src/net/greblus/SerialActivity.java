@@ -9,11 +9,9 @@ import android.util.Log;
 
 import org.qtproject.qt5.android.bindings.QtActivity;
 
-import com.hoho.android.usbserial.driver.UsbSerialPort;
-import com.hoho.android.usbserial.driver.UsbSerialProber;
-import com.hoho.android.usbserial.driver.UsbSerialDriver;
-import com.hoho.android.usbserial.driver.UsbSerialPort;
-import com.hoho.android.usbserial.driver.UsbId;
+import com.felhr.usbserial.CDCSerialDevice;
+import com.felhr.usbserial.UsbSerialDevice;
+import com.felhr.usbserial.UsbSerialInterface;
 
 import android.content.Context;
 import java.io.IOException;
@@ -41,13 +39,11 @@ public class SerialActivity extends QtActivity
             "com.android.example.USB_PERMISSION";
         private static ByteBuffer rbuf = ByteBuffer.allocateDirect(65535);
         private static ByteBuffer wbuf = ByteBuffer.allocateDirect(65535);
-        private static byte rb[] = new byte [65535];
-        private static byte wb[] = new byte [65535];
         private static byte t[] = new byte [1024];
+        private static byte t1[] = new byte [1];
         private static int counter;
         private static UsbDevice device = null;
-        private static UsbSerialDriver driver;
-        private static UsbSerialPort sPort;
+        private static UsbSerialDevice sPort;
         public static native void sendBufAddr(ByteBuffer rbuf, ByteBuffer wbuf);
         private static boolean debug = false;
         public static String m_chosen;
@@ -188,117 +184,91 @@ public class SerialActivity extends QtActivity
             else
                 return 0;
 
-            List<UsbSerialDriver> availableDrivers = UsbSerialProber.getDefaultProber().findAllDrivers(manager);
+            UsbDeviceConnection usbConnection = manager.openDevice(device);
+            sPort = UsbSerialDevice.createUsbSerialDevice(device, usbConnection);
+            sPort.open();
+            sPort.setBaudRate(19200);
+            sPort.setDataBits(UsbSerialInterface.DATA_BITS_8);
+            sPort.setParity(UsbSerialInterface.PARITY_ODD);
+            sPort.setFlowControl(UsbSerialInterface.FLOW_CONTROL_OFF);
+            sPort.syncOpen();
 
-            if (availableDrivers.isEmpty()) {
-                Log.i("USB", "No drivers found for attached usb devices");
-                return 0;
-            }
-
-            Log.i("USB", "Driver found for attached usb device");
-            driver = availableDrivers.get(0);
-
-            UsbDeviceConnection connection = manager.openDevice(device);
-
-            sPort = driver.getPorts().get(0);
-
-            try {
-                sPort.open(connection);
-                sPort.setParameters(19200, 8, UsbSerialPort.STOPBITS_1, UsbSerialPort.PARITY_NONE);
-            } catch (IOException e) {
-                Log.i("USB", "Can't open port");
-                return -1;
-            }
             Log.i("USB", "Device opened");
             return 1;
        }
 
      public static void closeDevice() {
-         try {
-           if (sPort != null)
-                sPort.close();
-         } catch (IOException e) {
-                Log.i("USB", "Can't close port");
+        if (sPort != null) {
+            sPort.close();
+            sPort.syncClose();
         }
-     }
+    }
 
      public static int setSpeed(int speed) {
-         int ret = 0;
-         try {
-            ret = sPort.setBaudRate(speed);
-         } catch (IOException e) {
-           Log.i("USB", "Can't set speed");
-         }
-         if (debug) Log.i("USB", "setBaudrate: " + ret);
-       return ret;
+         sPort.setBaudRate(speed);
+         return speed;
      }
 
     public static int read(int size, int total)
     {
         rbuf.position(total);
         int ret = 0, rd = 0;
-
-        try {
-            do {
-                 rd = sPort.sread(rb, size, 5000);
-                 rbuf.put(rb, 0, rd);
-                 size -= rd; ret += rd;
-            } while (size > 0);
-        } catch (IOException e) {
-           Log.i("USB", "Can't read");
-        }
+        byte[] rb = new byte[size];
+        do {
+            rd = sPort.syncRead(rb, 5000);
+            rbuf.put(rb, 0, rd);
+            size -= rd; ret += rd;
+        } while (size > 0);
         return ret;
     }
 
     public static int write(int size, int total) {
         int ret = 0, wn = 0;
+        byte[] wb = new byte[size];
         wbuf.position(total);
         wbuf.get(wb, 0, size);
 
-        try {
-            do {
-                wn = sPort.swrite(wb, size, 5000);
-                size -= wn; ret += wn;
-            } while (size > 0);
-        } catch (IOException e) {
-           Log.i("USB", "Can't write");
-        }
+        do {
+            wn = sPort.syncWrite(wb, 5000);
+            size -= wn; ret += wn;
+        } while (size > 0);
+
         return ret;
     }
 
     public static boolean purge() {
-        boolean ret;
-        try {
-            ret = sPort.purgeHwBuffers(true, true);
-        } catch (IOException e) {
-            Log.i("USB", "Can't purge");
-            ret = false;
-        }
-        if (debug) Log.i("USB", "purge: " + ret);
+        boolean ret = true;
+//        try {
+//            ret = sPort.purgeHwBuffers(true, true);
+//        } catch (IOException e) {
+//            Log.i("USB", "Can't purge");
+//            ret = false;
+//        }
+//        if (debug) Log.i("USB", "purge: " + ret);
         return ret;
     }
 
     public static boolean purgeTX() {
-        boolean ret;
-        try {
-            ret = sPort.purgeHwBuffers(false, true);
-        } catch (IOException e) {
-            Log.i("USB", "Can't purge TX buffer");
-            ret = false;
-        }
-        if (debug) Log.i("USB", "purgeTX: " + ret);
+        boolean ret = true;
+//        try {
+//            ret = sPort.purgeHwBuffers(false, true);
+//        } catch (IOException e) {
+//            Log.i("USB", "Can't purge TX buffer");
+//            ret = false;
+//        }
+//        if (debug) Log.i("USB", "purgeTX: " + ret);
         return ret;
     }
 
     public static boolean purgeRX() {
-        boolean ret;
-        try {
-            ret = sPort.purgeHwBuffers(true, false);
-        } catch (IOException e) {
-            Log.i("USB", "Can't purge RX buffer");
-            ret = false;
-       }
-        if (debug) Log.i("USB", "purgeRX: " + ret);
+        boolean ret = true;
+//        try {
+//            ret = sPort.purgeHwBuffers(true, false);
+//        } catch (IOException e) {
+//            Log.i("USB", "Can't purge RX buffer");
+//            ret = false;
+//       }
+//        if (debug) Log.i("USB", "purgeRX: " + ret);
         return ret;
     }
 
@@ -308,53 +278,33 @@ public class SerialActivity extends QtActivity
 
     public static int getModemStatus() {
         int ret = -2;
-        try {
-            ret = sPort.getStatus();
-        } catch (IOException e) {
-            Log.i("USB", "Can't get modem status");
-            ret = -1;
-        }
-        if (debug) {
-            counter +=1;
-            if (counter < 3) {
-                Log.i("USB", "getModemStatus: " + ret);
-            } else {
-                 if (counter == 3 ) Log.i("USB", "getModemStatus called too many times!");
-                 if (counter > 50000) counter = 0;
-            }
-        }
+//        try {
+//            ret = sPort.getStatus();
+//        } catch (IOException e) {
+//            Log.i("USB", "Can't get modem status");
+//            ret = -1;
+//        }
+//        if (debug) {
+//            counter +=1;
+//            if (counter < 3) {
+//                Log.i("USB", "getModemStatus: " + ret);
+//            } else {
+//                 if (counter == 3 ) Log.i("USB", "getModemStatus called too many times!");
+//                 if (counter > 50000) counter = 0;
+//            }
+//        }
         return ret;
     }
 
 
     public static int getSWCommandFrame() {
-        int expected = 0, sync_attempts = 0, got = 1, total_retries = 0;
-        int ret = 0, total = 0;
-        boolean prtl = false;
-
+        int expected = 0, sync_attempts = 0, got = 1, ret = 0, total = 0;
         rbuf.position(0);
+        byte[] rb = new byte[5];
         mainloop:
         while (true) {
-            ret = 0; total = 0; total_retries = 0;
-            do {
-                if (total_retries > 2) return 2;
-                try {
-                    ret = sPort.sread(rb, 5-total, 5000);
-                    if (ret == 5) break;
-                }
-                catch (IOException e) {};
-
-                if ((ret > 0) && (ret < 5)) {
-                    System.arraycopy(rb, 0, t, total, ret);
-                    prtl = true;
-                    total += ret;
-                }
-                if ((total == 5) && (prtl == true))
-                        System.arraycopy(t, 0, rb, 0, 5);
-                if (ret <= 0)
-                    total_retries++;
-            } while (total<5);
-
+            ret = 0; total = 0;
+            ret = sPort.syncRead(rb, 5000); // trzeba coś tu wymyślić
             expected = rb[4] & 0xff;
             got = sioChecksum(rb, 4) & 0xff;
 
@@ -366,11 +316,9 @@ public class SerialActivity extends QtActivity
                                 rb[i] = rb[i+1];
                         ret = 0;
                         do {
-                            try {
-                                ret = sPort.sread(t, 1, 5000); }
-                            catch (IOException e) {};
+                            ret = sPort.syncRead(t1, 5000);
                         } while (ret < 1);
-                        rb[4] = t[0];
+                        rb[4] = t1[0];
                 } else
                     continue mainloop;
             } else {
@@ -393,75 +341,75 @@ public class SerialActivity extends QtActivity
     }
 
     public static int getHWCommandFrame(int mMethod) {
-        int mask, total_retries, status, total, res = 0;
-        boolean ret;
+//        int mask, total_retries, status, total, res = 0;
+//        boolean ret;
 
-        switch (mMethod) {
-            case 0:
-                mask = 64;
-                break;
-            case 1:
-                mask = 32;
-                break;
-            case 2:
-                mask = 16;
-                break;
-            default:
-                mask = 32; }
+//        switch (mMethod) {
+//            case 0:
+//                mask = 64;
+//                break;
+//            case 1:
+//                mask = 32;
+//                break;
+//            case 2:
+//                mask = 16;
+//                break;
+//            default:
+//                mask = 32; }
 
-        rbuf.position(0);
-        do {
-            status = 0; total_retries = 0;
-            do {
-                if (total_retries > 10e2) return 2;
-                status = getModemStatus();
-                total_retries += 1;
+//        rbuf.position(0);
+//        do {
+//            status = 0; total_retries = 0;
+//            do {
+//                if (total_retries > 10e2) return 2;
+//                status = getModemStatus();
+//                total_retries += 1;
 
-                if (status < 0) {
-                    if (debug) Log.i("USB", "Cannot retrieve serial port status");
-                    return 0;
-                }
-            } while (!((status & mask) > 0));
+//                if (status < 0) {
+//                    if (debug) Log.i("USB", "Cannot retrieve serial port status");
+//                    return 0;
+//                }
+//            } while (!((status & mask) > 0));
 
-            ret = purge();
-            if (!ret) if (debug) Log.i("USB", "Cannot clear serial port");
+//            ret = purge();
+//            if (!ret) if (debug) Log.i("USB", "Cannot clear serial port");
 
-            total = 0; total_retries = 0;
-            do {
-                res = 0;
-                try {
-                    if (total_retries > 4) return 2;
-                    res = sPort.sread(rb, 5-total, 5000); }
-                catch (IOException e) {};
+//            total = 0; total_retries = 0;
+//            do {
+//                res = 0;
+//                try {
+//                    if (total_retries > 4) return 2;
+//                    res = sPort.sread(rb, 5-total, 5000); }
+//                catch (IOException e) {};
 
-                if (res > 0) {
-                    for (int i=0; i<res; i++) {
-                       if (debug) Log.i("USB", "CF: " + (rb[i] & 0xff));
-                       rbuf.put((byte)(rb[i] & 0xff));
-                       total += 1;
-                    }
-                } else
-                    total_retries++;
-            } while (total<5);
+//                if (res > 0) {
+//                    for (int i=0; i<res; i++) {
+//                       if (debug) Log.i("USB", "CF: " + (rb[i] & 0xff));
+//                       rbuf.put((byte)(rb[i] & 0xff));
+//                       total += 1;
+//                    }
+//                } else
+//                    total_retries++;
+//            } while (total<5);
 
-            int expected = (byte) rb[4] & 0xff;
-            int got = sioChecksum(rb, 4);
+//            int expected = (byte) rb[4] & 0xff;
+//            int got = sioChecksum(rb, 4);
 
-            if (expected != got) return 2;
+//            if (expected != got) return 2;
 
-            total_retries = 0;
-            do {
-                if (total_retries > 10e2) return 2;
-                status = getModemStatus();
-                total_retries += 1;
+//            total_retries = 0;
+//            do {
+//                if (total_retries > 10e2) return 2;
+//                status = getModemStatus();
+//                total_retries += 1;
 
-                if (status < 0) {
-                    if (debug) Log.i("USB", "Cannot retrieve serial port status");
-                    return 0;
-                }
-            } while ((status & mask) > 0);
-            break;
-         } while (true);
+//                if (status < 0) {
+//                    if (debug) Log.i("USB", "Cannot retrieve serial port status");
+//                    return 0;
+//                }
+//            } while ((status & mask) > 0);
+//            break;
+//         } while (true);
          return 1;
     }
 

@@ -144,7 +144,33 @@ DISTFILES += \
     android/src/com/hoho/android/usbserial/driver/UsbSerialRuntimeException.java \
     android/src/net/greblus/SerialActivity.java \
     android/src/net/greblus/SimpleFileDialog.java \
-    android/res/xml/device_filter.xml
+    android/res/xml/device_filter.xml \
+    android/src/com/felhr/deviceids/CH34xIds.java \
+    android/src/com/felhr/deviceids/CP210xIds.java \
+    android/src/com/felhr/deviceids/CP2130Ids.java \
+    android/src/com/felhr/deviceids/FTDISioIds.java \
+    android/src/com/felhr/deviceids/PL2303Ids.java \
+    android/src/com/felhr/deviceids/XdcVcpIds.java \
+    android/src/com/felhr/usbserial/BLED112SerialDevice.java \
+    android/src/com/felhr/usbserial/CDCSerialDevice.java \
+    android/src/com/felhr/usbserial/CH34xSerialDevice.java \
+    android/src/com/felhr/usbserial/CP2102SerialDevice.java \
+    android/src/com/felhr/usbserial/CP2130SpiDevice.java \
+    android/src/com/felhr/usbserial/FTDISerialDevice.java \
+    android/src/com/felhr/usbserial/PL2303SerialDevice.java \
+    android/src/com/felhr/usbserial/SerialBuffer.java \
+    android/src/com/felhr/usbserial/SerialInputStream.java \
+    android/src/com/felhr/usbserial/SerialOutputStream.java \
+    android/src/com/felhr/usbserial/UsbSerialDebugger.java \
+    android/src/com/felhr/usbserial/UsbSerialDevice.java \
+    android/src/com/felhr/usbserial/UsbSerialInterface.java \
+    android/src/com/felhr/usbserial/UsbSpiDevice.java \
+    android/src/com/felhr/usbserial/UsbSpiInterface.java \
+    android/src/com/felhr/usbserial/XdcVcpSerialDevice.java \
+    android/src/com/felhr/utils/HexData.java \
+    android/src/com/hoho/android/usbserial/util/HexDump.java \
+    android/src/com/hoho/android/usbserial/util/SerialInputOutputManager.java \
+    android/src/com/hoho/android/usbserial/BuildInfo.java
 
 
 
