@@ -189,7 +189,7 @@ public class SerialActivity extends QtActivity
             sPort.open();
             sPort.setBaudRate(19200);
             sPort.setDataBits(UsbSerialInterface.DATA_BITS_8);
-            sPort.setParity(UsbSerialInterface.PARITY_ODD);
+            sPort.setParity(UsbSerialInterface.PARITY_NONE);
             sPort.setFlowControl(UsbSerialInterface.FLOW_CONTROL_OFF);
             sPort.syncOpen();
 
@@ -298,46 +298,63 @@ public class SerialActivity extends QtActivity
 
 
     public static int getSWCommandFrame() {
-        int expected = 0, sync_attempts = 0, got = 1, ret = 0, total = 0;
+        int expected = 0, sync_attempts = 0, got = 1, total_retries = 0;
+        int ret = 0, total = 0;
+        boolean prtl = false;
         rbuf.position(0);
         byte[] rb = new byte[5];
         mainloop:
         while (true) {
-            ret = 0; total = 0;
-            ret = sPort.syncRead(rb, 5000); // trzeba coś tu wymyślić
-            expected = rb[4] & 0xff;
-            got = sioChecksum(rb, 4) & 0xff;
+            ret = 0; total = 0; total_retries = 0;
+            do {
+                if (total_retries > 2) return 2;
+                ret = sPort.syncRead(rb, 5000);
+                if (ret == 5) break;
+                if ((ret > 0) && (ret < 5)) {
+                    System.arraycopy(rb, 0, t, total, ret);
+                    prtl = true;
+                    total += ret;
+                }
+                if ((total == 5) && (prtl == true))
+                        System.arraycopy(t, 0, rb, 0, 5);
+                if (ret <= 0)
+                    total_retries++;
+        } while (total<5);
 
-            if (checkDesync(rb, got, expected) > 0) {
-                if (debug) Log.i("USB", "Apparent desync");
-                if (sync_attempts < 4) {
-                        sync_attempts++;
-                        for (int i = 0; i < 4; i++)
-                                rb[i] = rb[i+1];
-                        ret = 0;
-                        do {
-                            ret = sPort.syncRead(t1, 5000);
-                        } while (ret < 1);
-                        rb[4] = t1[0];
-                } else
-                    continue mainloop;
-            } else {
-                if (debug) Log.i("USB", "No desync");
+        expected = rb[4] & 0xff;
+        got = sioChecksum(rb, 4) & 0xff;
 
-                for (int i=0; i<4; i++)
-                   rbuf.put((byte)(rb[i] & 0xff));
+        if (checkDesync(rb, got, expected) > 0) {
+            if (debug) Log.i("USB", "Apparent desync");
+            if (sync_attempts < 4) {
+                sync_attempts++;
+                for (int i = 0; i < 4; i++)
+                        rb[i] = rb[i+1];
+                ret = 0;
+                do {
+                    ret = sPort.syncRead(t1, 5000);
+                } while (ret < 1);
+                rb[4] = t1[0];
+            } else
+                continue mainloop;
+        } else {
+            if (debug) Log.i("USB", "No desync");
 
-                   if (debug) {
-                       String data = "";
-                       for (int i=0; i<4; i++)
-                           data += Integer.toString(rb[i] & 0xff) + " ";
-                       Log.i("USB", "Command Frame: " + data);
-                   }
-                break;
+            for (int i=0; i<4; i++)
+               rbuf.put((byte)(rb[i] & 0xff));
+
+            if (debug) {
+               String data = "";
+               for (int i=0; i<4; i++)
+                   data += Integer.toString(rb[i] & 0xff) + " ";
+               Log.i("USB", "Command Frame: " + data);
             }
-         };
-         if (debug) Log.i("USB", "got=" + got + " expected= " + expected);
-         return 1;
+            break;
+         }
+     };
+
+     if (debug) Log.i("USB", "got=" + got + " expected= " + expected);
+     return 1;
     }
 
     public static int getHWCommandFrame(int mMethod) {
