@@ -42,7 +42,7 @@ StandardSerialPortBackend::~StandardSerialPortBackend()
 QString StandardSerialPortBackend::defaultPortName()
   {
 
-      return QString("Sio2PC-USB");
+      return QString("Sio2BT");
   }
 
 bool StandardSerialPortBackend::open()
@@ -64,7 +64,7 @@ bool StandardSerialPortBackend::open()
     }
 
     if (mHandle == -1)
-        qCritical() << "!e" << tr("No SIO2PC device detected!");
+        qCritical() << "!e" << tr("No device detected!");
 
     mMethod = aspeqtSettings->serialPortHandshakingMethod();
     mCanceled = false;

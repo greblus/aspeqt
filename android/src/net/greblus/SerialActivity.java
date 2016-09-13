@@ -6,73 +6,87 @@ import android.os.Bundle;
 import java.lang.String;
 import java.util.List;
 import android.util.Log;
+import java.util.Set;
 
 import org.qtproject.qt5.android.bindings.QtActivity;
 
-import com.felhr.usbserial.CDCSerialDevice;
-import com.felhr.usbserial.UsbSerialDevice;
-import com.felhr.usbserial.UsbSerialInterface;
+import android.bluetooth.BluetoothAdapter;
+import android.bluetooth.BluetoothDevice;
+import android.bluetooth.BluetoothSocket;
+import java.util.UUID;
+import java.io.InputStream;
+import java.io.OutputStream;
+import android.provider.Settings.Secure;
+import android.content.Intent;
+import android.app.Activity;
 
 import android.content.Context;
 import java.io.IOException;
 import java.nio.ByteBuffer;
 import java.nio.ByteOrder;
 
-import android.hardware.usb.UsbManager;
-import android.hardware.usb.UsbDevice;
-import android.hardware.usb.UsbDeviceConnection;
-import java.util.HashMap;
-import java.util.Iterator;
-import android.app.PendingIntent;
-import android.content.Intent;
-import android.content.IntentFilter;
-import android.content.BroadcastReceiver;
 import android.widget.Toast;
 import android.view.WindowManager;
 
 public class SerialActivity extends QtActivity
 {
         private static int devCount = 0;
-        private static UsbManager manager;
-        private static PendingIntent pintent;
-        private static final String ACTION_USB_PERMISSION =
-            "com.android.example.USB_PERMISSION";
         private static ByteBuffer rbuf = ByteBuffer.allocateDirect(65535);
         private static ByteBuffer wbuf = ByteBuffer.allocateDirect(65535);
+        private static byte rb[] = new byte [65535];
+        private static byte wb[] = new byte [65535];
         private static byte t[] = new byte [1024];
         private static byte t1[] = new byte [1];
         private static int counter;
-        private static UsbDevice device = null;
-        private static UsbSerialDevice sPort;
         public static native void sendBufAddr(ByteBuffer rbuf, ByteBuffer wbuf);
         private static boolean debug = false;
         public static String m_chosen;
         private static int m_filter;
         private static String m_action;
         private static String m_dir;
-
+        private static BluetoothAdapter mBluetoothAdapter = null;
+        private static BluetoothDevice device = null;
+        private static BluetoothSocket socket = null;
+        private static UUID uuid;
+        private static InputStream m_input = null;
+        private static OutputStream m_output = null;
+        private final static int REQUEST_ENABLE_BT = 1;
         public static SerialActivity s_activity = null;
 
         @Override
 	public void onCreate(Bundle savedInstanceState)
  	{
-		s_activity = this;
-                super.onCreate(savedInstanceState);
+            s_activity = this;
+            super.onCreate(savedInstanceState);
+            getWindow().addFlags(WindowManager.LayoutParams.FLAG_KEEP_SCREEN_ON);
+            sendBufAddr(rbuf, wbuf);
 
-                manager = (UsbManager)getSystemService(Context.USB_SERVICE);
-                pintent = PendingIntent.getBroadcast(this, 0, new Intent(ACTION_USB_PERMISSION), 0);
-                registerBroadcastReceiver();
-                getWindow().addFlags(WindowManager.LayoutParams.FLAG_KEEP_SCREEN_ON);
-
-                sendBufAddr(rbuf, wbuf);
+            mBluetoothAdapter = BluetoothAdapter.getDefaultAdapter();
+            if (mBluetoothAdapter == null) {
+                Log.i("BT", "No BT adapter found!");
+            }
+            else
+                if (!mBluetoothAdapter.isEnabled()) {
+                    Intent enableBtIntent = new Intent(BluetoothAdapter.ACTION_REQUEST_ENABLE);
+                    startActivityForResult(enableBtIntent, REQUEST_ENABLE_BT);
+                }
         }
 
-       @Override
-       public void onPause() {
+        @Override
+        public void onPause() {
            m_chosen = "Cancelled";
            super.onPause();
         }
 
+        @Override
+        protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+            if (requestCode == REQUEST_ENABLE_BT) {
+                if (resultCode == 0) {
+                    Intent enableBtIntent = new Intent(BluetoothAdapter.ACTION_REQUEST_ENABLE);
+                    startActivityForResult(enableBtIntent, REQUEST_ENABLE_BT);
+                }
+            }
+        }
 
         public static void runFileChooser(int filter, int action, String dir) {
             Log.i("ASPEQT:", "DIR:" + dir);
@@ -143,133 +157,102 @@ public class SerialActivity extends QtActivity
             FileOpenDialog.chooseFile_or_Dir();
         }
 
-        public static void registerBroadcastReceiver() {
-                if (SerialActivity.s_activity != null) {
-                        // Qt is running on a different thread than Android.
-                        // In order to register the receiver we need to execute it in the UI thread
-                        SerialActivity.s_activity.runOnUiThread( new RegisterReceiverRunnable());
-                        Log.i("USB", "Broadcast Receiver registered");
-                }
-        }
-
         public static int openDevice() {
-            HashMap<String, UsbDevice> deviceList = manager.getDeviceList();
-            Iterator<UsbDevice> deviceIterator = deviceList.values().iterator();
 
-            if (!deviceIterator.hasNext())
+            if (mBluetoothAdapter == null)
                 return 0;
 
-                int dev_pid, dev_vid;
-                boolean dev_found = false;
-                 do {
-                     device = deviceIterator.next();
-                     dev_pid = device.getProductId();
-                     dev_vid = device.getVendorId();
-                     if ((dev_vid == 1027) &&
-                        (
-                          (dev_pid == 24577) || //Lotharek's Sio2PC-USB
-                          (dev_pid == 33712) || //Ray's Sio2USB-1050PC
-                          (dev_pid == 33713) ||
-                          (dev_pid == 24597)    //Ray's Sio2PC-USB
-                        )
-                    ) { dev_found = true; break; }
+            while (!mBluetoothAdapter.isEnabled()) { };
 
-                     if ((dev_vid  == 1659) && (dev_pid == 8963)) //PL2303
-                        { dev_found = true; break;}
-
-            } while (deviceIterator.hasNext());
-
-            if (dev_found)
-                manager.requestPermission(device, pintent);
-            else
+            Set<BluetoothDevice> pairedDevices = mBluetoothAdapter.getBondedDevices();
+            if (pairedDevices.size() > 0) {
+                for (BluetoothDevice device : pairedDevices) {
+                    if (device.getName() == "Sio2bt") {
+                        Log.i("BT", "Sio2bt found!");
+                        break;
+                    } else
+                        device = null;
+                }
+            }
+            if (device == null)
                 return 0;
 
-            UsbDeviceConnection usbConnection = manager.openDevice(device);
-            sPort = UsbSerialDevice.createUsbSerialDevice(device, usbConnection);
-            sPort.open();
-            sPort.setBaudRate(19200);
-            sPort.setDataBits(UsbSerialInterface.DATA_BITS_8);
-            sPort.setParity(UsbSerialInterface.PARITY_NONE);
-            sPort.setFlowControl(UsbSerialInterface.FLOW_CONTROL_OFF);
-            sPort.syncOpen();
+            uuid = UUID.fromString(Secure.ANDROID_ID);
+            BluetoothSocket tmp = null;
+            try {
+                    tmp = device.createRfcommSocketToServiceRecord(uuid);
+            } catch (IOException e) { }
+            socket = tmp;
 
-            Log.i("USB", "Device opened");
-            return 1;
+            if (socket != null)
+                try {
+                    socket.connect();
+                } catch (IOException e) { }
+
+            if (socket.isConnected()) {
+                try {
+                    m_input = socket.getInputStream();
+                    m_output = socket.getOutputStream();
+                } catch (IOException e) { }
+
+                Log.i("BT", "Device opened");
+                return 1;
+            } else {
+                return 0;
+            }
+
        }
 
      public static void closeDevice() {
-        if (sPort != null) {
-            sPort.close();
-            sPort.syncClose();
+        if (socket != null) {
+            try {
+                socket.close();
+            } catch (IOException e) { }
         }
     }
 
      public static int setSpeed(int speed) {
-         sPort.setBaudRate(speed);
+        // sPort.setBaudRate(speed);
          return speed;
      }
 
     public static int read(int size, int total)
     {
         rbuf.position(total);
-        int ret = 0, rd = 0;
-        byte[] rb = new byte[size];
+        int ret = 0, rd = 0;       
         do {
-            rd = sPort.syncRead(rb, 5000);
-            rbuf.put(rb, 0, rd);
-            size -= rd; ret += rd;
+            try {
+                rd = m_input.read(rb, 0, size);
+                rbuf.put(rb, 0, rd);
+                size -= rd; ret += rd;
+            } catch (IOException e) {}
         } while (size > 0);
         return ret;
     }
 
     public static int write(int size, int total) {
-        int ret = 0, wn = 0;
-        byte[] wb = new byte[size];
+        int ret = 0, wn = 0;        
         wbuf.position(total);
         wbuf.get(wb, 0, size);
 
-        do {
-            wn = sPort.syncWrite(wb, 5000);
-            size -= wn; ret += wn;
-        } while (size > 0);
+        try {
+            m_output.write(wb, 0, size);
+            m_output.flush();
+        } catch (IOException e) { size = 0; }
 
-        return ret;
+        return size;
     }
 
-    public static boolean purge() {
-        boolean ret = true;
-//        try {
-//            ret = sPort.purgeHwBuffers(true, true);
-//        } catch (IOException e) {
-//            Log.i("USB", "Can't purge");
-//            ret = false;
-//        }
-//        if (debug) Log.i("USB", "purge: " + ret);
-        return ret;
+    public static boolean purge() {        
+        return true;
     }
 
     public static boolean purgeTX() {
-        boolean ret = true;
-//        try {
-//            ret = sPort.purgeHwBuffers(false, true);
-//        } catch (IOException e) {
-//            Log.i("USB", "Can't purge TX buffer");
-//            ret = false;
-//        }
-//        if (debug) Log.i("USB", "purgeTX: " + ret);
-        return ret;
+        return true;
     }
 
-    public static boolean purgeRX() {
-        boolean ret = true;
-//        try {
-//            ret = sPort.purgeHwBuffers(true, false);
-//        } catch (IOException e) {
-//            Log.i("USB", "Can't purge RX buffer");
-//            ret = false;
-//       }
-//        if (debug) Log.i("USB", "purgeRX: " + ret);
-        return ret;
+    public static boolean purgeRX() {        
+        return true;
     }
 
     public static void qLog(String msg) {
@@ -278,21 +261,6 @@ public class SerialActivity extends QtActivity
 
     public static int getModemStatus() {
         int ret = -2;
-//        try {
-//            ret = sPort.getStatus();
-//        } catch (IOException e) {
-//            Log.i("USB", "Can't get modem status");
-//            ret = -1;
-//        }
-//        if (debug) {
-//            counter +=1;
-//            if (counter < 3) {
-//                Log.i("USB", "getModemStatus: " + ret);
-//            } else {
-//                 if (counter == 3 ) Log.i("USB", "getModemStatus called too many times!");
-//                 if (counter > 50000) counter = 0;
-//            }
-//        }
         return ret;
     }
 
@@ -301,14 +269,15 @@ public class SerialActivity extends QtActivity
         int expected = 0, sync_attempts = 0, got = 1, total_retries = 0;
         int ret = 0, total = 0;
         boolean prtl = false;
-        rbuf.position(0);
-        byte[] rb = new byte[5];
+        rbuf.position(0);        
         mainloop:
         while (true) {
             ret = 0; total = 0; total_retries = 0;
             do {
                 if (total_retries > 2) return 2;
-                ret = sPort.syncRead(rb, 5000);
+                try {
+                    ret = m_input.read(rb, 0, 5);
+                } catch (IOException e) { }
                 if (ret == 5) break;
                 if ((ret > 0) && (ret < 5)) {
                     System.arraycopy(rb, 0, t, total, ret);
@@ -332,7 +301,9 @@ public class SerialActivity extends QtActivity
                         rb[i] = rb[i+1];
                 ret = 0;
                 do {
-                    ret = sPort.syncRead(t1, 5000);
+                    try {
+                        ret = m_input.read(t1);
+                    } catch (IOException e) { }
                 } while (ret < 1);
                 rb[4] = t1[0];
             } else
@@ -358,75 +329,6 @@ public class SerialActivity extends QtActivity
     }
 
     public static int getHWCommandFrame(int mMethod) {
-//        int mask, total_retries, status, total, res = 0;
-//        boolean ret;
-
-//        switch (mMethod) {
-//            case 0:
-//                mask = 64;
-//                break;
-//            case 1:
-//                mask = 32;
-//                break;
-//            case 2:
-//                mask = 16;
-//                break;
-//            default:
-//                mask = 32; }
-
-//        rbuf.position(0);
-//        do {
-//            status = 0; total_retries = 0;
-//            do {
-//                if (total_retries > 10e2) return 2;
-//                status = getModemStatus();
-//                total_retries += 1;
-
-//                if (status < 0) {
-//                    if (debug) Log.i("USB", "Cannot retrieve serial port status");
-//                    return 0;
-//                }
-//            } while (!((status & mask) > 0));
-
-//            ret = purge();
-//            if (!ret) if (debug) Log.i("USB", "Cannot clear serial port");
-
-//            total = 0; total_retries = 0;
-//            do {
-//                res = 0;
-//                try {
-//                    if (total_retries > 4) return 2;
-//                    res = sPort.sread(rb, 5-total, 5000); }
-//                catch (IOException e) {};
-
-//                if (res > 0) {
-//                    for (int i=0; i<res; i++) {
-//                       if (debug) Log.i("USB", "CF: " + (rb[i] & 0xff));
-//                       rbuf.put((byte)(rb[i] & 0xff));
-//                       total += 1;
-//                    }
-//                } else
-//                    total_retries++;
-//            } while (total<5);
-
-//            int expected = (byte) rb[4] & 0xff;
-//            int got = sioChecksum(rb, 4);
-
-//            if (expected != got) return 2;
-
-//            total_retries = 0;
-//            do {
-//                if (total_retries > 10e2) return 2;
-//                status = getModemStatus();
-//                total_retries += 1;
-
-//                if (status < 0) {
-//                    if (debug) Log.i("USB", "Cannot retrieve serial port status");
-//                    return 0;
-//                }
-//            } while ((status & mask) > 0);
-//            break;
-//         } while (true);
          return 1;
     }
 
@@ -461,18 +363,6 @@ public class SerialActivity extends QtActivity
     }
 }
 
-class RegisterReceiverRunnable implements Runnable
-{
-        // this method is called on Android Ui Thread
-        @Override
-        public void run() {
-                IntentFilter filter = new IntentFilter();
-                filter.addAction("com.android.example.USB_PERMISSION");
-                // this method must be called on Android Ui Thread
-                SerialActivity.s_activity.registerReceiver(new USBReceiver(), filter);
-                }
-}
-
 class FileChooser implements Runnable
 {
     @Override
@@ -486,25 +376,5 @@ class DirChooser implements Runnable
     @Override
     public void run() {
         SerialActivity.s_activity.dirChooser();
-    }
-}
-
-class USBReceiver extends BroadcastReceiver {
-        @Override
-        public void onReceive(Context context, Intent intent) {
-        // Step 4
-        if (intent.getAction().equals("com.android.example.USB_PERMISSION"))
-        synchronized (this) {
-            UsbDevice device = (UsbDevice)intent.getParcelableExtra(UsbManager.EXTRA_DEVICE);
-            if (intent.getBooleanExtra(UsbManager.EXTRA_PERMISSION_GRANTED, false)) {
-                Log.v("USB", "Received permission result OK");
-                if(device != null){
-                    Log.i("USB", "Device OK");
-                }
-                else {
-                    Log.i("USB", "Permission denied for device " + device);
-                }
-            }
-        }
     }
 }
