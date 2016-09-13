@@ -13,6 +13,7 @@ import org.qtproject.qt5.android.bindings.QtActivity;
 import android.bluetooth.BluetoothAdapter;
 import android.bluetooth.BluetoothDevice;
 import android.bluetooth.BluetoothSocket;
+
 import java.util.UUID;
 import java.io.InputStream;
 import java.io.OutputStream;
@@ -30,7 +31,6 @@ import android.view.WindowManager;
 
 public class SerialActivity extends QtActivity
 {
-        private static int devCount = 0;
         private static ByteBuffer rbuf = ByteBuffer.allocateDirect(65535);
         private static ByteBuffer wbuf = ByteBuffer.allocateDirect(65535);
         private static byte rb[] = new byte [65535];
@@ -39,14 +39,14 @@ public class SerialActivity extends QtActivity
         private static byte t1[] = new byte [1];
         private static int counter;
         public static native void sendBufAddr(ByteBuffer rbuf, ByteBuffer wbuf);
-        private static boolean debug = false;
+        private static boolean debug = true;
         public static String m_chosen;
         private static int m_filter;
         private static String m_action;
         private static String m_dir;
         private static BluetoothAdapter mBluetoothAdapter = null;
-        private static BluetoothDevice device = null;
-        private static BluetoothSocket socket = null;
+        private static BluetoothDevice m_device = null;
+        private static BluetoothSocket m_socket = null;
         private static UUID uuid;
         private static InputStream m_input = null;
         private static OutputStream m_output = null;
@@ -166,47 +166,49 @@ public class SerialActivity extends QtActivity
 
             Set<BluetoothDevice> pairedDevices = mBluetoothAdapter.getBondedDevices();
             if (pairedDevices.size() > 0) {
+                outer:
                 for (BluetoothDevice device : pairedDevices) {
-                    if (device.getName() == "Sio2bt") {
-                        Log.i("BT", "Sio2bt found!");
-                        break;
+                    if (device.getName().startsWith("SIO2BT")) {
+                        Log.i("BT", device.getName());
+                        m_device = device;
+                        break outer;
                     } else
-                        device = null;
+                        m_device = null;
                 }
             }
-            if (device == null)
+            if (m_device == null)
                 return 0;
 
-            uuid = UUID.fromString(Secure.ANDROID_ID);
+            uuid = UUID.fromString("00001101-0000-1000-8000-00805f9b34fb");
             BluetoothSocket tmp = null;
             try {
-                    tmp = device.createRfcommSocketToServiceRecord(uuid);
+                    tmp = m_device.createRfcommSocketToServiceRecord(uuid);
             } catch (IOException e) { }
-            socket = tmp;
+            m_socket = tmp;
 
-            if (socket != null)
+            if (m_socket != null)
                 try {
-                    socket.connect();
+                    m_socket.connect();
                 } catch (IOException e) { }
 
-            if (socket.isConnected()) {
+            if (m_socket.isConnected()) {
                 try {
-                    m_input = socket.getInputStream();
-                    m_output = socket.getOutputStream();
+                    m_input = m_socket.getInputStream();
+                    m_output = m_socket.getOutputStream();
                 } catch (IOException e) { }
 
                 Log.i("BT", "Device opened");
                 return 1;
             } else {
+                Log.i("BT", "Device not connected");
                 return 0;
             }
-
        }
 
      public static void closeDevice() {
-        if (socket != null) {
+        if (m_socket != null) {
             try {
-                socket.close();
+                m_socket.close();
             } catch (IOException e) { }
         }
     }
@@ -231,13 +233,12 @@ public class SerialActivity extends QtActivity
     }
 
     public static int write(int size, int total) {
-        int ret = 0, wn = 0;        
+
         wbuf.position(total);
         wbuf.get(wb, 0, size);
 
         try {
             m_output.write(wb, 0, size);
-            m_output.flush();
         } catch (IOException e) { size = 0; }
 
         return size;
