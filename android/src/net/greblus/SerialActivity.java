@@ -36,10 +36,9 @@ public class SerialActivity extends QtActivity
         private static byte rb[] = new byte [65535];
         private static byte wb[] = new byte [65535];
         private static byte t[] = new byte [1024];
-        private static byte t1[] = new byte [1];
         private static int counter;
         public static native void sendBufAddr(ByteBuffer rbuf, ByteBuffer wbuf);
-        private static boolean debug = true;
+        private static boolean debug = false;
         public static String m_chosen;
         private static int m_filter;
         private static String m_action;
@@ -164,6 +163,7 @@ public class SerialActivity extends QtActivity
 
             while (!mBluetoothAdapter.isEnabled()) { };
 
+            mBluetoothAdapter.cancelDiscovery();
             Set<BluetoothDevice> pairedDevices = mBluetoothAdapter.getBondedDevices();
             if (pairedDevices.size() > 0) {
                 outer:
@@ -214,8 +214,7 @@ public class SerialActivity extends QtActivity
     }
 
      public static int setSpeed(int speed) {
-        // sPort.setBaudRate(speed);
-         return speed;
+        return speed;
      }
 
     public static int read(int size, int total)
@@ -277,7 +276,7 @@ public class SerialActivity extends QtActivity
             do {
                 if (total_retries > 2) return 2;
                 try {
-                    ret = m_input.read(rb, 0, 5);
+                    ret = m_input.read(rb, 0, 5-total);
                 } catch (IOException e) { }
                 if (ret == 5) break;
                 if ((ret > 0) && (ret < 5)) {
@@ -296,17 +295,24 @@ public class SerialActivity extends QtActivity
 
         if (checkDesync(rb, got, expected) > 0) {
             if (debug) Log.i("USB", "Apparent desync");
-            if (sync_attempts < 4) {
+
+            if (debug) {
+               String data = "";
+               for (int i=0; i<4; i++)
+                   data += Integer.toString(rb[i] & 0xff) + " ";
+               Log.i("USB", "Desync Frame: " + data);
+            }
+            if (sync_attempts < 10) {
                 sync_attempts++;
                 for (int i = 0; i < 4; i++)
                         rb[i] = rb[i+1];
                 ret = 0;
                 do {
                     try {
-                        ret = m_input.read(t1);
+                        ret = m_input.read(t, 0, 1);
                     } catch (IOException e) { }
                 } while (ret < 1);
-                rb[4] = t1[0];
+                rb[4] = t[0];
             } else
                 continue mainloop;
         } else {

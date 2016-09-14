@@ -176,6 +176,8 @@ bool StandardSerialPortBackend::setSpeed(int speed)
 {
     if (debug) qWarning().noquote() << "!i" << tr("Serial port speed set to %1.").arg(speed);
 
+    return true; //not needed for SIO2BT
+
     int ret = QAndroidJniObject::callStaticMethod<jint>("net/greblus/SerialActivity", "setSpeed", "(I)I", speed);
     if (ret < 0) {
         if (debug) qCritical() << "!e" << tr("Cannot set serial port speed: %1")
@@ -215,7 +217,7 @@ QByteArray StandardSerialPortBackend::readCommandFrame()
 
         if (!data.isEmpty()) {
             break;
-        } else {
+        } else if (false) { // not needed for SIO2BT
             retries++;
             if (retries == 2) {
                 retries = 0;
@@ -292,14 +294,14 @@ bool StandardSerialPortBackend::writeDataNak()
 bool StandardSerialPortBackend::writeComplete()
 {
     if (debug) qWarning().noquote() << "!i" << tr("writeComplete");
-    SioWorker::usleep(900);
+    SioWorker::usleep(10000);
     return writeRawFrame(QByteArray(1, 67));
 }
 
 bool StandardSerialPortBackend::writeError()
 {
     if (debug) qWarning().noquote() << "!i" << tr("writeError");
-    SioWorker::usleep(900);
+    SioWorker::usleep(10000);
     return writeRawFrame(QByteArray(1, 78));
 }
 
