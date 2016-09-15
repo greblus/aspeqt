@@ -324,7 +324,7 @@ MainWindow::MainWindow(QWidget *parent)
     connect(sio, SIGNAL(started()), this, SLOT(sioStarted()));
     connect(sio, SIGNAL(finished()), this, SLOT(sioFinished()));
     connect(sio, SIGNAL(statusChanged(QString)), this, SLOT(sioStatusChanged(QString)));
-    shownFirstTime = true;
+    shownFirstTime = false;
 
     PCLINK* pclink = new PCLINK(sio);
     sio->installDevice(0x6F, pclink);
@@ -633,6 +633,7 @@ void MainWindow::show()
 
         ui->actionStartEmulation->trigger();
     }
+      ui->actionStartEmulation->trigger(); //temporary for sio2bt
 }
 void MainWindow::enterEvent(QEvent *)
 {

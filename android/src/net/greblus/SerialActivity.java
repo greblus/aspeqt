@@ -38,7 +38,7 @@ public class SerialActivity extends QtActivity
         private static byte t[] = new byte [1024];
         private static int counter;
         public static native void sendBufAddr(ByteBuffer rbuf, ByteBuffer wbuf);
-        private static boolean debug = true;
+        private static boolean debug = false;
         public static String m_chosen;
         private static int m_filter;
         private static String m_action;
@@ -49,7 +49,9 @@ public class SerialActivity extends QtActivity
         private static UUID uuid;
         private static InputStream m_input = null;
         private static OutputStream m_output = null;
-        private static int rd_delay = 5;
+        private static int rd_delay1 = 50;
+        private static int rd_delay2 = 40;
+        private static int rd_delay3 = 10;
         private final static int REQUEST_ENABLE_BT = 1;
         public static SerialActivity s_activity = null;
 
@@ -236,7 +238,7 @@ public class SerialActivity extends QtActivity
                     } catch (Exception e) { }
 
                     t_now = System.currentTimeMillis();
-                    if (t_now-t_start > rd_delay)
+                    if (t_now-t_start > rd_delay1)
                         return 0;
                 }
                 Log.i("USB", Integer.toString(available));
@@ -304,7 +306,7 @@ public class SerialActivity extends QtActivity
                         } catch (Exception e) { }
 
                         t_now = System.currentTimeMillis();
-                        if (t_now-t_start > rd_delay)
+                        if (t_now-t_start > rd_delay2)
                             return 2;
                     }
                     ret = m_input.read(rb, 0, available);
@@ -348,7 +350,7 @@ public class SerialActivity extends QtActivity
                         try { Thread.sleep(1);
                         } catch (Exception e) { }
                         t_now = System.currentTimeMillis();
-                        if (t_now-t_start > rd_delay)
+                        if (t_now-t_start > rd_delay3)
                             return 2;
                     }
                     ret = m_input.read(t, 0, 1);
