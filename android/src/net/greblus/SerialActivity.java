@@ -38,7 +38,7 @@ public class SerialActivity extends QtActivity
         private static byte t[] = new byte [1024];
         private static int counter;
         public static native void sendBufAddr(ByteBuffer rbuf, ByteBuffer wbuf);
-        private static boolean debug = false;
+        private static boolean debug = true;
         public static String m_chosen;
         private static int m_filter;
         private static String m_action;
@@ -49,6 +49,7 @@ public class SerialActivity extends QtActivity
         private static UUID uuid;
         private static InputStream m_input = null;
         private static OutputStream m_output = null;
+        private static int rd_delay = 5;
         private final static int REQUEST_ENABLE_BT = 1;
         public static SerialActivity s_activity = null;
 
@@ -221,9 +222,25 @@ public class SerialActivity extends QtActivity
     {
         rbuf.position(total);
         int ret = 0, rd = 0;       
+        long t_now, t_start;
+        t_start = System.currentTimeMillis();
+
         do {
             try {
-                rd = m_input.read(rb, 0, size);
+               int available = 0;
+                while (true) {                
+                    available = m_input.available();
+                    if (available > 0) break;
+
+                    try { Thread.sleep(1);
+                    } catch (Exception e) { }
+
+                    t_now = System.currentTimeMillis();
+                    if (t_now-t_start > rd_delay)
+                        return 0;
+                }
+                Log.i("USB", Integer.toString(available));
+                rd = m_input.read(rb, 0, available);
                 rbuf.put(rb, 0, rd);
                 size -= rd; ret += rd;
             } catch (IOException e) {}
@@ -269,14 +286,28 @@ public class SerialActivity extends QtActivity
         int expected = 0, sync_attempts = 0, got = 1, total_retries = 0;
         int ret = 0, total = 0;
         boolean prtl = false;
+        long t_now, t_start;
         rbuf.position(0);        
         mainloop:
         while (true) {
             ret = 0; total = 0; total_retries = 0;
             do {
-                if (total_retries > 2) return 2;
+                if (total_retries > 2) return 2;                
                 try {
-                    ret = m_input.read(rb, 0, 5-total);
+                   int available = 0;
+                   t_start = System.currentTimeMillis();
+                   while (true) {
+                        available = m_input.available();
+                        if (available > 0) break;
+
+                        try { Thread.sleep(1);
+                        } catch (Exception e) { }
+
+                        t_now = System.currentTimeMillis();
+                        if (t_now-t_start > rd_delay)
+                            return 2;
+                    }
+                    ret = m_input.read(rb, 0, available);
                 } catch (IOException e) { }
                 if (ret == 5) break;
                 if ((ret > 0) && (ret < 5)) {
@@ -307,11 +338,21 @@ public class SerialActivity extends QtActivity
                 for (int i = 0; i < 4; i++)
                         rb[i] = rb[i+1];
                 ret = 0;
-                do {
-                    try {
-                        ret = m_input.read(t, 0, 1);
-                    } catch (IOException e) { }
-                } while (ret < 1);
+                byte tmp = rb[0];                
+                try {
+                    int available = 0;
+                    t_start = System.currentTimeMillis();
+                    while (true) {
+                        available = m_input.available();
+                        if (available > 0) break;
+                        try { Thread.sleep(1);
+                        } catch (Exception e) { }
+                        t_now = System.currentTimeMillis();
+                        if (t_now-t_start > rd_delay)
+                            return 2;
+                    }
+                    ret = m_input.read(t, 0, 1);
+                } catch (IOException e) { }
                 rb[4] = t[0];
             } else
                 continue mainloop;
