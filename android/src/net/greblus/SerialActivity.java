@@ -49,9 +49,6 @@ public class SerialActivity extends QtActivity
         private static UUID uuid;
         private static InputStream m_input = null;
         private static OutputStream m_output = null;
-        private static int rd_delay1 = 50;
-        private static int rd_delay2 = 40;
-        private static int rd_delay3 = 10;
         private final static int REQUEST_ENABLE_BT = 1;
         public static SerialActivity s_activity = null;
 
@@ -169,18 +166,17 @@ public class SerialActivity extends QtActivity
             mBluetoothAdapter.cancelDiscovery();
             Set<BluetoothDevice> pairedDevices = mBluetoothAdapter.getBondedDevices();
             if (pairedDevices.size() > 0) {
-                outer:
                 for (BluetoothDevice device : pairedDevices) {
                     if (device.getName().startsWith("SIO2BT")) {
                         Log.i("BT", device.getName());
                         m_device = device;
-                        break outer;
+                        break;
                     } else
                         m_device = null;
-                }
+                 }
             }
-            if (m_device == null)
-                return 0;
+
+            if (m_device == null) return 0;
 
             uuid = UUID.fromString("00001101-0000-1000-8000-00805f9b34fb");
             BluetoothSocket tmp = null;
@@ -216,42 +212,45 @@ public class SerialActivity extends QtActivity
         }
     }
 
-     public static int setSpeed(int speed) {
+    public static int setSpeed(int speed) {
         return speed;
-     }
+    }
 
-    public static int read(int size, int total)
-    {
-        rbuf.position(total);
-        int ret = 0, rd = 0;       
+    public static int waitTillAvailable(int timeout) {
+        int avail = 0;
         long t_now, t_start;
         t_start = System.currentTimeMillis();
 
-        do {
-            try {
-               int available = 0;
-                while (true) {                
-                    available = m_input.available();
-                    if (available > 0) break;
+        while (true) {
+            try { avail = m_input.available(); }
+            catch (Exception e) {}
 
-                    try { Thread.sleep(1);
-                    } catch (Exception e) { }
+            if (avail > 0) break;
 
-                    t_now = System.currentTimeMillis();
-                    if (t_now-t_start > rd_delay1)
-                        return 0;
-                }
-                Log.i("USB", Integer.toString(available));
-                rd = m_input.read(rb, 0, available);
-                rbuf.put(rb, 0, rd);
-                size -= rd; ret += rd;
-            } catch (IOException e) {}
-        } while (size > 0);
-        return ret;
+            try { Thread.sleep(1);
+            } catch (Exception e) { }
+
+            t_now = System.currentTimeMillis();
+            if (t_now-t_start > timeout)
+                return 0;
+        }
+        if (debug) Log.i("USB", Integer.toString(avail));
+        return avail;
     }
 
-    public static int write(int size, int total) {
+    public static int read(int size, int total)
+    {
+        int rd = 0;
+        try {
+            rbuf.position(total);
+            rd = m_input.read(rb, 0, size);
+            rbuf.put(rb, 0, rd);
+        } catch (IOException e) {}
+    return rd;
+    }
 
+    public static int write(int size, int total)
+    {
         wbuf.position(total);
         wbuf.get(wb, 0, size);
 
@@ -283,12 +282,10 @@ public class SerialActivity extends QtActivity
         return ret;
     }
 
-
     public static int getSWCommandFrame() {
         int expected = 0, sync_attempts = 0, got = 1, total_retries = 0;
         int ret = 0, total = 0;
-        boolean prtl = false;
-        long t_now, t_start;
+        boolean prtl = false;     
         rbuf.position(0);        
         mainloop:
         while (true) {
@@ -296,20 +293,11 @@ public class SerialActivity extends QtActivity
             do {
                 if (total_retries > 2) return 2;                
                 try {
-                   int available = 0;
-                   t_start = System.currentTimeMillis();
-                   while (true) {
-                        available = m_input.available();
-                        if (available > 0) break;
-
-                        try { Thread.sleep(1);
-                        } catch (Exception e) { }
-
-                        t_now = System.currentTimeMillis();
-                        if (t_now-t_start > rd_delay2)
+                        int avail = waitTillAvailable(40);
+                        if (avail == 0)
                             return 2;
-                    }
-                    ret = m_input.read(rb, 0, available);
+                        else
+                            ret = m_input.read(rb, 0, avail);
                 } catch (IOException e) { }
                 if (ret == 5) break;
                 if ((ret > 0) && (ret < 5)) {
@@ -335,27 +323,20 @@ public class SerialActivity extends QtActivity
                    data += Integer.toString(rb[i] & 0xff) + " ";
                Log.i("USB", "Desync Frame: " + data);
             }
+
             if (sync_attempts < 10) {
                 sync_attempts++;
                 for (int i = 0; i < 4; i++)
                         rb[i] = rb[i+1];
-                ret = 0;
-                byte tmp = rb[0];                
-                try {
-                    int available = 0;
-                    t_start = System.currentTimeMillis();
-                    while (true) {
-                        available = m_input.available();
-                        if (available > 0) break;
-                        try { Thread.sleep(1);
-                        } catch (Exception e) { }
-                        t_now = System.currentTimeMillis();
-                        if (t_now-t_start > rd_delay3)
-                            return 2;
-                    }
-                    ret = m_input.read(t, 0, 1);
-                } catch (IOException e) { }
-                rb[4] = t[0];
+
+                int avail = waitTillAvailable(10);
+                if (avail > 0) {
+                    try {
+                        ret = m_input.read(t, 0, 1);
+                    } catch (IOException e) { }
+                    if (ret > 0) rb[4] = t[0];
+                } else
+                    return 2;
             } else
                 continue mainloop;
         } else {
@@ -375,6 +356,7 @@ public class SerialActivity extends QtActivity
      };
 
      if (debug) Log.i("USB", "got=" + got + " expected= " + expected);
+
      return 1;
     }
 

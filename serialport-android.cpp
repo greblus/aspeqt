@@ -294,14 +294,14 @@ bool StandardSerialPortBackend::writeDataNak()
 bool StandardSerialPortBackend::writeComplete()
 {
     if (debug) qWarning().noquote() << "!i" << tr("writeComplete");
-    SioWorker::usleep(300);
+    SioWorker::usleep(10000);
     return writeRawFrame(QByteArray(1, 67));
 }
 
 bool StandardSerialPortBackend::writeError()
 {
     if (debug) qWarning().noquote() << "!i" << tr("writeError");
-    SioWorker::usleep(300);
+    SioWorker::usleep(10000);
     return writeRawFrame(QByteArray(1, 78));
 }
 
