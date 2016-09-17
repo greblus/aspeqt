@@ -28,7 +28,7 @@ AspeqtSettings::AspeqtSettings()
     mSerialPortUsePokeyDivisors = mSettings->value("SerialPortUsePokeyDivisors", false).toBool();
     mSerialPortPokeyDivisor = mSettings->value("SerialPortPokeyDivisor", 0).toInt();
 
-    mUseHighSpeedExeLoader = mSettings->value("UseHighSpeedExeLoader", true).toBool();
+    mUseHighSpeedExeLoader = mSettings->value("UseHighSpeedExeLoader", false).toBool();
     #ifndef Q_OS_ANDROID
     mAtariSioDriverName = mSettings->value("AtariSioDriverName", AtariSioBackend::defaultPortName()).toString();
     #endif
