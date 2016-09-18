@@ -256,6 +256,7 @@ public class SerialActivity extends QtActivity
 
         try {
             m_output.write(wb, 0, size);
+            m_output.flush();
         } catch (IOException e) { size = 0; }
 
         return size;
