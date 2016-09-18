@@ -22,7 +22,7 @@ AspeqtSettings::AspeqtSettings()
     mPrtH = mSettings->value("PrtH", 486).toInt();
 
     /* Standard serial port backend */
-    mSerialPortName = mSettings->value("SerialPortName", StandardSerialPortBackend::defaultPortName()).toString();
+    mSerialPortName = "SIO2BT"; //mSettings->value("SerialPortName", StandardSerialPortBackend::defaultPortName()).toString();
     mSerialPortHandshakingMethod = mSettings->value("HandshakingMethod", 3).toInt();
     mSerialPortMaximumSpeed = mSettings->value("MaximumSerialPortSpeed", 0).toInt();
     mSerialPortUsePokeyDivisors = mSettings->value("SerialPortUsePokeyDivisors", false).toBool();
