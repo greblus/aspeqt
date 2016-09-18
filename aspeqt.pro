@@ -170,7 +170,9 @@ DISTFILES += \
     android/src/com/felhr/utils/HexData.java \
     android/src/com/hoho/android/usbserial/util/HexDump.java \
     android/src/com/hoho/android/usbserial/util/SerialInputOutputManager.java \
-    android/src/com/hoho/android/usbserial/BuildInfo.java
+    android/src/com/hoho/android/usbserial/BuildInfo.java \
+    android/src/net/greblus/SerialDevice.java \
+    android/src/net/greblus/SIO2BT.java
 
 
 
