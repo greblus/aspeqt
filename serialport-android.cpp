@@ -332,7 +332,7 @@ QByteArray StandardSerialPortBackend::readRawFrame(uint size, bool verbose)
     total = 0;
     rest = size;
     QTime startTime = QTime::currentTime();
-    int timeOut = data.count() * 24000 / mSpeed + 10;
+    int timeOut = data.count() * 24000 / mSpeed + 200;
     int elapsed;
 
     do {
@@ -377,7 +377,7 @@ bool StandardSerialPortBackend::writeRawFrame(const QByteArray &data)
     std::copy(data.constData(), data.constData()+rest, wbuf);
 
     QTime startTime = QTime::currentTime();
-    int timeOut = data.count() * 24000 / mSpeed + 10;
+    int timeOut = data.count() * 24000 / mSpeed + 200;
     int elapsed;
 
     do {
