@@ -142,7 +142,7 @@ public class SIO2BT implements SerialDevice {
             rd = m_input.read(sa.rb, 0, size);
             sa.rbuf.put(sa.rb, 0, rd);
         } catch (IOException e) {}
-    return rd;
+        return rd;
     }
 
     public int write(int size, int total)

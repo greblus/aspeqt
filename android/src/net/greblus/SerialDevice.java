@@ -4,7 +4,6 @@ package net.greblus;
 import android.content.Intent;
 
 public interface SerialDevice {
-
     public int openDevice();
     public void closeDevice();
     public int setSpeed(int speed);
