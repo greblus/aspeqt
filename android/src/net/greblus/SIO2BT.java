@@ -13,9 +13,8 @@ import java.util.Set;
 import java.io.IOException;
 import java.lang.System;
 
-public class SIO2BT implements SerialDevice {
-
-    private int counter;
+public class SIO2BT implements SerialDevice
+{
     private boolean debug = true;
     private BluetoothAdapter m_BluetoothAdapter = null;
     private BluetoothDevice m_device = null;

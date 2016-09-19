@@ -172,7 +172,8 @@ DISTFILES += \
     android/src/com/hoho/android/usbserial/util/SerialInputOutputManager.java \
     android/src/com/hoho/android/usbserial/BuildInfo.java \
     android/src/net/greblus/SerialDevice.java \
-    android/src/net/greblus/SIO2BT.java
+    android/src/net/greblus/SIO2BT.java \
+    android/src/net/greblus/SIO2PCUS4A.java
 
 
 

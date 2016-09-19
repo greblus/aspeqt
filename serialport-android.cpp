@@ -17,6 +17,9 @@ extern char *rbuf;
 extern char *wbuf;
 static bool debug = false;
 
+enum { SIO2BT, SIO2PC_US4A, SIO2PC_FELHR };
+int s_device = SIO2PC_US4A;
+
 AbstractSerialPortBackend::AbstractSerialPortBackend(QObject *parent)
     : QObject(parent)
 {
@@ -176,7 +179,8 @@ bool StandardSerialPortBackend::setSpeed(int speed)
 {
     if (debug) qWarning().noquote() << "!i" << tr("Serial port speed set to %1.").arg(speed);
 
-    return true; //not needed for SIO2BT
+    if (s_device == SIO2BT)
+        return true;
 
     int ret = QAndroidJniObject::callStaticMethod<jint>("net/greblus/SerialActivity", "setSpeed", "(I)I", speed);
     if (ret < 0) {
@@ -217,7 +221,7 @@ QByteArray StandardSerialPortBackend::readCommandFrame()
 
         if (!data.isEmpty()) {
             break;
-        } else if (false) { // not needed for SIO2BT
+        } else if (s_device != SIO2BT) {
             retries++;
             if (retries == 2) {
                 retries = 0;
@@ -294,14 +298,21 @@ bool StandardSerialPortBackend::writeDataNak()
 bool StandardSerialPortBackend::writeComplete()
 {
     if (debug) qWarning().noquote() << "!i" << tr("writeComplete");
-    SioWorker::usleep(10000);
+    if (s_device == SIO2BT)
+        SioWorker::usleep(10000);
+    else
+        SioWorker::usleep(900);
+
     return writeRawFrame(QByteArray(1, 67));
 }
 
 bool StandardSerialPortBackend::writeError()
 {
     if (debug) qWarning().noquote() << "!i" << tr("writeError");
-    SioWorker::usleep(10000);
+    if (s_device == SIO2BT)
+        SioWorker::usleep(10000);
+    else
+        SioWorker::usleep(900);
     return writeRawFrame(QByteArray(1, 78));
 }
 

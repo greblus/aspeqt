@@ -10,8 +10,13 @@ import android.util.Log;
 
 import org.qtproject.qt5.android.bindings.QtActivity;
 
+import android.hardware.usb.UsbManager;
+import android.hardware.usb.UsbDevice;
 import android.content.Context;
 import android.content.Intent;
+import android.content.IntentFilter;
+import android.app.PendingIntent;
+import android.content.BroadcastReceiver;
 
 import java.nio.ByteBuffer;
 import java.nio.ByteOrder;
@@ -21,14 +26,13 @@ import android.view.WindowManager;
 
 public class SerialActivity extends QtActivity
 {
-        private static boolean debug = false;
-        public static byte rb[] = new byte [65535];
-        public static byte wb[] = new byte [65535];
-        public static byte t[] = new byte [1024];
+        private static boolean debug = true;
+        protected static byte rb[] = new byte [65535];
+        protected static byte wb[] = new byte [65535];
+        protected static byte t[] = new byte [1024];
         public static native void sendBufAddr(ByteBuffer rbuf, ByteBuffer wbuf);
-        public static ByteBuffer rbuf = ByteBuffer.allocateDirect(65535);
-        public static ByteBuffer wbuf = ByteBuffer.allocateDirect(65535);
-
+        protected static ByteBuffer rbuf = ByteBuffer.allocateDirect(65535);
+        protected static ByteBuffer wbuf = ByteBuffer.allocateDirect(65535);
         public static String m_chosen;
         private static int m_filter;
         private static String m_action;
@@ -41,9 +45,11 @@ public class SerialActivity extends QtActivity
  	{
             s_activity = this;            
             super.onCreate(savedInstanceState);
-            sendBufAddr(rbuf, wbuf);
-            m_device = new SIO2BT();
+            m_device = new SIO2PCUS4A();  //m_device = new SIO2BT();
+                                          //will be configurable
+            registerBroadcastReceiver();
             getWindow().addFlags(WindowManager.LayoutParams.FLAG_KEEP_SCREEN_ON);
+            sendBufAddr(rbuf, wbuf);
         }
 
         @Override
@@ -126,6 +132,15 @@ public class SerialActivity extends QtActivity
             FileOpenDialog.chooseFile_or_Dir();
         }
 
+        public static void registerBroadcastReceiver() {
+                if (SerialActivity.s_activity != null) {
+                        // Qt is running on a different thread than Android.
+                        // In order to register the receiver we need to execute it in the UI thread
+                        SerialActivity.s_activity.runOnUiThread( new RegisterReceiverRunnable());
+                        Log.i("USB", "Broadcast Receiver registered");
+                }
+        }
+
         public static int openDevice() {
             return m_device.openDevice();
         }
@@ -179,18 +194,49 @@ public class SerialActivity extends QtActivity
         }
 }
 
-class FileChooser implements Runnable
-{
-    @Override
-    public void run() {
-        SerialActivity.s_activity.fileChooser();
+    class FileChooser implements Runnable
+    {
+        @Override
+        public void run() {
+            SerialActivity.s_activity.fileChooser();
+        }
     }
-}
 
-class DirChooser implements Runnable
-{
-    @Override
-    public void run() {
-        SerialActivity.s_activity.dirChooser();
+    class DirChooser implements Runnable
+    {
+        @Override
+        public void run() {
+            SerialActivity.s_activity.dirChooser();
+        }
     }
-}
+
+    class RegisterReceiverRunnable implements Runnable
+    {
+            // this method is called on Android Ui Thread
+            @Override
+            public void run() {
+                    IntentFilter filter = new IntentFilter();
+                    filter.addAction("com.android.example.USB_PERMISSION");
+                    // this method must be called on Android Ui Thread
+                    SerialActivity.s_activity.registerReceiver(new USBReceiver(), filter);
+                    }
+    }
+
+    class USBReceiver extends BroadcastReceiver {
+            @Override
+            public void onReceive(Context context, Intent intent) {
+            if (intent.getAction().equals("com.android.example.USB_PERMISSION"))
+            synchronized (this) {
+                UsbDevice device = (UsbDevice)intent.getParcelableExtra(UsbManager.EXTRA_DEVICE);
+                if (intent.getBooleanExtra(UsbManager.EXTRA_PERMISSION_GRANTED, false)) {
+                    Log.v("USB", "Received permission result OK");
+                    if(device != null){
+                        Log.i("USB", "Device OK");
+                    }
+                    else {
+                        Log.i("USB", "Permission denied for device " + device);
+                    }
+                }
+            }
+        }
+    }
