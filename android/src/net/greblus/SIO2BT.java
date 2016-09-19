@@ -15,28 +15,20 @@ import java.lang.System;
 
 public class SIO2BT implements SerialDevice {
 
-    private static int counter;
-    private static boolean debug = true;
-    private static BluetoothAdapter m_BluetoothAdapter = null;
-    private static BluetoothDevice m_device = null;
-    private static BluetoothSocket m_socket = null;
-    private static UUID uuid;
-    private static InputStream m_input = null;
-    private static OutputStream m_output = null;
-    private final static int REQUEST_ENABLE_BT = 1;
-    public static SerialActivity sa = SerialActivity.s_activity;
+    private int counter;
+    private boolean debug = true;
+    private BluetoothAdapter m_BluetoothAdapter = null;
+    private BluetoothDevice m_device = null;
+    private BluetoothSocket m_socket = null;
+    private UUID uuid;
+    private InputStream m_input = null;
+    private OutputStream m_output = null;
+    private int REQUEST_ENABLE_BT = 1;
+    private SerialActivity sa = SerialActivity.s_activity;
 
     SIO2BT() {
-
         m_BluetoothAdapter = BluetoothAdapter.getDefaultAdapter();
-        if (m_BluetoothAdapter == null) {
-            Log.i("BT", "No BT adapter found!");
-        }
-        else
-            if (!m_BluetoothAdapter.isEnabled()) {
-                Intent enableBtIntent = new Intent(BluetoothAdapter.ACTION_REQUEST_ENABLE);
-                sa.startActivityForResult(enableBtIntent, REQUEST_ENABLE_BT);
-            }
+        requestEnableBt();
     }
 
     public void activityResult(int requestCode, int resultCode, Intent data) {
@@ -48,9 +40,21 @@ public class SIO2BT implements SerialDevice {
         }
     }
 
-    public int openDevice() {
+    public int requestEnableBt() {
+        if (m_BluetoothAdapter == null) {
+            Log.i("BT", "No BT adapter found!");
+            return 0;
+        }
 
-        if (m_BluetoothAdapter == null)
+        if (!m_BluetoothAdapter.isEnabled()) {
+            Intent enableBtIntent = new Intent(BluetoothAdapter.ACTION_REQUEST_ENABLE);
+            sa.startActivityForResult(enableBtIntent, REQUEST_ENABLE_BT);
+        }
+        return 1;
+    }
+
+    public int openDevice() {
+        if (requestEnableBt() == 0)
             return 0;
 
         while (!m_BluetoothAdapter.isEnabled()) { };
