@@ -39,7 +39,7 @@ public class SIO2PCUS4A implements SerialDevice
     private static final String ACTION_USB_PERMISSION =
                                     "com.android.example.USB_PERMISSION";
 
-    private boolean debug = true;
+    private boolean debug = false;
     private SerialActivity sa = SerialActivity.s_activity;
 
     SIO2PCUS4A() {
@@ -254,7 +254,7 @@ public class SIO2PCUS4A implements SerialDevice
 
         if (checkDesync(sa.rb, got, expected) > 0) {
             if (debug) Log.i("USB", "Apparent desync");
-            if (sync_attempts < 4) {
+            if (sync_attempts < 10) {
                     sync_attempts++;
                     for (int i = 0; i < 4; i++)
                             sa.rb[i] = sa.rb[i+1];

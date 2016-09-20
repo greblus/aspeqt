@@ -15,7 +15,7 @@ import java.lang.System;
 
 public class SIO2BT implements SerialDevice
 {
-    private boolean debug = true;
+    private boolean debug = false;
     private BluetoothAdapter m_BluetoothAdapter = null;
     private BluetoothDevice m_device = null;
     private BluetoothSocket m_socket = null;

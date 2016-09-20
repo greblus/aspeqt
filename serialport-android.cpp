@@ -17,9 +17,6 @@ extern char *rbuf;
 extern char *wbuf;
 static bool debug = false;
 
-enum { SIO2BT, SIO2PC_US4A, SIO2PC_FELHR };
-int s_device = SIO2PC_US4A;
-
 AbstractSerialPortBackend::AbstractSerialPortBackend(QObject *parent)
     : QObject(parent)
 {
@@ -45,7 +42,7 @@ StandardSerialPortBackend::~StandardSerialPortBackend()
 QString StandardSerialPortBackend::defaultPortName()
   {
 
-      return QString("Sio2BT");
+      return QString("");
   }
 
 bool StandardSerialPortBackend::open()
@@ -179,7 +176,7 @@ bool StandardSerialPortBackend::setSpeed(int speed)
 {
     if (debug) qWarning().noquote() << "!i" << tr("Serial port speed set to %1.").arg(speed);
 
-    if (s_device == SIO2BT)
+    if (aspeqtSettings->serialPortInterface() == SIO2BT)
         return true;
 
     int ret = QAndroidJniObject::callStaticMethod<jint>("net/greblus/SerialActivity", "setSpeed", "(I)I", speed);
@@ -221,7 +218,7 @@ QByteArray StandardSerialPortBackend::readCommandFrame()
 
         if (!data.isEmpty()) {
             break;
-        } else if (s_device != SIO2BT) {
+        } else if (aspeqtSettings->serialPortInterface() != 1) {
             retries++;
             if (retries == 2) {
                 retries = 0;
@@ -298,8 +295,8 @@ bool StandardSerialPortBackend::writeDataNak()
 bool StandardSerialPortBackend::writeComplete()
 {
     if (debug) qWarning().noquote() << "!i" << tr("writeComplete");
-    if (s_device == SIO2BT)
-        SioWorker::usleep(10000);
+    if (aspeqtSettings->serialPortInterface() == SIO2BT)
+        SioWorker::usleep(aspeqtSettings->writeACKDelay()*1000);
     else
         SioWorker::usleep(900);
 
@@ -309,8 +306,8 @@ bool StandardSerialPortBackend::writeComplete()
 bool StandardSerialPortBackend::writeError()
 {
     if (debug) qWarning().noquote() << "!i" << tr("writeError");
-    if (s_device == SIO2BT)
-        SioWorker::usleep(10000);
+    if (aspeqtSettings->serialPortInterface() == SIO2BT)
+        SioWorker::usleep(aspeqtSettings->writeACKDelay()*1000);
     else
         SioWorker::usleep(900);
     return writeRawFrame(QByteArray(1, 78));

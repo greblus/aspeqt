@@ -26,7 +26,7 @@ import android.view.WindowManager;
 
 public class SerialActivity extends QtActivity
 {
-        private static boolean debug = true;
+        private static boolean debug = false;
         protected static byte rb[] = new byte [65535];
         protected static byte wb[] = new byte [65535];
         protected static byte t[] = new byte [1024];

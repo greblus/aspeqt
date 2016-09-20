@@ -6,6 +6,8 @@
 #include <QObject>
 #include <QByteArray>
 
+enum {SIO2BT = 1 };
+
 class AbstractSerialPortBackend : public QObject
 {
     Q_OBJECT

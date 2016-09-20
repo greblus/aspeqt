@@ -238,6 +238,25 @@ void OptionsDialog::on_emulationUseCustomCasBaudBox_toggled(bool checked)
 
 void OptionsDialog::on_serialPortInterfaceCombo_currentIndexChanged(int index)
 {
-    if (index == 1)
+    if (index == SIO2BT) {
         m_ui->writeACKDelayEdit->setEnabled(true);
+        m_ui->serialPortHandshakeCombo->setCurrentIndex(3); //SOFT
+        m_ui->serialPortHandshakeCombo->setDisabled(true);
+        m_ui->serialPortHandshakeLabel->setDisabled(true);
+        m_ui->serialPortBaudCombo->setDisabled(true);
+        m_ui->serialPortBaudLabel->setDisabled(true);
+        m_ui->serialPortDivisorLabel->setDisabled(true);
+        m_ui->serialPortDivisorEdit->setDisabled(true);
+        m_ui->serialPortUseDivisorsBox->setDisabled(true);
+    } else {
+        m_ui->writeACKDelayEdit->setDisabled(true);
+        m_ui->serialPortHandshakeCombo->setEnabled(true);
+        m_ui->serialPortHandshakeCombo->setEnabled(true);
+        m_ui->serialPortHandshakeLabel->setEnabled(true);
+        m_ui->serialPortBaudCombo->setEnabled(true);
+        m_ui->serialPortBaudLabel->setEnabled(true);
+        m_ui->serialPortDivisorLabel->setEnabled(true);
+        m_ui->serialPortDivisorEdit->setEnabled(true);
+        m_ui->serialPortUseDivisorsBox->setEnabled(true);
+    }
 }
