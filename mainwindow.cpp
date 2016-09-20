@@ -156,6 +156,10 @@ MainWindow::MainWindow(QWidget *parent)
     QCoreApplication::setOrganizationDomain("greblus.net");
     QCoreApplication::setApplicationName("AspeQt");
     aspeqtSettings = new AspeqtSettings();
+
+    int serial_int = aspeqtSettings->serialPortInterface();
+    QAndroidJniObject::setStaticField("net/greblus/SerialActivity", "m_serial", serial_int);
+    QAndroidJniObject::callStaticMethod<void>("net/greblus/SerialActivity", "changeDevice", "(I)V", serial_int);
        
     /* Load translators */
     loadTranslators();
@@ -324,7 +328,7 @@ MainWindow::MainWindow(QWidget *parent)
     connect(sio, SIGNAL(started()), this, SLOT(sioStarted()));
     connect(sio, SIGNAL(finished()), this, SLOT(sioFinished()));
     connect(sio, SIGNAL(statusChanged(QString)), this, SLOT(sioStatusChanged(QString)));
-    shownFirstTime = false;
+    shownFirstTime = true;
 
     PCLINK* pclink = new PCLINK(sio);
     sio->installDevice(0x6F, pclink);
@@ -363,9 +367,6 @@ MainWindow::MainWindow(QWidget *parent)
     connect (acl, SIGNAL(mountFile(int,QString)), this, SLOT(mountFileWithDefaultProtection(int,QString)));
     connect (this, SIGNAL(fileMounted(bool)), acl, SLOT(fileMounted(bool)));
     connect (acl, SIGNAL(toggleAutoCommit(int)), this, SLOT(autoCommit(int)));
-
-    int serial_int = aspeqtSettings->serialPortInterface();
-    QAndroidJniObject::setStaticField("net/greblus/SerialActivity", "m_serial", serial_int);
 
 }
 
@@ -637,7 +638,6 @@ void MainWindow::show()
 
         ui->actionStartEmulation->trigger();
     }
-      ui->actionStartEmulation->trigger(); //temporary for sio2bt
 }
 void MainWindow::enterEvent(QEvent *)
 {
@@ -1026,7 +1026,7 @@ void MainWindow::on_actionOptions_triggered()
     for (int i = 0x31; i <= 0x36; i++) {    //
         deviceStatusChanged(i);
     }
-    
+
     ui->actionStartEmulation->trigger();
 }
 

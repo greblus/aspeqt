@@ -230,6 +230,7 @@ int AspeqtSettings::serialPortInterface()
 void AspeqtSettings::setSerialPortInterface(int iface)
 {
     mSerialPortInterface = iface;
+    if (mSessionFileName == "") mSettings->setValue("SerialPortInterface", mSerialPortInterface);
 }
 
 int AspeqtSettings::writeACKDelay()
@@ -240,6 +241,8 @@ int AspeqtSettings::writeACKDelay()
 void AspeqtSettings::setWriteACKDelay(int delay)
 {
     mWriteACKDelay = delay;
+    if (mSessionFileName == "") mSettings->setValue("WriteACKDelay", mWriteACKDelay);
+
 }
 
 QString AspeqtSettings::atariSioDriverName()

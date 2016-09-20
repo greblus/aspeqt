@@ -66,6 +66,7 @@ OptionsDialog::OptionsDialog(QWidget *parent) :
     #ifndef Q_OS_ANDROID
     m_ui->serialPortDeviceNameEdit->setText(aspeqtSettings->serialPortName());
     #endif
+    m_ui->serialPortInterfaceCombo->setCurrentIndex(aspeqtSettings->serialPortInterface());
     m_ui->serialPortHandshakeCombo->setCurrentIndex(aspeqtSettings->serialPortHandshakingMethod());
     m_ui->serialPortBaudCombo->setCurrentIndex(aspeqtSettings->serialPortMaximumSpeed());
     m_ui->serialPortUseDivisorsBox->setChecked(aspeqtSettings->serialPortUsePokeyDivisors());
@@ -175,7 +176,7 @@ void OptionsDialog::OptionsDialog_accepted()
     aspeqtSettings->setUseLargeFont(m_ui->useLargerFont->isChecked());
 //    aspeqtSettings->setEnableShade(m_ui->enableShade->isChecked());
 
-    int serial_int = m_ui->serialPortInterfaceCombo->currentIndex();
+    int serial_int = aspeqtSettings->serialPortInterface();
     QAndroidJniObject::callStaticMethod<void>("net/greblus/SerialActivity", "changeDevice", "(I)V", serial_int);
 
     int backend = 0;
