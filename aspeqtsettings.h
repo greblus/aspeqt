@@ -20,6 +20,12 @@ public:
     QString serialPortName();
     void setSerialPortName(const QString &name);
 
+    int serialPortInterface();
+    void setSerialPortInterface(int iface);
+
+    int writeACKDelay();
+    void setWriteACKDelay(int delay);
+
     int serialPortHandshakingMethod();
     void setSerialPortHandshakingMethod(int method);
 
@@ -186,8 +192,10 @@ private:
     QString mSessionFileName;
     QString mSessionFilePath;
     QString mMainWindowTitle;
-//
+
     QString mSerialPortName;
+    int mSerialPortInterface;
+    int mWriteACKDelay;
     int mSerialPortHandshakingMethod;
     int mSerialPortMaximumSpeed;
     bool mSerialPortUsePokeyDivisors;

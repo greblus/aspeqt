@@ -80,6 +80,14 @@ OptionsDialog::OptionsDialog(QWidget *parent) :
     m_ui->useLargerFont->setChecked(aspeqtSettings->useLargeFont());
 //    m_ui->enableShade->setChecked(aspeqtSettings->enableShade());
 
+    m_ui->serialPortInterfaceCombo->setCurrentIndex(aspeqtSettings->serialPortInterface());
+    m_ui->writeACKDelayEdit->setValue(aspeqtSettings->writeACKDelay());
+    if (m_ui->serialPortInterfaceCombo->currentText() == "SIO2BT")
+    {
+        m_ui->writeACKDelayEdit->setEnabled(true);
+        m_ui->writeACKDelayLabel->setEnabled(true);
+    }
+
 #ifndef Q_OS_ANDROID
     switch (aspeqtSettings->backend()) {
         case 0:
@@ -141,7 +149,9 @@ void OptionsDialog::OptionsDialog_accepted()
     #ifndef Q_OS_ANDROID
     aspeqtSettings->setSerialPortName(m_ui->serialPortDeviceNameEdit->text());
     #else
-    aspeqtSettings->setSerialPortName("SIO2PC-USB");
+    aspeqtSettings->setSerialPortName(m_ui->serialPortInterfaceCombo->currentText());
+    aspeqtSettings->setSerialPortInterface(m_ui->serialPortInterfaceCombo->currentIndex());
+    aspeqtSettings->setWriteACKDelay(m_ui->writeACKDelayEdit->value());
     #endif
     aspeqtSettings->setSerialPortHandshakingMethod(m_ui->serialPortHandshakeCombo->currentIndex());
     aspeqtSettings->setSerialPortMaximumSpeed(m_ui->serialPortBaudCombo->currentIndex());
@@ -217,4 +227,10 @@ void OptionsDialog::on_serialPortUseDivisorsBox_toggled(bool checked)
 void OptionsDialog::on_emulationUseCustomCasBaudBox_toggled(bool checked)
 {
     m_ui->emulationCustomCasBaudSpin->setEnabled(checked);
+}
+
+void OptionsDialog::on_serialPortInterfaceCombo_currentIndexChanged(int index)
+{
+    if (index == 1)
+        m_ui->writeACKDelayEdit->setEnabled(true);
 }

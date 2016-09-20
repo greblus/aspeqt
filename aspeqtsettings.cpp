@@ -22,12 +22,15 @@ AspeqtSettings::AspeqtSettings()
     mPrtH = mSettings->value("PrtH", 486).toInt();
 
     /* Standard serial port backend */
-    mSerialPortName = "SIO2BT"; //mSettings->value("SerialPortName", StandardSerialPortBackend::defaultPortName()).toString();
+
+    mSerialPortName = mSettings->value("SerialPortName", "SIO2PC").toString();
+    mSerialPortInterface = mSettings->value("SerialPortInterface", 0).toInt();
+    mWriteACKDelay = mSettings->value("WriteACKDelay", 10).toInt();
+
     mSerialPortHandshakingMethod = mSettings->value("HandshakingMethod", 3).toInt();
     mSerialPortMaximumSpeed = mSettings->value("MaximumSerialPortSpeed", 0).toInt();
     mSerialPortUsePokeyDivisors = mSettings->value("SerialPortUsePokeyDivisors", false).toBool();
     mSerialPortPokeyDivisor = mSettings->value("SerialPortPokeyDivisor", 0).toInt();
-
     mUseHighSpeedExeLoader = mSettings->value("UseHighSpeedExeLoader", false).toBool();
     #ifndef Q_OS_ANDROID
     mAtariSioDriverName = mSettings->value("AtariSioDriverName", AtariSioBackend::defaultPortName()).toString();
@@ -102,8 +105,12 @@ void AspeqtSettings::saveSessionToFile(const QString &fileName)
         s.setValue("Backend", mBackend);
         s.setValue("AtariSioDriverName", mAtariSioDriverName);
         s.setValue("AtariSioHandshakingMethod", mAtariSioHandshakingMethod);
-        s.setValue("SerialPortName", mSerialPortName);
         s.setValue("HandshakingMethod", mSerialPortHandshakingMethod);
+
+        s.setValue("SerialPortName", mSerialPortName);
+        s.setValue("SerialPortInterface", mSerialPortInterface);
+        s.setValue("WriteACKDelay", mWriteACKDelay);
+
         s.setValue("MaximumSerialPortSpeed", mSerialPortMaximumSpeed);
         s.setValue("SerialPortUsePokeyDivisors", mSerialPortUsePokeyDivisors);
         s.setValue("SerialPortPokeyDivisor", mSerialPortPokeyDivisor);
@@ -152,7 +159,11 @@ void AspeqtSettings::saveSessionToFile(const QString &fileName)
         mAtariSioDriverName = s.value("AtariSioDriverName", AtariSioBackend::defaultPortName()).toString();
         #endif
         mAtariSioHandshakingMethod = s.value("AtariSioHandshakingMethod", 0).toInt();
-        mSerialPortName = s.value("SerialPortName", StandardSerialPortBackend::defaultPortName()).toString();
+
+        mSerialPortName = s.value("SerialPortName", "SIO2PC").toString();
+        mSerialPortInterface = s.value("SerialPortInterface", 0).toInt();
+        mWriteACKDelay = s.value("WriteACKDelay", 10).toInt();
+
         mSerialPortHandshakingMethod = s.value("HandshakingMethod", 0).toInt();
         mSerialPortMaximumSpeed = s.value("MaximumSerialPortSpeed", 2).toInt();
         mSerialPortUsePokeyDivisors = s.value("SerialPortUsePokeyDivisors", false).toBool();
@@ -209,6 +220,26 @@ void AspeqtSettings::setSerialPortName(const QString &name)
 {
     mSerialPortName = name;
     if(mSessionFileName == "") mSettings->setValue("SerialPortName", mSerialPortName);
+}
+
+int AspeqtSettings::serialPortInterface()
+{
+    return mSerialPortInterface;
+}
+
+void AspeqtSettings::setSerialPortInterface(int iface)
+{
+    mSerialPortInterface = iface;
+}
+
+int AspeqtSettings::writeACKDelay()
+{
+    return mWriteACKDelay;
+}
+
+void AspeqtSettings::setWriteACKDelay(int delay)
+{
+    mWriteACKDelay = delay;
 }
 
 QString AspeqtSettings::atariSioDriverName()
