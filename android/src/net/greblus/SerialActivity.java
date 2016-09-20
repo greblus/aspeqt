@@ -39,14 +39,18 @@ public class SerialActivity extends QtActivity
         private static String m_dir;
         protected static SerialActivity s_activity = null;
         private static SerialDevice m_device = null;
+        private static int m_serial = 0;
 
         @Override
 	public void onCreate(Bundle savedInstanceState)
  	{
             s_activity = this;            
             super.onCreate(savedInstanceState);
-            m_device = new SIO2PCUS4A();  //m_device = new SIO2BT();
-                                          //will be configurable
+            if (m_serial == 0)
+                m_device = new SIO2PCUS4A();
+            else
+                m_device = new SIO2BT();
+
             registerBroadcastReceiver();
             getWindow().addFlags(WindowManager.LayoutParams.FLAG_KEEP_SCREEN_ON);
             sendBufAddr(rbuf, wbuf);
@@ -141,6 +145,15 @@ public class SerialActivity extends QtActivity
                 }
         }
 
+        public static void changeDevice(int type)
+        {
+            m_device.closeDevice();
+            if (type == 1)
+                m_device = new SIO2BT();
+            else
+                m_device = new SIO2PCUS4A();
+        }
+
         public static int openDevice() {
             return m_device.openDevice();
         }
@@ -193,7 +206,6 @@ public class SerialActivity extends QtActivity
              return m_device.getHWCommandFrame(mMethod);
         }
 }
-
     class FileChooser implements Runnable
     {
         @Override

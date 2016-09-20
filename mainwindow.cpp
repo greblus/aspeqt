@@ -363,6 +363,10 @@ MainWindow::MainWindow(QWidget *parent)
     connect (acl, SIGNAL(mountFile(int,QString)), this, SLOT(mountFileWithDefaultProtection(int,QString)));
     connect (this, SIGNAL(fileMounted(bool)), acl, SLOT(fileMounted(bool)));
     connect (acl, SIGNAL(toggleAutoCommit(int)), this, SLOT(autoCommit(int)));
+
+    int serial_int = aspeqtSettings->serialPortInterface();
+    QAndroidJniObject::setStaticField("net/greblus/SerialActivity", "m_serial", serial_int);
+
 }
 
 MainWindow::~MainWindow()

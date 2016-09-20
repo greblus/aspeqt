@@ -8,6 +8,10 @@
 #include <QSize>
 #include <QScroller>
 
+#ifdef Q_OS_ANDROID
+#include <QAndroidJniObject>
+#endif
+
 OptionsDialog::OptionsDialog(QWidget *parent) :
     QDialog(parent),
     m_ui(new Ui::OptionsDialog)
@@ -170,6 +174,9 @@ void OptionsDialog::OptionsDialog_accepted()
     aspeqtSettings->setfilterUnderscore(m_ui->filterUscore->isChecked());
     aspeqtSettings->setUseLargeFont(m_ui->useLargerFont->isChecked());
 //    aspeqtSettings->setEnableShade(m_ui->enableShade->isChecked());
+
+    int serial_int = m_ui->serialPortInterfaceCombo->currentIndex();
+    QAndroidJniObject::callStaticMethod<void>("net/greblus/SerialActivity", "changeDevice", "(I)V", serial_int);
 
     int backend = 0;
 #ifndef Q_OS_ANDROID
