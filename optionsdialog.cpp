@@ -250,6 +250,7 @@ void OptionsDialog::on_serialPortInterfaceCombo_currentIndexChanged(int index)
 {
     if (index == SIO2BT) {
         m_ui->writeACKDelayEdit->setEnabled(true);
+        m_ui->writeACKDelayLabel->setEnabled(true);
         m_ui->serialPortHandshakeCombo->setCurrentIndex(3); //SOFT
         m_ui->serialPortHandshakeCombo->setDisabled(true);
         m_ui->serialPortHandshakeLabel->setDisabled(true);
@@ -266,6 +267,7 @@ void OptionsDialog::on_serialPortInterfaceCombo_currentIndexChanged(int index)
         m_ui->emulationHighSpeedExeLoaderBox->setStyleSheet("QCheckBox:!enabled {color: grey;}");
     } else {
         m_ui->writeACKDelayEdit->setDisabled(true);
+        m_ui->writeACKDelayLabel->setDisabled(true);
         m_ui->serialPortHandshakeCombo->setEnabled(true);
         m_ui->serialPortHandshakeCombo->setEnabled(true);
         m_ui->serialPortHandshakeLabel->setEnabled(true);
