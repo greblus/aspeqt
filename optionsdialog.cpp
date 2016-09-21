@@ -87,10 +87,19 @@ OptionsDialog::OptionsDialog(QWidget *parent) :
 
     m_ui->serialPortInterfaceCombo->setCurrentIndex(aspeqtSettings->serialPortInterface());
     m_ui->writeACKDelayEdit->setValue(aspeqtSettings->writeACKDelay());
-    if (m_ui->serialPortInterfaceCombo->currentText() == "SIO2BT")
+
+    if (aspeqtSettings->serialPortInterface() == SIO2BT)
     {
         m_ui->writeACKDelayEdit->setEnabled(true);
         m_ui->writeACKDelayLabel->setEnabled(true);
+        m_ui->serialPortBaudCombo->setDisabled(true);
+        m_ui->serialPortBaudLabel->setDisabled(true);
+        m_ui->serialPortDivisorEdit->setDisabled(true);
+        m_ui->serialPortDivisorLabel->setDisabled(true);
+        m_ui->serialPortUseDivisorsBox->setDisabled(true);
+        m_ui->emulationHighSpeedExeLoaderBox->setDisabled(true);
+        m_ui->serialPortUseDivisorsBox->setStyleSheet("QCheckBox:!enabled {color: grey;}");
+        m_ui->emulationHighSpeedExeLoaderBox->setStyleSheet("QCheckBox:!enabled {color: grey;}");
     }
 
 #ifndef Q_OS_ANDROID
@@ -247,8 +256,10 @@ void OptionsDialog::on_serialPortInterfaceCombo_currentIndexChanged(int index)
         m_ui->serialPortBaudCombo->setDisabled(true);
         m_ui->serialPortBaudLabel->setDisabled(true);
         m_ui->serialPortDivisorLabel->setDisabled(true);
+        m_ui->serialPortDivisorLabel->setDisabled(true);
         m_ui->serialPortDivisorEdit->setDisabled(true);
         m_ui->serialPortUseDivisorsBox->setDisabled(true);
+        m_ui->emulationHighSpeedExeLoaderBox->setDisabled(true);
     } else {
         m_ui->writeACKDelayEdit->setDisabled(true);
         m_ui->serialPortHandshakeCombo->setEnabled(true);
@@ -259,5 +270,6 @@ void OptionsDialog::on_serialPortInterfaceCombo_currentIndexChanged(int index)
         m_ui->serialPortDivisorLabel->setEnabled(true);
         m_ui->serialPortDivisorEdit->setEnabled(true);
         m_ui->serialPortUseDivisorsBox->setEnabled(true);
+        m_ui->emulationHighSpeedExeLoaderBox->setEnabled(true);
     }
 }
