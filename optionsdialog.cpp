@@ -253,13 +253,13 @@ void OptionsDialog::on_serialPortInterfaceCombo_currentIndexChanged(int index)
         m_ui->serialPortHandshakeCombo->setCurrentIndex(3); //SOFT
         m_ui->serialPortHandshakeCombo->setDisabled(true);
         m_ui->serialPortHandshakeLabel->setDisabled(true);
+        m_ui->serialPortUseDivisorsBox->setDisabled(true);
+        m_ui->serialPortUseDivisorsBox->setChecked(false);
         m_ui->serialPortBaudCombo->setDisabled(true);
         m_ui->serialPortBaudLabel->setDisabled(true);
         m_ui->serialPortDivisorLabel->setDisabled(true);
         m_ui->serialPortDivisorLabel->setDisabled(true);
         m_ui->serialPortDivisorEdit->setDisabled(true);
-        m_ui->serialPortUseDivisorsBox->setDisabled(true);
-        m_ui->serialPortUseDivisorsBox->setChecked(false);
         m_ui->emulationHighSpeedExeLoaderBox->setDisabled(true);
         m_ui->emulationHighSpeedExeLoaderBox->setChecked(false);
         m_ui->serialPortUseDivisorsBox->setStyleSheet("QCheckBox:!enabled {color: grey;}");
