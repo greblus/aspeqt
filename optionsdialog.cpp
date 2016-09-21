@@ -262,6 +262,8 @@ void OptionsDialog::on_serialPortInterfaceCombo_currentIndexChanged(int index)
         m_ui->serialPortUseDivisorsBox->setChecked(false);
         m_ui->emulationHighSpeedExeLoaderBox->setDisabled(true);
         m_ui->emulationHighSpeedExeLoaderBox->setChecked(false);
+        m_ui->serialPortUseDivisorsBox->setStyleSheet("QCheckBox:!enabled {color: grey;}");
+        m_ui->emulationHighSpeedExeLoaderBox->setStyleSheet("QCheckBox:!enabled {color: grey;}");
     } else {
         m_ui->writeACKDelayEdit->setDisabled(true);
         m_ui->serialPortHandshakeCombo->setEnabled(true);
@@ -273,5 +275,7 @@ void OptionsDialog::on_serialPortInterfaceCombo_currentIndexChanged(int index)
         m_ui->serialPortDivisorEdit->setEnabled(true);
         m_ui->serialPortUseDivisorsBox->setEnabled(true);
         m_ui->emulationHighSpeedExeLoaderBox->setEnabled(true);
+        m_ui->serialPortUseDivisorsBox->setStyleSheet("color: black");
+        m_ui->emulationHighSpeedExeLoaderBox->setStyleSheet("color: black");
     }
 }
