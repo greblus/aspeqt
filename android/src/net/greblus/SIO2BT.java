@@ -8,6 +8,7 @@ import java.io.InputStream;
 import java.io.OutputStream;
 import android.util.Log;
 import android.content.Intent;
+import android.widget.Toast;
 
 import java.util.Set;
 import java.io.IOException;
@@ -62,13 +63,19 @@ public class SIO2BT implements SerialDevice
         Set<BluetoothDevice> pairedDevices = m_BluetoothAdapter.getBondedDevices();
         if (pairedDevices.size() > 0) {
             for (BluetoothDevice device : pairedDevices) {
-                if (device.getName().startsWith("SIO2BT")) {
-                    Log.i("BT", device.getName());
+                if (device.getName().equals(sa.bluetoothName)) {
+                    if (debug) Log.i("BT", device.getName());
                     m_device = device;
                     break;
-                } else
+                } else {
                     m_device = null;
-             }
+                    sa.runOnUiThread(new Runnable() {
+                        public void run() {
+                            Toast.makeText(sa, "You have to pair your BT dongle first.", Toast.LENGTH_LONG).show();
+                        }
+                    });
+                }
+            }
         }
 
         if (m_device == null) return 0;

@@ -87,11 +87,14 @@ OptionsDialog::OptionsDialog(QWidget *parent) :
 
     m_ui->serialPortInterfaceCombo->setCurrentIndex(aspeqtSettings->serialPortInterface());
     m_ui->writeACKDelayEdit->setValue(aspeqtSettings->writeACKDelay());
+    m_ui->bluetoothNameEdit->setText(aspeqtSettings->bluetoothName());
 
     if (aspeqtSettings->serialPortInterface() == SIO2BT)
     {
         m_ui->writeACKDelayEdit->setEnabled(true);
         m_ui->writeACKDelayLabel->setEnabled(true);
+        m_ui->bluetoothNameLabel->setEnabled(true);
+        m_ui->bluetoothNameEdit->setEnabled(true);
         m_ui->serialPortBaudCombo->setDisabled(true);
         m_ui->serialPortBaudLabel->setDisabled(true);
         m_ui->serialPortDivisorEdit->setDisabled(true);
@@ -166,6 +169,7 @@ void OptionsDialog::OptionsDialog_accepted()
     aspeqtSettings->setSerialPortName(m_ui->serialPortInterfaceCombo->currentText());
     aspeqtSettings->setSerialPortInterface(m_ui->serialPortInterfaceCombo->currentIndex());
     aspeqtSettings->setWriteACKDelay(m_ui->writeACKDelayEdit->value());
+    aspeqtSettings->setBluetoothName(m_ui->bluetoothNameEdit->text());
     #endif
     aspeqtSettings->setSerialPortHandshakingMethod(m_ui->serialPortHandshakeCombo->currentIndex());
     aspeqtSettings->setSerialPortMaximumSpeed(m_ui->serialPortBaudCombo->currentIndex());
@@ -187,6 +191,9 @@ void OptionsDialog::OptionsDialog_accepted()
 
     int serial_int = aspeqtSettings->serialPortInterface();
     QAndroidJniObject::callStaticMethod<void>("net/greblus/SerialActivity", "changeDevice", "(I)V", serial_int);
+    QAndroidJniObject b_name = QAndroidJniObject::fromString(aspeqtSettings->bluetoothName());
+    jstring bluetooth_name = b_name.object<jstring>();
+    QAndroidJniObject::setStaticField("net/greblus/SerialActivity", "bluetoothName", bluetooth_name);
 
     int backend = 0;
 #ifndef Q_OS_ANDROID
@@ -251,6 +258,8 @@ void OptionsDialog::on_serialPortInterfaceCombo_currentIndexChanged(int index)
     if (index == SIO2BT) {
         m_ui->writeACKDelayEdit->setEnabled(true);
         m_ui->writeACKDelayLabel->setEnabled(true);
+        m_ui->bluetoothNameLabel->setEnabled(true);
+        m_ui->bluetoothNameEdit->setEnabled(true);
         m_ui->serialPortHandshakeCombo->setCurrentIndex(3); //SOFT
         m_ui->serialPortHandshakeCombo->setDisabled(true);
         m_ui->serialPortHandshakeLabel->setDisabled(true);
@@ -266,6 +275,8 @@ void OptionsDialog::on_serialPortInterfaceCombo_currentIndexChanged(int index)
         m_ui->serialPortUseDivisorsBox->setStyleSheet("QCheckBox:!enabled {color: grey;}");
         m_ui->emulationHighSpeedExeLoaderBox->setStyleSheet("QCheckBox:!enabled {color: grey;}");
     } else {
+        m_ui->bluetoothNameEdit->setDisabled(true);
+        m_ui->bluetoothNameLabel->setDisabled(true);
         m_ui->writeACKDelayEdit->setDisabled(true);
         m_ui->writeACKDelayLabel->setDisabled(true);
         m_ui->serialPortHandshakeCombo->setEnabled(true);

@@ -26,6 +26,9 @@ public:
     int writeACKDelay();
     void setWriteACKDelay(int delay);
 
+    QString bluetoothName();
+    void setBluetoothName(QString name);
+
     int serialPortHandshakingMethod();
     void setSerialPortHandshakingMethod(int method);
 
@@ -196,6 +199,9 @@ private:
     QString mSerialPortName;
     int mSerialPortInterface;
     int mWriteACKDelay;
+
+    QString mBluetoothName;
+
     int mSerialPortHandshakingMethod;
     int mSerialPortMaximumSpeed;
     bool mSerialPortUsePokeyDivisors;

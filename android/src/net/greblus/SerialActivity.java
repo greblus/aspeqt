@@ -40,6 +40,7 @@ public class SerialActivity extends QtActivity
         protected static SerialActivity s_activity = null;
         private static SerialDevice m_device = null;
         private static int m_serial = 0;
+        public static String bluetoothName;
 
         @Override
 	public void onCreate(Bundle savedInstanceState)

@@ -26,6 +26,7 @@ AspeqtSettings::AspeqtSettings()
     mSerialPortName = mSettings->value("SerialPortName", "SIO2PC").toString();
     mSerialPortInterface = mSettings->value("SerialPortInterface", 0).toInt();
     mWriteACKDelay = mSettings->value("WriteACKDelay", 10).toInt();
+    mBluetoothName = mSettings->value("BluetoothName", "SIO2BT").toString();
 
     mSerialPortHandshakingMethod = mSettings->value("HandshakingMethod", 3).toInt();
     mSerialPortMaximumSpeed = mSettings->value("MaximumSerialPortSpeed", 0).toInt();
@@ -109,6 +110,7 @@ void AspeqtSettings::saveSessionToFile(const QString &fileName)
 
         s.setValue("SerialPortName", mSerialPortName);
         s.setValue("SerialPortInterface", mSerialPortInterface);
+        s.setValue("BluetoothName", mBluetoothName);
         s.setValue("WriteACKDelay", mWriteACKDelay);
 
         s.setValue("MaximumSerialPortSpeed", mSerialPortMaximumSpeed);
@@ -163,6 +165,7 @@ void AspeqtSettings::saveSessionToFile(const QString &fileName)
         mSerialPortName = s.value("SerialPortName", "SIO2PC").toString();
         mSerialPortInterface = s.value("SerialPortInterface", 0).toInt();
         mWriteACKDelay = s.value("WriteACKDelay", 10).toInt();
+        mBluetoothName = s.value("BluetoothName", "SIO2BT").toString();
 
         mSerialPortHandshakingMethod = s.value("HandshakingMethod", 0).toInt();
         mSerialPortMaximumSpeed = s.value("MaximumSerialPortSpeed", 2).toInt();
@@ -242,6 +245,18 @@ void AspeqtSettings::setWriteACKDelay(int delay)
 {
     mWriteACKDelay = delay;
     if (mSessionFileName == "") mSettings->setValue("WriteACKDelay", mWriteACKDelay);
+
+}
+
+QString AspeqtSettings::bluetoothName()
+{
+    return mBluetoothName;
+}
+
+void AspeqtSettings::setBluetoothName(QString name)
+{
+    mBluetoothName = name;
+    if (mSessionFileName == "") mSettings->setValue("BluetoothName", mBluetoothName);
 
 }
 

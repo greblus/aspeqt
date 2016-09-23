@@ -160,7 +160,11 @@ MainWindow::MainWindow(QWidget *parent)
     int serial_int = aspeqtSettings->serialPortInterface();
     QAndroidJniObject::setStaticField("net/greblus/SerialActivity", "m_serial", serial_int);
     QAndroidJniObject::callStaticMethod<void>("net/greblus/SerialActivity", "changeDevice", "(I)V", serial_int);
-       
+    QAndroidJniObject b_name = QAndroidJniObject::fromString(aspeqtSettings->bluetoothName());
+    jstring bluetooth_name = b_name.object<jstring>();
+    QAndroidJniObject::setStaticField("net/greblus/SerialActivity", "bluetoothName", bluetooth_name);
+
+
     /* Load translators */
     loadTranslators();
 
