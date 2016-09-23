@@ -24,32 +24,39 @@
 &lt;html&gt;&lt;head&gt;&lt;meta name=&quot;qrichtext&quot; content=&quot;1&quot; /&gt;&lt;style type=&quot;text/css&quot;&gt;
 p, li { white-space: pre-wrap; }
 &lt;/style&gt;&lt;/head&gt;&lt;body style=&quot; font-family:&apos;MS Shell Dlg 2&apos;; font-size:8.25pt; font-weight:400; font-style:normal;&quot;&gt;
-&lt;p style=&quot;-qt-paragraph-type:empty; margin-top:18px; margin-bottom:12px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;br /&gt;&lt;/p&gt;
-&lt;p style=&quot; margin-top:18px; margin-bottom:12px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;span style=&quot; font-size:12pt;&quot;&gt;AspeQt emulates Atari SIO peripherals when connected to an Atari 8-bit computer with an SIO2PC cable. In that respect it&apos;s similar to programs like APE and Atari810. The main difference is that it&apos;s free (unlike APE) and it&apos;s cross-platform (unlike Atari810 and APE). &lt;/span&gt;&lt;/p&gt;
-&lt;p style=&quot; margin-top:18px; margin-bottom:12px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;span style=&quot; font-size:12pt; font-weight:600;&quot;&gt;What you need to use it:&lt;/span&gt;&lt;/p&gt;
-&lt;ul style=&quot;margin-top: 0px; margin-bottom: 0px; margin-left: 0px; margin-right: 0px; -qt-list-indent: 1;&quot;&gt;&lt;li style=&quot; font-size:12pt;&quot; style=&quot; margin-top:12px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;Android device with USB Host Support (check USB Host Support with &lt;a href=&quot;https://play.google.com/store/apps/details?id=eu.chainfire.usbhostdiagnostics&amp;amp;hl=pl&quot;&gt;&lt;span style=&quot; text-decoration: underline; color:#0000ff;&quot;&gt;this tool&lt;/span&gt;&lt;/a&gt;)&lt;/li&gt;
-&lt;li style=&quot; font-size:12pt;&quot; style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;OTG cable. &lt;/li&gt;
-&lt;li style=&quot; font-size:12pt;&quot; style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;Sio2PC-USB converter. I recommend &lt;a href=&quot;http://lotharek.pl/product.php?pid=98&quot;&gt;&lt;span style=&quot; text-decoration: underline; color:#0000ff;&quot;&gt;this one made by Lotharek&lt;/span&gt;&lt;/a&gt;. &lt;/li&gt;
-&lt;li style=&quot; font-size:12pt;&quot; style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;span style=&quot; font-weight:600;&quot;&gt;No root necessary.&lt;/span&gt; &lt;/li&gt;
-&lt;li style=&quot; font-size:12pt;&quot; style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;span style=&quot; font-weight:600;&quot;&gt;No drivers necessary.&lt;/span&gt; usb-serial-for-android java driver is in the package. &lt;/li&gt;&lt;/ul&gt;
-&lt;p style=&quot;-qt-paragraph-type:empty; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px; font-size:12pt;&quot;&gt;&lt;br /&gt;&lt;/p&gt;
-&lt;p style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;a href=&quot;https://github.com/greblus/aspeqt/wiki/AspeQt-Atari-Serial-Peripheral-Emulator-for-Android&quot;&gt;&lt;span style=&quot; font-size:12pt; font-weight:600; text-decoration: underline; color:#0000ff;&quot;&gt;More details here.&lt;/span&gt;&lt;/a&gt;&lt;/p&gt;
-&lt;p style=&quot; margin-top:18px; margin-bottom:12px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;span style=&quot; font-size:12pt; font-weight:600;&quot;&gt;License (see license.txt file for more details)&lt;/span&gt;&lt;/p&gt;
-&lt;p style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;span style=&quot; font-size:12pt;&quot;&gt;Original code up to version 0.6.0 Copyright 2009 by Fatih Aygun.&lt;br /&gt;Updates since v0.6.0 Copyright 2012 by Ray Ataergin.&lt;br /&gt;Android port of aspeqt-1.0.0.Preview_6 by Wiktor Grebla.&lt;br /&gt;You can freely copy, use, modify and distribute it under the GPL 2.0 license. Please see license.txt for details. &lt;br /&gt;Qt libraries: Copyright by The Qt Company. &lt;br /&gt;usb-serial-for-Android with support for FTDI chips is based &lt;/span&gt;&lt;a href=&quot;https://github.com/mik3y/usb-serial-for-android&quot;&gt;&lt;span style=&quot; font-size:12pt; text-decoration: underline; color:#0000ff;&quot;&gt;on this project&lt;/span&gt;&lt;/a&gt;&lt;span style=&quot; font-size:12pt;&quot;&gt;. &lt;br /&gt;&lt;/span&gt;&lt;a href=&quot;http://tango.freedesktop.org/Tango_Icon_Library&quot;&gt;&lt;span style=&quot; font-size:12pt; text-decoration: underline; color:#0000ff;&quot;&gt;Tango Icons&lt;/span&gt;&lt;/a&gt;&lt;span style=&quot; font-size:12pt;&quot;&gt;. &lt;br /&gt;High speed code used in the EXE loader was written by &lt;/span&gt;&lt;a href=&quot;hias@horus.com&quot;&gt;&lt;span style=&quot; font-size:12pt; text-decoration: underline; color:#0000ff;&quot;&gt;Matthias Reichl&lt;/span&gt;&lt;/a&gt;&lt;span style=&quot; font-size:12pt;&quot;&gt;. &lt;br /&gt;&lt;/span&gt;&lt;a href=&quot;http://www.scorchworks.com/Blog/simple-file-dialog-for-android-applications/&quot;&gt;&lt;span style=&quot; font-size:12pt; text-decoration: underline; color:#0000ff;&quot;&gt;Simple Filedialog for Android.&lt;/span&gt;&lt;/a&gt;&lt;span style=&quot; font-size:12pt;&quot;&gt; &lt;br /&gt;&lt;/span&gt;&lt;a href=&quot;https://dribbble.com/shots/147212-Tape-Cassette-Rotating&quot;&gt;&lt;span style=&quot; font-size:12pt; text-decoration: underline; color:#0000ff;&quot;&gt;Animated cassette tape&lt;/span&gt;&lt;/a&gt;&lt;span style=&quot; font-size:12pt;&quot;&gt; by Michael Bozgounov.&lt;/span&gt;&lt;/p&gt;
-&lt;p style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;span style=&quot; font-size:12pt;&quot;&gt;PCLINK by &lt;/span&gt;&lt;a href=&quot;https://github.com/TheMontezuma/RespeQt&quot;&gt;&lt;span style=&quot; font-size:12pt; text-decoration: underline; color:#0000ff;&quot;&gt;TheMontezuma&lt;/span&gt;&lt;/a&gt;&lt;span style=&quot; font-size:12pt;&quot;&gt;.&lt;/span&gt;&lt;/p&gt;
-&lt;p style=&quot; margin-top:18px; margin-bottom:12px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;span style=&quot; font-size:12pt; font-weight:600;&quot;&gt;Questions about this Android port? Drop me an e-mail ;)&lt;/span&gt;&lt;/p&gt;
-&lt;p style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;span style=&quot; font-size:12pt;&quot;&gt;Wiktor Grebla: &lt;/span&gt;&lt;a href=&quot;mailto:greblus@gmail.com&quot;&gt;&lt;span style=&quot; font-size:12pt; text-decoration: underline; color:#0000ff;&quot;&gt;greblus@gmail.com&lt;/span&gt;&lt;/a&gt;&lt;span style=&quot; font-size:12pt;&quot;&gt; &lt;/span&gt;&lt;/p&gt;
-&lt;p style=&quot; margin-top:18px; margin-bottom:12px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;span style=&quot; font-size:12pt; font-weight:600;&quot;&gt;SIO2PC-USB adapters:&lt;/span&gt;&lt;/p&gt;
-&lt;p style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;span style=&quot; font-size:12pt;&quot;&gt;For SIO2PC-USB hardware purchase visit: &lt;/span&gt;&lt;a href=&quot;http://www.lotharek.pl&quot;&gt;&lt;span style=&quot; font-size:12pt; text-decoration: underline; color:#0000ff;&quot;&gt;www.lotharek.pl&lt;/span&gt;&lt;/a&gt;&lt;span style=&quot; font-size:12pt;&quot;&gt; or: &lt;/span&gt;&lt;a href=&quot;http://www.atari8warez.com/&quot;&gt;&lt;span style=&quot; font-size:12pt; text-decoration: underline; color:#0000ff;&quot;&gt;http://www.atari8warez.com/&lt;/span&gt;&lt;/a&gt;&lt;span style=&quot; font-size:12pt;&quot;&gt; &lt;/span&gt;&lt;/p&gt;
-&lt;p style=&quot;-qt-paragraph-type:empty; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px; font-size:12pt;&quot;&gt;&lt;br /&gt;&lt;/p&gt;
-&lt;p style=&quot;-qt-paragraph-type:empty; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px; font-size:12pt;&quot;&gt;&lt;br /&gt;&lt;/p&gt;
-&lt;p style=&quot;-qt-paragraph-type:empty; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px; font-size:12pt;&quot;&gt;&lt;br /&gt;&lt;/p&gt;
-&lt;p style=&quot;-qt-paragraph-type:empty; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px; font-size:12pt;&quot;&gt;&lt;br /&gt;&lt;/p&gt;
-&lt;p style=&quot;-qt-paragraph-type:empty; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px; font-size:12pt;&quot;&gt;&lt;br /&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
+&lt;p style=&quot; margin-top:18px; margin-bottom:12px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;span style=&quot; font-size:10pt;&quot;&gt;AspeQt emulates Atari SIO peripherals when connected to an Atari 8-bit computer with an SIO2PC cable or&lt;br /&gt;SIO2BT dongle. In that respect it&apos;s similar to programs like APE or SIO2BT. &lt;/span&gt;&lt;/p&gt;
+&lt;p style=&quot; margin-top:18px; margin-bottom:12px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;span style=&quot; font-size:10pt; font-weight:600; text-decoration: underline;&quot;&gt;SUPPORTED DEVICES&lt;/span&gt;&lt;/p&gt;
+&lt;p style=&quot; margin-top:18px; margin-bottom:12px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;span style=&quot; font-size:10pt; font-weight:600; text-decoration: underline;&quot;&gt;SIO2PC-USB:&lt;/span&gt;&lt;/p&gt;
+&lt;ul style=&quot;margin-top: 0px; margin-bottom: 0px; margin-left: 0px; margin-right: 0px; -qt-list-indent: 1;&quot;&gt;&lt;li style=&quot; font-size:10pt;&quot; style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;Your Android device must support USB Host/OTG.&lt;br /&gt;(check USB Host Support &lt;a href=&quot;https://play.google.com/store/apps/details?id=eu.chainfire.usbhostdiagnostics&quot;&gt;&lt;span style=&quot; text-decoration: underline; color:#0000ff;&quot;&gt;with this tool&lt;/span&gt;&lt;/a&gt;).&lt;/li&gt;&lt;/ul&gt;
+&lt;ul style=&quot;margin-top: 0px; margin-bottom: 0px; margin-left: 0px; margin-right: 0px; -qt-list-indent: 1;&quot;&gt;&lt;li style=&quot; font-size:10pt;&quot; style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;OTG cable is necessary unless your device has an USB-A socket.&lt;/li&gt;&lt;/ul&gt;
+&lt;ul style=&quot;margin-top: 0px; margin-bottom: 0px; margin-left: 0px; margin-right: 0px; -qt-list-indent: 1;&quot;&gt;&lt;li style=&quot; font-size:10pt;&quot; style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;Sio2PC-USB converter. I recommend &lt;a href=&quot;http://lotharek.pl/product.php?pid=98&quot;&gt;&lt;span style=&quot; text-decoration: underline; color:#0000ff;&quot;&gt;this one made by Lotharek&lt;/span&gt;&lt;/a&gt;. &lt;br /&gt;&lt;/li&gt;&lt;/ul&gt;
+&lt;p style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;span style=&quot; font-size:10pt; font-weight:600;&quot;&gt;No root necessary&lt;/span&gt;&lt;span style=&quot; font-size:10pt;&quot;&gt; &lt;/span&gt;&lt;/p&gt;
+&lt;p style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;span style=&quot; font-size:10pt; font-weight:600;&quot;&gt;No drivers necessary&lt;/span&gt;&lt;/p&gt;
+&lt;p style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;span style=&quot; font-size:10pt; font-weight:600;&quot;&gt;usb-serial-for-android java driver is in the package&lt;/span&gt;&lt;/p&gt;
+&lt;p style=&quot;-qt-paragraph-type:empty; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:1; text-indent:0px; font-size:10pt;&quot;&gt;&lt;br /&gt;&lt;/p&gt;
+&lt;p style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;span style=&quot; font-size:10pt; font-weight:600; text-decoration: underline;&quot;&gt;SIO2BT:&lt;/span&gt;&lt;/p&gt;
+&lt;p style=&quot;-qt-paragraph-type:empty; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px; font-size:10pt; font-weight:600; text-decoration: underline;&quot;&gt;&lt;br /&gt;&lt;/p&gt;
+&lt;ul style=&quot;margin-top: 0px; margin-bottom: 0px; margin-left: 0px; margin-right: 0px; -qt-list-indent: 1;&quot;&gt;&lt;li style=&quot; font-size:10pt;&quot; style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;My favourite SIO2BT devices are available from &lt;a href=&quot;https://www.facebook.com/Sio2bt/&quot;&gt;&lt;span style=&quot; text-decoration: underline; color:#0000ff;&quot;&gt;Marcin &amp;quot;the Montezuma&amp;quot; Sochacki.&lt;/span&gt;&lt;/a&gt;&lt;/li&gt;&lt;/ul&gt;
+&lt;p style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:1; text-indent:0px;&quot;&gt;&lt;span style=&quot; font-size:10pt;&quot;&gt;You can build your own &lt;/span&gt;&lt;a href=&quot;http://atarionline.pl/cn/data/upimages/bluetooth_03.jpg&quot;&gt;&lt;span style=&quot; font-size:10pt; text-decoration: underline; color:#0000ff;&quot;&gt;following this simple diagram&lt;/span&gt;&lt;/a&gt;&lt;span style=&quot; font-size:10pt;&quot;&gt;.&lt;/span&gt;&lt;/p&gt;
+&lt;ul style=&quot;margin-top: 0px; margin-bottom: 0px; margin-left: 0px; margin-right: 0px; -qt-list-indent: 1;&quot;&gt;&lt;li style=&quot; font-size:10pt;&quot; style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;Perform pairing of your Android device with SIO2BT dongle.&lt;/li&gt;
+&lt;li style=&quot; font-size:10pt;&quot; style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;Specify the name of your BT module in the options window.&lt;/li&gt;
+&lt;li style=&quot; font-size:10pt;&quot; style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;Speed can be configured with &lt;a href=&quot;http://www.mr-atari.com/MyBIOS/BTCONFIG.XEX&quot;&gt;&lt;span style=&quot; text-decoration: underline; color:#0000ff;&quot;&gt;BTCONFIG.XEX&lt;/span&gt;&lt;/a&gt; by Mr Atari or &lt;a href=&quot;http://atariage.com/forums/index.php?app=core&amp;amp;module=attach&amp;amp;section=attach&amp;amp;attach_id=468608&quot;&gt;&lt;span style=&quot; text-decoration: underline; color:#0000ff;&quot;&gt;BTCFG&lt;/span&gt;&lt;/a&gt; by FJC.&lt;/li&gt;
+&lt;li style=&quot; font-size:10pt;&quot; style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;SIO2BT requires a special loader (xBIOSv4BT works on an unmodified Atari) or modified OS.&lt;/li&gt;
+&lt;li style=&quot; font-size:10pt;&quot; style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;a href=&quot;http://atari8.co.uk/firmware/&quot;&gt;&lt;span style=&quot; text-decoration: underline; color:#0000ff;&quot;&gt;U1MB with latest (September 2016) PBI BIOS&lt;/span&gt;&lt;/a&gt; supports higher baudrates, up to 56700 bps. &lt;/li&gt;&lt;/ul&gt;
+&lt;p align=&quot;center&quot; style=&quot;-qt-paragraph-type:empty; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px; font-size:10pt; font-weight:600; text-decoration: underline;&quot;&gt;&lt;br /&gt;&lt;/p&gt;
+&lt;p style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;a href=&quot;https://github.com/greblus/aspeqt/wiki/AspeQt-Atari-Serial-Peripheral-Emulator-for-Android&quot;&gt;&lt;span style=&quot; font-size:10pt; font-weight:600; text-decoration: underline; color:#0000ff;&quot;&gt;More details here.&lt;/span&gt;&lt;/a&gt;&lt;/p&gt;
+&lt;p style=&quot; margin-top:18px; margin-bottom:12px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;span style=&quot; font-size:10pt; font-weight:600;&quot;&gt;License (see license.txt file for more details)&lt;/span&gt;&lt;/p&gt;
+&lt;p style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;span style=&quot; font-size:10pt;&quot;&gt;Original code up to version 0.6.0 Copyright 2009 by Fatih Aygun.&lt;br /&gt;Updates since v0.6.0 Copyright 2012 by Ray Ataergin.&lt;br /&gt;Android port of aspeqt-1.0.0.Preview_6 by Wiktor Grebla.&lt;br /&gt;You can freely copy, use, modify and distribute it under the GPL 2.0 license.&lt;br /&gt;Please see license.txt for details. &lt;br /&gt;Qt libraries: Copyright by The Qt Company. &lt;br /&gt;usb-serial-for-Android with support for FTDI chips is based &lt;/span&gt;&lt;a href=&quot;https://github.com/mik3y/usb-serial-for-android&quot;&gt;&lt;span style=&quot; font-size:10pt; text-decoration: underline; color:#0000ff;&quot;&gt;on this project&lt;/span&gt;&lt;/a&gt;&lt;span style=&quot; font-size:10pt;&quot;&gt;. &lt;br /&gt;&lt;/span&gt;&lt;a href=&quot;http://tango.freedesktop.org/Tango_Icon_Library&quot;&gt;&lt;span style=&quot; font-size:10pt; text-decoration: underline; color:#0000ff;&quot;&gt;Tango Icons&lt;/span&gt;&lt;/a&gt;&lt;span style=&quot; font-size:10pt;&quot;&gt;. &lt;br /&gt;High speed code used in the EXE loader was written by &lt;/span&gt;&lt;a href=&quot;hias@horus.com&quot;&gt;&lt;span style=&quot; font-size:10pt; text-decoration: underline; color:#0000ff;&quot;&gt;Matthias Reichl&lt;/span&gt;&lt;/a&gt;&lt;span style=&quot; font-size:10pt;&quot;&gt;. &lt;br /&gt;&lt;/span&gt;&lt;a href=&quot;http://www.scorchworks.com/Blog/simple-file-dialog-for-android-applications/&quot;&gt;&lt;span style=&quot; font-size:10pt; text-decoration: underline; color:#0000ff;&quot;&gt;Simple Filedialog for Android.&lt;/span&gt;&lt;/a&gt;&lt;span style=&quot; font-size:10pt;&quot;&gt; &lt;br /&gt;&lt;/span&gt;&lt;a href=&quot;https://dribbble.com/shots/147212-Tape-Cassette-Rotating&quot;&gt;&lt;span style=&quot; font-size:10pt; text-decoration: underline; color:#0000ff;&quot;&gt;Animated cassette tape&lt;/span&gt;&lt;/a&gt;&lt;span style=&quot; font-size:10pt;&quot;&gt; by Michael Bozgounov.&lt;/span&gt;&lt;/p&gt;
+&lt;p style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;span style=&quot; font-size:10pt;&quot;&gt;PCLINK by &lt;/span&gt;&lt;a href=&quot;https://github.com/TheMontezuma/RespeQt&quot;&gt;&lt;span style=&quot; font-size:10pt; text-decoration: underline; color:#0000ff;&quot;&gt;TheMontezuma&lt;/span&gt;&lt;/a&gt;&lt;span style=&quot; font-size:10pt;&quot;&gt;.&lt;/span&gt;&lt;/p&gt;
+&lt;p style=&quot; margin-top:18px; margin-bottom:12px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;span style=&quot; font-size:10pt; font-weight:600;&quot;&gt;Questions about this Android port? Drop me an e-mail ;)&lt;/span&gt;&lt;/p&gt;
+&lt;p style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;span style=&quot; font-size:10pt;&quot;&gt;Wiktor Grebla: &lt;/span&gt;&lt;a href=&quot;mailto:greblus@gmail.com&quot;&gt;&lt;span style=&quot; font-size:10pt; text-decoration: underline; color:#0000ff;&quot;&gt;greblus@gmail.com&lt;/span&gt;&lt;/a&gt;&lt;span style=&quot; font-size:10pt;&quot;&gt; &lt;/span&gt;&lt;/p&gt;
+&lt;p style=&quot; margin-top:18px; margin-bottom:12px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;span style=&quot; font-size:10pt; font-weight:600;&quot;&gt;SIO2PC-USB adapters: &lt;/span&gt;&lt;a href=&quot;www.lotharek.pl&quot;&gt;&lt;span style=&quot; font-size:10pt; text-decoration: underline; color:#0000ff;&quot;&gt;www.lotharek.pl&lt;/span&gt;&lt;/a&gt;&lt;span style=&quot; font-size:10pt;&quot;&gt; or: &lt;/span&gt;&lt;a href=&quot;http://www.atari8warez.com/&quot;&gt;&lt;span style=&quot; font-size:10pt; text-decoration: underline; color:#0000ff;&quot;&gt;http://www.atari8warez.com/&lt;/span&gt;&lt;/a&gt;&lt;span style=&quot; font-size:10pt;&quot;&gt; &lt;br /&gt;&lt;/span&gt;&lt;span style=&quot; font-size:10pt; font-weight:600;&quot;&gt;SIO2BT: &lt;/span&gt;&lt;a href=&quot;http://atariage.com/forums/topic/241984-sio2bt-ordering-thread/page-3?hl=%2Bsio2bt#entry3596654&quot;&gt;&lt;span style=&quot; font-size:10pt; text-decoration: underline; color:#0000ff;&quot;&gt;ordering thread on AtariAge&lt;/span&gt;&lt;/a&gt;&lt;span style=&quot; font-size:10pt; font-weight:600;&quot;&gt;.&lt;/span&gt;&lt;/p&gt;
+&lt;p style=&quot;-qt-paragraph-type:empty; margin-top:18px; margin-bottom:12px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px; font-size:12pt; font-weight:600;&quot;&gt;&lt;br /&gt;&lt;/p&gt;
+&lt;p style=&quot;-qt-paragraph-type:empty; margin-top:18px; margin-bottom:12px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px; font-size:12pt; font-weight:600;&quot;&gt;&lt;br /&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../aboutdialog.ui" line="180"/>
+        <location filename="../aboutdialog.ui" line="187"/>
         <source>file:///E:/aspeqt/about.html</source>
         <translation type="unfinished"></translation>
     </message>
@@ -1625,27 +1632,27 @@ p, li { white-space: pre-wrap; }
 <context>
     <name>MainWindow</name>
     <message>
-        <location filename="../mainwindow.cpp" line="275"/>
+        <location filename="../mainwindow.cpp" line="279"/>
         <source>Clear messages</source>
         <translation>Usuń wiadomości</translation>
     </message>
     <message>
-        <location filename="../mainwindow.cpp" line="492"/>
+        <location filename="../mainwindow.cpp" line="496"/>
         <source>Swapped disk %1 with disk %2.</source>
         <translation>Zamieniono dysk %1 z dyskiem %2.</translation>
     </message>
     <message>
-        <location filename="../mainwindow.cpp" line="546"/>
+        <location filename="../mainwindow.cpp" line="550"/>
         <source>Cannot mount &apos;%1&apos;: No empty disk slots.</source>
         <translation>Nie można zamontować &apos;%1&apos;: Brak wolnych slotów.</translation>
     </message>
     <message>
-        <location filename="../mainwindow.cpp" line="631"/>
+        <location filename="../mainwindow.cpp" line="635"/>
         <source>First run</source>
         <translation>Pierwsze uruchomienie</translation>
     </message>
     <message>
-        <location filename="../mainwindow.cpp" line="632"/>
+        <location filename="../mainwindow.cpp" line="636"/>
         <source>You are running AspeQt for the first time.
 
 Do you want to open the options dialog?</source>
@@ -1654,42 +1661,42 @@ Do you want to open the options dialog?</source>
 Czy chcesz otworzyć opcje?</translation>
     </message>
     <message>
-        <location filename="../mainwindow.cpp" line="809"/>
+        <location filename="../mainwindow.cpp" line="813"/>
         <source>Printer emulation stopped.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../mainwindow.cpp" line="818"/>
+        <location filename="../mainwindow.cpp" line="822"/>
         <source>Printer emulation started.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../mainwindow.cpp" line="835"/>
+        <location filename="../mainwindow.cpp" line="839"/>
         <source>&amp;Stop emulation</source>
         <translation>&amp;Zatrzymaj emulację</translation>
     </message>
     <message>
-        <location filename="../mainwindow.cpp" line="836"/>
-        <location filename="../mainwindow.cpp" line="837"/>
+        <location filename="../mainwindow.cpp" line="840"/>
+        <location filename="../mainwindow.cpp" line="841"/>
         <source>Stop SIO peripheral emulation</source>
         <translation>Zatrzymaj emulację peryferiów SIO</translation>
     </message>
     <message>
         <location filename="../mainwindow.ui" line="4611"/>
-        <location filename="../mainwindow.cpp" line="845"/>
+        <location filename="../mainwindow.cpp" line="849"/>
         <source>&amp;Start emulation</source>
         <translation>&amp;Rozpocznij emulację</translation>
     </message>
     <message>
         <location filename="../mainwindow.ui" line="4614"/>
         <location filename="../mainwindow.ui" line="4617"/>
-        <location filename="../mainwindow.cpp" line="846"/>
-        <location filename="../mainwindow.cpp" line="847"/>
+        <location filename="../mainwindow.cpp" line="850"/>
+        <location filename="../mainwindow.cpp" line="851"/>
         <source>Start SIO peripheral emulation</source>
         <translation>Uruchom emulację peryferiów SIO</translation>
     </message>
     <message>
-        <location filename="../mainwindow.cpp" line="854"/>
+        <location filename="../mainwindow.cpp" line="858"/>
         <source>Emulation stopped.</source>
         <translation>Emulacja zatrzymana.</translation>
     </message>
@@ -1716,25 +1723,25 @@ We will now migrate the existing settings to their new repository, note that set
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../mainwindow.cpp" line="230"/>
-        <location filename="../mainwindow.cpp" line="240"/>
+        <location filename="../mainwindow.cpp" line="234"/>
+        <location filename="../mainwindow.cpp" line="244"/>
         <source>Session file error</source>
         <translation>Błąd pliku sesji</translation>
     </message>
     <message>
-        <location filename="../mainwindow.cpp" line="231"/>
+        <location filename="../mainwindow.cpp" line="235"/>
         <source>Requested session file not found in the given directory path or the path is incorrect. AspeQt will continue with default session configuration.</source>
         <translation>Plik sesji nie znaleziony w podanej ścieżce dostępu, bądź ścieżka dostępu jest błędna. AspeQt będzie kontynuował z domyślną konfiguracją.</translation>
     </message>
     <message>
-        <location filename="../mainwindow.cpp" line="241"/>
+        <location filename="../mainwindow.cpp" line="245"/>
         <source>Requested session file not found in the application&apos;s current directory path
  (No path was specified). AspeQt will continue with default session configuration.</source>
         <translation>Plik sesji nie znaleziony w aktualnym katalogu aplikacji (ścieżka dostępu nie została podana). AspeQt będzie kontynuował z domyślną konfiguracją.</translation>
     </message>
     <message>
-        <location filename="../mainwindow.cpp" line="254"/>
-        <location filename="../mainwindow.cpp" line="1899"/>
+        <location filename="../mainwindow.cpp" line="258"/>
+        <location filename="../mainwindow.cpp" line="1903"/>
         <source> -- Session: </source>
         <translation> -- Sesja:</translation>
     </message>
@@ -1743,42 +1750,42 @@ We will now migrate the existing settings to their new repository, note that set
         <translation type="vanished">19200 bps</translation>
     </message>
     <message>
-        <location filename="../mainwindow.cpp" line="384"/>
+        <location filename="../mainwindow.cpp" line="388"/>
         <source>AspeQt stopped at %1.</source>
         <translation>AspeQt zatrzymano %1.</translation>
     </message>
     <message>
-        <location filename="../mainwindow.cpp" line="802"/>
-        <location filename="../mainwindow.cpp" line="803"/>
         <location filename="../mainwindow.cpp" line="806"/>
+        <location filename="../mainwindow.cpp" line="807"/>
+        <location filename="../mainwindow.cpp" line="810"/>
         <source>Start printer emulation</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../mainwindow.cpp" line="872"/>
-        <location filename="../mainwindow.cpp" line="894"/>
+        <location filename="../mainwindow.cpp" line="876"/>
+        <location filename="../mainwindow.cpp" line="898"/>
         <source>Folder image</source>
         <translation>Folder</translation>
     </message>
     <message>
-        <location filename="../mainwindow.cpp" line="1145"/>
+        <location filename="../mainwindow.cpp" line="1149"/>
         <source>Unmounted disk %1</source>
         <translation>Odmontowany dysk %1</translation>
     </message>
     <message>
-        <location filename="../mainwindow.cpp" line="1317"/>
-        <location filename="../mainwindow.cpp" line="1853"/>
+        <location filename="../mainwindow.cpp" line="1321"/>
+        <location filename="../mainwindow.cpp" line="1857"/>
         <source>[%1] Mounted &apos;%2&apos; as &apos;%3&apos;.</source>
         <translation>[%1] Zamontowe &apos;%2&apos; jako &apos;%3&apos;.</translation>
     </message>
     <message>
-        <location filename="../mainwindow.cpp" line="1351"/>
+        <location filename="../mainwindow.cpp" line="1355"/>
         <source>Open a disk image</source>
         <translation>Otwórz obraz dysku</translation>
     </message>
     <message>
-        <location filename="../mainwindow.cpp" line="1353"/>
-        <location filename="../mainwindow.cpp" line="1634"/>
+        <location filename="../mainwindow.cpp" line="1357"/>
+        <location filename="../mainwindow.cpp" line="1638"/>
         <source>All Atari disk images (*.atr *.xfd *.pro);;SIO2PC ATR images (*.atr);;XFormer XFD images (*.xfd);;Pro images (*.pro);;All files (*)</source>
         <translation type="unfinished">Wszystkie obrazy dysku (*.atr *.xfd *.pro);;Obrazy SIO2PC ATR (*.atr);;Obrazy XFormer XFD (*.xfd);;Obrazy Pro (*.pro);;Wszystkie pliki (*)</translation>
     </message>
@@ -1787,25 +1794,25 @@ We will now migrate the existing settings to their new repository, note that set
         <translation type="obsolete">Wszystkie obrazy dysku (*.atr *.xfd *.atx *.pro);;Obrazy SIO2PC ATR (*.atr);;Obrazy XFormer XFD (*.xfd);;Obrazy ATX (*.atx);;Obrazy Pro (*.pro);;Wszystkie pliki (*)</translation>
     </message>
     <message>
-        <location filename="../mainwindow.cpp" line="1390"/>
+        <location filename="../mainwindow.cpp" line="1394"/>
         <source>Open a folder image</source>
         <translation>Otwórz folder</translation>
     </message>
     <message>
-        <location filename="../mainwindow.cpp" line="1434"/>
+        <location filename="../mainwindow.cpp" line="1438"/>
         <source>Image file unsaved</source>
         <translation>Plik obrazu zawiera niezapisane zmiany</translation>
     </message>
     <message>
-        <location filename="../mainwindow.cpp" line="1434"/>
+        <location filename="../mainwindow.cpp" line="1438"/>
         <source>&apos;%1&apos; has unsaved changes, do you want to save it?</source>
         <translation>&apos;%1&apos; zawiera niezapisane zmiany. Czy chcesz go zapisać?</translation>
     </message>
     <message>
-        <location filename="../mainwindow.cpp" line="920"/>
-        <location filename="../mainwindow.cpp" line="1479"/>
-        <location filename="../mainwindow.cpp" line="1595"/>
-        <location filename="../mainwindow.cpp" line="1652"/>
+        <location filename="../mainwindow.cpp" line="924"/>
+        <location filename="../mainwindow.cpp" line="1483"/>
+        <location filename="../mainwindow.cpp" line="1599"/>
+        <location filename="../mainwindow.cpp" line="1656"/>
         <source>Save failed</source>
         <translation>Zapis nie powiódł się</translation>
     </message>
@@ -1822,70 +1829,70 @@ We will now migrate the existing settings to their new repository, note that set
         <translation type="obsolete">Nie znaleziono karty sieciowej!</translation>
     </message>
     <message>
-        <location filename="../mainwindow.cpp" line="920"/>
-        <location filename="../mainwindow.cpp" line="1479"/>
-        <location filename="../mainwindow.cpp" line="1595"/>
-        <location filename="../mainwindow.cpp" line="1652"/>
+        <location filename="../mainwindow.cpp" line="924"/>
+        <location filename="../mainwindow.cpp" line="1483"/>
+        <location filename="../mainwindow.cpp" line="1599"/>
+        <location filename="../mainwindow.cpp" line="1656"/>
         <source>&apos;%1&apos; cannot be saved, do you want to save the image with another name?</source>
         <translation>&apos;%1&apos; nie może zostać zapisany. Czy chcesz zapisać obraz pod inną nazwą?</translation>
     </message>
     <message>
-        <location filename="../mainwindow.cpp" line="1542"/>
+        <location filename="../mainwindow.cpp" line="1546"/>
         <source>[Disk 1] Auto-commit ON.</source>
         <translation>[Disk 1] Automatyczny zapis włączony.</translation>
     </message>
     <message>
-        <location filename="../mainwindow.cpp" line="1544"/>
+        <location filename="../mainwindow.cpp" line="1548"/>
         <source>[Disk 1] Auto-commit OFF.</source>
         <translation>[Disk 1] Automatyczny zapis wyłączony.</translation>
     </message>
     <message>
-        <location filename="../mainwindow.cpp" line="1550"/>
+        <location filename="../mainwindow.cpp" line="1554"/>
         <source>[Disk 2] Auto-commit ON.</source>
         <translation>[Disk 2] Automatyczny zapis włączony.</translation>
     </message>
     <message>
-        <location filename="../mainwindow.cpp" line="1552"/>
+        <location filename="../mainwindow.cpp" line="1556"/>
         <source>[Disk 2] Auto-commit OFF.</source>
         <translation>[Disk 2] Automatyczny zapis wyłączony.</translation>
     </message>
     <message>
-        <location filename="../mainwindow.cpp" line="1558"/>
+        <location filename="../mainwindow.cpp" line="1562"/>
         <source>[Disk 3] Auto-commit ON.</source>
         <translation>[Disk 3] Automatyczny zapis włączony.</translation>
     </message>
     <message>
-        <location filename="../mainwindow.cpp" line="1560"/>
+        <location filename="../mainwindow.cpp" line="1564"/>
         <source>[Disk 3] Auto-commit OFF.</source>
         <translation>[Disk 3] Automatyczny zapis wyłączony.</translation>
     </message>
     <message>
-        <location filename="../mainwindow.cpp" line="1566"/>
+        <location filename="../mainwindow.cpp" line="1570"/>
         <source>[Disk 4] Auto-commit ON.</source>
         <translation>[Disk 4] Automatyczny zapis włączony.</translation>
     </message>
     <message>
-        <location filename="../mainwindow.cpp" line="1568"/>
+        <location filename="../mainwindow.cpp" line="1572"/>
         <source>[Disk 4] Auto-commit OFF.</source>
         <translation>[Disk 4] Automatyczny zapis wyłączony.</translation>
     </message>
     <message>
-        <location filename="../mainwindow.cpp" line="1574"/>
+        <location filename="../mainwindow.cpp" line="1578"/>
         <source>[Disk 5] Auto-commit ON.</source>
         <translation>[Disk 5] Automatyczny zapis włączony.</translation>
     </message>
     <message>
-        <location filename="../mainwindow.cpp" line="1576"/>
+        <location filename="../mainwindow.cpp" line="1580"/>
         <source>[Disk 5] Auto-commit OFF.</source>
         <translation>[Disk 5] Automatyczny zapis wyłączony.</translation>
     </message>
     <message>
-        <location filename="../mainwindow.cpp" line="1582"/>
+        <location filename="../mainwindow.cpp" line="1586"/>
         <source>[Disk 6] Auto-commit ON.</source>
         <translation>[Disk 6] Automatyczny zapis włączony.</translation>
     </message>
     <message>
-        <location filename="../mainwindow.cpp" line="1584"/>
+        <location filename="../mainwindow.cpp" line="1588"/>
         <source>[Disk 6] Auto-commit OFF.</source>
         <translation>[Disk 6] Automatyczny zapis wyłączony.</translation>
     </message>
@@ -1962,58 +1969,58 @@ We will now migrate the existing settings to their new repository, note that set
         <translation type="vanished">[Disk 15] Automatyczny zapis wyłączony.</translation>
     </message>
     <message>
-        <location filename="../mainwindow.cpp" line="1632"/>
+        <location filename="../mainwindow.cpp" line="1636"/>
         <source>Save image as</source>
         <translation>Zapisz obraz jako</translation>
     </message>
     <message>
-        <location filename="../mainwindow.cpp" line="1670"/>
+        <location filename="../mainwindow.cpp" line="1674"/>
         <source>Revert to last saved</source>
         <translation>Przywracanie do ostatnio zapisanego stanu</translation>
     </message>
     <message>
-        <location filename="../mainwindow.cpp" line="1671"/>
+        <location filename="../mainwindow.cpp" line="1675"/>
         <source>Do you really want to revert &apos;%1&apos; to its last saved state? You will lose the changes that has been made.</source>
         <translation>Czy na pewno chcesz przywrócić &apos;%1&apos; do ostatnio zapisanego stanu? Stracisz wszystkie wprowadzone zmiany.</translation>
     </message>
     <message>
-        <location filename="../mainwindow.cpp" line="1877"/>
+        <location filename="../mainwindow.cpp" line="1881"/>
         <source>Open session</source>
         <translation>Otwórz sesję</translation>
     </message>
     <message>
-        <location filename="../mainwindow.cpp" line="1879"/>
-        <location filename="../mainwindow.cpp" line="1930"/>
+        <location filename="../mainwindow.cpp" line="1883"/>
+        <location filename="../mainwindow.cpp" line="1934"/>
         <source>AspeQt sessions (*.aspeqt);;All files (*)</source>
         <translation>Sesje AspeQt (*.aspeqt);;Wszystkie pliki (*)</translation>
     </message>
     <message>
-        <location filename="../mainwindow.cpp" line="1928"/>
+        <location filename="../mainwindow.cpp" line="1932"/>
         <source>Save session as</source>
         <translation>Zapisz sesję jako</translation>
     </message>
     <message>
-        <location filename="../mainwindow.cpp" line="1965"/>
+        <location filename="../mainwindow.cpp" line="1969"/>
         <source>Open executable</source>
         <translation>Otwórz plik wykonywalny</translation>
     </message>
     <message>
-        <location filename="../mainwindow.cpp" line="1967"/>
+        <location filename="../mainwindow.cpp" line="1971"/>
         <source>Atari executables (*.xex *.com *.exe);;All files (*)</source>
         <translation>Pliki wykonywalne Atari (*.xex *.com *.exe);;Wszystkie pliki (*)</translation>
     </message>
     <message>
-        <location filename="../mainwindow.cpp" line="2011"/>
+        <location filename="../mainwindow.cpp" line="2015"/>
         <source>Open a cassette image</source>
         <translation>Otwórz obraz kasety</translation>
     </message>
     <message>
-        <location filename="../mainwindow.cpp" line="2013"/>
+        <location filename="../mainwindow.cpp" line="2017"/>
         <source>CAS images (*.cas);;All files (*)</source>
         <translation>Obrazy CAS (*.cas);;Wszystkie pliki (*)</translation>
     </message>
     <message>
-        <location filename="../mainwindow.cpp" line="252"/>
+        <location filename="../mainwindow.cpp" line="256"/>
         <source>AspeQt - Atari Serial Peripheral Emulator for Qt</source>
         <translation>AspeQt - Emulator Szeregowych Peryferiów Atari dla Qt</translation>
     </message>
@@ -2716,9 +2723,9 @@ We will now migrate the existing settings to their new repository, note that set
     <message>
         <location filename="../mainwindow.ui" line="6434"/>
         <location filename="../mainwindow.ui" line="6437"/>
-        <location filename="../mainwindow.cpp" line="811"/>
-        <location filename="../mainwindow.cpp" line="812"/>
         <location filename="../mainwindow.cpp" line="815"/>
+        <location filename="../mainwindow.cpp" line="816"/>
+        <location filename="../mainwindow.cpp" line="819"/>
         <source>Stop printer emulation</source>
         <translation>Zatrzymaj emulację drukarki</translation>
     </message>
@@ -3578,7 +3585,7 @@ We will now migrate the existing settings to their new repository, note that set
         <translation type="vanished">Własna prędkość dla emulacji kaset (bps)</translation>
     </message>
     <message>
-        <location filename="../android/optionsdialog.ui" line="298"/>
+        <location filename="../android/optionsdialog.ui" line="484"/>
         <location filename="../optionsdialog.ui" line="706"/>
         <source>Use larger font in drive slot descriptions</source>
         <translation>Duża czcionka opisu slotu</translation>
@@ -3594,14 +3601,14 @@ We will now migrate the existing settings to their new repository, note that set
         <translation></translation>
     </message>
     <message>
-        <location filename="../android/optionsdialog.ui" line="269"/>
+        <location filename="../android/optionsdialog.ui" line="455"/>
         <location filename="../optionsdialog.ui" line="175"/>
         <location filename="../optionsdialog.ui" line="354"/>
         <source>Handshake method:</source>
         <translation>Metoda synchronizacji:</translation>
     </message>
     <message>
-        <location filename="../android/optionsdialog.ui" line="219"/>
+        <location filename="../android/optionsdialog.ui" line="273"/>
         <location filename="../optionsdialog.ui" line="183"/>
         <location filename="../optionsdialog.ui" line="362"/>
         <source>RI</source>
@@ -3613,78 +3620,84 @@ We will now migrate the existing settings to their new repository, note that set
         <translation type="unfinished">Okno dialogowe</translation>
     </message>
     <message>
-        <location filename="../android/optionsdialog.ui" line="148"/>
+        <location filename="../android/optionsdialog.ui" line="179"/>
         <source>Save</source>
         <translation type="unfinished">Zapisz</translation>
     </message>
     <message>
-        <location filename="../android/optionsdialog.ui" line="483"/>
+        <location filename="../android/optionsdialog.ui" line="559"/>
         <source>User interface:</source>
         <translation>Interfejs użytkownika:</translation>
     </message>
     <message>
-        <location filename="../android/optionsdialog.ui" line="557"/>
+        <location filename="../android/optionsdialog.ui" line="608"/>
         <source>Emulation settings:</source>
         <translation>Ustawienia emulacji:</translation>
     </message>
     <message>
-        <location filename="../android/optionsdialog.ui" line="224"/>
+        <location filename="../android/optionsdialog.ui" line="278"/>
         <location filename="../optionsdialog.ui" line="188"/>
         <location filename="../optionsdialog.ui" line="367"/>
         <source>DSR</source>
         <translation></translation>
     </message>
     <message>
-        <location filename="../android/optionsdialog.ui" line="229"/>
+        <location filename="../android/optionsdialog.ui" line="283"/>
         <location filename="../optionsdialog.ui" line="193"/>
         <location filename="../optionsdialog.ui" line="372"/>
         <source>CTS</source>
         <translation></translation>
     </message>
     <message>
-        <location filename="../android/optionsdialog.ui" line="234"/>
+        <location filename="../android/optionsdialog.ui" line="288"/>
         <source>SOFT</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../android/optionsdialog.ui" line="250"/>
+        <location filename="../android/optionsdialog.ui" line="304"/>
         <source>SIO port emulation:</source>
         <translation>Emulacja portu SIO:</translation>
     </message>
     <message>
-        <location filename="../android/optionsdialog.ui" line="320"/>
+        <location filename="../android/optionsdialog.ui" line="506"/>
         <location filename="../optionsdialog.ui" line="212"/>
         <source>High speed mode baud rate:</source>
         <translation>Prędkość trybu przyspieszonego (bps):</translation>
     </message>
     <message>
-        <location filename="../android/optionsdialog.ui" line="590"/>
+        <location filename="../android/optionsdialog.ui" line="700"/>
         <source>SIO2PC</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../android/optionsdialog.ui" line="595"/>
+        <location filename="../android/optionsdialog.ui" line="728"/>
+        <source>Bluetooth name:</source>
+        <translation>Nazwa modułu BT:</translation>
+    </message>
+    <message>
+        <location filename="../android/optionsdialog.ui" line="127"/>
+        <location filename="../android/optionsdialog.ui" line="705"/>
         <source>SIO2BT</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../android/optionsdialog.ui" line="652"/>
+        <location filename="../android/optionsdialog.ui" line="544"/>
         <source>Write ACK delay [ms]</source>
         <translation>Opóźnienie zapisu ACK [ms]</translation>
     </message>
     <message>
-        <location filename="../android/optionsdialog.ui" line="671"/>
+        <location filename="../android/optionsdialog.ui" line="146"/>
         <source>Serial interface:</source>
         <translation>Interfejs szeregowy:</translation>
     </message>
     <message>
-        <location filename="../android/optionsdialog.ui" line="684"/>
+        <location filename="../android/optionsdialog.ui" line="159"/>
         <location filename="../optionsdialog.ui" line="241"/>
         <source>Use non-standard speeds</source>
         <translation>Użyj niestandardowych prędkości</translation>
     </message>
     <message>
-        <location filename="../android/optionsdialog.ui" line="468"/>
+        <location filename="../android/optionsdialog.ui" line="408"/>
         <location filename="../optionsdialog.ui" line="257"/>
         <source>High speed mode POKEY divisor:</source>
         <translation>Dzielnik POKEYa dla trybu przyspieszonego:</translation>
@@ -3715,32 +3728,32 @@ We will now migrate the existing settings to their new repository, note that set
         <translation></translation>
     </message>
     <message>
-        <location filename="../android/optionsdialog.ui" line="387"/>
+        <location filename="../android/optionsdialog.ui" line="355"/>
         <location filename="../optionsdialog.ui" line="439"/>
         <source>Use high speed executable loader</source>
         <translation>Szybkie ładowanie plików wykonywalnych</translation>
     </message>
     <message>
-        <location filename="../android/optionsdialog.ui" line="542"/>
+        <location filename="../android/optionsdialog.ui" line="646"/>
         <location filename="../optionsdialog.ui" line="477"/>
         <source>Use custom baud rate for cassette emulation</source>
         <oldsource>Use cutom baud rate for cassette emulation</oldsource>
         <translation>Własna prędkość dla emulacji kaset (bps)</translation>
     </message>
     <message>
-        <location filename="../android/optionsdialog.ui" line="199"/>
+        <location filename="../android/optionsdialog.ui" line="253"/>
         <location filename="../optionsdialog.ui" line="533"/>
         <source> Folder Images:</source>
         <translation>Obrazy katalogów</translation>
     </message>
     <message>
-        <location filename="../android/optionsdialog.ui" line="415"/>
+        <location filename="../android/optionsdialog.ui" line="383"/>
         <location filename="../optionsdialog.ui" line="552"/>
         <source>Filter out underscore character from file names</source>
         <translation>Filtruj podkreślenia z nazw plików</translation>
     </message>
     <message>
-        <location filename="../android/optionsdialog.ui" line="125"/>
+        <location filename="../android/optionsdialog.ui" line="199"/>
         <location filename="../optionsdialog.ui" line="573"/>
         <source>        (Required for AtariDOS compatibility)</source>
         <translation>        (Dla zgodności z AtariDOS)</translation>
@@ -3751,7 +3764,7 @@ We will now migrate the existing settings to their new repository, note that set
         <translation>Interfejs użytkownika</translation>
     </message>
     <message>
-        <location filename="../android/optionsdialog.ui" line="349"/>
+        <location filename="../android/optionsdialog.ui" line="317"/>
         <location filename="../optionsdialog.ui" line="627"/>
         <source>Language:</source>
         <translation>Język:</translation>
@@ -3762,7 +3775,7 @@ We will now migrate the existing settings to their new repository, note that set
         <translation>Minimalizuj do tacki systemowej</translation>
     </message>
     <message>
-        <location filename="../android/optionsdialog.ui" line="333"/>
+        <location filename="../android/optionsdialog.ui" line="519"/>
         <location filename="../optionsdialog.ui" line="644"/>
         <source>Save window positions and sizes</source>
         <translation>Zapisz pozycje i rozmiar okien</translation>
@@ -3773,30 +3786,30 @@ We will now migrate the existing settings to their new repository, note that set
         <translation>Zapisz lub odwołaj zmiany wprowadzone do ustawień</translation>
     </message>
     <message>
-        <location filename="../optionsdialog.cpp" line="125"/>
+        <location filename="../optionsdialog.cpp" line="128"/>
         <source>Automatic</source>
         <translation>Automatycznie</translation>
     </message>
     <message>
-        <location filename="../optionsdialog.cpp" line="128"/>
-        <location filename="../optionsdialog.cpp" line="137"/>
+        <location filename="../optionsdialog.cpp" line="131"/>
+        <location filename="../optionsdialog.cpp" line="140"/>
         <source>English</source>
         <translation>Polski</translation>
     </message>
     <message>
-        <location filename="../android/optionsdialog.ui" line="506"/>
+        <location filename="../android/optionsdialog.ui" line="669"/>
         <location filename="../optionsdialog.ui" line="223"/>
         <source>19200 (1x)</source>
         <translation></translation>
     </message>
     <message>
-        <location filename="../android/optionsdialog.ui" line="511"/>
+        <location filename="../android/optionsdialog.ui" line="674"/>
         <location filename="../optionsdialog.ui" line="228"/>
         <source>38400 (2x)</source>
         <translation></translation>
     </message>
     <message>
-        <location filename="../android/optionsdialog.ui" line="516"/>
+        <location filename="../android/optionsdialog.ui" line="679"/>
         <location filename="../optionsdialog.ui" line="233"/>
         <source>57600 (3x)</source>
         <translation></translation>

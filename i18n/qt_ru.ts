@@ -16,47 +16,43 @@
         <translation type="unfinished"></translation>
     </message>
     <message>
+        <source>file:///E:/aspeqt/about.html</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
         <source>&lt;!DOCTYPE HTML PUBLIC &quot;-//W3C//DTD HTML 4.0//EN&quot; &quot;http://www.w3.org/TR/REC-html40/strict.dtd&quot;&gt;
 &lt;html&gt;&lt;head&gt;&lt;meta name=&quot;qrichtext&quot; content=&quot;1&quot; /&gt;&lt;style type=&quot;text/css&quot;&gt;
 p, li { white-space: pre-wrap; }
 &lt;/style&gt;&lt;/head&gt;&lt;body style=&quot; font-family:&apos;MS Shell Dlg 2&apos;; font-size:8.25pt; font-weight:400; font-style:normal;&quot;&gt;
-&lt;p style=&quot; margin-top:18px; margin-bottom:12px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;span style=&quot; font-size:16pt; font-weight:600;&quot;&gt;AspeQt for Android.&lt;/span&gt;&lt;/p&gt;
-&lt;p style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;span style=&quot; font-size:12pt;&quot;&gt;This software was tested on various Android devices running Lollipop (5.0.1), KitKat (4.4.2) and JellyBean (4.2.2). Software command frame detection (SOFT - default handshake method) should work with anything @19200bps and is also behaving very nicely with non-standard speeds and Pokey divisor set eg. to 0 or 1. Try it also with &amp;quot;use high speed executable loader&amp;quot; option turned on ;) In this port a slightly modified and absolutely great &lt;/span&gt;&lt;a href=&quot;https://github.com/greblus/usb-serial-for-android&quot;&gt;&lt;span style=&quot; font-size:12pt; text-decoration: underline; color:#0000ff;&quot;&gt;usb-serial-for-android&lt;/span&gt;&lt;/a&gt;&lt;span style=&quot; font-size:12pt;&quot;&gt; driver is being used. &lt;/span&gt;&lt;/p&gt;
-&lt;p style=&quot;-qt-paragraph-type:empty; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px; font-size:12pt;&quot;&gt;&lt;br /&gt;&lt;/p&gt;
-&lt;p style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;span style=&quot; font-size:12pt; font-weight:600;&quot;&gt;SOFT command frame detection is now set as default method when AspeQt is started first time.&lt;/span&gt;&lt;span style=&quot; font-size:12pt;&quot;&gt; &lt;/span&gt;&lt;/p&gt;
-&lt;p style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;span style=&quot; font-size:12pt;&quot;&gt;Previous version with ftd2xx Java driver is still available &lt;/span&gt;&lt;a href=&quot;https://github.com/greblus/aspeqt/tree/ftd2xx&quot;&gt;&lt;span style=&quot; font-size:12pt; text-decoration: underline; color:#0000ff;&quot;&gt;here&lt;/span&gt;&lt;/a&gt;&lt;span style=&quot; font-size:12pt;&quot;&gt;. &lt;/span&gt;&lt;/p&gt;
-&lt;p style=&quot; margin-top:18px; margin-bottom:12px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;span style=&quot; font-size:16pt; font-weight:600;&quot;&gt;Downloads.&lt;/span&gt;&lt;/p&gt;
-&lt;p style=&quot; margin-top:18px; margin-bottom:12px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;span style=&quot; font-size:12pt; font-weight:600;&quot;&gt;AspeQt&lt;/span&gt;&lt;span style=&quot; font-size:12pt;&quot;&gt; is available through &lt;/span&gt;&lt;a href=&quot;https://play.google.com/store/search?q=aspeqt&quot;&gt;&lt;span style=&quot; font-size:12pt; text-decoration: underline; color:#0000ff;&quot;&gt;Google Play Store&lt;/span&gt;&lt;/a&gt;&lt;span style=&quot; font-size:12pt;&quot;&gt;. All releases (including previous ones) are available &lt;/span&gt;&lt;a href=&quot;https://github.com/greblus/aspeqt/releases&quot;&gt;&lt;span style=&quot; font-size:12pt; text-decoration: underline; color:#0000ff;&quot;&gt;here&lt;/span&gt;&lt;/a&gt;&lt;span style=&quot; font-size:12pt;&quot;&gt;. &lt;/span&gt;&lt;span style=&quot; font-size:12pt; font-weight:600;&quot;&gt;Lastest compiled apk&lt;/span&gt;&lt;span style=&quot; font-size:12pt;&quot;&gt; is always &lt;/span&gt;&lt;a href=&quot;https://github.com/greblus/aspeqt/raw/android/android/apk/aspeqt.apk&quot;&gt;&lt;span style=&quot; font-size:12pt; text-decoration: underline; color:#0000ff;&quot;&gt;here&lt;/span&gt;&lt;/a&gt;&lt;span style=&quot; font-size:12pt;&quot;&gt;. And of course all apk files which were uploaded to android/apk can be found in the repo (there is a &amp;quot;Browse Files&amp;quot; button which will show you a snapshot of the repository at a time of the particular commit). What doesn&apos;t work yet? Loading atr files stalls occassionally in DSR handshaking mode. Haven&apos;t noticed it in SOFT mode. Hopefully Will fix it soon. &lt;/span&gt;&lt;/p&gt;
-&lt;p style=&quot; margin-top:18px; margin-bottom:12px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;span style=&quot; font-size:16pt; font-weight:600;&quot;&gt;What&apos;s necessary to use it:&lt;/span&gt;&lt;span style=&quot; font-size:16pt;&quot;&gt; &lt;/span&gt;&lt;/p&gt;
-&lt;ul style=&quot;margin-top: 0px; margin-bottom: 0px; margin-left: 0px; margin-right: 0px; -qt-list-indent: 1;&quot;&gt;&lt;li style=&quot; font-size:12pt;&quot; style=&quot; margin-top:12px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;Android device with USB Host Support. Check USB Host Support with &lt;a href=&quot;https://play.google.com/store/apps/details?id=eu.chainfire.usbhostdiagnostics&quot;&gt;&lt;span style=&quot; text-decoration: underline; color:#0000ff;&quot;&gt;this tool&lt;/span&gt;&lt;/a&gt;. &lt;/li&gt;
-&lt;li style=&quot; font-size:12pt;&quot; style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;OTG cable. &lt;/li&gt;
-&lt;li style=&quot; font-size:12pt;&quot; style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;Sio2PC-USB converter. I recommend &lt;a href=&quot;http://lotharek.pl/product.php?pid=98&quot;&gt;&lt;span style=&quot; text-decoration: underline; color:#0000ff;&quot;&gt;this one made by Lotharek&lt;/span&gt;&lt;/a&gt;. &lt;/li&gt;
-&lt;li style=&quot; font-size:12pt;&quot; style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;AspeQt for Android should work on anything starting from 3.1. I&apos;ve tested it on Lark FreeMe 8&amp;quot; Android 4.2.2 tablet, Kazam 345 &amp;amp; Kazam Tornado phones with KitKat 4.4, Lenovo Tab 2 A10-70L and Lenovo Tab 2 A7 tablets with Lollipop 5.0.1 &lt;/li&gt;
-&lt;li style=&quot; font-size:12pt;&quot; style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;span style=&quot; font-weight:600;&quot;&gt;No root necessary.&lt;/span&gt; &lt;/li&gt;
-&lt;li style=&quot; font-size:12pt;&quot; style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;span style=&quot; font-weight:600;&quot;&gt;No drivers necessary.&lt;/span&gt; usb-serial-for-android java driver is in the package. &lt;/li&gt;
-&lt;li style=&quot; font-size:12pt;&quot; style=&quot; margin-top:0px; margin-bottom:12px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;After you connect the SIO2PC-USB to your Android device it&apos;ll automatically launch AspeQt. If you have SIO2PC-USB from Lotharek, select SOFT or DSR flow control method and set speed to 19200bps first, to see if it works at all. Feel free to experiment with higher speeds and Pokey divisors (HiSpeed OS, SDX or Qmeg is required for fast SIO routines). &lt;/li&gt;&lt;/ul&gt;
-&lt;p style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;span style=&quot; font-size:12pt;&quot;&gt;Alternatively (on an unmodified Atari) it&apos;s enough to mount the folder with xex files and copy these two files: $boot.bin and picodos.sys which can be dowloaded &lt;/span&gt;&lt;a href=&quot;https://github.com/greblus/aspeqt/tree/android/%24bootpic&quot;&gt;&lt;span style=&quot; font-size:12pt; text-decoration: underline; color:#0000ff;&quot;&gt;from here&lt;/span&gt;&lt;/a&gt;&lt;span style=&quot; font-size:12pt;&quot;&gt;. This way all xex files, e.g. just downloaded from the internet on your mobile or tablet) to some mounted folder eg. Download/Atari can be nicely loaded in high speed using MyPicoDos. &lt;/span&gt;&lt;/p&gt;
-&lt;p style=&quot; margin-top:16px; margin-bottom:12px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;a href=&quot;https://www.youtube.com/watch?v=GEkwZM_Cr_M&amp;amp;list=PL_0_k9JuZLPiox8zAklF3qvG3SbsZ08g8&quot;&gt;&lt;span style=&quot; font-size:12pt; font-weight:600; text-decoration: underline; color:#0000ff;&quot;&gt;Videos of AspeQt on Android&lt;/span&gt;&lt;/a&gt;&lt;span style=&quot; font-size:12pt;&quot;&gt; &lt;/span&gt;&lt;/p&gt;
-&lt;p style=&quot; margin-top:18px; margin-bottom:12px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;span style=&quot; font-size:16pt; font-weight:600;&quot;&gt;Summary&lt;/span&gt;&lt;/p&gt;
-&lt;p style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;span style=&quot; font-size:12pt;&quot;&gt;AspeQt emulates Atari SIO peripherals when connected to an Atari 8-bit computer with an SIO2PC cable. In that respect it&apos;s similar to programs like APE and Atari810. The main difference is that it&apos;s free (unlike APE) and it&apos;s cross-platform (unlike Atari810 and APE). &lt;/span&gt;&lt;/p&gt;
-&lt;p style=&quot; margin-top:18px; margin-bottom:12px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;span style=&quot; font-size:12pt; font-weight:600;&quot;&gt;License (see license.txt file for more details)&lt;/span&gt;&lt;/p&gt;
-&lt;p style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;span style=&quot; font-size:12pt;&quot;&gt;Original code up to version 0.6.0 Copyright 2009 by Fatih Aygün.&lt;br /&gt;Updates since v0.6.0 Copyright 2012 by Ray Ataergin.&lt;br /&gt;Android port of aspeqt-1.0.0.Preview_6 by Wiktor Grebla.&lt;/span&gt;&lt;/p&gt;
-&lt;p style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;span style=&quot; font-size:12pt;&quot;&gt;&lt;br /&gt;You can freely copy, use, modify and distribute it under the GPL 2.0 license. Please see license.txt for details. &lt;/span&gt;&lt;/p&gt;
-&lt;p style=&quot;-qt-paragraph-type:empty; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px; font-size:12pt;&quot;&gt;&lt;br /&gt;&lt;/p&gt;
-&lt;p style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;span style=&quot; font-size:16pt; font-weight:600; text-decoration: underline;&quot;&gt;This program couldn&apos;t be created without:&lt;/span&gt;&lt;/p&gt;
-&lt;p style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;span style=&quot; font-size:12pt;&quot;&gt;&lt;br /&gt;Qt libraries: Copyright by The Qt Company. &lt;br /&gt;usb-serial-for-Android with support for FTDI chips is a slightly modified fork of &lt;/span&gt;&lt;a href=&quot;https://github.com/mik3y/usb-serial-for-android&quot;&gt;&lt;span style=&quot; font-size:12pt; text-decoration: underline; color:#0000ff;&quot;&gt;this project&lt;/span&gt;&lt;/a&gt;&lt;span style=&quot; font-size:12pt;&quot;&gt;. &lt;br /&gt;&lt;/span&gt;&lt;a href=&quot;http://tango.freedesktop.org/Tango_Icon_Library&quot;&gt;&lt;span style=&quot; font-size:12pt; text-decoration: underline; color:#0000ff;&quot;&gt;Tango Icons&lt;/span&gt;&lt;/a&gt;&lt;span style=&quot; font-size:12pt;&quot;&gt;. &lt;br /&gt;High speed code used in the EXE loader written by &lt;/span&gt;&lt;a href=&quot;mailto:hias@horus.com&quot;&gt;&lt;span style=&quot; font-size:12pt; text-decoration: underline; color:#0000ff;&quot;&gt;Matthias Reichl&lt;/span&gt;&lt;/a&gt;&lt;span style=&quot; font-size:12pt;&quot;&gt;. &lt;br /&gt;&lt;/span&gt;&lt;a href=&quot;http://www.scorchworks.com/Blog/simple-file-dialog-for-android-applications/&quot;&gt;&lt;span style=&quot; font-size:12pt; text-decoration: underline; color:#0000ff;&quot;&gt;Simple Filedialog for Android.&lt;/span&gt;&lt;/a&gt;&lt;span style=&quot; font-size:12pt;&quot;&gt; &lt;br /&gt;&lt;/span&gt;&lt;/p&gt;
-&lt;p style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;span style=&quot; font-size:12pt; font-weight:600;&quot;&gt;Questions about this Android port? Drop me an e-mail ;)&lt;/span&gt;&lt;/p&gt;
-&lt;p style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;span style=&quot; font-size:12pt;&quot;&gt;Wiktor Grebla: &lt;/span&gt;&lt;a href=&quot;mailto:greblus@gmail.com&quot;&gt;&lt;span style=&quot; font-size:12pt; text-decoration: underline; color:#0000ff;&quot;&gt;greblus@gmail.com&lt;/span&gt;&lt;/a&gt;&lt;span style=&quot; font-size:12pt;&quot;&gt; &lt;/span&gt;&lt;/p&gt;
-&lt;p style=&quot; margin-top:18px; margin-bottom:12px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;span style=&quot; font-size:16pt; font-weight:600;&quot;&gt;SIO2PC-USB adapters:&lt;/span&gt;&lt;/p&gt;
-&lt;p style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;span style=&quot; font-size:12pt;&quot;&gt;For SIO2PC-USB hardware purchase visit: &lt;/span&gt;&lt;a href=&quot;http://lotharek.pl&quot;&gt;&lt;span style=&quot; font-size:12pt; text-decoration: underline; color:#0000ff;&quot;&gt;http://lotharek.pl&lt;/span&gt;&lt;/a&gt;&lt;span style=&quot; font-size:12pt;&quot;&gt; or: &lt;/span&gt;&lt;a href=&quot;http://www.atari8warez.com/&quot;&gt;&lt;span style=&quot; font-size:12pt; text-decoration: underline; color:#0000ff;&quot;&gt;http://www.atari8warez.com/&lt;/span&gt;&lt;/a&gt;&lt;span style=&quot; font-size:12pt;&quot;&gt; &lt;/span&gt;&lt;/p&gt;
-&lt;p style=&quot;-qt-paragraph-type:empty; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px; font-size:12pt;&quot;&gt;&lt;br /&gt;&lt;/p&gt;
-&lt;p style=&quot;-qt-paragraph-type:empty; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px; font-size:12pt;&quot;&gt;&lt;br /&gt;&lt;/p&gt;
-&lt;p style=&quot;-qt-paragraph-type:empty; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px; font-size:12pt;&quot;&gt;&lt;br /&gt;&lt;/p&gt;
-&lt;p style=&quot;-qt-paragraph-type:empty; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px; font-size:12pt;&quot;&gt;&lt;br /&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>file:///E:/aspeqt/about.html</source>
+&lt;p style=&quot; margin-top:18px; margin-bottom:12px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;span style=&quot; font-size:10pt;&quot;&gt;AspeQt emulates Atari SIO peripherals when connected to an Atari 8-bit computer with an SIO2PC cable or&lt;br /&gt;SIO2BT dongle. In that respect it&apos;s similar to programs like APE or SIO2BT. &lt;/span&gt;&lt;/p&gt;
+&lt;p style=&quot; margin-top:18px; margin-bottom:12px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;span style=&quot; font-size:10pt; font-weight:600; text-decoration: underline;&quot;&gt;SUPPORTED DEVICES&lt;/span&gt;&lt;/p&gt;
+&lt;p style=&quot; margin-top:18px; margin-bottom:12px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;span style=&quot; font-size:10pt; font-weight:600; text-decoration: underline;&quot;&gt;SIO2PC-USB:&lt;/span&gt;&lt;/p&gt;
+&lt;ul style=&quot;margin-top: 0px; margin-bottom: 0px; margin-left: 0px; margin-right: 0px; -qt-list-indent: 1;&quot;&gt;&lt;li style=&quot; font-size:10pt;&quot; style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;Your Android device must support USB Host/OTG.&lt;br /&gt;(check USB Host Support &lt;a href=&quot;https://play.google.com/store/apps/details?id=eu.chainfire.usbhostdiagnostics&quot;&gt;&lt;span style=&quot; text-decoration: underline; color:#0000ff;&quot;&gt;with this tool&lt;/span&gt;&lt;/a&gt;).&lt;/li&gt;&lt;/ul&gt;
+&lt;ul style=&quot;margin-top: 0px; margin-bottom: 0px; margin-left: 0px; margin-right: 0px; -qt-list-indent: 1;&quot;&gt;&lt;li style=&quot; font-size:10pt;&quot; style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;OTG cable is necessary unless your device has an USB-A socket.&lt;/li&gt;&lt;/ul&gt;
+&lt;ul style=&quot;margin-top: 0px; margin-bottom: 0px; margin-left: 0px; margin-right: 0px; -qt-list-indent: 1;&quot;&gt;&lt;li style=&quot; font-size:10pt;&quot; style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;Sio2PC-USB converter. I recommend &lt;a href=&quot;http://lotharek.pl/product.php?pid=98&quot;&gt;&lt;span style=&quot; text-decoration: underline; color:#0000ff;&quot;&gt;this one made by Lotharek&lt;/span&gt;&lt;/a&gt;. &lt;br /&gt;&lt;/li&gt;&lt;/ul&gt;
+&lt;p style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;span style=&quot; font-size:10pt; font-weight:600;&quot;&gt;No root necessary&lt;/span&gt;&lt;span style=&quot; font-size:10pt;&quot;&gt; &lt;/span&gt;&lt;/p&gt;
+&lt;p style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;span style=&quot; font-size:10pt; font-weight:600;&quot;&gt;No drivers necessary&lt;/span&gt;&lt;/p&gt;
+&lt;p style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;span style=&quot; font-size:10pt; font-weight:600;&quot;&gt;usb-serial-for-android java driver is in the package&lt;/span&gt;&lt;/p&gt;
+&lt;p style=&quot;-qt-paragraph-type:empty; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:1; text-indent:0px; font-size:10pt;&quot;&gt;&lt;br /&gt;&lt;/p&gt;
+&lt;p style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;span style=&quot; font-size:10pt; font-weight:600; text-decoration: underline;&quot;&gt;SIO2BT:&lt;/span&gt;&lt;/p&gt;
+&lt;p style=&quot;-qt-paragraph-type:empty; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px; font-size:10pt; font-weight:600; text-decoration: underline;&quot;&gt;&lt;br /&gt;&lt;/p&gt;
+&lt;ul style=&quot;margin-top: 0px; margin-bottom: 0px; margin-left: 0px; margin-right: 0px; -qt-list-indent: 1;&quot;&gt;&lt;li style=&quot; font-size:10pt;&quot; style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;My favourite SIO2BT devices are available from &lt;a href=&quot;https://www.facebook.com/Sio2bt/&quot;&gt;&lt;span style=&quot; text-decoration: underline; color:#0000ff;&quot;&gt;Marcin &amp;quot;the Montezuma&amp;quot; Sochacki.&lt;/span&gt;&lt;/a&gt;&lt;/li&gt;&lt;/ul&gt;
+&lt;p style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:1; text-indent:0px;&quot;&gt;&lt;span style=&quot; font-size:10pt;&quot;&gt;You can build your own &lt;/span&gt;&lt;a href=&quot;http://atarionline.pl/cn/data/upimages/bluetooth_03.jpg&quot;&gt;&lt;span style=&quot; font-size:10pt; text-decoration: underline; color:#0000ff;&quot;&gt;following this simple diagram&lt;/span&gt;&lt;/a&gt;&lt;span style=&quot; font-size:10pt;&quot;&gt;.&lt;/span&gt;&lt;/p&gt;
+&lt;ul style=&quot;margin-top: 0px; margin-bottom: 0px; margin-left: 0px; margin-right: 0px; -qt-list-indent: 1;&quot;&gt;&lt;li style=&quot; font-size:10pt;&quot; style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;Perform pairing of your Android device with SIO2BT dongle.&lt;/li&gt;
+&lt;li style=&quot; font-size:10pt;&quot; style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;Specify the name of your BT module in the options window.&lt;/li&gt;
+&lt;li style=&quot; font-size:10pt;&quot; style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;Speed can be configured with &lt;a href=&quot;http://www.mr-atari.com/MyBIOS/BTCONFIG.XEX&quot;&gt;&lt;span style=&quot; text-decoration: underline; color:#0000ff;&quot;&gt;BTCONFIG.XEX&lt;/span&gt;&lt;/a&gt; by Mr Atari or &lt;a href=&quot;http://atariage.com/forums/index.php?app=core&amp;amp;module=attach&amp;amp;section=attach&amp;amp;attach_id=468608&quot;&gt;&lt;span style=&quot; text-decoration: underline; color:#0000ff;&quot;&gt;BTCFG&lt;/span&gt;&lt;/a&gt; by FJC.&lt;/li&gt;
+&lt;li style=&quot; font-size:10pt;&quot; style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;SIO2BT requires a special loader (xBIOSv4BT works on an unmodified Atari) or modified OS.&lt;/li&gt;
+&lt;li style=&quot; font-size:10pt;&quot; style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;a href=&quot;http://atari8.co.uk/firmware/&quot;&gt;&lt;span style=&quot; text-decoration: underline; color:#0000ff;&quot;&gt;U1MB with latest (September 2016) PBI BIOS&lt;/span&gt;&lt;/a&gt; supports higher baudrates, up to 56700 bps. &lt;/li&gt;&lt;/ul&gt;
+&lt;p align=&quot;center&quot; style=&quot;-qt-paragraph-type:empty; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px; font-size:10pt; font-weight:600; text-decoration: underline;&quot;&gt;&lt;br /&gt;&lt;/p&gt;
+&lt;p style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;a href=&quot;https://github.com/greblus/aspeqt/wiki/AspeQt-Atari-Serial-Peripheral-Emulator-for-Android&quot;&gt;&lt;span style=&quot; font-size:10pt; font-weight:600; text-decoration: underline; color:#0000ff;&quot;&gt;More details here.&lt;/span&gt;&lt;/a&gt;&lt;/p&gt;
+&lt;p style=&quot; margin-top:18px; margin-bottom:12px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;span style=&quot; font-size:10pt; font-weight:600;&quot;&gt;License (see license.txt file for more details)&lt;/span&gt;&lt;/p&gt;
+&lt;p style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;span style=&quot; font-size:10pt;&quot;&gt;Original code up to version 0.6.0 Copyright 2009 by Fatih Aygun.&lt;br /&gt;Updates since v0.6.0 Copyright 2012 by Ray Ataergin.&lt;br /&gt;Android port of aspeqt-1.0.0.Preview_6 by Wiktor Grebla.&lt;br /&gt;You can freely copy, use, modify and distribute it under the GPL 2.0 license.&lt;br /&gt;Please see license.txt for details. &lt;br /&gt;Qt libraries: Copyright by The Qt Company. &lt;br /&gt;usb-serial-for-Android with support for FTDI chips is based &lt;/span&gt;&lt;a href=&quot;https://github.com/mik3y/usb-serial-for-android&quot;&gt;&lt;span style=&quot; font-size:10pt; text-decoration: underline; color:#0000ff;&quot;&gt;on this project&lt;/span&gt;&lt;/a&gt;&lt;span style=&quot; font-size:10pt;&quot;&gt;. &lt;br /&gt;&lt;/span&gt;&lt;a href=&quot;http://tango.freedesktop.org/Tango_Icon_Library&quot;&gt;&lt;span style=&quot; font-size:10pt; text-decoration: underline; color:#0000ff;&quot;&gt;Tango Icons&lt;/span&gt;&lt;/a&gt;&lt;span style=&quot; font-size:10pt;&quot;&gt;. &lt;br /&gt;High speed code used in the EXE loader was written by &lt;/span&gt;&lt;a href=&quot;hias@horus.com&quot;&gt;&lt;span style=&quot; font-size:10pt; text-decoration: underline; color:#0000ff;&quot;&gt;Matthias Reichl&lt;/span&gt;&lt;/a&gt;&lt;span style=&quot; font-size:10pt;&quot;&gt;. &lt;br /&gt;&lt;/span&gt;&lt;a href=&quot;http://www.scorchworks.com/Blog/simple-file-dialog-for-android-applications/&quot;&gt;&lt;span style=&quot; font-size:10pt; text-decoration: underline; color:#0000ff;&quot;&gt;Simple Filedialog for Android.&lt;/span&gt;&lt;/a&gt;&lt;span style=&quot; font-size:10pt;&quot;&gt; &lt;br /&gt;&lt;/span&gt;&lt;a href=&quot;https://dribbble.com/shots/147212-Tape-Cassette-Rotating&quot;&gt;&lt;span style=&quot; font-size:10pt; text-decoration: underline; color:#0000ff;&quot;&gt;Animated cassette tape&lt;/span&gt;&lt;/a&gt;&lt;span style=&quot; font-size:10pt;&quot;&gt; by Michael Bozgounov.&lt;/span&gt;&lt;/p&gt;
+&lt;p style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;span style=&quot; font-size:10pt;&quot;&gt;PCLINK by &lt;/span&gt;&lt;a href=&quot;https://github.com/TheMontezuma/RespeQt&quot;&gt;&lt;span style=&quot; font-size:10pt; text-decoration: underline; color:#0000ff;&quot;&gt;TheMontezuma&lt;/span&gt;&lt;/a&gt;&lt;span style=&quot; font-size:10pt;&quot;&gt;.&lt;/span&gt;&lt;/p&gt;
+&lt;p style=&quot; margin-top:18px; margin-bottom:12px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;span style=&quot; font-size:10pt; font-weight:600;&quot;&gt;Questions about this Android port? Drop me an e-mail ;)&lt;/span&gt;&lt;/p&gt;
+&lt;p style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;span style=&quot; font-size:10pt;&quot;&gt;Wiktor Grebla: &lt;/span&gt;&lt;a href=&quot;mailto:greblus@gmail.com&quot;&gt;&lt;span style=&quot; font-size:10pt; text-decoration: underline; color:#0000ff;&quot;&gt;greblus@gmail.com&lt;/span&gt;&lt;/a&gt;&lt;span style=&quot; font-size:10pt;&quot;&gt; &lt;/span&gt;&lt;/p&gt;
+&lt;p style=&quot; margin-top:18px; margin-bottom:12px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;span style=&quot; font-size:10pt; font-weight:600;&quot;&gt;SIO2PC-USB adapters: &lt;/span&gt;&lt;a href=&quot;www.lotharek.pl&quot;&gt;&lt;span style=&quot; font-size:10pt; text-decoration: underline; color:#0000ff;&quot;&gt;www.lotharek.pl&lt;/span&gt;&lt;/a&gt;&lt;span style=&quot; font-size:10pt;&quot;&gt; or: &lt;/span&gt;&lt;a href=&quot;http://www.atari8warez.com/&quot;&gt;&lt;span style=&quot; font-size:10pt; text-decoration: underline; color:#0000ff;&quot;&gt;http://www.atari8warez.com/&lt;/span&gt;&lt;/a&gt;&lt;span style=&quot; font-size:10pt;&quot;&gt; &lt;br /&gt;&lt;/span&gt;&lt;span style=&quot; font-size:10pt; font-weight:600;&quot;&gt;SIO2BT: &lt;/span&gt;&lt;a href=&quot;http://atariage.com/forums/topic/241984-sio2bt-ordering-thread/page-3?hl=%2Bsio2bt#entry3596654&quot;&gt;&lt;span style=&quot; font-size:10pt; text-decoration: underline; color:#0000ff;&quot;&gt;ordering thread on AtariAge&lt;/span&gt;&lt;/a&gt;&lt;span style=&quot; font-size:10pt; font-weight:600;&quot;&gt;.&lt;/span&gt;&lt;/p&gt;
+&lt;p style=&quot;-qt-paragraph-type:empty; margin-top:18px; margin-bottom:12px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px; font-size:12pt; font-weight:600;&quot;&gt;&lt;br /&gt;&lt;/p&gt;
+&lt;p style=&quot;-qt-paragraph-type:empty; margin-top:18px; margin-bottom:12px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px; font-size:12pt; font-weight:600;&quot;&gt;&lt;br /&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
         <translation type="unfinished"></translation>
     </message>
 </context>
@@ -348,6 +344,18 @@ For some programs you may have to close this dialog manually when the program st
         <source>Please reboot your Atari.
 
  Disable BASIC by holding down the Atari Option button.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Please reboot your Atari.
+
+Don&apos;t forget to remove any cartridges and disable BASIC by holding down the Atari Option button if necessary.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Use this button to re-load the executable 
+if it has been changed since the last re-boot 
+of your Atari computer - Useful for developers </source>
         <translation type="unfinished"></translation>
     </message>
 </context>
@@ -2396,6 +2404,449 @@ We will now migrate the existing settings to their new repository, note that set
         <source>Enable Shade in Mini Mode by default</source>
         <translation type="unfinished"></translation>
     </message>
+    <message>
+        <source>SIO2BT</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Serial interface:</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Write ACK delay [ms]</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>SIO2PC</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Bluetooth name:</source>
+        <translation type="unfinished"></translation>
+    </message>
+</context>
+<context>
+    <name>PCLINK</name>
+    <message>
+        <source>PCLINK Command=[$%1] aux1=$%2 aux2=$%3 cunit=$%4</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>[%1] P</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>[%1] R</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>[%1] Get status for [%2]</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>[%1] Speed poll</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>[%1] command: $%2, aux: $%3 NAKed.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>PCLINK[%1] Mount %2</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>PCLINK[%1] Unmount</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>closing all files</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>PARBLK retry, ignored</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>%1 (fno $%02)</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>bad handle 1 %1</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>bad size $0000 (0)</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>size $%1 (%2), buffer $%3 (%4)</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>serial communication error, abort</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>handle %1</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>FREAD: cannot read %1 bytes from dir</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>FREAD: cannot seek to $%1 (%2)</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>FREAD: cannot read %1 bytes from file</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>FREAD: send $%1 (%2), status $%3</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>bad handle 2 %1</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>size $%1 (%2)</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>FWRITE: cannot seek to $%1 (%2)</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>FWRITE: block CRC mismatch</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>FWRITE: cannot write %1 bytes to file</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>FWRITE: received $%1 (%2), status $%3</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>bad handle 3 %1</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>bad exec</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>handle %1, newpos $%2 (%3)</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>bad handle 4 %1</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>device $%1</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>handle %1, send $%2 (%3)</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>bad handle 5 %1</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>eof_flg %1</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>FNEXT: EOF</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>FNEXT: status %1, send $%2 $%3%4 $%5%6%7 %8%9%10%11%12%13%14%15%16%17%18 %19-%20-%21 %22:%23:%24</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>bad handle 6 %1</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>mode: $%1, atr1: $%2, atr2: $%3, path: &apos;%4&apos;, name: &apos;%5&apos;</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>unsupported fmode ($%1)</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>invalid path 1 &apos;%1&apos;</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>local path &apos;%1&apos;</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>FOPEN: too many channels open</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>FOPEN: cannot stat &apos;%1&apos;</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>OPEN DIR</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source> ! fmode &amp; 0x10</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>CHECK DOS NAME</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>FOPEN: file not found</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>FOPEN: creating file</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>FOPEN: bad filename &apos;%1&apos;</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>FOPEN: full local path &apos;%1&apos;</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>FOPEN: &apos;%1&apos; is read-only</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>FOPEN: cannot open &apos;%1&apos;, %2 (%3)</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>FOPEN: bad handle 7 %1</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>FOPEN: %1 handle %2</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>FOPEN: dir EOF?</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>FOPEN: send %1, send $%2 $%3%4 $%5%6%7 %8%9%10%11%12%13%14%15%16%17%18 %19-%20-%21 %22:%23:%24</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>invalid path 2 &apos;%1&apos;</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>cannot open dir &apos;%1&apos;</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>local path &apos;%1&apos;, fatr1 $%2</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>RENAME: renaming &apos;%1&apos; -&gt; &apos;%2&apos;</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>RENAME: &apos;%1&apos; already exists</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>RENAME: %1</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>invalid path 3 &apos;%1&apos;</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>REMOVE: delete &apos;%1&apos;</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>REMOVE: cannot delete &apos;%1&apos;</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>illegal fatr2 $%1</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>invalid path 4 &apos;%1&apos;</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>local path &apos;%1&apos;, fatr1 $%2 fatr2 $%3</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>CHMOD: cannot open dir &apos;%1&apos;</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>CHMOD: change atrs in &apos;%1&apos;</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>CHMOD: failed on &apos;%1&apos;</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>invalid path 5 &apos;%1&apos;</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>bad dir name &apos;%1&apos;</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>making dir &apos;%1&apos;, time %2-%3-%4 %5:%6:%7</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>MKDIR: &apos;%1&apos; already exists</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>MKDIR: cannot make dir &apos;%1&apos;</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>invalid path 6 &apos;%1&apos;</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>cannot stat &apos;%1&apos;</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>&apos;%1&apos; wrong uid</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>&apos;%1&apos; is not a directory</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>dir &apos;%1&apos; is write-protected</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>delete dir &apos;%1&apos;</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>RMDIR: cannot del &apos;%1&apos;, %2 (%3)</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>invalid path 7 &apos;%1&apos;</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>cannot access &apos;%1&apos;, %2</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>new current dir &apos;%1&apos;</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>device $1</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>send &apos;%1&apos;</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>reading &apos;%1&apos;</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>DFREE: send info (%1 bytes)</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>invalid name</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>writing &apos;%1&apos;</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>CHVOL: %1</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>fno $%1 not implemented</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>match: %1%2%3%4%5%6%7%8%9%10%11 with %12%13%14%15%16%17%18%19%20%21%22: </source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>no match</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>atr mismatch: not HIDDEN or ARCHIVED</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>atr mismatch: not PROTECTED</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>atr mismatch: not UNPROTECTED</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>atr mismatch: not SUBDIR</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>atr mismatch: not FILE</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>match</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>%1: got fname &apos;%2&apos;</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>%1: stat &apos;%2&apos;</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Internal error: dir_cache should be NULL!</source>
+        <translation type="unfinished"></translation>
+    </message>
 </context>
 <context>
     <name>Printer</name>
@@ -2681,6 +3132,10 @@ We will now migrate the existing settings to their new repository, note that set
         <source>Device $%1</source>
         <translation type="unfinished"></translation>
     </message>
+    <message>
+        <source>PCLINK</source>
+        <translation type="unfinished"></translation>
+    </message>
 </context>
 <context>
     <name>SpartaDosFileSystem</name>
@@ -2800,10 +3255,6 @@ We will now migrate the existing settings to their new repository, note that set
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <source>No SIO2PC device detected!</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
         <source>isOpen %1</source>
         <translation type="unfinished"></translation>
     </message>
@@ -2881,6 +3332,10 @@ We will now migrate the existing settings to their new repository, note that set
     </message>
     <message>
         <source>DBG -- Serial Port Open...</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>No device detected!</source>
         <translation type="unfinished"></translation>
     </message>
 </context>

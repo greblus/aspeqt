@@ -67,18 +67,19 @@ public class SIO2BT implements SerialDevice
                     if (debug) Log.i("BT", device.getName());
                     m_device = device;
                     break;
-                } else {
+                } else
                     m_device = null;
-                    sa.runOnUiThread(new Runnable() {
-                        public void run() {
-                            Toast.makeText(sa, "You have to pair your BT dongle first.", Toast.LENGTH_LONG).show();
-                        }
-                    });
-                }
             }
         }
 
-        if (m_device == null) return 0;
+        if (m_device == null) {
+            sa.runOnUiThread(new Runnable() {
+                public void run() {
+                    Toast.makeText(sa, "Check your BT module name and make sure it's paired.", Toast.LENGTH_SHORT).show();
+                }
+            });
+        return 0;
+        }
 
         uuid = UUID.fromString("00001101-0000-1000-8000-00805f9b34fb");
         BluetoothSocket tmp = null;

@@ -19,43 +19,39 @@
 &lt;html&gt;&lt;head&gt;&lt;meta name=&quot;qrichtext&quot; content=&quot;1&quot; /&gt;&lt;style type=&quot;text/css&quot;&gt;
 p, li { white-space: pre-wrap; }
 &lt;/style&gt;&lt;/head&gt;&lt;body style=&quot; font-family:&apos;MS Shell Dlg 2&apos;; font-size:8.25pt; font-weight:400; font-style:normal;&quot;&gt;
-&lt;p style=&quot; margin-top:18px; margin-bottom:12px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;span style=&quot; font-size:16pt; font-weight:600;&quot;&gt;AspeQt for Android.&lt;/span&gt;&lt;/p&gt;
-&lt;p style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;span style=&quot; font-size:12pt;&quot;&gt;This software was tested on various Android devices running Lollipop (5.0.1), KitKat (4.4.2) and JellyBean (4.2.2). Software command frame detection (SOFT - default handshake method) should work with anything @19200bps and is also behaving very nicely with non-standard speeds and Pokey divisor set eg. to 0 or 1. Try it also with &amp;quot;use high speed executable loader&amp;quot; option turned on ;) In this port a slightly modified and absolutely great &lt;/span&gt;&lt;a href=&quot;https://github.com/greblus/usb-serial-for-android&quot;&gt;&lt;span style=&quot; font-size:12pt; text-decoration: underline; color:#0000ff;&quot;&gt;usb-serial-for-android&lt;/span&gt;&lt;/a&gt;&lt;span style=&quot; font-size:12pt;&quot;&gt; driver is being used. &lt;/span&gt;&lt;/p&gt;
-&lt;p style=&quot;-qt-paragraph-type:empty; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px; font-size:12pt;&quot;&gt;&lt;br /&gt;&lt;/p&gt;
-&lt;p style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;span style=&quot; font-size:12pt; font-weight:600;&quot;&gt;SOFT command frame detection is now set as default method when AspeQt is started first time.&lt;/span&gt;&lt;span style=&quot; font-size:12pt;&quot;&gt; &lt;/span&gt;&lt;/p&gt;
-&lt;p style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;span style=&quot; font-size:12pt;&quot;&gt;Previous version with ftd2xx Java driver is still available &lt;/span&gt;&lt;a href=&quot;https://github.com/greblus/aspeqt/tree/ftd2xx&quot;&gt;&lt;span style=&quot; font-size:12pt; text-decoration: underline; color:#0000ff;&quot;&gt;here&lt;/span&gt;&lt;/a&gt;&lt;span style=&quot; font-size:12pt;&quot;&gt;. &lt;/span&gt;&lt;/p&gt;
-&lt;p style=&quot; margin-top:18px; margin-bottom:12px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;span style=&quot; font-size:16pt; font-weight:600;&quot;&gt;Downloads.&lt;/span&gt;&lt;/p&gt;
-&lt;p style=&quot; margin-top:18px; margin-bottom:12px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;span style=&quot; font-size:12pt; font-weight:600;&quot;&gt;AspeQt&lt;/span&gt;&lt;span style=&quot; font-size:12pt;&quot;&gt; is available through &lt;/span&gt;&lt;a href=&quot;https://play.google.com/store/search?q=aspeqt&quot;&gt;&lt;span style=&quot; font-size:12pt; text-decoration: underline; color:#0000ff;&quot;&gt;Google Play Store&lt;/span&gt;&lt;/a&gt;&lt;span style=&quot; font-size:12pt;&quot;&gt;. All releases (including previous ones) are available &lt;/span&gt;&lt;a href=&quot;https://github.com/greblus/aspeqt/releases&quot;&gt;&lt;span style=&quot; font-size:12pt; text-decoration: underline; color:#0000ff;&quot;&gt;here&lt;/span&gt;&lt;/a&gt;&lt;span style=&quot; font-size:12pt;&quot;&gt;. &lt;/span&gt;&lt;span style=&quot; font-size:12pt; font-weight:600;&quot;&gt;Lastest compiled apk&lt;/span&gt;&lt;span style=&quot; font-size:12pt;&quot;&gt; is always &lt;/span&gt;&lt;a href=&quot;https://github.com/greblus/aspeqt/raw/android/android/apk/aspeqt.apk&quot;&gt;&lt;span style=&quot; font-size:12pt; text-decoration: underline; color:#0000ff;&quot;&gt;here&lt;/span&gt;&lt;/a&gt;&lt;span style=&quot; font-size:12pt;&quot;&gt;. And of course all apk files which were uploaded to android/apk can be found in the repo (there is a &amp;quot;Browse Files&amp;quot; button which will show you a snapshot of the repository at a time of the particular commit). What doesn&apos;t work yet? Loading atr files stalls occassionally in DSR handshaking mode. Haven&apos;t noticed it in SOFT mode. Hopefully Will fix it soon. &lt;/span&gt;&lt;/p&gt;
-&lt;p style=&quot; margin-top:18px; margin-bottom:12px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;span style=&quot; font-size:16pt; font-weight:600;&quot;&gt;What&apos;s necessary to use it:&lt;/span&gt;&lt;span style=&quot; font-size:16pt;&quot;&gt; &lt;/span&gt;&lt;/p&gt;
-&lt;ul style=&quot;margin-top: 0px; margin-bottom: 0px; margin-left: 0px; margin-right: 0px; -qt-list-indent: 1;&quot;&gt;&lt;li style=&quot; font-size:12pt;&quot; style=&quot; margin-top:12px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;Android device with USB Host Support. Check USB Host Support with &lt;a href=&quot;https://play.google.com/store/apps/details?id=eu.chainfire.usbhostdiagnostics&quot;&gt;&lt;span style=&quot; text-decoration: underline; color:#0000ff;&quot;&gt;this tool&lt;/span&gt;&lt;/a&gt;. &lt;/li&gt;
-&lt;li style=&quot; font-size:12pt;&quot; style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;OTG cable. &lt;/li&gt;
-&lt;li style=&quot; font-size:12pt;&quot; style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;Sio2PC-USB converter. I recommend &lt;a href=&quot;http://lotharek.pl/product.php?pid=98&quot;&gt;&lt;span style=&quot; text-decoration: underline; color:#0000ff;&quot;&gt;this one made by Lotharek&lt;/span&gt;&lt;/a&gt;. &lt;/li&gt;
-&lt;li style=&quot; font-size:12pt;&quot; style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;AspeQt for Android should work on anything starting from 3.1. I&apos;ve tested it on Lark FreeMe 8&amp;quot; Android 4.2.2 tablet, Kazam 345 &amp;amp; Kazam Tornado phones with KitKat 4.4, Lenovo Tab 2 A10-70L and Lenovo Tab 2 A7 tablets with Lollipop 5.0.1 &lt;/li&gt;
-&lt;li style=&quot; font-size:12pt;&quot; style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;span style=&quot; font-weight:600;&quot;&gt;No root necessary.&lt;/span&gt; &lt;/li&gt;
-&lt;li style=&quot; font-size:12pt;&quot; style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;span style=&quot; font-weight:600;&quot;&gt;No drivers necessary.&lt;/span&gt; usb-serial-for-android java driver is in the package. &lt;/li&gt;
-&lt;li style=&quot; font-size:12pt;&quot; style=&quot; margin-top:0px; margin-bottom:12px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;After you connect the SIO2PC-USB to your Android device it&apos;ll automatically launch AspeQt. If you have SIO2PC-USB from Lotharek, select SOFT or DSR flow control method and set speed to 19200bps first, to see if it works at all. Feel free to experiment with higher speeds and Pokey divisors (HiSpeed OS, SDX or Qmeg is required for fast SIO routines). &lt;/li&gt;&lt;/ul&gt;
-&lt;p style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;span style=&quot; font-size:12pt;&quot;&gt;Alternatively (on an unmodified Atari) it&apos;s enough to mount the folder with xex files and copy these two files: $boot.bin and picodos.sys which can be dowloaded &lt;/span&gt;&lt;a href=&quot;https://github.com/greblus/aspeqt/tree/android/%24bootpic&quot;&gt;&lt;span style=&quot; font-size:12pt; text-decoration: underline; color:#0000ff;&quot;&gt;from here&lt;/span&gt;&lt;/a&gt;&lt;span style=&quot; font-size:12pt;&quot;&gt;. This way all xex files, e.g. just downloaded from the internet on your mobile or tablet) to some mounted folder eg. Download/Atari can be nicely loaded in high speed using MyPicoDos. &lt;/span&gt;&lt;/p&gt;
-&lt;p style=&quot; margin-top:16px; margin-bottom:12px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;a href=&quot;https://www.youtube.com/watch?v=GEkwZM_Cr_M&amp;amp;list=PL_0_k9JuZLPiox8zAklF3qvG3SbsZ08g8&quot;&gt;&lt;span style=&quot; font-size:12pt; font-weight:600; text-decoration: underline; color:#0000ff;&quot;&gt;Videos of AspeQt on Android&lt;/span&gt;&lt;/a&gt;&lt;span style=&quot; font-size:12pt;&quot;&gt; &lt;/span&gt;&lt;/p&gt;
-&lt;p style=&quot; margin-top:18px; margin-bottom:12px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;span style=&quot; font-size:16pt; font-weight:600;&quot;&gt;Summary&lt;/span&gt;&lt;/p&gt;
-&lt;p style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;span style=&quot; font-size:12pt;&quot;&gt;AspeQt emulates Atari SIO peripherals when connected to an Atari 8-bit computer with an SIO2PC cable. In that respect it&apos;s similar to programs like APE and Atari810. The main difference is that it&apos;s free (unlike APE) and it&apos;s cross-platform (unlike Atari810 and APE). &lt;/span&gt;&lt;/p&gt;
-&lt;p style=&quot; margin-top:18px; margin-bottom:12px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;span style=&quot; font-size:12pt; font-weight:600;&quot;&gt;License (see license.txt file for more details)&lt;/span&gt;&lt;/p&gt;
-&lt;p style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;span style=&quot; font-size:12pt;&quot;&gt;Original code up to version 0.6.0 Copyright 2009 by Fatih Aygün.&lt;br /&gt;Updates since v0.6.0 Copyright 2012 by Ray Ataergin.&lt;br /&gt;Android port of aspeqt-1.0.0.Preview_6 by Wiktor Grebla.&lt;/span&gt;&lt;/p&gt;
-&lt;p style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;span style=&quot; font-size:12pt;&quot;&gt;&lt;br /&gt;You can freely copy, use, modify and distribute it under the GPL 2.0 license. Please see license.txt for details. &lt;/span&gt;&lt;/p&gt;
-&lt;p style=&quot;-qt-paragraph-type:empty; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px; font-size:12pt;&quot;&gt;&lt;br /&gt;&lt;/p&gt;
-&lt;p style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;span style=&quot; font-size:16pt; font-weight:600; text-decoration: underline;&quot;&gt;This program couldn&apos;t be created without:&lt;/span&gt;&lt;/p&gt;
-&lt;p style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;span style=&quot; font-size:12pt;&quot;&gt;&lt;br /&gt;Qt libraries: Copyright by The Qt Company. &lt;br /&gt;usb-serial-for-Android with support for FTDI chips is a slightly modified fork of &lt;/span&gt;&lt;a href=&quot;https://github.com/mik3y/usb-serial-for-android&quot;&gt;&lt;span style=&quot; font-size:12pt; text-decoration: underline; color:#0000ff;&quot;&gt;this project&lt;/span&gt;&lt;/a&gt;&lt;span style=&quot; font-size:12pt;&quot;&gt;. &lt;br /&gt;&lt;/span&gt;&lt;a href=&quot;http://tango.freedesktop.org/Tango_Icon_Library&quot;&gt;&lt;span style=&quot; font-size:12pt; text-decoration: underline; color:#0000ff;&quot;&gt;Tango Icons&lt;/span&gt;&lt;/a&gt;&lt;span style=&quot; font-size:12pt;&quot;&gt;. &lt;br /&gt;High speed code used in the EXE loader written by &lt;/span&gt;&lt;a href=&quot;mailto:hias@horus.com&quot;&gt;&lt;span style=&quot; font-size:12pt; text-decoration: underline; color:#0000ff;&quot;&gt;Matthias Reichl&lt;/span&gt;&lt;/a&gt;&lt;span style=&quot; font-size:12pt;&quot;&gt;. &lt;br /&gt;&lt;/span&gt;&lt;a href=&quot;http://www.scorchworks.com/Blog/simple-file-dialog-for-android-applications/&quot;&gt;&lt;span style=&quot; font-size:12pt; text-decoration: underline; color:#0000ff;&quot;&gt;Simple Filedialog for Android.&lt;/span&gt;&lt;/a&gt;&lt;span style=&quot; font-size:12pt;&quot;&gt; &lt;br /&gt;&lt;/span&gt;&lt;/p&gt;
-&lt;p style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;span style=&quot; font-size:12pt; font-weight:600;&quot;&gt;Questions about this Android port? Drop me an e-mail ;)&lt;/span&gt;&lt;/p&gt;
-&lt;p style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;span style=&quot; font-size:12pt;&quot;&gt;Wiktor Grebla: &lt;/span&gt;&lt;a href=&quot;mailto:greblus@gmail.com&quot;&gt;&lt;span style=&quot; font-size:12pt; text-decoration: underline; color:#0000ff;&quot;&gt;greblus@gmail.com&lt;/span&gt;&lt;/a&gt;&lt;span style=&quot; font-size:12pt;&quot;&gt; &lt;/span&gt;&lt;/p&gt;
-&lt;p style=&quot; margin-top:18px; margin-bottom:12px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;span style=&quot; font-size:16pt; font-weight:600;&quot;&gt;SIO2PC-USB adapters:&lt;/span&gt;&lt;/p&gt;
-&lt;p style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;span style=&quot; font-size:12pt;&quot;&gt;For SIO2PC-USB hardware purchase visit: &lt;/span&gt;&lt;a href=&quot;http://lotharek.pl&quot;&gt;&lt;span style=&quot; font-size:12pt; text-decoration: underline; color:#0000ff;&quot;&gt;http://lotharek.pl&lt;/span&gt;&lt;/a&gt;&lt;span style=&quot; font-size:12pt;&quot;&gt; or: &lt;/span&gt;&lt;a href=&quot;http://www.atari8warez.com/&quot;&gt;&lt;span style=&quot; font-size:12pt; text-decoration: underline; color:#0000ff;&quot;&gt;http://www.atari8warez.com/&lt;/span&gt;&lt;/a&gt;&lt;span style=&quot; font-size:12pt;&quot;&gt; &lt;/span&gt;&lt;/p&gt;
-&lt;p style=&quot;-qt-paragraph-type:empty; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px; font-size:12pt;&quot;&gt;&lt;br /&gt;&lt;/p&gt;
-&lt;p style=&quot;-qt-paragraph-type:empty; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px; font-size:12pt;&quot;&gt;&lt;br /&gt;&lt;/p&gt;
-&lt;p style=&quot;-qt-paragraph-type:empty; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px; font-size:12pt;&quot;&gt;&lt;br /&gt;&lt;/p&gt;
-&lt;p style=&quot;-qt-paragraph-type:empty; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px; font-size:12pt;&quot;&gt;&lt;br /&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
+&lt;p style=&quot; margin-top:18px; margin-bottom:12px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;span style=&quot; font-size:10pt;&quot;&gt;AspeQt emulates Atari SIO peripherals when connected to an Atari 8-bit computer with an SIO2PC cable or&lt;br /&gt;SIO2BT dongle. In that respect it&apos;s similar to programs like APE or SIO2BT. &lt;/span&gt;&lt;/p&gt;
+&lt;p style=&quot; margin-top:18px; margin-bottom:12px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;span style=&quot; font-size:10pt; font-weight:600; text-decoration: underline;&quot;&gt;SUPPORTED DEVICES&lt;/span&gt;&lt;/p&gt;
+&lt;p style=&quot; margin-top:18px; margin-bottom:12px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;span style=&quot; font-size:10pt; font-weight:600; text-decoration: underline;&quot;&gt;SIO2PC-USB:&lt;/span&gt;&lt;/p&gt;
+&lt;ul style=&quot;margin-top: 0px; margin-bottom: 0px; margin-left: 0px; margin-right: 0px; -qt-list-indent: 1;&quot;&gt;&lt;li style=&quot; font-size:10pt;&quot; style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;Your Android device must support USB Host/OTG.&lt;br /&gt;(check USB Host Support &lt;a href=&quot;https://play.google.com/store/apps/details?id=eu.chainfire.usbhostdiagnostics&quot;&gt;&lt;span style=&quot; text-decoration: underline; color:#0000ff;&quot;&gt;with this tool&lt;/span&gt;&lt;/a&gt;).&lt;/li&gt;&lt;/ul&gt;
+&lt;ul style=&quot;margin-top: 0px; margin-bottom: 0px; margin-left: 0px; margin-right: 0px; -qt-list-indent: 1;&quot;&gt;&lt;li style=&quot; font-size:10pt;&quot; style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;OTG cable is necessary unless your device has an USB-A socket.&lt;/li&gt;&lt;/ul&gt;
+&lt;ul style=&quot;margin-top: 0px; margin-bottom: 0px; margin-left: 0px; margin-right: 0px; -qt-list-indent: 1;&quot;&gt;&lt;li style=&quot; font-size:10pt;&quot; style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;Sio2PC-USB converter. I recommend &lt;a href=&quot;http://lotharek.pl/product.php?pid=98&quot;&gt;&lt;span style=&quot; text-decoration: underline; color:#0000ff;&quot;&gt;this one made by Lotharek&lt;/span&gt;&lt;/a&gt;. &lt;br /&gt;&lt;/li&gt;&lt;/ul&gt;
+&lt;p style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;span style=&quot; font-size:10pt; font-weight:600;&quot;&gt;No root necessary&lt;/span&gt;&lt;span style=&quot; font-size:10pt;&quot;&gt; &lt;/span&gt;&lt;/p&gt;
+&lt;p style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;span style=&quot; font-size:10pt; font-weight:600;&quot;&gt;No drivers necessary&lt;/span&gt;&lt;/p&gt;
+&lt;p style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;span style=&quot; font-size:10pt; font-weight:600;&quot;&gt;usb-serial-for-android java driver is in the package&lt;/span&gt;&lt;/p&gt;
+&lt;p style=&quot;-qt-paragraph-type:empty; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:1; text-indent:0px; font-size:10pt;&quot;&gt;&lt;br /&gt;&lt;/p&gt;
+&lt;p style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;span style=&quot; font-size:10pt; font-weight:600; text-decoration: underline;&quot;&gt;SIO2BT:&lt;/span&gt;&lt;/p&gt;
+&lt;p style=&quot;-qt-paragraph-type:empty; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px; font-size:10pt; font-weight:600; text-decoration: underline;&quot;&gt;&lt;br /&gt;&lt;/p&gt;
+&lt;ul style=&quot;margin-top: 0px; margin-bottom: 0px; margin-left: 0px; margin-right: 0px; -qt-list-indent: 1;&quot;&gt;&lt;li style=&quot; font-size:10pt;&quot; style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;My favourite SIO2BT devices are available from &lt;a href=&quot;https://www.facebook.com/Sio2bt/&quot;&gt;&lt;span style=&quot; text-decoration: underline; color:#0000ff;&quot;&gt;Marcin &amp;quot;the Montezuma&amp;quot; Sochacki.&lt;/span&gt;&lt;/a&gt;&lt;/li&gt;&lt;/ul&gt;
+&lt;p style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:1; text-indent:0px;&quot;&gt;&lt;span style=&quot; font-size:10pt;&quot;&gt;You can build your own &lt;/span&gt;&lt;a href=&quot;http://atarionline.pl/cn/data/upimages/bluetooth_03.jpg&quot;&gt;&lt;span style=&quot; font-size:10pt; text-decoration: underline; color:#0000ff;&quot;&gt;following this simple diagram&lt;/span&gt;&lt;/a&gt;&lt;span style=&quot; font-size:10pt;&quot;&gt;.&lt;/span&gt;&lt;/p&gt;
+&lt;ul style=&quot;margin-top: 0px; margin-bottom: 0px; margin-left: 0px; margin-right: 0px; -qt-list-indent: 1;&quot;&gt;&lt;li style=&quot; font-size:10pt;&quot; style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;Perform pairing of your Android device with SIO2BT dongle.&lt;/li&gt;
+&lt;li style=&quot; font-size:10pt;&quot; style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;Specify the name of your BT module in the options window.&lt;/li&gt;
+&lt;li style=&quot; font-size:10pt;&quot; style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;Speed can be configured with &lt;a href=&quot;http://www.mr-atari.com/MyBIOS/BTCONFIG.XEX&quot;&gt;&lt;span style=&quot; text-decoration: underline; color:#0000ff;&quot;&gt;BTCONFIG.XEX&lt;/span&gt;&lt;/a&gt; by Mr Atari or &lt;a href=&quot;http://atariage.com/forums/index.php?app=core&amp;amp;module=attach&amp;amp;section=attach&amp;amp;attach_id=468608&quot;&gt;&lt;span style=&quot; text-decoration: underline; color:#0000ff;&quot;&gt;BTCFG&lt;/span&gt;&lt;/a&gt; by FJC.&lt;/li&gt;
+&lt;li style=&quot; font-size:10pt;&quot; style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;SIO2BT requires a special loader (xBIOSv4BT works on an unmodified Atari) or modified OS.&lt;/li&gt;
+&lt;li style=&quot; font-size:10pt;&quot; style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;a href=&quot;http://atari8.co.uk/firmware/&quot;&gt;&lt;span style=&quot; text-decoration: underline; color:#0000ff;&quot;&gt;U1MB with latest (September 2016) PBI BIOS&lt;/span&gt;&lt;/a&gt; supports higher baudrates, up to 56700 bps. &lt;/li&gt;&lt;/ul&gt;
+&lt;p align=&quot;center&quot; style=&quot;-qt-paragraph-type:empty; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px; font-size:10pt; font-weight:600; text-decoration: underline;&quot;&gt;&lt;br /&gt;&lt;/p&gt;
+&lt;p style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;a href=&quot;https://github.com/greblus/aspeqt/wiki/AspeQt-Atari-Serial-Peripheral-Emulator-for-Android&quot;&gt;&lt;span style=&quot; font-size:10pt; font-weight:600; text-decoration: underline; color:#0000ff;&quot;&gt;More details here.&lt;/span&gt;&lt;/a&gt;&lt;/p&gt;
+&lt;p style=&quot; margin-top:18px; margin-bottom:12px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;span style=&quot; font-size:10pt; font-weight:600;&quot;&gt;License (see license.txt file for more details)&lt;/span&gt;&lt;/p&gt;
+&lt;p style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;span style=&quot; font-size:10pt;&quot;&gt;Original code up to version 0.6.0 Copyright 2009 by Fatih Aygun.&lt;br /&gt;Updates since v0.6.0 Copyright 2012 by Ray Ataergin.&lt;br /&gt;Android port of aspeqt-1.0.0.Preview_6 by Wiktor Grebla.&lt;br /&gt;You can freely copy, use, modify and distribute it under the GPL 2.0 license.&lt;br /&gt;Please see license.txt for details. &lt;br /&gt;Qt libraries: Copyright by The Qt Company. &lt;br /&gt;usb-serial-for-Android with support for FTDI chips is based &lt;/span&gt;&lt;a href=&quot;https://github.com/mik3y/usb-serial-for-android&quot;&gt;&lt;span style=&quot; font-size:10pt; text-decoration: underline; color:#0000ff;&quot;&gt;on this project&lt;/span&gt;&lt;/a&gt;&lt;span style=&quot; font-size:10pt;&quot;&gt;. &lt;br /&gt;&lt;/span&gt;&lt;a href=&quot;http://tango.freedesktop.org/Tango_Icon_Library&quot;&gt;&lt;span style=&quot; font-size:10pt; text-decoration: underline; color:#0000ff;&quot;&gt;Tango Icons&lt;/span&gt;&lt;/a&gt;&lt;span style=&quot; font-size:10pt;&quot;&gt;. &lt;br /&gt;High speed code used in the EXE loader was written by &lt;/span&gt;&lt;a href=&quot;hias@horus.com&quot;&gt;&lt;span style=&quot; font-size:10pt; text-decoration: underline; color:#0000ff;&quot;&gt;Matthias Reichl&lt;/span&gt;&lt;/a&gt;&lt;span style=&quot; font-size:10pt;&quot;&gt;. &lt;br /&gt;&lt;/span&gt;&lt;a href=&quot;http://www.scorchworks.com/Blog/simple-file-dialog-for-android-applications/&quot;&gt;&lt;span style=&quot; font-size:10pt; text-decoration: underline; color:#0000ff;&quot;&gt;Simple Filedialog for Android.&lt;/span&gt;&lt;/a&gt;&lt;span style=&quot; font-size:10pt;&quot;&gt; &lt;br /&gt;&lt;/span&gt;&lt;a href=&quot;https://dribbble.com/shots/147212-Tape-Cassette-Rotating&quot;&gt;&lt;span style=&quot; font-size:10pt; text-decoration: underline; color:#0000ff;&quot;&gt;Animated cassette tape&lt;/span&gt;&lt;/a&gt;&lt;span style=&quot; font-size:10pt;&quot;&gt; by Michael Bozgounov.&lt;/span&gt;&lt;/p&gt;
+&lt;p style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;span style=&quot; font-size:10pt;&quot;&gt;PCLINK by &lt;/span&gt;&lt;a href=&quot;https://github.com/TheMontezuma/RespeQt&quot;&gt;&lt;span style=&quot; font-size:10pt; text-decoration: underline; color:#0000ff;&quot;&gt;TheMontezuma&lt;/span&gt;&lt;/a&gt;&lt;span style=&quot; font-size:10pt;&quot;&gt;.&lt;/span&gt;&lt;/p&gt;
+&lt;p style=&quot; margin-top:18px; margin-bottom:12px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;span style=&quot; font-size:10pt; font-weight:600;&quot;&gt;Questions about this Android port? Drop me an e-mail ;)&lt;/span&gt;&lt;/p&gt;
+&lt;p style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;span style=&quot; font-size:10pt;&quot;&gt;Wiktor Grebla: &lt;/span&gt;&lt;a href=&quot;mailto:greblus@gmail.com&quot;&gt;&lt;span style=&quot; font-size:10pt; text-decoration: underline; color:#0000ff;&quot;&gt;greblus@gmail.com&lt;/span&gt;&lt;/a&gt;&lt;span style=&quot; font-size:10pt;&quot;&gt; &lt;/span&gt;&lt;/p&gt;
+&lt;p style=&quot; margin-top:18px; margin-bottom:12px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;span style=&quot; font-size:10pt; font-weight:600;&quot;&gt;SIO2PC-USB adapters: &lt;/span&gt;&lt;a href=&quot;www.lotharek.pl&quot;&gt;&lt;span style=&quot; font-size:10pt; text-decoration: underline; color:#0000ff;&quot;&gt;www.lotharek.pl&lt;/span&gt;&lt;/a&gt;&lt;span style=&quot; font-size:10pt;&quot;&gt; or: &lt;/span&gt;&lt;a href=&quot;http://www.atari8warez.com/&quot;&gt;&lt;span style=&quot; font-size:10pt; text-decoration: underline; color:#0000ff;&quot;&gt;http://www.atari8warez.com/&lt;/span&gt;&lt;/a&gt;&lt;span style=&quot; font-size:10pt;&quot;&gt; &lt;br /&gt;&lt;/span&gt;&lt;span style=&quot; font-size:10pt; font-weight:600;&quot;&gt;SIO2BT: &lt;/span&gt;&lt;a href=&quot;http://atariage.com/forums/topic/241984-sio2bt-ordering-thread/page-3?hl=%2Bsio2bt#entry3596654&quot;&gt;&lt;span style=&quot; font-size:10pt; text-decoration: underline; color:#0000ff;&quot;&gt;ordering thread on AtariAge&lt;/span&gt;&lt;/a&gt;&lt;span style=&quot; font-size:10pt; font-weight:600;&quot;&gt;.&lt;/span&gt;&lt;/p&gt;
+&lt;p style=&quot;-qt-paragraph-type:empty; margin-top:18px; margin-bottom:12px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px; font-size:12pt; font-weight:600;&quot;&gt;&lt;br /&gt;&lt;/p&gt;
+&lt;p style=&quot;-qt-paragraph-type:empty; margin-top:18px; margin-bottom:12px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px; font-size:12pt; font-weight:600;&quot;&gt;&lt;br /&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../aboutdialog.ui" line="191"/>
+        <location filename="../aboutdialog.ui" line="187"/>
         <source>file:///E:/aspeqt/about.html</source>
         <translation type="unfinished"></translation>
     </message>
@@ -546,13 +542,12 @@ p, li { white-space: pre-wrap; }
     <name>AutoBootDialog</name>
     <message>
         <location filename="../android/autobootdialog.ui" line="31"/>
-        <location filename="../autobootdialog.ui" line="31"/>
+        <location filename="../autobootdialog.ui" line="26"/>
         <source>Boot executable</source>
         <translation>Boote ausführbare Datei</translation>
     </message>
     <message>
         <location filename="../android/autobootdialog.ui" line="137"/>
-        <location filename="../autobootdialog.ui" line="128"/>
         <source>Please reboot your Atari.
 
  Disable BASIC by holding down the Atari Option button.</source>
@@ -560,13 +555,12 @@ p, li { white-space: pre-wrap; }
     </message>
     <message>
         <location filename="../android/autobootdialog.ui" line="198"/>
-        <location filename="../autobootdialog.ui" line="189"/>
+        <location filename="../autobootdialog.ui" line="122"/>
         <source>Reload</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../android/autobootdialog.ui" line="173"/>
-        <location filename="../autobootdialog.ui" line="164"/>
         <source>Cancel</source>
         <translation type="unfinished"></translation>
     </message>
@@ -575,20 +569,28 @@ p, li { white-space: pre-wrap; }
         <translation type="vanished">Dialog offen lassen um dieses Diskettenimage mehr als einmal zu booten</translation>
     </message>
     <message>
+        <location filename="../autobootdialog.ui" line="87"/>
         <source>Please reboot your Atari.
 
 Don&apos;t forget to remove any cartridges and disable BASIC by holding down the Atari Option button if necessary.</source>
-        <translation type="vanished">Bitte dem ATARI neu booten.
+        <translation>Bitte dem ATARI neu booten.
 
 Nicht vergessen, alle Steckmodule zu entfernen und falls nötig, BASIC durch Drücken der OPTION Taste auszuschalten.</translation>
     </message>
     <message>
-        <location filename="../autobootdialog.cpp" line="77"/>
+        <location filename="../autobootdialog.ui" line="117"/>
+        <source>Use this button to re-load the executable 
+if it has been changed since the last re-boot 
+of your Atari computer - Useful for developers </source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../autobootdialog.cpp" line="78"/>
         <source>Atari is loading the booter.</source>
         <translation>Der ATARI lädt das Bootprogramm.</translation>
     </message>
     <message>
-        <location filename="../autobootdialog.cpp" line="82"/>
+        <location filename="../autobootdialog.cpp" line="83"/>
         <source>Atari is loading the program.
 
 For some programs you may have to close this dialog manually when the program starts.</source>
@@ -669,7 +671,7 @@ Bei manchen Programmen ist es unter Umständen nötig, diesen Dialog manuell zu 
         <translation>Cassetten-Image Wiedergabe</translation>
     </message>
     <message>
-        <location filename="../android/cassettedialog.ui" line="76"/>
+        <location filename="../android/cassettedialog.ui" line="105"/>
         <location filename="../cassettedialog.ui" line="35"/>
         <source>Do whatever is necessary in your Atari to load this cassette image like rebooting while holding Option and Start buttons or entering &quot;CLOAD&quot; in the BASIC prompt.
 
@@ -695,7 +697,7 @@ Tue am ATARI was nötig ist, um ein Cassettenimage zu laden, wie z.B. neu booten
 Wenn der Hupton zu hören ist, klicke auf den OK Knopf unten und drücke gleichzeitig eine Taste auf dem ATARI.</translation>
     </message>
     <message>
-        <location filename="../cassettedialog.cpp" line="46"/>
+        <location filename="../cassettedialog.cpp" line="55"/>
         <source>AspeQt is ready to playback the cassette image file &apos;%1&apos;.
 
 Do whatever is necessary in your Atari to load this cassette image like rebooting while holding Option and Start buttons or entering &quot;CLOAD&quot; in the BASIC prompt.
@@ -704,8 +706,8 @@ When you hear the beep sound, push the OK button below and press a key on your A
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../cassettedialog.cpp" line="98"/>
-        <location filename="../cassettedialog.cpp" line="113"/>
+        <location filename="../cassettedialog.cpp" line="107"/>
+        <location filename="../cassettedialog.cpp" line="123"/>
         <source>Playing back cassette image.
 
 Estimated time left: %1:%2</source>
@@ -717,35 +719,35 @@ Geschätzte verbleibende Zeit: %1:%2</translation>
 <context>
     <name>CassetteWorker</name>
     <message>
-        <location filename="../sioworker.cpp" line="252"/>
+        <location filename="../sioworker.cpp" line="255"/>
         <source>Cannot open &apos;%1&apos;: %2</source>
         <translation>Kann &apos;%1&apos;: %2 nicht öffnen</translation>
     </message>
     <message>
-        <location filename="../sioworker.cpp" line="263"/>
-        <location filename="../sioworker.cpp" line="274"/>
-        <location filename="../sioworker.cpp" line="296"/>
-        <location filename="../sioworker.cpp" line="306"/>
+        <location filename="../sioworker.cpp" line="266"/>
+        <location filename="../sioworker.cpp" line="277"/>
+        <location filename="../sioworker.cpp" line="299"/>
+        <location filename="../sioworker.cpp" line="309"/>
         <source>Cannot read &apos;%1&apos;: %2</source>
         <translation>Kann &apos;%1&apos;: %2 nicht lesen</translation>
     </message>
     <message>
-        <location filename="../sioworker.cpp" line="280"/>
+        <location filename="../sioworker.cpp" line="283"/>
         <source>Cannot open &apos;%1&apos;: The header does not match.</source>
         <translation>Kann &apos;%1&apos; nicht öffnen: Der Datei-Header passt nicht.</translation>
     </message>
     <message>
-        <location filename="../sioworker.cpp" line="285"/>
+        <location filename="../sioworker.cpp" line="288"/>
         <source>[Cassette]: File description &apos;%2&apos;.</source>
         <translation>[Cassette]: Datei Beschreibung &apos;%2&apos;.</translation>
     </message>
     <message>
-        <location filename="../sioworker.cpp" line="326"/>
+        <location filename="../sioworker.cpp" line="329"/>
         <source>Cannot open &apos;%1&apos;: Unknown chunk header %2.</source>
         <translation>Kann &apos;%1&apos; nicht öffnen: Unbekannter Chunk Header %2.</translation>
     </message>
     <message>
-        <location filename="../sioworker.cpp" line="375"/>
+        <location filename="../sioworker.cpp" line="378"/>
         <source>[Cassette] Playing record %1 of %2 (%3 ms of gap + %4 bytes of data)</source>
         <translation>[Cassette] Gebe Record %1 von %2 wieder (%3 ms der Lücke(Gap) + %4 Bytes Daten)</translation>
     </message>
@@ -903,8 +905,8 @@ Geschätzte verbleibende Zeit: %1:%2</translation>
         <location filename="../android/diskeditdialog.ui" line="275"/>
         <location filename="../diskeditdialog.ui" line="204"/>
         <location filename="../diskeditdialog.ui" line="207"/>
-        <location filename="../diskeditdialog.cpp" line="656"/>
-        <location filename="../diskeditdialog.cpp" line="657"/>
+        <location filename="../diskeditdialog.cpp" line="658"/>
+        <location filename="../diskeditdialog.cpp" line="659"/>
         <source>Text conversion is off</source>
         <translation>Textumwandlung ist aus</translation>
     </message>
@@ -978,28 +980,28 @@ Geschätzte verbleibende Zeit: %1:%2</translation>
         <translation>AspeQt - Exploring %1</translation>
     </message>
     <message>
-        <location filename="../diskeditdialog.cpp" line="631"/>
+        <location filename="../diskeditdialog.cpp" line="633"/>
         <source>Extract files</source>
         <translation>Extrahiere Dateien</translation>
     </message>
     <message>
-        <location filename="../diskeditdialog.cpp" line="652"/>
-        <location filename="../diskeditdialog.cpp" line="653"/>
+        <location filename="../diskeditdialog.cpp" line="654"/>
+        <location filename="../diskeditdialog.cpp" line="655"/>
         <source>Text conversion is on</source>
         <translation>Textumwandlung ist an</translation>
     </message>
     <message>
-        <location filename="../diskeditdialog.cpp" line="664"/>
+        <location filename="../diskeditdialog.cpp" line="666"/>
         <source>Confirmation</source>
         <translation>Bestätigung</translation>
     </message>
     <message>
-        <location filename="../diskeditdialog.cpp" line="664"/>
+        <location filename="../diskeditdialog.cpp" line="666"/>
         <source>Are you sure you want to delete selected files?</source>
         <translation>Sind Sie sicher, dass Sie die ausgewählten Dateien löschen wollen?</translation>
     </message>
     <message>
-        <location filename="../diskeditdialog.cpp" line="693"/>
+        <location filename="../diskeditdialog.cpp" line="697"/>
         <source>Add files</source>
         <translation type="unfinished"></translation>
     </message>
@@ -2544,15 +2546,15 @@ p, li { white-space: pre-wrap; }
     </message>
     <message>
         <location filename="../mainwindow.ui" line="4611"/>
-        <location filename="../mainwindow.cpp" line="828"/>
+        <location filename="../mainwindow.cpp" line="849"/>
         <source>&amp;Start emulation</source>
         <translation>&amp;Starte Emulation</translation>
     </message>
     <message>
         <location filename="../mainwindow.ui" line="4614"/>
         <location filename="../mainwindow.ui" line="4617"/>
-        <location filename="../mainwindow.cpp" line="829"/>
-        <location filename="../mainwindow.cpp" line="830"/>
+        <location filename="../mainwindow.cpp" line="850"/>
+        <location filename="../mainwindow.cpp" line="851"/>
         <source>Start SIO peripheral emulation</source>
         <translation>Starte SIO Peripherie Emulation</translation>
     </message>
@@ -2661,9 +2663,9 @@ p, li { white-space: pre-wrap; }
     <message>
         <location filename="../mainwindow.ui" line="6434"/>
         <location filename="../mainwindow.ui" line="6437"/>
-        <location filename="../mainwindow.cpp" line="794"/>
-        <location filename="../mainwindow.cpp" line="795"/>
-        <location filename="../mainwindow.cpp" line="798"/>
+        <location filename="../mainwindow.cpp" line="815"/>
+        <location filename="../mainwindow.cpp" line="816"/>
+        <location filename="../mainwindow.cpp" line="819"/>
         <source>Stop printer emulation</source>
         <translation type="unfinished"></translation>
     </message>
@@ -3432,52 +3434,52 @@ p, li { white-space: pre-wrap; }
         <translation>Speichere gemountete Diskettenimage-Gruppe als Standard</translation>
     </message>
     <message>
-        <location filename="../mainwindow.cpp" line="126"/>
+        <location filename="../mainwindow.cpp" line="127"/>
         <source>AspeQt started at %1.</source>
         <translation>AspeQt gestartet bei %1.</translation>
     </message>
     <message>
-        <location filename="../mainwindow.cpp" line="143"/>
-        <location filename="../mainwindow.cpp" line="151"/>
+        <location filename="../mainwindow.cpp" line="144"/>
+        <location filename="../mainwindow.cpp" line="152"/>
         <source>Migrate Settings</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../mainwindow.cpp" line="143"/>
+        <location filename="../mainwindow.cpp" line="144"/>
         <source>This version of AspeQt uses a different repository for storing its global settings.
 We will now migrate the existing settings to their new repository, note that settings stored in your existing AspeQt session files are not affected by this change.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../mainwindow.cpp" line="151"/>
+        <location filename="../mainwindow.cpp" line="152"/>
         <source>Setting were migrated successfuly.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../mainwindow.cpp" line="225"/>
-        <location filename="../mainwindow.cpp" line="235"/>
+        <location filename="../mainwindow.cpp" line="234"/>
+        <location filename="../mainwindow.cpp" line="244"/>
         <source>Session file error</source>
         <translation>Sitzungsdatei-Fehler</translation>
     </message>
     <message>
-        <location filename="../mainwindow.cpp" line="226"/>
+        <location filename="../mainwindow.cpp" line="235"/>
         <source>Requested session file not found in the given directory path or the path is incorrect. AspeQt will continue with default session configuration.</source>
         <translation>Angeforderte Sitzungsdatei nicht im angegebenen Verzeichnis gefunden oder der Pfad ist nicht korrekt. AspeQr macht mit der Standard-Sitzungs-Konfiguration weiter.</translation>
     </message>
     <message>
-        <location filename="../mainwindow.cpp" line="236"/>
+        <location filename="../mainwindow.cpp" line="245"/>
         <source>Requested session file not found in the application&apos;s current directory path
  (No path was specified). AspeQt will continue with default session configuration.</source>
         <translation>Angeforderte Sitzungsdatei nicht im aktuellen Pfad des Programms gefunden (es war kein Pfad angegeben). AspeQr macht mit der Standard-Sitzungs-Konfiguration weiter.</translation>
     </message>
     <message>
-        <location filename="../mainwindow.cpp" line="247"/>
+        <location filename="../mainwindow.cpp" line="256"/>
         <source>AspeQt - Atari Serial Peripheral Emulator for Qt</source>
         <translation>AspeQt - ATARI Serielle Peripherie Emulation für Qt</translation>
     </message>
     <message>
-        <location filename="../mainwindow.cpp" line="249"/>
-        <location filename="../mainwindow.cpp" line="1861"/>
+        <location filename="../mainwindow.cpp" line="258"/>
+        <location filename="../mainwindow.cpp" line="1903"/>
         <source> -- Session: </source>
         <translation> -- Sitzung: </translation>
     </message>
@@ -3486,105 +3488,105 @@ We will now migrate the existing settings to their new repository, note that set
         <translation type="vanished">19200 bits/sek</translation>
     </message>
     <message>
-        <location filename="../mainwindow.cpp" line="270"/>
+        <location filename="../mainwindow.cpp" line="279"/>
         <source>Clear messages</source>
         <translation>Lösche Nachrichten</translation>
     </message>
     <message>
-        <location filename="../mainwindow.cpp" line="375"/>
+        <location filename="../mainwindow.cpp" line="388"/>
         <source>AspeQt stopped at %1.</source>
         <translation>AspeQ1 gestoppt bei %1.</translation>
     </message>
     <message>
-        <location filename="../mainwindow.cpp" line="475"/>
+        <location filename="../mainwindow.cpp" line="496"/>
         <source>Swapped disk %1 with disk %2.</source>
         <translation>Diskettenimages %1 und %2 gewechselt.</translation>
     </message>
     <message>
-        <location filename="../mainwindow.cpp" line="529"/>
+        <location filename="../mainwindow.cpp" line="550"/>
         <source>Cannot mount &apos;%1&apos;: No empty disk slots.</source>
         <translation>Kann %1 nicht mounten: kein freier Platz.</translation>
     </message>
     <message>
-        <location filename="../mainwindow.cpp" line="614"/>
+        <location filename="../mainwindow.cpp" line="635"/>
         <source>First run</source>
         <translation>Erster Lauf</translation>
     </message>
     <message>
-        <location filename="../mainwindow.cpp" line="615"/>
+        <location filename="../mainwindow.cpp" line="636"/>
         <source>You are running AspeQt for the first time.
 
 Do you want to open the options dialog?</source>
         <translation>Sie starten AspeQt zum ersten Mal. Möchten Sie den Optionen-Dialog aufrufen?</translation>
     </message>
     <message>
-        <location filename="../mainwindow.cpp" line="785"/>
-        <location filename="../mainwindow.cpp" line="786"/>
-        <location filename="../mainwindow.cpp" line="789"/>
+        <location filename="../mainwindow.cpp" line="806"/>
+        <location filename="../mainwindow.cpp" line="807"/>
+        <location filename="../mainwindow.cpp" line="810"/>
         <source>Start printer emulation</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../mainwindow.cpp" line="792"/>
+        <location filename="../mainwindow.cpp" line="813"/>
         <source>Printer emulation stopped.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../mainwindow.cpp" line="801"/>
+        <location filename="../mainwindow.cpp" line="822"/>
         <source>Printer emulation started.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../mainwindow.cpp" line="818"/>
+        <location filename="../mainwindow.cpp" line="839"/>
         <source>&amp;Stop emulation</source>
         <translation>&amp;Stoppe Emulation</translation>
     </message>
     <message>
-        <location filename="../mainwindow.cpp" line="819"/>
-        <location filename="../mainwindow.cpp" line="820"/>
+        <location filename="../mainwindow.cpp" line="840"/>
+        <location filename="../mainwindow.cpp" line="841"/>
         <source>Stop SIO peripheral emulation</source>
         <translation>Stoppe SIO Peripherie Emulation</translation>
     </message>
     <message>
-        <location filename="../mainwindow.cpp" line="837"/>
+        <location filename="../mainwindow.cpp" line="858"/>
         <source>Emulation stopped.</source>
         <translation>Emulation gestoppt.</translation>
     </message>
     <message>
-        <location filename="../mainwindow.cpp" line="855"/>
-        <location filename="../mainwindow.cpp" line="877"/>
+        <location filename="../mainwindow.cpp" line="876"/>
+        <location filename="../mainwindow.cpp" line="898"/>
         <source>Folder image</source>
         <translation>Verzeichnis Image</translation>
     </message>
     <message>
-        <location filename="../mainwindow.cpp" line="903"/>
-        <location filename="../mainwindow.cpp" line="1444"/>
-        <location filename="../mainwindow.cpp" line="1560"/>
-        <location filename="../mainwindow.cpp" line="1616"/>
+        <location filename="../mainwindow.cpp" line="924"/>
+        <location filename="../mainwindow.cpp" line="1483"/>
+        <location filename="../mainwindow.cpp" line="1599"/>
+        <location filename="../mainwindow.cpp" line="1656"/>
         <source>Save failed</source>
         <translation>Speichern fehlgeschlagen</translation>
     </message>
     <message>
-        <location filename="../mainwindow.cpp" line="903"/>
-        <location filename="../mainwindow.cpp" line="1444"/>
-        <location filename="../mainwindow.cpp" line="1560"/>
-        <location filename="../mainwindow.cpp" line="1616"/>
+        <location filename="../mainwindow.cpp" line="924"/>
+        <location filename="../mainwindow.cpp" line="1483"/>
+        <location filename="../mainwindow.cpp" line="1599"/>
+        <location filename="../mainwindow.cpp" line="1656"/>
         <source>&apos;%1&apos; cannot be saved, do you want to save the image with another name?</source>
         <translation>&apos;%1&apos; kann nicht gespeichert werden, möchten Sie das Image mit einem anderen Namen speichern?</translation>
     </message>
     <message>
-        <location filename="../mainwindow.cpp" line="1128"/>
+        <location filename="../mainwindow.cpp" line="1149"/>
         <source>Unmounted disk %1</source>
         <translation>Diskettenimage %1 unmountet</translation>
     </message>
     <message>
-        <location filename="../mainwindow.cpp" line="1284"/>
-        <location filename="../mainwindow.cpp" line="1817"/>
+        <location filename="../mainwindow.cpp" line="1321"/>
+        <location filename="../mainwindow.cpp" line="1857"/>
         <source>[%1] Mounted &apos;%2&apos; as &apos;%3&apos;.</source>
         <translation>[%1] &apos;%2&apos; als &apos;%3&apos; gemountet.</translation>
     </message>
     <message>
-        <location filename="../mainwindow.cpp" line="1317"/>
+        <location filename="../mainwindow.cpp" line="1355"/>
         <source>Open a disk image</source>
         <translation>Öffne ein Diskettenimage</translation>
     </message>
@@ -3593,83 +3595,83 @@ Do you want to open the options dialog?</source>
         <translation type="obsolete">Alle ATARI Diskettenimages (*.atr *.xfd *.atx *.pro);;SIO2PC ATR Diskettenimages (*.atr);;XFormer XFD Diskettenimages (*.xfd);;ATX Diskettenimages (*.atx);;Pro Diskettenimages (*.pro);;Alle Dateien (*)</translation>
     </message>
     <message>
-        <location filename="../mainwindow.cpp" line="1319"/>
-        <location filename="../mainwindow.cpp" line="1598"/>
+        <location filename="../mainwindow.cpp" line="1357"/>
+        <location filename="../mainwindow.cpp" line="1638"/>
         <source>All Atari disk images (*.atr *.xfd *.pro);;SIO2PC ATR images (*.atr);;XFormer XFD images (*.xfd);;Pro images (*.pro);;All files (*)</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../mainwindow.cpp" line="1355"/>
+        <location filename="../mainwindow.cpp" line="1394"/>
         <source>Open a folder image</source>
         <translation>Öffne ein Verzeichnis Image</translation>
     </message>
     <message>
-        <location filename="../mainwindow.cpp" line="1399"/>
+        <location filename="../mainwindow.cpp" line="1438"/>
         <source>Image file unsaved</source>
         <translation>Image Datei nicht gespeichert</translation>
     </message>
     <message>
-        <location filename="../mainwindow.cpp" line="1399"/>
+        <location filename="../mainwindow.cpp" line="1438"/>
         <source>&apos;%1&apos; has unsaved changes, do you want to save it?</source>
         <translation>&apos;%1&apos; hat ungespeicherte Änderungen, möchten Sie es speichern?</translation>
     </message>
     <message>
-        <location filename="../mainwindow.cpp" line="1507"/>
+        <location filename="../mainwindow.cpp" line="1546"/>
         <source>[Disk 1] Auto-commit ON.</source>
         <translation>[Disk 1] Auto-commit AN.</translation>
     </message>
     <message>
-        <location filename="../mainwindow.cpp" line="1509"/>
+        <location filename="../mainwindow.cpp" line="1548"/>
         <source>[Disk 1] Auto-commit OFF.</source>
         <translation>[Disk 1] Auto-commit AUS.</translation>
     </message>
     <message>
-        <location filename="../mainwindow.cpp" line="1515"/>
+        <location filename="../mainwindow.cpp" line="1554"/>
         <source>[Disk 2] Auto-commit ON.</source>
         <translation>[Disk 2] Auto-commit AN.</translation>
     </message>
     <message>
-        <location filename="../mainwindow.cpp" line="1517"/>
+        <location filename="../mainwindow.cpp" line="1556"/>
         <source>[Disk 2] Auto-commit OFF.</source>
         <translation>[Disk 2] Auto-commit AUS.</translation>
     </message>
     <message>
-        <location filename="../mainwindow.cpp" line="1523"/>
+        <location filename="../mainwindow.cpp" line="1562"/>
         <source>[Disk 3] Auto-commit ON.</source>
         <translation>[Disk 3] Auto-commit AN.</translation>
     </message>
     <message>
-        <location filename="../mainwindow.cpp" line="1525"/>
+        <location filename="../mainwindow.cpp" line="1564"/>
         <source>[Disk 3] Auto-commit OFF.</source>
         <translation>[Disk 3] Auto-commit AUS.</translation>
     </message>
     <message>
-        <location filename="../mainwindow.cpp" line="1531"/>
+        <location filename="../mainwindow.cpp" line="1570"/>
         <source>[Disk 4] Auto-commit ON.</source>
         <translation>[Disk 4] Auto-commit AN.</translation>
     </message>
     <message>
-        <location filename="../mainwindow.cpp" line="1533"/>
+        <location filename="../mainwindow.cpp" line="1572"/>
         <source>[Disk 4] Auto-commit OFF.</source>
         <translation>[Disk 4] Auto-commit AUS.</translation>
     </message>
     <message>
-        <location filename="../mainwindow.cpp" line="1539"/>
+        <location filename="../mainwindow.cpp" line="1578"/>
         <source>[Disk 5] Auto-commit ON.</source>
         <translation>[Disk 5] Auto-commit AN.</translation>
     </message>
     <message>
-        <location filename="../mainwindow.cpp" line="1541"/>
+        <location filename="../mainwindow.cpp" line="1580"/>
         <source>[Disk 5] Auto-commit OFF.</source>
         <translation>[Disk 5] Auto-commit AUS.</translation>
     </message>
     <message>
-        <location filename="../mainwindow.cpp" line="1547"/>
+        <location filename="../mainwindow.cpp" line="1586"/>
         <source>[Disk 6] Auto-commit ON.</source>
         <translation>[Disk 6] Auto-commit AN.</translation>
     </message>
     <message>
-        <location filename="../mainwindow.cpp" line="1549"/>
+        <location filename="../mainwindow.cpp" line="1588"/>
         <source>[Disk 6] Auto-commit OFF.</source>
         <translation>[Disk 6] Auto-commit AUS.</translation>
     </message>
@@ -3746,53 +3748,53 @@ Do you want to open the options dialog?</source>
         <translation type="vanished">[Disk 15] Auto-commit AUS.</translation>
     </message>
     <message>
-        <location filename="../mainwindow.cpp" line="1596"/>
+        <location filename="../mainwindow.cpp" line="1636"/>
         <source>Save image as</source>
         <translation>Speichere Image als</translation>
     </message>
     <message>
-        <location filename="../mainwindow.cpp" line="1634"/>
+        <location filename="../mainwindow.cpp" line="1674"/>
         <source>Revert to last saved</source>
         <translation>Zurück zum letzten gespeicherten Stand</translation>
     </message>
     <message>
-        <location filename="../mainwindow.cpp" line="1635"/>
+        <location filename="../mainwindow.cpp" line="1675"/>
         <source>Do you really want to revert &apos;%1&apos; to its last saved state? You will lose the changes that has been made.</source>
         <translation>Wollen Sie wirklich mit &apos;%1&apos; zum letzten gespeicherten Stand zurück? Sie verlieren alle Änderungen, die gemacht wurden.</translation>
     </message>
     <message>
-        <location filename="../mainwindow.cpp" line="1839"/>
+        <location filename="../mainwindow.cpp" line="1881"/>
         <source>Open session</source>
         <translation>Öffne Sitzung</translation>
     </message>
     <message>
-        <location filename="../mainwindow.cpp" line="1841"/>
-        <location filename="../mainwindow.cpp" line="1890"/>
+        <location filename="../mainwindow.cpp" line="1883"/>
+        <location filename="../mainwindow.cpp" line="1934"/>
         <source>AspeQt sessions (*.aspeqt);;All files (*)</source>
         <translation>AspeQt Sitzungen (*.apspqt);;Alle Dateien (*)</translation>
     </message>
     <message>
-        <location filename="../mainwindow.cpp" line="1888"/>
+        <location filename="../mainwindow.cpp" line="1932"/>
         <source>Save session as</source>
         <translation>Speichere Sitzung als</translation>
     </message>
     <message>
-        <location filename="../mainwindow.cpp" line="1926"/>
+        <location filename="../mainwindow.cpp" line="1969"/>
         <source>Open executable</source>
         <translation>Öffne ausführbare Datei</translation>
     </message>
     <message>
-        <location filename="../mainwindow.cpp" line="1928"/>
+        <location filename="../mainwindow.cpp" line="1971"/>
         <source>Atari executables (*.xex *.com *.exe);;All files (*)</source>
         <translation>ATARI ausführbare Dateien (*.xex *.com *.exe);;Alle Dateien (*)</translation>
     </message>
     <message>
-        <location filename="../mainwindow.cpp" line="1970"/>
+        <location filename="../mainwindow.cpp" line="2015"/>
         <source>Open a cassette image</source>
         <translation>Öffne Cassettenimage</translation>
     </message>
     <message>
-        <location filename="../mainwindow.cpp" line="1972"/>
+        <location filename="../mainwindow.cpp" line="2017"/>
         <source>CAS images (*.cas);;All files (*)</source>
         <translation>CAS Imagedateien (*.cas);;Alle Dateien (*)</translation>
     </message>
@@ -3905,14 +3907,14 @@ Do you want to open the options dialog?</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../android/optionsdialog.ui" line="246"/>
+        <location filename="../android/optionsdialog.ui" line="455"/>
         <location filename="../optionsdialog.ui" line="175"/>
         <location filename="../optionsdialog.ui" line="354"/>
         <source>Handshake method:</source>
         <translation>Handshake-Methode:</translation>
     </message>
     <message>
-        <location filename="../android/optionsdialog.ui" line="196"/>
+        <location filename="../android/optionsdialog.ui" line="273"/>
         <location filename="../optionsdialog.ui" line="183"/>
         <location filename="../optionsdialog.ui" line="362"/>
         <source>RI</source>
@@ -3924,82 +3926,108 @@ Do you want to open the options dialog?</source>
         <translation type="unfinished">Dialog</translation>
     </message>
     <message>
-        <location filename="../android/optionsdialog.ui" line="125"/>
+        <location filename="../android/optionsdialog.ui" line="179"/>
         <source>Save</source>
         <translation type="unfinished">Speichern</translation>
     </message>
     <message>
-        <location filename="../android/optionsdialog.ui" line="275"/>
+        <location filename="../android/optionsdialog.ui" line="484"/>
         <location filename="../optionsdialog.ui" line="706"/>
         <source>Use larger font in drive slot descriptions</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../android/optionsdialog.ui" line="480"/>
+        <location filename="../android/optionsdialog.ui" line="559"/>
         <source>User interface:</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../android/optionsdialog.ui" line="567"/>
+        <location filename="../android/optionsdialog.ui" line="608"/>
         <source>Emulation settings:</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../android/optionsdialog.ui" line="201"/>
+        <location filename="../android/optionsdialog.ui" line="278"/>
         <location filename="../optionsdialog.ui" line="188"/>
         <location filename="../optionsdialog.ui" line="367"/>
         <source>DSR</source>
         <translation>DSR</translation>
     </message>
     <message>
-        <location filename="../android/optionsdialog.ui" line="206"/>
+        <location filename="../android/optionsdialog.ui" line="127"/>
+        <location filename="../android/optionsdialog.ui" line="705"/>
+        <source>SIO2BT</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../android/optionsdialog.ui" line="146"/>
+        <source>Serial interface:</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../android/optionsdialog.ui" line="283"/>
         <location filename="../optionsdialog.ui" line="193"/>
         <location filename="../optionsdialog.ui" line="372"/>
         <source>CTS</source>
         <translation>CTS</translation>
     </message>
     <message>
-        <location filename="../android/optionsdialog.ui" line="211"/>
+        <location filename="../android/optionsdialog.ui" line="288"/>
         <source>SOFT</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../android/optionsdialog.ui" line="227"/>
+        <location filename="../android/optionsdialog.ui" line="304"/>
         <source>SIO port emulation:</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../android/optionsdialog.ui" line="297"/>
+        <location filename="../android/optionsdialog.ui" line="506"/>
         <location filename="../optionsdialog.ui" line="212"/>
         <source>High speed mode baud rate:</source>
         <translation>High Speed Modus Baudrate:</translation>
     </message>
     <message>
-        <location filename="../android/optionsdialog.ui" line="503"/>
+        <location filename="../android/optionsdialog.ui" line="544"/>
+        <source>Write ACK delay [ms]</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../android/optionsdialog.ui" line="669"/>
         <location filename="../optionsdialog.ui" line="223"/>
         <source>19200 (1x)</source>
         <translation>19200 (1x)</translation>
     </message>
     <message>
-        <location filename="../android/optionsdialog.ui" line="508"/>
+        <location filename="../android/optionsdialog.ui" line="674"/>
         <location filename="../optionsdialog.ui" line="228"/>
         <source>38400 (2x)</source>
         <translation>38400 (2x)</translation>
     </message>
     <message>
-        <location filename="../android/optionsdialog.ui" line="513"/>
+        <location filename="../android/optionsdialog.ui" line="679"/>
         <location filename="../optionsdialog.ui" line="233"/>
         <source>57600 (3x)</source>
         <translation>57600 (3x)</translation>
     </message>
     <message>
-        <location filename="../android/optionsdialog.ui" line="527"/>
+        <location filename="../android/optionsdialog.ui" line="700"/>
+        <source>SIO2PC</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../android/optionsdialog.ui" line="728"/>
+        <source>Bluetooth name:</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../android/optionsdialog.ui" line="159"/>
         <location filename="../optionsdialog.ui" line="241"/>
         <source>Use non-standard speeds</source>
         <translation>Nutze non-standard Geschwindigkeiten</translation>
     </message>
     <message>
-        <location filename="../android/optionsdialog.ui" line="465"/>
+        <location filename="../android/optionsdialog.ui" line="408"/>
         <location filename="../optionsdialog.ui" line="257"/>
         <source>High speed mode POKEY divisor:</source>
         <translation>High Speed Modus POKEY Divisor:</translation>
@@ -4020,31 +4048,31 @@ Do you want to open the options dialog?</source>
         <translation>/dev/atarisio0</translation>
     </message>
     <message>
-        <location filename="../android/optionsdialog.ui" line="361"/>
+        <location filename="../android/optionsdialog.ui" line="355"/>
         <location filename="../optionsdialog.ui" line="439"/>
         <source>Use high speed executable loader</source>
         <translation>Nutze High Speed ausführbaren Loader</translation>
     </message>
     <message>
-        <location filename="../android/optionsdialog.ui" line="552"/>
+        <location filename="../android/optionsdialog.ui" line="646"/>
         <location filename="../optionsdialog.ui" line="477"/>
         <source>Use custom baud rate for cassette emulation</source>
         <translation>Nutze benutzerdefinierte Baudrate für Cassettenemulation</translation>
     </message>
     <message>
-        <location filename="../android/optionsdialog.ui" line="176"/>
+        <location filename="../android/optionsdialog.ui" line="253"/>
         <location filename="../optionsdialog.ui" line="533"/>
         <source> Folder Images:</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../android/optionsdialog.ui" line="412"/>
+        <location filename="../android/optionsdialog.ui" line="383"/>
         <location filename="../optionsdialog.ui" line="552"/>
         <source>Filter out underscore character from file names</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../android/optionsdialog.ui" line="384"/>
+        <location filename="../android/optionsdialog.ui" line="199"/>
         <location filename="../optionsdialog.ui" line="573"/>
         <source>        (Required for AtariDOS compatibility)</source>
         <translation type="unfinished"></translation>
@@ -4055,7 +4083,7 @@ Do you want to open the options dialog?</source>
         <translation>Benutzerinterface</translation>
     </message>
     <message>
-        <location filename="../android/optionsdialog.ui" line="326"/>
+        <location filename="../android/optionsdialog.ui" line="317"/>
         <location filename="../optionsdialog.ui" line="627"/>
         <source>Language:</source>
         <translation>Sprache:</translation>
@@ -4066,7 +4094,7 @@ Do you want to open the options dialog?</source>
         <translation>Minimiere zur Systemleiste</translation>
     </message>
     <message>
-        <location filename="../android/optionsdialog.ui" line="310"/>
+        <location filename="../android/optionsdialog.ui" line="519"/>
         <location filename="../optionsdialog.ui" line="644"/>
         <source>Save window positions and sizes</source>
         <translation>Speichere Fensterpositionen und -größen</translation>
@@ -4077,15 +4105,565 @@ Do you want to open the options dialog?</source>
         <translation>Speichere oder Ignoriere Änderungen zu den gemachten Einstellungen</translation>
     </message>
     <message>
-        <location filename="../optionsdialog.cpp" line="103"/>
+        <location filename="../optionsdialog.cpp" line="128"/>
         <source>Automatic</source>
         <translation>Automatisch</translation>
     </message>
     <message>
-        <location filename="../optionsdialog.cpp" line="106"/>
-        <location filename="../optionsdialog.cpp" line="115"/>
+        <location filename="../optionsdialog.cpp" line="131"/>
+        <location filename="../optionsdialog.cpp" line="140"/>
         <source>English</source>
         <translation>Deutsch</translation>
+    </message>
+</context>
+<context>
+    <name>PCLINK</name>
+    <message>
+        <location filename="../pclink.cpp" line="152"/>
+        <source>PCLINK Command=[$%1] aux1=$%2 aux2=$%3 cunit=$%4</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../pclink.cpp" line="164"/>
+        <source>[%1] P</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../pclink.cpp" line="171"/>
+        <source>[%1] R</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../pclink.cpp" line="189"/>
+        <source>[%1] Get status for [%2]</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../pclink.cpp" line="200"/>
+        <source>[%1] Speed poll</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../pclink.cpp" line="207"/>
+        <source>[%1] command: $%2, aux: $%3 NAKed.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../pclink.cpp" line="240"/>
+        <source>PCLINK[%1] Mount %2</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../pclink.cpp" line="281"/>
+        <source>PCLINK[%1] Unmount</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../pclink.cpp" line="292"/>
+        <source>closing all files</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../pclink.cpp" line="366"/>
+        <source>PARBLK retry, ignored</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../pclink.cpp" line="380"/>
+        <source>%1 (fno $%02)</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../pclink.cpp" line="394"/>
+        <source>bad handle 1 %1</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../pclink.cpp" line="401"/>
+        <location filename="../pclink.cpp" line="536"/>
+        <source>bad size $0000 (0)</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../pclink.cpp" line="421"/>
+        <source>size $%1 (%2), buffer $%3 (%4)</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../pclink.cpp" line="432"/>
+        <location filename="../pclink.cpp" line="552"/>
+        <location filename="../pclink.cpp" line="709"/>
+        <location filename="../pclink.cpp" line="869"/>
+        <source>serial communication error, abort</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../pclink.cpp" line="438"/>
+        <location filename="../pclink.cpp" line="558"/>
+        <location filename="../pclink.cpp" line="726"/>
+        <location filename="../pclink.cpp" line="804"/>
+        <source>handle %1</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../pclink.cpp" line="455"/>
+        <source>FREAD: cannot read %1 bytes from dir</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../pclink.cpp" line="472"/>
+        <source>FREAD: cannot seek to $%1 (%2)</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../pclink.cpp" line="481"/>
+        <source>FREAD: cannot read %1 bytes from file</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../pclink.cpp" line="509"/>
+        <source>FREAD: send $%1 (%2), status $%3</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../pclink.cpp" line="529"/>
+        <source>bad handle 2 %1</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../pclink.cpp" line="544"/>
+        <source>size $%1 (%2)</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../pclink.cpp" line="564"/>
+        <source>FWRITE: cannot seek to $%1 (%2)</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../pclink.cpp" line="577"/>
+        <source>FWRITE: block CRC mismatch</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../pclink.cpp" line="603"/>
+        <source>FWRITE: cannot write %1 bytes to file</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../pclink.cpp" line="614"/>
+        <source>FWRITE: received $%1 (%2), status $%3</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../pclink.cpp" line="626"/>
+        <source>bad handle 3 %1</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../pclink.cpp" line="634"/>
+        <location filename="../pclink.cpp" line="793"/>
+        <location filename="../pclink.cpp" line="831"/>
+        <location filename="../pclink.cpp" line="1163"/>
+        <location filename="../pclink.cpp" line="1263"/>
+        <location filename="../pclink.cpp" line="1338"/>
+        <location filename="../pclink.cpp" line="1424"/>
+        <location filename="../pclink.cpp" line="1493"/>
+        <location filename="../pclink.cpp" line="1572"/>
+        <location filename="../pclink.cpp" line="1754"/>
+        <source>bad exec</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../pclink.cpp" line="641"/>
+        <source>handle %1, newpos $%2 (%3)</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../pclink.cpp" line="665"/>
+        <source>bad handle 4 %1</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../pclink.cpp" line="672"/>
+        <location filename="../pclink.cpp" line="702"/>
+        <location filename="../pclink.cpp" line="1686"/>
+        <source>device $%1</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../pclink.cpp" line="683"/>
+        <source>handle %1, send $%2 (%3)</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../pclink.cpp" line="719"/>
+        <source>bad handle 5 %1</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../pclink.cpp" line="736"/>
+        <source>eof_flg %1</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../pclink.cpp" line="755"/>
+        <source>FNEXT: EOF</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../pclink.cpp" line="765"/>
+        <source>FNEXT: status %1, send $%2 $%3%4 $%5%6%7 %8%9%10%11%12%13%14%15%16%17%18 %19-%20-%21 %22:%23:%24</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../pclink.cpp" line="799"/>
+        <source>bad handle 6 %1</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../pclink.cpp" line="847"/>
+        <source>mode: $%1, atr1: $%2, atr2: $%3, path: &apos;%4&apos;, name: &apos;%5&apos;</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../pclink.cpp" line="881"/>
+        <source>unsupported fmode ($%1)</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../pclink.cpp" line="890"/>
+        <source>invalid path 1 &apos;%1&apos;</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../pclink.cpp" line="895"/>
+        <location filename="../pclink.cpp" line="1276"/>
+        <source>local path &apos;%1&apos;</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../pclink.cpp" line="904"/>
+        <source>FOPEN: too many channels open</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../pclink.cpp" line="911"/>
+        <location filename="../pclink.cpp" line="997"/>
+        <source>FOPEN: cannot stat &apos;%1&apos;</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../pclink.cpp" line="918"/>
+        <source>OPEN DIR</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../pclink.cpp" line="927"/>
+        <source> ! fmode &amp; 0x10</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../pclink.cpp" line="930"/>
+        <source>CHECK DOS NAME</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../pclink.cpp" line="960"/>
+        <source>FOPEN: file not found</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../pclink.cpp" line="970"/>
+        <source>FOPEN: creating file</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../pclink.cpp" line="976"/>
+        <source>FOPEN: bad filename &apos;%1&apos;</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../pclink.cpp" line="991"/>
+        <source>FOPEN: full local path &apos;%1&apos;</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../pclink.cpp" line="1008"/>
+        <source>FOPEN: &apos;%1&apos; is read-only</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../pclink.cpp" line="1038"/>
+        <source>FOPEN: cannot open &apos;%1&apos;, %2 (%3)</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../pclink.cpp" line="1076"/>
+        <source>FOPEN: bad handle 7 %1</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../pclink.cpp" line="1086"/>
+        <source>FOPEN: %1 handle %2</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../pclink.cpp" line="1099"/>
+        <source>FOPEN: dir EOF?</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../pclink.cpp" line="1131"/>
+        <source>FOPEN: send %1, send $%2 $%3%4 $%5%6%7 %8%9%10%11%12%13%14%15%16%17%18 %19-%20-%21 %22:%23:%24</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../pclink.cpp" line="1171"/>
+        <source>invalid path 2 &apos;%1&apos;</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../pclink.cpp" line="1180"/>
+        <location filename="../pclink.cpp" line="1282"/>
+        <source>cannot open dir &apos;%1&apos;</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../pclink.cpp" line="1185"/>
+        <source>local path &apos;%1&apos;, fatr1 $%2</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../pclink.cpp" line="1229"/>
+        <source>RENAME: renaming &apos;%1&apos; -&gt; &apos;%2&apos;</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../pclink.cpp" line="1233"/>
+        <source>RENAME: &apos;%1&apos; already exists</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../pclink.cpp" line="1240"/>
+        <source>RENAME: %1</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../pclink.cpp" line="1271"/>
+        <source>invalid path 3 &apos;%1&apos;</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../pclink.cpp" line="1311"/>
+        <source>REMOVE: delete &apos;%1&apos;</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../pclink.cpp" line="1314"/>
+        <source>REMOVE: cannot delete &apos;%1&apos;</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../pclink.cpp" line="1344"/>
+        <source>illegal fatr2 $%1</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../pclink.cpp" line="1353"/>
+        <source>invalid path 4 &apos;%1&apos;</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../pclink.cpp" line="1358"/>
+        <source>local path &apos;%1&apos;, fatr1 $%2 fatr2 $%3</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../pclink.cpp" line="1365"/>
+        <source>CHMOD: cannot open dir &apos;%1&apos;</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../pclink.cpp" line="1393"/>
+        <source>CHMOD: change atrs in &apos;%1&apos;</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../pclink.cpp" line="1402"/>
+        <source>CHMOD: failed on &apos;%1&apos;</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../pclink.cpp" line="1432"/>
+        <source>invalid path 5 &apos;%1&apos;</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../pclink.cpp" line="1441"/>
+        <location filename="../pclink.cpp" line="1510"/>
+        <source>bad dir name &apos;%1&apos;</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../pclink.cpp" line="1451"/>
+        <source>making dir &apos;%1&apos;, time %2-%3-%4 %5:%6:%7</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../pclink.cpp" line="1456"/>
+        <source>MKDIR: &apos;%1&apos; already exists</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../pclink.cpp" line="1467"/>
+        <source>MKDIR: cannot make dir &apos;%1&apos;</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../pclink.cpp" line="1501"/>
+        <source>invalid path 6 &apos;%1&apos;</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../pclink.cpp" line="1520"/>
+        <source>cannot stat &apos;%1&apos;</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../pclink.cpp" line="1528"/>
+        <source>&apos;%1&apos; wrong uid</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../pclink.cpp" line="1536"/>
+        <source>&apos;%1&apos; is not a directory</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../pclink.cpp" line="1543"/>
+        <source>dir &apos;%1&apos; is write-protected</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../pclink.cpp" line="1548"/>
+        <source>delete dir &apos;%1&apos;</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../pclink.cpp" line="1554"/>
+        <source>RMDIR: cannot del &apos;%1&apos;, %2 (%3)</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../pclink.cpp" line="1582"/>
+        <source>invalid path 7 &apos;%1&apos;</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../pclink.cpp" line="1591"/>
+        <source>cannot access &apos;%1&apos;, %2</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../pclink.cpp" line="1601"/>
+        <source>new current dir &apos;%1&apos;</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../pclink.cpp" line="1619"/>
+        <source>device $1</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../pclink.cpp" line="1639"/>
+        <source>send &apos;%1&apos;</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../pclink.cpp" line="1698"/>
+        <source>reading &apos;%1&apos;</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../pclink.cpp" line="1733"/>
+        <source>DFREE: send info (%1 bytes)</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../pclink.cpp" line="1762"/>
+        <source>invalid name</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../pclink.cpp" line="1771"/>
+        <source>writing &apos;%1&apos;</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../pclink.cpp" line="1791"/>
+        <source>CHVOL: %1</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../pclink.cpp" line="1797"/>
+        <source>fno $%1 not implemented</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../pclink.cpp" line="1883"/>
+        <source>match: %1%2%3%4%5%6%7%8%9%10%11 with %12%13%14%15%16%17%18%19%20%21%22: </source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../pclink.cpp" line="1896"/>
+        <source>no match</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../pclink.cpp" line="1907"/>
+        <source>atr mismatch: not HIDDEN or ARCHIVED</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../pclink.cpp" line="1915"/>
+        <source>atr mismatch: not PROTECTED</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../pclink.cpp" line="1924"/>
+        <source>atr mismatch: not UNPROTECTED</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../pclink.cpp" line="1933"/>
+        <source>atr mismatch: not SUBDIR</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../pclink.cpp" line="1942"/>
+        <source>atr mismatch: not FILE</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../pclink.cpp" line="1947"/>
+        <source>match</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../pclink.cpp" line="2015"/>
+        <source>%1: got fname &apos;%2&apos;</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../pclink.cpp" line="2023"/>
+        <source>%1: stat &apos;%2&apos;</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../pclink.cpp" line="2250"/>
+        <source>Internal error: dir_cache should be NULL!</source>
+        <translation type="unfinished"></translation>
     </message>
 </context>
 <context>
@@ -4482,6 +5060,11 @@ Do you want to open the options dialog?</source>
     </message>
     <message>
         <location filename="../sioworker.cpp" line="226"/>
+        <source>PCLINK</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../sioworker.cpp" line="229"/>
         <source>Device $%1</source>
         <translation>Gerät $%1</translation>
     </message>
@@ -4508,7 +5091,7 @@ Do you want to open the options dialog?</source>
 <context>
     <name>StandardSerialPortBackend</name>
     <message>
-        <location filename="../serialport-android.cpp" line="60"/>
+        <location filename="../serialport-android.cpp" line="61"/>
         <location filename="../serialport-unix.cpp" line="75"/>
         <location filename="../serialport-win32.cpp" line="59"/>
         <source>Cannot open serial port &apos;%1&apos;: %2</source>
@@ -4521,7 +5104,7 @@ Do you want to open the options dialog?</source>
         <translation>Kann DTR und RTS Leitungen/Signale auf seriellem Port &apos;%1&apos; nicht löschen: %2</translation>
     </message>
     <message>
-        <location filename="../serialport-android.cpp" line="94"/>
+        <location filename="../serialport-android.cpp" line="95"/>
         <location filename="../serialport-unix.cpp" line="114"/>
         <source>Emulation started through standard serial port backend on &apos;%1&apos; with %2 handshaking.</source>
         <translation>Emulation gestartet über serielles Port Backend auf &apos;%1&apos; mit %2 Handshaking.</translation>
@@ -4556,7 +5139,7 @@ Do you want to open the options dialog?</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../serialport-android.cpp" line="185"/>
+        <location filename="../serialport-android.cpp" line="189"/>
         <location filename="../serialport-unix.cpp" line="248"/>
         <location filename="../serialport-unix.cpp" line="304"/>
         <location filename="../serialport-win32.cpp" line="241"/>
@@ -4564,7 +5147,7 @@ Do you want to open the options dialog?</source>
         <translation>%1 Bits/Sek</translation>
     </message>
     <message>
-        <location filename="../serialport-android.cpp" line="176"/>
+        <location filename="../serialport-android.cpp" line="177"/>
         <location filename="../serialport-unix.cpp" line="249"/>
         <location filename="../serialport-unix.cpp" line="305"/>
         <location filename="../serialport-win32.cpp" line="242"/>
@@ -4572,47 +5155,42 @@ Do you want to open the options dialog?</source>
         <translation>Geschwindigkeit des seriellen Ports ist gesetzt auf %1.</translation>
     </message>
     <message>
-        <location filename="../serialport-android.cpp" line="49"/>
+        <location filename="../serialport-android.cpp" line="50"/>
         <source>open</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../serialport-android.cpp" line="66"/>
-        <source>No SIO2PC device detected!</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="../serialport-android.cpp" line="103"/>
+        <location filename="../serialport-android.cpp" line="104"/>
         <source>isOpen %1</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../serialport-android.cpp" line="109"/>
+        <location filename="../serialport-android.cpp" line="110"/>
         <source>close</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../serialport-android.cpp" line="117"/>
+        <location filename="../serialport-android.cpp" line="118"/>
         <source>cancel</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../serialport-android.cpp" line="123"/>
+        <location filename="../serialport-android.cpp" line="124"/>
         <source>speedByte</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../serialport-android.cpp" line="145"/>
+        <location filename="../serialport-android.cpp" line="146"/>
         <source>setNormalSpeed</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../serialport-android.cpp" line="152"/>
+        <location filename="../serialport-android.cpp" line="153"/>
         <source>setHighSpeed</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../serialport-android.cpp" line="180"/>
+        <location filename="../serialport-android.cpp" line="184"/>
         <source>Cannot set serial port speed: %1</source>
         <translation type="unfinished"></translation>
     </message>
@@ -4624,52 +5202,57 @@ Do you want to open the options dialog?</source>
         <translation>Kann Status des seriellen Ports nicht ermitteln: %1</translation>
     </message>
     <message>
-        <location filename="../serialport-android.cpp" line="269"/>
+        <location filename="../serialport-android.cpp" line="67"/>
+        <source>No device detected!</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../serialport-android.cpp" line="273"/>
         <source>writeCommandAck</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../serialport-android.cpp" line="275"/>
+        <location filename="../serialport-android.cpp" line="279"/>
         <source>writeCommandNak</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../serialport-android.cpp" line="281"/>
+        <location filename="../serialport-android.cpp" line="285"/>
         <source>writeDataAck</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../serialport-android.cpp" line="287"/>
+        <location filename="../serialport-android.cpp" line="291"/>
         <source>writeDataNak</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../serialport-android.cpp" line="293"/>
+        <location filename="../serialport-android.cpp" line="297"/>
         <source>writeComplete</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../serialport-android.cpp" line="300"/>
+        <location filename="../serialport-android.cpp" line="308"/>
         <source>writeError</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../serialport-android.cpp" line="307"/>
+        <location filename="../serialport-android.cpp" line="318"/>
         <source>sioChecksum</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../serialport-android.cpp" line="323"/>
+        <location filename="../serialport-android.cpp" line="334"/>
         <source>readRawFrame</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../serialport-android.cpp" line="352"/>
+        <location filename="../serialport-android.cpp" line="363"/>
         <source>readRawFrame: %1</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../serialport-android.cpp" line="398"/>
+        <location filename="../serialport-android.cpp" line="409"/>
         <location filename="../serialport-unix.cpp" line="549"/>
         <source>Serial port write timeout. (%1 of %2 written)</source>
         <translation type="unfinished"></translation>
@@ -4681,7 +5264,7 @@ Do you want to open the options dialog?</source>
         <translation>Kann den Lese-Puffer des seriellen Ports nicht löschen: %1</translation>
     </message>
     <message>
-        <location filename="../serialport-android.cpp" line="249"/>
+        <location filename="../serialport-android.cpp" line="253"/>
         <location filename="../serialport-unix.cpp" line="410"/>
         <location filename="../serialport-win32.cpp" line="361"/>
         <source>Data frame checksum error, expected: %1, got: %2. (%3)</source>
@@ -4758,7 +5341,7 @@ Do you want to open the options dialog?</source>
         <translation>Kann Schreib-Puffer vom seriellen Port nicht löschen: %1</translation>
     </message>
     <message>
-        <location filename="../serialport-android.cpp" line="384"/>
+        <location filename="../serialport-android.cpp" line="395"/>
         <location filename="../serialport-win32.cpp" line="501"/>
         <location filename="../serialport-win32.cpp" line="506"/>
         <source>Cannot write to serial port: %1</source>
