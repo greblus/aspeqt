@@ -24,6 +24,7 @@ package net.greblus;
 *  (See Links above for full license text)
 */
 
+import org.qtproject.example.AspeQt.R;
 import java.io.File;
 import java.io.IOException;
 import java.util.ArrayList;
@@ -204,7 +205,7 @@ public class SimpleFileDialog
 					}
 				}
 			}
-		}).setNegativeButton("Cancel", new OnClickListener()
+                }).setNegativeButton(R.string.file_cancel, new OnClickListener()
 		
 		{
 			@Override
@@ -314,9 +315,9 @@ public class SimpleFileDialog
 		//m_titleView1.setTextAppearance(m_context, android.R.style.TextAppearance_Large);
 		//m_titleView1.setTextColor( m_context.getResources().getColor(android.R.color.black) );
 				
-		if (Select_type == FileOpen    ) m_titleView1.setText("Open:");
-		if (Select_type == FileSave    ) m_titleView1.setText("Save As:");
-		if (Select_type == FolderChoose) m_titleView1.setText("Folder Select:");
+                if (Select_type == FileOpen    ) m_titleView1.setText(R.string.file_open);
+                if (Select_type == FileSave    ) m_titleView1.setText(R.string.file_save_as);
+                if (Select_type == FolderChoose) m_titleView1.setText(R.string.folder_select);
 		
 		//need to make this a variable Save as, Open, Select Directory
 		m_titleView1.setGravity(Gravity.CENTER_VERTICAL);
@@ -336,7 +337,7 @@ public class SimpleFileDialog
 			///////////////////////////////
 			Button newDirButton = new Button(m_context);
 			newDirButton.setLayoutParams(new LayoutParams(LayoutParams.MATCH_PARENT, LayoutParams.WRAP_CONTENT));
-			newDirButton.setText("New Folder");
+                        newDirButton.setText(R.string.new_folder);
 			newDirButton.setOnClickListener(new View.OnClickListener() 
 			{
 				@Override
@@ -346,8 +347,8 @@ public class SimpleFileDialog
 
 					// Show new folder name input dialog
 					new AlertDialog.Builder(m_context).
-					setTitle("New Folder Name").
-					setView(input).setPositiveButton("OK", new DialogInterface.OnClickListener() 
+                                        setTitle(R.string.new_folder_name).
+                                        setView(input).setPositiveButton("OK", new DialogInterface.OnClickListener()
 					{
 						public void onClick(DialogInterface dialog, int whichButton) 
 						{
@@ -362,11 +363,11 @@ public class SimpleFileDialog
 							}
 							else
 							{
-								Toast.makeText(	m_context, "Failed to create '" 
-										+ newDirName + "' folder", Toast.LENGTH_SHORT).show();
+                                                                Toast.makeText(	m_context, m_context.getResources().getString(R.string.failed_create)
+                                                                                + newDirName + m_context.getResources().getString(R.string.failed_folder), Toast.LENGTH_SHORT).show();
 							}
 						}
-					}).setNegativeButton("Cancel", null).show(); 
+                                        }).setNegativeButton(R.string.file_cancel, null).show();
 				}
 			}
 					);

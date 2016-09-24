@@ -1,5 +1,6 @@
 package net.greblus;
 
+import org.qtproject.example.AspeQt.R;
 import android.bluetooth.BluetoothAdapter;
 import android.bluetooth.BluetoothDevice;
 import android.bluetooth.BluetoothSocket;
@@ -75,7 +76,7 @@ public class SIO2BT implements SerialDevice
         if (m_device == null) {
             sa.runOnUiThread(new Runnable() {
                 public void run() {
-                    Toast.makeText(sa, "Check your BT module name and make sure it's paired.", Toast.LENGTH_SHORT).show();
+                    Toast.makeText(sa, sa.getResources().getString(R.string.bt_module_check), Toast.LENGTH_SHORT).show();
                 }
             });
         return 0;

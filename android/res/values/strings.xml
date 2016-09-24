@@ -1,0 +1,13 @@
+<resources>
+    <string name="file_open">Open:</string>
+    <string name="file_save_as">Save As:</string>
+    <string name="folder_select">Choose directory:</string>
+    <string name="failed_create">Directory \'</string>
+    <string name="failed_folder">\' cannot be created</string>
+    <string name="file_cancel">Cancel</string>
+    <string name="new_folder">New directory</string>
+    <string name="new_folder_name">Directory name:</string>
+    <string name="file_chosen">File chosen:\u0020</string>
+    <string name="dir_chosen">Dir chosen:\u0020</string>
+    <string name="bt_module_check">Check your BT module name set in options and make sure it\'s paired</string>
+</resources>

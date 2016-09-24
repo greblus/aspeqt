@@ -1,0 +1,13 @@
+<resources>
+    <string name="file_open">Otwórz:</string>
+    <string name="file_save_as">Zapisz jako:</string>
+    <string name="folder_select">Wybór katalogu:</string>
+    <string name="failed_create">Katalog \'</string>
+    <string name="failed_folder">\' nie mógł zostać utworzony</string>
+    <string name="file_cancel">Anuluj</string>
+    <string name="new_folder">Utwórz katalog</string>
+    <string name="new_folder_name">Nazwa katalogu:</string>
+    <string name="file_chosen">Wybrany plik:\u0020</string>
+    <string name="dir_chosen">Wybrany katalog:\u0020</string>
+    <string name="bt_module_check">Sprawdź w ustawieniach nazwę modułu BT i parowanie z urządzeniem</string>
+</resources>

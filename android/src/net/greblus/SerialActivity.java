@@ -1,5 +1,6 @@
 package net.greblus;
 
+import org.qtproject.example.AspeQt.R;
 import net.greblus.SerialDevice;
 
 import android.widget.Toast;
@@ -45,7 +46,7 @@ public class SerialActivity extends QtActivity
         @Override
 	public void onCreate(Bundle savedInstanceState)
  	{
-            s_activity = this;            
+            s_activity = this;
             super.onCreate(savedInstanceState);
             if (m_serial == 0)
                 m_device = new SIO2PCUS4A();
@@ -109,7 +110,7 @@ public class SerialActivity extends QtActivity
                     {
                             // The code in this function will be executed when the dialog OK button is pushed
                             m_chosen = chosenDir;
-                            if (m_chosen != "Cancelled") Toast.makeText(SerialActivity.this, "Chosen File: " +
+                            if (m_chosen != "Cancelled") Toast.makeText(SerialActivity.this, getResources().getString(R.string.file_chosen) +
                                             m_chosen, Toast.LENGTH_LONG).show();
                     }
             });
@@ -129,7 +130,7 @@ public class SerialActivity extends QtActivity
                     {
                             // The code in this function will be executed when the dialog OK button is pushed
                             m_chosen = chosenDir;
-                            if (m_chosen != "Cancelled") Toast.makeText(SerialActivity.this, "Chosen Directory: " +
+                            if (m_chosen != "Cancelled") Toast.makeText(SerialActivity.this, getResources().getString(R.string.dir_chosen) +
                                             m_chosen, Toast.LENGTH_LONG).show();
                     }
             });
