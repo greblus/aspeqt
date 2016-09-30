@@ -26,28 +26,31 @@ public class SIO2BT implements SerialDevice
     private OutputStream m_output = null;
     private int REQUEST_ENABLE_BT = 1;
     private SerialActivity sa = SerialActivity.s_activity;
+    private boolean bt_request_sent = false;
 
     SIO2BT() {
         m_BluetoothAdapter = BluetoothAdapter.getDefaultAdapter();
-        requestEnableBt();
+        requestEnableBt();       
     }
 
     public void activityResult(int requestCode, int resultCode, Intent data) {
-        if (requestCode == REQUEST_ENABLE_BT) {
+        if (requestCode == REQUEST_ENABLE_BT) {            
             if (resultCode == 0) {
                 Intent enableBtIntent = new Intent(BluetoothAdapter.ACTION_REQUEST_ENABLE);
                 sa.startActivityForResult(enableBtIntent, REQUEST_ENABLE_BT);
-            }
+            } else
+                    bt_request_sent = false;
         }
     }
 
-    public int requestEnableBt() {
+    public int requestEnableBt() {        
         if (m_BluetoothAdapter == null) {
             Log.i("BT", "No BT adapter found!");
             return 0;
         }
 
         if (!m_BluetoothAdapter.isEnabled()) {
+            bt_request_sent = true;
             Intent enableBtIntent = new Intent(BluetoothAdapter.ACTION_REQUEST_ENABLE);
             sa.startActivityForResult(enableBtIntent, REQUEST_ENABLE_BT);
         }
@@ -55,7 +58,7 @@ public class SIO2BT implements SerialDevice
     }
 
     public int openDevice() {
-        if (requestEnableBt() == 0)
+        if (!bt_request_sent && (requestEnableBt() == 0))
             return 0;
 
         while (!m_BluetoothAdapter.isEnabled()) { };
