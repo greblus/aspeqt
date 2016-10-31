@@ -63,10 +63,11 @@ OptionsDialog::OptionsDialog(QWidget *parent) :
     connect(this, SIGNAL(accepted()), this, SLOT(OptionsDialog_accepted()));
 
     /* Retrieve application settings */
-    #ifndef Q_OS_ANDROID
-    m_ui->serialPortDeviceNameEdit->setText(aspeqtSettings->serialPortName());
-    #endif
+    #ifdef Q_OS_ANDROID
     m_ui->serialPortInterfaceCombo->setCurrentIndex(aspeqtSettings->serialPortInterface());
+    #else
+    m_ui->serialPortDeviceNameEdit->setText(aspeqtSettings->serialPortName());
+    #endif    
     m_ui->serialPortHandshakeCombo->setCurrentIndex(aspeqtSettings->serialPortHandshakingMethod());
     m_ui->serialPortBaudCombo->setCurrentIndex(aspeqtSettings->serialPortMaximumSpeed());
     m_ui->serialPortUseDivisorsBox->setChecked(aspeqtSettings->serialPortUsePokeyDivisors());
@@ -84,7 +85,7 @@ OptionsDialog::OptionsDialog(QWidget *parent) :
     m_ui->filterUscore->setChecked(aspeqtSettings->filterUnderscore());
     m_ui->useLargerFont->setChecked(aspeqtSettings->useLargeFont());
 //    m_ui->enableShade->setChecked(aspeqtSettings->enableShade());
-
+    #ifdef Q_OS_ANDROID
     m_ui->serialPortInterfaceCombo->setCurrentIndex(aspeqtSettings->serialPortInterface());
     m_ui->writeACKDelayEdit->setValue(aspeqtSettings->writeACKDelay());
     m_ui->bluetoothNameEdit->setText(aspeqtSettings->bluetoothName());
@@ -104,8 +105,7 @@ OptionsDialog::OptionsDialog(QWidget *parent) :
         m_ui->serialPortUseDivisorsBox->setStyleSheet("QCheckBox:!enabled {color: grey;}");
         m_ui->emulationHighSpeedExeLoaderBox->setStyleSheet("QCheckBox:!enabled {color: grey;}");
     }
-
-#ifndef Q_OS_ANDROID
+    #else
     switch (aspeqtSettings->backend()) {
         case 0:
             itemStandard->setCheckState(0, Qt::Checked);
@@ -120,7 +120,7 @@ OptionsDialog::OptionsDialog(QWidget *parent) :
     }
    // m_ui->serialPortBox->setCheckState(itemStandard->checkState(0));
     m_ui->atariSioBox->setCheckState(itemAtariSio->checkState(0));
-#endif
+    #endif
     
     /* list available translations */
     QTranslator local_translator;
@@ -188,19 +188,19 @@ void OptionsDialog::OptionsDialog_accepted()
     aspeqtSettings->setfilterUnderscore(m_ui->filterUscore->isChecked());
     aspeqtSettings->setUseLargeFont(m_ui->useLargerFont->isChecked());
 //    aspeqtSettings->setEnableShade(m_ui->enableShade->isChecked());
-
+    #ifdef Q_OS_ANDROID
     int serial_int = aspeqtSettings->serialPortInterface();
     QAndroidJniObject::callStaticMethod<void>("net/greblus/SerialActivity", "changeDevice", "(I)V", serial_int);
     QAndroidJniObject b_name = QAndroidJniObject::fromString(aspeqtSettings->bluetoothName());
     jstring bluetooth_name = b_name.object<jstring>();
     QAndroidJniObject::setStaticField("net/greblus/SerialActivity", "bluetoothName", bluetooth_name);
-
+    #endif
     int backend = 0;
-#ifndef Q_OS_ANDROID
+    #ifndef Q_OS_ANDROID
     if (itemAtariSio->checkState(0) == Qt::Checked) {
         backend = 1;
     }
-#endif
+    #endif
 
     aspeqtSettings->setBackend(backend);
     aspeqtSettings->setI18nLanguage(m_ui->i18nLanguageCombo->itemData(m_ui->i18nLanguageCombo->currentIndex()).toString());
@@ -255,6 +255,7 @@ void OptionsDialog::on_emulationUseCustomCasBaudBox_toggled(bool checked)
 
 void OptionsDialog::on_serialPortInterfaceCombo_currentIndexChanged(int index)
 {
+    #ifdef Q_OS_ANDROID
     if (index == SIO2BT) {
         m_ui->writeACKDelayEdit->setEnabled(true);
         m_ui->writeACKDelayLabel->setEnabled(true);
@@ -291,4 +292,5 @@ void OptionsDialog::on_serialPortInterfaceCombo_currentIndexChanged(int index)
         m_ui->serialPortUseDivisorsBox->setStyleSheet("color: black");
         m_ui->emulationHighSpeedExeLoaderBox->setStyleSheet("color: black");
     }
+    #endif
 }

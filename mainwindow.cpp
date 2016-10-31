@@ -157,13 +157,14 @@ MainWindow::MainWindow(QWidget *parent)
     QCoreApplication::setApplicationName("AspeQt");
     aspeqtSettings = new AspeqtSettings();
 
+#ifdef Q_OS_ANDROID
     int serial_int = aspeqtSettings->serialPortInterface();
     QAndroidJniObject::setStaticField("net/greblus/SerialActivity", "m_serial", serial_int);
     QAndroidJniObject::callStaticMethod<void>("net/greblus/SerialActivity", "changeDevice", "(I)V", serial_int);
     QAndroidJniObject b_name = QAndroidJniObject::fromString(aspeqtSettings->bluetoothName());
     jstring bluetooth_name = b_name.object<jstring>();
     QAndroidJniObject::setStaticField("net/greblus/SerialActivity", "bluetoothName", bluetooth_name);
-
+#endif
 
     /* Load translators */
     loadTranslators();
@@ -1877,7 +1878,7 @@ void MainWindow::on_actionOpenSession_triggered()
       }
     while (fileName == "None");
     #else
-    QString dir = aspeqtSettings->lastSessionDir();
+    dir = aspeqtSettings->lastSessionDir();
     QString fileName = QFileDialog::getOpenFileName(this, tr("Open session"),
                                  dir,
                                  tr(
@@ -1928,7 +1929,7 @@ void MainWindow::on_actionSaveSession_triggered()
       }
     while (fileName == "None");
     #else
-    QString dir = aspeqtSettings->lastSessionDir();
+    dir = aspeqtSettings->lastSessionDir();
     QString fileName = QFileDialog::getSaveFileName(this, tr("Save session as"),
                                  dir,
                                  tr(
@@ -1997,10 +1998,10 @@ void MainWindow::textPrinterWindowClosed()
 void MainWindow::on_actionPlaybackCassette_triggered()
 {
     QString dir = aspeqtSettings->lastCasDir();
+    QString fileName = NULL;
     #ifdef Q_OS_ANDROID
     QAndroidJniObject jdir = QAndroidJniObject::fromString(dir);
     QAndroidJniObject::callStaticMethod<void>("net/greblus/SerialActivity", "runFileChooser", "(IILjava/lang/String;)V", 3, 0, jdir.object<jstring>());
-    QString fileName = NULL;
     do
       {
         QAndroidJniObject jFileName = QAndroidJniObject::getStaticObjectField<jstring>("net/greblus/SerialActivity", "m_chosen");
