@@ -348,6 +348,10 @@ MainWindow::MainWindow(QWidget *parent)
 
     setAcceptDrops(true);
 
+    // SmartDevice (ApeTime + URL submit)
+    SmartDevice *smart = new SmartDevice(sio);
+    sio->installDevice(SMART_CDEVIC, smart);
+
     // AspeQt Client  //
     AspeCl *acl = new AspeCl(sio);
     sio->installDevice(0x46, acl);

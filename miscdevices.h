@@ -15,6 +15,16 @@ signals:
     void print(const QString &text);
 };
 
+// SmartDevice (ApeTime + URL submit)
+class SmartDevice: public SioDevice
+{
+    Q_OBJECT
+
+public:
+    SmartDevice(SioWorker *worker): SioDevice(worker) {}
+    void handleCommand(quint8 command, quint16 aux);
+};
+
 // AspeQt Time Server // 
 class AspeCl: public SioDevice
 {
