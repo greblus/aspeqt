@@ -93,9 +93,17 @@ public class SIO2BT implements SerialDevice
         m_socket = tmp;
 
         if (m_socket != null)
+        {
+            sa.runOnUiThread(new Runnable() {
+                public void run() {
+                    Toast.makeText(sa, sa.getResources().getString(R.string.bt_try_connecting), Toast.LENGTH_LONG).show();
+                }
+            });
+
             try {
                 m_socket.connect();
             } catch (IOException e) { }
+        }
 
         if (m_socket.isConnected()) {
             try {

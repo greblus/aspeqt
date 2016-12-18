@@ -10,4 +10,5 @@
     <string name="file_chosen">File chosen:\u0020</string>
     <string name="dir_chosen">Dir chosen:\u0020</string>
     <string name="bt_module_check">Check your BT module name set in options and make sure it\'s paired</string>
+    <string name="bt_try_connecting">Connecting with SIO2BT. Please wait...</string>
 </resources>
