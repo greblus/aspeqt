@@ -31,6 +31,8 @@ private slots:
     void loaderDone();
     void onClick(QAbstractButton* button);
     void reloadExe();
+    void on_buttonBox_accepted();
+    void on_buttonBox_rejected();
 };
 
 #endif // AUTOBOOTDIALOG_H

@@ -14,33 +14,14 @@ CassetteDialog::CassetteDialog(QWidget *parent, const QString &fileName)
     Qt::WindowFlags flags = windowFlags();
     flags = flags & (~Qt::WindowContextHelpButtonHint);
     setWindowFlags(flags);
+    setWindowState(Qt::WindowFullScreen);
 
     mFileName = fileName;
 
     ui->setupUi(this);
 
-    QScreen *screen = qApp->screens().at(0);
-
-    int rx = screen->availableSize().width();
-    int ry = screen->availableSize().height();
-
-    int ts = (rx > ry) ? ry : rx;
-
-    this->setGeometry(0, 0, rx, ry);
 #ifdef Q_OS_ANDROID
-    ui->verticalLayoutWidget->setGeometry(0, 0, rx, ry);
-    ui->verticalLayoutWidget->setMaximumWidth(rx);
-    ui->verticalLayoutWidget->setMaximumHeight(ry);
-
-    ui->progressBar->setMaximumWidth(rx*0.8);
-
-    int bs = ts*70/800;
-    ui->buttonBox->setMaximumHeight(bs+30);
-    ui->label->setMaximumWidth(rx*0.8);
-    ui->verticalLayoutWidget->setContentsMargins(int(rx*0.2/2), int(ry/8), int(rx*0.2/2), int(ry/10));
-
     movie = new QMovie(":images/tape.gif");
-    movie->setScaledSize(QSize(1.33*170*ts/800, 120*ts/800));
     ui->tape_label->setMovie(movie);
     ui->tape_label->setAlignment(Qt::AlignCenter);
     movie->start();

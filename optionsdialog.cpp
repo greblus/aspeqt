@@ -26,28 +26,6 @@ OptionsDialog::OptionsDialog(QWidget *parent) :
     QWidget *w = m_ui->scrollArea->viewport();
     QScroller::grabGesture(w, QScroller::LeftMouseButtonGesture);
     setWindowState(Qt::WindowFullScreen);
-    
-    QScreen *screen = qApp->screens().at(0);
-    int rx = screen->availableSize().width();
-    int ry = screen->availableSize().height();
-
-    this->setMinimumWidth(rx);
-    this->setMinimumHeight(ry);
-
-    m_ui->scrollArea->resize(rx,ry);
-    
-    int wsize;
-    if (rx > ry)
-        wsize = ry*90/800;
-    else
-        wsize = rx*90/800;
-
-    m_ui->serialPortHandshakeCombo->setMinimumHeight(wsize);
-    m_ui->serialPortBaudCombo->setMinimumHeight(wsize);
-    m_ui->serialPortDivisorEdit->setMinimumHeight(wsize);
-    m_ui->emulationCustomCasBaudSpin->setMinimumHeight(wsize);
-    m_ui->i18nLanguageCombo->setMinimumHeight(wsize);
-    m_ui->pushButton->setMinimumHeight(wsize);
 #else
     m_ui->treeWidget->expandAll();
     itemStandard = m_ui->treeWidget->topLevelItem(0)->child(0);
@@ -55,13 +33,7 @@ OptionsDialog::OptionsDialog(QWidget *parent) :
     itemEmulation = m_ui->treeWidget->topLevelItem(1);
     itemI18n = m_ui->treeWidget->topLevelItem(2);
 #endif
-
-//#ifndef Q_OS_LINUX
-//    m_ui->treeWidget->topLevelItem(0)->removeChild(itemAtariSio);
-//#endif
-
     connect(this, SIGNAL(accepted()), this, SLOT(OptionsDialog_accepted()));
-
     /* Retrieve application settings */
     #ifdef Q_OS_ANDROID
     m_ui->serialPortInterfaceCombo->setCurrentIndex(aspeqtSettings->serialPortInterface());

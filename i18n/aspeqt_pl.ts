@@ -643,7 +643,7 @@ When you hear the beep sound, push the OK button below and press a key on your A
 
 Wykonaj konieczne czynności, np. ponowne uruchomienie z wciśniętymi przyciskami Start i Option lub wydanie komendy &quot;CLOAD&quot; w BASIC-u.
 
-Po usłyszeniu sygnału dźwiękowego wciśnij przycisk OK i dowolny krawisz na twoim Atari.</translation>
+Po usłyszeniu sygnału dźwiękowego wciśnij przycisk OK i dowolny klawisz na twoim Atari.</translation>
     </message>
     <message>
         <location filename="../cassettedialog.cpp" line="107"/>
