@@ -1460,11 +1460,13 @@ void MainWindow::loadTranslators()
         QString locale = QLocale::system().name();
         aspeqt_translator.load(":/translations/i18n/aspeqt_" + locale);
         aspeqt_qt_translator.load(":/translations/i18n/qt_" + locale);
+        aspeqt_qt_translator.load(":/translations/i18n/qtbase_" + locale);
         qApp->installTranslator(&aspeqt_qt_translator);
         qApp->installTranslator(&aspeqt_translator);
     } else if (aspeqtSettings->i18nLanguage().compare("en") != 0) {
         aspeqt_translator.load(":/translations/i18n/aspeqt_" + aspeqtSettings->i18nLanguage());
         aspeqt_qt_translator.load(":/translations/i18n/qt_" + aspeqtSettings->i18nLanguage());
+        aspeqt_qt_translator.load(":/translations/i18n/qtbase_" + aspeqtSettings->i18nLanguage());
         qApp->installTranslator(&aspeqt_qt_translator);
         qApp->installTranslator(&aspeqt_translator);
     }

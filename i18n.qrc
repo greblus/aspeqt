@@ -12,5 +12,9 @@
         <file>i18n/aspeqt_tr.qm</file>
         <file>i18n/aspeqt_es.qm</file>
         <file>i18n/qt_es.qm</file>
+        <file>i18n/qtbase_pl.qm</file>
+        <file>i18n/qtbase_de.qm</file>
+        <file>i18n/qtbase_ru.qm</file>
+        <file>i18n/qtbase_sk.qm</file>
     </qresource>
 </RCC>
