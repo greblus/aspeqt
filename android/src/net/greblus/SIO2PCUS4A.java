@@ -1,4 +1,5 @@
 package net.greblus;
+import org.qtproject.example.AspeQt.R;
 
 import java.lang.System;
 import android.widget.Toast;
@@ -53,8 +54,14 @@ public class SIO2PCUS4A implements SerialDevice
         HashMap<String, UsbDevice> deviceList = manager.getDeviceList();
         Iterator<UsbDevice> deviceIterator = deviceList.values().iterator();
 
-        if (!deviceIterator.hasNext())
+        if (!deviceIterator.hasNext()) {
+            sa.runOnUiThread(new Runnable() {
+                public void run() {
+                    Toast.makeText(sa, sa.getResources().getString(R.string.sio2pc_not_attached), Toast.LENGTH_LONG).show();
+                }
+            });
             return 0;
+        }
 
             int dev_pid, dev_vid;
             boolean dev_found = false;
@@ -71,16 +78,22 @@ public class SIO2PCUS4A implements SerialDevice
                     )
                 ) { dev_found = true; break; }
 
-                 if ((dev_vid  == 1659) && (dev_pid == 8963)) //PL2303
-                    { dev_found = true; break;}
+//                 if ((dev_vid  == 1659) && (dev_pid == 8963)) //PL2303
+//                    { dev_found = true; break;}
 
         } while (deviceIterator.hasNext());
 
         if (dev_found) {
             pintent = PendingIntent.getBroadcast(sa, 0, new Intent(ACTION_USB_PERMISSION), 0);
             manager.requestPermission(device, pintent);
-        } else
+        } else {
+            sa.runOnUiThread(new Runnable() {
+                public void run() {
+                    Toast.makeText(sa, sa.getResources().getString(R.string.sio2pc_not_attached), Toast.LENGTH_LONG).show();
+                }
+            });
             return 0;
+        }
 
         Log.i("USB", "Device found!");
         List<UsbSerialDriver> availableDrivers = UsbSerialProber.getDefaultProber().findAllDrivers(manager);
@@ -101,10 +114,20 @@ public class SIO2PCUS4A implements SerialDevice
             sPort.open(connection);
             sPort.setParameters(19200, 8, UsbSerialPort.STOPBITS_1, UsbSerialPort.PARITY_NONE);
         } catch (IOException e) {
-            Log.i("USB", "Can't open port");
+            if (debug) Log.i("USB", "Can't open port");
+            sa.runOnUiThread(new Runnable() {
+                public void run() {
+                    Toast.makeText(sa, sa.getResources().getString(R.string.sio2pc_failed_connecting), Toast.LENGTH_LONG).show();
+                }
+            });
             return -1;
         }
-        Log.i("USB", "Device opened");
+        if (debug) Log.i("USB", "Device opened");
+        sa.runOnUiThread(new Runnable() {
+            public void run() {
+                Toast.makeText(sa, sa.getResources().getString(R.string.sio2pc_connected), Toast.LENGTH_LONG).show();
+            }
+        });
         return 1;
     }
 

@@ -110,11 +110,22 @@ public class SIO2BT implements SerialDevice
                 m_input = m_socket.getInputStream();
                 m_output = m_socket.getOutputStream();
             } catch (IOException e) { }
-
-            Log.i("BT", "Device opened");
+            if (debug)
+                Log.i("BT", "Device opened");
+                sa.runOnUiThread(new Runnable() {
+                    public void run() {
+                        Toast.makeText(sa, sa.getResources().getString(R.string.bt_connected), Toast.LENGTH_LONG).show();
+                    }
+                });
             return 1;
         } else {
-            Log.i("BT", "Device not connected");
+            if (debug)
+                Log.i("BT", "Device not connected");
+            sa.runOnUiThread(new Runnable() {
+                public void run() {
+                    Toast.makeText(sa, sa.getResources().getString(R.string.bt_failed_connecting), Toast.LENGTH_LONG).show();
+                }
+            });
             return 0;
         }
     }

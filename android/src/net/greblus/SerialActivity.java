@@ -249,6 +249,11 @@ public class SerialActivity extends QtActivity
                     }
                     else {
                         Log.i("USB", "Permission denied for device " + device);
+                        SerialActivity.s_activity.runOnUiThread(new Runnable() {
+                            public void run() {
+                                Toast.makeText(SerialActivity.s_activity, SerialActivity.s_activity.getResources().getString(R.string.sio2pc_no_permissions), Toast.LENGTH_LONG).show();
+                            }
+                        });
                     }
                 }
             }
