@@ -121,7 +121,7 @@ void FolderImage::buildDirectory()
         atariFiles[i].atariExt = ext;
         atariFiles[i].lastSector = 0;
         atariFiles[i].pos = 0;
-
+        atariFiles[i].sectPass = 0;
     }
 
     if (i < infos.count()) {
@@ -368,12 +368,14 @@ bool FolderImage::readSector(quint16 sector, QByteArray &data)
         if ((sector >= 433 && sector <= 1023)) {
             QFile file(atariFiles[atariFileNo].original.absoluteFilePath());
             file.open(QFile::ReadOnly);
-            atariFiles[atariFileNo].pos = (125+((sector-433)*125));
+	    atariFiles[atariFileNo].pos = (125+((sector-433)*125))+(atariFiles[atariFileNo].sectPass*73875);
             file.seek(atariFiles[atariFileNo].pos);
             data = file.read(125);
             next = sector + 1;
-            if (sector == 1023)
+            if (sector == 1023) {
                 next = 433;
+                atariFiles[atariFileNo].sectPass += 1;
+	    }
             size = data.size();
             data.resize(128);
             atariFiles[atariFileNo].lastSector = sector;

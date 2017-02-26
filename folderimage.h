@@ -14,6 +14,7 @@ public:
     QString longName;
     int lastSector;
     quint64 pos;
+    int sectPass;
 };
 
 class FolderImage : public SimpleDiskImage
