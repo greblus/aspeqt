@@ -342,7 +342,7 @@ QByteArray StandardSerialPortBackend::readRawFrame(uint size, bool verbose)
     QTime startTime = QTime::currentTime();
     int bt_timeOut = 0;
     if (aspeqtSettings->serialPortInterface() == SIO2BT)
-        bt_timeOut = 3000;
+        bt_timeOut = 6000;
     int timeOut = data.count() * 24000 / mSpeed + bt_timeOut;
     int elapsed;
 
