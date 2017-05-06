@@ -47,7 +47,7 @@ QString StandardSerialPortBackend::defaultPortName()
 
 bool StandardSerialPortBackend::open()
 {
-    if (debug) qWarning().noquote() << "!i" << tr("open");
+    if (debug) qWarning() << "!i" << tr("open");
 
     if (isOpen()) {
         close();
@@ -92,7 +92,7 @@ bool StandardSerialPortBackend::open()
             m = "SOFT";
     }
     /* Notify the user that emulation is started */
-    qWarning().noquote() << "!i" << tr("Emulation started through standard serial port backend on '%1' with %2 handshaking.")
+    qWarning() << "!i" << tr("Emulation started through standard serial port backend on '%1' with %2 handshaking.")
                   .arg(aspeqtSettings->serialPortName())
                   .arg(m);
 
@@ -101,13 +101,13 @@ bool StandardSerialPortBackend::open()
 
 bool StandardSerialPortBackend::isOpen()
 {
-    if (debug) qWarning().noquote() << "!i" << tr("isOpen %1").arg(mHandle);
+    if (debug) qWarning() << "!i" << tr("isOpen %1").arg(mHandle);
     return (mHandle > 0);
 }
 
 void StandardSerialPortBackend::close()
 {
-    if (debug) qWarning().noquote() << "!i" << tr("close");
+    if (debug) qWarning() << "!i" << tr("close");
     cancel();
     mHandle = -1;
     QAndroidJniObject::callStaticMethod<jint>("net/greblus/SerialActivity", "closeDevice", "()V");
@@ -115,13 +115,13 @@ void StandardSerialPortBackend::close()
 
 void StandardSerialPortBackend::cancel()
 {
-    if (debug) qWarning().noquote() << "!i" << tr("cancel");
+    if (debug) qWarning() << "!i" << tr("cancel");
     mCanceled = true;
 }
 
 int StandardSerialPortBackend::speedByte()
 {
-    if (debug) qWarning().noquote() << "!i" << tr("speedByte");
+    if (debug) qWarning() << "!i" << tr("speedByte");
     if (aspeqtSettings->serialPortUsePokeyDivisors()) {
         return aspeqtSettings->serialPortPokeyDivisor();
     } else {
@@ -143,14 +143,14 @@ int StandardSerialPortBackend::speedByte()
 
 bool StandardSerialPortBackend::setNormalSpeed()
 {
-    if (debug) qWarning().noquote() << "!i" << tr("setNormalSpeed");
+    if (debug) qWarning() << "!i" << tr("setNormalSpeed");
     mHighSpeed = false;
     return setSpeed(19200);
 }
 
 bool StandardSerialPortBackend::setHighSpeed()
 {
-    if (debug) qWarning().noquote() << "!i" << tr("setHighSpeed");
+    if (debug) qWarning() << "!i" << tr("setHighSpeed");
 
     mHighSpeed = true;
     if (aspeqtSettings->serialPortUsePokeyDivisors()) {
@@ -174,7 +174,7 @@ bool StandardSerialPortBackend::setHighSpeed()
 
 bool StandardSerialPortBackend::setSpeed(int speed)
 {
-    if (debug) qWarning().noquote() << "!i" << tr("Serial port speed set to %1.").arg(speed);
+    if (debug) qWarning() << "!i" << tr("Serial port speed set to %1.").arg(speed);
 
     if (aspeqtSettings->serialPortInterface() == SIO2BT)
         return true;
@@ -250,7 +250,7 @@ QByteArray StandardSerialPortBackend::readDataFrame(uint size, bool verbose)
         return data;
     } else {
         if (verbose) {
-            qWarning().noquote() << "!w" << tr("Data frame checksum error, expected: %1, got: %2. (%3)")
+            qWarning() << "!w" << tr("Data frame checksum error, expected: %1, got: %2. (%3)")
                            .arg(expected)
                            .arg(got)
                            .arg(QString(data.toHex()));
@@ -270,31 +270,31 @@ bool StandardSerialPortBackend::writeDataFrame(QByteArray &data)
 
 bool StandardSerialPortBackend::writeCommandAck()
 {
-    if (debug) qWarning().noquote() << "!i" << tr("writeCommandAck");
+    if (debug) qWarning() << "!i" << tr("writeCommandAck");
     return writeRawFrame(QByteArray(1, 65));
 }
 
 bool StandardSerialPortBackend::writeCommandNak()
 {
-    if (debug) qWarning().noquote() << "!i" << tr("writeCommandNak");
+    if (debug) qWarning() << "!i" << tr("writeCommandNak");
     return writeRawFrame(QByteArray(1, 78));
 }
 
 bool StandardSerialPortBackend::writeDataAck()
 {
-    if (debug) qWarning().noquote() << "!i" << tr("writeDataAck");
+    if (debug) qWarning() << "!i" << tr("writeDataAck");
     return writeRawFrame(QByteArray(1, 65));
 }
 
 bool StandardSerialPortBackend::writeDataNak()
 {
-    if (debug) qWarning().noquote() << "!i" << tr("writeDataNak");
+    if (debug) qWarning() << "!i" << tr("writeDataNak");
     return writeRawFrame(QByteArray(1, 78));
 }
 
 bool StandardSerialPortBackend::writeComplete()
 {
-    if (debug) qWarning().noquote() << "!i" << tr("writeComplete");
+    if (debug) qWarning() << "!i" << tr("writeComplete");
     if (aspeqtSettings->serialPortInterface() == SIO2BT)
         SioWorker::usleep(aspeqtSettings->writeACKDelay()*1000);
     else
@@ -305,7 +305,7 @@ bool StandardSerialPortBackend::writeComplete()
 
 bool StandardSerialPortBackend::writeError()
 {
-    if (debug) qWarning().noquote() << "!i" << tr("writeError");
+    if (debug) qWarning() << "!i" << tr("writeError");
     if (aspeqtSettings->serialPortInterface() == SIO2BT)
         SioWorker::usleep(aspeqtSettings->writeACKDelay()*1000);
     else
@@ -315,7 +315,7 @@ bool StandardSerialPortBackend::writeError()
 
 quint8 StandardSerialPortBackend::sioChecksum(const QByteArray &data, uint size)
 {
-    if (debug) qWarning().noquote() << "!i" << tr("sioChecksum");
+    if (debug) qWarning() << "!i" << tr("sioChecksum");
     uint i;
     uint sum = 0;
 
@@ -331,7 +331,7 @@ quint8 StandardSerialPortBackend::sioChecksum(const QByteArray &data, uint size)
 
 QByteArray StandardSerialPortBackend::readRawFrame(uint size, bool verbose)
 {
-    if (debug) qWarning().noquote() << "!i" << tr("readRawFrame");
+    if (debug) qWarning() << "!i" << tr("readRawFrame");
 
     int result;
     uint total, rest;

@@ -14,7 +14,7 @@ void AutoBoot::passToOldHandler(quint8 command, quint16 aux)
         oldDevice->handleCommand(command, aux);
     } else {
         sio->port()->writeCommandNak();
-        qWarning().noquote() << "!w" << tr("[%1] command: $%2, aux: $%3 NAKed.")
+        qWarning() << "!w" << tr("[%1] command: $%2, aux: $%3 NAKed.")
                        .arg(deviceName())
                        .arg(command, 2, 16, QChar('0'))
                        .arg(aux, 4, 16, QChar('0'));
@@ -34,7 +34,7 @@ void AutoBoot::handleCommand(quint8 command, quint16 aux)
                 QByteArray speed(1, 0);
                 speed[0] = sio->port()->speedByte();
                 sio->port()->writeDataFrame(speed);
-                qDebug().noquote() << "!n" << tr("[%1] Speed poll.").arg(deviceName());
+                qDebug() << "!n" << tr("[%1] Speed poll.").arg(deviceName());
                 break;
             }
         case 0x52:
@@ -55,7 +55,7 @@ void AutoBoot::handleCommand(quint8 command, quint16 aux)
                     if (readSector(aux, data)) {
                         sio->port()->writeComplete();
                         sio->port()->writeDataFrame(data);
-                        qDebug().noquote() << "!n" << tr("[%1] Read sector %2 (%3 bytes).")
+                        qDebug() << "!n" << tr("[%1] Read sector %2 (%3 bytes).")
                                        .arg(deviceName())
                                        .arg(aux)
                                        .arg(data.size());
@@ -85,7 +85,7 @@ void AutoBoot::handleCommand(quint8 command, quint16 aux)
                 status[3] = 1;
                 sio->port()->writeComplete();
                 sio->port()->writeDataFrame(status);
-                qDebug().noquote() << "!n" << tr("[%1] Get status.")
+                qDebug() << "!n" << tr("[%1] Get status.")
                                .arg(deviceName());
                 break;
             }
@@ -94,7 +94,7 @@ void AutoBoot::handleCommand(quint8 command, quint16 aux)
                 if (!sio->port()->writeCommandAck()) {
                     return;
                 }
-                qDebug().noquote() << "!n" << tr("[%1] Atari is jumping to %2.")
+                qDebug() << "!n" << tr("[%1] Atari is jumping to %2.")
                                .arg(deviceName())
                                .arg(aux);
                 emit loaderDone();
@@ -106,7 +106,7 @@ void AutoBoot::handleCommand(quint8 command, quint16 aux)
                 if (!sio->port()->writeCommandAck()) {
                     return;
                 }
-                qDebug().noquote() << "!n" << tr("[%1] Get chunk %2 (%3 bytes).")
+                qDebug() << "!n" << tr("[%1] Get chunk %2 (%3 bytes).")
                                .arg(deviceName())
                                .arg(aux)
                                .arg(chunks.at(aux).data.size());
@@ -131,7 +131,7 @@ void AutoBoot::handleCommand(quint8 command, quint16 aux)
                 data[3] = chunks.size() != aux + 1;
                 data[4] = chunks.at(aux).data.size() % 256;
                 data[5] = chunks.at(aux).data.size() / 256;
-                qDebug().noquote() << "!d" << tr("[%1] Get chunk info %2 (%3 bytes at %4).")
+                qDebug() << "!d" << tr("[%1] Get chunk info %2 (%3 bytes at %4).")
                                .arg(deviceName())
                                .arg(aux)
                                .arg(chunks.at(aux).data.size())
@@ -223,10 +223,10 @@ bool AutoBoot::readExecutable(const QString &fileName)
         }
         end = (quint8) data.at(0) + (quint8) data.at(1) * 256;
 
-        qDebug().noquote() << "!d" << "Exe segment" << start << ".." << end;
+        qDebug() << "!d" << "Exe segment" << start << ".." << end;
 
         if (end < start) {
-            qWarning().noquote() << tr("The executable '%1' is broken: The end address is less than the start address.")
+            qWarning() << tr("The executable '%1' is broken: The end address is less than the start address.")
                           .arg(fileName);
             break;
         }
@@ -236,11 +236,11 @@ bool AutoBoot::readExecutable(const QString &fileName)
         data = file.read(size);
         if (data.size() < size) {
             if (file.atEnd()) {
-                qWarning().noquote() << "!w" << tr("The executable '%1' is broken: Unexpected end of file, needed %2 more.")
+                qWarning() << "!w" << tr("The executable '%1' is broken: Unexpected end of file, needed %2 more.")
                                .arg(fileName)
                                .arg(size - data.size());
             } else {
-                qWarning().noquote() << "!w" << tr("Cannot read from file '%1': %2.")
+                qWarning() << "!w" << tr("Cannot read from file '%1': %2.")
                                .arg(fileName)
                                .arg(file.errorString());
                 return false;
@@ -265,7 +265,7 @@ bool AutoBoot::readExecutable(const QString &fileName)
         data = file.read(2);
         if (data.size() < 2) {
             if (file.atEnd()) {
-                qWarning().noquote() << "!w" << tr("The executable '%1' is broken: Unexpected end of file, needed %2 more.")
+                qWarning() << "!w" << tr("The executable '%1' is broken: Unexpected end of file, needed %2 more.")
                                .arg(fileName)
                                .arg(2 - data.size());
                 break;
@@ -283,7 +283,7 @@ bool AutoBoot::readExecutable(const QString &fileName)
             data = file.read(2);
             if (data.size() < 2) {
                 if (file.atEnd()) {
-                    qWarning().noquote() << "!w" << tr("The executable '%1' is broken: Unexpected end of file, needed %2 more.")
+                    qWarning() << "!w" << tr("The executable '%1' is broken: Unexpected end of file, needed %2 more.")
                                    .arg(fileName)
                                    .arg(2 - data.size());
                     break;

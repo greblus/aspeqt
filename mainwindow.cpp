@@ -815,7 +815,7 @@ void MainWindow::on_actionPrinterEmulation_triggered()
         prtOnOffLabel->setToolTip(tr("Start printer emulation"));
         prtOnOffLabel->setStatusTip(prtOnOffLabel->toolTip());
         g_printerEmu = false;
-        qWarning().noquote() << "!i" << tr("Printer emulation stopped.");
+        qWarning() << "!i" << tr("Printer emulation stopped.");
     } else {
         ui->actionPrinterEmulation->setText(QApplication::translate("MainWindow", "Stop printer emulation", 0));
         ui->actionPrinterEmulation->setStatusTip(QApplication::translate("MainWindow", "Stop printer emulation", 0));
@@ -824,7 +824,7 @@ void MainWindow::on_actionPrinterEmulation_triggered()
         prtOnOffLabel->setToolTip(tr("Stop printer emulation"));
         prtOnOffLabel->setStatusTip(prtOnOffLabel->toolTip());
         g_printerEmu = true;
-        qWarning().noquote() << "!i" << tr("Printer emulation started.");
+        qWarning() << "!i" << tr("Printer emulation started.");
     }
 }
 
@@ -860,7 +860,7 @@ void MainWindow::sioFinished()
     onOffLabel->setStatusTip(ui->actionStartEmulation->statusTip());
     speedLabel->hide();
     speedLabel->clear();
-    qWarning().noquote() << "!i" << tr("Emulation stopped.");
+    qWarning() << "!i" << tr("Emulation stopped.");
 }
 
 void MainWindow::sioStatusChanged(QString status)

@@ -94,7 +94,7 @@ bool StandardSerialPortBackend::open()
         m = "NO";
     }
     /* Notify the user that emulation is started */
-    qWarning().noquote() << "!i" << tr("Emulation started through standard serial port backend on '%1' with %2 handshaking")
+    qWarning() << "!i" << tr("Emulation started through standard serial port backend on '%1' with %2 handshaking")
                   .arg(aspeqtSettings->serialPortName())
                   .arg(m);
 
@@ -239,7 +239,7 @@ bool StandardSerialPortBackend::setSpeed(int speed)
     }
 
     emit statusChanged(tr("%1 bits/sec").arg(speed));
-    qWarning().noquote() << "!i" << tr("Serial port speed set to %1.").arg(speed);
+    qWarning() << "!i" << tr("Serial port speed set to %1.").arg(speed);
     mSpeed = speed;
     return true;
 }
@@ -358,7 +358,7 @@ QByteArray StandardSerialPortBackend::readDataFrame(uint size, bool verbose)
         return data;
     } else {
         if (verbose) {
-            qWarning().noquote() << "!w" << tr("Data frame checksum error, expected: %1, got: %2. (%3)")
+            qWarning() << "!w" << tr("Data frame checksum error, expected: %1, got: %2. (%3)")
                            .arg(expected)
                            .arg(got)
                            .arg(QString(data.toHex()));

@@ -327,7 +327,7 @@ bool SimpleDiskImage::openAtr(const QString &fileName)
     // Check if the reported image size is consistent with the actual size
     // 
     if (size != imageSize) {
-        qWarning().noquote() << "!w" << tr("Image size of '%1' is reported as %2 bytes in the header but it's actually %3.")
+        qWarning() << "!w" << tr("Image size of '%1' is reported as %2 bytes in the header but it's actually %3.")
                        .arg(fileName)
                        .arg(size)
                        .arg(imageSize);
@@ -407,7 +407,7 @@ bool SimpleDiskImage::openAtr(const QString &fileName)
 
     // Check unsupported ATR extensions
     if (header[8] || header[9] || header[9] || header[10] || header[11] || header[12] || header[13] || header[14] || header[15]) {
-        qWarning().noquote() << "!w" << tr("The file '%1' has some unrecognized fields in its header.")
+        qWarning() << "!w" << tr("The file '%1' has some unrecognized fields in its header.")
                       .arg(fileName);
     }
 
@@ -599,7 +599,7 @@ bool SimpleDiskImage::saveAtr(const QString &fileName)
     guess.initialize(m_geometry.totalSize(), m_geometry.bytesPerSector());
 
     if (!guess.isEqual(m_geometry)) {
-        qWarning().noquote() << "!w" << tr("Detailed geometry information will be lost when reopening '%1' due to ATR file format limitations.").arg(fileName);
+        qWarning() << "!w" << tr("Detailed geometry information will be lost when reopening '%1' due to ATR file format limitations.").arg(fileName);
     }
 
     m_originalFileName = fileName;
@@ -619,7 +619,7 @@ bool SimpleDiskImage::saveXfd(const QString &fileName)
 
     if (!guess.isEqual(m_geometry)) {
         if (guess.bytesPerSector() == m_geometry.bytesPerSector()) {
-            qWarning().noquote() << "!w" << tr("Detailed disk geometry information will be lost when reopening '%1' due to XFD file format limitations.")
+            qWarning() << "!w" << tr("Detailed disk geometry information will be lost when reopening '%1' due to XFD file format limitations.")
                           .arg(fileName);
         } else {
             qCritical() << "!e" << tr("XFD file format cannot handle this disk geometry. Try saving '%1' as ATR.").arg(fileName);
@@ -829,7 +829,7 @@ void SimpleDiskImage::handleCommand(quint8 command, quint16 aux)
                 }
                 if (m_isReadOnly) {
                     sio->port()->writeError();
-                    qWarning().noquote() << "!w" << tr("[%1] Format ED denied.").arg(deviceName());
+                    qWarning() << "!w" << tr("[%1] Format ED denied.").arg(deviceName());
                     return;
                 }
                 m_newGeometry.initialize(false, 40, 26, 128);
@@ -838,7 +838,7 @@ void SimpleDiskImage::handleCommand(quint8 command, quint16 aux)
                     data[0] = data[1] = 0xFF;
                     sio->port()->writeComplete();
                     sio->port()->writeDataFrame(data);
-                    qDebug().noquote() << "!n" << tr("[%1] Format ED.").arg(deviceName());
+                    qDebug() << "!n" << tr("[%1] Format ED.").arg(deviceName());
                 } else {
                     sio->port()->writeError();
                     qCritical() << "!e" << tr("[%1] Format ED failed.").arg(deviceName());
@@ -854,7 +854,7 @@ void SimpleDiskImage::handleCommand(quint8 command, quint16 aux)
                 QByteArray speed(1, 0);
                 speed[0] = sio->port()->speedByte();
                 sio->port()->writeDataFrame(speed);
-                qDebug().noquote() << "!n" << tr("[%1] Speed poll.").arg(deviceName());
+                qDebug() << "!n" << tr("[%1] Speed poll.").arg(deviceName());
                 break;
             }
         case 0x4e:  // Get PERCOM block
@@ -865,7 +865,7 @@ void SimpleDiskImage::handleCommand(quint8 command, quint16 aux)
                 QByteArray percom = m_newGeometry.toPercomBlock();
                 sio->port()->writeComplete();
                 sio->port()->writeDataFrame(percom);
-                qDebug().noquote() << "!n" << tr("[%1] Get PERCOM block (%2).")
+                qDebug() << "!n" << tr("[%1] Get PERCOM block (%2).")
                                .arg(deviceName())
                                .arg(m_newGeometry.humanReadable());
                 break;
@@ -884,7 +884,7 @@ void SimpleDiskImage::handleCommand(quint8 command, quint16 aux)
                 m_newGeometry.initialize(percom);
 
                 sio->port()->writeComplete();
-                qDebug().noquote() << tr("[%1] Set PERCOM block (%2).")
+                qDebug() << tr("[%1] Set PERCOM block (%2).")
                               .arg(deviceName())
                               .arg(m_newGeometry.humanReadable());
                 break;
@@ -908,12 +908,12 @@ void SimpleDiskImage::handleCommand(quint8 command, quint16 aux)
                         break;
                     }
                     sio->port()->writeComplete();
-                    qWarning().noquote() << "!w" << tr("[%1] Format with custom sector skewing (%2).")
+                    qWarning() << "!w" << tr("[%1] Format with custom sector skewing (%2).")
                                    .arg(deviceName())
                                    .arg(m_newGeometry.humanReadable());
                 } else {
                     sio->port()->writeError();
-                    qWarning().noquote() << "!w" << tr("[%1] Format with custom sector skewing denied.")
+                    qWarning() << "!w" << tr("[%1] Format with custom sector skewing denied.")
                                    .arg(deviceName());
                 }
                 break;
@@ -930,10 +930,10 @@ void SimpleDiskImage::handleCommand(quint8 command, quint16 aux)
                     data[1] = 0xff;
                     sio->port()->writeComplete();
                     sio->port()->writeDataFrame(data);
-                    qWarning().noquote() << "!w" << tr("[%1] Format.").arg(deviceName());
+                    qWarning() << "!w" << tr("[%1] Format.").arg(deviceName());
                 } else {
                     sio->port()->writeError();
-                    qWarning().noquote() << "!w" << tr("[%1] Format denied.").arg(deviceName());
+                    qWarning() << "!w" << tr("[%1] Format denied.").arg(deviceName());
                     break;
                 }
 
@@ -951,12 +951,12 @@ void SimpleDiskImage::handleCommand(quint8 command, quint16 aux)
                         sio->port()->writeDataAck();
                         if (m_isReadOnly) {
                             sio->port()->writeError();
-                            qWarning().noquote() << "!w" << tr("[%1] Write sector %2 denied.").arg(deviceName()).arg(aux);
+                            qWarning() << "!w" << tr("[%1] Write sector %2 denied.").arg(deviceName()).arg(aux);
                             break;
                         }
                         if (writeSector(aux, data)) {
                             sio->port()->writeComplete();
-                            qDebug().noquote() << "!n" << tr("[%1] Write sector %2 (%3 bytes).").arg(deviceName()).arg(aux).arg(data.size());
+                            qDebug() << "!n" << tr("[%1] Write sector %2 (%3 bytes).").arg(deviceName()).arg(aux).arg(data.size());
                         } else {
                             sio->port()->writeError();
                             qCritical() << "!e" << tr("[%1] Write sector %2 failed.")
@@ -971,7 +971,7 @@ void SimpleDiskImage::handleCommand(quint8 command, quint16 aux)
                     }
                 } else {
                     sio->port()->writeCommandNak();
-                    qWarning().noquote() << "!w" << tr("[%1] Write sector %2 NAKed.")
+                    qWarning() << "!w" << tr("[%1] Write sector %2 NAKed.")
                                    .arg(deviceName())
                                    .arg(aux);
                 }
@@ -987,7 +987,7 @@ void SimpleDiskImage::handleCommand(quint8 command, quint16 aux)
                     if (readSector(aux, data)) {
                         sio->port()->writeComplete();
                         sio->port()->writeDataFrame(data);
-                        qDebug().noquote() << "!n" << tr("[%1] Read sector %2 (%3 bytes).")
+                        qDebug() << "!n" << tr("[%1] Read sector %2 (%3 bytes).")
                                        .arg(deviceName())
                                        .arg(aux)
                                        .arg(data.size());
@@ -999,7 +999,7 @@ void SimpleDiskImage::handleCommand(quint8 command, quint16 aux)
                     }
                 } else {
                     sio->port()->writeCommandNak();
-                    qWarning().noquote() << "!w" << tr("[%1] Read sector %2 NAKed.")
+                    qWarning() << "!w" << tr("[%1] Read sector %2 NAKed.")
                                    .arg(deviceName())
                                    .arg(aux);
                 }
@@ -1016,13 +1016,13 @@ void SimpleDiskImage::handleCommand(quint8 command, quint16 aux)
                 
                 sio->port()->writeComplete();
                 sio->port()->writeDataFrame(status);
-                qDebug().noquote() << "!n" << tr("[%1] Get status.").arg(deviceName());
+                qDebug() << "!n" << tr("[%1] Get status.").arg(deviceName());
                 break;
             }
         default:    // Unknown command
             {
                 sio->port()->writeCommandNak();
-                qWarning().noquote() << "!w" << tr("[%1] command: $%2, aux: $%3 NAKed.")
+                qWarning() << "!w" << tr("[%1] command: $%2, aux: $%3 NAKed.")
                                .arg(deviceName())
                                .arg(command, 2, 16, QChar('0'))
                                .arg(aux, 4, 16, QChar('0'));

@@ -94,7 +94,7 @@ void SioWorker::run()
     /* Process SIO commands until we're explicitly stopped */
     while (!mustTerminate) {
 
-//        qDebug().noquote() << "!d" << tr("DBG -- SIOWORKER...");
+//        qDebug() << "!d" << tr("DBG -- SIOWORKER...");
 
         QByteArray cmd = mPort->readCommandFrame();
         if (mustTerminate) {
@@ -116,13 +116,13 @@ void SioWorker::run()
                 devices[no]->handleCommand(command, aux);
                 devices[no]->unlock();
             } else {
-                qWarning().noquote() << "!w" << tr("[%1] command: $%2, aux: $%3 ignored because the image explorer is open.")
+                qWarning() << "!w" << tr("[%1] command: $%2, aux: $%3 ignored because the image explorer is open.")
                                .arg(deviceName(no))
                                .arg(command, 2, 16, QChar('0'))
                                .arg(aux, 4, 16, QChar('0'));
             }
         } else {
-            qDebug().noquote() << "!u" << tr("[%1] command: $%2, aux: $%3 ignored.")
+            qDebug() << "!u" << tr("[%1] command: $%2, aux: $%3 ignored.")
                            .arg(deviceName(no))
                            .arg(command, 2, 16, QChar('0'))
                            .arg(aux, 4, 16, QChar('0'));
@@ -287,7 +287,7 @@ bool CassetteWorker::loadCasImage(const QString &fileName)
     }
 
     if (!data.isEmpty()) {
-        qDebug().noquote() << "!n" << tr("[Cassette]: File description '%2'.").arg(QString::fromLatin1(data));
+        qDebug() << "!n" << tr("[Cassette]: File description '%2'.").arg(QString::fromLatin1(data));
     }
 
     int lastBaud = 600;
@@ -377,7 +377,7 @@ void CassetteWorker::run()
             }
         }
         emit statusChanged(remainingTime);
-        qDebug().noquote() << "!n" << tr("[Cassette] Playing record %1 of %2 (%3 ms of gap + %4 bytes of data)")
+        qDebug() << "!n" << tr("[Cassette] Playing record %1 of %2 (%3 ms of gap + %4 bytes of data)")
                 .arg(block)
                 .arg(mRecords.count())
                 .arg(record.gapDuration)
