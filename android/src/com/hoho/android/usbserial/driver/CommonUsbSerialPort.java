@@ -33,8 +33,8 @@ import java.io.IOException;
  */
 abstract class CommonUsbSerialPort implements UsbSerialPort {
 
-    public static final int DEFAULT_READ_BUFFER_SIZE = 16 * 1024;
-    public static final int DEFAULT_WRITE_BUFFER_SIZE = 16 * 1024;
+    public static final int DEFAULT_READ_BUFFER_SIZE = 65 * 1024;
+    public static final int DEFAULT_WRITE_BUFFER_SIZE = 65 * 1024;
 
     protected final UsbDevice mDevice;
     protected final int mPortNumber;

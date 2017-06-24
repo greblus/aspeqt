@@ -38,10 +38,10 @@ import java.nio.ByteBuffer;
 public class SerialInputOutputManager implements Runnable {
 
     private static final String TAG = SerialInputOutputManager.class.getSimpleName();
-    private static final boolean DEBUG = true;
+    private static final boolean DEBUG = false;
 
-    private static final int READ_WAIT_MILLIS = 200;
-    private static final int BUFSIZ = 4096;
+    private static final int READ_WAIT_MILLIS = 1;
+    private static final int BUFSIZ = 65535;
 
     private final UsbSerialPort mDriver;
 

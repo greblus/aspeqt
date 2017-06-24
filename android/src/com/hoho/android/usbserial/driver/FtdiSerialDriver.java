@@ -133,8 +133,8 @@ public class FtdiSerialDriver implements UsbSerialDriver {
         public static final int USB_ENDPOINT_IN = 0x80;
         public static final int USB_ENDPOINT_OUT = 0x00;
 
-        public static final int USB_WRITE_TIMEOUT_MILLIS = 5000;
-        public static final int USB_READ_TIMEOUT_MILLIS = 5000;
+        public static final int USB_WRITE_TIMEOUT_MILLIS = 50000;
+        public static final int USB_READ_TIMEOUT_MILLIS = 50000;
 
 
         // From ftdi.h
@@ -214,10 +214,10 @@ public class FtdiSerialDriver implements UsbSerialDriver {
          * @return The number of payload bytes
          */
         private final int filterStatusBytes(byte[] src, byte[] dest, int totalBytesRead, int maxPacketSize) {
-            final int packetsCount = totalBytesRead / maxPacketSize + (totalBytesRead % maxPacketSize == 0 ? 0 : 1);
+            final int packetsCount = (totalBytesRead + maxPacketSize -1 ) / maxPacketSize;
             for (int packetIdx = 0; packetIdx < packetsCount; ++packetIdx) {
                 final int count = (packetIdx == (packetsCount - 1))
-                        ? (totalBytesRead % maxPacketSize) - MODEM_STATUS_HEADER_LENGTH
+                        ? totalBytesRead - packetIdx * maxPacketSize - MODEM_STATUS_HEADER_LENGTH
                         : maxPacketSize - MODEM_STATUS_HEADER_LENGTH;
                 if (count > 0) {
                     try {
