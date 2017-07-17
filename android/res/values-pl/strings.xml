@@ -9,7 +9,7 @@
     <string name="new_folder_name">Nazwa katalogu:</string>
     <string name="file_chosen">Wybrany plik:\u0020</string>
     <string name="dir_chosen">Wybrany katalog:\u0020</string>
-    <string name="bt_module_check">Sprawdź w ustawieniach nazwę modułu BT i parowanie z urządzeniem</string>
+    <string name="bt_module_check">Włącz BT, sprawdź w ustawieniach nazwę modułu i parowanie z urządzeniem</string>
     <string name="bt_try_connecting">Łączenie z SIO2BT. Proszę czekać...</string>
     <string name="bt_connected">Połączono z SIO2BT.</string>
     <string name="bt_failed_connecting">Brak połączenia z SIO2BT. Spróbuj ponownie...</string>
@@ -17,4 +17,5 @@
     <string name="sio2pc_failed_connecting">Brak połączenia z SIO2PC-USB.</string>
     <string name="sio2pc_no_permissions">Brak uprawnień dla SIO2PC-USB.</string>
     <string name="sio2pc_not_attached">SIO2PC-USB nie jest podłączone.</string>
+    <string name="bt_module_not_present">Brak adaptera BT w urządzeniu.</string>
 </resources>

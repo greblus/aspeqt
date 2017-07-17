@@ -9,7 +9,7 @@
     <string name="new_folder_name">Directory name:</string>
     <string name="file_chosen">File chosen:\u0020</string>
     <string name="dir_chosen">Dir chosen:\u0020</string>
-    <string name="bt_module_check">Check your BT module name set in options and make sure it\'s paired</string>
+    <string name="bt_module_check">Turn BT on, check your BT module name set in options and make sure it\'s paired</string>
     <string name="bt_try_connecting">Connecting with SIO2BT. Please wait...</string>
     <string name="bt_connected">Connected with SIO2BT.</string>
     <string name="bt_failed_connecting">Failed to connect with SIO2BT. Try again...</string>
@@ -17,4 +17,5 @@
     <string name="sio2pc_failed_connecting">Failed to connect with SIO2PC-USB.</string>
     <string name="sio2pc_no_permissions">No permissions for SIO2PC-USB.</string>
     <string name="sio2pc_not_attached">SIO2PC-USB is not attached.</string>
+    <string name="bt_module_not_present">BT module not present.</string>
 </resources>
