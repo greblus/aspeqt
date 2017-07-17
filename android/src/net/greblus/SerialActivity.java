@@ -64,11 +64,6 @@ public class SerialActivity extends QtActivity
            super.onPause();
         }
 
-        @Override
-        protected void onActivityResult(int requestCode, int resultCode, Intent data) {
-            m_device.activityResult(requestCode, resultCode, data);
-        }
-
         public static void runFileChooser(int filter, int action, String dir) {
             Log.i("ASPEQT:", "DIR:" + dir);
             m_chosen = "None";

@@ -47,9 +47,6 @@ public class SIO2PCUS4A implements SerialDevice
         manager = (UsbManager)sa.getSystemService(Context.USB_SERVICE);
     }
 
-    public void activityResult(int requestCode, int resultCode, Intent data) {
-    }
-
     public int openDevice() {
         HashMap<String, UsbDevice> deviceList = manager.getDeviceList();
         Iterator<UsbDevice> deviceIterator = deviceList.values().iterator();

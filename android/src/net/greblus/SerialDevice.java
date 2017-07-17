@@ -1,7 +1,4 @@
-
 package net.greblus;
-
-import android.content.Intent;
 
 public interface SerialDevice {
     public int openDevice();
@@ -15,5 +12,4 @@ public interface SerialDevice {
     public int getModemStatus();
     public int getSWCommandFrame();
     public int getHWCommandFrame(int mMethod);
-    public void activityResult(int requestCode, int resultCode, Intent data);
 }

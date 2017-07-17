@@ -24,44 +24,27 @@ public class SIO2BT implements SerialDevice
     private UUID uuid;
     private InputStream m_input = null;
     private OutputStream m_output = null;
-    private int REQUEST_ENABLE_BT = 1;
     private SerialActivity sa = SerialActivity.s_activity;
-    private boolean bt_request_sent = false;
 
     SIO2BT() {
         m_BluetoothAdapter = BluetoothAdapter.getDefaultAdapter();
-        requestEnableBt();       
+        if (m_BluetoothAdapter == null)
+            Toast.makeText(sa, sa.getResources().getString(R.string.bt_module_not_present), Toast.LENGTH_SHORT).show();
+        else
+            if (!m_BluetoothAdapter.isEnabled())
+                m_BluetoothAdapter.enable();
     }
 
-    public void activityResult(int requestCode, int resultCode, Intent data) {
-        if (requestCode == REQUEST_ENABLE_BT) {            
-            if (resultCode == 0) {
-                Intent enableBtIntent = new Intent(BluetoothAdapter.ACTION_REQUEST_ENABLE);
-                sa.startActivityForResult(enableBtIntent, REQUEST_ENABLE_BT);
-            } else
-                    bt_request_sent = false;
-        }
-    }
-
-    public int requestEnableBt() {        
+    public int openDevice() {
         if (m_BluetoothAdapter == null) {
             Log.i("BT", "No BT adapter found!");
             return 0;
         }
 
-        if (!m_BluetoothAdapter.isEnabled()) {
-            bt_request_sent = true;
-            Intent enableBtIntent = new Intent(BluetoothAdapter.ACTION_REQUEST_ENABLE);
-            sa.startActivityForResult(enableBtIntent, REQUEST_ENABLE_BT);
-        }
-        return 1;
-    }
+        if (!m_BluetoothAdapter.isEnabled())
+            m_BluetoothAdapter.enable();
 
-    public int openDevice() {
-        if (!bt_request_sent && (requestEnableBt() == 0))
-            return 0;
-
-        while (!m_BluetoothAdapter.isEnabled()) { };
+        while (!m_BluetoothAdapter.isEnabled()) {} //let's wait for BT a little bit
 
         m_BluetoothAdapter.cancelDiscovery();
         Set<BluetoothDevice> pairedDevices = m_BluetoothAdapter.getBondedDevices();
@@ -316,4 +299,5 @@ public class SIO2BT implements SerialDevice
         return 0;
     }
 }
+
 
