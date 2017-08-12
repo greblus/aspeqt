@@ -92,7 +92,7 @@ public class SimpleFileDialog
 		else Select_type = FileOpen;
 		
 		m_context = context;
-                m_baseSdcardDirectory = "/mnt/sdcard/";
+                m_baseSdcardDirectory = Environment.getExternalStorageDirectory().getAbsolutePath();
 
                 File f = new File(m_dir);
                 if (f.isDirectory())
@@ -102,7 +102,7 @@ public class SimpleFileDialog
                     if (f.isDirectory())
                         m_sdcardDirectory = m_baseSdcardDirectory;
                     else
-                        m_sdcardDirectory = Environment.getExternalStorageDirectory().getAbsolutePath();
+                        m_sdcardDirectory = "/mnt/sdcard";
                 }
                 f = null;
 
@@ -161,21 +161,21 @@ public class SimpleFileDialog
 				String sel = "" + ((AlertDialog) dialog).getListView().getAdapter().getItem(item);
 				if (sel.charAt(sel.length()-1) == '/')	sel = sel.substring(0, sel.length()-1);
 				
-				// Navigate into the sub-directory
-				if (sel.equals(".."))
-				{
-					   m_dir = m_dir.substring(0, m_dir.lastIndexOf("/"));
-				}
-				else
-				{
-					   m_dir += "/" + sel;
-				}
-				Selected_File_Name = Default_File_Name;
+                                // Navigate into the sub-directory
+                                if (sel.equals(".."))
+                                {
+                                           m_dir = m_dir.substring(0, m_dir.lastIndexOf("/"));
+                                }
+                                else
+                                {
+                                           m_dir += '/' + sel;
+                                }
+                                Selected_File_Name = Default_File_Name;
 				
 				if ((new File(m_dir).isFile())) // If the selection is a regular file
 				{
-					m_dir = m_dir_old;
-					Selected_File_Name = sel;
+                                        m_dir = m_dir_old;
+                                        Selected_File_Name = sel;
 				}
 				
 				updateDirectory();
@@ -195,9 +195,9 @@ public class SimpleFileDialog
 				if (m_SimpleFileDialogListener != null){
 					{
 						if (Select_type == FileOpen || Select_type == FileSave)
-						{
-							Selected_File_Name= input_text.getText() +"";
-							m_SimpleFileDialogListener.onChosenDir(m_dir + "/" + Selected_File_Name);}
+                                                {
+                                                        Selected_File_Name= input_text.getText() +"";
+                                                        m_SimpleFileDialogListener.onChosenDir(m_dir + "/" + Selected_File_Name);}
 						else
 						{
 							m_SimpleFileDialogListener.onChosenDir(m_dir);
@@ -231,16 +231,20 @@ public class SimpleFileDialog
 		else return false;
 	}
 	
-	private List<String> getDirectories(String dir)
+        private List<String> getDirectories(String dir)
 	{
 		List<String> dirs = new ArrayList<String>();
+
 		try
 		{
 			File dirFile = new File(dir);
 			
                         int cnt = dir.length() - dir.replace("/", "").length();
-			// if directory is not the base sd card directory add ".." for going up one directory                        
-                        if (! m_dir.equals(m_baseSdcardDirectory) && (cnt > 1)) dirs.add("..");
+                        if (cnt == 0) {
+                            m_dir = m_baseSdcardDirectory;
+                            updateDirectory();
+                        }
+                        dirs.add("..");
 
 			if (! dirFile.exists() || ! dirFile.isDirectory())
 			{
