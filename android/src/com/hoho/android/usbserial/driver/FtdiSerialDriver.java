@@ -152,8 +152,6 @@ public class FtdiSerialDriver implements UsbSerialDriver {
          * Set flow control register.
          */
         private static final int SIO_SET_FLOW_CTRL_REQUEST = 2;
-        private static final int SIO_SET_FLOW_CTRL_REQUEST_TYPE = 0x40;
-        private static final int SIO_DISABLE_FLOW_CTRL = 0;
 
         /**
          * Set baud rate.
@@ -452,14 +450,6 @@ public class FtdiSerialDriver implements UsbSerialDriver {
             if (result != 0) {
                 throw new IOException("Setting parameters failed: result=" + result);
             }
-            //disable flow control, needed for FT231X
-            result = mConnection.controlTransfer(FTDI_DEVICE_OUT_REQTYPE,
-                    SIO_SET_FLOW_CTRL_REQUEST, SIO_DISABLE_FLOW_CTRL, 0 /* index */,
-                    null, 0, USB_WRITE_TIMEOUT_MILLIS);
-            if (result != 0) {
-                throw new IOException("Cannot disable flow control: result=" + result);
-            }
-
         }
 
         private long[] convertBaudrate(int baudrate) {
