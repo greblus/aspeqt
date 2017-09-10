@@ -104,7 +104,7 @@ void CassetteDialog::progress(int remainingTime)
     ui->label->setText(tr("Playing back cassette image.\n\n"
                           "Estimated time left: %1:%2").arg(minutes).arg(seconds, 2, 10, QChar('0')));
     ui->progressBar->setMaximum(mTotalDuration);
-    ui->progressBar->setValue(mRemainingTime);
+    ui->progressBar->setValue(mTotalDuration - mRemainingTime);
 }
 
 void CassetteDialog::tick()

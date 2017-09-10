@@ -75,7 +75,7 @@ When you hear the beep sound, push the OK button below and press a key on your A
         <number>100</number>
        </property>
        <property name="value">
-        <number>100</number>
+        <number>0</number>
        </property>
        <property name="alignment">
         <set>Qt::AlignCenter</set>
