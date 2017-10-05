@@ -134,14 +134,6 @@ TRANSLATIONS = i18n/aspeqt_pl.ts \
 RC_FILE = AspeQt.rc \
 
 DISTFILES += \
-    android/src/com/hoho/android/usbserial/driver/CommonUsbSerialPort.java \
-    android/src/com/hoho/android/usbserial/driver/FtdiSerialDriver.java \
-    android/src/com/hoho/android/usbserial/driver/ProbeTable.java \
-    android/src/com/hoho/android/usbserial/driver/UsbId.java \
-    android/src/com/hoho/android/usbserial/driver/UsbSerialDriver.java \
-    android/src/com/hoho/android/usbserial/driver/UsbSerialPort.java \
-    android/src/com/hoho/android/usbserial/driver/UsbSerialProber.java \
-    android/src/com/hoho/android/usbserial/driver/UsbSerialRuntimeException.java \
     android/src/net/greblus/SerialActivity.java \
     android/src/net/greblus/SimpleFileDialog.java \
     android/res/xml/device_filter.xml \
@@ -152,7 +144,8 @@ DISTFILES += \
     android/src/net/greblus/SIO2BT.java \
     android/src/net/greblus/SIO2PCUS4A.java \
     android/res/values/strings.xml \
-    android/res/values-pl/strings.xml
+    android/res/values-pl/strings.xml \
+    android/libs/d2xx.jar
 
 
 
