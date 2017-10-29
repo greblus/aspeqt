@@ -220,7 +220,7 @@ QByteArray StandardSerialPortBackend::readCommandFrame()
             break;
         } else if (aspeqtSettings->serialPortInterface() != 1) {
             retries++;
-            if (retries == 2) {
+            if (retries == 100) {
                 retries = 0;
                 if (mHighSpeed) {
                     mSpdChanged = false;
