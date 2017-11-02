@@ -58,24 +58,20 @@ public class SIO2PCUS4A implements SerialDevice
             return 0;
         }
 
-            int dev_pid, dev_vid;
-            boolean dev_found = false;
-             do {
-                 device = deviceIterator.next();
-                 dev_pid = device.getProductId();
-                 dev_vid = device.getVendorId();
-                 if ((dev_vid == 1027) &&
-                    (
-                      (dev_pid == 24577) || //Lotharek's Sio2PC-USB
-                      (dev_pid == 33712) || //Ray's Sio2USB-1050PC
-                      (dev_pid == 33713) ||
-                      (dev_pid == 24597)    //Ray's Sio2PC-USB
-                    )
-                ) { dev_found = true; break; }
-
-//                 if ((dev_vid  == 1659) && (dev_pid == 8963)) //PL2303
-//                    { dev_found = true; break;}
-
+        int dev_pid, dev_vid;
+        boolean dev_found = false;
+        do {
+            device = deviceIterator.next();
+            dev_pid = device.getProductId();
+            dev_vid = device.getVendorId();
+            if ((dev_vid == 1027) &&
+                (
+                  (dev_pid == 24577) || //Lotharek's Sio2PC-USB
+                  (dev_pid == 33712) || //Ray's Sio2USB-1050PC
+                  (dev_pid == 33713) ||
+                  (dev_pid == 24597)    //Ray's Sio2PC-USB
+                )
+            ) { dev_found = true; break; }
         } while (deviceIterator.hasNext());
 
         if (dev_found) {
@@ -92,22 +88,17 @@ public class SIO2PCUS4A implements SerialDevice
 
         Log.i("USB", "Device found!");
         UsbDeviceConnection connection = manager.openDevice(device);
-        sPort = UsbSerialDevice.createUsbSerialDevice(device, connection);
-
-        sPort.open();
+        sPort = UsbSerialDevice.createUsbSerialDevice(device, connection);        
         sPort.setBaudRate(19200);
         sPort.setDataBits(UsbSerialInterface.DATA_BITS_8);
         sPort.setParity(UsbSerialInterface.PARITY_ODD);
         sPort.setFlowControl(UsbSerialInterface.FLOW_CONTROL_OFF);
         sPort.syncOpen();
-
         return (sPort != null) ? 1 : 0;
-
     }
 
     public void closeDevice() {
-       if (sPort != null)            
-            sPort.close();
+       if (sPort != null)                        
             sPort.syncClose();
     }
 
