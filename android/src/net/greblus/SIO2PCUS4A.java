@@ -98,12 +98,13 @@ public class SIO2PCUS4A implements SerialDevice
             if (!ftdid2xx.isFtDevice(device))
                 return -1;
 
-            //if (debug) Log.i("USB", "Requesting permissions");
-            //manager.requestPermission(device, pintent);
+            D2xxManager.DriverParameters drvParams = new D2xxManager.DriverParameters();
+            drvParams.setMaxTransferSize(64);
+            drvParams.setReadTimeout(1000);
 
             if (devCount > 0) {
-            try {
-                ftDevice = ftdid2xx.openByUsbDevice(sa, device);
+            try {               
+                ftDevice = ftdid2xx.openByUsbDevice(sa, device, drvParams);
             } catch(NullPointerException e){
                 if (debug) Log.i("FTDI", e.getMessage(), e);
             } finally {
@@ -112,7 +113,8 @@ public class SIO2PCUS4A implements SerialDevice
                     return devCount;
                 }
             }
-            if (ftDevice.isOpen()) {
+
+        if (ftDevice.isOpen()) {
                 devInfo = ftDevice.getDeviceInfo();
                 ftDevice.setBitMode((byte)0, D2xxManager.FT_BITMODE_RESET);
                 boolean ret = ftDevice.setFlowControl(D2xxManager.FT_FLOW_NONE, (byte) 0x00, (byte)0x00 );
