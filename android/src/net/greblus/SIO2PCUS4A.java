@@ -33,7 +33,7 @@ public class SIO2PCUS4A implements SerialDevice
     private UsbDevice device = null;
     private UsbManager manager;
 
-    private static D2xxManager ftdid2xx = null;
+    private static D2xxManager ftD2xx = null;
     private static FT_Device ftDevice = null;
     private static D2xxManager.FtDeviceInfoListNode devInfo;
 
@@ -89,13 +89,13 @@ public class SIO2PCUS4A implements SerialDevice
             return 0;
         }
         try {
-            ftdid2xx = D2xxManager.getInstance(sa);
-            devCount = (int)ftdid2xx.createDeviceInfoList(sa);
-            ftdid2xx.setVIDPID(1027, 33713);
-            ftdid2xx.setVIDPID(1027, 24597);
-            ftdid2xx.setVIDPID(1027, 24577);
-            ftdid2xx.setVIDPID(1027, 33712);
-            if (!ftdid2xx.isFtDevice(device))
+            ftD2xx = D2xxManager.getInstance(sa);
+            devCount = (int)ftD2xx.createDeviceInfoList(sa);
+            ftD2xx.setVIDPID(1027, 33713);
+            ftD2xx.setVIDPID(1027, 24597);
+            ftD2xx.setVIDPID(1027, 24577);
+            ftD2xx.setVIDPID(1027, 33712);
+            if (!ftD2xx.isFtDevice(device))
                 return -1;
 
             D2xxManager.DriverParameters drvParams = new D2xxManager.DriverParameters();
@@ -104,7 +104,7 @@ public class SIO2PCUS4A implements SerialDevice
 
             if (devCount > 0) {
             try {               
-                ftDevice = ftdid2xx.openByUsbDevice(sa, device, drvParams);
+                ftDevice = ftD2xx.openByUsbDevice(sa, device, drvParams);
             } catch(NullPointerException e){
                 if (debug) Log.i("FTDI", e.getMessage(), e);
             } finally {
