@@ -36,6 +36,7 @@ import java.util.Collections;
 import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
+import android.os.Build;
 
 /**
  * A {@link CommonUsbSerialPort} implementation for a variety of FTDI devices
@@ -192,10 +193,11 @@ public class FtdiSerialDriver implements UsbSerialDriver {
          * since it gives no indication of number of bytes read. Set this to
          * {@code true} on platforms where it is fixed.
          */
-        private static final boolean ENABLE_ASYNC_READS = false;
+        private final boolean mEnableAsyncReads;
 
         public FtdiSerialPort(UsbDevice device, int portNumber) {
             super(device, portNumber);
+            mEnableAsyncReads = (Build.VERSION.SDK_INT >= Build.VERSION_CODES.JELLY_BEAN_MR1);
         }
 
         @Override
@@ -294,33 +296,29 @@ public class FtdiSerialDriver implements UsbSerialDriver {
         public int sread(byte[] dest, int size, int timeoutMillis) throws IOException {
             final UsbEndpoint endpoint = mDevice.getInterface(0).getEndpoint(0);
 
-            if (ENABLE_ASYNC_READS) {
-                final int readAmt;
-                synchronized (mReadBufferLock) {
-                    // mReadBuffer is only used for maximum read size.
-                    readAmt = Math.min(size, mReadBuffer.length);
-                }
-
+            if (mEnableAsyncReads) {
                 final UsbRequest request = new UsbRequest();
-                request.initialize(mConnection, endpoint);
-
                 final ByteBuffer buf = ByteBuffer.wrap(dest);
-                if (!request.queue(buf, readAmt)) {
-                    throw new IOException("Error queueing request.");
+                try {
+                        request.initialize(mConnection, endpoint);
+                        if (!request.queue(buf, dest.length)) {
+                        throw new IOException("Error queueing request.");
+                    }
+
+                        final UsbRequest response = mConnection.requestWait();
+                        if (response == null) {
+                            throw new IOException("Null response");
+                        }
+                } finally {
+                    request.close();
                 }
 
-                final UsbRequest response = mConnection.requestWait();
-                if (response == null) {
-                    throw new IOException("Null response");
+                final int totalBytesRead = buf.position();
+                if (totalBytesRead < MODEM_STATUS_HEADER_LENGTH) {
+                    throw new IOException("Expected at least " + MODEM_STATUS_HEADER_LENGTH + " bytes");
                 }
+                return filterStatusBytes(dest, dest, totalBytesRead, endpoint.getMaxPacketSize());
 
-                final int payloadBytesRead = buf.position() - MODEM_STATUS_HEADER_LENGTH;
-                if (payloadBytesRead > 0) {
-                    Log.d(TAG, HexDump.dumpHexString(dest, 0, Math.min(32, size)));
-                    return payloadBytesRead;
-                } else {
-                    return 0;
-                }
             } else {
                 final int totalBytesRead;
 

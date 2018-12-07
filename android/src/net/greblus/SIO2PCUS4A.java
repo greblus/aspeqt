@@ -110,6 +110,8 @@ public class SIO2PCUS4A implements SerialDevice
         try {
             sPort.open(connection);
             sPort.setParameters(19200, 8, UsbSerialPort.STOPBITS_1, UsbSerialPort.PARITY_NONE);
+            sPort.setDTR(true);
+            sPort.setRTS(true);
         } catch (IOException e) {
             if (debug) Log.i("USB", "Can't open port");
             sa.runOnUiThread(new Runnable() {
