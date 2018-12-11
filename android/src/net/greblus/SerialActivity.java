@@ -25,6 +25,10 @@ import java.nio.ByteOrder;
 import android.widget.Toast;
 import android.view.WindowManager;
 
+import android.os.Build;
+import android.content.pm.PackageManager;
+import android.Manifest;
+
 public class SerialActivity extends QtActivity
 {
         private static boolean debug = false;
@@ -54,6 +58,14 @@ public class SerialActivity extends QtActivity
                 m_device = new SIO2BT();
 
             registerBroadcastReceiver();
+
+            if (Build.VERSION.SDK_INT >= 23) {
+                if (this.checkSelfPermission(Manifest.permission.WRITE_EXTERNAL_STORAGE)
+                        != PackageManager.PERMISSION_GRANTED) {
+                    this.requestPermissions(new String[]{Manifest.permission.WRITE_EXTERNAL_STORAGE}, 1);
+                }
+            }
+
             getWindow().addFlags(WindowManager.LayoutParams.FLAG_KEEP_SCREEN_ON);
             sendBufAddr(rbuf, wbuf);
         }
