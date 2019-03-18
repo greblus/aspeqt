@@ -28,11 +28,8 @@ LogDisplayDialog::LogDisplayDialog(QWidget *parent) :
     int rx = screen->availableSize().width();
     int ry = screen->availableSize().height();
 
-    this->setMaximumWidth(rx);
-    this->setMaximumHeight(ry-200);
-
-    l_ui->textEdit->setMinimumWidth(rx-30);
-    l_ui->textEdit->setMinimumHeight(ry-200);
+    l_ui->textEdit->setMaximumHeight(ry-300);
+    l_ui->textEdit->setMaximumWidth(ry);
 
     QWidget *w = l_ui->textEdit;
     QScroller::grabGesture(w, QScroller::TouchGesture);
