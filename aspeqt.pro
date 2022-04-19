@@ -7,7 +7,7 @@ DEFINES += VERSION=\\\"1.0\\\"
 TARGET = AspeQt
 TEMPLATE = app
 CONFIG += qt
-QT += core gui widgets printsupport svg
+QT += core gui widgets printsupport svg core5compat
 CONFIG += mobility
 CONFIG += static
 MOBILITY = bearer
@@ -62,6 +62,7 @@ unix:
     linux:!android||macx {
     SOURCES += serialport-unix.cpp
     HEADERS += serialport-unix.h
+    LIBS += -lz
     }
 }
 

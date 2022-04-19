@@ -30,7 +30,7 @@ QString SioDevice::deviceName()
 SioWorker::SioWorker()
         : QThread()
 {
-    deviceMutex = new QMutex(QMutex::Recursive);
+    deviceMutex = new QRecursiveMutex();
     for (int i=0; i <= 255; i++) {
         devices[i] = 0;
     }
@@ -71,11 +71,11 @@ void SioWorker::start(Priority p)
         case 0:
             mPort = new StandardSerialPortBackend(0);
             break;
-        #ifndef Q_OS_ANDROID
-        case 1:
-            mPort = new AtariSioBackend(0);
-            break;
-        #endif
+//        #ifndef Q_OS_ANDROID
+//        case 1:
+//            mPort = new AtariSioBackend(0);
+//            break;
+//        #endif
     }
 
     mustTerminate = false;
@@ -416,11 +416,11 @@ void CassetteWorker::start(Priority p)
         case 0:
             mPort = new StandardSerialPortBackend(0);
             break;
-        #ifndef Q_OS_ANDROID
-        case 1:
-            mPort = new AtariSioBackend(0);
-            break;
-        #endif
+//        #ifndef Q_OS_ANDROID
+//        case 1:
+//            mPort = new AtariSioBackend(0);
+//            break;
+//        #endif
     }
     QThread::start(p);
 }

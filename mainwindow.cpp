@@ -23,7 +23,7 @@
 #include <QWidget>
 #include <QDrag>
 #include <QtDebug>
-#include <QDesktopWidget>
+//#include <QDesktopWidget>
 #include <QFont>
 #include <QTextCodec>
 #include <QLayout>

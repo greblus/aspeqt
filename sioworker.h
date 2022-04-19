@@ -2,7 +2,9 @@
 #define SIOWORKER_H
 
 #include <QThread>
+#include <QRecursiveMutex>
 #include <QMutex>
+#include <climits>
 
 #include "serialport.h"
 
@@ -46,7 +48,7 @@ class SioWorker : public QThread
 
 private:
     quint8 sioChecksum(const QByteArray &data, uint size);
-    QMutex *deviceMutex;
+    QRecursiveMutex *deviceMutex;
     SioDevice* devices[256];
     AbstractSerialPortBackend *mPort;
     bool mustTerminate;

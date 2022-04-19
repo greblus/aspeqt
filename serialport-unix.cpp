@@ -13,7 +13,9 @@
 #include <unistd.h>
 #ifdef Q_OS_UNIX
     #ifdef Q_OS_LINUX
+        #if HAVE_STROPTS_H
         #include <stropts.h>
+        #endif
         #include <termio.h>
         #include <linux/serial.h>
     #endif

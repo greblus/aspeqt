@@ -136,7 +136,7 @@ void SmartDevice::handleCommand(quint8 command, quint16 aux)
 
         qDebug() << "!n" << tr("[%1] Read date/time (%2).")
                        .arg(deviceName())
-                       .arg(dateTime.toString(Qt::SystemLocaleShortDate));
+                       .arg(dateTime.toString(Qt::ISODate));
         break;
     }
 
@@ -214,7 +214,7 @@ void AspeCl::handleCommand(quint8 command, quint16 aux)
             data[5] = dateTime.time().second();
             qDebug() << "!n" << tr("[%1] Date/time sent to client (%2).")
                        .arg(deviceName())
-                       .arg(dateTime.toString(Qt::SystemLocaleShortDate));
+                       .arg(dateTime.toString(Qt::ISODate));
 
             sio->port()->writeComplete();
             sio->port()->writeDataFrame(data);
