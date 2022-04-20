@@ -9,7 +9,7 @@ import java.lang.String;
 import java.util.List;
 import android.util.Log;
 
-import org.qtproject.qt5.android.bindings.QtActivity;
+import org.qtproject.qt.android.bindings.QtActivity;
 
 import android.hardware.usb.UsbManager;
 import android.hardware.usb.UsbDevice;
