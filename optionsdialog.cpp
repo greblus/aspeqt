@@ -9,7 +9,7 @@
 #include <QScroller>
 
 #ifdef Q_OS_ANDROID
-#include <QAndroidJniObject>
+#include <QJniObject>
 #endif
 
 OptionsDialog::OptionsDialog(QWidget *parent) :
@@ -162,10 +162,10 @@ void OptionsDialog::OptionsDialog_accepted()
 //    aspeqtSettings->setEnableShade(m_ui->enableShade->isChecked());
     #ifdef Q_OS_ANDROID
     int serial_int = aspeqtSettings->serialPortInterface();
-    QAndroidJniObject::callStaticMethod<void>("net/greblus/SerialActivity", "changeDevice", "(I)V", serial_int);
-    QAndroidJniObject b_name = QAndroidJniObject::fromString(aspeqtSettings->bluetoothName());
+    QJniObject::callStaticMethod<void>("net/greblus/SerialActivity", "changeDevice", "(I)V", serial_int);
+    QJniObject b_name = QJniObject::fromString(aspeqtSettings->bluetoothName());
     jstring bluetooth_name = b_name.object<jstring>();
-    QAndroidJniObject::setStaticField("net/greblus/SerialActivity", "bluetoothName", bluetooth_name);
+    QJniObject::setStaticField("net/greblus/SerialActivity", "bluetoothName", bluetooth_name);
     #endif
     int backend = 0;
     #ifndef Q_OS_ANDROID

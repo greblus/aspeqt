@@ -32,7 +32,7 @@
 #include "miscutils.h"
 
 #ifdef Q_OS_ANDROID
-#include <QAndroidJniObject>
+#include <QJniObject>
 #endif
 
 #include <QScreen>
@@ -159,11 +159,11 @@ MainWindow::MainWindow(QWidget *parent)
 
 #ifdef Q_OS_ANDROID
     int serial_int = aspeqtSettings->serialPortInterface();
-    QAndroidJniObject::setStaticField("net/greblus/SerialActivity", "m_serial", serial_int);
-    QAndroidJniObject::callStaticMethod<void>("net/greblus/SerialActivity", "changeDevice", "(I)V", serial_int);
-    QAndroidJniObject b_name = QAndroidJniObject::fromString(aspeqtSettings->bluetoothName());
+    QJniObject::setStaticField("net/greblus/SerialActivity", "m_serial", serial_int);
+    QJniObject::callStaticMethod<void>("net/greblus/SerialActivity", "changeDevice", "(I)V", serial_int);
+    QJniObject b_name = QJniObject::fromString(aspeqtSettings->bluetoothName());
     jstring bluetooth_name = b_name.object<jstring>();
-    QAndroidJniObject::setStaticField("net/greblus/SerialActivity", "bluetoothName", bluetooth_name);
+    QJniObject::setStaticField("net/greblus/SerialActivity", "bluetoothName", bluetooth_name);
 #endif
 
     /* Load translators */
@@ -1342,13 +1342,13 @@ void MainWindow::mountDiskImage(int no)
 //        dir = QFileInfo(diskWidgets[no].fileNameLabel->text()).absolutePath();
 //    }
 #ifdef Q_OS_ANDROID
-    QAndroidJniObject jdir = QAndroidJniObject::fromString(dir);
-    QAndroidJniObject::callStaticMethod<void>("net/greblus/SerialActivity", "runFileChooser", "(IILjava/lang/String;)V", 1, 0, jdir.object<jstring>());
+    QJniObject jdir = QJniObject::fromString(dir);
+    QJniObject::callStaticMethod<void>("net/greblus/SerialActivity", "runFileChooser", "(IILjava/lang/String;)V", 1, 0, jdir.object<jstring>());
 
     QString fileName = NULL;
     do
       {
-        QAndroidJniObject jFileName = QAndroidJniObject::getStaticObjectField<jstring>("net/greblus/SerialActivity", "m_chosen");
+        QJniObject jFileName = QJniObject::getStaticObjectField<jstring>("net/greblus/SerialActivity", "m_chosen");
         fileName = jFileName.toString();
 
         if (fileName == "Cancelled") {fileName.clear(); break;}
@@ -1382,13 +1382,13 @@ void MainWindow::mountFolderImage(int no)
 // Always mount from "last folder dir" //
     dir = aspeqtSettings->lastFolderImageDir();
 #ifdef Q_OS_ANDROID
-    QAndroidJniObject jdir = QAndroidJniObject::fromString(dir);
-    QAndroidJniObject::callStaticMethod<void>("net/greblus/SerialActivity", "runDirChooser", "(Ljava/lang/String;)V", jdir.object<jstring>());
+    QJniObject jdir = QJniObject::fromString(dir);
+    QJniObject::callStaticMethod<void>("net/greblus/SerialActivity", "runDirChooser", "(Ljava/lang/String;)V", jdir.object<jstring>());
 
     QString fileName = NULL;
     do
       {
-        QAndroidJniObject jFileName = QAndroidJniObject::getStaticObjectField<jstring>("net/greblus/SerialActivity", "m_chosen");
+        QJniObject jFileName = QJniObject::getStaticObjectField<jstring>("net/greblus/SerialActivity", "m_chosen");
         fileName = jFileName.toString();
 
         if (fileName == "Cancelled") {fileName.clear(); break;}
@@ -1628,11 +1628,11 @@ void MainWindow::saveDiskAs(int no)
 
     do {
         #ifdef Q_OS_ANDROID
-            QAndroidJniObject jdir = QAndroidJniObject::fromString(dir);
-            QAndroidJniObject::callStaticMethod<void>("net/greblus/SerialActivity", "runFileChooser", "(IILjava/lang/String;)V", 1, 1, jdir.object<jstring>());
+            QJniObject jdir = QJniObject::fromString(dir);
+            QJniObject::callStaticMethod<void>("net/greblus/SerialActivity", "runFileChooser", "(IILjava/lang/String;)V", 1, 1, jdir.object<jstring>());
             do
               {
-                QAndroidJniObject jFileName = QAndroidJniObject::getStaticObjectField<jstring>("net/greblus/SerialActivity", "m_chosen");
+                QJniObject jFileName = QJniObject::getStaticObjectField<jstring>("net/greblus/SerialActivity", "m_chosen");
                 fileName = jFileName.toString();
 
                 if (fileName == "Cancelled") {fileName.clear(); break;}
@@ -1871,12 +1871,12 @@ void MainWindow::on_actionOpenSession_triggered()
 {
     QString dir = aspeqtSettings->lastSessionDir();
     #ifdef Q_OS_ANDROID
-    QAndroidJniObject jdir = QAndroidJniObject::fromString(dir);
-    QAndroidJniObject::callStaticMethod<void>("net/greblus/SerialActivity", "runFileChooser", "(IILjava/lang/String;)V", 4, 0, jdir.object<jstring>());
+    QJniObject jdir = QJniObject::fromString(dir);
+    QJniObject::callStaticMethod<void>("net/greblus/SerialActivity", "runFileChooser", "(IILjava/lang/String;)V", 4, 0, jdir.object<jstring>());
     QString fileName;
     do
       {
-        QAndroidJniObject jFileName = QAndroidJniObject::getStaticObjectField<jstring>("net/greblus/SerialActivity", "m_chosen");
+        QJniObject jFileName = QJniObject::getStaticObjectField<jstring>("net/greblus/SerialActivity", "m_chosen");
         fileName = jFileName.toString();
 
         if (fileName == "Cancelled") {fileName.clear(); break;}
@@ -1922,12 +1922,12 @@ void MainWindow::on_actionSaveSession_triggered()
 {
     QString dir = aspeqtSettings->lastSessionDir();
     #ifdef Q_OS_ANDROID
-    QAndroidJniObject jdir = QAndroidJniObject::fromString(dir);
-    QAndroidJniObject::callStaticMethod<void>("net/greblus/SerialActivity", "runFileChooser", "(IILjava/lang/String;)V", 4, 1, jdir.object<jstring>());
+    QJniObject jdir = QJniObject::fromString(dir);
+    QJniObject::callStaticMethod<void>("net/greblus/SerialActivity", "runFileChooser", "(IILjava/lang/String;)V", 4, 1, jdir.object<jstring>());
     QString fileName;
     do
       {
-        QAndroidJniObject jFileName = QAndroidJniObject::getStaticObjectField<jstring>("net/greblus/SerialActivity", "m_chosen");
+        QJniObject jFileName = QJniObject::getStaticObjectField<jstring>("net/greblus/SerialActivity", "m_chosen");
         fileName = jFileName.toString();
 
         if (fileName == "Cancelled") {fileName.clear(); break;}
@@ -1961,11 +1961,11 @@ void MainWindow::on_actionBootExe_triggered()
 {
     QString dir = aspeqtSettings->lastExeDir();    
     #ifdef Q_OS_ANDROID
-    QAndroidJniObject jdir = QAndroidJniObject::fromString(dir);
-    QAndroidJniObject::callStaticMethod<void>("net/greblus/SerialActivity", "runFileChooser", "(IILjava/lang/String;)V", 2, 0, jdir.object<jstring>());
+    QJniObject jdir = QJniObject::fromString(dir);
+    QJniObject::callStaticMethod<void>("net/greblus/SerialActivity", "runFileChooser", "(IILjava/lang/String;)V", 2, 0, jdir.object<jstring>());
     do
       {
-        QAndroidJniObject jFileName = QAndroidJniObject::getStaticObjectField<jstring>("net/greblus/SerialActivity", "m_chosen");
+        QJniObject jFileName = QJniObject::getStaticObjectField<jstring>("net/greblus/SerialActivity", "m_chosen");
         g_exefileName = jFileName.toString();
 
         if (g_exefileName == "Cancelled") {g_exefileName.clear(); break;}
@@ -2006,11 +2006,11 @@ void MainWindow::on_actionPlaybackCassette_triggered()
     QString dir = aspeqtSettings->lastCasDir();
     QString fileName = NULL;
     #ifdef Q_OS_ANDROID
-    QAndroidJniObject jdir = QAndroidJniObject::fromString(dir);
-    QAndroidJniObject::callStaticMethod<void>("net/greblus/SerialActivity", "runFileChooser", "(IILjava/lang/String;)V", 3, 0, jdir.object<jstring>());
+    QJniObject jdir = QJniObject::fromString(dir);
+    QJniObject::callStaticMethod<void>("net/greblus/SerialActivity", "runFileChooser", "(IILjava/lang/String;)V", 3, 0, jdir.object<jstring>());
     do
       {
-        QAndroidJniObject jFileName = QAndroidJniObject::getStaticObjectField<jstring>("net/greblus/SerialActivity", "m_chosen");
+        QJniObject jFileName = QJniObject::getStaticObjectField<jstring>("net/greblus/SerialActivity", "m_chosen");
         fileName = jFileName.toString();
 
         if (fileName == "Cancelled") {fileName.clear(); break;}

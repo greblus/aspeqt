@@ -9,7 +9,7 @@
 #endif
 
 #ifdef Q_OS_ANDROID
-#include <QAndroidJniObject>
+#include <QJniObject>
 #include <jni.h>
 
 jbyte *jrbuf = NULL;

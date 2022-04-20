@@ -11,7 +11,7 @@
 #include <errno.h>
 #include <sys/types.h>
 #include <unistd.h>
-#include <QAndroidJniObject>
+#include <QJniObject>
 
 extern char *rbuf;
 extern char *wbuf;
@@ -55,7 +55,7 @@ bool StandardSerialPortBackend::open()
 
     QString name = aspeqtSettings->serialPortName();
 
-    mHandle = QAndroidJniObject::callStaticMethod<jint>("net/greblus/SerialActivity", "openDevice", "()I");
+    mHandle = QJniObject::callStaticMethod<jint>("net/greblus/SerialActivity", "openDevice", "()I");
 
     if (mHandle == 0) {
     if (debug) qCritical() << "!e" << tr("Cannot open serial port '%1': %2")
@@ -110,7 +110,7 @@ void StandardSerialPortBackend::close()
     if (debug) qWarning() << "!i" << tr("close");
     cancel();
     mHandle = -1;
-    QAndroidJniObject::callStaticMethod<jint>("net/greblus/SerialActivity", "closeDevice", "()V");
+    QJniObject::callStaticMethod<jint>("net/greblus/SerialActivity", "closeDevice", "()V");
 }
 
 void StandardSerialPortBackend::cancel()
@@ -179,7 +179,7 @@ bool StandardSerialPortBackend::setSpeed(int speed)
     if (aspeqtSettings->serialPortInterface() == SIO2BT)
         return true;
 
-    int ret = QAndroidJniObject::callStaticMethod<jint>("net/greblus/SerialActivity", "setSpeed", "(I)I", speed);
+    int ret = QJniObject::callStaticMethod<jint>("net/greblus/SerialActivity", "setSpeed", "(I)I", speed);
     if (ret < 0) {
         if (debug) qCritical() << "!e" << tr("Cannot set serial port speed: %1")
                        .arg(lastErrorMessage());
@@ -204,9 +204,9 @@ QByteArray StandardSerialPortBackend::readCommandFrame()
 
     do {
         if (mMethod == SOFTWARE_HANDSHAKE)
-            result = QAndroidJniObject::callStaticMethod<jint>("net/greblus/SerialActivity", "getSWCommandFrame", "()I");
+            result = QJniObject::callStaticMethod<jint>("net/greblus/SerialActivity", "getSWCommandFrame", "()I");
         else
-            result = QAndroidJniObject::callStaticMethod<jint>("net/greblus/SerialActivity", "getHWCommandFrame", "(I)I", mMethod);
+            result = QJniObject::callStaticMethod<jint>("net/greblus/SerialActivity", "getHWCommandFrame", "(I)I", mMethod);
 
         switch (result) {
             case 1:
@@ -347,7 +347,7 @@ QByteArray StandardSerialPortBackend::readRawFrame(uint size, bool verbose)
     int elapsed;
 
     do {
-        result =  QAndroidJniObject::callStaticMethod<jint>("net/greblus/SerialActivity", "read", "(II)I", rest, total);
+        result =  QJniObject::callStaticMethod<jint>("net/greblus/SerialActivity", "read", "(II)I", rest, total);
         if (result < 0) result = 0;
         total += result;
         rest -= result;
@@ -392,7 +392,7 @@ bool StandardSerialPortBackend::writeRawFrame(const QByteArray &data)
     int elapsed;
 
     do {
-        result = QAndroidJniObject::callStaticMethod<jint>("net/greblus/SerialActivity", "write", "(II)I", rest, total);
+        result = QJniObject::callStaticMethod<jint>("net/greblus/SerialActivity", "write", "(II)I", rest, total);
 
         if (result < 0 ) {
             if (debug) qCritical() << "!e" << tr("Cannot write to serial port: %1")

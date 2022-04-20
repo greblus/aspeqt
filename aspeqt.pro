@@ -37,8 +37,7 @@ win32:LIBS += -lwinmm -lz
 win32:SOURCES += serialport-win32.cpp
 unix:
 {
-    android: {
-        QT += androidextras
+    android: {        
         SOURCES += serialport-android.cpp
         HEADERS += serialport-android.h
         FORMS += \
