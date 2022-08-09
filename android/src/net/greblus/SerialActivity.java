@@ -49,7 +49,7 @@ public class SerialActivity extends QtActivity
 
         @Override
 	public void onCreate(Bundle savedInstanceState)
- 	{
+ 	{            
             s_activity = this;
             super.onCreate(savedInstanceState);
             if (m_serial == 0)
