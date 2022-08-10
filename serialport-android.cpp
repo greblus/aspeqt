@@ -110,7 +110,7 @@ void StandardSerialPortBackend::close()
     if (debug) qWarning() << "!i" << tr("close");
     cancel();
     mHandle = -1;
-    QJniObject::callStaticMethod<jint>("net/greblus/SerialActivity", "closeDevice", "()V");
+    QJniObject::callStaticMethod<void>("net/greblus/SerialActivity", "closeDevice", "()V");
 }
 
 void StandardSerialPortBackend::cancel()
