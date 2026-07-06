@@ -108,6 +108,11 @@ protected:
     void leaveEvent(QEvent *);
     void resizeEvent(QResizeEvent *);
     bool eventFilter(QObject *obj, QEvent *event);
+#ifdef Q_OS_ANDROID
+    // Re-fit the layout to the current screen: apply system-bar insets as window
+    // margins and size the 6 drive rows so the log always keeps usable height.
+    void androidRelayout();
+#endif
 
 signals:
     void logMessage(int type, const QString &msg);

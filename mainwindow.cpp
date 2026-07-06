@@ -36,6 +36,7 @@
 #endif
 
 #include <QScreen>
+#include <QTimer>
 #include "math.h"
 
 AspeqtSettings *aspeqtSettings;
@@ -57,6 +58,7 @@ int g_savedWidth;
 bool g_logOpen;
 float ssize = 0;
 int btnsize = 0;
+int sbIcon = 0;   // status-bar icon size (20% smaller than the drive-button icons)
 
 // ****************************** END OF GLOBALS ************************************//
 
@@ -190,9 +192,6 @@ MainWindow::MainWindow(QWidget *parent)
 
     ssize = sqrt(resx*resx + resy*resy);
 
-    if (ssize < 6) ui->textEdit->setVisible(false);
-        else ui->verticalSpacer->changeSize(0, 0, QSizePolicy::Fixed, QSizePolicy::Fixed);
-
     QWidget *central = ui->centralWidget;
     QList<QToolButton *> allbtns = central->findChildren<QToolButton *>();
 
@@ -201,20 +200,42 @@ MainWindow::MainWindow(QWidget *parent)
     else
         btnsize = scrw*70/800;
 
-    ui->horizontalFrame_1->setMinimumHeight(btnsize+10);
-    ui->horizontalFrame_2->setMinimumHeight(btnsize+10);
-    ui->horizontalFrame_3->setMinimumHeight(btnsize+10);
-    ui->horizontalFrame_4->setMinimumHeight(btnsize+10);
-    ui->horizontalFrame_5->setMinimumHeight(btnsize+10);
-    ui->horizontalFrame_6->setMinimumHeight(btnsize+10);
+    // Keep the drive rows compact: only a few px taller than the icons, so more
+    // vertical space is left for the log (textEdit), especially in landscape.
+    int iconPx = qRound((btnsize - 8) * 1.3);
+    int btnH   = iconPx + 2;
+    int rowH   = iconPx + 6;
+    for (int i = 1; i <= 6; ++i) {
+        QFrame *f = central->findChild<QFrame *>(QString("horizontalFrame_%1").arg(i));
+        if (f) {
+            f->setMinimumHeight(rowH);
+            f->setMaximumHeight(rowH);
+            if (f->layout()) {
+                f->layout()->setContentsMargins(3, 1, 3, 1);
+                f->layout()->setSpacing(4);   // tighter gap between buttons
+            }
+        }
+    }
 
     foreach(QToolButton* btn, allbtns) {
-        btn->setMinimumHeight(btnsize);
-        btn->setMinimumWidth(btnsize+10);
-        btn->setMaximumHeight(btnsize);
-        btn->setMaximumWidth(btnsize+10);
-        btn->setIconSize(QSize(btnsize-8, btnsize-8));
+        btn->setMinimumHeight(btnH);
+        btn->setMinimumWidth(btnH);     // square: width == height
+        btn->setMaximumHeight(btnH);
+        btn->setMaximumWidth(btnH);
+        btn->setIconSize(QSize(iconPx, iconPx));
     }
+
+    if (ssize < 6) ui->textEdit->setVisible(false);
+        else {
+            // Give the top spacer a fixed height (~ the Android action bar) so drive
+            // slot 1 is never hidden under it, and collapse the bottom spacer. The log
+            // (textEdit) is then the only vertically-expanding widget, so it fills all
+            // remaining height in both portrait and landscape.
+            int abPx = qRound(0.6 * screen->physicalDotsPerInchY());
+            ui->verticalSpacer_2->changeSize(0, abPx, QSizePolicy::Fixed, QSizePolicy::Fixed);
+            ui->verticalSpacer->changeSize(0, 0, QSizePolicy::Fixed, QSizePolicy::Fixed);
+            ui->gridLayout->invalidate();
+        }
 
      /* Parse command line arguments:
       arg(1): session file (xxxxxxxx.aspeqt)   */
@@ -261,26 +282,43 @@ MainWindow::MainWindow(QWidget *parent)
     } else {
         setWindowTitle(g_mainWindowTitle);
     }
+#ifdef Q_OS_ANDROID
+    // Fill the *available* screen (excludes the system status/navigation bars) and
+    // keep filling it across rotations, so the bottom status bar stays on-screen.
+    // A saved desktop size would leave the window at the portrait width (~half the
+    // screen) in landscape.
+    setGeometry(screen->availableGeometry());
+    connect(screen, &QScreen::availableGeometryChanged, this, [this](const QRect &g){ setGeometry(g); });
+#else
     setGeometry(aspeqtSettings->lastHorizontalPos(),aspeqtSettings->lastVerticalPos(),aspeqtSettings->lastWidth(),aspeqtSettings->lastHeight());
+#endif
 
     /* Setup status bar */
+    sbIcon = qRound((btnsize - 5) * 0.8);   // 20% smaller than the drive icons
     speedLabel = new QLabel(this);
     onOffLabel = new QLabel(this);
     prtOnOffLabel = new QLabel(this);
     clearMessagesLabel = new QLabel(this);
     speedLabel->setText(tr(""));
-    onOffLabel->setMinimumWidth(21);
-    prtOnOffLabel->setMinimumWidth(18);
-    prtOnOffLabel->setPixmap(QIcon(":/icons/tango-icons/devices/printer.svg").pixmap(btnsize-5, btnsize-5, QIcon::Normal));  //
+    onOffLabel->setMinimumWidth(17);
+    prtOnOffLabel->setMinimumWidth(15);
+    prtOnOffLabel->setPixmap(QIcon(":/icons/tango-icons/devices/printer.svg").pixmap(sbIcon, sbIcon, QIcon::Normal));  //
     prtOnOffLabel->setToolTip(ui->actionPrinterEmulation->toolTip());
     prtOnOffLabel->setStatusTip(ui->actionPrinterEmulation->statusTip());
 
-    clearMessagesLabel->setMinimumWidth(21);
-    clearMessagesLabel->setPixmap(QIcon(":/icons/tango-icons/actions/edit-clear.svg").pixmap(btnsize-5, btnsize-5, QIcon::Normal));
+    clearMessagesLabel->setMinimumWidth(17);
+    clearMessagesLabel->setPixmap(QIcon(":/icons/tango-icons/actions/edit-clear.svg").pixmap(sbIcon, sbIcon, QIcon::Normal));
     clearMessagesLabel->setToolTip(tr("Clear messages"));
     clearMessagesLabel->setStatusTip(clearMessagesLabel->toolTip());
 
     speedLabel->setMinimumWidth(80);
+#ifdef Q_OS_ANDROID
+    // Keep the status bar (the bottom "toolbar") compact: ~20% shorter. Add a
+    // right margin so the last icon (clear-log) isn't jammed against the edge-to-
+    // edge screen edge / rounded corner where it's hard to tap.
+    ui->statusBar->setContentsMargins(0, 0, sbIcon, 0);
+    ui->statusBar->setFixedHeight(sbIcon + 4);
+#endif
 
     ui->statusBar->addPermanentWidget(speedLabel);
     ui->statusBar->addPermanentWidget(onOffLabel);
@@ -633,7 +671,15 @@ void MainWindow::hideEvent(QHideEvent *event)
 
 void MainWindow::show()
 {
+#ifdef Q_OS_ANDROID
+    // Full-screen immersive; androidRelayout() (also called on every resize)
+    // applies the system-bar insets and sizes the drive rows / log.
+    QMainWindow::showMaximized();
+    QTimer::singleShot(300, this, [this]{ androidRelayout(); });
+    QTimer::singleShot(1200, this, [this]{ androidRelayout(); });
+#else
     QMainWindow::show();
+#endif
     if (shownFirstTime) {
         /* Open options dialog if it's the first time */
         if (aspeqtSettings->isFirstTime()) {
@@ -662,7 +708,125 @@ void MainWindow::leaveEvent(QEvent *)
 }
 void MainWindow::resizeEvent(QResizeEvent *)
 {
+#ifdef Q_OS_ANDROID
+    androidRelayout();
+    // A live rotation leaves Qt/Android with a stale surface (overlapping old
+    // rows, a bogus window height, a half-width log). Re-showing the top-level
+    // window once per orientation flip recreates the surface cleanly; the guard
+    // stops the re-show's own resize events from looping.
+    static int lastOri = -1;
+    QScreen *scr = screen();
+    int ori = (scr && scr->size().width() > scr->size().height()) ? 1 : 0;
+    if (ori != lastOri) {
+        lastOri = ori;
+        QTimer::singleShot(500, this, [this]{
+            QMainWindow::hide();
+            QMainWindow::showMaximized();
+            androidRelayout();
+        });
+    }
+#endif
 }
+
+#ifdef Q_OS_ANDROID
+void MainWindow::androidRelayout()
+{
+    // setContentsMargins()/changeSize() below trigger a relayout (another
+    // resizeEvent); guard against re-entering while we're mid-adjust.
+    static bool busy = false;
+    if (busy) return;
+    busy = true;
+
+    // --- system-bar insets -> window margins (edge-to-edge safe area) ---------
+    // targetSdk 35+ forces the surface full-screen with the status/navigation
+    // bars drawn as overlays. Inset the window so nothing hides under them.
+    long packed = QJniObject::callStaticMethod<jlong>("net/greblus/SerialActivity", "systemBarInsets");
+    qreal dpr = devicePixelRatioF();
+    if (dpr < 1.0) dpr = 1.0;
+    int il = (int)((packed >> 48) & 0xffff);
+    int it = (int)((packed >> 32) & 0xffff);
+    int ir = (int)((packed >> 16) & 0xffff);
+    int ib = (int)( packed        & 0xffff);
+    int ml = qRound(il / dpr);
+    int mt = qRound(it / dpr);   // status bar + ActionBar height (from Java)
+    int mr = qRound(ir / dpr);
+    int mb = qRound(ib / dpr);
+    // A small aesthetic gap below the ActionBar; the sides/bottom clear the nav
+    // bar and any display cutout.
+    const int topPad = 8;
+    setContentsMargins(ml, mt, mr, mb);
+
+    // Insets may not be published yet on the very first layout / just after a
+    // rotation; retry shortly so the window still ends up correctly inset.
+    if (packed == 0)
+        QTimer::singleShot(200, this, [this]{ androidRelayout(); });
+
+    // --- adaptive vertical budget --------------------------------------------
+    // Lay out as: top pad, 6 drive rows, log (fills the rest), status bar. Size
+    // the rows from the available height so the log always keeps a few lines,
+    // shrinking the rows in landscape rather than starving the log.
+    QWidget *central = ui->centralWidget;
+    // Derive the height available to the central widget directly from the window
+    // (minus the inset margins and the status bar) rather than central->height():
+    // when the grid's minimum overflows, central->height() reports the *overflowed*
+    // size and the status bar gets pushed off-screen.
+    int chrome = qMax(statusBar()->height(), statusBar()->sizeHint().height());
+    // Use the screen height, not window height(): after a live rotation the
+    // fullscreen window briefly reports a bogus height (larger than the screen),
+    // which would over-inflate the budget and make the rows too tall.
+    QScreen *scr = screen();
+    int winH   = scr ? scr->size().height() : height();
+    int avail  = winH - contentsMargins().top() - contentsMargins().bottom() - chrome;
+    QFontMetrics fm(ui->textEdit->font());
+    int minLog  = fm.lineSpacing() * 2 + 10;          // keep ~2 log lines
+    int gaps    = ui->gridLayout->spacing() * 8;      // 9 rows -> 8 gaps
+    int margins = 6;                                  // grid top+bottom margins
+    int forRows = avail - topPad - minLog - gaps - margins;
+    // Floor low enough that the log's reserved height survives in cramped
+    // landscape (rows shrink instead of starving the log); cap so portrait rows
+    // stay only a little larger than landscape rather than ballooning.
+    int rowH    = qBound(30, forRows / 6, 46);
+
+    // The frame is the slot "box": give it an equal top/bottom pad and size the
+    // (square) buttons to what's left, so the icons sit centred inside the panel
+    // instead of poking out of the bottom edge.
+    int pad    = 2;                                   // vertical pad inside the box
+    int btnH   = rowH - 2 * pad - 2;                  // -2 for the frame border
+    int iconPx = btnH - 3;                            // less padding -> larger icons
+    for (int i = 1; i <= 6; ++i) {
+        QFrame *f = central->findChild<QFrame *>(QString("horizontalFrame_%1").arg(i));
+        if (f) {
+            f->setMinimumHeight(rowH);
+            f->setMaximumHeight(rowH);
+            if (f->layout()) {
+                f->layout()->setContentsMargins(4, pad, 4, pad);
+                f->layout()->setSpacing(4);
+            }
+        }
+    }
+    foreach (QToolButton *btn, central->findChildren<QToolButton *>()) {
+        btn->setMinimumSize(btnH, btnH);
+        btn->setMaximumSize(btnH, btnH);
+        btn->setIconSize(QSize(iconPx, iconPx));
+    }
+    ui->verticalSpacer_2->changeSize(0, topPad, QSizePolicy::Fixed, QSizePolicy::Fixed);
+    ui->verticalSpacer->changeSize(0, 0, QSizePolicy::Fixed, QSizePolicy::Fixed);
+    ui->gridLayout->invalidate();
+    ui->gridLayout->activate();    // apply the new geometry synchronously
+    // After a live rotation QAbstractScrollArea leaves the log's viewport stuck
+    // at the previous orientation's width (frame is full width, but the white
+    // viewport background only fills half). layoutChildren() won't fix it, so
+    // resize the viewport widget directly to fill the textEdit's frame.
+    {
+        QRect fr = ui->textEdit->contentsRect();
+        ui->textEdit->viewport()->setGeometry(fr);
+        ui->textEdit->viewport()->update();
+    }
+    ui->centralWidget->update();   // repaint vacated regions after a resize
+
+    busy = false;
+}
+#endif
 
 bool MainWindow::eventFilter(QObject *obj, QEvent *event)
 {
@@ -811,7 +975,7 @@ void MainWindow::on_actionPrinterEmulation_triggered()
         ui->actionPrinterEmulation->setText(QApplication::translate("MainWindow", "Start printer emulation", 0));
         ui->actionPrinterEmulation->setStatusTip(QApplication::translate("MainWindow", "Start printer emulation", 0));
         ui->actionPrinterEmulation->setIcon(QIcon(":/icons/tango-icons/status/printer-error.svg").pixmap(btnsize-5, btnsize-5, QIcon::Normal, QIcon::On));
-        prtOnOffLabel->setPixmap(QIcon(":/icons/tango-icons/status/printer-error.svg").pixmap(btnsize-5, btnsize-5, QIcon::Normal, QIcon::On));
+        prtOnOffLabel->setPixmap(QIcon(":/icons/tango-icons/status/printer-error.svg").pixmap(sbIcon, sbIcon, QIcon::Normal, QIcon::On));
         prtOnOffLabel->setToolTip(tr("Start printer emulation"));
         prtOnOffLabel->setStatusTip(prtOnOffLabel->toolTip());
         g_printerEmu = false;
@@ -820,7 +984,7 @@ void MainWindow::on_actionPrinterEmulation_triggered()
         ui->actionPrinterEmulation->setText(QApplication::translate("MainWindow", "Stop printer emulation", 0));
         ui->actionPrinterEmulation->setStatusTip(QApplication::translate("MainWindow", "Stop printer emulation", 0));
         ui->actionPrinterEmulation->setIcon(QIcon(":/icons/tango-icons/devices/printer.svg").pixmap(btnsize-5, btnsize-5, QIcon::Normal, QIcon::On));
-        prtOnOffLabel->setPixmap(QIcon(":/icons/tango-icons/devices/printer.svg").pixmap(btnsize-5, btnsize-5, QIcon::Normal, QIcon::On));
+        prtOnOffLabel->setPixmap(QIcon(":/icons/tango-icons/devices/printer.svg").pixmap(sbIcon, sbIcon, QIcon::Normal, QIcon::On));
         prtOnOffLabel->setToolTip(tr("Stop printer emulation"));
         prtOnOffLabel->setStatusTip(prtOnOffLabel->toolTip());
         g_printerEmu = true;
@@ -844,7 +1008,7 @@ void MainWindow::sioStarted()
     ui->actionStartEmulation->setText(tr("&Stop emulation"));
     ui->actionStartEmulation->setToolTip(tr("Stop SIO peripheral emulation"));
     ui->actionStartEmulation->setStatusTip(tr("Stop SIO peripheral emulation"));
-    onOffLabel->setPixmap(QIcon(":/icons/tango-icons/actions/media-playback-stop.svg").pixmap(btnsize-5, btnsize-5, QIcon::Normal, QIcon::On));
+    onOffLabel->setPixmap(QIcon(":/icons/tango-icons/actions/media-playback-stop.svg").pixmap(sbIcon, sbIcon, QIcon::Normal, QIcon::On));
     onOffLabel->setToolTip(ui->actionStartEmulation->toolTip());
     onOffLabel->setStatusTip(ui->actionStartEmulation->statusTip());
 }
@@ -855,7 +1019,7 @@ void MainWindow::sioFinished()
     ui->actionStartEmulation->setToolTip(tr("Start SIO peripheral emulation"));
     ui->actionStartEmulation->setStatusTip(tr("Start SIO peripheral emulation"));
     ui->actionStartEmulation->setChecked(false);
-    onOffLabel->setPixmap(QIcon(":/icons/tango-icons/actions/media-playback-start.svg").pixmap(btnsize-5, btnsize-5, QIcon::Normal, QIcon::On));
+    onOffLabel->setPixmap(QIcon(":/icons/tango-icons/actions/media-playback-start.svg").pixmap(sbIcon, sbIcon, QIcon::Normal, QIcon::On));
     onOffLabel->setToolTip(ui->actionStartEmulation->toolTip());
     onOffLabel->setStatusTip(ui->actionStartEmulation->statusTip());
     speedLabel->hide();
