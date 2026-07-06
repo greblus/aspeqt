@@ -1,6 +1,7 @@
 #include <QApplication>
 #include <QTextCodec>
 #include <QLibraryInfo>
+#include <QStyleHints>
 #include "mainwindow.h"
 
 #ifdef Q_OS_WIN
@@ -37,6 +38,9 @@ int main(int argc, char *argv[])
     timeBeginPeriod(1);
 #endif
     QApplication a(argc, argv);
+    // The UI (grey icons/text) was designed for a light background; force a light
+    // colour scheme so it doesn't render as a black void under the system dark mode.
+    a.styleHints()->setColorScheme(Qt::ColorScheme::Light);
     MainWindow w;
     w.show();
     ret = a.exec();
