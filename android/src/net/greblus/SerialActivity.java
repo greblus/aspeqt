@@ -239,7 +239,12 @@ public class SerialActivity extends QtActivity
                     IntentFilter filter = new IntentFilter();
                     filter.addAction("com.android.example.USB_PERMISSION");
                     // this method must be called on Android Ui Thread
-                    SerialActivity.s_activity.registerReceiver(new USBReceiver(), filter);
+                    // API 33+ requires an explicit export flag for app-private receivers.
+                    if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.TIRAMISU) {
+                        SerialActivity.s_activity.registerReceiver(new USBReceiver(), filter, Context.RECEIVER_NOT_EXPORTED);
+                    } else {
+                        SerialActivity.s_activity.registerReceiver(new USBReceiver(), filter);
+                    }
                     }
     }
 

@@ -37,7 +37,10 @@ win32:LIBS += -lwinmm -lz
 win32:SOURCES += serialport-win32.cpp
 unix:
 {
-    android: {        
+    android: {
+        # Google Play target API requirement (Android 16 / API 36 from 2026-08-31)
+        ANDROID_TARGET_SDK_VERSION = 36
+        ANDROID_MIN_SDK_VERSION = 28
         SOURCES += serialport-android.cpp
         HEADERS += serialport-android.h
         FORMS += \
