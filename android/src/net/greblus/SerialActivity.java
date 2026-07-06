@@ -67,7 +67,49 @@ public class SerialActivity extends QtActivity
             }
 
             getWindow().addFlags(WindowManager.LayoutParams.FLAG_KEEP_SCREEN_ON);
+            applyImmersive();
             sendBufAddr(rbuf, wbuf);
+        }
+
+        @Override
+        public void onWindowFocusChanged(boolean hasFocus) {
+            super.onWindowFocusChanged(hasFocus);
+            // Immersive-sticky bars come back on their own after a swipe / focus
+            // change, so re-hide them whenever we regain focus.
+            if (hasFocus) applyImmersive();
+        }
+
+        // Go edge-to-edge full-screen: hide the status/navigation bars (the
+        // minimise/back/recents controls) and draw under the display cutout.
+        private void applyImmersive() {
+            try {
+                android.view.Window w = getWindow();
+                if (Build.VERSION.SDK_INT >= 30) {
+                    w.setDecorFitsSystemWindows(false);
+                    android.view.WindowInsetsController c = w.getInsetsController();
+                    if (c != null) {
+                        c.hide(android.view.WindowInsets.Type.systemBars());
+                        c.setSystemBarsBehavior(android.view.WindowInsetsController
+                                .BEHAVIOR_SHOW_TRANSIENT_BARS_BY_SWIPE);
+                    }
+                    android.view.WindowManager.LayoutParams lp = w.getAttributes();
+                    lp.layoutInDisplayCutoutMode = android.view.WindowManager.LayoutParams
+                            .LAYOUT_IN_DISPLAY_CUTOUT_MODE_ALWAYS;
+                    w.setAttributes(lp);
+                } else {
+                    w.getDecorView().setSystemUiVisibility(
+                            android.view.View.SYSTEM_UI_FLAG_LAYOUT_STABLE
+                            | android.view.View.SYSTEM_UI_FLAG_LAYOUT_HIDE_NAVIGATION
+                            | android.view.View.SYSTEM_UI_FLAG_LAYOUT_FULLSCREEN
+                            | android.view.View.SYSTEM_UI_FLAG_HIDE_NAVIGATION
+                            | android.view.View.SYSTEM_UI_FLAG_FULLSCREEN
+                            | android.view.View.SYSTEM_UI_FLAG_IMMERSIVE_STICKY);
+                    android.view.WindowManager.LayoutParams lp = w.getAttributes();
+                    lp.layoutInDisplayCutoutMode = android.view.WindowManager.LayoutParams
+                            .LAYOUT_IN_DISPLAY_CUTOUT_MODE_SHORT_EDGES;
+                    w.setAttributes(lp);
+                }
+            } catch (Throwable e) {}
         }
 
         @Override
@@ -201,6 +243,49 @@ public class SerialActivity extends QtActivity
 
         public static void qLog(String msg) {
             if (debug) Log.i("USB", msg);
+        }
+
+        // System-bar + display-cutout insets (in physical px), packed as
+        // (left<<48)|(top<<32)|(right<<16)|bottom. The C++ side reads this and
+        // insets the Qt window so content isn't hidden under the status/nav bars
+        // (targetSdk 35+ forces edge-to-edge; the surface is always full-screen).
+        public static long systemBarInsets() {
+            try {
+                if (s_activity == null) return 0;
+                android.view.View dv = s_activity.getWindow().getDecorView();
+                android.view.WindowInsets wi = dv.getRootWindowInsets();
+                if (wi == null) return 0;
+                long l, t, r, b;
+                if (Build.VERSION.SDK_INT >= 30) {
+                    // Only the system bars, NOT the display cutout: we deliberately
+                    // draw full-screen under the camera notch (immersive mode also
+                    // hides the bars, so these are usually 0 anyway).
+                    android.graphics.Insets in = wi.getInsets(
+                            android.view.WindowInsets.Type.systemBars());
+                    l = in.left; t = in.top; r = in.right; b = in.bottom;
+                } else {
+                    l = wi.getSystemWindowInsetLeft();
+                    t = wi.getSystemWindowInsetTop();
+                    r = wi.getSystemWindowInsetRight();
+                    b = wi.getSystemWindowInsetBottom();
+                }
+                // In immersive fullscreen the ActionBar is pushed below the camera
+                // cutout, so fold the cutout's TOP inset into the top offset (we
+                // still draw under the cutout on the side/bottom edges).
+                android.view.DisplayCutout dc = wi.getDisplayCutout();
+                if (dc != null) t += dc.getSafeInsetTop();
+
+                // The full-screen Qt surface is drawn behind the theme's ActionBar,
+                // so the top offset must also clear the ActionBar, not just the
+                // status-bar inset. Add the themed actionBarSize to the top value.
+                android.util.TypedValue tv = new android.util.TypedValue();
+                if (s_activity.getTheme().resolveAttribute(android.R.attr.actionBarSize, tv, true))
+                    t += android.util.TypedValue.complexToDimensionPixelSize(
+                            tv.data, s_activity.getResources().getDisplayMetrics());
+                return (l << 48) | (t << 32) | (r << 16) | b;
+            } catch (Throwable e) {
+                return 0;
+            }
         }
 
         public static int getModemStatus() {
