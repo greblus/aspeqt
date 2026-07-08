@@ -72,11 +72,23 @@ public class SerialActivity extends QtActivity
         }
 
         @Override
+        public void onResume() {
+            super.onResume();
+            applyImmersive();
+        }
+
+        @Override
         public void onWindowFocusChanged(boolean hasFocus) {
             super.onWindowFocusChanged(hasFocus);
             // Immersive-sticky bars come back on their own after a swipe / focus
-            // change, so re-hide them whenever we regain focus.
-            if (hasFocus) applyImmersive();
+            // change, so re-hide them whenever we regain focus. Qt re-shows the
+            // bars shortly after its own window setup, so re-apply deferred too.
+            if (hasFocus) {
+                applyImmersive();
+                final android.view.View dv = getWindow().getDecorView();
+                dv.postDelayed(new Runnable() { public void run() { applyImmersive(); } }, 300);
+                dv.postDelayed(new Runnable() { public void run() { applyImmersive(); } }, 800);
+            }
         }
 
         // Go edge-to-edge full-screen: hide the status/navigation bars (the
@@ -96,6 +108,23 @@ public class SerialActivity extends QtActivity
                     lp.layoutInDisplayCutoutMode = android.view.WindowManager.LayoutParams
                             .LAYOUT_IN_DISPLAY_CUTOUT_MODE_ALWAYS;
                     w.setAttributes(lp);
+                    // Qt 6.9+ re-enables edge-to-edge (bars shown) after its own
+                    // window setup and on every rotation, so re-hide the bars each
+                    // time insets are (re)applied.
+                    w.getDecorView().setOnApplyWindowInsetsListener(
+                        new android.view.View.OnApplyWindowInsetsListener() {
+                            @Override
+                            public android.view.WindowInsets onApplyWindowInsets(
+                                    android.view.View v, android.view.WindowInsets insets) {
+                                android.view.WindowInsetsController cc = v.getWindowInsetsController();
+                                if (cc != null) {
+                                    cc.hide(android.view.WindowInsets.Type.systemBars());
+                                    cc.setSystemBarsBehavior(android.view.WindowInsetsController
+                                            .BEHAVIOR_SHOW_TRANSIENT_BARS_BY_SWIPE);
+                                }
+                                return v.onApplyWindowInsets(insets);
+                            }
+                        });
                 } else {
                     w.getDecorView().setSystemUiVisibility(
                             android.view.View.SYSTEM_UI_FLAG_LAYOUT_STABLE
