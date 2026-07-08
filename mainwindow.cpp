@@ -181,6 +181,15 @@ MainWindow::MainWindow(QWidget *parent)
     /* Setup UI */
     ui->setupUi(this);
 
+#ifdef Q_OS_ANDROID
+    // Android's native options menu only opens submenus, it cannot trigger a
+    // bare top-level action. So make the single-entry "Options" submenu open
+    // the dialog as soon as it is tapped, giving a one-tap Options item.
+    connect(ui->menu_Tools, &QMenu::aboutToShow, this, [this]{
+        QTimer::singleShot(0, ui->actionOptions, &QAction::trigger);
+    });
+#endif
+
     /* I love ugly hacks */
     QScreen *screen = qApp->screens().at(0);
 

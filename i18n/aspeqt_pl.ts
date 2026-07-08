@@ -2044,6 +2044,11 @@ We will now migrate the existing settings to their new repository, note that set
         <translation>&amp;Narzędzia</translation>
     </message>
     <message>
+        <location filename="../mainwindow.ui" line="3386"/>
+        <source>&amp;Options</source>
+        <translation>&amp;Opcje</translation>
+    </message>
+    <message>
         <location filename="../mainwindow.ui" line="3392"/>
         <source>&amp;Help</source>
         <oldsource>Help</oldsource>
