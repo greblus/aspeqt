@@ -327,6 +327,13 @@ MainWindow::MainWindow(QWidget *parent)
     // edge screen edge / rounded corner where it's hard to tap.
     ui->statusBar->setContentsMargins(0, 0, sbIcon, 0);
     ui->statusBar->setFixedHeight(sbIcon + 4);
+    // The status-bar message font defaults too large on Android; scale it to
+    // the compact bar height.
+    {
+        QFont sbFont = ui->statusBar->font();
+        sbFont.setPointSize(10);
+        ui->statusBar->setFont(sbFont);
+    }
 #endif
 
     ui->statusBar->addPermanentWidget(speedLabel);
