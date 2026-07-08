@@ -10,6 +10,7 @@
 namespace Ui {
     class OptionsDialog;
 }
+class QButtonGroup;
 
 class OptionsDialog : public QDialog {
     Q_OBJECT
@@ -20,10 +21,21 @@ public:
 
 protected:
     void changeEvent(QEvent *e);
+#ifdef Q_OS_ANDROID
+    bool event(QEvent *e) override;
+#endif
 
 private:
     Ui::OptionsDialog *m_ui;
     QTreeWidgetItem *itemStandard, *itemAtariSio, *itemEmulation, *itemI18n;
+#ifdef Q_OS_ANDROID
+    QButtonGroup *ifaceGroup;
+    QButtonGroup *handshakeGroup;
+    QButtonGroup *baudGroup;
+    QButtonGroup *langGroup;
+    void androidInsetMargins();
+    void addAndroidLanguage(const QString &text, const QString &code);
+#endif
 
 private slots:
     void on_serialPortUseDivisorsBox_toggled(bool checked);
