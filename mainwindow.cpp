@@ -20,6 +20,8 @@
 #include <QFileDialog>
 #include <QFile>
 #include <QTemporaryFile>
+#include <QStandardPaths>
+#include <QDir>
 #include <QScrollBar>
 #include <QTranslator>
 #include <QMessageBox>
@@ -1331,6 +1333,16 @@ bool MainWindow::ejectImage(int no, bool ask)
         return true;
     }
     delete img;
+#ifdef Q_OS_ANDROID
+    // Folder image mounted from a SAF tree: write the temp working copy back to
+    // the picked folder, then discard the temp dir.
+    if (m_folderTree.contains(no)) {
+        androidCopyDirToTree(m_folderTemp.value(no), m_folderTree.value(no));
+        QDir(QFileInfo(m_folderTemp.value(no)).absolutePath()).removeRecursively();
+        m_folderTree.remove(no);
+        m_folderTemp.remove(no);
+    }
+#endif
     diskWidgets[no].ejectAction->setEnabled(false);
     QString fileName = diskWidgets[no].fileNameLabel->text();
     diskWidgets[no].fileNameLabel->clear();
@@ -1551,6 +1563,33 @@ void MainWindow::androidTakePersistable(const QString &uri, bool write)
         "net/greblus/SerialActivity", "takePersistable",
         "(Ljava/lang/String;Z)V", juri.object<jstring>(), (jboolean)write);
 }
+
+QString MainWindow::androidTreeName(const QString &tree)
+{
+    QJniObject jt = QJniObject::fromString(tree);
+    QJniObject res = QJniObject::callStaticObjectMethod(
+        "net/greblus/SerialActivity", "treeDisplayName",
+        "(Ljava/lang/String;)Ljava/lang/String;", jt.object<jstring>());
+    return res.isValid() ? res.toString() : QString();
+}
+
+int MainWindow::androidCopyTreeToDir(const QString &tree, const QString &dest)
+{
+    QJniObject jt = QJniObject::fromString(tree);
+    QJniObject jd = QJniObject::fromString(dest);
+    return QJniObject::callStaticMethod<jint>(
+        "net/greblus/SerialActivity", "copyTreeToDir",
+        "(Ljava/lang/String;Ljava/lang/String;)I", jt.object<jstring>(), jd.object<jstring>());
+}
+
+int MainWindow::androidCopyDirToTree(const QString &src, const QString &tree)
+{
+    QJniObject js = QJniObject::fromString(src);
+    QJniObject jt = QJniObject::fromString(tree);
+    return QJniObject::callStaticMethod<jint>(
+        "net/greblus/SerialActivity", "copyDirToTree",
+        "(Ljava/lang/String;Ljava/lang/String;)I", js.object<jstring>(), jt.object<jstring>());
+}
 #endif
 
 QString MainWindow::friendlyName(const QString &name)
@@ -1624,27 +1663,37 @@ void MainWindow::mountFolderImage(int no)
 // Always mount from "last folder dir" //
     dir = aspeqtSettings->lastFolderImageDir();
 #ifdef Q_OS_ANDROID
-    QJniObject jdir = QJniObject::fromString(dir);
-    QJniObject::callStaticMethod<void>("net/greblus/SerialActivity", "runDirChooser", "(Ljava/lang/String;)V", jdir.object<jstring>());
-
-    QString fileName = NULL;
-    do
-      {
-        QJniObject jFileName = QJniObject::getStaticObjectField<jstring>("net/greblus/SerialActivity", "m_chosen");
-        fileName = jFileName.toString();
-
-        if (fileName == "Cancelled") {fileName.clear(); break;}
-        if (fileName == "None") QThread::yieldCurrentThread();
-      }
-    while (fileName == "None");
+    // Pick a folder via SAF (ACTION_OPEN_DOCUMENT_TREE), copy its files into a
+    // local temp dir and mount that; changes are written back on eject.
+    QUrl treeUrl = QFileDialog::getExistingDirectoryUrl(this, tr("Open a folder image"), QUrl());
+    QString tree = treeUrl.toString();
+    if (tree.isEmpty()) {
+        return;
+    }
+    androidTakePersistable(tree, true);
+    QString folderName = androidTreeName(tree);
+    if (folderName.isEmpty()) folderName = QStringLiteral("folder");
+    QString base = QStandardPaths::writableLocation(QStandardPaths::CacheLocation)
+                 + "/foldermount/" + QString::number(no);
+    QDir(base).removeRecursively();
+    QString fileName = base + "/" + folderName;
+    if (!QDir().mkpath(fileName)) {
+        return;
+    }
+    if (androidCopyTreeToDir(tree, fileName) < 0) {
+        QMessageBox::warning(this, tr("Folder image"), tr("Could not read the selected folder."));
+        return;
+    }
+    m_folderTree[no] = tree;
+    m_folderTemp[no] = fileName;
 #else
     QString fileName = QFileDialog::getExistingDirectory(this, tr("Open a folder image"), dir);
-#endif
     fileName = QDir::fromNativeSeparators(fileName);
     if (fileName.isEmpty()) {
         return;
     }
     aspeqtSettings->setLastFolderImageDir(fileName);
+#endif
     mountFileWithDefaultProtection(no, fileName);
 }
 

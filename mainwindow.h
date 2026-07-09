@@ -4,6 +4,7 @@
 #include <QtWidgets/QMainWindow>
 #include <QFileDialog>
 #include <QMessageBox>
+#include <QMap>
 #include <QtDebug>
 #include <QFrame>
 #include <QLabel>
@@ -99,6 +100,13 @@ private:
     QString androidDisplayName(const QString &uri);
     // Persist access to a content:// URI so it stays usable after a restart.
     void androidTakePersistable(const QString &uri, bool write);
+    // Folder images: a SAF tree can't be read as a path, so it is copied to a
+    // local temp dir for mounting and copied back on eject.
+    QString androidTreeName(const QString &tree);
+    int androidCopyTreeToDir(const QString &tree, const QString &dest);
+    int androidCopyDirToTree(const QString &src, const QString &tree);
+    QMap<int, QString> m_folderTree;   // slot -> tree content:// URI
+    QMap<int, QString> m_folderTemp;   // slot -> local temp working dir
 #endif
     bool ejectImage(int no, bool ask = true);
     void toggleWriteProtection(int no);

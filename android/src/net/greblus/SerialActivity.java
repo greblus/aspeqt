@@ -269,6 +269,105 @@ public class SerialActivity extends QtActivity
             } catch (Throwable e) {}
         }
 
+        // --- Storage Access Framework directory support (folder images) ---
+        // FolderImage needs a real filesystem path, and Qt can't enumerate a
+        // content://tree, so we copy the picked tree into a local temp dir,
+        // mount that, and copy changed files back to the tree on eject.
+
+        // Display name (folder name) of a tree URI.
+        public static String treeDisplayName(String treeUri) {
+            try {
+                android.content.ContentResolver r = s_activity.getContentResolver();
+                android.net.Uri tree = android.net.Uri.parse(treeUri);
+                String docId = android.provider.DocumentsContract.getTreeDocumentId(tree);
+                android.net.Uri docUri = android.provider.DocumentsContract.buildDocumentUriUsingTree(tree, docId);
+                android.database.Cursor c = r.query(docUri, new String[]{
+                        android.provider.DocumentsContract.Document.COLUMN_DISPLAY_NAME}, null, null, null);
+                if (c != null) {
+                    try { if (c.moveToFirst()) return c.getString(0); }
+                    finally { c.close(); }
+                }
+            } catch (Throwable e) {}
+            return "";
+        }
+
+        // Copy the (flat) files of a tree into a local directory. Returns the
+        // number of files copied, or -1 on error.
+        public static int copyTreeToDir(String treeUri, String destPath) {
+            int count = 0;
+            try {
+                android.content.ContentResolver r = s_activity.getContentResolver();
+                android.net.Uri tree = android.net.Uri.parse(treeUri);
+                String docId = android.provider.DocumentsContract.getTreeDocumentId(tree);
+                android.net.Uri children = android.provider.DocumentsContract.buildChildDocumentsUriUsingTree(tree, docId);
+                android.database.Cursor c = r.query(children, new String[]{
+                        android.provider.DocumentsContract.Document.COLUMN_DOCUMENT_ID,
+                        android.provider.DocumentsContract.Document.COLUMN_DISPLAY_NAME,
+                        android.provider.DocumentsContract.Document.COLUMN_MIME_TYPE}, null, null, null);
+                if (c == null) return -1;
+                try {
+                    while (c.moveToNext()) {
+                        String childId = c.getString(0);
+                        String name = c.getString(1);
+                        String mime = c.getString(2);
+                        if (android.provider.DocumentsContract.Document.MIME_TYPE_DIR.equals(mime))
+                            continue;   // folder images are flat; skip sub-dirs
+                        android.net.Uri childUri = android.provider.DocumentsContract.buildDocumentUriUsingTree(tree, childId);
+                        java.io.InputStream in = r.openInputStream(childUri);
+                        java.io.FileOutputStream out = new java.io.FileOutputStream(destPath + "/" + name);
+                        byte[] buf = new byte[65536];
+                        int n;
+                        while ((n = in.read(buf)) > 0) out.write(buf, 0, n);
+                        out.close();
+                        in.close();
+                        count++;
+                    }
+                } finally { c.close(); }
+            } catch (Throwable e) { return -1; }
+            return count;
+        }
+
+        // Copy the files of a local directory back into a tree (create or
+        // overwrite by name). Returns the number written, or -1 on error.
+        public static int copyDirToTree(String srcPath, String treeUri) {
+            int count = 0;
+            try {
+                android.content.ContentResolver r = s_activity.getContentResolver();
+                android.net.Uri tree = android.net.Uri.parse(treeUri);
+                String parentId = android.provider.DocumentsContract.getTreeDocumentId(tree);
+                android.net.Uri parentUri = android.provider.DocumentsContract.buildDocumentUriUsingTree(tree, parentId);
+                android.net.Uri children = android.provider.DocumentsContract.buildChildDocumentsUriUsingTree(tree, parentId);
+                java.util.HashMap<String, String> existing = new java.util.HashMap<String, String>();
+                android.database.Cursor c = r.query(children, new String[]{
+                        android.provider.DocumentsContract.Document.COLUMN_DOCUMENT_ID,
+                        android.provider.DocumentsContract.Document.COLUMN_DISPLAY_NAME}, null, null, null);
+                if (c != null) {
+                    try { while (c.moveToNext()) existing.put(c.getString(1), c.getString(0)); }
+                    finally { c.close(); }
+                }
+                java.io.File[] files = new java.io.File(srcPath).listFiles();
+                if (files != null) for (java.io.File f : files) {
+                    if (!f.isFile()) continue;
+                    String name = f.getName();
+                    android.net.Uri target;
+                    if (existing.containsKey(name))
+                        target = android.provider.DocumentsContract.buildDocumentUriUsingTree(tree, existing.get(name));
+                    else
+                        target = android.provider.DocumentsContract.createDocument(r, parentUri, "application/octet-stream", name);
+                    if (target == null) continue;
+                    java.io.FileInputStream in = new java.io.FileInputStream(f);
+                    java.io.OutputStream out = r.openOutputStream(target, "wt");
+                    byte[] buf = new byte[65536];
+                    int n;
+                    while ((n = in.read(buf)) > 0) out.write(buf, 0, n);
+                    out.close();
+                    in.close();
+                    count++;
+                }
+            } catch (Throwable e) { return -1; }
+            return count;
+        }
+
         public static int openDevice() {
             return m_device.openDevice();
         }
