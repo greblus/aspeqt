@@ -8,7 +8,7 @@
 
 QMovie *movie = NULL;
 
-CassetteDialog::CassetteDialog(QWidget *parent, const QString &fileName)
+CassetteDialog::CassetteDialog(QWidget *parent, const QString &fileName, const QString &displayName)
     : QDialog(parent), ui(new Ui::CassetteDialog)
 {
     Qt::WindowFlags flags = windowFlags();
@@ -17,6 +17,7 @@ CassetteDialog::CassetteDialog(QWidget *parent, const QString &fileName)
     setWindowState(Qt::WindowFullScreen);
 
     mFileName = fileName;
+    mDisplayName = displayName.isEmpty() ? fileName : displayName;
 
     ui->setupUi(this);
 
@@ -39,7 +40,7 @@ CassetteDialog::CassetteDialog(QWidget *parent, const QString &fileName)
                           "or entering \"CLOAD\" in the BASIC prompt.\n\n"
                           "When you hear the beep sound, push the OK button below and press "
                           "a key on your Atari at about the same time.")
-                       .arg(mFileName)
+                       .arg(mDisplayName)
                        .arg(minutes)
                        .arg(seconds, 2, 10, QChar('0')));
 

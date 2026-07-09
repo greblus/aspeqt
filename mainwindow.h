@@ -86,6 +86,9 @@ private:
     void mountFile(int no, const QString &fileName, bool prot);
     void mountDiskImage(int no);
     void mountFolderImage(int no);
+    // Short, human-readable name for logs/labels: the file's base name, or the
+    // ContentResolver display name for a content:// URI.
+    QString friendlyName(const QString &name);
 #ifdef Q_OS_ANDROID
     // Storage Access Framework pickers: return a content:// URI string (empty
     // if cancelled). QFile opens these directly, so no storage permission is

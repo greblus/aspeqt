@@ -11,7 +11,7 @@ namespace Ui {
 class CassetteDialog : public QDialog {
     Q_OBJECT
 public:
-    CassetteDialog(QWidget *parent, const QString &fileName);
+    CassetteDialog(QWidget *parent, const QString &fileName, const QString &displayName = QString());
     ~CassetteDialog();
 
 protected:
@@ -24,6 +24,7 @@ private:
     int mTotalDuration;
     int mRemainingTime;
     QString mFileName;
+    QString mDisplayName;
 
 public slots:
     int exec();

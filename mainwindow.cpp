@@ -1504,12 +1504,7 @@ void MainWindow::mountFile(int no, const QString &fileName, bool /*prot*/)
         deviceStatusChanged(0x31 + no);
 
         // Extract the file name without the path //
-        QString filenamelabel;
-        int i = fileName.lastIndexOf("/");
-        if (i != -1) {
-            i++;
-            filenamelabel = fileName.right(fileName.size() - i);
-        }
+        QString filenamelabel = friendlyName(fileName);
 
         qDebug() << "!n" << tr("[%1] Mounted '%2' as '%3'.")
                 .arg(disk->deviceName())
@@ -1540,6 +1535,19 @@ QString MainWindow::androidDisplayName(const QString &uri)
     return res.isValid() ? res.toString() : QString();
 }
 #endif
+
+QString MainWindow::friendlyName(const QString &name)
+{
+#ifdef Q_OS_ANDROID
+    if (name.startsWith("content:")) {
+        QString dn = androidDisplayName(name);
+        if (!dn.isEmpty()) return dn;
+    }
+#endif
+    int i = name.lastIndexOf('/');
+    if (i < 0) i = name.lastIndexOf('\\');
+    return (i >= 0) ? name.mid(i + 1) : name;
+}
 
 void MainWindow::mountDiskImage(int no)
 {
@@ -2087,7 +2095,7 @@ void MainWindow::on_actionNewImage_triggered()
     deviceStatusChanged(0x31 + no);
     qDebug() << "!n" << tr("[%1] Mounted '%2' as '%3'.")
             .arg(disk->deviceName())
-            .arg(disk->originalFileName())
+            .arg(friendlyName(disk->originalFileName()))
             .arg(disk->description());
 }
 
@@ -2267,7 +2275,7 @@ void MainWindow::on_actionPlaybackCassette_triggered()
         qApp->processEvents();
     }
 
-    CassetteDialog *dlg = new CassetteDialog(this, fileName);
+    CassetteDialog *dlg = new CassetteDialog(this, fileName, friendlyName(fileName));
     dlg->exec();
     delete dlg;
 
