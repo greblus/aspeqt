@@ -212,12 +212,7 @@ bool FolderImage::readSector(quint16 sector, QByteArray &data)
                          if(atariFiles[i].longName != "$boot.bin") {
                                  nameLine.clear();
                                  nameLine.append(atariFiles[i].atariName.toStdString());
-                                 QByteArray space;
-                                 int size;
-                                 size = atariFiles[i].atariName.size();
-                                 for(int j=0; j<=8-size-1; j++) {
-                                     space[j] = '\x20';
-                                 }
+                                 QByteArray space(qMax(0, 8 - (int)atariFiles[i].atariName.size()), '\x20');
                                  nameLine.append(space.toStdString());
                                  nameLine.append(atariFiles[i].atariExt.toStdString());
                                  nameLine.append('\x20');
@@ -313,7 +308,9 @@ bool FolderImage::readSector(quint16 sector, QByteArray &data)
             if (!atariFiles[i].exists) {
                 entry = QByteArray(16, 0);
             } else {
-                entry = "";
+                // Qt 6: operator[] no longer grows the array, so pre-size the
+                // 5 header bytes before indexing (name/ext are appended after).
+                entry = QByteArray(5, 0);
                 entry[0] = 0x42;
                 QFileInfo info = atariFiles[i].original;;
                 int size = (info.size() + 124) / 125;
