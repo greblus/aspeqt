@@ -60,6 +60,9 @@ public:
 protected:
     MyModel *model;
     void changeEvent(QEvent *e);
+#ifdef Q_OS_ANDROID
+    bool event(QEvent *e) override;
+#endif
 
 private:
     Ui::DiskEditDialog *m_ui;

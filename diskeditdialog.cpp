@@ -17,6 +17,14 @@
 #ifdef Q_OS_ANDROID
 #include <QJniObject>
 #include <QScreen>
+#include <QScroller>
+#include <QScrollerProperties>
+#include <QKeyEvent>
+#include <QAction>
+#include <QIcon>
+#include <QFile>
+#include <QDir>
+#include <QStandardPaths>
 #endif
 
 /* MyModel */
@@ -45,7 +53,7 @@ Qt::ItemFlags MyModel::flags(const QModelIndex &index) const
     if (index.column() == 1 || index.column() == 2) {
         return Qt::ItemIsSelectable | Qt::ItemIsEnabled | Qt::ItemIsDragEnabled | Qt::ItemIsEditable | Qt::ItemIsDropEnabled;
     } else if (index.column() == 4) {
-        if (fileSystem->fileSystemCode() == 5) {
+        if (fileSystem && fileSystem->fileSystemCode() == 5) {
             return Qt::ItemIsSelectable | Qt::ItemIsEnabled | Qt::ItemIsDragEnabled | Qt::ItemIsEditable | Qt::ItemIsDropEnabled;
         } else {
             return Qt::ItemIsSelectable | Qt::ItemIsEnabled | Qt::ItemIsDragEnabled | Qt::ItemIsDropEnabled;
@@ -462,8 +470,27 @@ DiskEditDialog::DiskEditDialog(QWidget *parent) :
     bs = ts*90/800;
     m_ui->toolBar->setIconSize(QSize(bs, bs));
     m_ui->aView->verticalHeader()->setSectionResizeMode(QHeaderView::ResizeToContents);
-    m_ui->aView->horizontalHeader()->setSectionResizeMode(QHeaderView::ResizeToContents);
+    // Fit the columns to the width so there is no horizontal scroll range; then
+    // the finger scroller only moves vertically through the file list.
+    m_ui->aView->horizontalHeader()->setSectionResizeMode(QHeaderView::Stretch);
 
+    // Finger scrolling instead of the oversized scrollbar.
+    m_ui->aView->setVerticalScrollBarPolicy(Qt::ScrollBarAlwaysOff);
+    m_ui->aView->setHorizontalScrollBarPolicy(Qt::ScrollBarAlwaysOff);
+    QScroller::grabGesture(m_ui->aView->viewport(), QScroller::LeftMouseButtonGesture);
+    QScrollerProperties sp = QScroller::scroller(m_ui->aView->viewport())->scrollerProperties();
+    sp.setScrollMetric(QScrollerProperties::VerticalOvershootPolicy,
+                       QVariant::fromValue(QScrollerProperties::OvershootAlwaysOff));
+    sp.setScrollMetric(QScrollerProperties::HorizontalOvershootPolicy,
+                       QVariant::fromValue(QScrollerProperties::OvershootAlwaysOff));
+    QScroller::scroller(m_ui->aView->viewport())->setScrollerProperties(sp);
+
+    // The Android back button isn't reliably delivered to Qt, so give the
+    // editor an explicit Close button on the toolbar.
+    QAction *closeAction = new QAction(QIcon(":/icons/tango-icons/actions/system-log-out.svg"),
+                                       tr("Close"), this);
+    connect(closeAction, &QAction::triggered, this, &DiskEditDialog::close);
+    m_ui->toolBar->addAction(closeAction);
 #endif
     setAttribute(Qt::WA_DeleteOnClose);
     m_fileSystemBox = new QComboBox(this);
@@ -478,6 +505,17 @@ DiskEditDialog::DiskEditDialog(QWidget *parent) :
     model = new MyModel(this);
     model->setFileSystem(0);
     m_ui->aView->setModel(model);
+
+#ifdef Q_OS_ANDROID
+    // Keep only the columns that matter on a phone so the 3 remaining ones
+    // stretch to exactly fill the width -> no horizontal scroll range, so the
+    // finger scroller moves vertically only. Per-pixel mode makes it smooth.
+    m_ui->aView->setColumnHidden(0, true);   // No
+    m_ui->aView->setColumnHidden(4, true);   // Time
+    m_ui->aView->setColumnHidden(5, true);   // Notes
+    m_ui->aView->setVerticalScrollMode(QAbstractItemView::ScrollPerPixel);
+    m_ui->aView->setHorizontalScrollMode(QAbstractItemView::ScrollPerPixel);
+#endif
 
     connect(m_fileSystemBox, SIGNAL(currentIndexChanged(int)), SLOT(fileSystemChanged(int)));
     connect(m_ui->aView->selectionModel(), SIGNAL(currentChanged(QModelIndex,QModelIndex)), SLOT(currentChanged(QModelIndex,QModelIndex)));
@@ -496,6 +534,22 @@ DiskEditDialog::~DiskEditDialog()
     m_disk->unlock();
     delete m_ui;
 }
+
+#ifdef Q_OS_ANDROID
+bool DiskEditDialog::event(QEvent *e)
+{
+    // Android back button/gesture closes the editor.
+    if (e->type() == QEvent::KeyPress || e->type() == QEvent::KeyRelease) {
+        int k = static_cast<QKeyEvent *>(e)->key();
+        if (k == Qt::Key_Back || k == Qt::Key_Escape) {
+            if (e->type() == QEvent::KeyRelease)
+                close();
+            return true;
+        }
+    }
+    return QMainWindow::event(e);
+}
+#endif
 
 void DiskEditDialog::changeEvent(QEvent *e)
 {
@@ -517,11 +571,12 @@ void DiskEditDialog::go(SimpleDiskImage *image, int fileSystem)
     if (fileSystem < 0) {
         fileSystem = m_disk->defaultFileSystem();
     }
-    if (fileSystem != m_fileSystemBox->currentIndex()) {
-        m_fileSystemBox->setCurrentIndex(fileSystem);
-    } else {
-        fileSystemChanged(fileSystem);
-    }
+    // Drive the change directly instead of via the combo's currentIndexChanged
+    // signal: emitting it crashes QComboBox on the Android (Qt 6.11) build.
+    m_fileSystemBox->blockSignals(true);
+    m_fileSystemBox->setCurrentIndex(fileSystem);
+    m_fileSystemBox->blockSignals(false);
+    fileSystemChanged(fileSystem);
 }
 
 void DiskEditDialog::fileSystemChanged(int index)
@@ -678,12 +733,37 @@ void DiskEditDialog::on_actionAddFiles_triggered()
     QString dir = aspeqtSettings->lastExeDir();
 
     #ifdef Q_OS_ANDROID
-    // SAF picker returns a content:// URI; QFile reads it directly.
+    // The Atari filesystem insert uses QFile::size()/seek, which are unreliable
+    // on a sequential content:// stream (it wrongly reports "disk full"). So
+    // copy the picked document to a real temp file (named with its display name
+    // so the Atari 8.3 name derives correctly) and insert that.
     QUrl url = QFileDialog::getOpenFileUrl(this, tr("Add files"), QUrl());
     if (url.isEmpty()) {
         return;
     }
-    files.append(url.toString());
+    QFile src(url.toString());
+    if (!src.open(QIODevice::ReadOnly)) {
+        return;
+    }
+    QByteArray bytes = src.readAll();
+    src.close();
+    QJniObject jn = QJniObject::callStaticObjectMethod(
+        "net/greblus/SerialActivity", "displayName",
+        "(Ljava/lang/String;)Ljava/lang/String;",
+        QJniObject::fromString(url.toString()).object<jstring>());
+    QString displayName = jn.isValid() ? jn.toString() : QString();
+    if (displayName.isEmpty()) displayName = QStringLiteral("FILE");
+    QString tmpDir = QStandardPaths::writableLocation(QStandardPaths::CacheLocation) + "/addfile";
+    QDir(tmpDir).removeRecursively();
+    QDir().mkpath(tmpDir);
+    QString tmpPath = tmpDir + "/" + displayName;
+    QFile dst(tmpPath);
+    if (!dst.open(QIODevice::WriteOnly | QIODevice::Truncate)) {
+        return;
+    }
+    dst.write(bytes);
+    dst.close();
+    files.append(tmpPath);
     #else
     files = QFileDialog::getOpenFileNames(this, tr("Add files"), aspeqtSettings->lastExtractDir());
     #endif
