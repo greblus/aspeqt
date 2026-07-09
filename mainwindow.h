@@ -97,6 +97,8 @@ private:
     QString androidSaveUrl(const QString &caption, const QString &filter);
     // Human-readable name of a content:// URI (via ContentResolver), for labels.
     QString androidDisplayName(const QString &uri);
+    // Persist access to a content:// URI so it stays usable after a restart.
+    void androidTakePersistable(const QString &uri, bool write);
 #endif
     bool ejectImage(int no, bool ask = true);
     void toggleWriteProtection(int no);

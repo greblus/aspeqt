@@ -18,6 +18,8 @@
 #include <QDropEvent>
 #include <QUrl>
 #include <QFileDialog>
+#include <QFile>
+#include <QTemporaryFile>
 #include <QScrollBar>
 #include <QTranslator>
 #include <QMessageBox>
@@ -1467,6 +1469,13 @@ void MainWindow::mountFile(int no, const QString &fileName, bool /*prot*/)
             if(g_aspeclFileName.left(1) == "*") emit fileMounted(false);  //
             return;
         }
+#ifdef Q_OS_ANDROID
+        // Persist read access to the picked document so a saved session can
+        // re-mount it after the app is restarted (the image is loaded into a
+        // temp working copy, so read access is sufficient).
+        if (fileName.startsWith("content:"))
+            androidTakePersistable(fileName, false);
+#endif
         if (!ejectImage(no)) {
             aspeqtSettings->unmountImage(no);
             delete disk;
@@ -1533,6 +1542,14 @@ QString MainWindow::androidDisplayName(const QString &uri)
         "net/greblus/SerialActivity", "displayName",
         "(Ljava/lang/String;)Ljava/lang/String;", juri.object<jstring>());
     return res.isValid() ? res.toString() : QString();
+}
+
+void MainWindow::androidTakePersistable(const QString &uri, bool write)
+{
+    QJniObject juri = QJniObject::fromString(uri);
+    QJniObject::callStaticMethod<void>(
+        "net/greblus/SerialActivity", "takePersistable",
+        "(Ljava/lang/String;Z)V", juri.object<jstring>(), (jboolean)write);
 }
 #endif
 
@@ -2102,39 +2119,57 @@ void MainWindow::on_actionNewImage_triggered()
 void MainWindow::on_actionOpenSession_triggered()
 {
     QString dir = aspeqtSettings->lastSessionDir();
-    #ifdef Q_OS_ANDROID
-    QJniObject jdir = QJniObject::fromString(dir);
-    QJniObject::callStaticMethod<void>("net/greblus/SerialActivity", "runFileChooser", "(IILjava/lang/String;)V", 4, 0, jdir.object<jstring>());
-    QString fileName;
-    do
-      {
-        QJniObject jFileName = QJniObject::getStaticObjectField<jstring>("net/greblus/SerialActivity", "m_chosen");
-        fileName = jFileName.toString();
-
-        if (fileName == "Cancelled") {fileName.clear(); break;}
-        if (fileName == "None") QThread::yieldCurrentThread();
-      }
-    while (fileName == "None");
-    #else
-    dir = aspeqtSettings->lastSessionDir();
-    QString fileName = QFileDialog::getOpenFileName(this, tr("Open session"),
+    QString fileName;   // path QSettings can read
+#ifdef Q_OS_ANDROID
+    // QSettings can't read a content:// URI, so copy the picked session into a
+    // local temp file and load QSettings from there. Keep tmp alive till the end.
+    QTemporaryFile tmp;
+    QString url = androidOpenUrl(tr("Open session"),
+                                 tr("AspeQt sessions (*.aspeqt);;All files (*)"));
+    if (url.isEmpty()) {
+        return;
+    }
+    if (!tmp.open()) {
+        return;
+    }
+    {
+        QFile in(url);
+        if (!in.open(QIODevice::ReadOnly)) {
+            return;
+        }
+        tmp.write(in.readAll());
+    }
+    tmp.flush();
+    tmp.close();
+    fileName = tmp.fileName();
+    g_sessionFile = friendlyName(url);
+    g_sessionFilePath = QString();
+#else
+    fileName = QFileDialog::getOpenFileName(this, tr("Open session"),
                                  dir,
                                  tr(
                                          "AspeQt sessions (*.aspeqt);;"
                                          "All files (*)"));
-    #endif
     if (fileName.isEmpty()) {
         return;
     }
-// First eject existing images, then mount session images and restore mainwindow position and size //
-    MainWindow::on_actionEjectAll_triggered();
-
     aspeqtSettings->setLastSessionDir(QFileInfo(fileName).absolutePath());
     g_sessionFile = QFileInfo(fileName).fileName();
     g_sessionFilePath = QFileInfo(fileName).absolutePath();
+#endif
+// First eject existing images, then mount session images and restore mainwindow position and size //
+    MainWindow::on_actionEjectAll_triggered();
 
 // Pass Session file name, path and MainWindow title to AspeQtSettings //
+#ifdef Q_OS_ANDROID
+    // Android always launches into the default session (no named-session file
+    // argument), so keep the default as the write target (empty session name).
+    // Otherwise mounts from a loaded session are not persisted and the slots
+    // come up empty after a restart.
+    aspeqtSettings->setSessionFile(QString(), QString());
+#else
     aspeqtSettings->setSessionFile(g_sessionFile, g_sessionFilePath);
+#endif
     aspeqtSettings->setMainWindowTitle(g_mainWindowTitle);
 
     aspeqtSettings->loadSessionFromFile(fileName);
@@ -2153,31 +2188,23 @@ void MainWindow::on_actionOpenSession_triggered()
 void MainWindow::on_actionSaveSession_triggered()
 {
     QString dir = aspeqtSettings->lastSessionDir();
-    #ifdef Q_OS_ANDROID
-    QJniObject jdir = QJniObject::fromString(dir);
-    QJniObject::callStaticMethod<void>("net/greblus/SerialActivity", "runFileChooser", "(IILjava/lang/String;)V", 4, 1, jdir.object<jstring>());
-    QString fileName;
-    do
-      {
-        QJniObject jFileName = QJniObject::getStaticObjectField<jstring>("net/greblus/SerialActivity", "m_chosen");
-        fileName = jFileName.toString();
-
-        if (fileName == "Cancelled") {fileName.clear(); break;}
-        if (fileName == "None") QThread::yieldCurrentThread();
-      }
-    while (fileName == "None");
-    #else
-    dir = aspeqtSettings->lastSessionDir();
+#ifdef Q_OS_ANDROID
+    QString url = androidSaveUrl(tr("Save session as"),
+                                 tr("AspeQt sessions (*.aspeqt);;All files (*)"));
+    if (url.isEmpty()) {
+        return;
+    }
+#else
     QString fileName = QFileDialog::getSaveFileName(this, tr("Save session as"),
                                  dir,
                                  tr(
                                          "AspeQt sessions (*.aspeqt);;"
                                          "All files (*)"));
-    #endif
     if (fileName.isEmpty()) {
         return;
     }
     aspeqtSettings->setLastSessionDir(QFileInfo(fileName).absolutePath());
+#endif
 
 // Save mainwindow position and size to session file //
     if (aspeqtSettings->saveWindowsPos()) {
@@ -2186,7 +2213,23 @@ void MainWindow::on_actionSaveSession_triggered()
         aspeqtSettings->setLastWidth(geometry().width());
         aspeqtSettings->setLastHeight(geometry().height());
     }
+#ifdef Q_OS_ANDROID
+    // QSettings needs a real path: write to a temp file, then copy the bytes to
+    // the SAF content:// target.
+    QTemporaryFile tmp;
+    if (!tmp.open()) {
+        return;
+    }
+    QString tmpPath = tmp.fileName();
+    tmp.close();
+    aspeqtSettings->saveSessionToFile(tmpPath);
+    QFile in(tmpPath), out(url);
+    if (in.open(QIODevice::ReadOnly) && out.open(QIODevice::WriteOnly | QIODevice::Truncate)) {
+        out.write(in.readAll());
+    }
+#else
     aspeqtSettings->saveSessionToFile(fileName);
+#endif
 }
 
 void MainWindow::on_actionBootExe_triggered()

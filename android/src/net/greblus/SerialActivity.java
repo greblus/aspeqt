@@ -257,6 +257,18 @@ public class SerialActivity extends QtActivity
             return "";
         }
 
+        // Persist access to a SAF content:// URI across app restarts, so a saved
+        // session can re-mount the same document later.
+        public static void takePersistable(String uri, boolean write) {
+            try {
+                android.net.Uri u = android.net.Uri.parse(uri);
+                int flags = android.content.Intent.FLAG_GRANT_READ_URI_PERMISSION;
+                if (write)
+                    flags |= android.content.Intent.FLAG_GRANT_WRITE_URI_PERMISSION;
+                s_activity.getContentResolver().takePersistableUriPermission(u, flags);
+            } catch (Throwable e) {}
+        }
+
         public static int openDevice() {
             return m_device.openDevice();
         }
