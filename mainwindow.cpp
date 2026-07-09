@@ -17,6 +17,7 @@
 #include <QDragEnterEvent>
 #include <QDropEvent>
 #include <QUrl>
+#include <QFileDialog>
 #include <QScrollBar>
 #include <QTranslator>
 #include <QMessageBox>
@@ -1071,6 +1072,13 @@ void MainWindow::deviceStatusChanged(int deviceNo)
             } else {
                 filenamelabel = "!!!!!!!!.!!!";
                 }
+#ifdef Q_OS_ANDROID
+            // content:// URIs have no real path/name; resolve the display name.
+            if (img->originalFileName().startsWith("content:")) {
+                QString dn = androidDisplayName(img->originalFileName());
+                if (!dn.isEmpty()) filenamelabel = dn;
+            }
+#endif
 
             findChild <QLabel*> (QString("labelFileName_%1").arg(deviceNo - 0x31 + 1))->setToolTip(img->originalFileName().left(i - 1));
             findChild <QLabel*> (QString("labelFileName_%1").arg(deviceNo - 0x31 + 1))->setStatusTip(img->originalFileName());
@@ -1512,6 +1520,27 @@ void MainWindow::mountFile(int no, const QString &fileName, bool /*prot*/)
     }
 }
 
+#ifdef Q_OS_ANDROID
+QString MainWindow::androidOpenUrl(const QString &caption, const QString &filter)
+{
+    return QFileDialog::getOpenFileUrl(this, caption, QUrl(), filter).toString();
+}
+
+QString MainWindow::androidSaveUrl(const QString &caption, const QString &filter)
+{
+    return QFileDialog::getSaveFileUrl(this, caption, QUrl(), filter).toString();
+}
+
+QString MainWindow::androidDisplayName(const QString &uri)
+{
+    QJniObject juri = QJniObject::fromString(uri);
+    QJniObject res = QJniObject::callStaticObjectMethod(
+        "net/greblus/SerialActivity", "displayName",
+        "(Ljava/lang/String;)Ljava/lang/String;", juri.object<jstring>());
+    return res.isValid() ? res.toString() : QString();
+}
+#endif
+
 void MainWindow::mountDiskImage(int no)
 {
     QString dir;
@@ -1522,19 +1551,27 @@ void MainWindow::mountDiskImage(int no)
 //        dir = QFileInfo(diskWidgets[no].fileNameLabel->text()).absolutePath();
 //    }
 #ifdef Q_OS_ANDROID
-    QJniObject jdir = QJniObject::fromString(dir);
-    QJniObject::callStaticMethod<void>("net/greblus/SerialActivity", "runFileChooser", "(IILjava/lang/String;)V", 1, 0, jdir.object<jstring>());
-
-    QString fileName = NULL;
-    do
-      {
-        QJniObject jFileName = QJniObject::getStaticObjectField<jstring>("net/greblus/SerialActivity", "m_chosen");
-        fileName = jFileName.toString();
-
-        if (fileName == "Cancelled") {fileName.clear(); break;}
-        if (fileName == "None") QThread::yieldCurrentThread();
-      }
-    while (fileName == "None");
+    // The SAF picker cannot filter by the Atari extensions (no MIME types), so
+    // it shows every file. Validate the picked file's real type and reject the
+    // ones that belong to other actions.
+    QString fileName = androidOpenUrl(tr("Open a disk image"),
+                                      tr("All Atari disk images (*.atr *.xfd *.pro);;All files (*)"));
+    if (fileName.isEmpty()) {
+        return;
+    }
+    {
+        FileTypes::FileType t = FileTypes::getFileType(fileName);
+        if (t == FileTypes::Xex || t == FileTypes::XexGz) {
+            QMessageBox::information(this, tr("Not a disk image"),
+                tr("This is an Atari executable, not a disk image.\nUse \"File / Boot Atari executable\" to run it."));
+            return;
+        }
+        if (t == FileTypes::Cas || t == FileTypes::CasGz) {
+            QMessageBox::information(this, tr("Not a disk image"),
+                tr("This is a cassette image, not a disk image.\nUse \"File / Play cassette image\" to run it."));
+            return;
+        }
+    }
 #else
         QString fileName = QFileDialog::getOpenFileName(this,
                                                         tr("Open a disk image"),
@@ -1547,12 +1584,12 @@ void MainWindow::mountDiskImage(int no)
     //                                                    "ATX images (*.atx);;"
                                                         "Pro images (*.pro);;"
                                                         "All files (*)"));
-#endif
     if (fileName.isEmpty()) {
         return;
     }
-
     aspeqtSettings->setLastDiskImageDir(QFileInfo(fileName).absolutePath());
+#endif
+
     mountFileWithDefaultProtection(no, fileName);
 }
 
@@ -1808,17 +1845,22 @@ void MainWindow::saveDiskAs(int no)
 
     do {
         #ifdef Q_OS_ANDROID
-            QJniObject jdir = QJniObject::fromString(dir);
-            QJniObject::callStaticMethod<void>("net/greblus/SerialActivity", "runFileChooser", "(IILjava/lang/String;)V", 1, 1, jdir.object<jstring>());
-            do
-              {
-                QJniObject jFileName = QJniObject::getStaticObjectField<jstring>("net/greblus/SerialActivity", "m_chosen");
-                fileName = jFileName.toString();
-
-                if (fileName == "Cancelled") {fileName.clear(); break;}
-                if (fileName == "None") QThread::yieldCurrentThread();
-              }
-            while (fileName == "None");
+            // SAF create-document: the content:// URI has no extension, so pick
+            // the format from the display name the user typed (default ATR).
+            fileName = androidSaveUrl(tr("Save image as"),
+                                      tr("ATR image (*.atr);;XFD image (*.xfd);;All files (*)"));
+            if (fileName.isEmpty()) {
+                return;
+            }
+            QString dn = androidDisplayName(fileName);
+            FileTypes::FileType st = FileTypes::Atr;
+            if (dn.endsWith(".xfd", Qt::CaseInsensitive)) st = FileTypes::Xfd;
+            else if (dn.endsWith(".dcm", Qt::CaseInsensitive)) st = FileTypes::Dcm;
+            else if (dn.endsWith(".scp", Qt::CaseInsensitive)) st = FileTypes::Scp;
+            else if (dn.endsWith(".di", Qt::CaseInsensitive))  st = FileTypes::Di;
+            img->lock();
+            saved = img->saveAs(fileName, st);
+            img->unlock();
         #else
         fileName = QFileDialog::getSaveFileName(this, tr("Save image as"),
                                  dir,
@@ -1830,7 +1872,6 @@ void MainWindow::saveDiskAs(int no)
 //                                                    "ATX images (*.atx);;"
                                                     "Pro images (*.pro);;"
                                                     "All files (*)"));
-        #endif
         if (fileName.isEmpty()) {
             return;
         }
@@ -1838,6 +1879,7 @@ void MainWindow::saveDiskAs(int no)
         img->lock();
         saved = img->saveAs(fileName);
         img->unlock();
+        #endif
 
         if (!saved) {
             if (QMessageBox::question(this, tr("Save failed"), tr("'%1' cannot be saved, do you want to save the image with another name?")
@@ -1849,7 +1891,9 @@ void MainWindow::saveDiskAs(int no)
     } while (!saved);
 
     if (saved) {
+        #ifndef Q_OS_ANDROID
         aspeqtSettings->setLastDiskImageDir(QFileInfo(fileName).absolutePath());
+        #endif
     }
     aspeqtSettings->unmountImage(no);
     aspeqtSettings->mountImage(no, fileName, img->isReadOnly());
@@ -2139,30 +2183,33 @@ void MainWindow::on_actionSaveSession_triggered()
 
 void MainWindow::on_actionBootExe_triggered()
 {
-    QString dir = aspeqtSettings->lastExeDir();    
+    QString dir = aspeqtSettings->lastExeDir();
     #ifdef Q_OS_ANDROID
-    QJniObject jdir = QJniObject::fromString(dir);
-    QJniObject::callStaticMethod<void>("net/greblus/SerialActivity", "runFileChooser", "(IILjava/lang/String;)V", 2, 0, jdir.object<jstring>());
-    do
-      {
-        QJniObject jFileName = QJniObject::getStaticObjectField<jstring>("net/greblus/SerialActivity", "m_chosen");
-        g_exefileName = jFileName.toString();
-
-        if (g_exefileName == "Cancelled") {g_exefileName.clear(); break;}
-        if (g_exefileName == "None") QThread::yieldCurrentThread();
-      }
-    while (g_exefileName == "None");
+    g_exefileName = androidOpenUrl(tr("Open executable"),
+                                   tr("Atari executables (*.xex *.com *.exe);;All files (*)"));
+    if (g_exefileName.isEmpty()) {
+        return;
+    }
+    {
+        FileTypes::FileType t = FileTypes::getFileType(g_exefileName);
+        if (t != FileTypes::Xex && t != FileTypes::XexGz) {
+            QMessageBox::information(this, tr("Not an executable"),
+                tr("This is not an Atari executable.\nExecutables start with $FFFF; pick a .xex/.com/.exe file."));
+            g_exefileName.clear();
+            return;
+        }
+    }
     #else
     g_exefileName = QFileDialog::getOpenFileName(this, tr("Open executable"),
                                  dir,
                                  tr(
                                          "Atari executables (*.xex *.com *.exe);;"
                                          "All files (*)"));
-    #endif
     if (g_exefileName.isEmpty()) {
         return;
     }
-        aspeqtSettings->setLastExeDir(QFileInfo(g_exefileName).absolutePath());
+    aspeqtSettings->setLastExeDir(QFileInfo(g_exefileName).absolutePath());
+    #endif
     bootExe(g_exefileName);
 }
 
@@ -2186,17 +2233,19 @@ void MainWindow::on_actionPlaybackCassette_triggered()
     QString dir = aspeqtSettings->lastCasDir();
     QString fileName = NULL;
     #ifdef Q_OS_ANDROID
-    QJniObject jdir = QJniObject::fromString(dir);
-    QJniObject::callStaticMethod<void>("net/greblus/SerialActivity", "runFileChooser", "(IILjava/lang/String;)V", 3, 0, jdir.object<jstring>());
-    do
-      {
-        QJniObject jFileName = QJniObject::getStaticObjectField<jstring>("net/greblus/SerialActivity", "m_chosen");
-        fileName = jFileName.toString();
-
-        if (fileName == "Cancelled") {fileName.clear(); break;}
-        if (fileName == "None") QThread::yieldCurrentThread();
-      }
-    while (fileName == "None");
+    fileName = androidOpenUrl(tr("Open a cassette image"),
+                              tr("CAS images (*.cas);;All files (*)"));
+    if (fileName.isEmpty()) {
+        return;
+    }
+    {
+        FileTypes::FileType t = FileTypes::getFileType(fileName);
+        if (t != FileTypes::Cas && t != FileTypes::CasGz) {
+            QMessageBox::information(this, tr("Not a cassette image"),
+                tr("This is not a cassette image.\nPick a .cas file."));
+            return;
+        }
+    }
     #else
     fileName = QFileDialog::getOpenFileName(this,
                                                     tr("Open a cassette image"),
@@ -2204,11 +2253,11 @@ void MainWindow::on_actionPlaybackCassette_triggered()
                                                     tr(
                                                     "CAS images (*.cas);;"
                                                     "All files (*)"));
-    #endif
     if (fileName.isEmpty()) {
         return;
     }
     aspeqtSettings->setLastCasDir(QFileInfo(fileName).absolutePath());
+    #endif
 
     bool restart;
     restart = ui->actionStartEmulation->isChecked();

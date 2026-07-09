@@ -237,6 +237,26 @@ public class SerialActivity extends QtActivity
                 m_device = new SIO2PCUS4A();
         }
 
+        // Resolve the human-readable file name of a content:// URI (SAF picks
+        // return opaque URIs with no usable path), for showing in slot labels.
+        public static String displayName(String uri) {
+            try {
+                android.net.Uri u = android.net.Uri.parse(uri);
+                android.database.Cursor c = s_activity.getContentResolver()
+                        .query(u, null, null, null, null);
+                if (c != null) {
+                    try {
+                        int idx = c.getColumnIndex(android.provider.OpenableColumns.DISPLAY_NAME);
+                        if (idx >= 0 && c.moveToFirst()) {
+                            String name = c.getString(idx);
+                            if (name != null) return name;
+                        }
+                    } finally { c.close(); }
+                }
+            } catch (Throwable e) {}
+            return "";
+        }
+
         public static int openDevice() {
             return m_device.openDevice();
         }

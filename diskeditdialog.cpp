@@ -678,22 +678,12 @@ void DiskEditDialog::on_actionAddFiles_triggered()
     QString dir = aspeqtSettings->lastExeDir();
 
     #ifdef Q_OS_ANDROID
-    QString fileName;
-    QJniObject jdir = QJniObject::fromString(dir);
-    QJniObject::callStaticMethod<void>("net/greblus/SerialActivity", "runFileChooser", "(IILjava/lang/String;)V", 0, 0, jdir.object<jstring>());
-    do
-      {
-        QJniObject jFileName = QJniObject::getStaticObjectField<jstring>("net/greblus/SerialActivity", "m_chosen");
-        fileName = jFileName.toString();
-
-        if (fileName == "Cancelled") {fileName.clear(); break;}
-        if (fileName == "None") QThread::yieldCurrentThread();
-      }
-    while (fileName == "None");
-
-    if (fileName == "Cancelled") {
+    // SAF picker returns a content:// URI; QFile reads it directly.
+    QUrl url = QFileDialog::getOpenFileUrl(this, tr("Add files"), QUrl());
+    if (url.isEmpty()) {
         return;
-    } else { files.append(fileName); }
+    }
+    files.append(url.toString());
     #else
     files = QFileDialog::getOpenFileNames(this, tr("Add files"), aspeqtSettings->lastExtractDir());
     #endif

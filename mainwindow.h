@@ -86,6 +86,15 @@ private:
     void mountFile(int no, const QString &fileName, bool prot);
     void mountDiskImage(int no);
     void mountFolderImage(int no);
+#ifdef Q_OS_ANDROID
+    // Storage Access Framework pickers: return a content:// URI string (empty
+    // if cancelled). QFile opens these directly, so no storage permission is
+    // needed. Replaces the old filesystem-browsing Java dialog.
+    QString androidOpenUrl(const QString &caption, const QString &filter);
+    QString androidSaveUrl(const QString &caption, const QString &filter);
+    // Human-readable name of a content:// URI (via ContentResolver), for labels.
+    QString androidDisplayName(const QString &uri);
+#endif
     bool ejectImage(int no, bool ask = true);
     void toggleWriteProtection(int no);
     void openEditor(int no);
