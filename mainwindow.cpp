@@ -1077,10 +1077,9 @@ void MainWindow::deviceStatusChanged(int deviceNo)
                 filenamelabel = "!!!!!!!!.!!!";
                 }
 #ifdef Q_OS_ANDROID
-            // content:// URIs have no real path/name; resolve the display name.
+            // content:// URIs have no real path/name; resolve a display name.
             if (img->originalFileName().startsWith("content:")) {
-                QString dn = androidDisplayName(img->originalFileName());
-                if (!dn.isEmpty()) filenamelabel = dn;
+                filenamelabel = friendlyName(img->originalFileName());
             }
 #endif
 
@@ -1598,6 +1597,12 @@ QString MainWindow::friendlyName(const QString &name)
     if (name.startsWith("content:")) {
         QString dn = androidDisplayName(name);
         if (!dn.isEmpty()) return dn;
+        // Some providers don't answer the DISPLAY_NAME query. Fall back to the
+        // SAF document id in the last URI segment (e.g. percent-encoded
+        // "primary:Download/Folder/name.atr") and take just the base name.
+        QString seg = QUrl::fromPercentEncoding(name.mid(name.lastIndexOf('/') + 1).toUtf8());
+        int cut = qMax(seg.lastIndexOf('/'), seg.lastIndexOf(':'));
+        return (cut >= 0) ? seg.mid(cut + 1) : seg;
     }
 #endif
     int i = name.lastIndexOf('/');
