@@ -80,16 +80,35 @@ public class SIO2PCUS4A implements SerialDevice
 
         } while (deviceIterator.hasNext());
 
-        if (dev_found) {
-            pintent = PendingIntent.getBroadcast(sa, 0, new Intent(ACTION_USB_PERMISSION), 0);
-            manager.requestPermission(device, pintent);
-        } else {
+        if (!dev_found) {
             sa.runOnUiThread(new Runnable() {
                 public void run() {
                     Toast.makeText(sa, sa.getResources().getString(R.string.sio2pc_not_attached), Toast.LENGTH_LONG).show();
                 }
             });
             return 0;
+        }
+
+        // Ask for USB permission if we don't have it yet, then WAIT for the
+        // async result before opening. On targetSdk 31+ the PendingIntent must
+        // carry an explicit mutability flag (FLAG_MUTABLE for USB permission),
+        // otherwise getBroadcast() throws and the device is never opened.
+        if (!manager.hasPermission(device)) {
+            int flag = (android.os.Build.VERSION.SDK_INT >= 31) ? PendingIntent.FLAG_MUTABLE : 0;
+            pintent = PendingIntent.getBroadcast(sa, 0, new Intent(ACTION_USB_PERMISSION), flag);
+            SerialActivity.usbPermissionLatch = new java.util.concurrent.CountDownLatch(1);
+            manager.requestPermission(device, pintent);
+            try {
+                SerialActivity.usbPermissionLatch.await(30, java.util.concurrent.TimeUnit.SECONDS);
+            } catch (InterruptedException e) {}
+            if (!manager.hasPermission(device)) {
+                sa.runOnUiThread(new Runnable() {
+                    public void run() {
+                        Toast.makeText(sa, sa.getResources().getString(R.string.sio2pc_no_permissions), Toast.LENGTH_LONG).show();
+                    }
+                });
+                return 0;
+            }
         }
 
         Log.i("USB", "Device found!");

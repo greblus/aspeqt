@@ -46,6 +46,9 @@ public class SerialActivity extends QtActivity
         private static SerialDevice m_device = null;
         private static int m_serial = 0;
         public static String bluetoothName;
+        // Signalled when the async USB-permission result arrives, so openDevice()
+        // can wait for it instead of racing ahead and failing to open.
+        public static java.util.concurrent.CountDownLatch usbPermissionLatch;
 
         @Override
 	public void onCreate(Bundle savedInstanceState)
@@ -382,6 +385,9 @@ public class SerialActivity extends QtActivity
                         });
                     }
                 }
+                // Unblock openDevice() waiting on the permission result.
+                if (SerialActivity.usbPermissionLatch != null)
+                    SerialActivity.usbPermissionLatch.countDown();
             }
         }
     }
