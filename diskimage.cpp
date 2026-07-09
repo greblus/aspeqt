@@ -722,6 +722,28 @@ bool SimpleDiskImage::saveAs(const QString &fileName)
     }
 }
 
+bool SimpleDiskImage::saveAs(const QString &fileName, FileTypes::FileType type)
+{
+    m_originalImageType = type;
+    switch (type) {
+        case FileTypes::Xfd:
+        case FileTypes::XfdGz:
+            return saveXfd(fileName);
+        case FileTypes::Dcm:
+        case FileTypes::DcmGz:
+            return saveDcm(fileName);
+        case FileTypes::Scp:
+        case FileTypes::ScpGz:
+            return saveScp(fileName);
+        case FileTypes::Di:
+        case FileTypes::DiGz:
+            return saveDi(fileName);
+        default:
+            m_originalImageType = FileTypes::Atr;
+            return saveAtr(fileName);
+    }
+}
+
 bool SimpleDiskImage::save()
 {
     switch (m_originalImageType) {

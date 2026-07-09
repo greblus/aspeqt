@@ -58,6 +58,9 @@ public:
     virtual void close();
     bool save();
     bool saveAs(const QString &fileName);
+    // Save to fileName using an explicit format (used on Android where the
+    // content:// target has no extension to infer the type from).
+    bool saveAs(const QString &fileName, FileTypes::FileType type);
     inline bool isOpen() const {return file.isOpen();}
     inline bool isReadOnly() const {return m_isReadOnly;}
     inline void setReadOnly(bool readOnly) {m_isReadOnly = readOnly;}
