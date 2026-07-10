@@ -9,6 +9,9 @@
 #include <QFrame>
 #include <QLabel>
 #include <QPushButton>
+#include <QToolButton>
+#include <QScrollArea>
+#include <QVBoxLayout>
 #include <QTranslator>
 #include <QSystemTrayIcon>
 #include <QTextEdit>
@@ -22,7 +25,14 @@
 #include "textprinterwindow.h"
 #include "docdisplaywindow.h"
 
-#define g_numberOfDisks 6
+#define g_numberOfDisks 6      // desktop: fixed number of drive slots
+
+#ifdef Q_OS_ANDROID
+#define MAX_DISKS 15           // SIO disk device numbers 0x31..0x3F
+#define DEFAULT_DISKS 5
+#else
+#define MAX_DISKS g_numberOfDisks
+#endif
 
 namespace Ui
 {
@@ -31,19 +41,19 @@ namespace Ui
 class DiskWidgets
 {
 public:
-    QLabel *fileNameLabel;
-    QLabel *imagePropertiesLabel;
-    QAction *saveAction;
-    QAction *autoSaveAction;        //
-    QAction *bootOptionAction;      //
-    QAction *saveAsAction;
-    QAction *revertAction;
-    QAction *mountDiskAction;
-    QAction *mountFolderAction;
-    QAction *ejectAction;
-    QAction *writeProtectAction;
-    QAction *editAction;
-    QFrame *frame;
+    QLabel *fileNameLabel = nullptr;
+    QLabel *imagePropertiesLabel = nullptr;
+    QAction *saveAction = nullptr;
+    QAction *autoSaveAction = nullptr;        //
+    QAction *bootOptionAction = nullptr;      //
+    QAction *saveAsAction = nullptr;
+    QAction *revertAction = nullptr;
+    QAction *mountDiskAction = nullptr;
+    QAction *mountFolderAction = nullptr;
+    QAction *ejectAction = nullptr;
+    QAction *writeProtectAction = nullptr;
+    QAction *editAction = nullptr;
+    QFrame *frame = nullptr;
 };
 
 class MainWindow : public QMainWindow
@@ -69,7 +79,8 @@ private:
     Ui::MainWindow *ui;
     SioWorker *sio;
     bool shownFirstTime;
-    DiskWidgets diskWidgets[g_numberOfDisks];    //
+    DiskWidgets diskWidgets[MAX_DISKS];    //
+    int m_numDisks;                        // active number of drive slots
     QLabel *speedLabel, *onOffLabel, *prtOnOffLabel, *netLabel, *clearMessagesLabel;  //
     TextPrinterWindow *textPrinterWindow;
     DocDisplayWindow *docDisplayWindow;    //
@@ -112,6 +123,25 @@ private:
     QString androidReadablePath(const QString &uri, int slot);
     QMap<int, QString> m_folderTree;   // slot -> tree content:// URI
     QMap<int, QString> m_folderTemp;   // slot -> local temp working dir
+
+    // --- dynamic drive slots (Android) --------------------------------------
+    // Slots live in a scrollable column: m_numDisks frames plus a trailing "+"
+    // button. buildSlotFrame() creates one slot's widgets/actions and fills
+    // diskWidgets[i]; add/remove append/drop the last slot; a horizontal swipe
+    // on the last frame removes it. The count persists in the session.
+    QScrollArea *m_slotScroll = nullptr;
+    QWidget     *m_slotContainer = nullptr;
+    QVBoxLayout *m_slotBox = nullptr;
+    QToolButton *m_addSlotBtn = nullptr;
+    QFrame      *m_addSlotRow = nullptr;
+    void buildSlotFrame(int i);        // create widgets + actions for slot i
+    void layoutSlotFrame(int i);       // (re)build slot i's inner layout
+    void androidRebuildSlots();        // (re)populate present slots from settings
+    void androidAddSlot();             // "+" -> fill the lowest gap / append
+    void androidRemoveSlot(int i);     // 2nd eject on empty -> drop this slot
+    void androidEjectPressed(int i);   // eject if mounted, else remove the slot
+    int  androidBoxPos(int i);         // layout position for slot i in m_slotBox
+    void androidUpdateAddRow();        // show/hide "+" row at the current cap
 #endif
     bool ejectImage(int no, bool ask = true);
     void toggleWriteProtection(int no);
