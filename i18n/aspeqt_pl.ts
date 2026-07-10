@@ -1637,6 +1637,10 @@ p, li { white-space: pre-wrap; }
         <translation>Usuń wiadomości</translation>
     </message>
     <message>
+        <source>Scroll the slot list to see all of them.</source>
+        <translation>Przewiń listę slotów żeby zobaczyć je wszystkie.</translation>
+    </message>
+    <message>
         <location filename="../mainwindow.cpp" line="496"/>
         <source>Swapped disk %1 with disk %2.</source>
         <translation>Zamieniono dysk %1 z dyskiem %2.</translation>

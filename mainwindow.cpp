@@ -1212,6 +1212,12 @@ void MainWindow::androidRelayout()
         int h = qMin(content, cap);
         m_slotScroll->setMinimumHeight(h);
         m_slotScroll->setMaximumHeight(h);
+        // Hint once when the slots first stop fitting (must be scrolled to see
+        // them all); reset when they fit again so it can fire next time.
+        bool over = content > cap;
+        if (over && !m_slotsOverflowed)
+            qWarning() << "!i" << tr("Scroll the slot list to see all of them.");
+        m_slotsOverflowed = over;
         // Pin the content to the viewport width so there is no horizontal scroll
         // range (keeps scrolling vertical-only).
         int vpW = m_slotScroll->maximumViewportSize().width();

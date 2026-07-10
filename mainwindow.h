@@ -134,6 +134,7 @@ private:
     QVBoxLayout *m_slotBox = nullptr;
     QToolButton *m_addSlotBtn = nullptr;
     QFrame      *m_addSlotRow = nullptr;
+    bool         m_slotsOverflowed = false;   // slots taller than the viewport
     void buildSlotFrame(int i);        // create widgets + actions for slot i
     void layoutSlotFrame(int i);       // (re)build slot i's inner layout
     void androidRebuildSlots();        // (re)populate present slots from settings
