@@ -21,8 +21,12 @@ QString androidContentUri(const QUrl &url)
         QString marker;
         for (const QString &m : markers)
             if (rest.startsWith(m)) { marker = m; break; }
+        // Android's Uri.encode leaves these "mark" chars un-encoded; excluding
+        // them reproduces the provider's exact document id (otherwise e.g.
+        // "(" -> %28 makes ContentResolver/QFile miss the file).
+        static const QByteArray keep = "!'()*";
         if (marker.isEmpty()) {                // unexpected shape: encode as-is
-            out += QString::fromUtf8(QUrl::toPercentEncoding(rest, "/"));
+            out += QString::fromUtf8(QUrl::toPercentEncoding(rest, "/" + keep));
             break;
         }
         QString after = rest.mid(marker.size());
@@ -33,7 +37,7 @@ QString androidContentUri(const QUrl &url)
                 nextIdx = p;
         }
         QString id = (nextIdx >= 0) ? after.left(nextIdx) : after;
-        out += marker + QString::fromUtf8(QUrl::toPercentEncoding(id));
+        out += marker + QString::fromUtf8(QUrl::toPercentEncoding(id, keep));
         rest = (nextIdx >= 0) ? after.mid(nextIdx) : QString();
     }
     return out;
