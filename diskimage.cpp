@@ -214,11 +214,11 @@ QString DiskGeometry::humanReadable() const
         result = tr("QD Diskette");
     } else if (m_tracksPerSide == 1) {
         if (m_bytesPerSector == 128) {
-            result = tr("%1 sector SD HardDrive").arg(m_sectorCount);
+            result = tr("Disk %1 s. SD").arg(m_sectorCount);
         } else if (m_bytesPerSector == 256) {
-            result = tr("%1 sector DD HardDrive").arg(m_sectorCount);
+            result = tr("Disk %1 s. DD").arg(m_sectorCount);
         } else {
-            result = tr("%1 sector, %2 bytes/sector HardDrive").arg(m_sectorCount).arg(m_bytesPerSector);
+            result = tr("Disk %1 s. %2B").arg(m_sectorCount).arg(m_bytesPerSector);
         }
     } else {
         result = tr("%1 %2 tracks/side, %3 sectors/track, %4 bytes/sector diskette")

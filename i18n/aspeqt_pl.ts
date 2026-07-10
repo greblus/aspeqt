@@ -1026,18 +1026,18 @@ Kiedy usłyszysz sygnał, naciśnij przycisk OK poniżej i jednocześnie naciśn
     </message>
     <message>
         <location filename="../diskimage.cpp" line="217"/>
-        <source>%1 sector SD HardDrive</source>
-        <translation>%1 sektor SD Twardy dysk</translation>
+        <source>Disk %1 s. SD</source>
+        <translation>Dysk %1 s. SD</translation>
     </message>
     <message>
         <location filename="../diskimage.cpp" line="219"/>
-        <source>%1 sector DD HardDrive</source>
-        <translation>%1 sektor DD Twardy dysk</translation>
+        <source>Disk %1 s. DD</source>
+        <translation>Dysk %1 s. DD</translation>
     </message>
     <message>
         <location filename="../diskimage.cpp" line="221"/>
-        <source>%1 sector, %2 bytes/sector HardDrive</source>
-        <translation>%1 sektor, %2 bajty/sektor Twardy dysk</translation>
+        <source>Disk %1 s. %2B</source>
+        <translation>Dysk %1 s. %2B</translation>
     </message>
     <message>
         <location filename="../diskimage.cpp" line="224"/>
