@@ -22,6 +22,9 @@
 #include <QTemporaryFile>
 #include <QStandardPaths>
 #include <QDir>
+#include <QVBoxLayout>
+#include <QHBoxLayout>
+#include <QToolButton>
 #include <QScrollBar>
 #include <QTranslator>
 #include <QMessageBox>
@@ -387,6 +390,10 @@ MainWindow::MainWindow(QWidget *parent)
         findChild <QToolButton*> (QString("buttonEditDisk_%1").arg(i + 1)) -> setDefaultAction(diskWidgets[i].editAction);
     }
 
+#ifdef Q_OS_ANDROID
+    androidBuildSlots();
+#endif
+
     /* Connect SioWorker signals */
     sio = new SioWorker();
     connect(sio, SIGNAL(started()), this, SLOT(sioStarted()));
@@ -750,6 +757,66 @@ void MainWindow::resizeEvent(QResizeEvent *)
 }
 
 #ifdef Q_OS_ANDROID
+void MainWindow::androidBuildSlots()
+{
+    for (int i = 1; i <= 6; ++i) {
+        QFrame *f = ui->centralWidget->findChild<QFrame *>(QString("horizontalFrame_%1").arg(i));
+        if (!f)
+            continue;
+
+        QLabel *fileLbl = findChild<QLabel *>(QString("labelFileName_%1").arg(i));
+        QLabel *typeLbl = findChild<QLabel *>(QString("labelImageProperties_%1").arg(i));
+        QLabel *numLbl = nullptr;   // the slot number ("1:") — the odd label out
+        foreach (QLabel *l, f->findChildren<QLabel *>())
+            if (l != fileLbl && l != typeLbl) { numLbl = l; break; }
+
+        QList<QToolButton *> btns;
+        btns << findChild<QToolButton *>(QString("buttonMountDisk_%1").arg(i))
+             << findChild<QToolButton *>(QString("buttonMountFolder_%1").arg(i))
+             << findChild<QToolButton *>(QString("buttonSave_%1").arg(i))
+             << findChild<QToolButton *>(QString("autoSave_%1").arg(i))
+             << findChild<QToolButton *>(QString("buttonEditDisk_%1").arg(i))
+             << findChild<QToolButton *>(QString("buttonEject_%1").arg(i));
+
+        // Drop the old horizontal layout; its widgets reparent to the frame.
+        delete f->layout();
+
+        // Row 1: number + first five icons (left), eject pushed to the right.
+        // Row 2: file name (left, under the first icon), file type (right).
+        QVBoxLayout *v = new QVBoxLayout(f);
+        v->setContentsMargins(8, 3, 8, 3);
+        v->setSpacing(2);
+
+        QHBoxLayout *btnRow = new QHBoxLayout();
+        btnRow->setSpacing(6);
+        if (numLbl) btnRow->addWidget(numLbl);
+        for (int k = 0; k < btns.size(); ++k) {
+            if (!btns[k]) continue;
+            if (k == btns.size() - 1)   // last icon (eject) -> right edge
+                btnRow->addStretch();
+            btnRow->addWidget(btns[k]);
+        }
+
+        QHBoxLayout *lblRow = new QHBoxLayout();
+        lblRow->setSpacing(8);
+        // Line the name up with the first icon, past the number.
+        int indent = numLbl ? numLbl->sizeHint().width() + btnRow->spacing() : 0;
+        lblRow->addSpacing(indent);
+        if (fileLbl) {
+            fileLbl->setSizePolicy(QSizePolicy::Preferred, QSizePolicy::Preferred);
+            lblRow->addWidget(fileLbl);
+        }
+        lblRow->addStretch();
+        if (typeLbl) {
+            typeLbl->setSizePolicy(QSizePolicy::Preferred, QSizePolicy::Preferred);
+            lblRow->addWidget(typeLbl);
+        }
+
+        v->addLayout(btnRow);
+        v->addLayout(lblRow);
+    }
+}
+
 void MainWindow::androidRelayout()
 {
     // setContentsMargins()/changeSize() below trigger a relayout (another
@@ -814,15 +881,16 @@ void MainWindow::androidRelayout()
     int pad    = 2;                                   // vertical pad inside the box
     int btnH   = rowH - 2 * pad - 2;                  // -2 for the frame border
     int iconPx = btnH - 3;                            // less padding -> larger icons
+    // Two-line slot box: pad + button row + gap + description line + pad + border.
+    int labelH = 0;
+    if (QLabel *l0 = findChild<QLabel *>("labelFileName_1"))
+        labelH = QFontMetrics(l0->font()).height();
+    int frameH = 3 + btnH + 2 + labelH + 3 + 2;
     for (int i = 1; i <= 6; ++i) {
         QFrame *f = central->findChild<QFrame *>(QString("horizontalFrame_%1").arg(i));
         if (f) {
-            f->setMinimumHeight(rowH);
-            f->setMaximumHeight(rowH);
-            if (f->layout()) {
-                f->layout()->setContentsMargins(4, pad, 4, pad);
-                f->layout()->setSpacing(4);
-            }
+            f->setMinimumHeight(frameH);
+            f->setMaximumHeight(frameH);
         }
     }
     foreach (QToolButton *btn, central->findChildren<QToolButton *>()) {
@@ -1538,12 +1606,14 @@ void MainWindow::mountFile(int no, const QString &fileName, bool /*prot*/)
 #ifdef Q_OS_ANDROID
 QString MainWindow::androidOpenUrl(const QString &caption, const QString &filter)
 {
-    return QFileDialog::getOpenFileUrl(this, caption, QUrl(), filter).toString();
+    QUrl u = QFileDialog::getOpenFileUrl(this, caption, QUrl(), filter);
+    return u.isEmpty() ? QString() : androidContentUri(u);
 }
 
 QString MainWindow::androidSaveUrl(const QString &caption, const QString &filter)
 {
-    return QFileDialog::getSaveFileUrl(this, caption, QUrl(), filter).toString();
+    QUrl u = QFileDialog::getSaveFileUrl(this, caption, QUrl(), filter);
+    return u.isEmpty() ? QString() : androidContentUri(u);
 }
 
 QString MainWindow::androidDisplayName(const QString &uri)
@@ -1589,6 +1659,40 @@ int MainWindow::androidCopyDirToTree(const QString &src, const QString &tree)
         "net/greblus/SerialActivity", "copyDirToTree",
         "(Ljava/lang/String;Ljava/lang/String;)I", js.object<jstring>(), jt.object<jstring>());
 }
+
+int MainWindow::androidCopyUriToFile(const QString &uri, const QString &dest)
+{
+    QJniObject ju = QJniObject::fromString(uri);
+    QJniObject jd = QJniObject::fromString(dest);
+    return QJniObject::callStaticMethod<jint>(
+        "net/greblus/SerialActivity", "copyUriToFile",
+        "(Ljava/lang/String;Ljava/lang/String;)I", ju.object<jstring>(), jd.object<jstring>());
+}
+
+QString MainWindow::androidReadablePath(const QString &uri, int slot)
+{
+    if (!uri.startsWith("content:"))
+        return uri;
+    QFile probe(uri);
+    if (probe.open(QIODevice::ReadOnly)) {   // Qt can read it directly
+        probe.close();
+        return uri;
+    }
+    // Qt's QFile can't open this SAF URI; copy the document to a temp file
+    // (named with its real name so the slot label is correct) and read that.
+    QString name = friendlyName(uri);
+    if (name.isEmpty())
+        name = QStringLiteral("image");
+    QString tmpDir = QStandardPaths::writableLocation(QStandardPaths::CacheLocation)
+                   + "/mount/" + QString::number(slot);
+    QDir(tmpDir).removeRecursively();
+    QDir().mkpath(tmpDir);
+    QString tmpPath = tmpDir + "/" + name;
+    if (androidCopyUriToFile(uri, tmpPath) < 0)
+        return uri;
+    return tmpPath;
+}
+
 #endif
 
 QString MainWindow::friendlyName(const QString &name)
@@ -1628,6 +1732,7 @@ void MainWindow::mountDiskImage(int no)
     if (fileName.isEmpty()) {
         return;
     }
+    fileName = androidReadablePath(fileName, no);
     {
         FileTypes::FileType t = FileTypes::getFileType(fileName);
         if (t == FileTypes::Xex || t == FileTypes::XexGz) {
@@ -1671,7 +1776,7 @@ void MainWindow::mountFolderImage(int no)
     // Pick a folder via SAF (ACTION_OPEN_DOCUMENT_TREE), copy its files into a
     // local temp dir and mount that; changes are written back on eject.
     QUrl treeUrl = QFileDialog::getExistingDirectoryUrl(this, tr("Open a folder image"), QUrl());
-    QString tree = treeUrl.toString();
+    QString tree = treeUrl.isEmpty() ? QString() : androidContentUri(treeUrl);
     if (tree.isEmpty()) {
         return;
     }

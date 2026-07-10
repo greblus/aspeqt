@@ -105,6 +105,11 @@ private:
     QString androidTreeName(const QString &tree);
     int androidCopyTreeToDir(const QString &tree, const QString &dest);
     int androidCopyDirToTree(const QString &src, const QString &tree);
+    int androidCopyUriToFile(const QString &uri, const QString &dest);
+    // Return a path QFile can read: the content:// URI itself when Qt can open
+    // it, otherwise a temp copy made via ContentResolver (Qt's QFile fails on
+    // some SAF URIs, e.g. files in sub-folders). Keeps the real file name.
+    QString androidReadablePath(const QString &uri, int slot);
     QMap<int, QString> m_folderTree;   // slot -> tree content:// URI
     QMap<int, QString> m_folderTemp;   // slot -> local temp working dir
 #endif
@@ -134,6 +139,9 @@ protected:
     // Re-fit the layout to the current screen: apply system-bar insets as window
     // margins and size the 6 drive rows so the log always keeps usable height.
     void androidRelayout();
+    // Rebuild each drive slot as a centred button row with the name/type
+    // descriptions left-aligned on a second line below the buttons.
+    void androidBuildSlots();
 #endif
 
 signals:
