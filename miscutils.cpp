@@ -3,6 +3,41 @@
 #include <QDir>
 #include <QFile>
 #include <QDebug>
+#include <QUrl>
+#include <QStringList>
+
+QString androidContentUri(const QUrl &url)
+{
+    if (url.scheme() != QLatin1String("content"))
+        return url.toString(QUrl::FullyEncoded);
+
+    QString out = QStringLiteral("content://") + url.authority();
+    // Component-decode gives the raw id characters (%2F -> /, %3A -> :, %20 ->
+    // space); re-encode each id segment as one component below.
+    QString rest = url.path(QUrl::FullyDecoded);   // /document/<id> or /tree/<id>/document/<id>
+
+    const QStringList markers = { QStringLiteral("/document/"), QStringLiteral("/tree/") };
+    while (!rest.isEmpty()) {
+        QString marker;
+        for (const QString &m : markers)
+            if (rest.startsWith(m)) { marker = m; break; }
+        if (marker.isEmpty()) {                // unexpected shape: encode as-is
+            out += QString::fromUtf8(QUrl::toPercentEncoding(rest, "/"));
+            break;
+        }
+        QString after = rest.mid(marker.size());
+        int nextIdx = -1;                      // start of the next id segment
+        for (const QString &m : markers) {
+            int p = after.indexOf(m);
+            if (p >= 0 && (nextIdx < 0 || p < nextIdx))
+                nextIdx = p;
+        }
+        QString id = (nextIdx >= 0) ? after.left(nextIdx) : after;
+        out += marker + QString::fromUtf8(QUrl::toPercentEncoding(id));
+        rest = (nextIdx >= 0) ? after.mid(nextIdx) : QString();
+    }
+    return out;
+}
 
 void deltree(const QString &name)
 {

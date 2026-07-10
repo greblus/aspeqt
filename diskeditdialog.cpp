@@ -741,7 +741,10 @@ void DiskEditDialog::on_actionAddFiles_triggered()
     if (url.isEmpty()) {
         return;
     }
-    QFile src(url.toString());
+    // Re-encode the SAF document id so a content:// URI with spaces/sub-folders
+    // stays valid (QUrl pretty-decodes it otherwise).
+    QString uri = androidContentUri(url);
+    QFile src(uri);
     if (!src.open(QIODevice::ReadOnly)) {
         return;
     }
@@ -750,7 +753,7 @@ void DiskEditDialog::on_actionAddFiles_triggered()
     QJniObject jn = QJniObject::callStaticObjectMethod(
         "net/greblus/SerialActivity", "displayName",
         "(Ljava/lang/String;)Ljava/lang/String;",
-        QJniObject::fromString(url.toString()).object<jstring>());
+        QJniObject::fromString(uri).object<jstring>());
     QString displayName = jn.isValid() ? jn.toString() : QString();
     if (displayName.isEmpty()) displayName = QStringLiteral("FILE");
     QString tmpDir = QStandardPaths::writableLocation(QStandardPaths::CacheLocation) + "/addfile";

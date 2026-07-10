@@ -7,6 +7,13 @@
 
 void deltree(const QString &name);
 
+class QUrl;
+// Rebuild a SAF content:// URI string that ContentResolver/QFile can open:
+// re-encode each document/tree id segment (%2F, %3A, %20, ...) that QUrl
+// pretty-decodes when it parses the picker result. Without this, files in
+// sub-folders or with special characters fail to open.
+QString androidContentUri(const QUrl &url);
+
 class GzFile : public QFile
 {
     Q_OBJECT
