@@ -368,6 +368,25 @@ public class SerialActivity extends QtActivity
             return count;
         }
 
+        // Read a content:// document into a local file via ContentResolver.
+        // Qt's QFile can't open some SAF URIs (files in sub-folders on the
+        // external-storage provider), so this is the reliable read path.
+        // Returns bytes copied, or -1 on error.
+        public static int copyUriToFile(String uri, String destPath) {
+            try {
+                android.net.Uri u = android.net.Uri.parse(uri);
+                java.io.InputStream in = s_activity.getContentResolver().openInputStream(u);
+                if (in == null) return -1;
+                java.io.FileOutputStream out = new java.io.FileOutputStream(destPath);
+                byte[] buf = new byte[65536];
+                int n, total = 0;
+                while ((n = in.read(buf)) > 0) { out.write(buf, 0, n); total += n; }
+                out.close();
+                in.close();
+                return total;
+            } catch (Throwable e) { return -1; }
+        }
+
         public static int openDevice() {
             return m_device.openDevice();
         }
