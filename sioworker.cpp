@@ -297,9 +297,12 @@ bool CassetteWorker::loadCasImage(const QString &fileName)
     do {
         header = casFile.read(8);
 
+        // Tolerate a truncated final chunk (some CAS files are cut short):
+        // stop and keep the complete records instead of failing the whole load.
         if (header.length() != 8) {
-            qCritical() << "!e" << tr("Cannot read '%1': %2").arg(fileName).arg(casFile.errorString());
-            return false;
+            if (header.length() > 0)
+                qWarning() << "!w" << tr("'%1' ends with an incomplete chunk; loaded the complete records only.").arg(fileName);
+            break;
         }
 
         magic = (quint8)header.at(0) + (quint8)header.at(1) * 256 + (quint8)header.at(2) * 65536 + (quint8)header.at(3) * 16777216;
@@ -308,8 +311,8 @@ bool CassetteWorker::loadCasImage(const QString &fileName)
 
         data = casFile.read(length);
         if (data.length() != length) {
-            qCritical() << "!e" << tr("Cannot read '%1': %2").arg(fileName).arg(casFile.errorString());
-            return false;
+            qWarning() << "!w" << tr("'%1' ends with an incomplete chunk; loaded the complete records only.").arg(fileName);
+            break;
         }
 
         /* Verify the header */
