@@ -45,12 +45,19 @@ AspeqtSettings::AspeqtSettings()
 
     int i;
 
+    mNumberOfDisks = mSettings->value("NumberOfDisks", 5).toInt();
+    if (mNumberOfDisks < 1)  mNumberOfDisks = 1;
+    if (mNumberOfDisks > 16) mNumberOfDisks = 16;
+
     mSettings->beginReadArray("MountedImageSettings");
 
-    for (i = 0; i < 6; i++) {      //
+    for (i = 0; i < 16; i++) {      //
         mSettings->setArrayIndex(i);
         mMountedImageSettings[i].fileName = mSettings->value("FileName", QString()).toString();
         mMountedImageSettings[i].isWriteProtected = mSettings->value("IsWriteProtected", false).toBool();
+        // Default (older configs without the key): the first NumberOfDisks slots
+        // are present, the rest are absent.
+        mMountedImageSettings[i].present = mSettings->value("Present", i < mNumberOfDisks).toBool();
     }
     mSettings->endArray();
 
@@ -142,12 +149,14 @@ void AspeqtSettings::saveSessionToFile(const QString &fileName)
         s.setValue("EnableShadeByDefault", mEnableShade);
     s.endGroup();
 //
+    s.setValue("NumberOfDisks", mNumberOfDisks);
     s.beginWriteArray("MountedImageSettings");
-    for (int i = 0; i < 6; i++) {                      //
+    for (int i = 0; i < 16; i++) {                     //
         ImageSettings is = mMountedImageSettings[i];
         s.setArrayIndex(i);
         s.setValue("FileName", is.fileName);
         s.setValue("IsWriteProtected", is.isWriteProtected);
+        s.setValue("Present", is.present);
     }
     s.endArray();
 }
@@ -196,10 +205,15 @@ void AspeqtSettings::saveSessionToFile(const QString &fileName)
         mEnableShade = s.value("EnableShadeByDefault", true).toBool();
     s.endGroup();
  //
+    int n = s.value("NumberOfDisks", 6).toInt();
+    if (n < 1)  n = 1;
+    if (n > 16) n = 16;
+    mNumberOfDisks = n;
     s.beginReadArray("MountedImageSettings");
-    for (int i = 0; i < 6; i++) {              //
+    for (int i = 0; i < 16; i++) {              //
         s.setArrayIndex(i);
         setMountedImageSetting(i, s.value("FileName", "").toString(), s.value("IsWriteProtected", false).toBool());
+        mMountedImageSettings[i].present = s.value("Present", i < mNumberOfDisks).toBool();
     }
     s.endArray();
 }
@@ -417,6 +431,33 @@ void AspeqtSettings::setMountedImageSetting(int no, const QString &fileName, boo
     if(mSessionFileName == "") mSettings->setValue(QString("MountedImageSettings/%1/FileName").arg(no+1), fileName);
     if(mSessionFileName == "") mSettings->setValue(QString("MountedImageSettings/%1/IsWriteProtected").arg(no+1), prot);
 }
+int AspeqtSettings::numberOfDisks()
+{
+    return mNumberOfDisks;
+}
+
+void AspeqtSettings::setNumberOfDisks(int n)
+{
+    if (n < 1)  n = 1;
+    if (n > 16) n = 16;
+    mNumberOfDisks = n;
+    if (mSessionFileName == "") mSettings->setValue("NumberOfDisks", mNumberOfDisks);
+}
+
+bool AspeqtSettings::slotPresent(int no)
+{
+    if (no < 0 || no >= 16) return false;
+    return mMountedImageSettings[no].present;
+}
+
+void AspeqtSettings::setSlotPresent(int no, bool present)
+{
+    if (no < 0 || no >= 16) return;
+    mMountedImageSettings[no].present = present;
+    if (mSessionFileName == "")
+        mSettings->setValue(QString("MountedImageSettings/%1/Present").arg(no + 1), present);
+}
+
 void AspeqtSettings::mountImage(int no, const QString &fileName, bool prot)
 {
     if (fileName.isEmpty()) {

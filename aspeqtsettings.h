@@ -10,6 +10,7 @@ public:
     public:
         QString fileName;
         bool isWriteProtected;
+        bool present = true;   // Android: false = slot removed (leaves a number gap)
     };
 
     AspeqtSettings();
@@ -65,6 +66,14 @@ public:
 
     void setMountedImageSetting(int no, const QString &fileName, bool prot);
     ImageSettings recentImageSetting(int no);
+
+    // Number of drive slots shown (Android dynamic slots). Persisted per session.
+    // This is the slot-index range (highest present slot + 1); removed slots in
+    // the middle stay as gaps flagged by slotPresent().
+    int numberOfDisks();
+    void setNumberOfDisks(int n);
+    bool slotPresent(int no);
+    void setSlotPresent(int no, bool present);
 
     void mountImage(int no, const QString &fileName, bool prot);
 
@@ -218,6 +227,7 @@ private:
     int mCustomCasBaud;
 
     ImageSettings mMountedImageSettings[16];    //
+    int mNumberOfDisks;
 
     ImageSettings mRecentImageSettings[10];
     QString mLastDiskImageDir;
