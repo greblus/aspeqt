@@ -12,6 +12,7 @@
 #include <QToolButton>
 #include <QScrollArea>
 #include <QVBoxLayout>
+#include <QProgressBar>
 #include <QTranslator>
 #include <QSystemTrayIcon>
 #include <QTextEdit>
@@ -38,6 +39,7 @@ namespace Ui
 {
     class MainWindow;
 }
+class AutoBoot;
 class DiskWidgets
 {
 public:
@@ -121,6 +123,10 @@ private:
     // it, otherwise a temp copy made via ContentResolver (Qt's QFile fails on
     // some SAF URIs, e.g. files in sub-folders). Keeps the real file name.
     QString androidReadablePath(const QString &uri, int slot);
+    // Always copy a content:// URI to a local temp file (returns the path, or
+    // empty on failure). For read-only loads (CAS/executable) where QFile's SAF
+    // stream can pass open() but fail the repeated reads/seeks/atEnd() they need.
+    QString androidLocalCopy(const QString &uri);
     QMap<int, QString> m_folderTree;   // slot -> tree content:// URI
     QMap<int, QString> m_folderTemp;   // slot -> local temp working dir
 
@@ -138,6 +144,40 @@ private:
     void buildSlotFrame(int i);        // create widgets + actions for slot i
     void layoutSlotFrame(int i);       // (re)build slot i's inner layout
     void androidRebuildSlots();        // (re)populate present slots from settings
+
+    // --- top loader slot: inline XEX autoboot / CAS cassette player ----------
+    QFrame       *m_loaderFrame = nullptr;
+    QLabel       *m_loaderBadge = nullptr;
+    QLabel       *m_loaderFileLbl = nullptr;
+    QLabel       *m_loaderTypeLbl = nullptr;
+    QToolButton  *m_loaderLoadBtn = nullptr;
+    QToolButton  *m_loaderPlayBtn = nullptr;
+    QToolButton  *m_loaderRetryBtn = nullptr;
+    QToolButton  *m_loaderEjectBtn = nullptr;
+    QWidget      *m_loaderSpacer1 = nullptr;   // keep icon columns aligned with
+    QWidget      *m_loaderSpacer2 = nullptr;   // the 5-icon disk slots
+    QString       m_loaderFile;             // current local (temp) file path
+    int           m_loaderKind = 0;         // 0 none, 1 xex, 2 cas
+    CassetteWorker *m_casWorker = nullptr;
+    QTimer       *m_casTimer = nullptr;
+    int           m_casTotal = 0, m_casRemaining = 0;
+    bool          m_casWasRunning = false;   // emulation paused for cassette play
+    AutoBoot     *m_autoBoot = nullptr;
+    SioDevice    *m_autoBootOld = nullptr;
+    void androidBuildLoaderSlot();
+    void loaderLoad();
+    void loaderLoadXex(const QString &path);
+    void loaderLoadCas(const QString &path);
+    void loaderPlayCas();
+    void loaderEject();
+    void loaderRetry();
+    void loaderUpdateButtons();
+    void loaderSetFill(double frac);   // fill the whole slot as a progress bar
+    void loaderCasStatus(int remainingTime);
+    void loaderCasTick();
+    void loaderCasFinished();
+    void loaderBlockRead(int current, int all);
+    void loaderBooterDone();
     void androidAddSlot();             // "+" -> fill the lowest gap / append
     void androidRemoveSlot(int i);     // 2nd eject on empty -> drop this slot
     void androidEjectPressed(int i);   // eject if mounted, else remove the slot

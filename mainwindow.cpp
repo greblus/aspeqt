@@ -29,6 +29,7 @@
 #include <QScrollArea>
 #include <QScroller>
 #include <QScrollerProperties>
+#include <QProgressBar>
 #include <QMouseEvent>
 #ifdef Q_OS_ANDROID
 // "Remove slot" affordance for an empty slot: the tango "unreadable" emblem
@@ -826,6 +827,10 @@ void MainWindow::buildSlotFrame(int i)
     d.saveAction         = mkAct(":/icons/tango-icons/devices/media-floppy.svg", false, tr("Save disk"));
     d.autoSaveAction     = mkAct(":/icons/tango-icons/actions/document-save-as.svg", true, tr("Auto-commit"));
     d.editAction         = mkAct(":/icons/tango-icons/apps/system-file-manager.svg", true, tr("Disk explorer"));
+    // A new slot starts empty: show the placeholder hint (deviceStatusChanged()
+    // replaces it with the file name once something is mounted).
+    d.fileNameLabel->setText(tr("Mount a disk image or folder."));
+    d.fileNameLabel->setStyleSheet("color:#B0B0B0; font-style:italic; font-weight:normal; font-size:12px;");
     d.ejectAction        = mkAct(":/icons/tango-icons/actions/media-eject.svg", false, tr("Eject"));
     // A new slot starts empty, so the eject button starts as the "remove slot"
     // trash button; deviceStatusChanged() swaps in the eject icon once mounted.
@@ -904,7 +909,7 @@ void MainWindow::layoutSlotFrame(int i)
         numLbl->setText(QString::number(i + 1));
         numLbl->setAlignment(Qt::AlignCenter);
         numLbl->setFixedSize(30, 30);
-        numLbl->setStyleSheet("QLabel { background:#9AA7B4; color:white;"
+        numLbl->setStyleSheet("QLabel { background:#E0A030; color:white;"
                               " border-radius:8px; font-weight:bold; font-size:14px; }");
         outer->addWidget(numLbl, 0, Qt::AlignVCenter);
     }
@@ -1012,6 +1017,9 @@ void MainWindow::androidBuildSlots()
     m_slotBox->addWidget(m_addSlotRow);
     m_slotBox->addStretch();
 
+    // The always-on-top loader slot (inserts itself at box position 0).
+    androidBuildLoaderSlot();
+
     // Remove the .ui's fixed frames from the grid and put the scroll area in
     // their place (row 1, spanning the six old drive rows).
     for (int i = 1; i <= 6; ++i)
@@ -1047,11 +1055,13 @@ void MainWindow::androidRebuildSlots()
     m_numDisks = aspeqtSettings->numberOfDisks();
     if (m_numDisks < 1)         m_numDisks = DEFAULT_DISKS;
     if (m_numDisks > MAX_DISKS)  m_numDisks = MAX_DISKS;
+    int base = m_loaderFrame ? 1 : 0;   // loader slot occupies box position 0
     int pos = 0;
     for (int i = 0; i < m_numDisks; ++i) {
         if (!aspeqtSettings->slotPresent(i)) continue;   // removed slot -> gap
         buildSlotFrame(i);
-        m_slotBox->insertWidget(pos++, diskWidgets[i].frame);
+        m_slotBox->insertWidget(base + pos, diskWidgets[i].frame);
+        pos++;
     }
     androidUpdateAddRow();
 }
@@ -1073,7 +1083,7 @@ void MainWindow::androidAddSlot()
         if (!diskWidgets[k].frame) { i = k; break; }
     if (i < 0) return;                       // all slots present
     buildSlotFrame(i);
-    m_slotBox->insertWidget(androidBoxPos(i), diskWidgets[i].frame);
+    m_slotBox->insertWidget((m_loaderFrame ? 1 : 0) + androidBoxPos(i), diskWidgets[i].frame);
     if (i >= m_numDisks) m_numDisks = i + 1;
     aspeqtSettings->setNumberOfDisks(m_numDisks);
     aspeqtSettings->setSlotPresent(i, true);
@@ -1112,6 +1122,352 @@ void MainWindow::androidEjectPressed(int i)
         ejectImage(i);
     else
         androidRemoveSlot(i);
+}
+
+// ---- top loader slot: inline XEX autoboot / CAS cassette player -------------
+
+// Build the always-on-top loader slot (badge "cas/xex", load / play / retry /
+// eject buttons, and a load progress bar) and insert it above the disk slots.
+void MainWindow::androidBuildLoaderSlot()
+{
+    QFrame *f = new QFrame(m_slotContainer);
+    f->setObjectName("loaderFrame");
+    f->setFrameShape(QFrame::NoFrame);
+    f->setStyleSheet("QFrame#loaderFrame { background:#F7F7F7; border:1px solid #B0B0B0; border-radius:6px; }");
+    m_loaderFrame = f;
+
+    m_loaderBadge = new QLabel(f);
+    m_loaderBadge->setObjectName("loaderBadge");
+    m_loaderBadge->setAlignment(Qt::AlignCenter);
+    m_loaderBadge->setFixedSize(30, 30);
+    m_loaderBadge->setTextFormat(Qt::RichText);
+    m_loaderBadge->setText(QStringLiteral("cas<br>xex"));
+    m_loaderBadge->setStyleSheet("QLabel#loaderBadge { background:#E0A030; color:white;"
+                                 " border-radius:8px; font-weight:bold; font-size:10px; }");
+
+    m_loaderFileLbl = new QLabel(f);
+    m_loaderFileLbl->setObjectName("loaderFileLbl");
+    m_loaderTypeLbl = new QLabel(f);
+    m_loaderTypeLbl->setObjectName("loaderTypeLbl");
+
+    auto mkBtn = [&](const QString &icon, const QString &tip) {
+        QToolButton *b = new QToolButton(f);
+        b->setIcon(QIcon(icon));
+        b->setToolTip(tip);
+        return b;
+    };
+    m_loaderLoadBtn  = mkBtn(":/icons/tango-icons/categories/applications-system.svg", tr("Load executable or cassette"));
+    m_loaderPlayBtn  = mkBtn(":/icons/tango-icons/actions/media-playback-start.svg", tr("Start cassette playback"));
+    m_loaderRetryBtn = mkBtn(":/icons/tango-icons/actions/view-refresh.svg", tr("Retry"));
+    m_loaderEjectBtn = mkBtn(":/icons/tango-icons/actions/media-eject.svg", tr("Eject"));
+    // Invisible placeholders so the three loader icons line up with the first
+    // three icons of the (five-icon) disk slots.
+    m_loaderSpacer1 = new QWidget(f);
+    m_loaderSpacer2 = new QWidget(f);
+
+    connect(m_loaderLoadBtn,  &QToolButton::clicked, this, [this]{ loaderLoad(); });
+    connect(m_loaderPlayBtn,  &QToolButton::clicked, this, [this]{ loaderPlayCas(); });
+    connect(m_loaderRetryBtn, &QToolButton::clicked, this, [this]{ loaderRetry(); });
+    connect(m_loaderEjectBtn, &QToolButton::clicked, this, [this]{ loaderEject(); });
+
+    QHBoxLayout *outer = new QHBoxLayout(f);
+    outer->setContentsMargins(8, 3, 8, 3);
+    outer->setSpacing(8);
+    outer->addWidget(m_loaderBadge, 0, Qt::AlignVCenter);
+
+    QVBoxLayout *col = new QVBoxLayout();
+    col->setSpacing(2);
+    QHBoxLayout *btnRow = new QHBoxLayout();
+    btnRow->setSpacing(6);
+    btnRow->addStretch();
+    btnRow->addWidget(m_loaderLoadBtn,  0, Qt::AlignVCenter);
+    btnRow->addWidget(m_loaderPlayBtn,  0, Qt::AlignVCenter);
+    btnRow->addWidget(m_loaderRetryBtn, 0, Qt::AlignVCenter);
+    btnRow->addWidget(m_loaderSpacer1,  0, Qt::AlignVCenter);
+    btnRow->addWidget(m_loaderSpacer2,  0, Qt::AlignVCenter);
+    btnRow->addStretch();
+    btnRow->addSpacing(6);
+    btnRow->addWidget(m_loaderEjectBtn, 0, Qt::AlignVCenter);
+
+    // Name + type row, identical to the disk slots (name bold left, type right).
+    if (aspeqtSettings->useLargeFont()) {
+        m_loaderFileLbl->setFont(QFont("Arial Black", 16, QFont::Normal));
+        m_loaderTypeLbl->setFont(QFont("Arial Black", 14, QFont::Normal));
+    } else {
+        m_loaderFileLbl->setFont(QFont("MS Shell Dlg 2", 10, QFont::Normal));
+        m_loaderTypeLbl->setFont(QFont("MS Shell Dlg 2", 10, QFont::Normal));
+    }
+    QHBoxLayout *lblRow = new QHBoxLayout();
+    lblRow->setSpacing(8);
+    m_loaderFileLbl->setSizePolicy(QSizePolicy::Maximum, QSizePolicy::Preferred);
+    QFont ff = m_loaderFileLbl->font();
+    ff.setBold(true);
+    m_loaderFileLbl->setFont(ff);
+    lblRow->addWidget(m_loaderFileLbl, 0, Qt::AlignBottom);
+    lblRow->addStretch();
+    m_loaderTypeLbl->setSizePolicy(QSizePolicy::Maximum, QSizePolicy::Preferred);
+    QFont tf = m_loaderTypeLbl->font();
+    tf.setPointSize(qMax(1, tf.pointSize() - 1));
+    m_loaderTypeLbl->setFont(tf);
+    m_loaderTypeLbl->setStyleSheet("color:#8A8A8A;");
+    lblRow->addWidget(m_loaderTypeLbl, 0, Qt::AlignBottom);
+    lblRow->addSpacing(6);
+
+    col->addLayout(btnRow);
+    col->addLayout(lblRow);
+    outer->addLayout(col);
+
+    m_slotBox->insertWidget(0, f);
+    loaderEject();   // initialise: placeholder text, buttons disabled, no fill
+}
+
+// Fill the whole loader slot left-to-right as a progress bar. frac<=0 or >=1
+// restores the plain background (so the fill disappears once loading is done).
+void MainWindow::loaderSetFill(double frac)
+{
+    if (!m_loaderFrame) return;
+    if (frac <= 0.0 || frac >= 1.0) {
+        // Idle: blue accent when a file is loaded, plain otherwise.
+        if (m_loaderKind != 0)
+            m_loaderFrame->setStyleSheet("QFrame#loaderFrame { background:#EAF3FB;"
+                " border:1px solid #6FA8DC; border-radius:6px; }");
+        else
+            m_loaderFrame->setStyleSheet("QFrame#loaderFrame { background:#F7F7F7;"
+                " border:1px solid #B0B0B0; border-radius:6px; }");
+        return;
+    }
+    double p2 = qMin(frac + 0.0005, 1.0);
+    m_loaderFrame->setStyleSheet(QString(
+        "QFrame#loaderFrame { border:1px solid #B0B0B0; border-radius:6px;"
+        " background: qlineargradient(x1:0, y1:0, x2:1, y2:0,"
+        " stop:0 #CFE6FF, stop:%1 #CFE6FF, stop:%2 #F7F7F7, stop:1 #F7F7F7); }")
+        .arg(frac, 0, 'f', 4).arg(p2, 0, 'f', 4));
+}
+
+// Enable/disable the loader buttons for the current state.
+void MainWindow::loaderUpdateButtons()
+{
+    if (!m_loaderPlayBtn) return;
+    bool casReady = (m_loaderKind == 2) && m_casWorker && !m_casWorker->isRunning();
+    m_loaderPlayBtn->setEnabled(casReady);
+    m_loaderRetryBtn->setEnabled(!m_loaderFile.isEmpty());
+    m_loaderEjectBtn->setEnabled(m_loaderKind != 0);
+}
+
+// Load button: pick an XEX/CAS file and dispatch by type.
+void MainWindow::loaderLoad()
+{
+    QString url = androidOpenUrl(tr("Load executable or cassette"),
+        tr("Atari programs (*.xex *.com *.exe *.cas);;All files (*)"));
+    if (url.isEmpty())
+        return;
+    // Always copy a content:// pick to a real temp file: QFile on a SAF stream
+    // can pass a one-shot open() probe yet fail the repeated sequential reads /
+    // atEnd() that CAS parsing and the boot loader need (seen as "Unknown
+    // error" on some files but not others, depending on their SAF location).
+    QString path = androidLocalCopy(url);
+    if (path.isEmpty()) {
+        qWarning() << "!i" << tr("Failed to load '%1'.").arg(friendlyName(url));
+        return;
+    }
+    FileTypes::FileType t = FileTypes::getFileType(path);
+    if (t == FileTypes::Cas || t == FileTypes::CasGz)
+        loaderLoadCas(path);
+    else if (t == FileTypes::Xex || t == FileTypes::XexGz)
+        loaderLoadXex(path);
+    else
+        QMessageBox::information(this, tr("Unsupported file"),
+            tr("Pick an Atari executable (.xex/.com/.exe) or a cassette image (.cas)."));
+}
+
+// XEX: install the autoboot loader on D1 and let the running emulation boot it,
+// driving the progress bar from the loader's blockRead signal.
+void MainWindow::loaderLoadXex(const QString &path)
+{
+    loaderEject();                       // clear any previous load
+    m_autoBootOld = sio->getDevice(0x31);
+    m_autoBoot = new AutoBoot(sio, m_autoBootOld);
+    if (!m_autoBoot->open(path, aspeqtSettings->useHighSpeedExeLoader())) {
+        delete m_autoBoot;
+        m_autoBoot = nullptr;
+        m_autoBootOld = nullptr;
+        qWarning() << "!i" << tr("Failed to load executable '%1'.").arg(friendlyName(path));
+        return;
+    }
+    sio->uninstallDevice(0x31);
+    sio->installDevice(0x31, m_autoBoot);
+    connect(m_autoBoot, &AutoBoot::blockRead, this, &MainWindow::loaderBlockRead);
+    connect(m_autoBoot, &AutoBoot::loaderDone, this, &MainWindow::loaderBooterDone);
+
+    m_loaderKind = 1;
+    m_loaderFile = path;
+    m_loaderFileLbl->setStyleSheet("color: rgb(32,32,32); font-weight:bold;");
+    m_loaderFileLbl->setText(friendlyName(path));
+    m_loaderTypeLbl->setText(tr("Executable (%1k)").arg((QFileInfo(path).size() + 512) / 1024));
+    loaderSetFill(0);
+    loaderUpdateButtons();
+    qDebug() << "!i" << tr("Loaded executable '%1'. Start (or reboot) your Atari to run it.")
+                        .arg(friendlyName(path));
+}
+
+// CAS: load the cassette image, log the playback instructions and arm the play
+// button (playback itself is started by the user, in sync with the Atari).
+void MainWindow::loaderLoadCas(const QString &path)
+{
+    loaderEject();
+    m_casWorker = new CassetteWorker;
+    if (!m_casWorker->loadCasImage(path)) {
+        delete m_casWorker;
+        m_casWorker = nullptr;
+        qWarning() << "!i" << tr("Failed to load cassette image '%1'.").arg(friendlyName(path));
+        return;
+    }
+    m_casTotal = m_casWorker->mTotalDuration;
+    m_casRemaining = m_casTotal;
+    m_loaderKind = 2;
+    m_loaderFile = path;
+    m_loaderFileLbl->setStyleSheet("color: rgb(32,32,32); font-weight:bold;");
+    m_loaderFileLbl->setText(friendlyName(path));
+    {
+        int minutes = m_casTotal / 60000;
+        int seconds = (m_casTotal - minutes * 60000) / 1000;
+        m_loaderTypeLbl->setText(tr("Cassette (%1:%2)").arg(minutes).arg(seconds, 2, 10, QChar('0')));
+    }
+    loaderSetFill(0);
+    loaderUpdateButtons();
+
+    // Use doLogMessage (not qDebug, which would escape the newlines) and render
+    // the line breaks as <br> for the HTML log.
+    QString msg = tr("AspeQt is ready to playback the cassette image file '%1'.\n\n"
+                     "Do whatever is necessary in your Atari to load this cassette "
+                     "image like rebooting while holding Option and Start buttons "
+                     "or entering \"CLOAD\" in the BASIC prompt.\n\n"
+                     "When you hear the beep sound, push the play button and press "
+                     "a key on your Atari at about the same time.")
+                  .arg(friendlyName(path));
+    doLogMessage('i', msg.replace("\n", "<br>"));
+}
+
+// Play button: start streaming the loaded cassette image.
+void MainWindow::loaderPlayCas()
+{
+    if (m_loaderKind != 2 || !m_casWorker || m_casWorker->isRunning())
+        return;
+    // The cassette player opens the single serial port itself, so disk emulation
+    // must be paused while it runs (AspeQt never drives cassette + disk at once).
+    m_casWasRunning = ui->actionStartEmulation->isChecked();
+    if (m_casWasRunning) {
+        ui->actionStartEmulation->trigger();
+        sio->wait();
+        qApp->processEvents();
+    }
+    connect(m_casWorker, &CassetteWorker::statusChanged, this, &MainWindow::loaderCasStatus, Qt::QueuedConnection);
+    connect(m_casWorker, &QThread::finished, this, &MainWindow::loaderCasFinished);
+    m_casWorker->start(QThread::TimeCriticalPriority);
+    m_casTimer = new QTimer(this);
+    connect(m_casTimer, &QTimer::timeout, this, &MainWindow::loaderCasTick);
+    m_casTimer->start(1000);
+    loaderUpdateButtons();
+    qDebug() << "!i" << tr("Playing back cassette image.");
+}
+
+void MainWindow::loaderCasStatus(int remainingTime)
+{
+    if (!m_casWorker) return;
+    m_casTotal = m_casWorker->mTotalDuration;
+    m_casRemaining = remainingTime;
+    loaderSetFill(m_casTotal > 0 ? double(m_casTotal - m_casRemaining) / m_casTotal : 0.0);
+}
+
+void MainWindow::loaderCasTick()
+{
+    if (m_casRemaining < 1000)
+        m_casRemaining = 1000;
+    loaderCasStatus(m_casRemaining - 1000);
+}
+
+void MainWindow::loaderCasFinished()
+{
+    if (m_casTimer) { m_casTimer->stop(); }
+    loaderSetFill(0);            // fill disappears when done
+    // Resume disk emulation if we paused it for the cassette.
+    if (m_casWasRunning) {
+        m_casWasRunning = false;
+        if (!ui->actionStartEmulation->isChecked())
+            ui->actionStartEmulation->trigger();
+    }
+    loaderUpdateButtons();
+    qDebug() << "!i" << tr("Cassette playback finished.");
+}
+
+void MainWindow::loaderBlockRead(int current, int all)
+{
+    loaderSetFill(all > 0 ? double(current) / all : 0.0);
+}
+
+void MainWindow::loaderBooterDone()
+{
+    loaderSetFill(0);           // fill disappears once loaded
+    qDebug() << "!i" << tr("Executable loaded into the Atari.");
+    // The program now runs from Atari RAM; hand D1 back to whatever was there.
+    if (m_autoBoot) {
+        sio->uninstallDevice(0x31);
+        if (m_autoBootOld)
+            sio->installDevice(0x31, m_autoBootOld);
+        m_autoBoot->deleteLater();
+        m_autoBoot = nullptr;
+        m_autoBootOld = nullptr;
+    }
+    loaderUpdateButtons();
+}
+
+// Eject: stop any playback/boot and clear the loader slot.
+void MainWindow::loaderEject()
+{
+    if (m_casTimer) { m_casTimer->stop(); m_casTimer->deleteLater(); m_casTimer = nullptr; }
+    if (m_casWorker) {
+        if (m_casWorker->isRunning()) {
+            m_casWorker->setPriority(QThread::NormalPriority);
+            m_casWorker->wait();
+        }
+        m_casWorker->deleteLater();
+        m_casWorker = nullptr;
+    }
+    // Resume disk emulation if it was paused for cassette playback.
+    if (m_casWasRunning) {
+        m_casWasRunning = false;
+        if (!ui->actionStartEmulation->isChecked())
+            ui->actionStartEmulation->trigger();
+    }
+    if (m_autoBoot) {
+        sio->uninstallDevice(0x31);
+        if (m_autoBootOld)
+            sio->installDevice(0x31, m_autoBootOld);
+        m_autoBoot->deleteLater();
+        m_autoBoot = nullptr;
+        m_autoBootOld = nullptr;
+    }
+    m_loaderKind = 0;
+    m_loaderFile.clear();
+    if (m_loaderFileLbl) {
+        m_loaderFileLbl->setText(tr("Load a cas/com/xex file."));
+        m_loaderFileLbl->setStyleSheet("color:#B0B0B0; font-style:italic; font-weight:normal; font-size:12px;");
+    }
+    if (m_loaderTypeLbl) m_loaderTypeLbl->clear();
+    loaderSetFill(0);
+    loaderUpdateButtons();
+}
+
+// Retry: re-run the last load (e.g. after a failed boot).
+void MainWindow::loaderRetry()
+{
+    if (m_loaderFile.isEmpty()) return;
+    QString path = m_loaderFile;   // loaderEject() (via load*) clears m_loaderKind
+    int kind = m_loaderKind;
+    if (kind == 2)
+        loaderLoadCas(path);
+    else
+        loaderLoadXex(path);
 }
 
 void MainWindow::androidRelayout()
@@ -1189,6 +1545,10 @@ void MainWindow::androidRelayout()
             diskWidgets[i].frame->setMinimumHeight(frameH);
             diskWidgets[i].frame->setMaximumHeight(frameH);
         }
+    if (m_loaderFrame) {
+        m_loaderFrame->setMinimumHeight(frameH);
+        m_loaderFrame->setMaximumHeight(frameH);
+    }
     // The "+" row is a compact bar, not a full-height slot.
     if (m_addSlotRow) {
         int addH = btnH + 8;
@@ -1202,13 +1562,18 @@ void MainWindow::androidRelayout()
     if (m_slotScroll) {
         int spacing = m_slotBox ? m_slotBox->spacing() : 3;
         int addH = btnH + 8;
+        int loaderH = m_loaderFrame ? frameH : 0;
+        int loaderN = m_loaderFrame ? 1 : 0;
         int present = 0;
         for (int k = 0; k < MAX_DISKS; ++k) if (diskWidgets[k].frame) present++;
         bool addVisible = m_addSlotRow && m_addSlotRow->isVisible();
-        int items = present + (addVisible ? 1 : 0);
-        int content = present * frameH + (addVisible ? addH : 0)
+        int items = loaderN + present + (addVisible ? 1 : 0);
+        int content = loaderH + present * frameH + (addVisible ? addH : 0)
                     + (items > 0 ? (items - 1) * spacing : 0);
-        int cap = 6 * frameH + 5 * spacing;
+        // Cap so the default set (loader + DEFAULT_DISKS slots + "+") fits; more
+        // slots than that scroll while the log keeps its height.
+        int capItems = loaderN + DEFAULT_DISKS + 1;
+        int cap = loaderH + DEFAULT_DISKS * frameH + addH + (capItems - 1) * spacing;
         int h = qMin(content, cap);
         m_slotScroll->setMinimumHeight(h);
         m_slotScroll->setMaximumHeight(h);
@@ -1232,6 +1597,10 @@ void MainWindow::androidRelayout()
         int px = btn->objectName().startsWith("buttonEditDisk") ? iconPx + 5 : iconPx;
         btn->setIconSize(QSize(px, px));
     }
+    // Loader placeholders take a button's footprint so its 3 icons line up with
+    // the disk slots' first 3 icons.
+    if (m_loaderSpacer1) m_loaderSpacer1->setFixedSize(btnH, btnH);
+    if (m_loaderSpacer2) m_loaderSpacer2->setFixedSize(btnH, btnH);
     ui->verticalSpacer_2->changeSize(0, topPad, QSizePolicy::Fixed, QSizePolicy::Fixed);
     ui->verticalSpacer->changeSize(0, 0, QSizePolicy::Fixed, QSizePolicy::Fixed);
     ui->gridLayout->invalidate();
@@ -1571,7 +1940,14 @@ void MainWindow::deviceStatusChanged(int deviceNo)
             diskWidgets[deviceNo - 0x31].ejectAction->setEnabled(false);
 #endif
             diskWidgets[deviceNo - 0x31].saveAction->setEnabled(false);
+#ifdef Q_OS_ANDROID
+            // Empty slot: a muted call-to-action where the file name would be.
+            diskWidgets[deviceNo - 0x31].fileNameLabel->setText(tr("Mount a disk image or folder."));
+            diskWidgets[deviceNo - 0x31].fileNameLabel->setStyleSheet(
+                "color:#B0B0B0; font-style:italic; font-weight:normal; font-size:12px;");
+#else
             diskWidgets[deviceNo - 0x31].fileNameLabel->clear();
+#endif
             diskWidgets[deviceNo - 0x31].imagePropertiesLabel->clear();
             diskWidgets[deviceNo - 0x31].revertAction->setEnabled(false);
             diskWidgets[deviceNo - 0x31].saveAsAction->setEnabled(false);
@@ -2067,6 +2443,22 @@ QString MainWindow::androidReadablePath(const QString &uri, int slot)
     QString tmpPath = tmpDir + "/" + name;
     if (androidCopyUriToFile(uri, tmpPath) < 0)
         return uri;
+    return tmpPath;
+}
+
+QString MainWindow::androidLocalCopy(const QString &uri)
+{
+    if (!uri.startsWith("content:"))
+        return uri;
+    QString name = friendlyName(uri);
+    if (name.isEmpty())
+        name = QStringLiteral("file");
+    QString tmpDir = QStandardPaths::writableLocation(QStandardPaths::CacheLocation) + "/loader";
+    QDir(tmpDir).removeRecursively();
+    QDir().mkpath(tmpDir);
+    QString tmpPath = tmpDir + "/" + name;
+    if (androidCopyUriToFile(uri, tmpPath) < 0)
+        return QString();
     return tmpPath;
 }
 
@@ -2783,6 +3175,11 @@ void MainWindow::on_actionBootExe_triggered()
     if (g_exefileName.isEmpty()) {
         return;
     }
+    // QFile (used by the boot loader) can't reliably read some SAF content://
+    // URIs; always copy to a temp file first.
+    g_exefileName = androidLocalCopy(g_exefileName);
+    if (g_exefileName.isEmpty())
+        return;
     {
         FileTypes::FileType t = FileTypes::getFileType(g_exefileName);
         if (t != FileTypes::Xex && t != FileTypes::XexGz) {
@@ -2831,6 +3228,11 @@ void MainWindow::on_actionPlaybackCassette_triggered()
     if (fileName.isEmpty()) {
         return;
     }
+    // QFile (used by CassetteWorker) can't reliably read some SAF content://
+    // URIs; always copy to a temp file first.
+    fileName = androidLocalCopy(fileName);
+    if (fileName.isEmpty())
+        return;
     {
         FileTypes::FileType t = FileTypes::getFileType(fileName);
         if (t != FileTypes::Cas && t != FileTypes::CasGz) {

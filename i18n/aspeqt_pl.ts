@@ -675,6 +675,10 @@ Kiedy usłyszysz sygnał, naciśnij przycisk OK poniżej i jednocześnie naciśn
 <context>
     <name>CassetteWorker</name>
     <message>
+        <source>&apos;%1&apos; ends with an incomplete chunk; loaded the complete records only.</source>
+        <translation>&apos;%1&apos; kończy się niekompletnym blokiem; wczytano tylko kompletne rekordy.</translation>
+    </message>
+    <message>
         <location filename="../sioworker.cpp" line="255"/>
         <source>Cannot open &apos;%1&apos;: %2</source>
         <translation>Nie można otworzyć &apos;%1&apos;: %2</translation>
@@ -1639,6 +1643,86 @@ p, li { white-space: pre-wrap; }
     <message>
         <source>Scroll the slot list to see all of them.</source>
         <translation>Przewiń listę slotów żeby zobaczyć je wszystkie.</translation>
+    </message>
+    <message>
+        <source>Cassette</source>
+        <translation>Kaseta</translation>
+    </message>
+    <message>
+        <source>Cassette (%1:%2)</source>
+        <translation>Kaseta (%1:%2)</translation>
+    </message>
+    <message>
+        <source>Executable (%1k)</source>
+        <translation>Plik exe (%1k)</translation>
+    </message>
+    <message>
+        <source>Load a cas/com/xex file.</source>
+        <translation>Załaduj plik cas/com/xex.</translation>
+    </message>
+    <message>
+        <source>Mount a disk image or folder.</source>
+        <translation>Zamontuj obraz dysku lub katalog.</translation>
+    </message>
+    <message>
+        <source>Load executable or cassette</source>
+        <translation>Załaduj program lub kasetę</translation>
+    </message>
+    <message>
+        <source>Start cassette playback</source>
+        <translation>Rozpocznij odtwarzanie kasety</translation>
+    </message>
+    <message>
+        <source>Retry</source>
+        <translation>Ponów</translation>
+    </message>
+    <message>
+        <source>Atari programs (*.xex *.com *.exe *.cas);;All files (*)</source>
+        <translation>Programy Atari (*.xex *.com *.exe *.cas);;Wszystkie pliki (*)</translation>
+    </message>
+    <message>
+        <source>Unsupported file</source>
+        <translation>Nieobsługiwany plik</translation>
+    </message>
+    <message>
+        <source>Pick an Atari executable (.xex/.com/.exe) or a cassette image (.cas).</source>
+        <translation>Wybierz program Atari (.xex/.com/.exe) lub obraz kasety (.cas).</translation>
+    </message>
+    <message>
+        <source>Failed to load executable &apos;%1&apos;.</source>
+        <translation>Nie udało się załadować programu &apos;%1&apos;.</translation>
+    </message>
+    <message>
+        <source>Loaded executable &apos;%1&apos;. Start (or reboot) your Atari to run it.</source>
+        <translation>Załadowano program &apos;%1&apos;. Uruchom (lub zresetuj) Atari, aby go wystartować.</translation>
+    </message>
+    <message>
+        <source>Failed to load cassette image &apos;%1&apos;.</source>
+        <translation>Nie udało się załadować obrazu kasety &apos;%1&apos;.</translation>
+    </message>
+    <message>
+        <source>Playing back cassette image.</source>
+        <translation>Odtwarzanie obrazu kasety.</translation>
+    </message>
+    <message>
+        <source>Cassette playback finished.</source>
+        <translation>Zakończono odtwarzanie kasety.</translation>
+    </message>
+    <message>
+        <source>Executable loaded into the Atari.</source>
+        <translation>Program załadowany do Atari.</translation>
+    </message>
+    <message>
+        <source>AspeQt is ready to playback the cassette image file &apos;%1&apos;.
+
+Do whatever is necessary in your Atari to load this cassette image like rebooting while holding Option and Start buttons or entering &quot;CLOAD&quot; in the BASIC prompt.
+
+When you hear the beep sound, push the play button and press a key on your Atari at about the same time.</source>
+        <translation>AspeQt jest gotowy do odtworzenia obrazu kasety &apos;%1&apos;.
+
+Wykonaj w Atari czynności potrzebne do wczytania tej kasety, np. zresetuj trzymając Option i Start albo wpisz &quot;CLOAD&quot; w BASIC-u.
+
+Gdy usłyszysz sygnał, naciśnij przycisk play i mniej więcej w tym samym czasie naciśnij klawisz na Atari.</translation>
     </message>
     <message>
         <location filename="../mainwindow.cpp" line="496"/>
