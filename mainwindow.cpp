@@ -781,39 +781,57 @@ void MainWindow::androidBuildSlots()
         // Drop the old horizontal layout; its widgets reparent to the frame.
         delete f->layout();
 
-        // Row 1: number + first five icons (left), eject pushed to the right.
-        // Row 2: file name (left, under the first icon), file type (right).
-        QVBoxLayout *v = new QVBoxLayout(f);
-        v->setContentsMargins(8, 3, 8, 3);
-        v->setSpacing(2);
+        // [ number badge (centred over full height) | icons row / name+type row ]
+        // The five action icons are centred between the badge and the eject icon.
+        QHBoxLayout *outer = new QHBoxLayout(f);
+        outer->setContentsMargins(8, 3, 8, 3);
+        outer->setSpacing(8);
+        if (numLbl) {
+            numLbl->setText(QString::number(i));
+            numLbl->setAlignment(Qt::AlignCenter);
+            numLbl->setFixedSize(30, 30);
+            numLbl->setStyleSheet("QLabel { background:#9AA7B4; color:white;"
+                                  " border-radius:8px; font-weight:bold; font-size:14px; }");
+            outer->addWidget(numLbl, 0, Qt::AlignVCenter);
+        }
+
+        QVBoxLayout *col = new QVBoxLayout();
+        col->setSpacing(2);
 
         QHBoxLayout *btnRow = new QHBoxLayout();
         btnRow->setSpacing(6);
-        if (numLbl) btnRow->addWidget(numLbl);
-        for (int k = 0; k < btns.size(); ++k) {
-            if (!btns[k]) continue;
-            if (k == btns.size() - 1)   // last icon (eject) -> right edge
-                btnRow->addStretch();
-            btnRow->addWidget(btns[k]);
-        }
+        btnRow->addStretch();
+        for (int k = 0; k < btns.size() - 1; ++k)   // first five, centred
+            if (btns[k]) btnRow->addWidget(btns[k], 0, Qt::AlignVCenter);
+        btnRow->addStretch();
+        btnRow->addSpacing(6);
+        if (btns.last())                            // eject -> right edge
+            btnRow->addWidget(btns.last(), 0, Qt::AlignVCenter);
 
         QHBoxLayout *lblRow = new QHBoxLayout();
         lblRow->setSpacing(8);
-        // Line the name up with the first icon, past the number.
-        int indent = numLbl ? numLbl->sizeHint().width() + btnRow->spacing() : 0;
-        lblRow->addSpacing(indent);
         if (fileLbl) {
-            fileLbl->setSizePolicy(QSizePolicy::Preferred, QSizePolicy::Preferred);
-            lblRow->addWidget(fileLbl);
+            fileLbl->setSizePolicy(QSizePolicy::Maximum, QSizePolicy::Preferred);
+            QFont ff = fileLbl->font();
+            ff.setBold(true);
+            fileLbl->setFont(ff);
+            lblRow->addWidget(fileLbl, 0, Qt::AlignBottom);
+        }
+        if (typeLbl) {
+            // Keep the type right next to the name, not out by the eject icon.
+            typeLbl->setSizePolicy(QSizePolicy::Maximum, QSizePolicy::Preferred);
+            QFont tf = typeLbl->font();
+            tf.setPointSize(qMax(1, tf.pointSize() - 1));
+            typeLbl->setFont(tf);
+            typeLbl->setStyleSheet("color:#8A8A8A;");
+            lblRow->addSpacing(10);
+            lblRow->addWidget(typeLbl, 0, Qt::AlignBottom);
         }
         lblRow->addStretch();
-        if (typeLbl) {
-            typeLbl->setSizePolicy(QSizePolicy::Preferred, QSizePolicy::Preferred);
-            lblRow->addWidget(typeLbl);
-        }
 
-        v->addLayout(btnRow);
-        v->addLayout(lblRow);
+        col->addLayout(btnRow);
+        col->addLayout(lblRow);
+        outer->addLayout(col);
     }
 }
 
@@ -896,7 +914,10 @@ void MainWindow::androidRelayout()
     foreach (QToolButton *btn, central->findChildren<QToolButton *>()) {
         btn->setMinimumSize(btnH, btnH);
         btn->setMaximumSize(btnH, btnH);
-        btn->setIconSize(QSize(iconPx, iconPx));
+        // The disk-viewer (edit) icon has more internal padding than the others,
+        // so bump its icon size a little to match the visual weight.
+        int px = btn->objectName().startsWith("buttonEditDisk") ? iconPx + 5 : iconPx;
+        btn->setIconSize(QSize(px, px));
     }
     ui->verticalSpacer_2->changeSize(0, topPad, QSizePolicy::Fixed, QSizePolicy::Fixed);
     ui->verticalSpacer->changeSize(0, 0, QSizePolicy::Fixed, QSizePolicy::Fixed);
@@ -1159,6 +1180,12 @@ void MainWindow::deviceStatusChanged(int deviceNo)
             diskWidgets[deviceNo - 0x31].imagePropertiesLabel->setText(img->description());
             diskWidgets[deviceNo - 0x31].ejectAction->setEnabled(true);
             diskWidgets[deviceNo - 0x31].editAction->setChecked(img->editDialog() != 0);
+#ifdef Q_OS_ANDROID
+            // Mounted slot: subtle accent box so it stands out from empty ones.
+            diskWidgets[deviceNo - 0x31].frame->setStyleSheet(
+                QString("QFrame#%1 { background:#EAF3FB; border:1px solid #AFCFEC; border-radius:6px; }")
+                    .arg(diskWidgets[deviceNo - 0x31].frame->objectName()));
+#endif
             if (img->description() == tr("Folder image")) {
                 diskWidgets[deviceNo - 0x31].fileNameLabel->setStyleSheet("color: rgb(54, 168, 164); font-weight: bold");
                 diskWidgets[deviceNo - 0x31].editAction->setEnabled(true);              //
@@ -1169,7 +1196,7 @@ void MainWindow::deviceStatusChanged(int deviceNo)
                 if(deviceNo - 0x31 == 0)
                     diskWidgets[deviceNo - 0x31].bootOptionAction->setEnabled(true);   //
             } else {
-                diskWidgets[deviceNo - 0x31].fileNameLabel->setStyleSheet("color: rgb(0, 0, 0); font-weight: normal");  //
+                diskWidgets[deviceNo - 0x31].fileNameLabel->setStyleSheet("color: rgb(32, 32, 32); font-weight: bold");  //
                 diskWidgets[deviceNo - 0x31].editAction->setEnabled(true);
                 diskWidgets[deviceNo - 0x31].saveAsAction->setEnabled(true);
                 diskWidgets[deviceNo - 0x31].autoSaveAction->setEnabled(true);          //
@@ -1200,6 +1227,12 @@ void MainWindow::deviceStatusChanged(int deviceNo)
                 }
             }
         } else {
+#ifdef Q_OS_ANDROID
+            // Empty slot: muted outline, no fill.
+            diskWidgets[deviceNo - 0x31].frame->setStyleSheet(
+                QString("QFrame#%1 { background:transparent; border:1px solid #CFCFCF; border-radius:6px; }")
+                    .arg(diskWidgets[deviceNo - 0x31].frame->objectName()));
+#endif
             diskWidgets[deviceNo - 0x31].saveAction->setEnabled(false);
             diskWidgets[deviceNo - 0x31].fileNameLabel->clear();
             diskWidgets[deviceNo - 0x31].imagePropertiesLabel->clear();
