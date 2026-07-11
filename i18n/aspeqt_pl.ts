@@ -1653,6 +1653,30 @@ p, li { white-space: pre-wrap; }
         <translation>Kaseta (%1:%2)</translation>
     </message>
     <message>
+        <source>Install DOS</source>
+        <translation>Zainstaluj DOS</translation>
+    </message>
+    <message>
+        <source>This slot does not hold a mounted folder.</source>
+        <translation>Ten slot nie zawiera zamontowanego katalogu.</translation>
+    </message>
+    <message>
+        <source>Copy high-speed MyPicoDOS ($boot.bin + picodos.sys) into this folder? The Atari will then be able to boot DOS from it.</source>
+        <translation>Skopiować szybkie MyPicoDOS ($boot.bin + picodos.sys) do tego katalogu? Atari będzie mogło z niego wystartować DOS.</translation>
+    </message>
+    <message>
+        <source>Could not copy the DOS files into the folder.</source>
+        <translation>Nie udało się skopiować plików DOS do katalogu.</translation>
+    </message>
+    <message>
+        <source>Installed high-speed MyPicoDOS into the folder. Reboot your Atari to load DOS.</source>
+        <translation>Zainstalowano szybkie MyPicoDOS w katalogu. Zrestartuj Atari, aby wczytać DOS.</translation>
+    </message>
+    <message>
+        <source>Install high-speed DOS (MyPicoDOS) into this folder</source>
+        <translation>Zainstaluj szybki DOS (MyPicoDOS) w tym katalogu</translation>
+    </message>
+    <message>
         <source>Executable (%1k)</source>
         <translation>Plik exe (%1k)</translation>
     </message>

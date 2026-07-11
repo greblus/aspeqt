@@ -119,6 +119,9 @@ private:
     int androidCopyTreeToDir(const QString &tree, const QString &dest);
     int androidCopyDirToTree(const QString &src, const QString &tree);
     int androidCopyUriToFile(const QString &uri, const QString &dest);
+    // Copy the bundled high-speed MyPicoDOS ($boot.bin + picodos.sys) into a
+    // mounted folder so the Atari can boot DOS from it.
+    void androidInstallDos(int no);
     // Return a path QFile can read: the content:// URI itself when Qt can open
     // it, otherwise a temp copy made via ContentResolver (Qt's QFile fails on
     // some SAF URIs, e.g. files in sub-folders). Keeps the real file name.

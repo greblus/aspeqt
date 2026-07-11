@@ -3,4 +3,8 @@
         <file>atari/autoboot/autoboot.bin</file>
         <file>atari/autoboot/autoboot-hispeed.bin</file>
     </qresource>
+    <qresource prefix="/dos">
+        <file alias="boot.bin">dosassets/boot.bin</file>
+        <file alias="picodos.sys">dosassets/picodos.sys</file>
+    </qresource>
 </RCC>

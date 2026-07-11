@@ -31,12 +31,40 @@
 #include <QScrollerProperties>
 #include <QProgressBar>
 #include <QMouseEvent>
+#include <QPainter>
 #ifdef Q_OS_ANDROID
 // "Remove slot" affordance for an empty slot: the tango "unreadable" emblem
 // (red X badge).
 static QIcon removeSlotIcon()
 {
     return QIcon(":/icons/tango-icons/emblems/emblem-unreadable.svg");
+}
+// "Install DOS" affordance for a mounted folder: the hard-disk icon with a
+// "DOS" caption overlaid.
+static QIcon dosDriveIcon()
+{
+    static QIcon cached;
+    if (cached.isNull()) {
+        // Force devicePixelRatio 1 so the pixmap's physical size equals the
+        // logical size QPainter draws in (otherwise the caption lands off-icon).
+        const int S = 96;
+        QPixmap pm = QIcon(":/icons/tango-icons/devices/drive-harddisk.svg").pixmap(QSize(S, S), 1.0);
+        QPainter p(&pm);
+        QFont f = p.font();
+        f.setBold(true);
+        f.setPixelSize(40);
+        p.setFont(f);
+        QRect r(0, S / 2 - 4, S, S / 2);
+        p.setPen(QColor(255, 255, 255));           // white halo for contrast
+        for (int dx = -2; dx <= 2; ++dx)
+            for (int dy = -2; dy <= 2; ++dy)
+                p.drawText(r.translated(dx, dy), Qt::AlignCenter, "DOS");
+        p.setPen(QColor(40, 40, 40));
+        p.drawText(r, Qt::AlignCenter, "DOS");
+        p.end();
+        cached = QIcon(pm);
+    }
+    return cached;
 }
 #endif
 #include <QTranslator>
@@ -374,6 +402,9 @@ MainWindow::MainWindow(QWidget *parent)
     if (m_numDisks < 1)          m_numDisks = DEFAULT_DISKS;
     if (m_numDisks > MAX_DISKS)  m_numDisks = MAX_DISKS;
     androidBuildSlots();
+    // The top loader slot replaces the executable/cassette menu items.
+    ui->actionBootExe->setVisible(false);
+    ui->actionPlaybackCassette->setVisible(false);
 #else
     m_numDisks = g_numberOfDisks;
     for (int i = 0; i < m_numDisks; i++) {      //
@@ -1893,9 +1924,20 @@ void MainWindow::deviceStatusChanged(int deviceNo)
                 diskWidgets[deviceNo - 0x31].saveAction->setEnabled(false);
                 diskWidgets[deviceNo - 0x31].autoSaveAction->setEnabled(false);         //
                 diskWidgets[deviceNo - 0x31].revertAction->setEnabled(false);
+#ifdef Q_OS_ANDROID
+                // For a folder the "save" button becomes "install high-speed DOS".
+                diskWidgets[deviceNo - 0x31].saveAction->setEnabled(true);
+                diskWidgets[deviceNo - 0x31].saveAction->setIcon(dosDriveIcon());
+                diskWidgets[deviceNo - 0x31].saveAction->setToolTip(tr("Install high-speed DOS (MyPicoDOS) into this folder"));
+#endif
                 if(deviceNo - 0x31 == 0)
                     diskWidgets[deviceNo - 0x31].bootOptionAction->setEnabled(true);   //
             } else {
+#ifdef Q_OS_ANDROID
+                // Restore the normal "save disk" icon for real disk images.
+                diskWidgets[deviceNo - 0x31].saveAction->setIcon(QIcon(":/icons/tango-icons/devices/media-floppy.svg"));
+                diskWidgets[deviceNo - 0x31].saveAction->setToolTip(tr("Save disk"));
+#endif
                 diskWidgets[deviceNo - 0x31].fileNameLabel->setStyleSheet("color: rgb(32, 32, 32); font-weight: bold");  //
                 diskWidgets[deviceNo - 0x31].editAction->setEnabled(true);
                 diskWidgets[deviceNo - 0x31].saveAsAction->setEnabled(true);
@@ -1941,6 +1983,8 @@ void MainWindow::deviceStatusChanged(int deviceNo)
 #endif
             diskWidgets[deviceNo - 0x31].saveAction->setEnabled(false);
 #ifdef Q_OS_ANDROID
+            diskWidgets[deviceNo - 0x31].saveAction->setIcon(QIcon(":/icons/tango-icons/devices/media-floppy.svg"));
+            diskWidgets[deviceNo - 0x31].saveAction->setToolTip(tr("Save disk"));
             // Empty slot: a muted call-to-action where the file name would be.
             diskWidgets[deviceNo - 0x31].fileNameLabel->setText(tr("Mount a disk image or folder."));
             diskWidgets[deviceNo - 0x31].fileNameLabel->setStyleSheet(
@@ -2462,6 +2506,55 @@ QString MainWindow::androidLocalCopy(const QString &uri)
     return tmpPath;
 }
 
+void MainWindow::androidInstallDos(int no)
+{
+    QString folder = m_folderTemp.value(no);
+    QString tree   = m_folderTree.value(no);
+    if (folder.isEmpty() || !QDir(folder).exists()) {
+        QMessageBox::warning(this, tr("Install DOS"), tr("This slot does not hold a mounted folder."));
+        return;
+    }
+    if (QMessageBox::question(this, tr("Install DOS"),
+            tr("Copy high-speed MyPicoDOS ($boot.bin + picodos.sys) into this folder? "
+               "The Atari will then be able to boot DOS from it."),
+            QMessageBox::Yes | QMessageBox::No, QMessageBox::No) != QMessageBox::Yes)
+        return;
+
+    // Stage the two files so we can push exactly them to the real SAF folder
+    // (rather than re-uploading the whole mounted folder).
+    QString stage = QStandardPaths::writableLocation(QStandardPaths::CacheLocation) + "/dosinstall";
+    QDir(stage).removeRecursively();
+    QDir().mkpath(stage);
+
+    auto put = [&](const QString &src, const QString &dstName) -> bool {
+        const QFileDevice::Permissions rw = QFileDevice::ReadOwner | QFileDevice::WriteOwner
+                                          | QFileDevice::ReadGroup | QFileDevice::ReadOther;
+        QString a = folder + "/" + dstName;   // into the mounted (temp) folder
+        QFile::remove(a);
+        if (!QFile::copy(src, a))
+            return false;
+        QFile::setPermissions(a, rw);
+        QString b = stage + "/" + dstName;    // into the push stage
+        QFile::copy(src, b);
+        QFile::setPermissions(b, rw);
+        return true;
+    };
+
+    bool ok = put(":/dos/boot.bin", "$boot.bin") && put(":/dos/picodos.sys", "picodos.sys");
+    // Write the files to the real folder now (not only on eject).
+    if (ok && !tree.isEmpty())
+        androidCopyDirToTree(stage, tree);
+    QDir(stage).removeRecursively();
+
+    if (ok) {
+        deviceStatusChanged(no + 0x31);   // re-read the folder
+        qDebug() << "!i" << tr("Installed high-speed MyPicoDOS into the folder. "
+                               "Reboot your Atari to load DOS.");
+    } else {
+        QMessageBox::warning(this, tr("Install DOS"), tr("Could not copy the DOS files into the folder."));
+    }
+}
+
 #endif
 
 QString MainWindow::friendlyName(const QString &name)
@@ -2644,6 +2737,13 @@ void MainWindow::loadTranslators()
 
 void MainWindow::saveDisk(int no)
 {
+#ifdef Q_OS_ANDROID
+    // For a mounted folder the "save" button installs high-speed DOS instead.
+    if (qobject_cast<FolderImage *>(sio->getDevice(no + 0x31))) {
+        androidInstallDos(no);
+        return;
+    }
+#endif
     SimpleDiskImage *img = qobject_cast <SimpleDiskImage*> (sio->getDevice(no + 0x31));
 
     if (img->isUnnamed()) {
