@@ -124,7 +124,9 @@ void AutoBoot::handleCommand(quint8 command, quint16 aux)
                     loaded = true;
                     emit booterLoaded();
                 }
-                QByteArray data;
+                // Qt 6 QByteArray::operator[] no longer auto-grows the array, so
+                // an empty QByteArray here writes out of bounds and crashes.
+                QByteArray data(6, 0);
                 data[0] = chunks.at(aux).address % 256;
                 data[1] = chunks.at(aux).address / 256;
                 data[2] = 1;
