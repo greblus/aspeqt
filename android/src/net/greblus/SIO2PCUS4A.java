@@ -9,10 +9,10 @@ import java.util.List;
 import android.util.Log;
 
 import com.hoho.android.usbserial.driver.UsbSerialPort;
-import com.hoho.android.usbserial.driver.UsbSerialProber;
 import com.hoho.android.usbserial.driver.UsbSerialDriver;
-import com.hoho.android.usbserial.driver.UsbSerialPort;
+import com.hoho.android.usbserial.driver.FtdiSerialDriver;
 import com.hoho.android.usbserial.driver.UsbId;
+import java.util.EnumSet;
 import android.hardware.usb.UsbManager;
 import android.hardware.usb.UsbDevice;
 import android.hardware.usb.UsbDeviceConnection;
@@ -112,15 +112,10 @@ public class SIO2PCUS4A implements SerialDevice
         }
 
         Log.i("USB", "Device found!");
-        List<UsbSerialDriver> availableDrivers = UsbSerialProber.getDefaultProber().findAllDrivers(manager);
-
-        if (availableDrivers.isEmpty()) {
-            Log.i("USB", "No drivers found for attached usb devices");
-            return 0;
-        }
-
-        Log.i("USB", "Driver found for attached usb device");
-        driver = availableDrivers.get(0);
+        // The device was already matched by vid/pid above (incl. Ray's custom
+        // PIDs 0x83B0/0x83B1 that the default prober doesn't know), so build the
+        // FTDI driver directly instead of going through UsbSerialProber.
+        driver = new FtdiSerialDriver(device);
 
         UsbDeviceConnection connection = manager.openDevice(device);
 
@@ -159,11 +154,14 @@ public class SIO2PCUS4A implements SerialDevice
     }
 
     public int setSpeed(int speed) {
-     int ret = 0;
+     // Upstream has no standalone setBaudRate; setParameters re-sends the full
+     // 8N1 framing plus the new baud (framing is always 8N1 for SIO).
+     int ret = speed;
      try {
-        ret = sPort.setBaudRate(speed);
+        sPort.setParameters(speed, 8, UsbSerialPort.STOPBITS_1, UsbSerialPort.PARITY_NONE);
      } catch (IOException e) {
        Log.i("USB", "Can't set speed");
+       ret = -1;
      }
      if (debug) Log.i("USB", "setBaudrate: " + ret);
     return ret;
@@ -176,7 +174,7 @@ public class SIO2PCUS4A implements SerialDevice
 
     try {
         do {
-             rd = sPort.sread(sa.rb, size, 5000);
+             rd = sPort.read(sa.rb, size, 5000);
              sa.rbuf.put(sa.rb, 0, rd);
              size -= rd; ret += rd;
         } while (size > 0);
@@ -187,25 +185,27 @@ public class SIO2PCUS4A implements SerialDevice
     }
 
     public int write(int size, int total) {
-    int ret = 0, wn = 0;
+    // Upstream write() writes the whole buffer or throws (SerialTimeoutException
+    // is an IOException), so no manual chunk loop is needed here.
+    int ret = 0;
     sa.wbuf.position(total);
     sa.wbuf.get(sa.wb, 0, size);
 
     try {
-        do {
-            wn = sPort.swrite(sa.wb, size, 5000);
-            size -= wn; ret += wn;
-        } while (size > 0);
+        sPort.write(sa.wb, size, 5000);
+        ret = size;
     } catch (IOException e) {
        Log.i("USB", "Can't write");
     }
     return ret;
     }
 
+    // Upstream purgeHwBuffers is now void and takes (purgeWrite, purgeRead) —
+    // the arg order is flipped vs the old fork (which was (flushRX, flushTX)).
     public boolean purge() {
-    boolean ret;
+    boolean ret = true;
     try {
-        ret = sPort.purgeHwBuffers(true, true);
+        sPort.purgeHwBuffers(true, true);
     } catch (IOException e) {
         Log.i("USB", "Can't purge");
         ret = false;
@@ -215,9 +215,9 @@ public class SIO2PCUS4A implements SerialDevice
     }
 
     public boolean purgeTX() {
-    boolean ret;
+    boolean ret = true;
     try {
-        ret = sPort.purgeHwBuffers(false, true);
+        sPort.purgeHwBuffers(true, false);
     } catch (IOException e) {
         Log.i("USB", "Can't purge TX buffer");
         ret = false;
@@ -227,9 +227,9 @@ public class SIO2PCUS4A implements SerialDevice
     }
 
     public boolean purgeRX() {
-    boolean ret;
+    boolean ret = true;
     try {
-        ret = sPort.purgeHwBuffers(true, false);
+        sPort.purgeHwBuffers(false, true);
     } catch (IOException e) {
         Log.i("USB", "Can't purge RX buffer");
         ret = false;
@@ -242,10 +242,24 @@ public class SIO2PCUS4A implements SerialDevice
     if (debug) Log.i("USB", msg);
     }
 
+    // Rebuild the raw FTDI modem-status byte from the public getControlLines().
+    // Masks match getHWCommandFrame() (16/32/64 = CTS/DSR/RI). getControlLines()
+    // decodes the same status byte cleanly, so the old "buf[0]-1" baseline-bit
+    // normalization is no longer needed.
+    private int rawStatus() throws IOException {
+        EnumSet<UsbSerialPort.ControlLine> cl = sPort.getControlLines();
+        int s = 0;
+        if (cl.contains(UsbSerialPort.ControlLine.CTS)) s |= 0x10;
+        if (cl.contains(UsbSerialPort.ControlLine.DSR)) s |= 0x20;
+        if (cl.contains(UsbSerialPort.ControlLine.RI))  s |= 0x40;
+        if (cl.contains(UsbSerialPort.ControlLine.CD))  s |= 0x80;
+        return s;
+    }
+
     public int getModemStatus() {
     int ret = -2;
     try {
-        ret = sPort.getStatus();
+        ret = rawStatus();
     } catch (IOException e) {
         Log.i("USB", "Can't get modem status");
         ret = -1;
@@ -274,7 +288,7 @@ public class SIO2PCUS4A implements SerialDevice
         do {
             if (total_retries > 2) return 2;
             try {
-                ret = sPort.sread(sa.rb, 5-total, 5000);
+                ret = sPort.read(sa.rb, 5-total, 5000);
                 if (ret == 5) break;
             }
             catch (IOException e) {};
@@ -302,7 +316,7 @@ public class SIO2PCUS4A implements SerialDevice
                     ret = 0;
                     do {
                         try {
-                            ret = sPort.sread(sa.t, 1, 5000); }
+                            ret = sPort.read(sa.t, 1, 5000); }
                         catch (IOException e) {};
                     } while (ret < 1);
                     sa.rb[4] = sa.t[0];
@@ -366,7 +380,7 @@ public class SIO2PCUS4A implements SerialDevice
             res = 0;
             try {
                 if (total_retries > 4) return 2;
-                res = sPort.sread(sa.rb, 5-total, 5000); }
+                res = sPort.read(sa.rb, 5-total, 5000); }
             catch (IOException e) {};
 
             if (res > 0) {

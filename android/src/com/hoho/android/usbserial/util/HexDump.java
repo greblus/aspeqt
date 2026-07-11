@@ -16,14 +16,19 @@
 
 package com.hoho.android.usbserial.util;
 
+import java.security.InvalidParameterException;
+
 /**
- * Clone of Android's HexDump class, for use in debugging. Cosmetic changes
- * only.
+ * Clone of Android's /core/java/com/android/internal/util/HexDump class, for use in debugging.
+ * Changes: space separated hex strings
  */
 public class HexDump {
     private final static char[] HEX_DIGITS = {
             '0', '1', '2', '3', '4', '5', '6', '7', '8', '9', 'A', 'B', 'C', 'D', 'E', 'F'
     };
+
+    private HexDump() {
+    }
 
     public static String dumpHexString(byte[] array) {
         return dumpHexString(array, 0, array.length);
@@ -32,17 +37,12 @@ public class HexDump {
     public static String dumpHexString(byte[] array, int offset, int length) {
         StringBuilder result = new StringBuilder();
 
-        byte[] line = new byte[16];
+        byte[] line = new byte[8];
         int lineIndex = 0;
 
-        result.append("\n0x");
-        result.append(toHexString(offset));
-
         for (int i = offset; i < offset + length; i++) {
-            if (lineIndex == 16) {
-                result.append(" ");
-
-                for (int j = 0; j < 16; j++) {
+            if (lineIndex == line.length) {
+                for (int j = 0; j < line.length; j++) {
                     if (line[j] > ' ' && line[j] < '~') {
                         result.append(new String(line, j, 1));
                     } else {
@@ -50,32 +50,26 @@ public class HexDump {
                     }
                 }
 
-                result.append("\n0x");
-                result.append(toHexString(i));
+                result.append("\n");
                 lineIndex = 0;
             }
 
             byte b = array[i];
-            result.append(" ");
             result.append(HEX_DIGITS[(b >>> 4) & 0x0F]);
             result.append(HEX_DIGITS[b & 0x0F]);
+            result.append(" ");
 
             line[lineIndex++] = b;
         }
 
-        if (lineIndex != 16) {
-            int count = (16 - lineIndex) * 3;
-            count++;
-            for (int i = 0; i < count; i++) {
-                result.append(" ");
-            }
-
-            for (int i = 0; i < lineIndex; i++) {
-                if (line[i] > ' ' && line[i] < '~') {
-                    result.append(new String(line, i, 1));
-                } else {
-                    result.append(".");
-                }
+        for (int i = 0; i < (line.length - lineIndex); i++) {
+            result.append("   ");
+        }
+        for (int i = 0; i < lineIndex; i++) {
+            if (line[i] > ' ' && line[i] < '~') {
+                result.append(new String(line, i, 1));
+            } else {
+                result.append(".");
             }
         }
 
@@ -91,10 +85,12 @@ public class HexDump {
     }
 
     public static String toHexString(byte[] array, int offset, int length) {
-        char[] buf = new char[length * 2];
+        char[] buf = new char[length > 0 ? length * 3 - 1 : 0];
 
         int bufIndex = 0;
         for (int i = offset; i < offset + length; i++) {
+            if (i > offset)
+                buf[bufIndex++] = ' ';
             byte b = array[i];
             buf[bufIndex++] = HEX_DIGITS[(b >>> 4) & 0x0F];
             buf[bufIndex++] = HEX_DIGITS[b & 0x0F];
@@ -145,16 +141,16 @@ public class HexDump {
         if (c >= 'a' && c <= 'f')
             return (c - 'a' + 10);
 
-        throw new RuntimeException("Invalid hex char '" + c + "'");
+        throw new InvalidParameterException("Invalid hex char '" + c + "'");
     }
 
+    /** accepts any separator, e.g. space or newline */
     public static byte[] hexStringToByteArray(String hexString) {
         int length = hexString.length();
-        byte[] buffer = new byte[length / 2];
+        byte[] buffer = new byte[(length + 1) / 3];
 
-        for (int i = 0; i < length; i += 2) {
-            buffer[i / 2] = (byte) ((toByte(hexString.charAt(i)) << 4) | toByte(hexString
-                    .charAt(i + 1)));
+        for (int i = 0; i < length; i += 3) {
+            buffer[i / 3] = (byte) ((toByte(hexString.charAt(i)) << 4) | toByte(hexString.charAt(i + 1)));
         }
 
         return buffer;

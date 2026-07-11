@@ -1,92 +1,76 @@
 /* Copyright 2011-2013 Google Inc.
  * Copyright 2013 mike wakerly <opensource@hoho.com>
  *
- * This library is free software; you can redistribute it and/or
- * modify it under the terms of the GNU Lesser General Public
- * License as published by the Free Software Foundation; either
- * version 2.1 of the License, or (at your option) any later version.
- *
- * This library is distributed in the hope that it will be useful,
- * but WITHOUT ANY WARRANTY; without even the implied warranty of
- * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the GNU
- * Lesser General Public License for more details.
- *
- * You should have received a copy of the GNU Lesser General Public
- * License along with this library; if not, write to the Free Software
- * Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301,
- * USA.
- *
  * Project home page: https://github.com/mik3y/usb-serial-for-android
  */
 
 package com.hoho.android.usbserial.util;
 
-import android.hardware.usb.UsbRequest;
+import android.os.Process;
 import android.util.Log;
 
 import com.hoho.android.usbserial.driver.UsbSerialPort;
 
 import java.io.IOException;
 import java.nio.ByteBuffer;
+import java.util.concurrent.CountDownLatch;
+import java.util.concurrent.atomic.AtomicReference;
 
 /**
- * Utility class which services a {@link UsbSerialPort} in its {@link #run()}
- * method.
+ * Utility class which services a {@link UsbSerialPort} in its {@link #runWrite()} ()} and {@link #runRead()} ()} ()} methods.
  *
  * @author mike wakerly (opensource@hoho.com)
  */
-public class SerialInputOutputManager implements Runnable {
+public class SerialInputOutputManager {
 
-    private static final String TAG = SerialInputOutputManager.class.getSimpleName();
-    private static final boolean DEBUG = false;
-
-    private static final int READ_WAIT_MILLIS = 1;
-    private static final int BUFSIZ = 65535;
-
-    private final UsbSerialPort mDriver;
-
-    private final ByteBuffer mReadBuffer = ByteBuffer.allocate(BUFSIZ);
-
-    // Synchronized by 'mWriteBuffer'
-    private final ByteBuffer mWriteBuffer = ByteBuffer.allocate(BUFSIZ);
-
-    private enum State {
+    public enum State {
         STOPPED,
+        STARTING,
         RUNNING,
         STOPPING
     }
 
-    // Synchronized by 'this'
-    private State mState = State.STOPPED;
+    public static boolean DEBUG = false;
 
-    // Synchronized by 'this'
-    private Listener mListener;
+    private static final String TAG = SerialInputOutputManager.class.getSimpleName();
+    private static final int WRITE_BUFFER_SIZE = 4096;
+
+    private int mReadTimeout = 0;
+    private int mWriteTimeout = 0;
+    private int mReadQueueBufferCount = 0;
+    //       no mReadQueueBufferSize, using mReadBuffer.size instead
+
+    private final Object mReadBufferLock = new Object();
+    private final Object mWriteBufferLock = new Object();
+
+    private ByteBuffer mReadBuffer; // default size = getReadEndpoint().getMaxPacketSize()
+    private ByteBuffer mWriteBuffer = ByteBuffer.allocate(WRITE_BUFFER_SIZE);
+
+    private int mThreadPriority = Process.THREAD_PRIORITY_URGENT_AUDIO;
+    private final AtomicReference<State> mState = new AtomicReference<>(State.STOPPED);
+    private CountDownLatch mStartuplatch = new CountDownLatch(2);
+    private Listener mListener; // Synchronized by 'this'
+    private final UsbSerialPort mSerialPort;
 
     public interface Listener {
         /**
          * Called when new incoming data is available.
          */
-        public void onNewData(byte[] data);
+        void onNewData(byte[] data);
 
         /**
-         * Called when {@link SerialInputOutputManager#run()} aborts due to an
-         * error.
+         * Called when {@link SerialInputOutputManager#runRead()} ()} or {@link SerialInputOutputManager#runWrite()} ()} ()} aborts due to an error.
          */
-        public void onRunError(Exception e);
+        void onRunError(Exception e);
     }
 
-    /**
-     * Creates a new instance with no listener.
-     */
-    public SerialInputOutputManager(UsbSerialPort driver) {
-        this(driver, null);
+    public SerialInputOutputManager(UsbSerialPort serialPort) {
+        mSerialPort = serialPort;
+        mReadBuffer = ByteBuffer.allocate(serialPort.getReadEndpoint().getMaxPacketSize());
     }
 
-    /**
-     * Creates a new instance with the provided listener.
-     */
-    public SerialInputOutputManager(UsbSerialPort driver, Listener listener) {
-        mDriver = driver;
+    public SerialInputOutputManager(UsbSerialPort serialPort, Listener listener) {
+        this(serialPort);
         mListener = listener;
     }
 
@@ -98,92 +82,271 @@ public class SerialInputOutputManager implements Runnable {
         return mListener;
     }
 
-    public void writeAsync(byte[] data) {
-        synchronized (mWriteBuffer) {
-            mWriteBuffer.put(data);
+    /**
+     * setThreadPriority. By default a higher priority than UI thread is used to prevent data loss
+     *
+     * @param threadPriority  see {@link Process#setThreadPriority(int)}
+     * */
+    public void setThreadPriority(int threadPriority) {
+        if (!mState.compareAndSet(State.STOPPED, State.STOPPED)) {
+            throw new IllegalStateException("threadPriority only configurable before SerialInputOutputManager is started");
         }
-    }
-
-    public synchronized void stop() {
-        if (getState() == State.RUNNING) {
-            Log.i(TAG, "Stop requested");
-            mState = State.STOPPING;
-        }
-    }
-
-    private synchronized State getState() {
-        return mState;
+        mThreadPriority = threadPriority;
     }
 
     /**
-     * Continuously services the read and write buffers until {@link #stop()} is
-     * called, or until a driver exception is raised.
-     *
-     * NOTE(mikey): Uses inefficient read/write-with-timeout.
-     * TODO(mikey): Read asynchronously with {@link UsbRequest#queue(ByteBuffer, int)}
+     * read/write timeout
      */
-    @Override
-    public void run() {
-        synchronized (this) {
-            if (getState() != State.STOPPED) {
-                throw new IllegalStateException("Already running.");
-            }
-            mState = State.RUNNING;
-        }
+    public void setReadTimeout(int timeout) {
+        // when set if already running, read already blocks and the new value will not become effective now
+        if(mReadTimeout == 0 && timeout != 0 && mState.get() != State.STOPPED)
+            throw new IllegalStateException("readTimeout only configurable before SerialInputOutputManager is started");
+        mReadTimeout = timeout;
+    }
 
-        Log.i(TAG, "Running ..");
-        try {
-            while (true) {
-                if (getState() != State.RUNNING) {
-                    Log.i(TAG, "Stopping mState=" + getState());
-                    break;
-                }
-                step();
+    public int getReadTimeout() {
+        return mReadTimeout;
+    }
+
+    public void setWriteTimeout(int timeout) {
+        mWriteTimeout = timeout;
+    }
+
+    public int getWriteTimeout() {
+        return mWriteTimeout;
+    }
+
+    /**
+     * read/write buffer size
+     */
+    public void setReadBufferSize(int bufferSize) {
+        if (getReadBufferSize() == bufferSize)
+            return;
+        synchronized (mReadBufferLock) {
+            mReadBuffer = ByteBuffer.allocate(bufferSize);
+        }
+    }
+
+    public int getReadBufferSize() {
+        return mReadBuffer.capacity();
+    }
+
+    public void setWriteBufferSize(int bufferSize) {
+        if(getWriteBufferSize() == bufferSize)
+            return;
+        synchronized (mWriteBufferLock) {
+            ByteBuffer newWriteBuffer = ByteBuffer.allocate(bufferSize);
+            if(mWriteBuffer.position() > 0)
+                newWriteBuffer.put(mWriteBuffer.array(), 0, mWriteBuffer.position());
+            mWriteBuffer = newWriteBuffer;
+        }
+    }
+
+    public int getWriteBufferSize() {
+        return mWriteBuffer.capacity();
+    }
+
+    /**
+     * Set read queue, similar to {@link UsbSerialPort#setReadQueue}
+     * except buffer size to be set before with {@link #setReadBufferSize}.
+     *
+     * @param bufferCount number of buffers to use for readQueue,
+     *                    disable with value 0
+     */
+    public void setReadQueue(int bufferCount) {
+        mSerialPort.setReadQueue(bufferCount, getReadBufferSize());
+        mReadQueueBufferCount = bufferCount; // only store if set ok
+    }
+
+    public int getReadQueueBufferCount() { return mReadQueueBufferCount; }
+
+    /**
+     * write data asynchronously
+     */
+    public void writeAsync(byte[] data) {
+        synchronized (mWriteBufferLock) {
+            mWriteBuffer.put(data);
+            mWriteBufferLock.notifyAll(); // Notify waiting threads
+        }
+    }
+
+    /**
+     * start SerialInputOutputManager in separate threads
+     */
+    public void start() {
+        mSerialPort.setReadQueue(mReadQueueBufferCount, getReadBufferSize());
+        if(mState.compareAndSet(State.STOPPED, State.STARTING)) {
+            mStartuplatch = new CountDownLatch(2);
+            new Thread(this::runRead, this.getClass().getSimpleName() + "_read").start();
+            new Thread(this::runWrite, this.getClass().getSimpleName() + "_write").start();
+            try {
+                mStartuplatch.await();
+                mState.set(State.RUNNING);
+            } catch (InterruptedException e) {
+                Thread.currentThread().interrupt();
             }
-        } catch (Exception e) {
-            Log.w(TAG, "Run ending due to exception: " + e.getMessage(), e);
-            final Listener listener = getListener();
-            if (listener != null) {
-              listener.onRunError(e);
+        } else {
+            throw new IllegalStateException("already started");
+        }
+    }
+
+    /**
+     * stop SerialInputOutputManager threads
+     *
+     * when using readTimeout == 0 (default), additionally use usbSerialPort.close() to
+     * interrupt blocking read
+     */
+    public void stop() {
+        if(mState.compareAndSet(State.RUNNING, State.STOPPING)) {
+            synchronized (mWriteBufferLock) {
+                mWriteBufferLock.notifyAll(); // wake up write thread to check the stop condition
             }
-        } finally {
-            synchronized (this) {
-                mState = State.STOPPED;
-                Log.i(TAG, "Stopped.");
+            Log.i(TAG, "Stop requested");
+        }
+    }
+
+    public State getState() {
+        return mState.get();
+    }
+
+    /**
+     * @return true if the thread is still running
+     */
+    private boolean isStillRunning() {
+        State state = mState.get();
+        return ((state == State.RUNNING) || (state == State.STARTING))
+            && !Thread.currentThread().isInterrupted();
+    }
+
+    /**
+     * Notify listener of an error
+     *
+     * @param e the exception
+     */
+    private void notifyErrorListener(Throwable e) {
+        Listener listener = getListener();
+        if (listener != null) {
+            try {
+                listener.onRunError(e instanceof Exception ? (Exception) e : new Exception(e));
+            } catch (Throwable t) {
+                Log.w(TAG, "Exception in onRunError: " + t.getMessage(), t);
             }
         }
     }
 
-    private void step() throws IOException {
+    /**
+     * Set the thread priority
+     */
+    private void setThreadPriority() {
+        if (mThreadPriority != Process.THREAD_PRIORITY_DEFAULT) {
+            Process.setThreadPriority(mThreadPriority);
+        }
+    }
+
+    /**
+     * Continuously services the read buffers until {@link #stop()} is called, or until a driver exception is
+     * raised.
+     */
+    void runRead() {
+        Log.i(TAG, "runRead running ...");
+        try {
+            setThreadPriority();
+            mStartuplatch.countDown();
+            do {
+                stepRead();
+            } while (isStillRunning());
+            Log.i(TAG, "runRead: Stopping mState=" + getState());
+        } catch (Throwable e) {
+            if (Thread.currentThread().isInterrupted()) {
+                Log.w(TAG, "runRead: interrupted");
+            } else if(mSerialPort.isOpen()) {
+                Log.w(TAG, "runRead ending due to exception: " + e.getMessage(), e);
+            } else {
+                Log.i(TAG, "runRead: Socket closed");
+            }
+            notifyErrorListener(e);
+        } finally {
+            if (mState.compareAndSet(State.RUNNING, State.STOPPING)) {
+                synchronized (mWriteBufferLock) {
+                    mWriteBufferLock.notifyAll(); // wake up write thread to check the stop condition
+                }
+            } else if (mState.compareAndSet(State.STOPPING, State.STOPPED)) {
+                Log.i(TAG, "runRead: Stopped mState=" + getState());
+            }
+        }
+    }
+
+    /**
+     * Continuously services the write buffers until {@link #stop()} is called, or until a driver exception is
+     * raised.
+     */
+    void runWrite() {
+        Log.i(TAG, "runWrite running ...");
+        try {
+            setThreadPriority();
+            mStartuplatch.countDown();
+            do {
+                stepWrite();
+            } while (isStillRunning());
+            Log.i(TAG, "runWrite: Stopping mState=" + getState());
+        } catch (Throwable e) {
+            if (Thread.currentThread().isInterrupted()) {
+                Log.w(TAG, "runWrite: interrupted");
+            } else if(mSerialPort.isOpen()) {
+                Log.w(TAG, "runWrite ending due to exception: " + e.getMessage(), e);
+            } else {
+                Log.i(TAG, "runWrite: Socket closed");
+            }
+            notifyErrorListener(e);
+        } finally {
+            if (!mState.compareAndSet(State.RUNNING, State.STOPPING)) {
+                if (mState.compareAndSet(State.STOPPING, State.STOPPED)) {
+                    Log.i(TAG, "runWrite: Stopped mState=" + getState());
+                }
+            }
+        }
+    }
+
+    private void stepRead() throws IOException {
         // Handle incoming data.
-        int len = mDriver.read(mReadBuffer.array(), READ_WAIT_MILLIS);
+        byte[] buffer;
+        synchronized (mReadBufferLock) {
+            buffer = mReadBuffer.array();
+        }
+        int len = mSerialPort.read(buffer, mReadTimeout);
         if (len > 0) {
-            if (DEBUG) Log.d(TAG, "Read data len=" + len);
+            if (DEBUG) {
+                Log.d(TAG, "Read data len=" + len);
+            }
             final Listener listener = getListener();
             if (listener != null) {
                 final byte[] data = new byte[len];
-                mReadBuffer.get(data, 0, len);
+                System.arraycopy(buffer, 0, data, 0, len);
                 listener.onNewData(data);
             }
-            mReadBuffer.clear();
         }
+    }
 
+    private void stepWrite() throws IOException, InterruptedException {
         // Handle outgoing data.
-        byte[] outBuff = null;
-        synchronized (mWriteBuffer) {
-            len = mWriteBuffer.position();
+        byte[] buffer = null;
+        synchronized (mWriteBufferLock) {
+            int len = mWriteBuffer.position();
             if (len > 0) {
-                outBuff = new byte[len];
+                buffer = new byte[len];
                 mWriteBuffer.rewind();
-                mWriteBuffer.get(outBuff, 0, len);
+                mWriteBuffer.get(buffer, 0, len);
                 mWriteBuffer.clear();
+                mWriteBufferLock.notifyAll(); // Notify writeAsync that there is space in the buffer
+            } else {
+                mWriteBufferLock.wait();
             }
         }
-        if (outBuff != null) {
+        if (buffer != null) {
             if (DEBUG) {
-                Log.d(TAG, "Writing data len=" + len);
+                Log.d(TAG, "Writing data len=" + buffer.length);
             }
-            mDriver.write(outBuff, READ_WAIT_MILLIS);
+            mSerialPort.write(buffer, mWriteTimeout);
         }
     }
 
