@@ -193,6 +193,7 @@ bool FolderImage::readSector(quint16 sector, QByteArray &data)
                          boot.open(QFile::ReadWrite);
                          boot.seek(15);
                          speed = boot.read(1);
+                         if (speed.isEmpty()) speed = QByteArray(1, 0);   // Qt6: no auto-grow
                          speed[0] = '\x30';
                          boot.seek(15);
                          boot.write(speed);
@@ -233,8 +234,7 @@ bool FolderImage::readSector(quint16 sector, QByteArray &data)
                      x32Dos.open(QFile::ReadOnly);
                      QByteArray flag;
                      flag = x32Dos.readAll();
-                     if(flag[0] == '\xFF') {
-                         flag[0] = '\x00';
+                     if(!flag.isEmpty() && flag.at(0) == '\xFF') {
                          data[1] = 0x01;
                          data[3] = 0x07;
                          data[4] = 0x40;
@@ -274,7 +274,7 @@ bool FolderImage::readSector(quint16 sector, QByteArray &data)
             x32Dos.open(QFile::ReadWrite);
             QByteArray flag;
             flag = x32Dos.readAll();
-            if(flag[0] == '\x00') {
+            if(!flag.isEmpty() && flag.at(0) == '\x00') {
                 flag[0] = '\xFF';
                 x32Dos.seek(0);
                 x32Dos.write(flag);
@@ -365,6 +365,10 @@ bool FolderImage::readSector(quint16 sector, QByteArray &data)
 
     /* Rest of the file sectors */
         if ((sector >= 433 && sector <= 1023)) {
+            if (atariFileNo < 0 || atariFileNo >= 64 || !atariFiles[atariFileNo].exists) {
+                data = QByteArray(128, 0);
+                return true;
+            }
             QFile file(atariFiles[atariFileNo].original.absoluteFilePath());
             file.open(QFile::ReadOnly);
 	    atariFiles[atariFileNo].pos = (125+((sector-433)*125))+(atariFiles[atariFileNo].sectPass*73875);
