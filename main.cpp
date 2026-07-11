@@ -37,6 +37,12 @@ int main(int argc, char *argv[])
 #ifdef Q_OS_WIN
     timeBeginPeriod(1);
 #endif
+#ifdef Q_OS_ANDROID
+    // Qt 6.11 on Android crashes (qFatal in makeCurrent/QRhi::create) when a
+    // modal dialog forces the widget backing store onto the RHI/OpenGL path and
+    // the Android surface is momentarily gone. Force the raster backing store.
+    qputenv("QT_WIDGETS_RHI", "0");
+#endif
     QApplication a(argc, argv);
     // The UI (grey icons/text) was designed for a light background; force a light
     // colour scheme so it doesn't render as a black void under the system dark mode.
