@@ -56,7 +56,7 @@ public class FtdiSerialDriver implements UsbSerialDriver {
 
     public class FtdiSerialPort extends CommonUsbSerialPort {
 
-        private static final int USB_WRITE_TIMEOUT_MILLIS = 5000;
+        private static final int USB_WRITE_TIMEOUT_MILLIS = 50000; // AspeQt: was 5000 upstream; old SIO fork used 50000
         private static final int READ_HEADER_LENGTH = 2; // contains MODEM_STATUS
 
         private static final int REQTYPE_HOST_TO_DEVICE = UsbConstants.USB_TYPE_VENDOR | UsbConstants.USB_DIR_OUT;
