@@ -83,6 +83,10 @@ public class SIO2PCUS4A implements SerialDevice
             int total = buf.position();
             if (total < 2) return 0;                 // header only -> no payload
             return filterStatus(dest, total);
+        } catch (Exception e) {
+            // A transient async/USB hiccup must not escape (it would break the
+            // SIO worker) — treat it as an empty read so the caller just retries.
+            return 0;
         } finally {
             req.close();
         }
