@@ -2361,6 +2361,23 @@ void MainWindow::mountFile(int no, const QString &fileName, bool /*prot*/)
 
         sio->installDevice(0x31 + no, disk);
 
+#ifdef Q_OS_ANDROID
+        // Keep the "Install DOS" button working for a folder that came back from
+        // a restored session: it is mounted through this path (not through
+        // mountFolderImage), so record its working dir here too. Otherwise
+        // m_folderTemp stays empty and the button reports "not a mounted folder"
+        // even though the folder's files show up in the viewer. (The SAF tree URI
+        // for write-back isn't restored, so the DOS files land in the mounted
+        // working copy — enough for the Atari to boot DOS from it.) For any
+        // non-folder mount, drop stale folder tracking so a reused slot is clean.
+        if (isDir) {
+            m_folderTemp[no] = fileName;
+        } else {
+            m_folderTemp.remove(no);
+            m_folderTree.remove(no);
+        }
+#endif
+
         PCLINK* pclink = reinterpret_cast<PCLINK*>(sio->getDevice(0x6F));
         if(isDir || pclink->hasLink(no+1))
         {
