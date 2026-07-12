@@ -5,17 +5,18 @@ import java.lang.System;
 import android.widget.Toast;
 import android.os.Bundle;
 import java.lang.String;
-import java.util.List;
 import android.util.Log;
 
 import com.hoho.android.usbserial.driver.UsbSerialPort;
 import com.hoho.android.usbserial.driver.UsbSerialDriver;
 import com.hoho.android.usbserial.driver.FtdiSerialDriver;
 import com.hoho.android.usbserial.driver.UsbId;
-import java.util.EnumSet;
 import android.hardware.usb.UsbManager;
 import android.hardware.usb.UsbDevice;
 import android.hardware.usb.UsbDeviceConnection;
+import android.hardware.usb.UsbEndpoint;
+import android.hardware.usb.UsbRequest;
+import java.nio.ByteBuffer;
 
 import java.util.HashMap;
 import java.util.Iterator;
@@ -25,9 +26,17 @@ import android.content.IntentFilter;
 import android.content.Context;
 import android.content.BroadcastReceiver;
 import java.io.IOException;
-import android.widget.Toast;
 import android.view.WindowManager;
 
+// SIO2PC-USB backend: talks to an FTDI SIO2PC cable through the vendored
+// usb-serial-for-android (upstream 3.10.0) driver and implements the Atari SIO
+// command/data framing on top of it.
+//
+// The whole class is the "wrapper" that adapts upstream 3.10's API to what the
+// Atari SIO protocol needs. Everything non-obvious here exists because SIO is
+// timing-sensitive and reads/writes tiny frames (1-5 bytes) at up to ~126 kbit/s.
+// The four spots that differ from a plain serial read/write are called out in
+// comments: sioRead(), setSpeed(), rawStatus() and the direct driver construction.
 public class SIO2PCUS4A implements SerialDevice
 {
     private int devCount = 0;
@@ -42,6 +51,59 @@ public class SIO2PCUS4A implements SerialDevice
 
     private boolean debug = false;
     private SerialActivity sa = SerialActivity.s_activity;
+
+    // Cached at open() and used by the raw read path and the modem-status poll.
+    private UsbDeviceConnection sioConn;
+    private UsbEndpoint sioReadEp;
+    private int sioMaxPkt = 64;
+
+    // ---- Raw async read ----------------------------------------------------
+    // We deliberately bypass the driver's own read() and talk to the read
+    // endpoint directly, exactly like the old (pre-3.10) fork did. Why:
+    //   * The FTDI prefixes every USB packet with 2 modem-status bytes and only
+    //     flushes on its latency timer, so a read returns "one packet worth".
+    //   * A queued UsbRequest + requestWait() returns as soon as that one packet
+    //     arrives, yielding 0 payload when only the status header came in. AspeQt's
+    //     speed auto-detection (readCommandFrame in serialport-android.cpp) relies
+    //     on these prompt, per-packet, sometimes-empty returns to decide when to
+    //     flip between normal and high speed.
+    //   * Upstream 3.10's read(dest,len,timeout) instead spins/blocks until real
+    //     payload or the timeout, which is far too slow per call and stalls the
+    //     speed toggle.
+    // A fresh request is created and closed each call so nothing stays queued to
+    // collide with the control transfers done by setSpeed()/rawStatus().
+    private int sioRead(byte[] dest, int want, int timeout) throws IOException {
+        if (sioConn == null || sioReadEp == null) return 0;
+        UsbRequest req = new UsbRequest();
+        try {
+            if (!req.initialize(sioConn, sioReadEp)) return 0;
+            ByteBuffer buf = ByteBuffer.wrap(dest);
+            if (!req.queue(buf, dest.length)) return 0;
+            if (sioConn.requestWait() == null) return 0;
+            int total = buf.position();
+            if (total < 2) return 0;                 // header only -> no payload
+            return filterStatus(dest, total);
+        } finally {
+            req.close();
+        }
+    }
+
+    // Strip the 2-byte FTDI modem-status header that prefixes each 64-byte USB
+    // packet, compacting the real payload down in place. Returns the payload
+    // length. (Mirrors the old fork's filterStatusBytes.)
+    private int filterStatus(byte[] buf, int total) {
+        int mp = sioMaxPkt;
+        int packets = (total + mp - 1) / mp;
+        int dst = 0;
+        for (int p = 0; p < packets; p++) {
+            int count = (p == packets - 1) ? total - p * mp - 2 : mp - 2;
+            if (count > 0) {
+                System.arraycopy(buf, p * mp + 2, buf, dst, count);
+                dst += count;
+            }
+        }
+        return dst;
+    }
 
     SIO2PCUS4A() {
         manager = (UsbManager)sa.getSystemService(Context.USB_SERVICE);
@@ -111,10 +173,11 @@ public class SIO2PCUS4A implements SerialDevice
             }
         }
 
-        Log.i("USB", "Device found!");
-        // The device was already matched by vid/pid above (incl. Ray's custom
-        // PIDs 0x83B0/0x83B1 that the default prober doesn't know), so build the
-        // FTDI driver directly instead of going through UsbSerialProber.
+        if (debug) Log.i("USB", "Device found!");
+        // The device was already matched by vid/pid above (including Ray's custom
+        // PIDs 0x83B0/0x83B1 which upstream's default prober does not know), so
+        // construct the FTDI driver directly instead of going through
+        // UsbSerialProber.findAllDrivers().
         driver = new FtdiSerialDriver(device);
 
         UsbDeviceConnection connection = manager.openDevice(device);
@@ -126,6 +189,12 @@ public class SIO2PCUS4A implements SerialDevice
             sPort.setParameters(19200, 8, UsbSerialPort.STOPBITS_1, UsbSerialPort.PARITY_NONE);
             sPort.setDTR(true);
             sPort.setRTS(true);
+            // Cache the connection + read endpoint for sioRead() and rawStatus().
+            // (The FTDI latency timer is left at its 16 ms default, like the old
+            // fork — lower values split the 5-byte command frame across packets.)
+            sioConn = connection;
+            sioReadEp = sPort.getReadEndpoint();
+            if (sioReadEp != null) sioMaxPkt = sioReadEp.getMaxPacketSize();
         } catch (IOException e) {
             if (debug) Log.i("USB", "Can't open port");
             sa.runOnUiThread(new Runnable() {
@@ -154,17 +223,26 @@ public class SIO2PCUS4A implements SerialDevice
     }
 
     public int setSpeed(int speed) {
-     // Upstream has no standalone setBaudRate; setParameters re-sends the full
-     // 8N1 framing plus the new baud (framing is always 8N1 for SIO).
-     int ret = speed;
-     try {
-        sPort.setParameters(speed, 8, UsbSerialPort.STOPBITS_1, UsbSerialPort.PARITY_NONE);
-     } catch (IOException e) {
-       Log.i("USB", "Can't set speed");
-       ret = -1;
+     // Upstream 3.10 has no standalone setBaudRate; setParameters re-sends the
+     // full framing (always 8N1 for SIO) plus the new baud.
+     //
+     // The baud control transfer can transiently return result=-1 (which
+     // setParameters turns into an IOException) when it lands right after an async
+     // read — the USB stack is momentarily busy. A short sleep lets it settle and
+     // a few retries make sure the speed change actually takes effect; otherwise
+     // the speed the code thinks it is at and the speed the FTDI is really at
+     // diverge, which desyncs the Atari. (See also USB_WRITE_TIMEOUT_MILLIS in the
+     // vendored FtdiSerialDriver, raised to 50000 for the same reason.)
+     for (int tries = 0; tries < 4; tries++) {
+        try {
+            sPort.setParameters(speed, 8, UsbSerialPort.STOPBITS_1, UsbSerialPort.PARITY_NONE);
+            return speed;
+        } catch (Exception e) {
+            try { Thread.sleep(1); } catch (InterruptedException ie) {}
+        }
      }
-     if (debug) Log.i("USB", "setBaudrate: " + ret);
-    return ret;
+     if (debug) Log.i("USB", "Can't set speed " + speed);
+     return -1;
     }
 
     public int read(int size, int total)
@@ -174,12 +252,12 @@ public class SIO2PCUS4A implements SerialDevice
 
     try {
         do {
-             rd = sPort.read(sa.rb, size, 5000);
+             rd = sioRead(sa.rb, size, 5000);
              sa.rbuf.put(sa.rb, 0, rd);
              size -= rd; ret += rd;
         } while (size > 0);
     } catch (IOException e) {
-       Log.i("USB", "Can't read");
+       if (debug) Log.i("USB", "Can't read");
     }
     return ret;
     }
@@ -195,22 +273,21 @@ public class SIO2PCUS4A implements SerialDevice
         sPort.write(sa.wb, size, 5000);
         ret = size;
     } catch (IOException e) {
-       Log.i("USB", "Can't write");
+       if (debug) Log.i("USB", "Can't write");
     }
     return ret;
     }
 
-    // Upstream purgeHwBuffers is now void and takes (purgeWrite, purgeRead) —
-    // the arg order is flipped vs the old fork (which was (flushRX, flushTX)).
+    // Upstream purgeHwBuffers is void and takes (purgeWrite, purgeRead) — the
+    // argument order is flipped versus the old fork, which was (flushRX, flushTX).
     public boolean purge() {
     boolean ret = true;
     try {
         sPort.purgeHwBuffers(true, true);
     } catch (IOException e) {
-        Log.i("USB", "Can't purge");
+        if (debug) Log.i("USB", "Can't purge");
         ret = false;
     }
-    if (debug) Log.i("USB", "purge: " + ret);
     return ret;
     }
 
@@ -219,10 +296,9 @@ public class SIO2PCUS4A implements SerialDevice
     try {
         sPort.purgeHwBuffers(true, false);
     } catch (IOException e) {
-        Log.i("USB", "Can't purge TX buffer");
+        if (debug) Log.i("USB", "Can't purge TX buffer");
         ret = false;
     }
-    if (debug) Log.i("USB", "purgeTX: " + ret);
     return ret;
     }
 
@@ -231,10 +307,9 @@ public class SIO2PCUS4A implements SerialDevice
     try {
         sPort.purgeHwBuffers(false, true);
     } catch (IOException e) {
-        Log.i("USB", "Can't purge RX buffer");
+        if (debug) Log.i("USB", "Can't purge RX buffer");
         ret = false;
     }
-    if (debug) Log.i("USB", "purgeRX: " + ret);
     return ret;
     }
 
@@ -242,18 +317,22 @@ public class SIO2PCUS4A implements SerialDevice
     if (debug) Log.i("USB", msg);
     }
 
-    // Rebuild the raw FTDI modem-status byte from the public getControlLines().
-    // Masks match getHWCommandFrame() (16/32/64 = CTS/DSR/RI). getControlLines()
-    // decodes the same status byte cleanly, so the old "buf[0]-1" baseline-bit
-    // normalization is no longer needed.
+    // Raw FTDI GET_MODEM_STATUS control transfer, like the old fork. We do this by
+    // hand instead of using upstream's getControlLines() because getControlLines()
+    // allocates an EnumSet on every call, and the hardware command-frame detection
+    // (getHWCommandFrame, for the RI/DSR/CTS handshake methods) polls the status in
+    // a tight loop where that per-call overhead measurably hurts timing.
+    // getHWCommandFrame only tests bits 4-6 (CTS 0x10 / DSR 0x20 / RI 0x40), so the
+    // raw status byte is exactly what it needs.
+    private final byte[] modemStatusBuf = new byte[2];
     private int rawStatus() throws IOException {
-        EnumSet<UsbSerialPort.ControlLine> cl = sPort.getControlLines();
-        int s = 0;
-        if (cl.contains(UsbSerialPort.ControlLine.CTS)) s |= 0x10;
-        if (cl.contains(UsbSerialPort.ControlLine.DSR)) s |= 0x20;
-        if (cl.contains(UsbSerialPort.ControlLine.RI))  s |= 0x40;
-        if (cl.contains(UsbSerialPort.ControlLine.CD))  s |= 0x80;
-        return s;
+        int result, tries = 0;
+        do {
+            result = sioConn.controlTransfer(0xC0 /*vendor, device->host*/, 5 /*GET_MODEM_STATUS*/,
+                    0, 0, modemStatusBuf, 2, 200);
+        } while (result < 0 && ++tries < 4);
+        if (result < 0) throw new IOException("modem status failed: " + result);
+        return modemStatusBuf[0] & 0xff;
     }
 
     public int getModemStatus() {
@@ -261,17 +340,8 @@ public class SIO2PCUS4A implements SerialDevice
     try {
         ret = rawStatus();
     } catch (IOException e) {
-        Log.i("USB", "Can't get modem status");
+        if (debug) Log.i("USB", "Can't get modem status");
         ret = -1;
-    }
-    if (debug) {
-        counter +=1;
-        if (counter < 3) {
-            Log.i("USB", "getModemStatus: " + ret);
-        } else {
-             if (counter == 3 ) Log.i("USB", "getModemStatus called too many times!");
-             if (counter > 50000) counter = 0;
-        }
     }
     return ret;
     }
@@ -288,7 +358,7 @@ public class SIO2PCUS4A implements SerialDevice
         do {
             if (total_retries > 2) return 2;
             try {
-                ret = sPort.read(sa.rb, 5-total, 5000);
+                ret = sioRead(sa.rb, 5-total, 5000);
                 if (ret == 5) break;
             }
             catch (IOException e) {};
@@ -316,7 +386,7 @@ public class SIO2PCUS4A implements SerialDevice
                     ret = 0;
                     do {
                         try {
-                            ret = sPort.read(sa.t, 1, 5000); }
+                            ret = sioRead(sa.t, 1, 5000); }
                         catch (IOException e) {};
                     } while (ret < 1);
                     sa.rb[4] = sa.t[0];
@@ -380,7 +450,7 @@ public class SIO2PCUS4A implements SerialDevice
             res = 0;
             try {
                 if (total_retries > 4) return 2;
-                res = sPort.read(sa.rb, 5-total, 5000); }
+                res = sioRead(sa.rb, 5-total, 5000); }
             catch (IOException e) {};
 
             if (res > 0) {
@@ -445,4 +515,3 @@ public class SIO2PCUS4A implements SerialDevice
         return 0;
     }
 }
-
