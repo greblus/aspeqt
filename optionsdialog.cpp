@@ -43,6 +43,17 @@ OptionsDialog::OptionsDialog(QWidget *parent) :
     scroller->setScrollerProperties(sp);
     setWindowState(Qt::WindowFullScreen);
     androidInsetMargins();
+    // Bigger checkbox hit targets and a more legible Save button for touch.
+    setStyleSheet(styleSheet() +
+                  "\nQCheckBox::indicator { width: 23px; height: 23px; }"
+                  "\nQRadioButton::indicator { width: 12px; height: 12px; }");
+    {
+        QFont bf = m_ui->pushButton->font();
+        bf.setPointSize(bf.pointSize() + 4);
+        bf.setBold(true);
+        m_ui->pushButton->setFont(bf);
+        m_ui->pushButton->setMinimumHeight(52);
+    }
     // Repaint on scroll: the bitblt scroll leaves ghost pixels on Android.
     connect(m_ui->scrollArea->verticalScrollBar(), &QScrollBar::valueChanged,
             this, [this]{ repaint(); });

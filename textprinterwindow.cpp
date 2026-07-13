@@ -10,6 +10,11 @@
 #include <QString>
 #include <QFontComboBox>
 #include <QMessageBox>
+#include <QPushButton>
+#include <QGridLayout>
+#include <QIcon>
+#include <QScreen>
+#include <QApplication>
 
 int effAtasciiFont = 0;
 int effFontSize = 0;
@@ -40,6 +45,22 @@ TextPrinterWindow::TextPrinterWindow(QWidget *parent) :
 
     connect(ui->asciiFontName, SIGNAL(currentFontChanged(QFont)), this, SLOT(asciiFontChanged(QFont)));
 
+#ifdef Q_OS_ANDROID
+    setWindowState(Qt::WindowFullScreen);
+    // The QMainWindow toolbar doesn't render on Android and the back button isn't
+    // reliably delivered to Qt, so put a guaranteed-visible Exit button straight
+    // into the central widget's layout.
+    QPushButton *exitBtn = new QPushButton(this);
+    exitBtn->setIcon(QIcon(":/icons/tango-icons/actions/system-log-out.svg"));  // same glyph as the disk viewer
+    exitBtn->setFlat(true);
+    { QScreen *scr = qApp->screens().at(0);
+      int isz = qMin(scr->size().width(), scr->size().height()) * 90 / 800;
+      exitBtn->setIconSize(QSize(isz, isz)); }
+    exitBtn->setToolTip(tr("Exit"));
+    connect(exitBtn, &QPushButton::clicked, this, &TextPrinterWindow::close);
+    if (QGridLayout *lay = qobject_cast<QGridLayout*>(ui->centralwidget->layout()))
+        lay->addWidget(exitBtn, lay->rowCount(), 0, 1, qMax(1, lay->columnCount()), Qt::AlignHCenter);
+#endif
 }
 
 TextPrinterWindow::~TextPrinterWindow()

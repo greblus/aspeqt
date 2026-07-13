@@ -1669,6 +1669,18 @@ p, li { white-space: pre-wrap; }
         <translation>Nie udało się skopiować plików DOS do katalogu.</translation>
     </message>
     <message>
+        <source>Swap drives</source>
+        <translation>Zamiana napędów</translation>
+    </message>
+    <message>
+        <source>Swap drive %1 with drive %2?</source>
+        <translation>Zamienić napęd %1 z napędem %2?</translation>
+    </message>
+    <message>
+        <source>Playing cassette image</source>
+        <translation>Odtwarzanie kasety</translation>
+    </message>
+    <message>
         <source>Installed high-speed MyPicoDOS into the folder. Reboot your Atari to load DOS.</source>
         <translation>Zainstalowano szybkie MyPicoDOS w katalogu. Zrestartuj Atari, aby wczytać DOS.</translation>
     </message>
@@ -5170,6 +5182,10 @@ We will now migrate the existing settings to their new repository, note that set
 </context>
 <context>
     <name>TextPrinterWindow</name>
+    <message>
+        <source>Exit</source>
+        <translation>Wyjście</translation>
+    </message>
     <message>
         <location filename="../textprinterwindow.cpp" line="220"/>
         <source>Save printer text output</source>

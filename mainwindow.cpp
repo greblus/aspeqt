@@ -237,6 +237,18 @@ MainWindow::MainWindow(QWidget *parent)
     connect(ui->menu_Tools, &QMenu::aboutToShow, this, [this]{
         QTimer::singleShot(0, ui->actionOptions, &QAction::trigger);
     });
+    // Promote "Quit" from the File submenu to its own one-tap top-level menu entry
+    // (same aboutToShow trick, since a bare top-level action can't be triggered).
+    ui->menu_File->removeAction(ui->actionQuit);
+    {
+        QMenu *quitMenu = ui->menuBar->addMenu(ui->actionQuit->text());
+        quitMenu->addAction(ui->actionQuit);
+        connect(quitMenu, &QMenu::aboutToShow, this, [this]{
+            QTimer::singleShot(0, ui->actionQuit, &QAction::trigger);
+        });
+    }
+    // Drop the Help menu (About + Documentation) from the menu bar entirely.
+    ui->menuBar->removeAction(ui->menu_Help->menuAction());
 #endif
 
     /* I love ugly hacks */
@@ -352,7 +364,7 @@ MainWindow::MainWindow(QWidget *parent)
 #endif
 
     /* Setup status bar */
-    sbIcon = qRound((btnsize - 5) * 0.8);   // 20% smaller than the drive icons
+    sbIcon = qRound((btnsize - 5) * 0.8 * 4.0 / 3.0);   // status bar 1/3 taller / icons bigger
     speedLabel = new QLabel(this);
     onOffLabel = new QLabel(this);
     prtOnOffLabel = new QLabel(this);
@@ -380,7 +392,7 @@ MainWindow::MainWindow(QWidget *parent)
     // the compact bar height.
     {
         QFont sbFont = ui->statusBar->font();
-        sbFont.setPointSize(10);
+        sbFont.setPointSize(14);
         ui->statusBar->setFont(sbFont);
     }
 #endif
@@ -606,6 +618,16 @@ void MainWindow::dropEvent(QDropEvent *event)
         if (slot == source) {
             return;
         }
+
+#ifdef Q_OS_ANDROID
+        // Finger scrolling occasionally starts an accidental drag that would
+        // silently swap two drives, so confirm first on touch.
+        if (QMessageBox::question(this, tr("Swap drives"),
+                tr("Swap drive %1 with drive %2?").arg(source + 1).arg(slot + 1),
+                QMessageBox::Yes | QMessageBox::No, QMessageBox::No) != QMessageBox::Yes) {
+            return;
+        }
+#endif
 
         sio->swapDevices(slot + 0x31, source + 0x31);
 
@@ -1392,6 +1414,12 @@ void MainWindow::loaderPlayCas()
         sio->wait();
         qApp->processEvents();
     }
+    // Disk SIO is paused, but the cassette player IS driving the serial line, so
+    // show an "active" status icon instead of the "disconnected" one that pausing
+    // the SIO worker left behind.
+    onOffLabel->setPixmap(QIcon(":/icons/tango-icons/actions/media-playback-stop.svg").pixmap(sbIcon, sbIcon, QIcon::Normal, QIcon::On));
+    onOffLabel->setToolTip(tr("Playing cassette image"));
+    onOffLabel->setStatusTip(tr("Playing cassette image"));
     connect(m_casWorker, &CassetteWorker::statusChanged, this, &MainWindow::loaderCasStatus, Qt::QueuedConnection);
     connect(m_casWorker, &QThread::finished, this, &MainWindow::loaderCasFinished);
     m_casWorker->start(QThread::TimeCriticalPriority);
@@ -1426,6 +1454,13 @@ void MainWindow::loaderCasFinished()
         m_casWasRunning = false;
         if (!ui->actionStartEmulation->isChecked())
             ui->actionStartEmulation->trigger();
+    }
+    // If emulation didn't resume, restore the "disconnected" status icon (when it
+    // does resume, sioStarted() sets the running icon).
+    if (!ui->actionStartEmulation->isChecked()) {
+        onOffLabel->setPixmap(QIcon(":/icons/tango-icons/actions/media-playback-start.svg").pixmap(sbIcon, sbIcon, QIcon::Normal, QIcon::On));
+        onOffLabel->setToolTip(ui->actionStartEmulation->toolTip());
+        onOffLabel->setStatusTip(ui->actionStartEmulation->statusTip());
     }
     loaderUpdateButtons();
     qDebug() << "!i" << tr("Cassette playback finished.");
@@ -2215,19 +2250,21 @@ bool MainWindow::ejectImage(int no, bool ask)
 
 int MainWindow::containingDiskSlot(const QPoint &point)
 {
-    int i;
-    QPoint distance = centralWidget()->geometry().topLeft();
-    for (i=0; i < m_numDisks; i++) {    //
+    // Map through global coordinates so this works no matter how the slots are
+    // nested (e.g. inside a scroll area). The old version compared against
+    // frame->geometry() offset by the central widget, which ignored the scroll
+    // position — so once the slot list was scrolled (slots 6+), the hit test
+    // landed on the wrong slot.
+    const QPoint global = mapToGlobal(point);
+    for (int i = 0; i < m_numDisks; i++) {
         if (!diskWidgets[i].frame) continue;   // skip removed slots (gaps)
-        QRect rect = diskWidgets[i].frame->geometry().translated(distance);
-        if (rect.contains(point)) {
-            break;
+        QRect rect(diskWidgets[i].frame->mapToGlobal(QPoint(0, 0)),
+                   diskWidgets[i].frame->size());
+        if (rect.contains(global)) {
+            return i;
         }
     }
-    if (i > m_numDisks-1) {   //
-        i = -1;
-    }
-    return i;
+    return -1;
 }
 
 int MainWindow::firstEmptyDiskSlot(int startFrom, bool createOne)
