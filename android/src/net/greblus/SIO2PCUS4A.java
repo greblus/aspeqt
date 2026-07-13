@@ -228,7 +228,15 @@ public class SIO2PCUS4A implements SerialDevice
 
     public int setSpeed(int speed) {
      // Upstream 3.10 has no standalone setBaudRate; setParameters re-sends the
-     // full framing (always 8N1 for SIO) plus the new baud.
+     // full framing plus the new baud.
+     //
+     // Stop bits: PAL Atari high-speed SIO (POKEY divisor 0-3) needs TWO stop
+     // bits so the POKEY receiver gets enough inter-byte gap to resync — without
+     // it the receiver drops the last byte of a frame and the Atari retries
+     // (that was the source of the high-speed hiccups). Per HiassofT's AtariSIO
+     // baud table ("needs 2 stopbits on PAL"). The command frame stays at
+     // standard 19200 with one stop bit.
+     int stop = (speed > 19200) ? UsbSerialPort.STOPBITS_2 : UsbSerialPort.STOPBITS_1;
      //
      // The baud control transfer can transiently return result=-1 (which
      // setParameters turns into an IOException) when it lands right after an async
@@ -239,7 +247,7 @@ public class SIO2PCUS4A implements SerialDevice
      // vendored FtdiSerialDriver, raised to 50000 for the same reason.)
      for (int tries = 0; tries < 4; tries++) {
         try {
-            sPort.setParameters(speed, 8, UsbSerialPort.STOPBITS_1, UsbSerialPort.PARITY_NONE);
+            sPort.setParameters(speed, 8, stop, UsbSerialPort.PARITY_NONE);
             return speed;
         } catch (Exception e) {
             try { Thread.sleep(1); } catch (InterruptedException ie) {}
