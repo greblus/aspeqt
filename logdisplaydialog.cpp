@@ -7,6 +7,15 @@
 #include <QMessageBox>
 #include <QScreen>
 #include <QScroller>
+#include <QScrollerProperties>
+#include <QLineEdit>
+#include <QBoxLayout>
+#include <QTextCursor>
+#include <QColor>
+#include <QPushButton>
+#include <QIcon>
+#include <QApplication>
+#include <QComboBox>
 
 QString g_savedLog, g_filter;
 extern bool g_logOpen;
@@ -24,15 +33,89 @@ LogDisplayDialog::LogDisplayDialog(QWidget *parent) :
 
 #ifdef Q_OS_ANDROID
     setWindowState(Qt::WindowFullScreen);
-    QScreen *screen = qApp->screens().at(0);
-    int rx = screen->availableSize().width();
-    int ry = screen->availableSize().height();
 
-    l_ui->textEdit->setMaximumHeight(ry-300);
-    l_ui->textEdit->setMaximumWidth(ry);
+    // Let the log fill the whole window. The old code capped the height to
+    // screen-height-300 (hence the ~2/3 cut-off) and, worse, set the *width* to
+    // the screen *height*.
+    l_ui->textEdit->setMaximumHeight(QWIDGETSIZE_MAX);
+    l_ui->textEdit->setMaximumWidth(QWIDGETSIZE_MAX);
+    l_ui->textEdit->setReadOnly(true);
+    l_ui->textEdit->setLineWrapMode(QTextEdit::WidgetWidth);
 
-    QWidget *w = l_ui->textEdit;
-    QScroller::grabGesture(w, QScroller::TouchGesture);
+    // Smooth finger scrolling (grab the viewport, per-pixel, no overshoot).
+    l_ui->textEdit->setVerticalScrollBarPolicy(Qt::ScrollBarAlwaysOff);
+    l_ui->textEdit->setHorizontalScrollBarPolicy(Qt::ScrollBarAlwaysOff);
+    QScroller::grabGesture(l_ui->textEdit->viewport(), QScroller::LeftMouseButtonGesture);
+    {
+        QScrollerProperties sp = QScroller::scroller(l_ui->textEdit->viewport())->scrollerProperties();
+        sp.setScrollMetric(QScrollerProperties::VerticalOvershootPolicy,
+                           QVariant::fromValue(QScrollerProperties::OvershootAlwaysOff));
+        sp.setScrollMetric(QScrollerProperties::HorizontalOvershootPolicy,
+                           QVariant::fromValue(QScrollerProperties::OvershootAlwaysOff));
+        QScroller::scroller(l_ui->textEdit->viewport())->setScrollerProperties(sp);
+    }
+
+    l_ui->listByDisk->setMaximumHeight(38);
+    l_ui->listByDisk->setMinimumWidth(0);
+    l_ui->listByDisk->setSizeAdjustPolicy(QComboBox::AdjustToContents);
+    if (l_ui->gridLayout)
+        l_ui->gridLayout->setContentsMargins(8, 48, 8, 8);
+
+    QSize scr = qApp->screens().at(0)->size();
+    int isz = qMin(scr.width(), scr.height()) * 60 / 800;
+
+    QLineEdit *searchEdit = new QLineEdit(this);
+    searchEdit->setPlaceholderText(tr("Search text…"));
+    searchEdit->setClearButtonEnabled(true);
+    searchEdit->setFixedHeight(38);
+
+    auto runSearch = [this, searchEdit](bool next) {
+        const QString needle = searchEdit->text();
+        if (needle.isEmpty()) { l_ui->textEdit->setExtraSelections({}); return; }
+        if (!next) {                       // live: always start from the top
+            QTextCursor c = l_ui->textEdit->textCursor();
+            c.movePosition(QTextCursor::Start);
+            l_ui->textEdit->setTextCursor(c);
+        }
+        bool found = l_ui->textEdit->find(needle);
+        if (!found) {                      // wrap
+            QTextCursor c = l_ui->textEdit->textCursor();
+            c.movePosition(QTextCursor::Start);
+            l_ui->textEdit->setTextCursor(c);
+            found = l_ui->textEdit->find(needle);
+        }
+        if (found) {
+            QTextEdit::ExtraSelection es;
+            es.cursor = l_ui->textEdit->textCursor();
+            es.format.setBackground(QColor(255, 235, 59));
+            l_ui->textEdit->setExtraSelections({ es });
+            l_ui->textEdit->ensureCursorVisible();
+        }
+    };
+    connect(searchEdit, &QLineEdit::textChanged, this, [runSearch]{ runSearch(false); });
+    connect(searchEdit, &QLineEdit::returnPressed, this, [runSearch]{ runSearch(true); });
+
+    QPushButton *nextBtn = new QPushButton(this);
+    nextBtn->setIcon(QIcon(":/icons/tango-icons/actions/go-next.svg"));
+    nextBtn->setFlat(true);
+    nextBtn->setIconSize(QSize(isz, isz));
+    connect(nextBtn, &QPushButton::clicked, this, [runSearch]{ runSearch(true); });
+
+    QPushButton *closeBtn = new QPushButton(this);
+    closeBtn->setIcon(QIcon(":/icons/tango-icons/actions/system-log-out.svg"));
+    closeBtn->setFlat(true);
+    closeBtn->setIconSize(QSize(isz, isz));
+    connect(closeBtn, &QPushButton::clicked, this, &QDialog::close);
+
+    if (QHBoxLayout *hb = qobject_cast<QHBoxLayout *>(l_ui->groupBox->layout())) {
+        hb->removeWidget(l_ui->buttonBox);
+        l_ui->buttonBox->hide();
+        hb->insertWidget(1, searchEdit);
+        hb->addWidget(nextBtn);
+        hb->addWidget(closeBtn);
+        hb->setStretch(0, 0);   // disk combo: sized to its content
+        hb->setStretch(1, 1);   // search: fills the rest
+    }
 #endif
 
     connect(l_ui->listByDisk, SIGNAL(currentIndexChanged(QString)), this, SLOT(diskFilter()));

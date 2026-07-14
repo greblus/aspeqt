@@ -1543,6 +1543,10 @@ p, li { white-space: pre-wrap; }
 <context>
     <name>LogDisplayDialog</name>
     <message>
+        <source>Search text…</source>
+        <translation>Szukaj tekstu…</translation>
+    </message>
+    <message>
         <location filename="../logdisplaydialog.ui" line="20"/>
         <source>AspeQt Log View</source>
         <translation type="unfinished"></translation>
@@ -1550,7 +1554,7 @@ p, li { white-space: pre-wrap; }
     <message>
         <location filename="../logdisplaydialog.ui" line="117"/>
         <source>Filter log by:</source>
-        <translation type="unfinished"></translation>
+        <translation>Filtruj wg:</translation>
     </message>
     <message>
         <location filename="../logdisplaydialog.ui" line="133"/>
