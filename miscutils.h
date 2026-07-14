@@ -14,7 +14,26 @@ class QUrl;
 // sub-folders or with special characters fail to open.
 QString androidContentUri(const QUrl &url);
 
-class GzFile : public QFile
+// A QFile that opens a SAF content:// URI through a real file descriptor
+// (ContentResolver.openFileDescriptor via SerialActivity.openFd), so the picked
+// file is read/written in place with no copy into app storage. For a normal
+// path it behaves exactly like QFile. On non-Android builds it is a plain QFile.
+class ContentFile : public QFile
+{
+    Q_OBJECT
+
+public:
+    explicit ContentFile(const QString &name);
+    bool open(OpenMode mode) override;
+
+private:
+    // The name exactly as given. QFile's Android file engine re-encodes a
+    // content:// URI (double-encodes parens, mangles %2F), so we must open the
+    // descriptor from this untouched string, not from fileName().
+    QString m_name;
+};
+
+class GzFile : public ContentFile
 {
     Q_OBJECT
 

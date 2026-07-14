@@ -1,9 +1,34 @@
 #include "folderimage.h"
 #include "aspeqtsettings.h"
+#include "miscutils.h"
 
 #include <QFileInfoList>
 #include <QtDebug>
 #include <QRegularExpression>
+#include <algorithm>
+#ifdef Q_OS_ANDROID
+#include <QJniObject>
+#endif
+
+#ifdef Q_OS_ANDROID
+// content:// tree helpers, implemented in net/greblus/SerialActivity.
+static QString androidTreeCall(const char *method, const QString &tree, const QString &arg = QString())
+{
+    QJniObject jt = QJniObject::fromString(tree);
+    if (arg.isNull()) {
+        QJniObject r = QJniObject::callStaticObjectMethod(
+            "net/greblus/SerialActivity", method,
+            "(Ljava/lang/String;)Ljava/lang/String;", jt.object<jstring>());
+        return r.isValid() ? r.toString() : QString();
+    }
+    QJniObject ja = QJniObject::fromString(arg);
+    QJniObject r = QJniObject::callStaticObjectMethod(
+        "net/greblus/SerialActivity", method,
+        "(Ljava/lang/String;Ljava/lang/String;)Ljava/lang/String;",
+        jt.object<jstring>(), ja.object<jstring>());
+    return r.isValid() ? r.toString() : QString();
+}
+#endif
 
 
 // CIRCULAR SECTORS USED FOR SERVING FILES FROM FOLDER IMAGES
@@ -28,8 +53,85 @@ void FolderImage::close()
     for (int i = 0; i < 64; i++) {
         atariFiles[i].exists = false;
     }
-
+    if (m_openFile) {
+        m_openFile->close();
+        delete m_openFile;
+        m_openFile = nullptr;
+    }
+    m_openFileNo = -1;
     return;
+}
+
+// Enumerate the folder's flat file list: on Android from the SAF tree (name +
+// child URI + size), on the desktop from the QDir. Sorted by name to match the
+// old QDir::Name ordering.
+QVector<FolderImage::Entry> FolderImage::listFolder()
+{
+    QVector<Entry> out;
+#ifdef Q_OS_ANDROID
+    if (m_tree.startsWith(QLatin1String("content:"))) {
+        const QString listing = androidTreeCall("listTree", m_tree);
+        const QStringList lines = listing.split('\n', Qt::SkipEmptyParts);
+        for (const QString &ln : lines) {
+            const QStringList f = ln.split('\t');
+            if (f.size() < 3)
+                continue;
+            out.append({ f.at(0), f.at(1), f.at(2).toLongLong() });
+        }
+        std::sort(out.begin(), out.end(), [](const Entry &a, const Entry &b) {
+            return a.name.compare(b.name, Qt::CaseInsensitive) < 0;
+        });
+        return out;
+    }
+#endif
+    const QFileInfoList infos = dir.entryInfoList(QDir::Files, QDir::Name);
+    for (const QFileInfo &fi : infos)
+        out.append({ fi.fileName(), fi.absoluteFilePath(), fi.size() });
+    return out;
+}
+
+// Openable source for a helper file kept next to the mirrored files. On the
+// desktop that is just a path; on Android it is the tree child URI (created when
+// create=true, e.g. for the piconame.txt/x32.dos markers a DOS mount writes).
+QString FolderImage::nameSource(const QString &name, bool create)
+{
+#ifdef Q_OS_ANDROID
+    if (m_tree.startsWith(QLatin1String("content:"))) {
+        auto it = m_nameCache.constFind(name);
+        if (it != m_nameCache.constEnd() && !it.value().isEmpty())
+            return it.value();
+        QString src = androidTreeCall(create ? "ensureInTree" : "childInTree", m_tree, name);
+        if (!src.isEmpty())
+            m_nameCache.insert(name, src);
+        return src;
+    }
+#else
+    Q_UNUSED(create)
+#endif
+    return dir.path() + "/" + name;
+}
+
+// Cached read handle for the file served sector by sector (opened once per file).
+ContentFile *FolderImage::dataFile(int fileNo)
+{
+    if (m_openFileNo == fileNo && m_openFile && m_openFile->isOpen())
+        return m_openFile;
+    if (m_openFile) {
+        m_openFile->close();
+        delete m_openFile;
+        m_openFile = nullptr;
+    }
+    m_openFileNo = -1;
+    if (fileNo < 0 || fileNo >= 64 || !atariFiles[fileNo].exists)
+        return nullptr;
+    m_openFile = new ContentFile(atariFiles[fileNo].source);
+    if (!m_openFile->open(QFile::ReadOnly)) {
+        delete m_openFile;
+        m_openFile = nullptr;
+        return nullptr;
+    }
+    m_openFileNo = fileNo;
+    return m_openFile;
 }
 
 bool FolderImage::format(quint16, quint16)
@@ -51,20 +153,22 @@ QString FolderImage::longName(QString &lastMountedFolder, QString &atariFileName
 }
 void FolderImage::buildDirectory()
 {
-    QFileInfoList infos = dir.entryInfoList(QDir::Files,  QDir::Name);
-    QFileInfo info;
+    m_nameCache.clear();
+    QVector<Entry> infos = listFolder();
     QString name, longName;
     QString ext;
 
     int j = -1, k, i;
     for (i = 0; i < 64; i++) {
+        Entry entry;
         do {
             j++;
             if (j >= infos.count()) {
                 atariFiles[i].exists = false;
                 break;
             }
-            info = infos.at(j);
+            entry = infos.at(j);
+            QFileInfo info(entry.name);   // parse base/suffix only, no I/O
             longName = info.completeBaseName();
             name = longName.toUpper();
             if(aspeqtSettings->filterUnderscore()) {
@@ -117,7 +221,8 @@ void FolderImage::buildDirectory()
         }
 
         atariFiles[i].exists = true;
-        atariFiles[i].original = info;
+        atariFiles[i].source = entry.source;
+        atariFiles[i].size = entry.size;
         atariFiles[i].atariName = name;
         atariFiles[i].longName = longName;
         atariFiles[i].atariExt = ext;
@@ -136,28 +241,35 @@ void FolderImage::buildDirectory()
 
 bool FolderImage::open(const QString &fileName, FileTypes::FileType /* type */)
 {
+#ifdef Q_OS_ANDROID
+    // A SAF tree URI has no filesystem path; mount it directly (files are read
+    // in place through content:// descriptors, nothing is copied).
+    if (fileName.startsWith(QLatin1String("content:"))) {
+        m_tree = fileName;
+    } else
+#endif
     if (dir.exists(fileName)) {
         dir.setPath(fileName);
-
-        buildDirectory();
-
-        m_originalFileName = fileName;
-        m_geometry.initialize(false, 40, 26, 128);
-        m_newGeometry.initialize(m_geometry);
-        m_isReadOnly = true;
-        m_isModified = false;
-        m_isUnmodifiable = true;
-        return true;
     } else {
         return false;
     }
+
+    buildDirectory();
+
+    m_originalFileName = fileName;
+    m_geometry.initialize(false, 40, 26, 128);
+    m_newGeometry.initialize(m_geometry);
+    m_isReadOnly = true;
+    m_isModified = false;
+    m_isUnmodifiable = true;
+    return true;
 }
 
 bool FolderImage::readSector(quint16 sector, QByteArray &data)
 {
     /* Boot */
 
-    QFile boot(dir.path() + "/$boot.bin");
+    ContentFile boot(nameSource("$boot.bin", false));
     data = QByteArray(128, 0);
     int bootFileSector;
 
@@ -188,7 +300,7 @@ bool FolderImage::readSector(quint16 sector, QByteArray &data)
                      bootFileSector = 369 + i;
                      if(g_disablePicoHiSpeed) {
                          data[15] = 0;
-                         QFile boot(dir.path() + "/$boot.bin");
+                         ContentFile boot(nameSource("$boot.bin", false));
                          QByteArray speed;
                          boot.open(QFile::ReadWrite);
                          boot.seek(15);
@@ -202,10 +314,15 @@ bool FolderImage::readSector(quint16 sector, QByteArray &data)
                      data[9] = bootFileSector % 256;
                      data[10] = bootFileSector / 256;
                      // Create the piconame.txt file
-                     QFile picoName(dir.path() + "/piconame.txt");
+                     ContentFile picoName(nameSource("piconame.txt", true));
                      picoName.open(QFile::WriteOnly);
+                     QString folderLabel = dir.dirName();
+#ifdef Q_OS_ANDROID
+                     if (m_tree.startsWith(QLatin1String("content:")))
+                         folderLabel = androidTreeCall("treeDisplayName", m_tree);
+#endif
                      QByteArray nameLine;
-                     nameLine.append(dir.dirName().toStdString());
+                     nameLine.append(folderLabel.toStdString());
                      nameLine.append('\x9b');
                      picoName.write(nameLine);
                      for(int i=0; i<64; i++){
@@ -230,7 +347,7 @@ bool FolderImage::readSector(quint16 sector, QByteArray &data)
                  }
                  // SpartaDOS, force it to change to AtariDOS format after the boot
                  if(atariFiles[i].longName.toUpper() == "X32.DOS") {
-                     QFile x32Dos(dir.path() + "/x32.dos");
+                     ContentFile x32Dos(nameSource("x32.dos", false));
                      x32Dos.open(QFile::ReadOnly);
                      QByteArray flag;
                      flag = x32Dos.readAll();
@@ -270,7 +387,7 @@ bool FolderImage::readSector(quint16 sector, QByteArray &data)
         boot.seek((sector-1)*128);
         data = boot.read(128);
         if(sector == 134) {
-            QFile x32Dos(dir.path() + "/x32.dos");
+            ContentFile x32Dos(nameSource("x32.dos", true));
             x32Dos.open(QFile::ReadWrite);
             QByteArray flag;
             flag = x32Dos.readAll();
@@ -312,8 +429,7 @@ bool FolderImage::readSector(quint16 sector, QByteArray &data)
                 // 5 header bytes before indexing (name/ext are appended after).
                 entry = QByteArray(5, 0);
                 entry[0] = 0x42;
-                QFileInfo info = atariFiles[i].original;;
-                int size = (info.size() + 124) / 125;
+                int size = (atariFiles[i].size + 124) / 125;
                 if (size > 999) {
                     size = 999;
                 }
@@ -346,12 +462,16 @@ bool FolderImage::readSector(quint16 sector, QByteArray &data)
                 data = QByteArray(128, 0);
                 return true;
             }
-            QFile file(atariFiles[atariFileNo].original.absoluteFilePath());
-            file.open(QFile::ReadOnly);
-            data = file.read(125);
+            ContentFile *file = dataFile(atariFileNo);
+            if (!file) {
+                data = QByteArray(128, 0);
+                return true;
+            }
+            file->seek(0);
+            data = file->read(125);
             size = data.size();
             data.resize(128);
-            if (file.atEnd()) {
+            if (file->atEnd()) {
                 next = 0;
             }
             else {
@@ -369,11 +489,14 @@ bool FolderImage::readSector(quint16 sector, QByteArray &data)
                 data = QByteArray(128, 0);
                 return true;
             }
-            QFile file(atariFiles[atariFileNo].original.absoluteFilePath());
-            file.open(QFile::ReadOnly);
+            ContentFile *file = dataFile(atariFileNo);
+            if (!file) {
+                data = QByteArray(128, 0);
+                return true;
+            }
 	    atariFiles[atariFileNo].pos = (125+((sector-433)*125))+(atariFiles[atariFileNo].sectPass*73875);
-            file.seek(atariFiles[atariFileNo].pos);
-            data = file.read(125);
+            file->seek(atariFiles[atariFileNo].pos);
+            data = file->read(125);
             next = sector + 1;
             if (sector == 1023) {
                 next = 433;
@@ -382,7 +505,7 @@ bool FolderImage::readSector(quint16 sector, QByteArray &data)
             size = data.size();
             data.resize(128);
             atariFiles[atariFileNo].lastSector = sector;
-            if (file.atEnd()) next = 0;
+            if (file->atEnd()) next = 0;
             data[125] = (atariFileNo * 4) | (next / 256);
             data[126] = next % 256;
             data[127] = size;

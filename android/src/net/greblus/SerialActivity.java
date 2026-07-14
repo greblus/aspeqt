@@ -1,6 +1,6 @@
 package net.greblus;
 
-import org.qtproject.example.AspeQt.R;
+import org.greblus.AspeQt.R;
 import net.greblus.SerialDevice;
 
 import android.widget.Toast;
@@ -61,13 +61,6 @@ public class SerialActivity extends QtActivity
                 m_device = new SIO2BT();
 
             registerBroadcastReceiver();
-
-            if (Build.VERSION.SDK_INT >= 23) {
-                if (this.checkSelfPermission(Manifest.permission.WRITE_EXTERNAL_STORAGE)
-                        != PackageManager.PERMISSION_GRANTED) {
-                    this.requestPermissions(new String[]{Manifest.permission.WRITE_EXTERNAL_STORAGE}, 1);
-                }
-            }
 
             getWindow().addFlags(WindowManager.LayoutParams.FLAG_KEEP_SCREEN_ON);
             applyImmersive();
@@ -384,6 +377,96 @@ public class SerialActivity extends QtActivity
                 out.close();
                 in.close();
                 return total;
+            } catch (Throwable e) { return -1; }
+        }
+
+        // Enumerate the flat file list of a picked tree, one record per line
+        // "displayName\tdocumentUri\tsize" (sub-dirs skipped). Metadata only, no
+        // file data is read, so this is cheap even for large collections. The
+        // folder image opens each documentUri on demand via openFd.
+        public static String listTree(String treeUri) {
+            StringBuilder sb = new StringBuilder();
+            try {
+                android.content.ContentResolver r = s_activity.getContentResolver();
+                android.net.Uri tree = android.net.Uri.parse(treeUri);
+                String docId = android.provider.DocumentsContract.getTreeDocumentId(tree);
+                android.net.Uri children = android.provider.DocumentsContract.buildChildDocumentsUriUsingTree(tree, docId);
+                android.database.Cursor c = r.query(children, new String[]{
+                        android.provider.DocumentsContract.Document.COLUMN_DOCUMENT_ID,
+                        android.provider.DocumentsContract.Document.COLUMN_DISPLAY_NAME,
+                        android.provider.DocumentsContract.Document.COLUMN_MIME_TYPE,
+                        android.provider.DocumentsContract.Document.COLUMN_SIZE}, null, null, null);
+                if (c != null) {
+                    try {
+                        while (c.moveToNext()) {
+                            String id = c.getString(0);
+                            String name = c.getString(1);
+                            String mime = c.getString(2);
+                            long size = c.isNull(3) ? 0 : c.getLong(3);
+                            if (android.provider.DocumentsContract.Document.MIME_TYPE_DIR.equals(mime))
+                                continue;
+                            if (name == null || name.indexOf('\t') >= 0 || name.indexOf('\n') >= 0)
+                                continue;
+                            android.net.Uri childUri = android.provider.DocumentsContract.buildDocumentUriUsingTree(tree, id);
+                            sb.append(name).append('\t').append(childUri.toString()).append('\t').append(size).append('\n');
+                        }
+                    } finally { c.close(); }
+                }
+            } catch (Throwable e) {}
+            return sb.toString();
+        }
+
+        // Document uri of a direct child of the tree by display name, or "".
+        public static String childInTree(String treeUri, String name) {
+            try {
+                android.content.ContentResolver r = s_activity.getContentResolver();
+                android.net.Uri tree = android.net.Uri.parse(treeUri);
+                String docId = android.provider.DocumentsContract.getTreeDocumentId(tree);
+                android.net.Uri children = android.provider.DocumentsContract.buildChildDocumentsUriUsingTree(tree, docId);
+                android.database.Cursor c = r.query(children, new String[]{
+                        android.provider.DocumentsContract.Document.COLUMN_DOCUMENT_ID,
+                        android.provider.DocumentsContract.Document.COLUMN_DISPLAY_NAME}, null, null, null);
+                if (c != null) {
+                    try {
+                        while (c.moveToNext()) {
+                            if (name.equals(c.getString(1)))
+                                return android.provider.DocumentsContract
+                                        .buildDocumentUriUsingTree(tree, c.getString(0)).toString();
+                        }
+                    } finally { c.close(); }
+                }
+            } catch (Throwable e) {}
+            return "";
+        }
+
+        // Find a child by name, creating an empty document if absent. Returns its
+        // document uri, or "". Used for the DOS marker files a folder mount writes.
+        public static String ensureInTree(String treeUri, String name) {
+            String existing = childInTree(treeUri, name);
+            if (!existing.isEmpty()) return existing;
+            try {
+                android.content.ContentResolver r = s_activity.getContentResolver();
+                android.net.Uri tree = android.net.Uri.parse(treeUri);
+                String parentId = android.provider.DocumentsContract.getTreeDocumentId(tree);
+                android.net.Uri parentUri = android.provider.DocumentsContract.buildDocumentUriUsingTree(tree, parentId);
+                android.net.Uri created = android.provider.DocumentsContract.createDocument(
+                        r, parentUri, "application/octet-stream", name);
+                if (created != null) return created.toString();
+            } catch (Throwable e) {}
+            return "";
+        }
+
+        // Open a content:// document as a real, seekable file descriptor and hand
+        // its ownership to native code (detachFd). Mode "r"/"w"/"rw"/"wt". The
+        // native side wraps it in a QFile (AutoCloseHandle) and closes it. Lets
+        // us read/write the picked file in place, with no copy to app storage.
+        public static int openFd(String uri, String mode) {
+            try {
+                android.net.Uri u = android.net.Uri.parse(uri);
+                android.os.ParcelFileDescriptor pfd =
+                        s_activity.getContentResolver().openFileDescriptor(u, mode);
+                if (pfd == null) return -1;
+                return pfd.detachFd();
             } catch (Throwable e) { return -1; }
         }
 

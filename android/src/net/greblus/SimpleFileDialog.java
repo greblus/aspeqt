@@ -24,7 +24,7 @@ package net.greblus;
 *  (See Links above for full license text)
 */
 
-import org.qtproject.example.AspeQt.R;
+import org.greblus.AspeQt.R;
 import java.io.File;
 import java.io.IOException;
 import java.util.ArrayList;

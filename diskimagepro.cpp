@@ -19,7 +19,7 @@ bool DiskImagePro::format(quint16, quint16)
 bool DiskImagePro::open(const QString &fileName, FileTypes::FileType /* type */)
 {
     if (m_originalImageType == FileTypes::Atr) {
-        sourceFile = new QFile(fileName);
+        sourceFile = new ContentFile(fileName);
     } else {
         sourceFile = new GzFile(fileName);
     }

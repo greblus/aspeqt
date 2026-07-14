@@ -1,5 +1,5 @@
 package net.greblus;
-import org.qtproject.example.AspeQt.R;
+import org.greblus.AspeQt.R;
 
 import java.lang.System;
 import android.widget.Toast;

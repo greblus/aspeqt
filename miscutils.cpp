@@ -5,6 +5,48 @@
 #include <QDebug>
 #include <QUrl>
 #include <QStringList>
+#ifdef Q_OS_ANDROID
+#include <QJniObject>
+#endif
+
+#ifdef Q_OS_ANDROID
+// content:// -> real file descriptor, via SerialActivity.openFd. Returns -1 on
+// failure. The caller owns the fd (QFile::AutoCloseHandle closes it).
+static int androidOpenFd(const QString &uri, const char *mode)
+{
+    QJniObject juri = QJniObject::fromString(uri);
+    QJniObject jmode = QJniObject::fromString(QString::fromLatin1(mode));
+    return QJniObject::callStaticMethod<jint>(
+        "net/greblus/SerialActivity", "openFd",
+        "(Ljava/lang/String;Ljava/lang/String;)I",
+        juri.object<jstring>(), jmode.object<jstring>());
+}
+
+static const char *fdModeFor(QIODevice::OpenMode m)
+{
+    if (m & QIODevice::WriteOnly)
+        return (m & QIODevice::ReadOnly) ? "rw" : "wt";
+    return "r";
+}
+#endif
+
+ContentFile::ContentFile(const QString &name)
+    : QFile(name), m_name(name)
+{
+}
+
+bool ContentFile::open(OpenMode mode)
+{
+#ifdef Q_OS_ANDROID
+    if (m_name.startsWith(QLatin1String("content:"))) {
+        int fd = androidOpenFd(m_name, fdModeFor(mode));
+        if (fd < 0)
+            return false;
+        return QFile::open(fd, mode, QFile::AutoCloseHandle);
+    }
+#endif
+    return QFile::open(mode);
+}
 
 QString androidContentUri(const QUrl &url)
 {
@@ -70,13 +112,24 @@ FileTypes::FileType FileTypes::getFileType(const QString &fileName)
 
     /* Check if it is a folder */
 
+#ifdef Q_OS_ANDROID
+    // A SAF folder pick (ACTION_OPEN_DOCUMENT_TREE) is a bare tree URI with no
+    // /document/ segment; treat it as a folder image. A single-file pick is a
+    // /document/ URI and falls through to header sniffing.
+    if (fileName.startsWith(QLatin1String("content:"))
+            && fileName.contains(QLatin1String("/tree/"))
+            && !fileName.contains(QLatin1String("/document/"))) {
+        return Dir;
+    }
+#endif
+
     if (QFileInfo(fileName).isDir()) {
         return Dir;
     }
 
     /* Read the file header */
     {
-        QFile file(fileName);
+        ContentFile file(fileName);
         if (file.open(QFile::ReadOnly)) {
             header = file.read(4);
         }
@@ -184,7 +237,7 @@ QString FileTypes::getFileTypeName(FileType type)
 /* GzFile */
 
 GzFile::GzFile(const QString &path)
-    :QFile(path)
+    :ContentFile(path)
 {
     mPath = path;
     mHandle = 0;
@@ -197,7 +250,7 @@ GzFile::~GzFile()
 
 bool GzFile::open(OpenMode mode)
 {
-    if (QFile::open(mode)) {
+    if (ContentFile::open(mode)) {
         if((mode & ReadOnly) == ReadOnly) {
             mHandle = gzdopen(handle(), "rb");
         }  else if((mode & ReadWrite) == ReadWrite) {

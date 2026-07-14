@@ -2,13 +2,18 @@
 #define FOLDERIMAGE_H
 
 #include <QDir>
+#include <QVector>
+#include <QMap>
 #include "diskimage.h"
+
+class ContentFile;
 
 class AtariFile
 {
 public:
     bool exists;
-    QFileInfo original;
+    QString source;      // real path (desktop) or content:// child URI (Android)
+    qint64 size;
     QString atariName;
     QString atariExt;
     QString longName;
@@ -23,10 +28,25 @@ class FolderImage : public SimpleDiskImage
 
 protected:
     QDir dir;
+    QString m_tree;              // Android: the SAF tree content:// URI
     bool mReadOnly;
     void buildDirectory();
     AtariFile atariFiles[64];
-    int atariFileNo;             // 
+    int atariFileNo;             //
+
+    // One folder entry: display name, its openable source (path or child URI)
+    // and byte size. buildDirectory() turns these into the 64 mirrored slots.
+    struct Entry { QString name; QString source; qint64 size; };
+    QVector<Entry> listFolder();
+    // Openable source for a by-name helper file ($boot.bin, piconame.txt, ...).
+    // create=true finds-or-creates it (Android SAF); on desktop it is just a path.
+    QString nameSource(const QString &name, bool create);
+    QMap<QString, QString> m_nameCache;   // Android: name -> resolved source URI
+    // Cached read handle for the file currently being served sector by sector,
+    // so we don't reopen it (an fd/ContentResolver round-trip) every 125 bytes.
+    ContentFile *m_openFile = nullptr;
+    int m_openFileNo = -1;
+    ContentFile *dataFile(int fileNo);
 
 public:
     FolderImage(SioWorker *worker): SimpleDiskImage(worker) {}

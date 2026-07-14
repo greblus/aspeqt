@@ -122,6 +122,8 @@ private:
     // Copy the bundled high-speed MyPicoDOS ($boot.bin + picodos.sys) into a
     // mounted folder so the Atari can boot DOS from it.
     void androidInstallDos(int no);
+    // Find-or-create a document by name in a SAF tree; returns its content:// URI.
+    QString androidChildOrCreate(const QString &tree, const QString &name);
     // Return a path QFile can read: the content:// URI itself when Qt can open
     // it, otherwise a temp copy made via ContentResolver (Qt's QFile fails on
     // some SAF URIs, e.g. files in sub-folders). Keeps the real file name.

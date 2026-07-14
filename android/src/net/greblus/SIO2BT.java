@@ -1,6 +1,6 @@
 package net.greblus;
 
-import org.qtproject.example.AspeQt.R;
+import org.greblus.AspeQt.R;
 import android.bluetooth.BluetoothAdapter;
 import android.bluetooth.BluetoothDevice;
 import android.bluetooth.BluetoothSocket;

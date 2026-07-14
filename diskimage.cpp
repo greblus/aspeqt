@@ -251,7 +251,7 @@ bool SimpleDiskImage::openAtr(const QString &fileName)
     QFile *sourceFile;
 
     if (m_originalImageType == FileTypes::Atr) {
-        sourceFile = new QFile(fileName);
+        sourceFile = new ContentFile(fileName);
     } else {
         sourceFile = new GzFile(fileName);
     }
@@ -439,7 +439,7 @@ bool SimpleDiskImage::openXfd(const QString &fileName)
     QFile *sourceFile;
 
     if (m_originalImageType == FileTypes::Xfd) {
-        sourceFile = new QFile(fileName);
+        sourceFile = new ContentFile(fileName);
     } else {
         sourceFile = new GzFile(fileName);
     }
@@ -542,7 +542,7 @@ bool SimpleDiskImage::saveAtr(const QString &fileName)
     QFile *outputFile;
 
     if (m_originalImageType == FileTypes::Atr) {
-        outputFile = new QFile(fileName);
+        outputFile = new ContentFile(fileName);
     } else {
         outputFile = new GzFile(fileName);
     }

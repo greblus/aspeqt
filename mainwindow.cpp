@@ -2408,7 +2408,8 @@ void MainWindow::mountFile(int no, const QString &fileName, bool /*prot*/)
         // working copy — enough for the Atari to boot DOS from it.) For any
         // non-folder mount, drop stale folder tracking so a reused slot is clean.
         if (isDir) {
-            m_folderTemp[no] = fileName;
+            if (fileName.startsWith("content:"))
+                m_folderTree[no] = fileName;   // enables Install DOS after restore
         } else {
             m_folderTemp.remove(no);
             m_folderTree.remove(no);
@@ -2560,11 +2561,21 @@ QString MainWindow::androidLocalCopy(const QString &uri)
     return tmpPath;
 }
 
+QString MainWindow::androidChildOrCreate(const QString &tree, const QString &name)
+{
+    QJniObject jt = QJniObject::fromString(tree);
+    QJniObject jn = QJniObject::fromString(name);
+    QJniObject r = QJniObject::callStaticObjectMethod(
+        "net/greblus/SerialActivity", "ensureInTree",
+        "(Ljava/lang/String;Ljava/lang/String;)Ljava/lang/String;",
+        jt.object<jstring>(), jn.object<jstring>());
+    return r.isValid() ? r.toString() : QString();
+}
+
 void MainWindow::androidInstallDos(int no)
 {
-    QString folder = m_folderTemp.value(no);
-    QString tree   = m_folderTree.value(no);
-    if (folder.isEmpty() || !QDir(folder).exists()) {
+    QString tree = m_folderTree.value(no);
+    if (tree.isEmpty()) {
         QMessageBox::warning(this, tr("Install DOS"), tr("This slot does not hold a mounted folder."));
         return;
     }
@@ -2574,32 +2585,20 @@ void MainWindow::androidInstallDos(int no)
             QMessageBox::Yes | QMessageBox::No, QMessageBox::No) != QMessageBox::Yes)
         return;
 
-    // Stage the two files so we can push exactly them to the real SAF folder
-    // (rather than re-uploading the whole mounted folder).
-    QString stage = QStandardPaths::writableLocation(QStandardPaths::CacheLocation) + "/dosinstall";
-    QDir(stage).removeRecursively();
-    QDir().mkpath(stage);
-
-    auto put = [&](const QString &src, const QString &dstName) -> bool {
-        const QFileDevice::Permissions rw = QFileDevice::ReadOwner | QFileDevice::WriteOwner
-                                          | QFileDevice::ReadGroup | QFileDevice::ReadOther;
-        QString a = folder + "/" + dstName;   // into the mounted (temp) folder
-        QFile::remove(a);
-        if (!QFile::copy(src, a))
+    // Write the two bundled files straight into the SAF folder (find-or-create
+    // the document, then stream the resource into it via a descriptor).
+    auto put = [&](const QString &res, const QString &dstName) -> bool {
+        QString childUri = androidChildOrCreate(tree, dstName);
+        if (childUri.isEmpty())
             return false;
-        QFile::setPermissions(a, rw);
-        QString b = stage + "/" + dstName;    // into the push stage
-        QFile::copy(src, b);
-        QFile::setPermissions(b, rw);
-        return true;
+        QFile src(res);
+        ContentFile dst(childUri);
+        if (!src.open(QIODevice::ReadOnly) || !dst.open(QIODevice::WriteOnly | QIODevice::Truncate))
+            return false;
+        return dst.write(src.readAll()) >= 0;
     };
 
     bool ok = put(":/dos/boot.bin", "$boot.bin") && put(":/dos/picodos.sys", "picodos.sys");
-    // Write the files to the real folder now (not only on eject).
-    if (ok && !tree.isEmpty())
-        androidCopyDirToTree(stage, tree);
-    QDir(stage).removeRecursively();
-
     if (ok) {
         deviceStatusChanged(no + 0x31);   // re-read the folder
         qDebug() << "!i" << tr("Installed high-speed MyPicoDOS into the folder. "
@@ -2648,7 +2647,8 @@ void MainWindow::mountDiskImage(int no)
     if (fileName.isEmpty()) {
         return;
     }
-    fileName = androidReadablePath(fileName, no);
+    // Mount the SAF document in place (opened via a file descriptor); no copy
+    // into app storage. The content:// URI flows straight through open().
     {
         FileTypes::FileType t = FileTypes::getFileType(fileName);
         if (t == FileTypes::Xex || t == FileTypes::XexGz) {
@@ -2689,29 +2689,16 @@ void MainWindow::mountFolderImage(int no)
 // Always mount from "last folder dir" //
     dir = aspeqtSettings->lastFolderImageDir();
 #ifdef Q_OS_ANDROID
-    // Pick a folder via SAF (ACTION_OPEN_DOCUMENT_TREE), copy its files into a
-    // local temp dir and mount that; changes are written back on eject.
+    // Pick a folder via SAF (ACTION_OPEN_DOCUMENT_TREE) and mount the tree URI
+    // directly: the folder image reads files in place through content://
+    // descriptors, so nothing is copied into app storage.
     QUrl treeUrl = QFileDialog::getExistingDirectoryUrl(this, tr("Open a folder image"), QUrl());
-    QString tree = treeUrl.isEmpty() ? QString() : androidContentUri(treeUrl);
-    if (tree.isEmpty()) {
+    QString fileName = treeUrl.isEmpty() ? QString() : androidContentUri(treeUrl);
+    if (fileName.isEmpty()) {
         return;
     }
-    androidTakePersistable(tree, true);
-    QString folderName = androidTreeName(tree);
-    if (folderName.isEmpty()) folderName = QStringLiteral("folder");
-    QString base = QStandardPaths::writableLocation(QStandardPaths::CacheLocation)
-                 + "/foldermount/" + QString::number(no);
-    QDir(base).removeRecursively();
-    QString fileName = base + "/" + folderName;
-    if (!QDir().mkpath(fileName)) {
-        return;
-    }
-    if (androidCopyTreeToDir(tree, fileName) < 0) {
-        QMessageBox::warning(this, tr("Folder image"), tr("Could not read the selected folder."));
-        return;
-    }
-    m_folderTree[no] = tree;
-    m_folderTemp[no] = fileName;
+    androidTakePersistable(fileName, true);
+    m_folderTree[no] = fileName;
 #else
     QString fileName = QFileDialog::getExistingDirectory(this, tr("Open a folder image"), dir);
     fileName = QDir::fromNativeSeparators(fileName);
