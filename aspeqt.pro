@@ -41,6 +41,8 @@ unix:
         # Google Play target API requirement (Android 16 / API 36 from 2026-08-31)
         ANDROID_TARGET_SDK_VERSION = 36
         ANDROID_MIN_SDK_VERSION = 28
+        # Android 15+ requires native libs aligned to 16 KB ELF LOAD segments.
+        QMAKE_LFLAGS += -Wl,-z,max-page-size=16384 -Wl,-z,common-page-size=16384
         SOURCES += serialport-android.cpp
         HEADERS += serialport-android.h
         FORMS += \
