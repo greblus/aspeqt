@@ -8,6 +8,10 @@ AspeqtSettings::AspeqtSettings()
 
     mIsFirstTime = mSettings->value("FirstTime", true).toBool();
     mSettings->setValue("FirstTime", false);
+    // Persist immediately: on Android the process is often killed (swipe-out)
+    // without running the QSettings destructor, so a deferred write of this flag
+    // can be lost and the first-run prompt would reappear on the next launch.
+    mSettings->sync();
 
     // Set Window Position/Size defaults //
     mMainX = mSettings->value("MainX", 20).toInt();
@@ -226,6 +230,11 @@ void AspeqtSettings::setMainWindowTitle(const QString &g_mainWindowTitle)
 bool AspeqtSettings::isFirstTime()
 {
     return mIsFirstTime;
+}
+
+void AspeqtSettings::sync()
+{
+    mSettings->sync();
 }
 
 QString AspeqtSettings::serialPortName()

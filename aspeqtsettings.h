@@ -17,6 +17,7 @@ public:
     ~AspeqtSettings();
 
     bool isFirstTime();
+    void sync();
 
     QString serialPortName();
     void setSerialPortName(const QString &name);

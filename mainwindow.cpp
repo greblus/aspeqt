@@ -756,6 +756,7 @@ void MainWindow::closeEvent(QCloseEvent *event)
         }
     }
 
+    aspeqtSettings->sync();   // flush settings now; the process may be killed on exit
     event->accept();
 
 }
@@ -2225,14 +2226,10 @@ bool MainWindow::ejectImage(int no, bool ask)
     }
     delete img;
 #ifdef Q_OS_ANDROID
-    // Folder image mounted from a SAF tree: write the temp working copy back to
-    // the picked folder, then discard the temp dir.
-    if (m_folderTree.contains(no)) {
-        androidCopyDirToTree(m_folderTemp.value(no), m_folderTree.value(no));
-        QDir(QFileInfo(m_folderTemp.value(no)).absolutePath()).removeRecursively();
-        m_folderTree.remove(no);
-        m_folderTemp.remove(no);
-    }
+    // Folder images are mounted from the SAF tree in place (nothing was copied),
+    // so ejecting just drops the tracking entries.
+    m_folderTree.remove(no);
+    m_folderTemp.remove(no);
 #endif
     diskWidgets[no].ejectAction->setEnabled(false);
     QString fileName = diskWidgets[no].fileNameLabel->text();
