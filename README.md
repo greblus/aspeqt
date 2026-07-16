@@ -7,10 +7,12 @@ interfaces:
 * **SIO2PC-USB** via an FTDI adapter (USB OTG host support is required), or
 * **SIO2BT** via a SIO2BT bluetooth dongle, supported by most modern Android devices.
 
+> **Branch `qml`:** a work-in-progress redesign of the GUI in **Qt Quick / QML**
+> (Material Design). It faithfully reproduces the existing drive-panel layout with a
+> cleaner, more touch-friendly look. The screenshot below is the QML build.
+
 <p align="center">
-  <img src="src/screenshots/aspeqt_xex.jpg" alt="Loading an executable, a folder with DOS installed and a mounted disk" width="45%">
-  &nbsp;&nbsp;
-  <img src="src/screenshots/aspeqt_cas.jpg" alt="Playing back a cassette image" width="45%">
+  <img src="src/screenshots/aspeqt_qml.jpg" alt="AspeQt QML redesign: loader slot, drive slots and log" width="42%">
 </p>
 
 ## What's new in the Android port

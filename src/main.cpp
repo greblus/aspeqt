@@ -4,6 +4,12 @@
 #include <QStyleHints>
 #include "mainwindow.h"
 
+#ifdef ASPEQT_QML
+#include <QQmlApplicationEngine>
+#include <QQmlContext>
+#include "qmlbridge.h"
+#endif
+
 #ifdef Q_OS_WIN
 #include <windows.h>
 #include <Mmsystem.h>
@@ -47,9 +53,21 @@ int main(int argc, char *argv[])
     // The UI (grey icons/text) was designed for a light background; force a light
     // colour scheme so it doesn't render as a black void under the system dark mode.
     a.styleHints()->setColorScheme(Qt::ColorScheme::Light);
+#ifdef ASPEQT_QML
+    // QML UI spike (branch `qml`): reproduce the main-window layout in Qt Quick.
+    qputenv("QT_QUICK_CONTROLS_STYLE", "Material");
+    QQmlApplicationEngine engine;
+    AppController controller;
+    engine.rootContext()->setContextProperty("app", &controller);
+    engine.load(QUrl(QStringLiteral("qrc:/qml/Main.qml")));
+    if (engine.rootObjects().isEmpty())
+        return -1;
+    ret = a.exec();
+#else
     MainWindow w;
     w.show();
     ret = a.exec();
+#endif
 #ifdef Q_OS_WIN
     timeEndPeriod(1);
 #endif

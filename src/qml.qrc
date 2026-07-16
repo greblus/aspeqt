@@ -1,0 +1,11 @@
+<RCC>
+    <qresource prefix="/">
+        <file>qml/qmldir</file>
+        <file>qml/Theme.qml</file>
+        <file>qml/Badge.qml</file>
+        <file>qml/SlotButton.qml</file>
+        <file>qml/SlotCard.qml</file>
+        <file>qml/LoaderCard.qml</file>
+        <file>qml/Main.qml</file>
+    </qresource>
+</RCC>

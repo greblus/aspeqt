@@ -11,6 +11,17 @@ QT += core gui widgets printsupport svg core5compat
 CONFIG += mobility
 CONFIG += static
 MOBILITY = bearer
+
+# QML UI spike (branch `qml`): build with `qmake CONFIG+=qmlui` to launch the
+# Qt Quick front-end (src/qml/) instead of the QtWidgets MainWindow. The widget
+# build is untouched when qmlui is not set.
+qmlui {
+    DEFINES += ASPEQT_QML
+    QT += quick qml
+    SOURCES += qmlbridge.cpp
+    HEADERS += qmlbridge.h
+    RESOURCES += qml.qrc
+}
 SOURCES += main.cpp \
     mainwindow.cpp \
     sioworker.cpp \
