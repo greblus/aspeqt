@@ -8,9 +8,9 @@ interfaces:
 * **SIO2BT** via a SIO2BT bluetooth dongle, supported by most modern Android devices.
 
 <p align="center">
-  <img src="screenshots/aspeqt_xex.jpg" alt="Loading an executable, a folder with DOS installed and a mounted disk" width="45%">
+  <img src="src/screenshots/aspeqt_xex.jpg" alt="Loading an executable, a folder with DOS installed and a mounted disk" width="45%">
   &nbsp;&nbsp;
-  <img src="screenshots/aspeqt_cas.jpg" alt="Playing back a cassette image" width="45%">
+  <img src="src/screenshots/aspeqt_cas.jpg" alt="Playing back a cassette image" width="45%">
 </p>
 
 ## What's new in the Android port
@@ -94,7 +94,7 @@ ACK timeout increased). Speed, name and PIN can be configured with
 * **AspeQt** will soon be available again from [Google Play Store](https://play.google.com/store/search?q=aspeqt).
 * All releases (including older ones) are on the [releases page](https://github.com/greblus/aspeqt/releases).
 * The latest compiled APK is always at
-  [`android/apk/aspeqt.apk`](https://github.com/greblus/aspeqt/raw/android/android/apk/aspeqt.apk).
+  [`apk/aspeqt.apk`](https://github.com/greblus/aspeqt/raw/ng/apk/aspeqt.apk).
 
 ## Where to get the adapters
 
