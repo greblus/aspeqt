@@ -1,4 +1,7 @@
 #include "qmlbridge.h"
+#include "mainwindow.h"
+
+#include <QVariant>
 
 // ---------------------------------------------------------------------------
 // DriveModel
@@ -55,118 +58,105 @@ void DriveModel::setSlots(const QVector<SlotData> &list)
     endResetModel();
 }
 
-const SlotData *DriveModel::slotAt(int row) const
-{
-    if (row < 0 || row >= m_slots.size()) return nullptr;
-    return &m_slots.at(row);
-}
-
 // ---------------------------------------------------------------------------
 // AppController
 // ---------------------------------------------------------------------------
-AppController::AppController(QObject *parent) : QObject(parent)
+AppController::AppController(MainWindow *engine, QObject *parent)
+    : QObject(parent), m_engine(engine)
 {
-    m_statusText = QStringLiteral("19200 bps");
-    m_sioRunning = true;    // mock: emulation running (speed shown, stop icon)
-    seedMockData();
+    if (m_engine) {
+        connect(m_engine, &MainWindow::qmlChanged, this, &AppController::refresh);
+        connect(m_engine, &MainWindow::logMessage, this, &AppController::onLogMessage);
+    }
+    refresh();
 }
 
-bool AppController::canAddSlot() const
+void AppController::refresh()
 {
-    return m_slots.size() < 15;   // MAX_DISKS
-}
+    if (!m_engine) return;
 
-void AppController::appendLog(const QString &html)
-{
-    m_logHtml += html + QStringLiteral("<br>");
-    emit logChanged();
-}
+    // drive slots
+    QVector<SlotData> rows;
+    const QVariantList list = m_engine->qmlDriveList();
+    for (const QVariant &v : list) {
+        const QVariantMap m = v.toMap();
+        SlotData s;
+        s.hwIndex        = m.value("hwIndex").toInt();
+        s.mounted        = m.value("mounted").toBool();
+        s.isFolder       = m.value("isFolder").toBool();
+        s.fileName       = m.value("fileName").toString();
+        s.typeText       = m.value("typeText").toString();
+        s.modified       = m.value("modified").toBool();
+        s.writeProtected = m.value("writeProtected").toBool();
+        s.autoCommit     = m.value("autoCommit").toBool();
+        s.editOpen       = m.value("editOpen").toBool();
+        rows.append(s);
+    }
+    m_model.setSlots(rows);
 
-// Spike-only: reproduce the reference screenshot so the layout can be judged
-// against the real app before the SioWorker wiring lands.
-void AppController::seedMockData()
-{
-    SlotData s1;
-    s1.hwIndex = 0; s1.mounted = true; s1.isFolder = true;
-    s1.fileName = QStringLiteral("Atari"); s1.typeText = QStringLiteral("Folder");
-
-    SlotData s2;
-    s2.hwIndex = 1; s2.mounted = true; s2.isFolder = false;
-    s2.fileName = QStringLiteral("Pac Man (v1).atr");
-    s2.typeText = QStringLiteral("Dysk 512 s. SD (64k)");
-
-    SlotData s3;
-    s3.hwIndex = 2;   // empty
-
-    m_slots = { s1, s2, s3 };
-    m_model.setSlots(m_slots);
-
-    m_loaderKind = 1;   // xex
-    m_loaderFileName = QStringLiteral("blue_max.xex");
-    m_loaderTypeText = QStringLiteral("Plik exe (24k)");
-
-    m_logHtml =
-        QStringLiteral("<span style='color:#1a56b0'>Program załadowany do Atari.</span><br>") +
-        QStringLiteral("[Dysk 1] Zamontowane 'Atari' jako 'Folder'.<br>") +
-        QStringLiteral("[Dysk 2] Zamontowane 'Pac Man (v1).atr' jako 'Dysk 512 s. SD (64k)'.<br>");
-
-    emit loaderChanged();
-    emit statusChanged();
-    emit logChanged();
+    bool add = m_engine->qmlCanAddSlot();
+    if (add != m_canAddSlot) { m_canAddSlot = add; }
     emit drivesChanged();
-}
 
-// -- drive-slot actions (spike stubs) ---------------------------------------
-void AppController::mountDisk(int hwIndex)   { appendLog(QStringLiteral("[Dysk %1] Montowanie obrazu…").arg(hwIndex + 1)); }
-void AppController::mountFolder(int hwIndex) { appendLog(QStringLiteral("[Dysk %1] Montowanie katalogu…").arg(hwIndex + 1)); }
-void AppController::eject(int hwIndex)       { appendLog(QStringLiteral("[Dysk %1] Wysunięto.").arg(hwIndex + 1)); }
-void AppController::removeSlot(int hwIndex)  { appendLog(QStringLiteral("[Dysk %1] Usunięto slot.").arg(hwIndex + 1)); }
-void AppController::save(int hwIndex)        { appendLog(QStringLiteral("[Dysk %1] Zapis.").arg(hwIndex + 1)); }
-void AppController::toggleAutoCommit(int hwIndex) { appendLog(QStringLiteral("[Dysk %1] Auto-zapis przełączony.").arg(hwIndex + 1)); }
-void AppController::openEditor(int hwIndex)  { appendLog(QStringLiteral("[Dysk %1] Edytor dysku.").arg(hwIndex + 1)); }
-void AppController::toggleWriteProtect(int hwIndex) { appendLog(QStringLiteral("[Dysk %1] Ochrona zapisu.").arg(hwIndex + 1)); }
-void AppController::bootOptions()            { appendLog(QStringLiteral("Opcje bootowania.")); }
-
-void AppController::addSlot()
-{
-    if (!canAddSlot()) return;
-    SlotData s; s.hwIndex = m_slots.size();
-    m_slots.append(s);
-    m_model.setSlots(m_slots);
-    emit drivesChanged();
-}
-
-// -- loader actions (spike stubs) -------------------------------------------
-void AppController::loaderLoad()  { appendLog(QStringLiteral("Loader: wybierz plik exe/cas.")); }
-void AppController::loaderPlay()  { appendLog(QStringLiteral("Loader: odtwarzanie kasety.")); }
-void AppController::loaderRetry() { appendLog(QStringLiteral("Loader: ponowna próba.")); }
-void AppController::loaderEject()
-{
-    m_loaderKind = 0;
-    m_loaderFileName.clear();
-    m_loaderTypeText.clear();
-    m_loaderFill = 0.0;
+    // loader
+    const QVariantMap l = m_engine->qmlLoaderState();
+    m_loaderKind         = l.value("kind").toInt();
+    m_loaderFileName     = l.value("fileName").toString();
+    m_loaderTypeText     = l.value("typeText").toString();
+    m_loaderFill         = l.value("fill").toDouble();
+    m_loaderPlayEnabled  = l.value("playEnabled").toBool();
+    m_loaderRetryEnabled = l.value("retryEnabled").toBool();
+    m_loaderEjectEnabled = l.value("ejectEnabled").toBool();
     emit loaderChanged();
-    appendLog(QStringLiteral("Loader: wysunięto."));
-}
 
-// -- status bar (spike stubs) -----------------------------------------------
-void AppController::toggleSio()
-{
-    m_sioRunning = !m_sioRunning;
-    emit statusChanged();
-    appendLog(m_sioRunning ? QStringLiteral("Emulacja uruchomiona.")
-                           : QStringLiteral("Emulacja zatrzymana."));
-}
-
-void AppController::togglePrinter()
-{
-    m_printerOn = !m_printerOn;
+    // status bar
+    const QVariantMap st = m_engine->qmlStatus();
+    m_sioRunning = st.value("running").toBool();
+    m_statusText = st.value("speed").toString();
+    m_printerOn  = st.value("printerOn").toBool();
     emit statusChanged();
 }
 
-void AppController::clearLog()
+// Format one engine log line the same way MainWindow::uiMessage colours it.
+void AppController::onLogMessage(int type, const QString &msg)
 {
-    m_logHtml.clear();
+    QString text = msg;
+    if (text.startsWith('"')) text.remove(0, 1);
+    if (text.endsWith('"'))   text.chop(1);
+    text = text.toHtmlEscaped();
+
+    QString colour;
+    switch (type) {
+    case 'd': colour = "green"; break;
+    case 'u': colour = "gray";  break;
+    case 'n': colour = "black"; break;
+    case 'i': colour = "blue";  break;
+    case 'w': colour = "brown"; break;
+    case 'e': colour = "red";   break;
+    default:  colour = "purple"; break;
+    }
+    m_logHtml += QStringLiteral("<span style='color:%1'>%2</span><br>").arg(colour, text);
     emit logChanged();
 }
+
+// -- actions ----------------------------------------------------------------
+void AppController::mountDisk(int hwIndex)         { if (m_engine) m_engine->qmlMountDisk(hwIndex); }
+void AppController::mountFolder(int hwIndex)       { if (m_engine) m_engine->qmlMountFolder(hwIndex); }
+void AppController::eject(int hwIndex)             { if (m_engine) m_engine->qmlEjectPressed(hwIndex); }
+void AppController::removeSlot(int hwIndex)        { if (m_engine) m_engine->qmlEjectPressed(hwIndex); }
+void AppController::save(int hwIndex)              { if (m_engine) m_engine->qmlSave(hwIndex); }
+void AppController::toggleAutoCommit(int hwIndex)  { if (m_engine) m_engine->qmlToggleAutoCommit(hwIndex); }
+void AppController::openEditor(int hwIndex)        { if (m_engine) m_engine->qmlEdit(hwIndex); }
+void AppController::toggleWriteProtect(int hwIndex){ if (m_engine) m_engine->qmlToggleWriteProtect(hwIndex); }
+void AppController::bootOptions()                  { if (m_engine) m_engine->qmlBootOptions(); }
+void AppController::addSlot()                      { if (m_engine) m_engine->qmlAddSlot(); }
+void AppController::swapSlots(int fromHw, int toHw){ if (m_engine) m_engine->qmlSwapSlots(fromHw, toHw); }
+
+void AppController::loaderLoad()  { if (m_engine) m_engine->qmlLoaderLoad(); }
+void AppController::loaderPlay()  { if (m_engine) m_engine->qmlLoaderPlay(); }
+void AppController::loaderRetry() { if (m_engine) m_engine->qmlLoaderRetry(); }
+void AppController::loaderEject() { if (m_engine) m_engine->qmlLoaderEject(); }
+
+void AppController::toggleSio()     { if (m_engine) m_engine->qmlToggleSio(); }
+void AppController::togglePrinter() { if (m_engine) m_engine->qmlTogglePrinter(); }
+void AppController::clearLog()      { if (m_engine) { m_engine->qmlClearLog(); } m_logHtml.clear(); emit logChanged(); }

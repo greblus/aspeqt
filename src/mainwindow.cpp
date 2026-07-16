@@ -4,6 +4,7 @@
 #include "diskimage.h"
 #include "diskimagepro.h"
 #include "folderimage.h"
+#include <QVariant>
 #include "pclink.h"
 #include "miscdevices.h"
 #include "aspeqtsettings.h"
@@ -1118,6 +1119,9 @@ void MainWindow::androidRebuildSlots()
         pos++;
     }
     androidUpdateAddRow();
+#ifdef ASPEQT_QML
+    emit qmlChanged();
+#endif
 }
 
 // Hide the "+" row once every hardware slot index is in use.
@@ -1144,6 +1148,9 @@ void MainWindow::androidAddSlot()
     deviceStatusChanged(i + 0x31);           // paint it as empty
     androidUpdateAddRow();
     androidRelayout();
+#ifdef ASPEQT_QML
+    emit qmlChanged();
+#endif
 }
 
 // 2nd eject on an empty slot: drop this specific slot, leaving a number gap so
@@ -1166,6 +1173,9 @@ void MainWindow::androidRemoveSlot(int i)
     aspeqtSettings->setNumberOfDisks(m_numDisks);
     androidUpdateAddRow();
     androidRelayout();
+#ifdef ASPEQT_QML
+    emit qmlChanged();
+#endif
 }
 
 // Eject button: eject a mounted image; on an already-empty slot the button
@@ -1279,6 +1289,10 @@ void MainWindow::androidBuildLoaderSlot()
 // restores the plain background (so the fill disappears once loading is done).
 void MainWindow::loaderSetFill(double frac)
 {
+    m_loaderFill = frac;
+#ifdef ASPEQT_QML
+    emit qmlChanged();
+#endif
     if (!m_loaderFrame) return;
     if (frac <= 0.0 || frac >= 1.0) {
         // Idle: blue accent when a file is loaded, plain otherwise.
@@ -1306,6 +1320,9 @@ void MainWindow::loaderUpdateButtons()
     m_loaderPlayBtn->setEnabled(casReady);
     m_loaderRetryBtn->setEnabled(!m_loaderFile.isEmpty());
     m_loaderEjectBtn->setEnabled(m_loaderKind != 0);
+#ifdef ASPEQT_QML
+    emit qmlChanged();
+#endif
 }
 
 // Load button: pick an XEX/CAS file and dispatch by type.
@@ -1880,6 +1897,10 @@ void MainWindow::sioStarted()
     onOffLabel->setPixmap(QIcon(":/icons/tango-icons/actions/media-playback-stop.svg").pixmap(sbIcon, sbIcon, QIcon::Normal, QIcon::On));
     onOffLabel->setToolTip(ui->actionStartEmulation->toolTip());
     onOffLabel->setStatusTip(ui->actionStartEmulation->statusTip());
+    m_emulationRunning = true;
+#ifdef ASPEQT_QML
+    emit qmlChanged();
+#endif
 }
 
 void MainWindow::sioFinished()
@@ -1893,13 +1914,20 @@ void MainWindow::sioFinished()
     onOffLabel->setStatusTip(ui->actionStartEmulation->statusTip());
     speedLabel->hide();
     speedLabel->clear();
+    m_emulationRunning = false;
     qWarning() << "!i" << tr("Emulation stopped.");
+#ifdef ASPEQT_QML
+    emit qmlChanged();
+#endif
 }
 
 void MainWindow::sioStatusChanged(QString status)
 {
     speedLabel->setText(status);
     speedLabel->show();
+#ifdef ASPEQT_QML
+    emit qmlChanged();
+#endif
 }
 
 void MainWindow::deviceStatusChanged(int deviceNo)
@@ -2040,6 +2068,9 @@ void MainWindow::deviceStatusChanged(int deviceNo)
 
         }
     }
+#ifdef ASPEQT_QML
+    emit qmlChanged();
+#endif
 }
 
 void MainWindow::uiMessage(int t, QString message)
@@ -3438,3 +3469,119 @@ void MainWindow::on_actionBootOption_triggered()
     connect(this, SIGNAL(takeFolderPath(QString)), &bod, SLOT(folderPath(QString)));
     bod.exec();
 }
+
+#ifdef ASPEQT_QML
+// ===========================================================================
+// QML bridge (branch `qml`): expose the engine's state as QVariant and route
+// QML button presses to the existing widget-era slots. See qmlbridge.{h,cpp}.
+// ===========================================================================
+QVariantList MainWindow::qmlDriveList()
+{
+    QVariantList out;
+    for (int i = 0; i < MAX_DISKS; ++i) {
+        if (!diskWidgets[i].frame) continue;   // only slots that are present
+        QVariantMap m;
+        m["hwIndex"] = i;
+        SimpleDiskImage *img = qobject_cast<SimpleDiskImage *>(sio->getDevice(0x31 + i));
+        if (img) {
+            const QString orig = img->originalFileName();
+            int slash = orig.lastIndexOf('/');
+            QString disp = slash >= 0 ? orig.mid(slash + 1) : orig;
+#ifdef Q_OS_ANDROID
+            if (orig.startsWith("content:")) disp = friendlyName(orig);
+#endif
+            m["mounted"]        = true;
+            m["isFolder"]       = (qobject_cast<FolderImage *>(img) != nullptr);
+            m["fileName"]       = disp;
+            m["typeText"]       = img->description();
+            m["modified"]       = img->isModified();
+            m["editOpen"]       = img->editDialog() != nullptr;
+            m["autoCommit"]     = diskWidgets[i].autoSaveAction && diskWidgets[i].autoSaveAction->isChecked();
+            m["writeProtected"] = diskWidgets[i].writeProtectAction && diskWidgets[i].writeProtectAction->isChecked();
+        } else {
+            m["mounted"]        = false;
+            m["isFolder"]       = false;
+            m["fileName"]       = QString();
+            m["typeText"]       = QString();
+            m["modified"]       = false;
+            m["editOpen"]       = false;
+            m["autoCommit"]     = false;
+            m["writeProtected"] = false;
+        }
+        out << m;
+    }
+    return out;
+}
+
+QVariantMap MainWindow::qmlLoaderState()
+{
+    QVariantMap m;
+    m["kind"]        = m_loaderKind;
+    m["fileName"]    = m_loaderFileLbl ? m_loaderFileLbl->text() : QString();
+    m["typeText"]    = m_loaderTypeLbl ? m_loaderTypeLbl->text() : QString();
+    m["fill"]        = m_loaderFill;
+    bool casReady    = (m_loaderKind == 2) && m_casWorker && !m_casWorker->isRunning();
+    m["playEnabled"]  = casReady;
+    m["retryEnabled"] = !m_loaderFile.isEmpty();
+    m["ejectEnabled"] = m_loaderKind != 0;
+    return m;
+}
+
+QVariantMap MainWindow::qmlStatus()
+{
+    QVariantMap m;
+    m["running"]   = m_emulationRunning;
+    m["speed"]     = speedLabel ? speedLabel->text() : QString();
+    m["printerOn"] = ui->actionPrinterEmulation->isChecked();
+    return m;
+}
+
+bool MainWindow::qmlCanAddSlot()
+{
+    for (int i = 0; i < MAX_DISKS; ++i)
+        if (!diskWidgets[i].frame) return true;
+    return false;
+}
+
+void MainWindow::qmlMountDisk(int i)          { mountDiskImage(i); }
+void MainWindow::qmlMountFolder(int i)        { mountFolderImage(i); }
+void MainWindow::qmlEjectPressed(int i)       { androidEjectPressed(i); }
+void MainWindow::qmlSave(int i)               { saveDisk(i); }
+void MainWindow::qmlToggleAutoCommit(int i)   { autoSaveDisk(i); }
+void MainWindow::qmlEdit(int i)               { openEditor(i); }
+void MainWindow::qmlToggleWriteProtect(int i) { toggleWriteProtection(i); }
+void MainWindow::qmlAddSlot()                 { androidAddSlot(); }
+void MainWindow::qmlBootOptions()             { on_actionBootOption_triggered(); }
+
+// Swap two drives (drag-reorder). Same effect as the widget UI's drop handler:
+// device numbers stay put, the mounted images/links exchange places.
+void MainWindow::qmlSwapSlots(int source, int slot)
+{
+    if (source == slot || source < 0 || slot < 0) return;
+    if (!diskWidgets[source].frame || !diskWidgets[slot].frame) return;
+
+    sio->swapDevices(slot + 0x31, source + 0x31);
+    aspeqtSettings->swapImages(slot, source);
+
+    PCLINK *pclink = reinterpret_cast<PCLINK *>(sio->getDevice(0x6F));
+    if (pclink && (pclink->hasLink(slot + 1) || pclink->hasLink(source + 1))) {
+        sio->uninstallDevice(0x6F);
+        pclink->swapLinks(slot + 1, source + 1);
+        sio->installDevice(0x6F, pclink);
+    }
+    qDebug() << "!n" << tr("Swapped disk %1 with disk %2.").arg(slot + 1).arg(source + 1);
+    emit qmlChanged();
+}
+void MainWindow::qmlLoaderLoad()              { loaderLoad(); }
+void MainWindow::qmlLoaderPlay()              { loaderPlayCas(); }
+void MainWindow::qmlLoaderRetry()             { loaderRetry(); }
+void MainWindow::qmlLoaderEject()             { loaderEject(); }
+void MainWindow::qmlToggleSio()               { ui->actionStartEmulation->trigger(); }
+void MainWindow::qmlTogglePrinter()           { ui->actionPrinterEmulation->trigger(); }
+void MainWindow::qmlClearLog()
+{
+    ui->textEdit->clear();
+    emit sendLogText(QString());
+    emit qmlChanged();
+}
+#endif // ASPEQT_QML

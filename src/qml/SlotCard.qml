@@ -1,10 +1,12 @@
 import QtQuick
+import QtQuick.Controls
 import QtQuick.Layouts
 import "."
 
 // One disk drive slot. Reproduces MainWindow::layoutSlotFrame:
 //   [ number badge | (icon row) / (name + type row) ]
 // Six icons: mount-disk, mount-folder, save, auto-commit, edit  ...  eject.
+// The number badge is a drag handle: drag it onto another slot to swap drives.
 Rectangle {
     id: card
 
@@ -21,6 +23,10 @@ Rectangle {
     property bool editOpen: false
     property bool isBootSlot: false
 
+    property bool dropHover: false
+
+    signal requestSwap(int fromHw, int toHw)
+
     // derived affordances (see MainWindow::deviceStatusChanged)
     readonly property bool saveIsDos:   isFolder
     readonly property bool saveEnabled: mounted && (isFolder || (modified && !autoCommit))
@@ -28,9 +34,28 @@ Rectangle {
 
     radius: Theme.cardRadius
     color: mounted ? Theme.cardActiveBg : Theme.cardEmptyBg
-    border.width: 1
-    border.color: mounted ? Theme.cardActiveBorder : Theme.cardEmptyBorder
+    border.width: dropHover ? 2 : 1
+    border.color: dropHover ? Theme.accent
+                            : (mounted ? Theme.cardActiveBorder : Theme.cardEmptyBorder)
     implicitHeight: row.implicitHeight + 2 * 6
+
+    // Accept another slot's badge dropped onto this card -> swap the two drives.
+    DropArea {
+        anchors.fill: parent
+        keys: ["aspeqt-slot"]
+        // Ignore the slot being dragged (its own DropArea) so the source card
+        // doesn't highlight itself.
+        onEntered: (drag) => {
+            if (drag.source && drag.source.fromHw !== card.hwIndex)
+                card.dropHover = true
+        }
+        onExited:  card.dropHover = false
+        onDropped: (drag) => {
+            card.dropHover = false
+            if (drag.source && drag.source.fromHw !== card.hwIndex)
+                card.requestSwap(drag.source.fromHw, card.hwIndex)
+        }
+    }
 
     RowLayout {
         id: row
@@ -42,8 +67,37 @@ Rectangle {
         spacing: Theme.gap
 
         Badge {
+            id: badge
             text: card.slotNumber
             Layout.alignment: Qt.AlignVCenter
+
+            // Drag handle: press the badge and drag onto another slot.
+            MouseArea {
+                id: dragHandle
+                anchors.fill: parent
+                cursorShape: Qt.OpenHandCursor
+                // Keep the gesture so the scrollable slot list can't steal it.
+                preventStealing: true
+                function moveGhost(m) {
+                    // ghost lives in the window overlay -> map to overlay coords
+                    var p = dragHandle.mapToItem(Overlay.overlay, m.x, m.y)
+                    ghost.x = p.x - ghost.width / 2
+                    ghost.y = p.y - ghost.height / 2
+                }
+                onPressed: (m) => {
+                    moveGhost(m)
+                    ghost.visible = true
+                    ghost.Drag.active = true
+                }
+                onPositionChanged: (m) => { if (ghost.Drag.active) moveGhost(m) }
+                onReleased: {
+                    if (ghost.Drag.active) {
+                        ghost.Drag.drop()
+                        ghost.Drag.active = false
+                        ghost.visible = false
+                    }
+                }
+            }
         }
 
         ColumnLayout {
@@ -146,6 +200,32 @@ Rectangle {
                 }
                 Item { width: 6 }
             }
+        }
+    }
+
+    // Floating drag proxy (the number that follows the finger during a drag).
+    // Parented to the window overlay so it renders above every slot card.
+    Rectangle {
+        id: ghost
+        parent: Overlay.overlay
+        property int fromHw: card.hwIndex
+        width: Theme.badgeSize
+        height: Theme.badgeSize
+        radius: 8
+        color: Theme.accent
+        opacity: 0.9
+        visible: false
+        z: 1000
+        Drag.active: false
+        Drag.keys: ["aspeqt-slot"]
+        Drag.hotSpot.x: width / 2
+        Drag.hotSpot.y: height / 2
+        Text {
+            anchors.centerIn: parent
+            text: card.slotNumber
+            color: "white"
+            font.bold: true
+            font.pixelSize: 14
         }
     }
 }

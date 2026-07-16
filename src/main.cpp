@@ -54,10 +54,16 @@ int main(int argc, char *argv[])
     // colour scheme so it doesn't render as a black void under the system dark mode.
     a.styleHints()->setColorScheme(Qt::ColorScheme::Light);
 #ifdef ASPEQT_QML
-    // QML UI spike (branch `qml`): reproduce the main-window layout in Qt Quick.
+    // QML UI (branch `qml`): MainWindow runs headless as the emulation engine
+    // (never shown); the Qt Quick front-end drives it via AppController.
     qputenv("QT_QUICK_CONTROLS_STYLE", "Material");
+    MainWindow engineWindow;              // headless engine
+    // Keep the widget window off the (single) Android surface so the Qt Quick
+    // window is the visible one; the engine still runs (SIO, mounting, log).
+    engineWindow.setAttribute(Qt::WA_DontShowOnScreen, true);
+    engineWindow.hide();
     QQmlApplicationEngine engine;
-    AppController controller;
+    AppController controller(&engineWindow);
     engine.rootContext()->setContextProperty("app", &controller);
     engine.load(QUrl(QStringLiteral("qrc:/qml/Main.qml")));
     if (engine.rootObjects().isEmpty())

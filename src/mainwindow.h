@@ -83,6 +83,7 @@ private:
     bool shownFirstTime;
     DiskWidgets diskWidgets[MAX_DISKS];    //
     int m_numDisks;                        // active number of drive slots
+    bool m_emulationRunning = false;       // SIO worker running (mirrored to QML)
     QLabel *speedLabel, *onOffLabel, *prtOnOffLabel, *netLabel, *clearMessagesLabel;  //
     TextPrinterWindow *textPrinterWindow;
     DocDisplayWindow *docDisplayWindow;    //
@@ -163,6 +164,7 @@ private:
     QWidget      *m_loaderSpacer2 = nullptr;   // the 5-icon disk slots
     QString       m_loaderFile;             // current local (temp) file path
     int           m_loaderKind = 0;         // 0 none, 1 xex, 2 cas
+    double        m_loaderFill = 0.0;       // last progress-fill fraction (for QML)
     CassetteWorker *m_casWorker = nullptr;
     QTimer       *m_casTimer = nullptr;
     int           m_casTotal = 0, m_casRemaining = 0;
@@ -230,6 +232,39 @@ signals:
 
 public:
     void doLogMessage(int type, const QString &msg);
+
+#ifdef ASPEQT_QML
+    // --- bridge for the QML UI (branch `qml`) -------------------------------
+    // MainWindow runs headless (never shown) as the emulation engine; the QML
+    // AppController drives it through these wrappers and mirrors its state via
+    // the qml*() readers, refreshing whenever qmlChanged() fires.
+public:
+    QVariantList qmlDriveList();     // one map per present drive slot
+    QVariantMap  qmlLoaderState();   // loader (XEX/CAS) slot
+    QVariantMap  qmlStatus();        // { running, speed, printerOn }
+    bool         qmlCanAddSlot();
+
+    void qmlMountDisk(int i);
+    void qmlMountFolder(int i);
+    void qmlEjectPressed(int i);
+    void qmlSave(int i);
+    void qmlToggleAutoCommit(int i);
+    void qmlEdit(int i);
+    void qmlToggleWriteProtect(int i);
+    void qmlAddSlot();
+    void qmlSwapSlots(int source, int slot);   // drag-reorder: swap two drives
+    void qmlBootOptions();
+    void qmlLoaderLoad();
+    void qmlLoaderPlay();
+    void qmlLoaderRetry();
+    void qmlLoaderEject();
+    void qmlToggleSio();
+    void qmlTogglePrinter();
+    void qmlClearLog();
+signals:
+    void qmlChanged();
+private:
+#endif
 
 private slots:
     void on_actionPlaybackCassette_triggered();

@@ -62,6 +62,7 @@ ApplicationWindow {
             clip: true
             contentWidth: availableWidth      // clamp: never scroll horizontally
             ScrollBar.horizontal.policy: ScrollBar.AlwaysOff
+            ScrollBar.vertical.policy: ScrollBar.AlwaysOff   // finger-scroll only
 
             ColumnLayout {
                 id: slotCol
@@ -87,6 +88,7 @@ ApplicationWindow {
                         autoCommit: model.autoCommit
                         editOpen: model.editOpen
                         isBootSlot: model.isBootSlot
+                        onRequestSwap: (fromHw, toHw) => app.swapSlots(fromHw, toHw)
                     }
                 }
 

@@ -49,8 +49,11 @@ Item {
         enabled: root.enabledState
         hoverEnabled: true
         onClicked: root.clicked()
+        // Touch has no hover: reveal the hint on press-and-hold.
+        onPressAndHold: if (root.tip.length > 0) ToolTip.show(root.tip, 2500)
     }
 
+    // Desktop/mouse hover tooltip.
     ToolTip.visible: tip.length > 0 && ma.containsMouse
     ToolTip.text: tip
 }
