@@ -3642,9 +3642,10 @@ void MainWindow::qmlApplyOptions(const QVariantMap &o)
     aspeqtSettings->setUseHighSpeedExeLoader(o.value("hsExeLoader").toBool());
     aspeqtSettings->setUseCustomCasBaud(o.value("useCustomCasBaud").toBool());
     aspeqtSettings->setCustomCasBaud(o.value("customCasBaud").toInt());
-    aspeqtSettings->setsaveWindowsPos(o.value("saveWinPos").toBool());
+    // Always on now (their checkboxes were removed from the QML options).
+    aspeqtSettings->setsaveWindowsPos(true);
     aspeqtSettings->setfilterUnderscore(o.value("filterUscore").toBool());
-    aspeqtSettings->setUseLargeFont(o.value("largeFont").toBool());
+    aspeqtSettings->setUseLargeFont(true);
 #ifdef Q_OS_ANDROID
     int serial_int = aspeqtSettings->serialPortInterface();
     QJniObject::callStaticMethod<void>("net/greblus/SerialActivity", "changeDevice", "(I)V", serial_int);

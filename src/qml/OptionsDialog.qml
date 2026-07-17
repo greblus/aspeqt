@@ -5,11 +5,15 @@ import QtQuick.Layouts
 import "."
 
 // Options screen — faithful to the Android QtWidgets OptionsDialog layout, minus
-// the obsolete "custom drive numbers" (slot order) field. Values load from and
-// save to the engine via app.loadOptions()/applyOptions().
+// the obsolete "custom drive numbers" (slot order), "larger font" and "save
+// window position" fields (the latter two are now always on). Values load from
+// and save to the engine via app.loadOptions()/applyOptions().
 Popup {
     id: dlg
     parent: Overlay.overlay
+    // Full-screen; the breathing room is internal padding on the body content.
+    x: 0
+    y: 0
     width: parent ? parent.width : 420
     height: parent ? parent.height : 900
     modal: true
@@ -29,8 +33,6 @@ Popup {
         useCustomCas.checked = o.useCustomCasBaud
         customCasBaud.value = o.customCasBaud
         filterUscore.checked = o.filterUscore
-        saveWinPos.checked = o.saveWinPos
-        largeFont.checked = o.largeFont
         langBox.model = app.languages()
         langBox.currentIndex = Math.max(0, langBox.indexOfValue(o.language))
     }
@@ -48,12 +50,12 @@ Popup {
             "useCustomCasBaud": useCustomCas.checked,
             "customCasBaud": customCasBaud.value,
             "filterUscore": filterUscore.checked,
-            "saveWinPos": saveWinPos.checked,
-            "largeFont": largeFont.checked,
             "language": langBox.currentValue
         })
         dlg.close()
     }
+
+    readonly property bool isBT: ifaceGroup.value === 1
 
     // A radio group that remembers an integer value per button.
     component IntGroup: QtObject {
@@ -65,30 +67,57 @@ Popup {
                 if (b[i].val === v) { b[i].checked = true; value = v; return }
         }
     }
-    // section title
+    // main group title (blue, large)
     component SectionTitle: Label {
-        Layout.topMargin: 6
-        font.pixelSize: 15
+        Layout.topMargin: 10
+        font.pixelSize: 21
         font.bold: true
         color: Theme.primary
+    }
+    // sub-category label (bold)
+    component FieldLabel: Label {
+        Layout.topMargin: 4
+        font.bold: true
+    }
+    // Compact -/value/+ stepper (the Material SpinBox is far too tall/wide here).
+    component Spin: RowLayout {
+        id: spin
+        property int from: 0
+        property int to: 100
+        property int step: 1
+        property int value: 0
+        spacing: 2
+        Button {
+            text: "−"
+            flat: true
+            implicitWidth: 38; implicitHeight: 38
+            padding: 0
+            enabled: spin.value > spin.from
+            onClicked: spin.value = Math.max(spin.from, spin.value - spin.step)
+        }
+        Label {
+            text: spin.value
+            horizontalAlignment: Text.AlignHCenter
+            Layout.preferredWidth: 52
+            font.pixelSize: 16
+        }
+        Button {
+            text: "+"
+            flat: true
+            implicitWidth: 38; implicitHeight: 38
+            padding: 0
+            enabled: spin.value < spin.to
+            onClicked: spin.value = Math.min(spin.to, spin.value + spin.step)
+        }
     }
 
     IntGroup { id: ifaceGroup }
     IntGroup { id: hsGroup }
     IntGroup { id: baudGroup }
 
-    Connections {
-        target: ifaceGroup.group
-        function onClicked(b) { ifaceGroup.value = b.val }
-    }
-    Connections {
-        target: hsGroup.group
-        function onClicked(b) { hsGroup.value = b.val }
-    }
-    Connections {
-        target: baudGroup.group
-        function onClicked(b) { baudGroup.value = b.val }
-    }
+    Connections { target: ifaceGroup.group; function onClicked(b) { ifaceGroup.value = b.val } }
+    Connections { target: hsGroup.group;    function onClicked(b) { hsGroup.value = b.val } }
+    Connections { target: baudGroup.group;  function onClicked(b) { baudGroup.value = b.val } }
 
     background: Rectangle { color: Material.background }
 
@@ -128,19 +157,20 @@ Popup {
             ScrollBar.horizontal.policy: ScrollBar.AlwaysOff
 
             ColumnLayout {
-                width: parent.width
-                spacing: 8
+                x: 14
+                width: parent.width - 28      // internal horizontal padding
+                spacing: 6
 
                 // ---- SIO port emulation -----------------------------------
                 SectionTitle { text: qsTr("SIO port emulation") }
 
-                Label { text: qsTr("Serial interface:") }
+                FieldLabel { text: qsTr("Serial interface:") }
                 RowLayout {
                     RadioButton { property int val: 0; text: "SIO2PC"; ButtonGroup.group: ifaceGroup.group }
                     RadioButton { property int val: 1; text: "SIO2BT"; ButtonGroup.group: ifaceGroup.group }
                 }
 
-                Label { text: qsTr("Handshake method:") }
+                FieldLabel { text: qsTr("Handshake method:") }
                 Flow {
                     Layout.fillWidth: true
                     spacing: 4
@@ -150,33 +180,39 @@ Popup {
                     RadioButton { property int val: 3; text: "SOFT"; ButtonGroup.group: hsGroup.group }
                 }
 
-                Label { text: qsTr("High speed mode baud rate:") }
+                FieldLabel {
+                    text: qsTr("Transmission speed [bps]:")
+                    enabled: !useDivisors.checked
+                }
                 ColumnLayout {
                     spacing: 0
+                    enabled: !useDivisors.checked
                     RadioButton { property int val: 0; text: "19200 (1x)"; ButtonGroup.group: baudGroup.group }
                     RadioButton { property int val: 1; text: "38400 (2x)"; ButtonGroup.group: baudGroup.group }
                     RadioButton { property int val: 2; text: "57600 (3x)"; ButtonGroup.group: baudGroup.group }
                 }
 
-                Label { text: qsTr("Bluetooth name:") }
+                FieldLabel { text: qsTr("Bluetooth name:"); enabled: dlg.isBT }
                 TextField {
                     id: btName
                     Layout.fillWidth: true
                     placeholderText: "SIO2BT"
+                    enabled: dlg.isBT
                 }
 
                 RowLayout {
                     Layout.fillWidth: true
-                    Label { text: qsTr("Write ACK delay [ms]"); Layout.fillWidth: true }
-                    SpinBox { id: ackDelay; from: 0; to: 40 }
+                    enabled: dlg.isBT
+                    FieldLabel { text: qsTr("Write ACK delay [ms]"); Layout.fillWidth: true }
+                    Spin { id: ackDelay; from: 0; to: 40 }
                 }
 
                 CheckBox { id: useDivisors; text: qsTr("Use non-standard speeds") }
                 RowLayout {
                     Layout.fillWidth: true
                     enabled: useDivisors.checked
-                    Label { text: qsTr("High speed mode POKEY divisor:"); Layout.fillWidth: true }
-                    SpinBox { id: pokeyDivisor; from: 0; to: 40 }
+                    Label { text: qsTr("POKEY divisor:"); Layout.fillWidth: true }
+                    Spin { id: pokeyDivisor; from: 0; to: 40 }
                 }
 
                 MenuSeparator { Layout.fillWidth: true }
@@ -188,8 +224,8 @@ Popup {
                 RowLayout {
                     Layout.fillWidth: true
                     enabled: useCustomCas.checked
-                    Label { text: qsTr("Cassette baud rate:"); Layout.fillWidth: true }
-                    SpinBox { id: customCasBaud; from: 425; to: 875 }
+                    FieldLabel { text: qsTr("Cassette baud rate:"); Layout.fillWidth: true }
+                    Spin { id: customCasBaud; from: 425; to: 875 }
                 }
 
                 MenuSeparator { Layout.fillWidth: true }
@@ -208,15 +244,13 @@ Popup {
 
                 // ---- User interface ---------------------------------------
                 SectionTitle { text: qsTr("User interface") }
-                Label { text: qsTr("Language:") }
+                FieldLabel { text: qsTr("Language:") }
                 ComboBox {
                     id: langBox
                     Layout.fillWidth: true
                     textRole: "name"
                     valueRole: "code"
                 }
-                CheckBox { id: saveWinPos; text: qsTr("Save window positions and sizes") }
-                CheckBox { id: largeFont;  text: qsTr("Use larger font in drive slot descriptions") }
 
                 Item { Layout.preferredHeight: 8 }
             }
@@ -230,16 +264,8 @@ Popup {
             RowLayout {
                 anchors.fill: parent
                 Item { Layout.fillWidth: true }
-                Button {
-                    text: qsTr("Cancel")
-                    flat: true
-                    onClicked: dlg.close()
-                }
-                Button {
-                    text: qsTr("Save")
-                    highlighted: true
-                    onClicked: dlg.save()
-                }
+                Button { text: qsTr("Cancel"); flat: true; onClicked: dlg.close() }
+                Button { text: qsTr("Save"); highlighted: true; onClicked: dlg.save() }
             }
         }
     }

@@ -1,4 +1,5 @@
 import QtQuick
+import QtQuick.Window
 import QtQuick.Controls
 import QtQuick.Controls.Material
 import QtQuick.Layouts
@@ -7,9 +8,14 @@ import "."
 ApplicationWindow {
     id: win
     visible: true
-    width: 420
-    height: 900
+    // Desktop default only; Android forces fullscreen. Content is capped +
+    // centred below so it stays a comfortable column on wide screens/tablets.
+    width: Math.min(Screen.width, 480)
+    height: Math.min(Screen.height, 900)
     title: "AspeQt"
+
+    // Max width of the content column (phones use full width; tablets centre it).
+    readonly property int contentMaxWidth: 720
 
     Material.theme: Material.Light
     Material.primary: Theme.primary
@@ -100,9 +106,14 @@ ApplicationWindow {
     }
 
     // ---- body --------------------------------------------------------------
-    ColumnLayout {
+    Item {
         anchors.fill: parent
-        spacing: 0
+
+        ColumnLayout {
+            anchors.horizontalCenter: parent.horizontalCenter
+            width: Math.min(parent.width, win.contentMaxWidth)
+            height: parent.height
+            spacing: 0
 
         // scrollable slot column: loader (pinned) + disk slots + add row
         ScrollView {
@@ -250,6 +261,7 @@ ApplicationWindow {
                     onClicked: app.clearLog()
                 }
             }
+        }
         }
     }
 
