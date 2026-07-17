@@ -12,6 +12,11 @@ class TextPrinterWindow : public QMainWindow {
 public:
     TextPrinterWindow(QWidget *parent = 0);
     ~TextPrinterWindow();
+    // QML bridge accessors
+    QString qmlText() const;        // ASCII (inverse-video stripped)
+    QString qmlTextAtascii() const; // raw ATASCII (for the Atari font view)
+    void    qmlClear();
+    void    qmlSave();
 
 protected:
     void changeEvent(QEvent *e);

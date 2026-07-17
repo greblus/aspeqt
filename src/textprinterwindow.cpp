@@ -68,6 +68,26 @@ TextPrinterWindow::~TextPrinterWindow()
     delete ui;
 }
 
+QString TextPrinterWindow::qmlText() const
+{
+    return ui->printerTextEditASCII->toPlainText();
+}
+
+QString TextPrinterWindow::qmlTextAtascii() const
+{
+    return ui->printerTextEdit->toPlainText();
+}
+
+void TextPrinterWindow::qmlClear()
+{
+    on_actionClear_triggered();
+}
+
+void TextPrinterWindow::qmlSave()
+{
+    on_actionSave_triggered();
+}
+
 void TextPrinterWindow::changeEvent(QEvent *e)
 {
     QMainWindow::changeEvent(e);

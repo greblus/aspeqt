@@ -2,5 +2,6 @@
     <qresource prefix="/images">
         <file>images/MainWindowBackGround.png</file>
         <file>tape.gif</file>
+        <file alias="AtariClassicChunky.ttf">fonts/AtariClassicChunky.ttf</file>
     </qresource>
 </RCC>
