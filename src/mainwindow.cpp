@@ -2396,6 +2396,40 @@ void MainWindow::mountFile(int no, const QString &fileName, bool /*prot*/)
 
     FileTypes::FileType type = FileTypes::getFileType(fileName);
 
+#ifdef ASPEQT_QML
+    // Executables (.xex/.com/.exe) and cassettes (.cas) don't belong in a disk
+    // slot: send them to the loader (cas/xex) slot. Detected by content type and
+    // by extension (a .com Atari binary has the same 0xFF 0xFF magic as .xex).
+    {
+        QString nm = fileName;
+#ifdef Q_OS_ANDROID
+        if (fileName.startsWith("content:")) nm = friendlyName(fileName);
+#endif
+        nm = nm.toLower();
+        bool isCas = type == FileTypes::Cas || type == FileTypes::CasGz
+                     || nm.endsWith(".cas") || nm.endsWith(".cas.gz");
+        bool isExe = type == FileTypes::Xex || type == FileTypes::XexGz
+                     || nm.endsWith(".xex") || nm.endsWith(".com") || nm.endsWith(".exe")
+                     || nm.endsWith(".xex.gz") || nm.endsWith(".com.gz") || nm.endsWith(".exe.gz");
+        if (isCas || isExe) {
+            QString path = fileName;
+#ifdef Q_OS_ANDROID
+            if (fileName.startsWith("content:")) path = androidLocalCopy(fileName);
+#endif
+            if (!path.isEmpty()) {
+                if (isCas) loaderLoadCas(path);
+                else       loaderLoadXex(path);
+#ifdef Q_OS_ANDROID
+                QJniObject::callStaticMethod<void>("net/greblus/SerialActivity", "showToast",
+                    "(Ljava/lang/String;)V",
+                    QJniObject::fromString(tr("Loaded into the cas/xex slot.")).object<jstring>());
+#endif
+            }
+            return;
+        }
+    }
+#endif
+
     if (type == FileTypes::Dir) {
         disk = new FolderImage(sio);
         isDir = true;
@@ -2681,6 +2715,9 @@ void MainWindow::mountDiskImage(int no)
     }
     // Mount the SAF document in place (opened via a file descriptor); no copy
     // into app storage. The content:// URI flows straight through open().
+#ifndef ASPEQT_QML
+    // Widget build: reject executables/cassettes here. In the QML build they are
+    // redirected to the loader slot by mountFile() instead.
     {
         FileTypes::FileType t = FileTypes::getFileType(fileName);
         if (t == FileTypes::Xex || t == FileTypes::XexGz) {
@@ -2694,6 +2731,7 @@ void MainWindow::mountDiskImage(int no)
             return;
         }
     }
+#endif
 #else
         QString fileName = QFileDialog::getOpenFileName(this,
                                                         tr("Open a disk image"),
@@ -3603,8 +3641,16 @@ void MainWindow::qmlQuit()             { close(); qApp->quit(); }
 QStringList MainWindow::qmlRecentFiles()
 {
     QStringList out;
-    for (int i = 0; i < 10; ++i)
-        out << aspeqtSettings->recentImageSetting(i).fileName;
+    for (int i = 0; i < 10; ++i) {
+        const QString fn = aspeqtSettings->recentImageSetting(i).fileName;
+        if (fn.isEmpty()) { out << QString(); continue; }
+        int slash = fn.lastIndexOf('/');
+        QString disp = slash >= 0 ? fn.mid(slash + 1) : fn;
+#ifdef Q_OS_ANDROID
+        if (fn.startsWith("content:")) disp = friendlyName(fn);
+#endif
+        out << disp;
+    }
     return out;
 }
 

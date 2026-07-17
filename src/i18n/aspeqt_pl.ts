@@ -1647,67 +1647,93 @@ p, li { white-space: pre-wrap; }
     </message>
 </context>
 <context>
+    <name>LogWindow</name>
+    <message>
+        <location filename="../qml/LogWindow.qml" line="22" />
+        <source>ALL</source>
+        <translation>WSZYSTKIE</translation>
+    </message>
+    <message>
+        <location filename="../qml/LogWindow.qml" line="24" />
+        <source>Disk %1</source>
+        <translation>Dysk %1</translation>
+    </message>
+    <message>
+        <location filename="../qml/LogWindow.qml" line="65" />
+        <source>AspeQt Log View</source>
+        <translation>Podgląd logu AspeQt</translation>
+    </message>
+    <message>
+        <location filename="../qml/LogWindow.qml" line="82" />
+        <source>Filter log by:</source>
+        <translation>Filtruj wg:</translation>
+    </message>
+    <message>
+        <location filename="../qml/LogWindow.qml" line="93" />
+        <source>Search text…</source>
+        <translation>Szukaj tekstu…</translation>
+    </message>
+</context>
+<context>
     <name>Main</name>
     <message>
-        <location filename="../qml/Main.qml" line="47" />
+        <location filename="../qml/Main.qml" line="61" />
         <source>File</source>
         <translation>Plik</translation>
     </message>
     <message>
-        <location filename="../qml/Main.qml" line="49" />
-        <location filename="../qml/Main.qml" line="249" />
+        <location filename="../qml/Main.qml" line="47" />
+        <location filename="../qml/Main.qml" line="256" />
         <source>Stop emulation</source>
         <translation>Zatrzymaj emulację</translation>
     </message>
     <message>
-        <location filename="../qml/Main.qml" line="50" />
-        <location filename="../qml/Main.qml" line="249" />
+        <location filename="../qml/Main.qml" line="48" />
+        <location filename="../qml/Main.qml" line="256" />
         <source>Start emulation</source>
         <translation>Uruchom emulację</translation>
     </message>
     <message>
-        <location filename="../qml/Main.qml" line="54" />
-        <location filename="../qml/Main.qml" line="255" />
+        <location filename="../qml/Main.qml" line="52" />
+        <location filename="../qml/Main.qml" line="262" />
         <source>Printer emulation</source>
         <translation>Emulacja drukarki</translation>
     </message>
     <message>
-        <location filename="../qml/Main.qml" line="59" />
+        <location filename="../qml/Main.qml" line="57" />
         <source>Show printer output</source>
         <translation>Pokaż wydruk drukarki</translation>
     </message>
     <message>
-        <location filename="../qml/Main.qml" line="61" />
+        <location filename="../qml/Main.qml" line="62" />
         <source>Open session…</source>
         <translation>Otwórz sesję…</translation>
     </message>
     <message>
-        <location filename="../qml/Main.qml" line="62" />
+        <location filename="../qml/Main.qml" line="63" />
         <source>Save session…</source>
         <translation>Zapisz sesję…</translation>
     </message>
     <message>
-        <location filename="../qml/Main.qml" line="66" />
+        <location filename="../qml/Main.qml" line="67" />
         <source>Disk</source>
         <translation>Dysk</translation>
     </message>
     <message>
-        <location filename="../qml/Main.qml" line="67" />
+        <location filename="../qml/Main.qml" line="68" />
         <source>New disk image…</source>
         <translation>Nowy obraz dysku…</translation>
     </message>
     <message>
-        <location filename="../qml/Main.qml" line="68" />
         <source>Mount disk…</source>
-        <translation>Zamontuj dysk…</translation>
+        <translation type="vanished">Zamontuj dysk…</translation>
+    </message>
+    <message>
+        <source>Mount folder…</source>
+        <translation type="vanished">Zamontuj katalog…</translation>
     </message>
     <message>
         <location filename="../qml/Main.qml" line="69" />
-        <source>Mount folder…</source>
-        <translation>Zamontuj katalog…</translation>
-    </message>
-    <message>
-        <location filename="../qml/Main.qml" line="70" />
         <source>Eject all</source>
         <translation>Wysuń wszystkie</translation>
     </message>
@@ -1722,12 +1748,12 @@ p, li { white-space: pre-wrap; }
         <translation>Opcje</translation>
     </message>
     <message>
-        <location filename="../qml/Main.qml" line="102" />
+        <location filename="../qml/Main.qml" line="101" />
         <source>Quit</source>
         <translation>Zakończ</translation>
     </message>
     <message>
-        <location filename="../qml/Main.qml" line="260" />
+        <location filename="../qml/Main.qml" line="267" />
         <source>Clear messages</source>
         <translation>Wyczyść komunikaty</translation>
     </message>
@@ -1754,24 +1780,24 @@ p, li { white-space: pre-wrap; }
         <translation>Kaseta (%1:%2)</translation>
     </message>
     <message>
-        <location filename="../mainwindow.cpp" line="2611" />
-        <location filename="../mainwindow.cpp" line="2614" />
-        <location filename="../mainwindow.cpp" line="2639" />
+        <location filename="../mainwindow.cpp" line="2645" />
+        <location filename="../mainwindow.cpp" line="2648" />
+        <location filename="../mainwindow.cpp" line="2673" />
         <source>Install DOS</source>
         <translation>Zainstaluj DOS</translation>
     </message>
     <message>
-        <location filename="../mainwindow.cpp" line="2611" />
+        <location filename="../mainwindow.cpp" line="2645" />
         <source>This slot does not hold a mounted folder.</source>
         <translation>Ten slot nie zawiera zamontowanego katalogu.</translation>
     </message>
     <message>
-        <location filename="../mainwindow.cpp" line="2615" />
+        <location filename="../mainwindow.cpp" line="2649" />
         <source>Copy high-speed MyPicoDOS ($boot.bin + picodos.sys) into this folder? The Atari will then be able to boot DOS from it.</source>
         <translation>Skopiować szybkie MyPicoDOS ($boot.bin + picodos.sys) do tego katalogu? Atari będzie mogło z niego wystartować DOS.</translation>
     </message>
     <message>
-        <location filename="../mainwindow.cpp" line="2639" />
+        <location filename="../mainwindow.cpp" line="2673" />
         <source>Could not copy the DOS files into the folder.</source>
         <translation>Nie udało się skopiować plików DOS do katalogu.</translation>
     </message>
@@ -1792,7 +1818,7 @@ p, li { white-space: pre-wrap; }
         <translation>Odtwarzanie kasety</translation>
     </message>
     <message>
-        <location filename="../mainwindow.cpp" line="2636" />
+        <location filename="../mainwindow.cpp" line="2670" />
         <source>Installed high-speed MyPicoDOS into the folder. Reboot your Atari to load DOS.</source>
         <translation>Zainstalowano szybkie MyPicoDOS w katalogu. Zrestartuj Atari, aby wczytać DOS.</translation>
     </message>
@@ -1825,42 +1851,42 @@ p, li { white-space: pre-wrap; }
     <message>
         <location filename="../mainwindow.cpp" line="884" />
         <source>Mount disk image</source>
-        <translation type="unfinished" />
+        <translation type="unfinished">Zamontuj obraz dysku</translation>
     </message>
     <message>
         <location filename="../mainwindow.cpp" line="885" />
         <source>Mount folder image</source>
-        <translation type="unfinished" />
+        <translation type="unfinished">Zamontuj katalog</translation>
     </message>
     <message>
         <location filename="../mainwindow.cpp" line="886" />
         <location filename="../mainwindow.cpp" line="2007" />
         <location filename="../mainwindow.cpp" line="2055" />
         <source>Save disk</source>
-        <translation type="unfinished" />
+        <translation type="unfinished">Zapisz dysk</translation>
     </message>
     <message>
         <location filename="../mainwindow.cpp" line="887" />
         <source>Auto-commit</source>
-        <translation type="unfinished" />
+        <translation type="unfinished">Auto-zapis</translation>
     </message>
     <message>
         <location filename="../mainwindow.cpp" line="888" />
         <source>Disk explorer</source>
-        <translation type="unfinished" />
+        <translation type="unfinished">Eksplorator dysku</translation>
     </message>
     <message>
         <location filename="../mainwindow.cpp" line="893" />
         <location filename="../mainwindow.cpp" line="1230" />
         <location filename="../mainwindow.cpp" line="1979" />
         <source>Eject</source>
-        <translation type="unfinished" />
+        <translation type="unfinished">Wysuń</translation>
     </message>
     <message>
         <location filename="../mainwindow.cpp" line="897" />
         <location filename="../mainwindow.cpp" line="2047" />
         <source>Remove slot</source>
-        <translation type="unfinished" />
+        <translation type="unfinished">Usuń slot</translation>
     </message>
     <message>
         <location filename="../mainwindow.cpp" line="898" />
@@ -1949,18 +1975,23 @@ p, li { white-space: pre-wrap; }
         <translation>Program załadowany do Atari.</translation>
     </message>
     <message>
-        <location filename="../mainwindow.cpp" line="3412" />
+        <location filename="../mainwindow.cpp" line="2425" />
+        <source>Loaded into the cas/xex slot.</source>
+        <translation>Zamontowałem w slocie cas/xex.</translation>
+    </message>
+    <message>
+        <location filename="../mainwindow.cpp" line="3450" />
         <source>Not a cassette image</source>
         <translation type="unfinished" />
     </message>
     <message>
-        <location filename="../mainwindow.cpp" line="3413" />
+        <location filename="../mainwindow.cpp" line="3451" />
         <source>This is not a cassette image.
 Pick a .cas file.</source>
         <translation type="unfinished" />
     </message>
     <message>
-        <location filename="../mainwindow.cpp" line="3666" />
+        <location filename="../mainwindow.cpp" line="3712" />
         <source>Automatic</source>
         <translation>Automatyczny</translation>
     </message>
@@ -1979,7 +2010,7 @@ Gdy usłyszysz sygnał, naciśnij przycisk play i mniej więcej w tym samym czas
     </message>
     <message>
         <location filename="../mainwindow.cpp" line="649" />
-        <location filename="../mainwindow.cpp" line="3576" />
+        <location filename="../mainwindow.cpp" line="3614" />
         <source>Swapped disk %1 with disk %2.</source>
         <translation>Zamieniono dysk %1 z dyskiem %2.</translation>
     </message>
@@ -2083,7 +2114,7 @@ We will now migrate the existing settings to their new repository, note that set
     </message>
     <message>
         <location filename="../mainwindow.cpp" line="355" />
-        <location filename="../mainwindow.cpp" line="3278" />
+        <location filename="../mainwindow.cpp" line="3316" />
         <source> -- Session: </source>
         <translation> -- Sesja:</translation>
     </message>
@@ -2115,20 +2146,20 @@ We will now migrate the existing settings to their new repository, note that set
         <translation>Odmontowany dysk %1</translation>
     </message>
     <message>
-        <location filename="../mainwindow.cpp" line="2481" />
-        <location filename="../mainwindow.cpp" line="3214" />
+        <location filename="../mainwindow.cpp" line="2515" />
+        <location filename="../mainwindow.cpp" line="3252" />
         <source>[%1] Mounted '%2' as '%3'.</source>
         <translation>[%1] Zamontowe '%2' jako '%3'.</translation>
     </message>
     <message>
-        <location filename="../mainwindow.cpp" line="2677" />
-        <location filename="../mainwindow.cpp" line="2699" />
+        <location filename="../mainwindow.cpp" line="2711" />
+        <location filename="../mainwindow.cpp" line="2737" />
         <source>Open a disk image</source>
         <translation>Otwórz obraz dysku</translation>
     </message>
     <message>
-        <location filename="../mainwindow.cpp" line="2701" />
-        <location filename="../mainwindow.cpp" line="2993" />
+        <location filename="../mainwindow.cpp" line="2739" />
+        <location filename="../mainwindow.cpp" line="3031" />
         <source>All Atari disk images (*.atr *.xfd *.pro);;SIO2PC ATR images (*.atr);;XFormer XFD images (*.xfd);;Pro images (*.pro);;All files (*)</source>
         <translation type="unfinished">Wszystkie obrazy dysku (*.atr *.xfd *.pro);;Obrazy SIO2PC ATR (*.atr);;Obrazy XFormer XFD (*.xfd);;Obrazy Pro (*.pro);;Wszystkie pliki (*)</translation>
     </message>
@@ -2137,26 +2168,26 @@ We will now migrate the existing settings to their new repository, note that set
         <translation type="obsolete">Wszystkie obrazy dysku (*.atr *.xfd *.atx *.pro);;Obrazy SIO2PC ATR (*.atr);;Obrazy XFormer XFD (*.xfd);;Obrazy ATX (*.atx);;Obrazy Pro (*.pro);;Wszystkie pliki (*)</translation>
     </message>
     <message>
-        <location filename="../mainwindow.cpp" line="2727" />
-        <location filename="../mainwindow.cpp" line="2735" />
+        <location filename="../mainwindow.cpp" line="2765" />
+        <location filename="../mainwindow.cpp" line="2773" />
         <source>Open a folder image</source>
         <translation>Otwórz folder</translation>
     </message>
     <message>
-        <location filename="../mainwindow.cpp" line="2779" />
+        <location filename="../mainwindow.cpp" line="2817" />
         <source>Image file unsaved</source>
         <translation>Plik obrazu zawiera niezapisane zmiany</translation>
     </message>
     <message>
-        <location filename="../mainwindow.cpp" line="2779" />
+        <location filename="../mainwindow.cpp" line="2817" />
         <source>'%1' has unsaved changes, do you want to save it?</source>
         <translation>'%1' zawiera niezapisane zmiany. Czy chcesz go zapisać?</translation>
     </message>
     <message>
         <location filename="../mainwindow.cpp" line="2025" />
-        <location filename="../mainwindow.cpp" line="2833" />
-        <location filename="../mainwindow.cpp" line="2949" />
-        <location filename="../mainwindow.cpp" line="3011" />
+        <location filename="../mainwindow.cpp" line="2871" />
+        <location filename="../mainwindow.cpp" line="2987" />
+        <location filename="../mainwindow.cpp" line="3049" />
         <source>Save failed</source>
         <translation>Zapis nie powiódł się</translation>
     </message>
@@ -2174,92 +2205,92 @@ We will now migrate the existing settings to their new repository, note that set
     </message>
     <message>
         <location filename="../mainwindow.cpp" line="2025" />
-        <location filename="../mainwindow.cpp" line="2833" />
-        <location filename="../mainwindow.cpp" line="2949" />
-        <location filename="../mainwindow.cpp" line="3011" />
+        <location filename="../mainwindow.cpp" line="2871" />
+        <location filename="../mainwindow.cpp" line="2987" />
+        <location filename="../mainwindow.cpp" line="3049" />
         <source>'%1' cannot be saved, do you want to save the image with another name?</source>
         <translation>'%1' nie może zostać zapisany. Czy chcesz zapisać obraz pod inną nazwą?</translation>
     </message>
     <message>
-        <location filename="../mainwindow.cpp" line="2678" />
+        <location filename="../mainwindow.cpp" line="2712" />
         <source>All Atari disk images (*.atr *.xfd *.pro);;All files (*)</source>
         <translation type="unfinished" />
     </message>
     <message>
-        <location filename="../mainwindow.cpp" line="2687" />
-        <location filename="../mainwindow.cpp" line="2692" />
+        <location filename="../mainwindow.cpp" line="2724" />
+        <location filename="../mainwindow.cpp" line="2729" />
         <source>Not a disk image</source>
         <translation type="unfinished" />
     </message>
     <message>
-        <location filename="../mainwindow.cpp" line="2688" />
+        <location filename="../mainwindow.cpp" line="2725" />
         <source>This is an Atari executable, not a disk image.
 Use "File / Boot Atari executable" to run it.</source>
         <translation type="unfinished" />
     </message>
     <message>
-        <location filename="../mainwindow.cpp" line="2693" />
+        <location filename="../mainwindow.cpp" line="2730" />
         <source>This is a cassette image, not a disk image.
 Use "File / Play cassette image" to run it.</source>
         <translation type="unfinished" />
     </message>
     <message>
-        <location filename="../mainwindow.cpp" line="2896" />
+        <location filename="../mainwindow.cpp" line="2934" />
         <source>[Disk 1] Auto-commit ON.</source>
         <translation>[Disk 1] Automatyczny zapis włączony.</translation>
     </message>
     <message>
-        <location filename="../mainwindow.cpp" line="2898" />
+        <location filename="../mainwindow.cpp" line="2936" />
         <source>[Disk 1] Auto-commit OFF.</source>
         <translation>[Disk 1] Automatyczny zapis wyłączony.</translation>
     </message>
     <message>
-        <location filename="../mainwindow.cpp" line="2904" />
+        <location filename="../mainwindow.cpp" line="2942" />
         <source>[Disk 2] Auto-commit ON.</source>
         <translation>[Disk 2] Automatyczny zapis włączony.</translation>
     </message>
     <message>
-        <location filename="../mainwindow.cpp" line="2906" />
+        <location filename="../mainwindow.cpp" line="2944" />
         <source>[Disk 2] Auto-commit OFF.</source>
         <translation>[Disk 2] Automatyczny zapis wyłączony.</translation>
     </message>
     <message>
-        <location filename="../mainwindow.cpp" line="2912" />
+        <location filename="../mainwindow.cpp" line="2950" />
         <source>[Disk 3] Auto-commit ON.</source>
         <translation>[Disk 3] Automatyczny zapis włączony.</translation>
     </message>
     <message>
-        <location filename="../mainwindow.cpp" line="2914" />
+        <location filename="../mainwindow.cpp" line="2952" />
         <source>[Disk 3] Auto-commit OFF.</source>
         <translation>[Disk 3] Automatyczny zapis wyłączony.</translation>
     </message>
     <message>
-        <location filename="../mainwindow.cpp" line="2920" />
+        <location filename="../mainwindow.cpp" line="2958" />
         <source>[Disk 4] Auto-commit ON.</source>
         <translation>[Disk 4] Automatyczny zapis włączony.</translation>
     </message>
     <message>
-        <location filename="../mainwindow.cpp" line="2922" />
+        <location filename="../mainwindow.cpp" line="2960" />
         <source>[Disk 4] Auto-commit OFF.</source>
         <translation>[Disk 4] Automatyczny zapis wyłączony.</translation>
     </message>
     <message>
-        <location filename="../mainwindow.cpp" line="2928" />
+        <location filename="../mainwindow.cpp" line="2966" />
         <source>[Disk 5] Auto-commit ON.</source>
         <translation>[Disk 5] Automatyczny zapis włączony.</translation>
     </message>
     <message>
-        <location filename="../mainwindow.cpp" line="2930" />
+        <location filename="../mainwindow.cpp" line="2968" />
         <source>[Disk 5] Auto-commit OFF.</source>
         <translation>[Disk 5] Automatyczny zapis wyłączony.</translation>
     </message>
     <message>
-        <location filename="../mainwindow.cpp" line="2936" />
+        <location filename="../mainwindow.cpp" line="2974" />
         <source>[Disk 6] Auto-commit ON.</source>
         <translation>[Disk 6] Automatyczny zapis włączony.</translation>
     </message>
     <message>
-        <location filename="../mainwindow.cpp" line="2938" />
+        <location filename="../mainwindow.cpp" line="2976" />
         <source>[Disk 6] Auto-commit OFF.</source>
         <translation>[Disk 6] Automatyczny zapis wyłączony.</translation>
     </message>
@@ -2336,79 +2367,79 @@ Use "File / Play cassette image" to run it.</source>
         <translation type="vanished">[Disk 15] Automatyczny zapis wyłączony.</translation>
     </message>
     <message>
-        <location filename="../mainwindow.cpp" line="2976" />
-        <location filename="../mainwindow.cpp" line="2991" />
+        <location filename="../mainwindow.cpp" line="3014" />
+        <location filename="../mainwindow.cpp" line="3029" />
         <source>Save image as</source>
         <translation>Zapisz obraz jako</translation>
     </message>
     <message>
         <location filename="../mainwindow.cpp" line="900" />
-        <location filename="../mainwindow.cpp" line="3031" />
+        <location filename="../mainwindow.cpp" line="3069" />
         <source>Revert to last saved</source>
         <translation>Przywracanie do ostatnio zapisanego stanu</translation>
     </message>
     <message>
-        <location filename="../mainwindow.cpp" line="2977" />
+        <location filename="../mainwindow.cpp" line="3015" />
         <source>ATR image (*.atr);;XFD image (*.xfd);;All files (*)</source>
         <translation type="unfinished" />
     </message>
     <message>
-        <location filename="../mainwindow.cpp" line="3032" />
+        <location filename="../mainwindow.cpp" line="3070" />
         <source>Do you really want to revert '%1' to its last saved state? You will lose the changes that has been made.</source>
         <translation>Czy na pewno chcesz przywrócić '%1' do ostatnio zapisanego stanu? Stracisz wszystkie wprowadzone zmiany.</translation>
     </message>
     <message>
-        <location filename="../mainwindow.cpp" line="3228" />
-        <location filename="../mainwindow.cpp" line="3249" />
+        <location filename="../mainwindow.cpp" line="3266" />
+        <location filename="../mainwindow.cpp" line="3287" />
         <source>Open session</source>
         <translation>Otwórz sesję</translation>
     </message>
     <message>
-        <location filename="../mainwindow.cpp" line="3229" />
-        <location filename="../mainwindow.cpp" line="3251" />
-        <location filename="../mainwindow.cpp" line="3300" />
-        <location filename="../mainwindow.cpp" line="3307" />
+        <location filename="../mainwindow.cpp" line="3267" />
+        <location filename="../mainwindow.cpp" line="3289" />
+        <location filename="../mainwindow.cpp" line="3338" />
+        <location filename="../mainwindow.cpp" line="3345" />
         <source>AspeQt sessions (*.aspeqt);;All files (*)</source>
         <translation>Sesje AspeQt (*.aspeqt);;Wszystkie pliki (*)</translation>
     </message>
     <message>
-        <location filename="../mainwindow.cpp" line="3299" />
-        <location filename="../mainwindow.cpp" line="3305" />
+        <location filename="../mainwindow.cpp" line="3337" />
+        <location filename="../mainwindow.cpp" line="3343" />
         <source>Save session as</source>
         <translation>Zapisz sesję jako</translation>
     </message>
     <message>
-        <location filename="../mainwindow.cpp" line="3346" />
-        <location filename="../mainwindow.cpp" line="3366" />
+        <location filename="../mainwindow.cpp" line="3384" />
+        <location filename="../mainwindow.cpp" line="3404" />
         <source>Open executable</source>
         <translation>Otwórz plik wykonywalny</translation>
     </message>
     <message>
-        <location filename="../mainwindow.cpp" line="3347" />
-        <location filename="../mainwindow.cpp" line="3368" />
+        <location filename="../mainwindow.cpp" line="3385" />
+        <location filename="../mainwindow.cpp" line="3406" />
         <source>Atari executables (*.xex *.com *.exe);;All files (*)</source>
         <translation>Pliki wykonywalne Atari (*.xex *.com *.exe);;Wszystkie pliki (*)</translation>
     </message>
     <message>
-        <location filename="../mainwindow.cpp" line="3359" />
+        <location filename="../mainwindow.cpp" line="3397" />
         <source>Not an executable</source>
         <translation type="unfinished" />
     </message>
     <message>
-        <location filename="../mainwindow.cpp" line="3360" />
+        <location filename="../mainwindow.cpp" line="3398" />
         <source>This is not an Atari executable.
 Executables start with $FFFF; pick a .xex/.com/.exe file.</source>
         <translation type="unfinished" />
     </message>
     <message>
-        <location filename="../mainwindow.cpp" line="3399" />
-        <location filename="../mainwindow.cpp" line="3419" />
+        <location filename="../mainwindow.cpp" line="3437" />
+        <location filename="../mainwindow.cpp" line="3457" />
         <source>Open a cassette image</source>
         <translation>Otwórz obraz kasety</translation>
     </message>
     <message>
-        <location filename="../mainwindow.cpp" line="3400" />
-        <location filename="../mainwindow.cpp" line="3421" />
+        <location filename="../mainwindow.cpp" line="3438" />
+        <location filename="../mainwindow.cpp" line="3459" />
         <source>CAS images (*.cas);;All files (*)</source>
         <translation>Obrazy CAS (*.cas);;Wszystkie pliki (*)</translation>
     </message>
@@ -3956,7 +3987,7 @@ Executables start with $FFFF; pick a .xex/.com/.exe file.</source>
     </message>
     <message>
         <location filename="../optionsdialog.ui" line="85" />
-        <location filename="../qml/OptionsDialog.qml" line="242" />
+        <location filename="../qml/OptionsDialog.qml" line="246" />
         <source>User interface</source>
         <translation>Interfejs użytkownika</translation>
     </message>
@@ -4021,7 +4052,7 @@ Executables start with $FFFF; pick a .xex/.com/.exe file.</source>
     </message>
     <message>
         <location filename="../android/optionsdialog.ui" line="621" />
-        <location filename="../qml/OptionsDialog.qml" line="264" />
+        <location filename="../qml/OptionsDialog.qml" line="268" />
         <source>Save</source>
         <translation>Zapisz</translation>
     </message>
@@ -4061,7 +4092,7 @@ Executables start with $FFFF; pick a .xex/.com/.exe file.</source>
     </message>
     <message>
         <location filename="../android/optionsdialog.ui" line="508" />
-        <location filename="../qml/OptionsDialog.qml" line="233" />
+        <location filename="../qml/OptionsDialog.qml" line="237" />
         <source>(Required for AtariDOS compatibility)</source>
         <translation>(Wymagane dla zgodności z AtariDOS)</translation>
     </message>
@@ -4093,7 +4124,7 @@ Executables start with $FFFF; pick a .xex/.com/.exe file.</source>
     </message>
     <message>
         <location filename="../android/optionsdialog.ui" line="313" />
-        <location filename="../qml/OptionsDialog.qml" line="191" />
+        <location filename="../qml/OptionsDialog.qml" line="195" />
         <source>Bluetooth name:</source>
         <translation>Nazwa modułu BT:</translation>
     </message>
@@ -4105,7 +4136,7 @@ Executables start with $FFFF; pick a .xex/.com/.exe file.</source>
     </message>
     <message>
         <location filename="../android/optionsdialog.ui" line="339" />
-        <location filename="../qml/OptionsDialog.qml" line="202" />
+        <location filename="../qml/OptionsDialog.qml" line="206" />
         <source>Write ACK delay [ms]</source>
         <translation>Opóźnienie zapisu ACK [ms]</translation>
     </message>
@@ -4118,7 +4149,7 @@ Executables start with $FFFF; pick a .xex/.com/.exe file.</source>
     <message>
         <location filename="../android/optionsdialog.ui" line="371" />
         <location filename="../optionsdialog.ui" line="241" />
-        <location filename="../qml/OptionsDialog.qml" line="206" />
+        <location filename="../qml/OptionsDialog.qml" line="210" />
         <source>Use non-standard speeds</source>
         <translation>Użyj niestandardowych prędkości</translation>
     </message>
@@ -4156,14 +4187,14 @@ Executables start with $FFFF; pick a .xex/.com/.exe file.</source>
     <message>
         <location filename="../android/optionsdialog.ui" line="427" />
         <location filename="../optionsdialog.ui" line="439" />
-        <location filename="../qml/OptionsDialog.qml" line="218" />
+        <location filename="../qml/OptionsDialog.qml" line="222" />
         <source>Use high speed executable loader</source>
         <translation>Szybkie ładowanie plików wykonywalnych</translation>
     </message>
     <message>
         <location filename="../android/optionsdialog.ui" line="443" />
         <location filename="../optionsdialog.ui" line="477" />
-        <location filename="../qml/OptionsDialog.qml" line="219" />
+        <location filename="../qml/OptionsDialog.qml" line="223" />
         <source>Use custom baud rate for cassette emulation</source>
         <oldsource>Use cutom baud rate for cassette emulation</oldsource>
         <translation>Własna prędkość dla emulacji kaset (bps)</translation>
@@ -4176,7 +4207,7 @@ Executables start with $FFFF; pick a .xex/.com/.exe file.</source>
     <message>
         <location filename="../android/optionsdialog.ui" line="492" />
         <location filename="../optionsdialog.ui" line="552" />
-        <location filename="../qml/OptionsDialog.qml" line="231" />
+        <location filename="../qml/OptionsDialog.qml" line="235" />
         <source>Filter out underscore character from file names</source>
         <translation>Filtruj podkreślenia z nazw plików</translation>
     </message>
@@ -4193,7 +4224,7 @@ Executables start with $FFFF; pick a .xex/.com/.exe file.</source>
     <message>
         <location filename="../android/optionsdialog.ui" line="529" />
         <location filename="../optionsdialog.ui" line="627" />
-        <location filename="../qml/OptionsDialog.qml" line="243" />
+        <location filename="../qml/OptionsDialog.qml" line="247" />
         <source>Language:</source>
         <translation>Język:</translation>
     </message>
@@ -4220,7 +4251,7 @@ Executables start with $FFFF; pick a .xex/.com/.exe file.</source>
         <translation>Automatycznie</translation>
     </message>
     <message>
-        <location filename="../mainwindow.cpp" line="3678" />
+        <location filename="../mainwindow.cpp" line="3724" />
         <location filename="../optionsdialog.cpp" line="141" />
         <location filename="../optionsdialog.cpp" line="147" />
         <location filename="../optionsdialog.cpp" line="157" />
@@ -4251,32 +4282,32 @@ Executables start with $FFFF; pick a .xex/.com/.exe file.</source>
         <translation>Emulacja portu SIO</translation>
     </message>
     <message>
-        <location filename="../qml/OptionsDialog.qml" line="183" />
+        <location filename="../qml/OptionsDialog.qml" line="184" />
         <source>Transmission speed [bps]:</source>
         <translation>Prędkość transmisji [bps]:</translation>
     </message>
     <message>
-        <location filename="../qml/OptionsDialog.qml" line="210" />
+        <location filename="../qml/OptionsDialog.qml" line="214" />
         <source>POKEY divisor:</source>
         <translation>Dzielnik POKEY:</translation>
     </message>
     <message>
-        <location filename="../qml/OptionsDialog.qml" line="217" />
+        <location filename="../qml/OptionsDialog.qml" line="221" />
         <source>Emulation settings</source>
         <translation>Ustawienia emulacji</translation>
     </message>
     <message>
-        <location filename="../qml/OptionsDialog.qml" line="223" />
+        <location filename="../qml/OptionsDialog.qml" line="227" />
         <source>Cassette baud rate:</source>
         <translation>Prędkość transmisji kasety:</translation>
     </message>
     <message>
-        <location filename="../qml/OptionsDialog.qml" line="230" />
+        <location filename="../qml/OptionsDialog.qml" line="234" />
         <source>Folder images</source>
         <translation>Obrazy katalogów</translation>
     </message>
     <message>
-        <location filename="../qml/OptionsDialog.qml" line="263" />
+        <location filename="../qml/OptionsDialog.qml" line="267" />
         <source>Cancel</source>
         <translation>Anuluj</translation>
     </message>

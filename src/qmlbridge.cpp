@@ -120,10 +120,11 @@ void AppController::refresh()
 // Format one engine log line the same way MainWindow::uiMessage colours it.
 void AppController::onLogMessage(int type, const QString &msg)
 {
+    // Match the widget UI's uiMessage(): do NOT HTML-escape — messages may embed
+    // intentional markup (e.g. <br> line breaks in the cassette-ready notice).
     QString text = msg;
     if (text.startsWith('"')) text.remove(0, 1);
     if (text.endsWith('"'))   text.chop(1);
-    text = text.toHtmlEscaped();
 
     QString colour;
     switch (type) {

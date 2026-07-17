@@ -230,6 +230,17 @@ public class SerialActivity extends QtActivity
                 m_device = new SIO2PCUS4A();
         }
 
+        // Native Android toast, callable from C++ (JNI). Runs on the UI thread.
+        public static void showToast(final String msg)
+        {
+            if (s_activity == null) return;
+            s_activity.runOnUiThread(new Runnable() {
+                public void run() {
+                    Toast.makeText(s_activity, msg, Toast.LENGTH_LONG).show();
+                }
+            });
+        }
+
         // Resolve the human-readable file name of a content:// URI (SAF picks
         // return opaque URIs with no usable path), for showing in slot labels.
         public static String displayName(String uri) {
