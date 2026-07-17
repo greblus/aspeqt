@@ -50,7 +50,7 @@ Item {
             running: root.spinning
             loops: Animation.Infinite
             from: 0; to: 360
-            duration: 1000
+            duration: 2000
         }
         onVisibleChanged: if (!visible) rotation = 0
     }
@@ -72,11 +72,7 @@ Item {
         enabled: root.enabledState
         hoverEnabled: true
         onClicked: root.clicked()
-        // Touch has no hover: reveal the hint on press-and-hold.
+        // Hint only on press-and-hold (a plain tap must not show it).
         onPressAndHold: if (root.tip.length > 0) ToolTip.show(root.tip, 2500)
     }
-
-    // Desktop/mouse hover tooltip.
-    ToolTip.visible: tip.length > 0 && ma.containsMouse
-    ToolTip.text: tip
 }

@@ -61,9 +61,8 @@ Rectangle {
                 }
                 SlotButton {
                     source: Theme.icon("actions/media-playback-start.svg")
-                    animatedSource: "qrc:/images/tape.gif"
-                    animated: app.loaderCasPlaying
-                    enabledState: app.loaderPlayEnabled || app.loaderCasPlaying
+                    spinning: app.loaderCasPlaying
+                    enabledState: app.loaderPlayEnabled
                     tip: qsTr("Start cassette playback")
                     onClicked: app.loaderPlay()
                 }

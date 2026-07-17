@@ -3570,7 +3570,7 @@ QVariantMap MainWindow::qmlLoaderState()
     m["playEnabled"]  = casReady;
     m["retryEnabled"] = !m_loaderFile.isEmpty();
     m["ejectEnabled"] = m_loaderKind != 0;
-    m["loading"]      = m_loaderFill > 0.0 && m_loaderFill < 1.0;
+    m["loading"]      = m_loaderKind == 1 && m_loaderFill > 0.0 && m_loaderFill < 1.0;
     m["casPlaying"]   = m_casWorker && m_casWorker->isRunning();
     return m;
 }
@@ -3599,7 +3599,17 @@ void MainWindow::qmlSave(int i)               { saveDisk(i); }
 void MainWindow::qmlToggleAutoCommit(int i)   { autoSaveDisk(i); }
 void MainWindow::qmlEdit(int i)               { openEditor(i); }
 void MainWindow::qmlToggleWriteProtect(int i) { toggleWriteProtection(i); }
-void MainWindow::qmlAddSlot()                 { androidAddSlot(); }
+int MainWindow::qmlAddSlot()
+{
+    // androidAddSlot() fills the lowest empty index; return it so the QML side
+    // can scroll to and flash the new slot.
+    int i = -1;
+    for (int k = 0; k < MAX_DISKS; ++k)
+        if (!diskWidgets[k].frame) { i = k; break; }
+    if (i < 0) return -1;
+    androidAddSlot();
+    return i;
+}
 void MainWindow::qmlBootOptions()             { on_actionBootOption_triggered(); }
 
 // Swap two drives (drag-reorder). Same effect as the widget UI's drop handler:
@@ -3626,7 +3636,7 @@ void MainWindow::qmlLoaderPlay()              { loaderPlayCas(); }
 void MainWindow::qmlLoaderRetry()             { loaderRetry(); }
 void MainWindow::qmlLoaderEject()             { loaderEject(); }
 void MainWindow::qmlToggleSio()               { ui->actionStartEmulation->trigger(); }
-void MainWindow::qmlTogglePrinter()           { ui->actionPrinterEmulation->trigger(); }
+void MainWindow::qmlTogglePrinter()           { ui->actionPrinterEmulation->trigger(); emit qmlChanged(); }
 void MainWindow::qmlClearLog()
 {
     ui->textEdit->clear();

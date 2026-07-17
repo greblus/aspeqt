@@ -160,7 +160,7 @@ void AppController::toggleAutoCommit(int hwIndex)  { if (m_engine) m_engine->qml
 void AppController::openEditor(int hwIndex)        { if (m_engine) m_engine->qmlEdit(hwIndex); }
 void AppController::toggleWriteProtect(int hwIndex){ if (m_engine) m_engine->qmlToggleWriteProtect(hwIndex); }
 void AppController::bootOptions()                  { if (m_engine) m_engine->qmlBootOptions(); }
-void AppController::addSlot()                      { if (m_engine) m_engine->qmlAddSlot(); }
+int AppController::addSlot()                       { return m_engine ? m_engine->qmlAddSlot() : -1; }
 void AppController::swapSlots(int fromHw, int toHw){ if (m_engine) m_engine->qmlSwapSlots(fromHw, toHw); }
 
 void AppController::loaderLoad()  { if (m_engine) m_engine->qmlLoaderLoad(); }

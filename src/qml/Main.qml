@@ -16,6 +16,7 @@ ApplicationWindow {
 
     // Max width of the content column (phones use full width; tablets centre it).
     readonly property int contentMaxWidth: 720
+    property int pendingFlashHw: -1   // slot to scroll to + flash after an add
 
     Material.theme: Material.Light
     Material.primary: Theme.primary
@@ -137,6 +138,7 @@ ApplicationWindow {
                 LoaderCard { Layout.fillWidth: true }
 
                 Repeater {
+                    id: slotRepeater
                     model: app.drives
                     delegate: SlotCard {
                         required property var model
@@ -172,7 +174,15 @@ ApplicationWindow {
                         source: Theme.icon("actions/list-add.svg")
                         sourceSize.width: 56; sourceSize.height: 56
                     }
-                    MouseArea { anchors.fill: parent; onClicked: app.addSlot() }
+                    MouseArea {
+                        anchors.fill: parent
+                        // Only scroll when a slot is appended at the end (not when
+                        // "+" fills a gap left by a removed slot).
+                        onClicked: {
+                            var hw = app.addSlot()
+                            if (hw >= 0) { win.pendingFlashHw = hw; scrollEndTimer.restart() }
+                        }
+                    }
                 }
             }
         }
@@ -275,6 +285,37 @@ ApplicationWindow {
                 }
             }
         }
+        }
+    }
+
+    // Smoothly scroll the slot column to the bottom after a slot is appended
+    // (deferred so the new row's height is included).
+    NumberAnimation {
+        id: scrollAnim
+        target: slotScroll.contentItem
+        property: "contentY"
+        duration: 320
+        easing.type: Easing.OutCubic
+    }
+    Timer {
+        id: scrollEndTimer
+        interval: 80
+        onTriggered: {
+            var f = slotScroll.contentItem
+            for (var i = 0; i < slotRepeater.count; ++i) {
+                var d = slotRepeater.itemAt(i)
+                if (d && d.hwIndex === win.pendingFlashHw) {
+                    // delegate position in flickable content coordinates
+                    var contentPos = d.mapToItem(f, 0, 0).y + f.contentY
+                    var target = Math.max(0, Math.min(contentPos - (f.height - d.height) / 2,
+                                                       f.contentHeight - f.height))
+                    scrollAnim.from = f.contentY
+                    scrollAnim.to = target
+                    scrollAnim.restart()
+                    d.flash()
+                    break
+                }
+            }
         }
     }
 

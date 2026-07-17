@@ -260,7 +260,7 @@ public:
     void qmlToggleAutoCommit(int i);
     void qmlEdit(int i);
     void qmlToggleWriteProtect(int i);
-    void qmlAddSlot();
+    int qmlAddSlot();    // returns the hardware index of the added slot (-1 none)
     void qmlSwapSlots(int source, int slot);   // drag-reorder: swap two drives
     void qmlBootOptions();
     void qmlLoaderLoad();

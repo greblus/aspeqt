@@ -28,6 +28,25 @@ Rectangle {
     signal requestSwap(int fromHw, int toHw)
     signal requestEditor(int hw)
 
+    function flash() { flashAnim.restart() }
+
+    // Brief accent overlay to highlight a freshly added slot.
+    Rectangle {
+        id: flashOverlay
+        anchors.fill: parent
+        radius: card.radius
+        color: Theme.accent
+        opacity: 0
+        z: 20
+        visible: opacity > 0
+    }
+    SequentialAnimation {
+        id: flashAnim
+        loops: 2
+        NumberAnimation { target: flashOverlay; property: "opacity"; from: 0; to: 0.45; duration: 160 }
+        NumberAnimation { target: flashOverlay; property: "opacity"; to: 0; duration: 240 }
+    }
+
     // derived affordances (see MainWindow::deviceStatusChanged)
     readonly property bool saveIsDos:   isFolder
     readonly property bool saveEnabled: mounted && (isFolder || (modified && !autoCommit))

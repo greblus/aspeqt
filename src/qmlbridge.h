@@ -113,7 +113,7 @@ public:
     Q_INVOKABLE void openEditor(int hwIndex);
     Q_INVOKABLE void toggleWriteProtect(int hwIndex);
     Q_INVOKABLE void bootOptions();
-    Q_INVOKABLE void addSlot();
+    Q_INVOKABLE int addSlot();    // hardware index of the added slot (-1 none)
     Q_INVOKABLE void swapSlots(int fromHw, int toHw);
 
     Q_INVOKABLE void loaderLoad();
