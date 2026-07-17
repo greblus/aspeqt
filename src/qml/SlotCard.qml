@@ -26,6 +26,7 @@ Rectangle {
     property bool dropHover: false
 
     signal requestSwap(int fromHw, int toHw)
+    signal requestEditor(int hw)
 
     // derived affordances (see MainWindow::deviceStatusChanged)
     readonly property bool saveIsDos:   isFolder
@@ -158,7 +159,7 @@ Rectangle {
                     checked: card.editOpen
                     enabledState: card.mounted
                     tip: qsTr("Disk explorer")
-                    onClicked: app.openEditor(card.hwIndex)
+                    onClicked: card.requestEditor(card.hwIndex)
                 }
 
                 Item { Layout.fillWidth: true }   // right stretch

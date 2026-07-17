@@ -1193,6 +1193,11 @@ QList <AtariDirEntry> SpartaDosFileSystem::getEntries(quint16 dir)
     m_image->readSector(dir, firstMap);
 
     QByteArray dosEntry = sf.read(23);
+    // A wrong DOS type (e.g. probing SpartaDos on a MyDOS disk) yields garbage
+    // maps and short reads; bail out instead of indexing an empty QByteArray.
+    if (dosEntry.size() < 6) {
+        return list;
+    }
 
     int dirLen = (quint8)dosEntry.at(3) + (quint8)dosEntry.at(4) * 256 + (quint8)dosEntry.at(5) * 65536 - 23;
     int no = 0;
@@ -1200,6 +1205,9 @@ QList <AtariDirEntry> SpartaDosFileSystem::getEntries(quint16 dir)
     while (dirLen > 0) {
         AtariDirEntry entry;
         dosEntry = sf.read(23);
+        if (dosEntry.isEmpty()) {
+            break;
+        }
         int f = (quint8)dosEntry.at(0);
         if (f == 0) {
             break;

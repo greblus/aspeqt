@@ -1101,15 +1101,23 @@ bool SimpleDiskImage::seekToSector(quint16 sector)
 
 bool SimpleDiskImage::readSector(quint16 sector, QByteArray &data)
 {
+    // On any failure, hand back a zero-filled buffer of the sector size so
+    // callers that skip the return value (e.g. the disk-editor filesystem
+    // parsers probing a wrong DOS type) index it safely instead of touching an
+    // empty QByteArray.
+    int sz = m_geometry.bytesPerSector(sector);
+    if (sz <= 0) sz = 128;
     if (!seekToSector(sector)) {
+        data = QByteArray(sz, '\0');
         return false;
     }
-    data = file.read(m_geometry.bytesPerSector(sector));
-    if (data.size() != m_geometry.bytesPerSector(sector)) {
+    data = file.read(sz);
+    if (data.size() != sz) {
         qCritical() << "!e" << tr("[%1] Cannot read from sector %2: %3.")
                        .arg(deviceName())
                        .arg(sector)
                        .arg(file.errorString());
+        data = QByteArray(sz, '\0');
         return false;
     }
     return true;
