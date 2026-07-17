@@ -55,12 +55,15 @@ Rectangle {
 
                 SlotButton {
                     source: Theme.icon("categories/applications-system.svg")
+                    spinning: app.loaderLoading
                     tip: qsTr("Load executable or cassette")
                     onClicked: app.loaderLoad()
                 }
                 SlotButton {
                     source: Theme.icon("actions/media-playback-start.svg")
-                    enabledState: app.loaderPlayEnabled
+                    animatedSource: "qrc:/images/tape.gif"
+                    animated: app.loaderCasPlaying
+                    enabledState: app.loaderPlayEnabled || app.loaderCasPlaying
                     tip: qsTr("Start cassette playback")
                     onClicked: app.loaderPlay()
                 }

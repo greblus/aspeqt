@@ -148,27 +148,44 @@ Popup {
         //   2: filter label + disk combo ......... next | close
         ToolBar {
             Layout.fillWidth: true
+            // Two rows don't fit a default-height ToolBar; size it to the content.
+            Layout.preferredHeight: bottomCol.implicitHeight + 4 + 12
             Material.background: "#ECECEC"
             ColumnLayout {
+                id: bottomCol
                 anchors.fill: parent
-                anchors.leftMargin: 10
-                anchors.rightMargin: 6
-                anchors.topMargin: 2
-                anchors.bottomMargin: 2
+                anchors.leftMargin: 12
+                anchors.rightMargin: 8
+                anchors.topMargin: 4
+                anchors.bottomMargin: 12
                 spacing: 4
 
-                TextField {
-                    id: search
-                    Layout.fillWidth: true
-                    Layout.preferredHeight: 34
-                    font.pixelSize: 14
-                    placeholderText: qsTr("Search text…")
-                    onAccepted: logWin.nextMatch()
-                }
-
+                // 1: search field + next arrow
                 RowLayout {
                     Layout.fillWidth: true
-                    Layout.preferredHeight: 44   // match the main window's status bar
+                    Layout.preferredHeight: 34
+                    spacing: 4
+                    TextField {
+                        id: search
+                        Layout.fillWidth: true
+                        Layout.preferredHeight: 34
+                        font.pixelSize: 14
+                        placeholderText: qsTr("Search text…")
+                        onAccepted: logWin.nextMatch()
+                    }
+                    ToolButton {
+                        icon.source: Theme.icon("actions/go-next.svg")
+                        icon.color: "transparent"
+                        icon.width: 26; icon.height: 26
+                        Layout.preferredHeight: 34
+                        onClicked: logWin.nextMatch()
+                    }
+                }
+
+                // 2: filter label + disk combo ......... Close
+                RowLayout {
+                    Layout.fillWidth: true
+                    Layout.preferredHeight: 44
                     spacing: 6
                     Label { text: qsTr("Filter log by:") }
                     ComboBox {
@@ -181,18 +198,9 @@ Popup {
                         Layout.preferredHeight: 34
                     }
                     Item { Layout.fillWidth: true }
-                    ToolButton {
-                        icon.source: Theme.icon("actions/go-next.svg")
-                        icon.color: "transparent"
-                        icon.width: 26; icon.height: 26
-                        Layout.preferredHeight: 34
-                        onClicked: logWin.nextMatch()
-                    }
-                    ToolButton {
-                        icon.source: Theme.icon("actions/system-log-out.svg")
-                        icon.color: "transparent"
-                        icon.width: 26; icon.height: 26
-                        Layout.preferredHeight: 34
+                    Button {
+                        text: qsTr("Close")
+                        highlighted: true
                         onClicked: logWin.close()
                     }
                 }

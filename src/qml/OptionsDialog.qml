@@ -140,11 +140,6 @@ Popup {
                     font.bold: true
                     Layout.fillWidth: true
                 }
-                ToolButton {
-                    text: "✕"
-                    font.pixelSize: 18
-                    onClicked: dlg.close()
-                }
             }
         }
 

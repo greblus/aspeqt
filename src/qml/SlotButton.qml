@@ -11,6 +11,9 @@ Item {
     property bool enabledState: true
     property bool checked: false
     property string tip: ""
+    property bool spinning: false          // rotate the icon (e.g. XEX loading)
+    property url animatedSource: ""        // GIF shown while `animated` is true
+    property bool animated: false          // e.g. CAS playing -> tape.gif
     signal clicked
 
     implicitWidth: Theme.iconSize + 2 * Theme.btnPad
@@ -33,6 +36,8 @@ Item {
     }
 
     Image {
+        id: icon
+        visible: !(root.animated && root.animatedSource != "")
         anchors.centerIn: parent
         width: Theme.iconSize
         height: Theme.iconSize
@@ -40,6 +45,24 @@ Item {
         sourceSize.width: Theme.iconSize * 2
         sourceSize.height: Theme.iconSize * 2
         fillMode: Image.PreserveAspectFit
+        smooth: true
+        RotationAnimator on rotation {
+            running: root.spinning
+            loops: Animation.Infinite
+            from: 0; to: 360
+            duration: 1000
+        }
+        onVisibleChanged: if (!visible) rotation = 0
+    }
+
+    AnimatedImage {
+        visible: root.animated && root.animatedSource != ""
+        anchors.centerIn: parent
+        width: Theme.iconSize
+        height: Theme.iconSize
+        source: root.animatedSource
+        fillMode: Image.PreserveAspectFit
+        playing: visible
         smooth: true
     }
 
