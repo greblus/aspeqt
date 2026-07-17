@@ -160,3 +160,20 @@ void AppController::loaderEject() { if (m_engine) m_engine->qmlLoaderEject(); }
 void AppController::toggleSio()     { if (m_engine) m_engine->qmlToggleSio(); }
 void AppController::togglePrinter() { if (m_engine) m_engine->qmlTogglePrinter(); }
 void AppController::clearLog()      { if (m_engine) { m_engine->qmlClearLog(); } m_logHtml.clear(); emit logChanged(); }
+
+void AppController::newImage()          { if (m_engine) m_engine->qmlNewImage(); }
+void AppController::mountDiskAny()      { if (m_engine) m_engine->qmlMountDiskAny(); }
+void AppController::mountFolderAny()    { if (m_engine) m_engine->qmlMountFolderAny(); }
+void AppController::ejectAll()          { if (m_engine) m_engine->qmlEjectAll(); }
+void AppController::showPrinterOutput() { if (m_engine) m_engine->qmlShowPrinterOutput(); }
+void AppController::openSession()       { if (m_engine) m_engine->qmlOpenSession(); }
+void AppController::saveSession()       { if (m_engine) m_engine->qmlSaveSession(); }
+void AppController::options()           { if (m_engine) m_engine->qmlOptions(); }
+void AppController::logWindow()         { if (m_engine) m_engine->qmlLogWindow(); }
+void AppController::quit()              { if (m_engine) m_engine->qmlQuit(); }
+QStringList AppController::recentFiles(){ return m_engine ? m_engine->qmlRecentFiles() : QStringList(); }
+void AppController::mountRecent(int i)  { if (m_engine) m_engine->qmlMountRecent(i); }
+
+QVariantMap AppController::loadOptions()          { return m_engine ? m_engine->qmlLoadOptions() : QVariantMap(); }
+void AppController::applyOptions(const QVariantMap &o) { if (m_engine) m_engine->qmlApplyOptions(o); }
+QVariantList AppController::languages()           { return m_engine ? m_engine->qmlLanguages() : QVariantList(); }

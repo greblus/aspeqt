@@ -5,6 +5,10 @@
 #include "diskimagepro.h"
 #include "folderimage.h"
 #include <QVariant>
+#ifdef Q_OS_ANDROID
+#include <QJniObject>
+#include <jni.h>
+#endif
 #include "pclink.h"
 #include "miscdevices.h"
 #include "aspeqtsettings.h"
@@ -3583,5 +3587,114 @@ void MainWindow::qmlClearLog()
     ui->textEdit->clear();
     emit sendLogText(QString());
     emit qmlChanged();
+}
+
+void MainWindow::qmlNewImage()         { on_actionNewImage_triggered(); }
+void MainWindow::qmlMountDiskAny()     { on_actionMountDisk_triggered(); }
+void MainWindow::qmlMountFolderAny()   { on_actionMountFolder_triggered(); }
+void MainWindow::qmlEjectAll()         { on_actionEjectAll_triggered(); }
+void MainWindow::qmlShowPrinterOutput(){ on_actionShowPrinterTextOutput_triggered(); }
+void MainWindow::qmlOpenSession()      { on_actionOpenSession_triggered(); }
+void MainWindow::qmlSaveSession()      { on_actionSaveSession_triggered(); }
+void MainWindow::qmlOptions()          { on_actionOptions_triggered(); }
+void MainWindow::qmlLogWindow()        { on_actionLogWindow_triggered(); }
+void MainWindow::qmlQuit()             { close(); qApp->quit(); }
+
+QStringList MainWindow::qmlRecentFiles()
+{
+    QStringList out;
+    for (int i = 0; i < 10; ++i)
+        out << aspeqtSettings->recentImageSetting(i).fileName;
+    return out;
+}
+
+QVariantMap MainWindow::qmlLoadOptions()
+{
+    QVariantMap o;
+    o["iface"]            = (aspeqtSettings->serialPortInterface() == SIO2BT) ? 1 : 0;
+    o["handshake"]        = aspeqtSettings->serialPortHandshakingMethod();
+    o["baud"]             = aspeqtSettings->serialPortMaximumSpeed();
+    o["btName"]           = aspeqtSettings->bluetoothName();
+    o["ackDelay"]         = aspeqtSettings->writeACKDelay();
+    o["useDivisors"]      = aspeqtSettings->serialPortUsePokeyDivisors();
+    o["pokeyDivisor"]     = aspeqtSettings->serialPortPokeyDivisor();
+    o["hsExeLoader"]      = aspeqtSettings->useHighSpeedExeLoader();
+    o["useCustomCasBaud"] = aspeqtSettings->useCustomCasBaud();
+    o["customCasBaud"]    = aspeqtSettings->customCasBaud();
+    o["filterUscore"]     = aspeqtSettings->filterUnderscore();
+    o["saveWinPos"]       = aspeqtSettings->saveWindowsPos();
+    o["largeFont"]        = aspeqtSettings->useLargeFont();
+    o["language"]         = aspeqtSettings->i18nLanguage();
+    return o;
+}
+
+void MainWindow::qmlApplyOptions(const QVariantMap &o)
+{
+    int ifaceVal = o.value("iface").toInt() == 1 ? SIO2BT : 0;
+    aspeqtSettings->setSerialPortName(ifaceVal == SIO2BT ? "SIO2BT" : "SIO2PC");
+    aspeqtSettings->setSerialPortInterface(ifaceVal);
+    aspeqtSettings->setWriteACKDelay(o.value("ackDelay").toInt());
+    aspeqtSettings->setBluetoothName(o.value("btName").toString());
+    aspeqtSettings->setSerialPortHandshakingMethod(o.value("handshake").toInt());
+    aspeqtSettings->setSerialPortMaximumSpeed(o.value("baud").toInt());
+    aspeqtSettings->setSerialPortUsePokeyDivisors(o.value("useDivisors").toBool());
+    aspeqtSettings->setSerialPortPokeyDivisor(o.value("pokeyDivisor").toInt());
+    aspeqtSettings->setUseHighSpeedExeLoader(o.value("hsExeLoader").toBool());
+    aspeqtSettings->setUseCustomCasBaud(o.value("useCustomCasBaud").toBool());
+    aspeqtSettings->setCustomCasBaud(o.value("customCasBaud").toInt());
+    aspeqtSettings->setsaveWindowsPos(o.value("saveWinPos").toBool());
+    aspeqtSettings->setfilterUnderscore(o.value("filterUscore").toBool());
+    aspeqtSettings->setUseLargeFont(o.value("largeFont").toBool());
+#ifdef Q_OS_ANDROID
+    int serial_int = aspeqtSettings->serialPortInterface();
+    QJniObject::callStaticMethod<void>("net/greblus/SerialActivity", "changeDevice", "(I)V", serial_int);
+    QJniObject b_name = QJniObject::fromString(aspeqtSettings->bluetoothName());
+    jstring bluetooth_name = b_name.object<jstring>();
+    QJniObject::setStaticField("net/greblus/SerialActivity", "bluetoothName", bluetooth_name);
+#endif
+    aspeqtSettings->setBackend(0);
+    aspeqtSettings->setI18nLanguage(o.value("language").toString());
+    emit qmlChanged();
+}
+
+// Available UI languages: Automatic + English + every bundled aspeqt_*.qm
+// (native name = that translation's rendering of "English").
+QVariantList MainWindow::qmlLanguages()
+{
+    QVariantList langs;
+    langs << QVariantMap{ { "code", "auto" }, { "name", tr("Automatic") } };
+    langs << QVariantMap{ { "code", "en" },   { "name", "English" } };
+    QDir dir(":/translations/i18n/");
+    QStringList filters;
+    filters << "aspeqt_*.qm";
+    const QStringList entries = dir.entryList(filters, QDir::Files, QDir::Name);
+    for (const QString &f : entries) {
+        QString code = f.mid(7);
+        code.replace(".qm", "");
+        QString name = code;
+        QTranslator t;
+        if (t.load(":/translations/i18n/" + f)) {
+            QString native = t.translate("OptionsDialog", "English");
+            if (!native.isEmpty()) name = native;
+        }
+        langs << QVariantMap{ { "code", code }, { "name", name } };
+    }
+    return langs;
+}
+
+void MainWindow::qmlMountRecent(int index)
+{
+    switch (index) {
+    case 0: on_actionMountRecent_0_triggered(); break;
+    case 1: on_actionMountRecent_1_triggered(); break;
+    case 2: on_actionMountRecent_2_triggered(); break;
+    case 3: on_actionMountRecent_3_triggered(); break;
+    case 4: on_actionMountRecent_4_triggered(); break;
+    case 5: on_actionMountRecent_5_triggered(); break;
+    case 6: on_actionMountRecent_6_triggered(); break;
+    case 7: on_actionMountRecent_7_triggered(); break;
+    case 8: on_actionMountRecent_8_triggered(); break;
+    case 9: on_actionMountRecent_9_triggered(); break;
+    }
 }
 #endif // ASPEQT_QML

@@ -3,3 +3,4 @@ Badge Badge.qml
 SlotButton SlotButton.qml
 SlotCard SlotCard.qml
 LoaderCard LoaderCard.qml
+OptionsDialog OptionsDialog.qml

@@ -1,0 +1,246 @@
+import QtQuick
+import QtQuick.Controls
+import QtQuick.Controls.Material
+import QtQuick.Layouts
+import "."
+
+// Options screen — faithful to the Android QtWidgets OptionsDialog layout, minus
+// the obsolete "custom drive numbers" (slot order) field. Values load from and
+// save to the engine via app.loadOptions()/applyOptions().
+Popup {
+    id: dlg
+    parent: Overlay.overlay
+    width: parent ? parent.width : 420
+    height: parent ? parent.height : 900
+    modal: true
+    padding: 0
+    closePolicy: Popup.NoAutoClose
+
+    function load() {
+        var o = app.loadOptions()
+        ifaceGroup.select(o.iface)
+        hsGroup.select(o.handshake)
+        baudGroup.select(o.baud)
+        btName.text = o.btName
+        ackDelay.value = o.ackDelay
+        useDivisors.checked = o.useDivisors
+        pokeyDivisor.value = o.pokeyDivisor
+        hsExeLoader.checked = o.hsExeLoader
+        useCustomCas.checked = o.useCustomCasBaud
+        customCasBaud.value = o.customCasBaud
+        filterUscore.checked = o.filterUscore
+        saveWinPos.checked = o.saveWinPos
+        largeFont.checked = o.largeFont
+        langBox.model = app.languages()
+        langBox.currentIndex = Math.max(0, langBox.indexOfValue(o.language))
+    }
+
+    function save() {
+        app.applyOptions({
+            "iface": ifaceGroup.value,
+            "handshake": hsGroup.value,
+            "baud": baudGroup.value,
+            "btName": btName.text,
+            "ackDelay": ackDelay.value,
+            "useDivisors": useDivisors.checked,
+            "pokeyDivisor": pokeyDivisor.value,
+            "hsExeLoader": hsExeLoader.checked,
+            "useCustomCasBaud": useCustomCas.checked,
+            "customCasBaud": customCasBaud.value,
+            "filterUscore": filterUscore.checked,
+            "saveWinPos": saveWinPos.checked,
+            "largeFont": largeFont.checked,
+            "language": langBox.currentValue
+        })
+        dlg.close()
+    }
+
+    // A radio group that remembers an integer value per button.
+    component IntGroup: QtObject {
+        property ButtonGroup group: ButtonGroup {}
+        property int value: -1
+        function select(v) {
+            var b = group.buttons
+            for (var i = 0; i < b.length; ++i)
+                if (b[i].val === v) { b[i].checked = true; value = v; return }
+        }
+    }
+    // section title
+    component SectionTitle: Label {
+        Layout.topMargin: 6
+        font.pixelSize: 15
+        font.bold: true
+        color: Theme.primary
+    }
+
+    IntGroup { id: ifaceGroup }
+    IntGroup { id: hsGroup }
+    IntGroup { id: baudGroup }
+
+    Connections {
+        target: ifaceGroup.group
+        function onClicked(b) { ifaceGroup.value = b.val }
+    }
+    Connections {
+        target: hsGroup.group
+        function onClicked(b) { hsGroup.value = b.val }
+    }
+    Connections {
+        target: baudGroup.group
+        function onClicked(b) { baudGroup.value = b.val }
+    }
+
+    background: Rectangle { color: Material.background }
+
+    contentItem: ColumnLayout {
+        spacing: 0
+
+        // header bar
+        ToolBar {
+            Layout.fillWidth: true
+            Material.primary: Theme.primary
+            Material.foreground: "white"
+            RowLayout {
+                anchors.fill: parent
+                anchors.leftMargin: 12
+                anchors.rightMargin: 4
+                Label {
+                    text: qsTr("Options")
+                    color: "white"
+                    font.pixelSize: 20
+                    font.bold: true
+                    Layout.fillWidth: true
+                }
+                ToolButton {
+                    text: "✕"
+                    font.pixelSize: 18
+                    onClicked: dlg.close()
+                }
+            }
+        }
+
+        // scrollable body
+        ScrollView {
+            Layout.fillWidth: true
+            Layout.fillHeight: true
+            clip: true
+            contentWidth: availableWidth
+            ScrollBar.horizontal.policy: ScrollBar.AlwaysOff
+
+            ColumnLayout {
+                width: parent.width
+                spacing: 8
+
+                // ---- SIO port emulation -----------------------------------
+                SectionTitle { text: qsTr("SIO port emulation") }
+
+                Label { text: qsTr("Serial interface:") }
+                RowLayout {
+                    RadioButton { property int val: 0; text: "SIO2PC"; ButtonGroup.group: ifaceGroup.group }
+                    RadioButton { property int val: 1; text: "SIO2BT"; ButtonGroup.group: ifaceGroup.group }
+                }
+
+                Label { text: qsTr("Handshake method:") }
+                Flow {
+                    Layout.fillWidth: true
+                    spacing: 4
+                    RadioButton { property int val: 0; text: "RI";   ButtonGroup.group: hsGroup.group }
+                    RadioButton { property int val: 1; text: "DSR";  ButtonGroup.group: hsGroup.group }
+                    RadioButton { property int val: 2; text: "CTS";  ButtonGroup.group: hsGroup.group }
+                    RadioButton { property int val: 3; text: "SOFT"; ButtonGroup.group: hsGroup.group }
+                }
+
+                Label { text: qsTr("High speed mode baud rate:") }
+                ColumnLayout {
+                    spacing: 0
+                    RadioButton { property int val: 0; text: "19200 (1x)"; ButtonGroup.group: baudGroup.group }
+                    RadioButton { property int val: 1; text: "38400 (2x)"; ButtonGroup.group: baudGroup.group }
+                    RadioButton { property int val: 2; text: "57600 (3x)"; ButtonGroup.group: baudGroup.group }
+                }
+
+                Label { text: qsTr("Bluetooth name:") }
+                TextField {
+                    id: btName
+                    Layout.fillWidth: true
+                    placeholderText: "SIO2BT"
+                }
+
+                RowLayout {
+                    Layout.fillWidth: true
+                    Label { text: qsTr("Write ACK delay [ms]"); Layout.fillWidth: true }
+                    SpinBox { id: ackDelay; from: 0; to: 40 }
+                }
+
+                CheckBox { id: useDivisors; text: qsTr("Use non-standard speeds") }
+                RowLayout {
+                    Layout.fillWidth: true
+                    enabled: useDivisors.checked
+                    Label { text: qsTr("High speed mode POKEY divisor:"); Layout.fillWidth: true }
+                    SpinBox { id: pokeyDivisor; from: 0; to: 40 }
+                }
+
+                MenuSeparator { Layout.fillWidth: true }
+
+                // ---- Emulation settings -----------------------------------
+                SectionTitle { text: qsTr("Emulation settings") }
+                CheckBox { id: hsExeLoader; text: qsTr("Use high speed executable loader") }
+                CheckBox { id: useCustomCas; text: qsTr("Use custom baud rate for cassette emulation") }
+                RowLayout {
+                    Layout.fillWidth: true
+                    enabled: useCustomCas.checked
+                    Label { text: qsTr("Cassette baud rate:"); Layout.fillWidth: true }
+                    SpinBox { id: customCasBaud; from: 425; to: 875 }
+                }
+
+                MenuSeparator { Layout.fillWidth: true }
+
+                // ---- Folder images ----------------------------------------
+                SectionTitle { text: qsTr("Folder images") }
+                CheckBox { id: filterUscore; text: qsTr("Filter out underscore character from file names") }
+                Label {
+                    text: qsTr("(Required for AtariDOS compatibility)")
+                    color: Theme.typeGrey
+                    font.pixelSize: 12
+                    Layout.leftMargin: 8
+                }
+
+                MenuSeparator { Layout.fillWidth: true }
+
+                // ---- User interface ---------------------------------------
+                SectionTitle { text: qsTr("User interface") }
+                Label { text: qsTr("Language:") }
+                ComboBox {
+                    id: langBox
+                    Layout.fillWidth: true
+                    textRole: "name"
+                    valueRole: "code"
+                }
+                CheckBox { id: saveWinPos; text: qsTr("Save window positions and sizes") }
+                CheckBox { id: largeFont;  text: qsTr("Use larger font in drive slot descriptions") }
+
+                Item { Layout.preferredHeight: 8 }
+            }
+        }
+
+        // footer
+        Frame {
+            Layout.fillWidth: true
+            padding: 8
+            background: Rectangle { color: "#ECECEC" }
+            RowLayout {
+                anchors.fill: parent
+                Item { Layout.fillWidth: true }
+                Button {
+                    text: qsTr("Cancel")
+                    flat: true
+                    onClicked: dlg.close()
+                }
+                Button {
+                    text: qsTr("Save")
+                    highlighted: true
+                    onClicked: dlg.save()
+                }
+            }
+        }
+    }
+}

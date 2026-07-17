@@ -115,6 +115,25 @@ public:
     Q_INVOKABLE void togglePrinter();
     Q_INVOKABLE void clearLog();
 
+    // menu items
+    Q_INVOKABLE void newImage();
+    Q_INVOKABLE void mountDiskAny();
+    Q_INVOKABLE void mountFolderAny();
+    Q_INVOKABLE void ejectAll();
+    Q_INVOKABLE void showPrinterOutput();
+    Q_INVOKABLE void openSession();
+    Q_INVOKABLE void saveSession();
+    Q_INVOKABLE void options();
+    Q_INVOKABLE void logWindow();
+    Q_INVOKABLE void quit();
+    Q_INVOKABLE QStringList recentFiles();
+    Q_INVOKABLE void mountRecent(int index);
+
+    // options window
+    Q_INVOKABLE QVariantMap  loadOptions();
+    Q_INVOKABLE void         applyOptions(const QVariantMap &o);
+    Q_INVOKABLE QVariantList languages();
+
 signals:
     void loaderChanged();
     void statusChanged();

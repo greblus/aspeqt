@@ -261,6 +261,23 @@ public:
     void qmlToggleSio();
     void qmlTogglePrinter();
     void qmlClearLog();
+    // menu items (mirror the QtWidgets menu bar)
+    void qmlNewImage();
+    void qmlMountDiskAny();
+    void qmlMountFolderAny();
+    void qmlEjectAll();
+    void qmlShowPrinterOutput();
+    void qmlOpenSession();
+    void qmlSaveSession();
+    void qmlOptions();
+    void qmlLogWindow();
+    void qmlQuit();
+    QStringList qmlRecentFiles();
+    void qmlMountRecent(int index);
+    // options window
+    QVariantMap  qmlLoadOptions();
+    void         qmlApplyOptions(const QVariantMap &o);
+    QVariantList qmlLanguages();
 signals:
     void qmlChanged();
 private:
