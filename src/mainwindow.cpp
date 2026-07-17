@@ -4,6 +4,7 @@
 #include "diskimage.h"
 #include "diskimagepro.h"
 #include "folderimage.h"
+#include "atarifilesystem.h"
 #include <QVariant>
 #ifdef Q_OS_ANDROID
 #include <QJniObject>
@@ -498,6 +499,9 @@ MainWindow::MainWindow(QWidget *parent)
 
     Printer *printer = new Printer(sio);
     connect(printer, SIGNAL(print(QString)), textPrinterWindow, SLOT(print(QString)));
+#ifdef ASPEQT_QML
+    connect(printer, SIGNAL(print(QString)), this, SIGNAL(qmlPrinterTextChanged()));
+#endif
     sio->installDevice(0x40, printer);
     untitledName = 0;
 
@@ -1295,7 +1299,7 @@ void MainWindow::loaderSetFill(double frac)
 {
     m_loaderFill = frac;
 #ifdef ASPEQT_QML
-    emit qmlChanged();
+    emit qmlLoaderProgress();   // light: only the loader fill, no full model reset
 #endif
     if (!m_loaderFrame) return;
     if (frac <= 0.0 || frac >= 1.0) {
@@ -3566,15 +3570,18 @@ QVariantMap MainWindow::qmlLoaderState()
     m["playEnabled"]  = casReady;
     m["retryEnabled"] = !m_loaderFile.isEmpty();
     m["ejectEnabled"] = m_loaderKind != 0;
+    m["loading"]      = m_loaderFill > 0.0 && m_loaderFill < 1.0;
+    m["casPlaying"]   = m_casWorker && m_casWorker->isRunning();
     return m;
 }
 
 QVariantMap MainWindow::qmlStatus()
 {
+    extern bool g_printerEmu;
     QVariantMap m;
     m["running"]   = m_emulationRunning;
     m["speed"]     = speedLabel ? speedLabel->text() : QString();
-    m["printerOn"] = ui->actionPrinterEmulation->isChecked();
+    m["printerOn"] = g_printerEmu;
     return m;
 }
 
@@ -3629,9 +3636,42 @@ void MainWindow::qmlClearLog()
 
 void MainWindow::qmlNewImage()         { on_actionNewImage_triggered(); }
 void MainWindow::qmlMountDiskAny()     { on_actionMountDisk_triggered(); }
+
+// Create + format + mount a new disk image (port of on_actionNewImage_triggered
+// without the widget dialog; geometry chosen in the QML CreateDiskDialog).
+void MainWindow::qmlCreateDisk(int sectorCount, int sectorSize)
+{
+    if (sectorCount <= 0 || sectorSize <= 0) return;
+    SimpleDiskImage *disk = new SimpleDiskImage(sio);
+    connect(disk, SIGNAL(statusChanged(int)), this, SLOT(deviceStatusChanged(int)), Qt::QueuedConnection);
+    if (!disk->create(++untitledName)) { delete disk; return; }
+
+    DiskGeometry g;
+    uint size = (uint)sectorCount * sectorSize;
+    if (sectorSize == 256) {
+        if (sectorCount >= 3) size -= 384;
+        else                  size -= sectorCount * 128;
+    }
+    g.initialize(size, sectorSize);
+    if (!disk->format(g)) { delete disk; return; }
+
+    int no = firstEmptyDiskSlot(0, true);
+    if (!ejectImage(no)) { delete disk; return; }
+    sio->installDevice(0x31 + no, disk);
+    deviceStatusChanged(0x31 + no);
+    qDebug() << "!n" << tr("[%1] Mounted '%2' as '%3'.")
+            .arg(disk->deviceName())
+            .arg(friendlyName(disk->originalFileName()))
+            .arg(disk->description());
+    emit qmlChanged();
+}
 void MainWindow::qmlMountFolderAny()   { on_actionMountFolder_triggered(); }
 void MainWindow::qmlEjectAll()         { on_actionEjectAll_triggered(); }
 void MainWindow::qmlShowPrinterOutput(){ on_actionShowPrinterTextOutput_triggered(); }
+QString MainWindow::qmlPrinterText()   { return textPrinterWindow ? textPrinterWindow->qmlText() : QString(); }
+QString MainWindow::qmlPrinterTextAtascii() { return textPrinterWindow ? textPrinterWindow->qmlTextAtascii() : QString(); }
+void MainWindow::qmlPrinterClear()     { if (textPrinterWindow) textPrinterWindow->qmlClear(); emit qmlPrinterTextChanged(); }
+void MainWindow::qmlPrinterSave()      { if (textPrinterWindow) textPrinterWindow->qmlSave(); }
 void MainWindow::qmlOpenSession()      { on_actionOpenSession_triggered(); }
 void MainWindow::qmlSaveSession()      { on_actionSaveSession_triggered(); }
 void MainWindow::qmlOptions()          { on_actionOptions_triggered(); }
@@ -3727,6 +3767,195 @@ QVariantList MainWindow::qmlLanguages()
         langs << QVariantMap{ { "code", code }, { "name", name } };
     }
     return langs;
+}
+
+// -- disk viewer/editor bridge ----------------------------------------------
+static AtariFileSystem *createDiskFs(int index, SimpleDiskImage *disk)
+{
+    switch (index) {
+    case 1: return new Dos10FileSystem(disk);
+    case 2: return new Dos20FileSystem(disk);
+    case 3: return new Dos25FileSystem(disk);
+    case 4: return new MyDosFileSystem(disk);
+    case 5: return new SpartaDosFileSystem(disk);
+    }
+    return nullptr;
+}
+
+bool MainWindow::qmlDiskOpen(int hwIndex)
+{
+    qmlDiskClose();
+    SimpleDiskImage *img = qobject_cast<SimpleDiskImage *>(sio->getDevice(0x31 + hwIndex));
+    if (!img) return false;
+    m_dvDisk = img;
+    m_dvDisk->lock();
+    // Open even when the type is unknown (0): the viewer shows a filesystem-type
+    // override combo so the user can pick it manually.
+    m_dvFsType = img->defaultFileSystem();
+    m_dvFs = createDiskFs(m_dvFsType, img);
+    m_dvPaths.clear();
+    m_dvDirs.clear();
+    if (m_dvFs) m_dvDirs.append(m_dvFs->rootDir());
+    return true;
+}
+
+bool MainWindow::qmlDiskReadOnly()
+{
+    // Folder images are read-only virtual disks (writeSector is a no-op).
+    return !m_dvDisk || qobject_cast<FolderImage *>(m_dvDisk) != nullptr;
+}
+
+int MainWindow::qmlDiskFsType() { return m_dvFsType; }
+
+void MainWindow::qmlDiskSetFsType(int index)
+{
+    if (!m_dvDisk) return;
+    if (m_dvFs) { delete m_dvFs; m_dvFs = nullptr; }
+    m_dvFsType = index;
+    m_dvFs = createDiskFs(index, m_dvDisk);
+    m_dvPaths.clear();
+    m_dvDirs.clear();
+    if (m_dvFs) m_dvDirs.append(m_dvFs->rootDir());
+}
+
+void MainWindow::qmlDiskClose()
+{
+    if (m_dvFs)   { delete m_dvFs; m_dvFs = nullptr; }
+    if (m_dvDisk) { m_dvDisk->unlock(); m_dvDisk = nullptr; }
+    m_dvDirs.clear();
+    m_dvPaths.clear();
+}
+
+QVariantList MainWindow::qmlDiskEntries()
+{
+    QVariantList out;
+    if (!m_dvFs || m_dvDirs.isEmpty()) return out;
+    const QList<AtariDirEntry> entries = m_dvFs->getEntries(m_dvDirs.last());
+    for (const AtariDirEntry &e : entries) {
+        QVariantMap m;
+        m["name"]  = e.niceName();
+        m["size"]  = e.size;
+        m["isDir"] = bool(e.attributes & AtariDirEntry::Directory);
+        m["attrs"] = e.attributeNames();
+        m["date"]  = e.dateTime.isValid() ? e.dateTime.toString("yyyy-MM-dd") : QString();
+        out << m;
+    }
+    return out;
+}
+
+QString MainWindow::qmlDiskPath()
+{
+    if (!m_dvFs || !m_dvDisk) return QString();
+    QString p = QString("D%1:").arg(m_dvDisk->deviceNo() - 0x30);
+    for (const QString &s : m_dvPaths) p.append(s + ">");
+    return p;
+}
+
+bool MainWindow::qmlDiskCanParent() { return !m_dvPaths.isEmpty(); }
+
+void MainWindow::qmlDiskEnter(int row)
+{
+    if (!m_dvFs || m_dvDirs.isEmpty()) return;
+    const QList<AtariDirEntry> entries = m_dvFs->getEntries(m_dvDirs.last());
+    if (row < 0 || row >= entries.size()) return;
+    const AtariDirEntry &e = entries.at(row);
+    if (!(e.attributes & AtariDirEntry::Directory)) return;
+    m_dvPaths.append(e.name());
+    m_dvDirs.append(e.firstSector);
+}
+
+void MainWindow::qmlDiskParent()
+{
+    if (m_dvPaths.isEmpty()) return;
+    m_dvPaths.removeLast();
+    m_dvDirs.removeLast();
+}
+
+static QList<AtariDirEntry> dvPickRows(AtariFileSystem *fs, quint16 dir, const QVariantList &rows)
+{
+    QList<AtariDirEntry> out;
+    const QList<AtariDirEntry> entries = fs->getEntries(dir);
+    for (const QVariant &v : rows) {
+        int r = v.toInt();
+        if (r >= 0 && r < entries.size()) out.append(entries.at(r));
+    }
+    return out;
+}
+
+void MainWindow::qmlDiskSetTextConversion(bool on)
+{
+    if (m_dvFs) m_dvFs->setTextConversion(on);
+}
+
+bool MainWindow::qmlDiskExtract(const QVariantList &rows)
+{
+    if (!m_dvFs || m_dvDirs.isEmpty() || rows.isEmpty()) return false;
+    QList<AtariDirEntry> sel = dvPickRows(m_dvFs, m_dvDirs.last(), rows);
+    if (sel.isEmpty()) return false;
+
+    QString target;
+#ifdef Q_OS_ANDROID
+    QJniObject jdir = QJniObject::fromString(aspeqtSettings->lastExtractDir());
+    QJniObject::callStaticMethod<void>("net/greblus/SerialActivity", "runDirChooser",
+        "(Ljava/lang/String;)V", jdir.object<jstring>());
+    do {
+        QJniObject j = QJniObject::getStaticObjectField<jstring>("net/greblus/SerialActivity", "m_chosen");
+        target = j.toString();
+        if (target == "Cancelled") { target.clear(); break; }
+        if (target == "None") QThread::yieldCurrentThread();
+    } while (target == "None");
+#endif
+    if (target.isEmpty()) return false;
+    aspeqtSettings->setLastExtractDir(target);
+    m_dvFs->extractRecursive(sel, target);
+    return true;
+}
+
+bool MainWindow::qmlDiskDelete(const QVariantList &rows)
+{
+    if (!m_dvFs || m_dvDirs.isEmpty() || rows.isEmpty()) return false;
+    // Same native confirmation dialog as the MyPicoDOS install prompt.
+    if (QMessageBox::question(this, tr("Confirmation"),
+            tr("Are you sure you want to delete selected files?"),
+            QMessageBox::Yes | QMessageBox::No, QMessageBox::No) != QMessageBox::Yes)
+        return false;
+    QList<AtariDirEntry> sel = dvPickRows(m_dvFs, m_dvDirs.last(), rows);
+    if (sel.isEmpty()) return false;
+    m_dvFs->deleteRecursive(sel);
+    return true;
+}
+
+bool MainWindow::qmlDiskAddFiles()
+{
+    if (!m_dvFs || m_dvDirs.isEmpty()) return false;
+    QStringList files;
+#ifdef Q_OS_ANDROID
+    QUrl url = QFileDialog::getOpenFileUrl(this, tr("Add files"), QUrl());
+    if (url.isEmpty()) return false;
+    QString uri = androidContentUri(url);
+    QFile src(uri);
+    if (!src.open(QIODevice::ReadOnly)) return false;
+    QByteArray bytes = src.readAll();
+    src.close();
+    QJniObject jn = QJniObject::callStaticObjectMethod(
+        "net/greblus/SerialActivity", "displayName",
+        "(Ljava/lang/String;)Ljava/lang/String;",
+        QJniObject::fromString(uri).object<jstring>());
+    QString displayName = jn.isValid() ? jn.toString() : QString();
+    if (displayName.isEmpty()) displayName = QStringLiteral("FILE");
+    QString tmpDir = QStandardPaths::writableLocation(QStandardPaths::CacheLocation) + "/addfile";
+    QDir(tmpDir).removeRecursively();
+    QDir().mkpath(tmpDir);
+    QString tmpPath = tmpDir + "/" + displayName;
+    QFile dst(tmpPath);
+    if (!dst.open(QIODevice::WriteOnly | QIODevice::Truncate)) return false;
+    dst.write(bytes);
+    dst.close();
+    files.append(tmpPath);
+#endif
+    if (files.isEmpty()) return false;
+    m_dvFs->insertRecursive(m_dvDirs.last(), files);
+    return true;
 }
 
 void MainWindow::qmlMountRecent(int index)

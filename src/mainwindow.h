@@ -40,6 +40,8 @@ namespace Ui
     class MainWindow;
 }
 class AutoBoot;
+class AtariFileSystem;
+class SimpleDiskImage;
 class DiskWidgets
 {
 public:
@@ -84,6 +86,13 @@ private:
     DiskWidgets diskWidgets[MAX_DISKS];    //
     int m_numDisks;                        // active number of drive slots
     bool m_emulationRunning = false;       // SIO worker running (mirrored to QML)
+
+    // QML disk viewer state (entries are re-fetched per call, not stored)
+    AtariFileSystem *m_dvFs = nullptr;
+    SimpleDiskImage *m_dvDisk = nullptr;
+    int m_dvFsType = 0;                    // current filesystem type (0..5)
+    QList<quint16> m_dvDirs;               // directory sector stack
+    QStringList m_dvPaths;                 // directory name stack
     QLabel *speedLabel, *onOffLabel, *prtOnOffLabel, *netLabel, *clearMessagesLabel;  //
     TextPrinterWindow *textPrinterWindow;
     DocDisplayWindow *docDisplayWindow;    //
@@ -263,10 +272,15 @@ public:
     void qmlClearLog();
     // menu items (mirror the QtWidgets menu bar)
     void qmlNewImage();
+    void qmlCreateDisk(int sectorCount, int sectorSize);
     void qmlMountDiskAny();
     void qmlMountFolderAny();
     void qmlEjectAll();
     void qmlShowPrinterOutput();
+    QString qmlPrinterText();
+    QString qmlPrinterTextAtascii();
+    void    qmlPrinterClear();
+    void    qmlPrinterSave();
     void qmlOpenSession();
     void qmlSaveSession();
     void qmlOptions();
@@ -278,8 +292,25 @@ public:
     QVariantMap  qmlLoadOptions();
     void         qmlApplyOptions(const QVariantMap &o);
     QVariantList qmlLanguages();
+    // disk viewer/editor
+    bool         qmlDiskOpen(int hwIndex);
+    void         qmlDiskClose();
+    QVariantList qmlDiskEntries();
+    QString      qmlDiskPath();
+    bool         qmlDiskCanParent();
+    bool         qmlDiskReadOnly();
+    int          qmlDiskFsType();
+    void         qmlDiskSetFsType(int index);
+    void         qmlDiskEnter(int row);
+    void         qmlDiskParent();
+    void         qmlDiskSetTextConversion(bool on);
+    bool         qmlDiskExtract(const QVariantList &rows);
+    bool         qmlDiskDelete(const QVariantList &rows);
+    bool         qmlDiskAddFiles();
 signals:
     void qmlChanged();
+    void qmlLoaderProgress();   // frequent, loader-only (progress fill)
+    void qmlPrinterTextChanged();
 private:
 #endif
 

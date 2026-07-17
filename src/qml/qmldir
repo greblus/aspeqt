@@ -5,3 +5,6 @@ SlotCard SlotCard.qml
 LoaderCard LoaderCard.qml
 OptionsDialog OptionsDialog.qml
 LogWindow LogWindow.qml
+DiskViewer DiskViewer.qml
+CreateDiskDialog CreateDiskDialog.qml
+PrintWindow PrintWindow.qml

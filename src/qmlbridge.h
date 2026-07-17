@@ -68,11 +68,15 @@ class AppController : public QObject
     Q_PROPERTY(bool    loaderPlayEnabled READ loaderPlayEnabled NOTIFY loaderChanged)
     Q_PROPERTY(bool    loaderRetryEnabled READ loaderRetryEnabled NOTIFY loaderChanged)
     Q_PROPERTY(bool    loaderEjectEnabled READ loaderEjectEnabled NOTIFY loaderChanged)
+    Q_PROPERTY(bool    loaderLoading    READ loaderLoading    NOTIFY loaderChanged)
+    Q_PROPERTY(bool    loaderCasPlaying READ loaderCasPlaying NOTIFY loaderChanged)
     Q_PROPERTY(QString statusText READ statusText NOTIFY statusChanged)
     Q_PROPERTY(bool    sioRunning READ sioRunning NOTIFY statusChanged)
     Q_PROPERTY(bool    printerOn  READ printerOn  NOTIFY statusChanged)
     Q_PROPERTY(QString logHtml    READ logHtml    NOTIFY logChanged)
     Q_PROPERTY(bool    canAddSlot READ canAddSlot NOTIFY drivesChanged)
+    Q_PROPERTY(QString printerText READ printerText NOTIFY printerTextChanged)
+    Q_PROPERTY(QString printerTextAtascii READ printerTextAtascii NOTIFY printerTextChanged)
 
 public:
     explicit AppController(MainWindow *engine, QObject *parent = nullptr);
@@ -86,12 +90,18 @@ public:
     bool    loaderPlayEnabled() const  { return m_loaderPlayEnabled; }
     bool    loaderRetryEnabled() const { return m_loaderRetryEnabled; }
     bool    loaderEjectEnabled() const { return m_loaderEjectEnabled; }
+    bool    loaderLoading() const      { return m_loaderLoading; }
+    bool    loaderCasPlaying() const   { return m_loaderCasPlaying; }
 
     QString statusText() const { return m_statusText; }
     bool    sioRunning() const { return m_sioRunning; }
     bool    printerOn() const  { return m_printerOn; }
     QString logHtml() const    { return m_logHtml; }
     bool    canAddSlot() const { return m_canAddSlot; }
+    QString printerText() const { return m_printerText; }
+    QString printerTextAtascii() const { return m_printerTextAtascii; }
+    Q_INVOKABLE void printerClear();
+    Q_INVOKABLE void printerSave();
 
     // Actions from QML -> engine wrappers.
     Q_INVOKABLE void mountDisk(int hwIndex);
@@ -117,6 +127,7 @@ public:
 
     // menu items
     Q_INVOKABLE void newImage();
+    Q_INVOKABLE void createDisk(int sectorCount, int sectorSize);
     Q_INVOKABLE void mountDiskAny();
     Q_INVOKABLE void mountFolderAny();
     Q_INVOKABLE void ejectAll();
@@ -134,14 +145,33 @@ public:
     Q_INVOKABLE void         applyOptions(const QVariantMap &o);
     Q_INVOKABLE QVariantList languages();
 
+    // disk viewer/editor
+    Q_INVOKABLE bool         diskOpen(int hwIndex);
+    Q_INVOKABLE void         diskClose();
+    Q_INVOKABLE QVariantList diskEntries();
+    Q_INVOKABLE QString      diskPath();
+    Q_INVOKABLE bool         diskCanParent();
+    Q_INVOKABLE bool         diskReadOnly();
+    Q_INVOKABLE int          diskFsType();
+    Q_INVOKABLE void         diskSetFsType(int index);
+    Q_INVOKABLE void         diskEnter(int row);
+    Q_INVOKABLE void         diskParent();
+    Q_INVOKABLE void         diskSetTextConversion(bool on);
+    Q_INVOKABLE bool         diskExtract(const QVariantList &rows);
+    Q_INVOKABLE bool         diskDelete(const QVariantList &rows);
+    Q_INVOKABLE bool         diskAddFiles();
+
 signals:
     void loaderChanged();
     void statusChanged();
     void logChanged();
     void drivesChanged();
+    void printerTextChanged();
 
 private slots:
     void refresh();                              // pull engine state -> model
+    void refreshLoader();                        // light: loader progress only
+    void refreshPrinter();                       // printer text updated
     void onLogMessage(int type, const QString &msg);
 
 private:
@@ -155,12 +185,16 @@ private:
     bool    m_loaderPlayEnabled = false;
     bool    m_loaderRetryEnabled = false;
     bool    m_loaderEjectEnabled = false;
+    bool    m_loaderLoading = false;
+    bool    m_loaderCasPlaying = false;
 
     QString m_statusText;
     bool    m_sioRunning = false;
     bool    m_printerOn = false;
     bool    m_canAddSlot = true;
     QString m_logHtml;
+    QString m_printerText;
+    QString m_printerTextAtascii;
 };
 
 #endif // QMLBRIDGE_H

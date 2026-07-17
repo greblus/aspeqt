@@ -54,7 +54,7 @@ ApplicationWindow {
                         checked: app.printerOn
                         onTriggered: app.togglePrinter()
                     }
-                    MenuItem { text: qsTr("Show printer output"); onTriggered: app.showPrinterOutput() }
+                    MenuItem { text: qsTr("Show printer output"); onTriggered: printWindow.open() }
                     MenuSeparator {}
 
                     Menu {
@@ -65,7 +65,7 @@ ApplicationWindow {
 
                     Menu {
                         title: qsTr("Disk")
-                        MenuItem { text: qsTr("New disk image…"); onTriggered: app.newImage() }
+                        MenuItem { text: qsTr("New disk image…"); onTriggered: createDiskDialog.open2() }
                         MenuItem { text: qsTr("Eject all");       onTriggered: app.ejectAll() }
                     }
 
@@ -153,6 +153,7 @@ ApplicationWindow {
                         editOpen: model.editOpen
                         isBootSlot: model.isBootSlot
                         onRequestSwap: (fromHw, toHw) => app.swapSlots(fromHw, toHw)
+                        onRequestEditor: (hw) => diskViewer.openFor(hw)
                     }
                 }
 
@@ -260,9 +261,11 @@ ApplicationWindow {
                     onClicked: app.toggleSio()
                 }
                 StatusIcon {
-                    source: Theme.icon("devices/printer.svg")
-                    on: app.printerOn
-                    tip: qsTr("Printer emulation")
+                    source: app.printerOn ? Theme.icon("devices/printer.svg")
+                                          : Theme.icon("status/printer-error.svg")
+                    on: true
+                    tip: app.printerOn ? qsTr("Stop printer emulation")
+                                       : qsTr("Start printer emulation")
                     onClicked: app.togglePrinter()
                 }
                 StatusIcon {
@@ -277,4 +280,7 @@ ApplicationWindow {
 
     OptionsDialog { id: optionsDialog }
     LogWindow { id: logWindow }
+    DiskViewer { id: diskViewer }
+    CreateDiskDialog { id: createDiskDialog }
+    PrintWindow { id: printWindow }
 }

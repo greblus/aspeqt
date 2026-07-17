@@ -66,6 +66,8 @@ AppController::AppController(MainWindow *engine, QObject *parent)
 {
     if (m_engine) {
         connect(m_engine, &MainWindow::qmlChanged, this, &AppController::refresh);
+        connect(m_engine, &MainWindow::qmlLoaderProgress, this, &AppController::refreshLoader);
+        connect(m_engine, &MainWindow::qmlPrinterTextChanged, this, &AppController::refreshPrinter);
         connect(m_engine, &MainWindow::logMessage, this, &AppController::onLogMessage);
     }
     refresh();
@@ -99,6 +101,19 @@ void AppController::refresh()
     emit drivesChanged();
 
     // loader
+    refreshLoader();
+
+    // status bar
+    const QVariantMap st = m_engine->qmlStatus();
+    m_sioRunning = st.value("running").toBool();
+    m_statusText = st.value("speed").toString();
+    m_printerOn  = st.value("printerOn").toBool();
+    emit statusChanged();
+}
+
+void AppController::refreshLoader()
+{
+    if (!m_engine) return;
     const QVariantMap l = m_engine->qmlLoaderState();
     m_loaderKind         = l.value("kind").toInt();
     m_loaderFileName     = l.value("fileName").toString();
@@ -107,14 +122,9 @@ void AppController::refresh()
     m_loaderPlayEnabled  = l.value("playEnabled").toBool();
     m_loaderRetryEnabled = l.value("retryEnabled").toBool();
     m_loaderEjectEnabled = l.value("ejectEnabled").toBool();
+    m_loaderLoading      = l.value("loading").toBool();
+    m_loaderCasPlaying   = l.value("casPlaying").toBool();
     emit loaderChanged();
-
-    // status bar
-    const QVariantMap st = m_engine->qmlStatus();
-    m_sioRunning = st.value("running").toBool();
-    m_statusText = st.value("speed").toString();
-    m_printerOn  = st.value("printerOn").toBool();
-    emit statusChanged();
 }
 
 // Format one engine log line the same way MainWindow::uiMessage colours it.
@@ -163,6 +173,16 @@ void AppController::togglePrinter() { if (m_engine) m_engine->qmlTogglePrinter()
 void AppController::clearLog()      { if (m_engine) { m_engine->qmlClearLog(); } m_logHtml.clear(); emit logChanged(); }
 
 void AppController::newImage()          { if (m_engine) m_engine->qmlNewImage(); }
+void AppController::createDisk(int sc, int ss) { if (m_engine) m_engine->qmlCreateDisk(sc, ss); }
+void AppController::printerClear()      { if (m_engine) m_engine->qmlPrinterClear(); }
+void AppController::printerSave()       { if (m_engine) m_engine->qmlPrinterSave(); }
+void AppController::refreshPrinter()
+{
+    if (!m_engine) return;
+    m_printerText = m_engine->qmlPrinterText();
+    m_printerTextAtascii = m_engine->qmlPrinterTextAtascii();
+    emit printerTextChanged();
+}
 void AppController::mountDiskAny()      { if (m_engine) m_engine->qmlMountDiskAny(); }
 void AppController::mountFolderAny()    { if (m_engine) m_engine->qmlMountFolderAny(); }
 void AppController::ejectAll()          { if (m_engine) m_engine->qmlEjectAll(); }
@@ -178,3 +198,18 @@ void AppController::mountRecent(int i)  { if (m_engine) m_engine->qmlMountRecent
 QVariantMap AppController::loadOptions()          { return m_engine ? m_engine->qmlLoadOptions() : QVariantMap(); }
 void AppController::applyOptions(const QVariantMap &o) { if (m_engine) m_engine->qmlApplyOptions(o); }
 QVariantList AppController::languages()           { return m_engine ? m_engine->qmlLanguages() : QVariantList(); }
+
+bool AppController::diskOpen(int hw)      { return m_engine ? m_engine->qmlDiskOpen(hw) : false; }
+void AppController::diskClose()           { if (m_engine) m_engine->qmlDiskClose(); }
+QVariantList AppController::diskEntries()  { return m_engine ? m_engine->qmlDiskEntries() : QVariantList(); }
+QString AppController::diskPath()          { return m_engine ? m_engine->qmlDiskPath() : QString(); }
+bool AppController::diskCanParent()        { return m_engine ? m_engine->qmlDiskCanParent() : false; }
+bool AppController::diskReadOnly()         { return m_engine ? m_engine->qmlDiskReadOnly() : true; }
+int AppController::diskFsType()            { return m_engine ? m_engine->qmlDiskFsType() : 0; }
+void AppController::diskSetFsType(int i)   { if (m_engine) m_engine->qmlDiskSetFsType(i); }
+void AppController::diskEnter(int row)     { if (m_engine) m_engine->qmlDiskEnter(row); }
+void AppController::diskParent()           { if (m_engine) m_engine->qmlDiskParent(); }
+void AppController::diskSetTextConversion(bool on) { if (m_engine) m_engine->qmlDiskSetTextConversion(on); }
+bool AppController::diskExtract(const QVariantList &rows) { return m_engine ? m_engine->qmlDiskExtract(rows) : false; }
+bool AppController::diskDelete(const QVariantList &rows)  { return m_engine ? m_engine->qmlDiskDelete(rows) : false; }
+bool AppController::diskAddFiles()         { return m_engine ? m_engine->qmlDiskAddFiles() : false; }
