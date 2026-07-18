@@ -1,7 +1,7 @@
 #ifndef MAINWINDOW_H
 #define MAINWINDOW_H
 
-#include <QtWidgets/QMainWindow>
+#include <QObject>
 #include <QFileDialog>
 #include <QMessageBox>
 #include <QMap>
@@ -31,15 +31,11 @@
 #define MAX_DISKS g_numberOfDisks
 #endif
 
-namespace Ui
-{
-    class MainWindow;
-}
 class AutoBoot;
 class AtariFileSystem;
 class SimpleDiskImage;
 
-class MainWindow : public QMainWindow
+class MainWindow : public QObject
 {
     Q_OBJECT
 
@@ -51,18 +47,17 @@ public:
     QString g_mainWindowTitle;
 
 public slots:
-    void show();
     int firstEmptyDiskSlot(int startFrom = 0, bool createOne = true);       //
     void mountFileWithDefaultProtection(int no, const QString &fileName);   //
     void autoCommit(int no);                                                //
 
 private:
     int untitledName;
-    Ui::MainWindow *ui;
     SioWorker *sio;
     bool shownFirstTime;
     int m_numDisks;                        // active number of drive slots
     bool m_emulationRunning = false;       // SIO worker running (mirrored to QML)
+    QString m_sioStatus;                   // connection speed shown in the status bar
 
     // Per-slot runtime state, moved out of the widgets (DiskWidgets) so the
     // engine no longer needs them. Presence used to be "diskWidgets[i].frame".
@@ -76,17 +71,10 @@ private:
     int m_dvFsType = 0;                    // current filesystem type (0..5)
     QList<quint16> m_dvDirs;               // directory sector stack
     QStringList m_dvPaths;                 // directory name stack
-    QLabel *speedLabel, *onOffLabel, *prtOnOffLabel, *netLabel, *clearMessagesLabel;  //
     TextPrinterWindow *textPrinterWindow;
     QTranslator aspeqt_translator, aspeqt_qt_translator;
-    QSystemTrayIcon trayIcon;
-    Qt::WindowFlags oldWindowFlags;
-    Qt::WindowStates oldWindowStates;
-    QString lastMessage;
-    int lastMessageRepeat;
     
     void setSession();  //
-    void updateRecentFileActions();
     void mountFile(int no, const QString &fileName, bool prot);
     // Short, human-readable name for logs/labels: the file's base name, or the
     // ContentResolver display name for a content:// URI.
@@ -95,14 +83,12 @@ private:
     // Storage Access Framework pickers: return a content:// URI string (empty
     // if cancelled). QFile opens these directly, so no storage permission is
     // needed. Replaces the old filesystem-browsing Java dialog.
-    QString androidSaveUrl(const QString &caption, const QString &filter);
     // Human-readable name of a content:// URI (via ContentResolver), for labels.
     QString androidDisplayName(const QString &uri);
     // Persist access to a content:// URI so it stays usable after a restart.
     void androidTakePersistable(const QString &uri, bool write);
     // Folder images: a SAF tree can't be read as a path, so it is copied to a
     // local temp dir for mounting and copied back on eject.
-    QString androidTreeName(const QString &tree);
     int androidCopyTreeToDir(const QString &tree, const QString &dest);
     int androidCopyDirToTree(const QString &src, const QString &tree);
     int androidCopyUriToFile(const QString &uri, const QString &dest);
@@ -156,14 +142,11 @@ private:
 #endif
     bool ejectImage(int no, bool ask = true);
     void toggleWriteProtection(int no);
-    void revertDisk(int no);
     QMessageBox::StandardButton saveImageWhenClosing(int no, QMessageBox::StandardButton previousAnswer, int number);
     void loadTranslators();
     void autoSaveDisk(int no);                                              //
 
 protected:
-    void closeEvent(QCloseEvent *event);
-    void hideEvent(QHideEvent *event);
 #ifdef Q_OS_ANDROID
 #endif
 
@@ -171,8 +154,6 @@ signals:
     void logMessage(int type, const QString &msg);
     void newSlot (int slot);
     void fileMounted(bool mounted);
-    void sendLogText (QString logText);
-    void sendLogTextChange (QString logTextChange);
 
 public:
     void doLogMessage(int type, const QString &msg);
@@ -242,6 +223,7 @@ public:
     bool         qmlSaveAsPath(int no, const QString &url);
     void         qmlInstallDos(int no);
     void         qmlToast(const QString &text);
+    bool         shutdown();   // false = user cancelled quitting
     void         qmlDiskEnter(int row);
     void         qmlDiskParent();
     void         qmlDiskSetTextConversion(bool on);
@@ -257,47 +239,12 @@ private:
 #endif
 
 private slots:
-    void on_actionStartEmulation_triggered();
-    void on_actionPrinterEmulation_triggered();
     void on_actionQuit_triggered();
 
-    void on_actionEject_1_triggered();
-    void on_actionEject_2_triggered();
-    void on_actionEject_3_triggered();
-    void on_actionEject_4_triggered();
-    void on_actionEject_5_triggered();
-    void on_actionEject_6_triggered();
-
-    void on_actionWriteProtect_1_triggered();
-    void on_actionWriteProtect_2_triggered();
-    void on_actionWriteProtect_3_triggered();
-    void on_actionWriteProtect_4_triggered();
-    void on_actionWriteProtect_5_triggered();
-    void on_actionWriteProtect_6_triggered();
-
-    void on_actionMountRecent_0_triggered();
-    void on_actionMountRecent_1_triggered();
-    void on_actionMountRecent_2_triggered();
-    void on_actionMountRecent_3_triggered();
-    void on_actionMountRecent_4_triggered();
-    void on_actionMountRecent_5_triggered();
-    void on_actionMountRecent_6_triggered();
-    void on_actionMountRecent_7_triggered();
-    void on_actionMountRecent_8_triggered();
-    void on_actionMountRecent_9_triggered();
-
-    void on_actionToggleMiniMode_triggered();
-    void on_actionToggleShade_triggered();
     void sioFinished();
     void sioStarted();
     void sioStatusChanged(QString status);
     void deviceStatusChanged(int deviceNo);
-    void uiMessage(int t, const QString message);
-    void trayIconActivated(QSystemTrayIcon::ActivationReason reason);
-    void saveWindowGeometry();
-    void saveMiniWindowGeometry();
-    void logChanged(QString text);
-    void changeFonts();
 };
 
 #endif // MAINWINDOW_H

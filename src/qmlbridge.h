@@ -221,6 +221,8 @@ private:
     static const int kMaxLogLines = 2000;   // full history, for the log window
     static const int kTailLines   = 150;    // what the main-window pane renders
     QStringList     m_logLines;
+    QString         m_lastLogLine;
+    int             m_lastLogRepeat = 1;
     mutable QString m_logCache;
     mutable QString m_logTailCache;
     mutable bool    m_logDirty = true;

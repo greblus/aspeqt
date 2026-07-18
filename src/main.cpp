@@ -76,11 +76,7 @@ int main(int argc, char *argv[])
     // QML UI (branch `qml`): MainWindow runs headless as the emulation engine
     // (never shown); the Qt Quick front-end drives it via AppController.
     qputenv("QT_QUICK_CONTROLS_STYLE", "Material");
-    MainWindow engineWindow;              // headless engine
-    // Keep the widget window off the (single) Android surface so the Qt Quick
-    // window is the visible one; the engine still runs (SIO, mounting, log).
-    engineWindow.setAttribute(Qt::WA_DontShowOnScreen, true);
-    engineWindow.hide();
+    MainWindow engineWindow;              // the engine: SIO, mounting, log
     QQmlApplicationEngine engine;
     AppController controller(&engineWindow);
     engine.rootContext()->setContextProperty("app", &controller);

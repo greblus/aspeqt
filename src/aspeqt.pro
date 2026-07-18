@@ -90,8 +90,7 @@ win32:HEADERS += serialport-win32.h
 !android:FORMS += \
     diskeditdialog.ui
 
-FORMS += mainwindow.ui \
-    textprinterwindow.ui
+FORMS += textprinterwindow.ui
 
 RESOURCES += icons.qrc \
     atarifiles.qrc \

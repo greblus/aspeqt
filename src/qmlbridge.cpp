@@ -164,6 +164,17 @@ void AppController::onLogMessage(int type, const QString &msg)
     if (text.startsWith('"')) text.remove(0, 1);
     if (text.endsWith('"'))   text.chop(1);
 
+    // Collapse a repeated line into "... [xN]" instead of printing it again
+    // (the SIO path repeats a lot); this used to live in the widget log.
+    if (text == m_lastLogLine && !m_logLines.isEmpty()) {
+        m_logLines.removeLast();
+        m_lastLogRepeat++;
+        text = QStringLiteral("%1 [x%2]").arg(text).arg(m_lastLogRepeat);
+    } else {
+        m_lastLogLine = text;
+        m_lastLogRepeat = 1;
+    }
+
     QString colour;
     switch (type) {
     case 'd': colour = "green"; break;

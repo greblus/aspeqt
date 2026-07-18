@@ -1,5 +1,4 @@
 #include "mainwindow.h"
-#include "ui_mainwindow.h"
 
 #include "diskimage.h"
 #include "diskimagepro.h"
@@ -15,24 +14,11 @@
 #include "aspeqtsettings.h"
 #include "autoboot.h"
 
-#include <QEvent>
-#include <QDragEnterEvent>
-#include <QDropEvent>
 #include <QUrl>
-#include <QFileDialog>
 #include <QFile>
 #include <QTemporaryFile>
 #include <QStandardPaths>
 #include <QDir>
-#include <QVBoxLayout>
-#include <QHBoxLayout>
-#include <QToolButton>
-#include <QScrollBar>
-#include <QScrollArea>
-#include <QScroller>
-#include <QScrollerProperties>
-#include <QProgressBar>
-#include <QMouseEvent>
 #include <QPainter>
 #ifdef Q_OS_ANDROID
 // "Remove slot" affordance for an empty slot: the tango "unreadable" emblem
@@ -72,12 +58,9 @@ static QIcon dosDriveIcon()
 #include <QTranslator>
 #include <QMessageBox>
 #include <QWidget>
-#include <QDrag>
 #include <QtDebug>
-//#include <QDesktopWidget>
 #include <QFont>
 #include <QTextCodec>
-#include <QLayout>
 
 #include "atarifilesystem.h"
 #include "miscutils.h"
@@ -168,7 +151,7 @@ void MainWindow::doLogMessage(int type, const QString &msg)
 }
 
 MainWindow::MainWindow(QWidget *parent)
-    : QMainWindow(parent), ui(new Ui::MainWindow)
+    : QObject(parent)
 {
 
     /* Setup the logging system */
@@ -178,7 +161,6 @@ MainWindow::MainWindow(QWidget *parent)
     logFile = new QFile(QDir::temp().absoluteFilePath("aspeqt.log"));
     logFile->open(QFile::WriteOnly | QFile::Truncate | QFile::Unbuffered | QFile::Text);
     logMutex = new QMutex();
-    connect(this, SIGNAL(logMessage(int,QString)), this, SLOT(uiMessage(int,QString)), Qt::QueuedConnection);
     qInstallMessageHandler(logMessageOutput);
     qDebug() << "!d" << tr("AspeQt started at %1.").arg(QDateTime::currentDateTime().toString());
 
@@ -197,7 +179,7 @@ MainWindow::MainWindow(QWidget *parent)
     QSettings newSettings("greblus.net", "AspeQt");
     QStringList oldKeys = oldSettings.allKeys();
     if(oldKeys.size()>0){
-        QMessageBox::information(this, tr("Migrate Settings"), tr("This version of AspeQt uses a different repository "
+        QMessageBox::information(nullptr, tr("Migrate Settings"), tr("This version of AspeQt uses a different repository "
                                           "for storing its global settings.\nWe will now migrate the existing "
                                           "settings to their new repository, note that settings stored in your existing "
                                           "AspeQt session files are not affected by this change."), QMessageBox::Ok);
@@ -205,7 +187,7 @@ MainWindow::MainWindow(QWidget *parent)
             newSettings.setValue(oldKeys.value(i), oldSettings.value(oldKeys.value(i)));
         }
         oldSettings.clear();
-        QMessageBox::information(this, tr("Migrate Settings"), tr("Setting were migrated successfuly."), QMessageBox::Ok);
+        QMessageBox::information(nullptr, tr("Migrate Settings"), tr("Setting were migrated successfuly."), QMessageBox::Ok);
     }
     /* Set application properties */
     QCoreApplication::setOrganizationName("Atari Forever!");
@@ -233,28 +215,6 @@ MainWindow::MainWindow(QWidget *parent)
 
     
     /* Setup UI */
-    ui->setupUi(this);
-
-#ifdef Q_OS_ANDROID
-    // Android's native options menu only opens submenus, it cannot trigger a
-    // bare top-level action. So make the single-entry "Options" submenu open
-    // the dialog as soon as it is tapped, giving a one-tap Options item.
-    connect(ui->menu_Tools, &QMenu::aboutToShow, this, [this]{
-        QTimer::singleShot(0, ui->actionOptions, &QAction::trigger);
-    });
-    // Promote "Quit" from the File submenu to its own one-tap top-level menu entry
-    // (same aboutToShow trick, since a bare top-level action can't be triggered).
-    ui->menu_File->removeAction(ui->actionQuit);
-    {
-        QMenu *quitMenu = ui->menuBar->addMenu(ui->actionQuit->text());
-        quitMenu->addAction(ui->actionQuit);
-        connect(quitMenu, &QMenu::aboutToShow, this, [this]{
-            QTimer::singleShot(0, ui->actionQuit, &QAction::trigger);
-        });
-    }
-    // Drop the Help menu (About + Documentation) from the menu bar entirely.
-    ui->menuBar->removeAction(ui->menu_Help->menuAction());
-#endif
 
     /* I love ugly hacks */
     QScreen *screen = qApp->screens().at(0);
@@ -266,51 +226,6 @@ MainWindow::MainWindow(QWidget *parent)
     float resy = scrh/screen->physicalDotsPerInchY();
 
     ssize = sqrt(resx*resx + resy*resy);
-
-    QWidget *central = ui->centralWidget;
-    QList<QToolButton *> allbtns = central->findChildren<QToolButton *>();
-
-    if (scrw > scrh)
-        btnsize = scrh*70/800;
-    else
-        btnsize = scrw*70/800;
-
-    // Keep the drive rows compact: only a few px taller than the icons, so more
-    // vertical space is left for the log (textEdit), especially in landscape.
-    int iconPx = qRound((btnsize - 8) * 1.3);
-    int btnH   = iconPx + 2;
-    int rowH   = iconPx + 6;
-    for (int i = 1; i <= 6; ++i) {
-        QFrame *f = central->findChild<QFrame *>(QString("horizontalFrame_%1").arg(i));
-        if (f) {
-            f->setMinimumHeight(rowH);
-            f->setMaximumHeight(rowH);
-            if (f->layout()) {
-                f->layout()->setContentsMargins(3, 1, 3, 1);
-                f->layout()->setSpacing(4);   // tighter gap between buttons
-            }
-        }
-    }
-
-    foreach(QToolButton* btn, allbtns) {
-        btn->setMinimumHeight(btnH);
-        btn->setMinimumWidth(btnH);     // square: width == height
-        btn->setMaximumHeight(btnH);
-        btn->setMaximumWidth(btnH);
-        btn->setIconSize(QSize(iconPx, iconPx));
-    }
-
-    if (ssize < 6) ui->textEdit->setVisible(false);
-        else {
-            // Give the top spacer a fixed height (~ the Android action bar) so drive
-            // slot 1 is never hidden under it, and collapse the bottom spacer. The log
-            // (textEdit) is then the only vertically-expanding widget, so it fills all
-            // remaining height in both portrait and landscape.
-            int abPx = qRound(0.6 * screen->physicalDotsPerInchY());
-            ui->verticalSpacer_2->changeSize(0, abPx, QSizePolicy::Fixed, QSizePolicy::Fixed);
-            ui->verticalSpacer->changeSize(0, 0, QSizePolicy::Fixed, QSizePolicy::Fixed);
-            ui->gridLayout->invalidate();
-        }
 
      /* Parse command line arguments:
       arg(1): session file (xxxxxxxx.aspeqt)   */
@@ -328,7 +243,7 @@ MainWindow::MainWindow(QWidget *parent)
            g_sessionFilePath = QDir::fromNativeSeparators(g_sessionFilePath);
            sess.setFileName(g_sessionFilePath+g_sessionFile);
            if (!sess.exists()) {
-               QMessageBox::question(this, tr("Session file error"),
+               QMessageBox::question(nullptr, tr("Session file error"),
                tr("Requested session file not found in the given directory path or the path is incorrect. AspeQt will continue with default session configuration."), QMessageBox::Ok);
                g_sessionFile = g_sessionFilePath = "";
            }
@@ -338,7 +253,7 @@ MainWindow::MainWindow(QWidget *parent)
                g_sessionFilePath = QDir::currentPath();
                sess.setFileName(g_sessionFile);
                if (!sess.exists()) {
-                   QMessageBox::question(this, tr("Session file error"),
+                   QMessageBox::question(nullptr, tr("Session file error"),
                    tr("Requested session file not found in the application's current directory path\n (No path was specified). AspeQt will continue with default session configuration."), QMessageBox::Ok);
                    g_sessionFile = g_sessionFilePath = "";
                }
@@ -352,61 +267,16 @@ MainWindow::MainWindow(QWidget *parent)
     // Display Session name, and restore session parameters if session file was specified //
     g_mainWindowTitle = tr("AspeQt - Atari Serial Peripheral Emulator for Qt");
     if (g_sessionFile != "") {
-        setWindowTitle(g_mainWindowTitle + tr(" -- Session: ") + g_sessionFile);
         aspeqtSettings->loadSessionFromFile(g_sessionFilePath+g_sessionFile);
     } else {
-        setWindowTitle(g_mainWindowTitle);
     }
 #ifdef Q_OS_ANDROID
     // Fill the *available* screen (excludes the system status/navigation bars) and
     // keep filling it across rotations, so the bottom status bar stays on-screen.
     // A saved desktop size would leave the window at the portrait width (~half the
     // screen) in landscape.
-    setGeometry(screen->availableGeometry());
-    connect(screen, &QScreen::availableGeometryChanged, this, [this](const QRect &g){ setGeometry(g); });
 #else
-    setGeometry(aspeqtSettings->lastHorizontalPos(),aspeqtSettings->lastVerticalPos(),aspeqtSettings->lastWidth(),aspeqtSettings->lastHeight());
 #endif
-
-    /* Setup status bar */
-    sbIcon = qRound((btnsize - 5) * 0.8 * 4.0 / 3.0);   // status bar 1/3 taller / icons bigger
-    speedLabel = new QLabel(this);
-    onOffLabel = new QLabel(this);
-    prtOnOffLabel = new QLabel(this);
-    clearMessagesLabel = new QLabel(this);
-    speedLabel->setText(tr(""));
-    onOffLabel->setMinimumWidth(17);
-    prtOnOffLabel->setMinimumWidth(15);
-    prtOnOffLabel->setPixmap(QIcon(":/icons/tango-icons/devices/printer.svg").pixmap(sbIcon, sbIcon, QIcon::Normal));  //
-    prtOnOffLabel->setToolTip(ui->actionPrinterEmulation->toolTip());
-    prtOnOffLabel->setStatusTip(ui->actionPrinterEmulation->statusTip());
-
-    clearMessagesLabel->setMinimumWidth(17);
-    clearMessagesLabel->setPixmap(QIcon(":/icons/tango-icons/actions/edit-clear.svg").pixmap(sbIcon, sbIcon, QIcon::Normal));
-    clearMessagesLabel->setToolTip(tr("Clear messages"));
-    clearMessagesLabel->setStatusTip(clearMessagesLabel->toolTip());
-
-    speedLabel->setMinimumWidth(80);
-#ifdef Q_OS_ANDROID
-    // Keep the status bar (the bottom "toolbar") compact: ~20% shorter. Add a
-    // right margin so the last icon (clear-log) isn't jammed against the edge-to-
-    // edge screen edge / rounded corner where it's hard to tap.
-    ui->statusBar->setContentsMargins(0, 0, sbIcon, 0);
-    ui->statusBar->setFixedHeight(sbIcon + 4);
-    // The status-bar message font defaults too large on Android; scale it to
-    // the compact bar height.
-    {
-        QFont sbFont = ui->statusBar->font();
-        sbFont.setPointSize(14);
-        ui->statusBar->setFont(sbFont);
-    }
-#endif
-
-    ui->statusBar->addPermanentWidget(speedLabel);
-    ui->statusBar->addPermanentWidget(onOffLabel);
-    ui->statusBar->addPermanentWidget(prtOnOffLabel);
-    ui->statusBar->addPermanentWidget(clearMessagesLabel);
-    changeFonts();
 
 #ifdef Q_OS_ANDROID
     // Slot presence from the session (used to be done by androidBuildSlots()).
@@ -436,7 +306,6 @@ MainWindow::MainWindow(QWidget *parent)
         is = aspeqtSettings->mountedImageSetting(i);
         mountFile(i, is.fileName, is.isWriteProtected);
     }
-    updateRecentFileActions();
 
     // SmartDevice (ApeTime + URL submit)
     SmartDevice *smart = new SmartDevice(sio);
@@ -458,8 +327,6 @@ MainWindow::MainWindow(QWidget *parent)
     sio->installDevice(0x40, printer);
     untitledName = 0;
 
-    connect(&trayIcon, SIGNAL(activated(QSystemTrayIcon::ActivationReason)), this, SLOT(trayIconActivated(QSystemTrayIcon::ActivationReason)));
-    trayIcon.setIcon(windowIcon());
 
     // Connections needed for remotely mounting a disk image & Toggle Auto-Commit //
     connect (acl, SIGNAL(findNewSlot(int,bool)), this, SLOT(firstEmptyDiskSlot(int,bool)));
@@ -472,14 +339,12 @@ MainWindow::MainWindow(QWidget *parent)
 
 MainWindow::~MainWindow()
 {
-    if (ui->actionStartEmulation->isChecked()) {
-        ui->actionStartEmulation->trigger();
+    if (m_emulationRunning) {
+        qmlToggleSio();
     }
 
     delete aspeqtSettings;
     delete sio;
-
-    delete ui;
 
     qDebug() << "!d" << tr("AspeQt stopped at %1.").arg(QDateTime::currentDateTime().toString());
     qInstallMessageHandler(0);
@@ -487,35 +352,30 @@ MainWindow::~MainWindow()
     delete logFile;
 }
 
- void MainWindow::closeEvent(QCloseEvent *event)
+// Shut the engine down: stop SIO, offer to save modified images, close the
+// devices. Returns false when the user cancelled, so the caller leaves the
+// application running (which close()/event->ignore() used to do -- except
+// qmlQuit() then quit anyway, so Cancel did not actually cancel).
+bool MainWindow::shutdown()
 {
-    // Save various session settings  //
-    if (aspeqtSettings->saveWindowsPos()) {
-        if (g_miniMode) {
-            saveMiniWindowGeometry();
-        } else {
-            saveWindowGeometry();
-        }
-    }
     if (g_sessionFile != "") aspeqtSettings->saveSessionToFile(g_sessionFilePath + "/" + g_sessionFile);
     aspeqtSettings->setD9DOVisible(g_D9DOVisible);
-    bool wasRunning = ui->actionStartEmulation->isChecked();
-    QMessageBox::StandardButton answer = QMessageBox::No;
 
+    const bool wasRunning = m_emulationRunning;
     if (wasRunning) {
-        ui->actionStartEmulation->trigger();
+        qmlToggleSio();
     }
 
     int toBeSaved = 0;
-
-    for (int i = 0; i < m_numDisks; i++) {      //
+    for (int i = 0; i < m_numDisks; i++) {
         SimpleDiskImage *img = qobject_cast <SimpleDiskImage*> (sio->getDevice(i + 0x31));
         if (img && img->isModified()) {
             toBeSaved++;
         }
     }
 
-    for (int i = 0; i < m_numDisks; i++) {      //
+    QMessageBox::StandardButton answer = QMessageBox::No;
+    for (int i = 0; i < m_numDisks; i++) {
         SimpleDiskImage *img = qobject_cast <SimpleDiskImage*> (sio->getDevice(i + 0x31));
         if (img && img->isModified()) {
             toBeSaved--;
@@ -525,16 +385,15 @@ MainWindow::~MainWindow()
             }
             if (answer == QMessageBox::Cancel) {
                 if (wasRunning) {
-                    ui->actionStartEmulation->trigger();
+                    qmlToggleSio();
                 }
-                event->ignore();
-                return;
+                return false;
             }
         }
     }
 
     delete textPrinterWindow;
-    //
+    textPrinterWindow = nullptr;
 
     for (int i = 0x31; i < 0x39; i++) {
         SimpleDiskImage *s = qobject_cast <SimpleDiskImage*> (sio->getDevice(i));
@@ -544,41 +403,10 @@ MainWindow::~MainWindow()
     }
 
     aspeqtSettings->sync();   // flush settings now; the process may be killed on exit
-    event->accept();
-
+    return true;
 }
 
-void MainWindow::hideEvent(QHideEvent *event)
-{
-    if (aspeqtSettings->minimizeToTray()) {
-        trayIcon.show();
-        oldWindowFlags = windowFlags();
-        oldWindowStates = windowState();
-        setWindowFlags(Qt::Widget);
-        hide();
-        event->ignore();
-        return;
-    }
-    QMainWindow::hideEvent(event);
-}
 
-void MainWindow::show()
-{
-    QMainWindow::show();
-    if (shownFirstTime) {
-        /* Open options dialog if it's the first time */
-        if (aspeqtSettings->isFirstTime()) {
-            if (QMessageBox::Yes == QMessageBox::question(this, tr("First run"),
-                                       tr("You are running AspeQt for the first time.\n\nDo you want to open the options dialog?"),
-                                       QMessageBox::Yes, QMessageBox::No)) {
-                ui->actionOptions->trigger();
-            }
-        }
-        qDebug() << "!d" << "Starting emulation";
-
-        ui->actionStartEmulation->trigger();
-    }
-}
 void MainWindow::androidRebuildSlots()
 {
     for (int i = 0; i < MAX_DISKS; ++i)
@@ -734,18 +562,12 @@ void MainWindow::loaderPlayCas()
         return;
     // The cassette player opens the single serial port itself, so disk emulation
     // must be paused while it runs (AspeQt never drives cassette + disk at once).
-    m_casWasRunning = ui->actionStartEmulation->isChecked();
+    m_casWasRunning = m_emulationRunning;
     if (m_casWasRunning) {
-        ui->actionStartEmulation->trigger();
+        qmlToggleSio();
         sio->wait();
         qApp->processEvents();
     }
-    // Disk SIO is paused, but the cassette player IS driving the serial line, so
-    // show an "active" status icon instead of the "disconnected" one that pausing
-    // the SIO worker left behind.
-    onOffLabel->setPixmap(QIcon(":/icons/tango-icons/actions/media-playback-stop.svg").pixmap(sbIcon, sbIcon, QIcon::Normal, QIcon::On));
-    onOffLabel->setToolTip(tr("Playing cassette image"));
-    onOffLabel->setStatusTip(tr("Playing cassette image"));
     connect(m_casWorker, &CassetteWorker::statusChanged, this, &MainWindow::loaderCasStatus, Qt::QueuedConnection);
     connect(m_casWorker, &QThread::finished, this, &MainWindow::loaderCasFinished);
     m_casWorker->start(QThread::TimeCriticalPriority);
@@ -778,15 +600,8 @@ void MainWindow::loaderCasFinished()
     // Resume disk emulation if we paused it for the cassette.
     if (m_casWasRunning) {
         m_casWasRunning = false;
-        if (!ui->actionStartEmulation->isChecked())
-            ui->actionStartEmulation->trigger();
-    }
-    // If emulation didn't resume, restore the "disconnected" status icon (when it
-    // does resume, sioStarted() sets the running icon).
-    if (!ui->actionStartEmulation->isChecked()) {
-        onOffLabel->setPixmap(QIcon(":/icons/tango-icons/actions/media-playback-start.svg").pixmap(sbIcon, sbIcon, QIcon::Normal, QIcon::On));
-        onOffLabel->setToolTip(ui->actionStartEmulation->toolTip());
-        onOffLabel->setStatusTip(ui->actionStartEmulation->statusTip());
+        if (!m_emulationRunning)
+            qmlToggleSio();
     }
     loaderUpdateButtons();
     qDebug() << "!i" << tr("Cassette playback finished.");
@@ -828,8 +643,8 @@ void MainWindow::loaderEject()
     // Resume disk emulation if it was paused for cassette playback.
     if (m_casWasRunning) {
         m_casWasRunning = false;
-        if (!ui->actionStartEmulation->isChecked())
-            ui->actionStartEmulation->trigger();
+        if (!m_emulationRunning)
+            qmlToggleSio();
     }
     if (m_autoBoot) {
         sio->uninstallDevice(0x31);
@@ -859,191 +674,33 @@ void MainWindow::loaderRetry()
         loaderLoadXex(path);
 }
 
-void MainWindow::logChanged(QString text)
-{
-    emit sendLogTextChange(text);
 
-}
 
-void MainWindow::saveWindowGeometry()
-{
-    aspeqtSettings->setLastHorizontalPos(geometry().x());
-    aspeqtSettings->setLastVerticalPos(geometry().y());
-    aspeqtSettings->setLastWidth(geometry().width());
-    aspeqtSettings->setLastHeight(geometry().height());
-}
 
-void MainWindow::saveMiniWindowGeometry()
-{
-    aspeqtSettings->setLastMiniHorizontalPos(geometry().x());
-    aspeqtSettings->setLastMiniVerticalPos(geometry().y());
-}
-
-void MainWindow::on_actionToggleShade_triggered()
-{
-    if (g_shadeMode) {
-        setWindowFlags(Qt::WindowSystemMenuHint);
-        setWindowOpacity(1.0);
-        g_shadeMode = false;
-        QMainWindow::show();
-    } else {
-        setWindowFlags(Qt::FramelessWindowHint);
-        setWindowOpacity(0.25);
-        g_shadeMode = true;
-        QMainWindow::show();
-    }
-}
 
 // Toggle Mini Mode //
-void MainWindow::on_actionToggleMiniMode_triggered()
-{
-    if(g_miniMode){
-        ui->horizontalFrame_1->setFixedHeight(100);
-        ui->buttonMountDisk_1->setFixedHeight(70);
-        ui->buttonMountDisk_1->setFixedWidth(70);
-        ui->buttonMountFolder_1->setFixedHeight(70);
-        ui->buttonMountFolder_1->setFixedWidth(70);
-        ui->buttonSave_1->setFixedHeight(70);
-        ui->buttonSave_1->setFixedWidth(70);
-        ui->autoSave_1->setFixedHeight(70);
-        ui->autoSave_1->setFixedWidth(70);
-        ui->buttonEditDisk_1->setFixedHeight(70);
-        ui->buttonEditDisk_1->setFixedWidth(70);
-        ui->buttonEject_1->setFixedHeight(70);
-        ui->buttonEject_1->setFixedWidth(70);
-        ui->horizontalFrame_2->setVisible(true);
-        ui->horizontalFrame_3->setVisible(true);
-        ui->horizontalFrame_4->setVisible(true);
-        ui->horizontalFrame_5->setVisible(true);
-        ui->horizontalFrame_6->setVisible(true);
-
-        setMinimumHeight(426);
-        setMaximumHeight(QWIDGETSIZE_MAX);
-        if (ssize > 5) {
-            ui->textEdit->setVisible(true);
-        }
-        saveMiniWindowGeometry();
-        setGeometry(g_savedGeometry);
-        setWindowOpacity(1.0);
-        setWindowFlags(Qt::WindowSystemMenuHint);
-        ui->actionToggleShade->setDisabled(true);
-        QMainWindow::show();
-        g_miniMode = false;
-        g_shadeMode = false;
-    } else {
-        g_savedGeometry = geometry();
-        ui->horizontalFrame_1->setFixedHeight(112);
-        ui->buttonMountDisk_1->setFixedHeight(96);
-        ui->buttonMountDisk_1->setFixedWidth(96);
-        ui->buttonMountFolder_1->setFixedHeight(96);
-        ui->buttonMountFolder_1->setFixedWidth(96);
-        ui->buttonSave_1->setFixedHeight(96);
-        ui->buttonSave_1->setFixedWidth(96);
-        ui->autoSave_1->setFixedHeight(96);
-        ui->autoSave_1->setFixedWidth(96);
-        ui->buttonEditDisk_1->setFixedHeight(96);
-        ui->buttonEditDisk_1->setFixedWidth(96);
-        ui->buttonEject_1->setFixedHeight(96);
-        ui->buttonEject_1->setFixedWidth(96);
-        ui->horizontalFrame_2->setVisible(false);
-        ui->horizontalFrame_3->setVisible(false);
-        ui->horizontalFrame_4->setVisible(false);
-        ui->horizontalFrame_5->setVisible(false);
-        ui->horizontalFrame_6->setVisible(false);
-        ui->textEdit->setVisible(false);
-        setMinimumWidth(1000);
-        setMinimumHeight(200);
-//        setMaximumHeight(100);
-        setGeometry(aspeqtSettings->lastMiniHorizontalPos(), aspeqtSettings->lastMiniVerticalPos(),
-                    minimumWidth(), minimumHeight());
-        ui->actionHideShowDrives->setDisabled(true);
-        ui->actionToggleShade->setEnabled(true);
-        if (aspeqtSettings->enableShade()) {
-            setWindowOpacity(0.25);
-            setWindowFlags(Qt::FramelessWindowHint);
-            g_shadeMode = true;
-        } else {
-            g_shadeMode = false;
-        }
-        QMainWindow::show();
-        g_miniMode = true;
-    }
-}
 
 // Toggle printer Emulation ON/OFF //
-void MainWindow::on_actionPrinterEmulation_triggered()
-{
-    if (g_printerEmu) {
-        ui->actionPrinterEmulation->setText(QApplication::translate("MainWindow", "Start printer emulation", 0));
-        ui->actionPrinterEmulation->setStatusTip(QApplication::translate("MainWindow", "Start printer emulation", 0));
-        ui->actionPrinterEmulation->setIcon(QIcon(":/icons/tango-icons/status/printer-error.svg").pixmap(btnsize-5, btnsize-5, QIcon::Normal, QIcon::On));
-        prtOnOffLabel->setPixmap(QIcon(":/icons/tango-icons/status/printer-error.svg").pixmap(sbIcon, sbIcon, QIcon::Normal, QIcon::On));
-        prtOnOffLabel->setToolTip(tr("Start printer emulation"));
-        prtOnOffLabel->setStatusTip(prtOnOffLabel->toolTip());
-        g_printerEmu = false;
-        qWarning() << "!i" << tr("Printer emulation stopped.");
-    } else {
-        ui->actionPrinterEmulation->setText(QApplication::translate("MainWindow", "Stop printer emulation", 0));
-        ui->actionPrinterEmulation->setStatusTip(QApplication::translate("MainWindow", "Stop printer emulation", 0));
-        ui->actionPrinterEmulation->setIcon(QIcon(":/icons/tango-icons/devices/printer.svg").pixmap(btnsize-5, btnsize-5, QIcon::Normal, QIcon::On));
-        prtOnOffLabel->setPixmap(QIcon(":/icons/tango-icons/devices/printer.svg").pixmap(sbIcon, sbIcon, QIcon::Normal, QIcon::On));
-        prtOnOffLabel->setToolTip(tr("Stop printer emulation"));
-        prtOnOffLabel->setStatusTip(prtOnOffLabel->toolTip());
-        g_printerEmu = true;
-        qWarning() << "!i" << tr("Printer emulation started.");
-    }
-}
 
-void MainWindow::on_actionStartEmulation_triggered()
-{
-    if (ui->actionStartEmulation->isChecked()) {
-        sio->start(QThread::TimeCriticalPriority);
-    } else {
-        sio->setPriority(QThread::NormalPriority);
-        sio->wait();
-        qApp->processEvents();
-    }
-}
 
 void MainWindow::sioStarted()
 {
-    ui->actionStartEmulation->setText(tr("&Stop emulation"));
-    ui->actionStartEmulation->setToolTip(tr("Stop SIO peripheral emulation"));
-    ui->actionStartEmulation->setStatusTip(tr("Stop SIO peripheral emulation"));
-    onOffLabel->setPixmap(QIcon(":/icons/tango-icons/actions/media-playback-stop.svg").pixmap(sbIcon, sbIcon, QIcon::Normal, QIcon::On));
-    onOffLabel->setToolTip(ui->actionStartEmulation->toolTip());
-    onOffLabel->setStatusTip(ui->actionStartEmulation->statusTip());
     m_emulationRunning = true;
-#ifdef ASPEQT_QML
     emit qmlChanged();
-#endif
 }
 
 void MainWindow::sioFinished()
 {
-    ui->actionStartEmulation->setText(tr("&Start emulation"));
-    ui->actionStartEmulation->setToolTip(tr("Start SIO peripheral emulation"));
-    ui->actionStartEmulation->setStatusTip(tr("Start SIO peripheral emulation"));
-    ui->actionStartEmulation->setChecked(false);
-    onOffLabel->setPixmap(QIcon(":/icons/tango-icons/actions/media-playback-start.svg").pixmap(sbIcon, sbIcon, QIcon::Normal, QIcon::On));
-    onOffLabel->setToolTip(ui->actionStartEmulation->toolTip());
-    onOffLabel->setStatusTip(ui->actionStartEmulation->statusTip());
-    speedLabel->hide();
-    speedLabel->clear();
     m_emulationRunning = false;
+    m_sioStatus.clear();
     qWarning() << "!i" << tr("Emulation stopped.");
-#ifdef ASPEQT_QML
     emit qmlChanged();
-#endif
 }
 
 void MainWindow::sioStatusChanged(QString status)
 {
-    speedLabel->setText(status);
-    speedLabel->show();
-#ifdef ASPEQT_QML
+    m_sioStatus = status;
     emit qmlChanged();
-#endif
 }
 
 void MainWindow::deviceStatusChanged(int deviceNo)
@@ -1073,87 +730,8 @@ void MainWindow::deviceStatusChanged(int deviceNo)
 #endif
 }
 
-void MainWindow::uiMessage(int t, QString message)
-{
-    if (message.at(0) == '"') {
-        message.remove(0, 1);
-    }
-    if (message.at(message.count() - 1) == '"') {
-        message.resize(message.count() - 1);
-    }
-
-    if (message == lastMessage) {
-        lastMessageRepeat++;
-        message = QString("%1 [x%2]").arg(message).arg(lastMessageRepeat);
-        ui->textEdit->moveCursor(QTextCursor::End);
-        QTextCursor cursor = ui->textEdit->textCursor();
-        cursor.select(QTextCursor::BlockUnderCursor);
-        cursor.removeSelectedText();
-    } else {
-        lastMessage = message;
-        lastMessageRepeat = 1;
-    }
-
-    ui->statusBar->showMessage(message, 3000);
-
-    switch (t) {
-        case 'd':
-            message = QString("<span style='color:green'>%1</span>").arg(message);
-            break;
-        case 'u':
-            message = QString("<span style='color:gray'>%1</span>").arg(message);
-            break;
-        case 'n':
-            message = QString("<span style='color:black'>%1</span>").arg(message);
-            break;
-        case 'i':
-            message = QString("<span style='color:blue'>%1</span>").arg(message);
-            break;
-        case 'w':
-            message = QString("<span style='color:brown'>%1</span>").arg(message);
-            break;
-        case 'e':
-            message = QString("<span style='color:red'>%1</span>").arg(message);
-            break;
-        default:
-            message = QString("<span style='color:purple'>%1</span>").arg(message);
-            break;
-    }
-
-    ui->textEdit->append(message);
-    ui->textEdit->verticalScrollBar()->setSliderPosition(ui->textEdit->verticalScrollBar()->maximum());
-    ui->textEdit->horizontalScrollBar()->setSliderPosition(ui->textEdit->horizontalScrollBar()->minimum());
-    logChanged(message);
-}
 
 
-void MainWindow::changeFonts()
-{
-    if (aspeqtSettings->useLargeFont()) {
-        QFont font("Arial Black", 16, QFont::Normal);
-        ui->labelFileName_1->setFont(font);
-        ui->labelFileName_2->setFont(font);
-        ui->labelFileName_3->setFont(font);
-        ui->labelFileName_4->setFont(font);
-        ui->labelFileName_5->setFont(font);
-        ui->labelFileName_6->setFont(font);
-        font = QFont("Arial Black", 14, QFont::Normal);
-        ui->labelImageProperties_1->setFont(font);
-        ui->labelImageProperties_2->setFont(font);
-        ui->labelImageProperties_3->setFont(font);
-        ui->labelImageProperties_4->setFont(font);
-        ui->labelImageProperties_5->setFont(font);
-        ui->labelImageProperties_6->setFont(font);
-} else {
-        QFont font("MS Shell Dlg 2,10", 10, QFont::Normal);
-        ui->labelFileName_1->setFont(font);
-        ui->labelFileName_2->setFont(font);
-        ui->labelFileName_3->setFont(font);
-        ui->labelFileName_4->setFont(font);
-        ui->labelFileName_5->setFont(font);
-        ui->labelFileName_6->setFont(font);
-    }
-}
 
 //
 
@@ -1161,45 +739,20 @@ void MainWindow::changeFonts()
 void MainWindow::setSession()
 {
     bool restart;
-    restart = ui->actionStartEmulation->isChecked();
+    restart = m_emulationRunning;
     if (restart) {
-        ui->actionStartEmulation->trigger();
+        qmlToggleSio();
        sio->wait();
         qApp->processEvents();
     }
 
     // load translators and retranslate
     loadTranslators();
-    ui->retranslateUi(this);
     for (int i = 0; i < MAX_DISKS; i++) {
         deviceStatusChanged(0x31 + i);
     }
 
-    ui->actionStartEmulation->trigger();
-}
-void MainWindow::updateRecentFileActions()
-{
-    ui->actionMountRecent_0->setText(aspeqtSettings->recentImageSetting(0).fileName);
-    ui->actionMountRecent_1->setText(aspeqtSettings->recentImageSetting(1).fileName);
-    ui->actionMountRecent_2->setText(aspeqtSettings->recentImageSetting(2).fileName);
-    ui->actionMountRecent_3->setText(aspeqtSettings->recentImageSetting(3).fileName);
-    ui->actionMountRecent_4->setText(aspeqtSettings->recentImageSetting(4).fileName);
-    ui->actionMountRecent_5->setText(aspeqtSettings->recentImageSetting(5).fileName);
-    ui->actionMountRecent_6->setText(aspeqtSettings->recentImageSetting(6).fileName);
-    ui->actionMountRecent_7->setText(aspeqtSettings->recentImageSetting(7).fileName);
-    ui->actionMountRecent_8->setText(aspeqtSettings->recentImageSetting(8).fileName);
-    ui->actionMountRecent_9->setText(aspeqtSettings->recentImageSetting(9).fileName);
-
-    ui->actionMountRecent_0->setVisible(!ui->actionMountRecent_0->text().isEmpty());
-    ui->actionMountRecent_1->setVisible(!ui->actionMountRecent_1->text().isEmpty());
-    ui->actionMountRecent_2->setVisible(!ui->actionMountRecent_2->text().isEmpty());
-    ui->actionMountRecent_3->setVisible(!ui->actionMountRecent_3->text().isEmpty());
-    ui->actionMountRecent_4->setVisible(!ui->actionMountRecent_4->text().isEmpty());
-    ui->actionMountRecent_5->setVisible(!ui->actionMountRecent_5->text().isEmpty());
-    ui->actionMountRecent_6->setVisible(!ui->actionMountRecent_6->text().isEmpty());
-    ui->actionMountRecent_7->setVisible(!ui->actionMountRecent_7->text().isEmpty());
-    ui->actionMountRecent_8->setVisible(!ui->actionMountRecent_8->text().isEmpty());
-    ui->actionMountRecent_9->setVisible(!ui->actionMountRecent_9->text().isEmpty());
+    qmlToggleSio();
 }
 
 
@@ -1229,7 +782,6 @@ bool MainWindow::ejectImage(int no, bool ask)
     m_writeProtect[no] = false;
 
     aspeqtSettings->unmountImage(no);
-    updateRecentFileActions();
     deviceStatusChanged(no + 0x31);
     qDebug() << "!n" << tr("Unmounted disk %1").arg(no + 1);
     return true;
@@ -1404,7 +956,6 @@ void MainWindow::mountFile(int no, const QString &fileName, bool /*prot*/)
         m_writeProtect[no] = disk->isReadOnly();
 
         aspeqtSettings->mountImage(no, fileName, disk->isReadOnly());
-        updateRecentFileActions();
         connect(disk, SIGNAL(statusChanged(int)), this, SLOT(deviceStatusChanged(int)), Qt::QueuedConnection);
         deviceStatusChanged(0x31 + no);
 
@@ -1422,11 +973,6 @@ void MainWindow::mountFile(int no, const QString &fileName, bool /*prot*/)
 
 #ifdef Q_OS_ANDROID
 
-QString MainWindow::androidSaveUrl(const QString &caption, const QString &filter)
-{
-    QUrl u = QFileDialog::getSaveFileUrl(this, caption, QUrl(), filter);
-    return u.isEmpty() ? QString() : androidContentUri(u);
-}
 
 QString MainWindow::androidDisplayName(const QString &uri)
 {
@@ -1445,14 +991,6 @@ void MainWindow::androidTakePersistable(const QString &uri, bool write)
         "(Ljava/lang/String;Z)V", juri.object<jstring>(), (jboolean)write);
 }
 
-QString MainWindow::androidTreeName(const QString &tree)
-{
-    QJniObject jt = QJniObject::fromString(tree);
-    QJniObject res = QJniObject::callStaticObjectMethod(
-        "net/greblus/SerialActivity", "treeDisplayName",
-        "(Ljava/lang/String;)Ljava/lang/String;", jt.object<jstring>());
-    return res.isValid() ? res.toString() : QString();
-}
 
 int MainWindow::androidCopyTreeToDir(const QString &tree, const QString &dest)
 {
@@ -1609,8 +1147,9 @@ QMessageBox::StandardButton MainWindow::saveImageWhenClosing(int no, QMessageBox
         } else {
             buttons = QMessageBox::Yes | QMessageBox::No | QMessageBox::Cancel;
         }
-        previousAnswer = QMessageBox::question(this, tr("Image file unsaved"), tr("'%1' has unsaved changes, do you want to save it?")
-                                       .arg(img->originalFileName()), buttons);
+        // friendlyName(): a SAF content:// URI is unreadable in a prompt.
+        previousAnswer = QMessageBox::question(nullptr, tr("Image file unsaved"), tr("'%1' has unsaved changes, do you want to save it?")
+                                       .arg(friendlyName(img->originalFileName())), buttons);
     }
     if (previousAnswer == QMessageBox::Yes || previousAnswer == QMessageBox::YesToAll) {
         qmlSaveDisk(no);
@@ -1734,45 +1273,11 @@ bool MainWindow::qmlSaveAsPath(int no, const QString &url)
     return true;
 }
 
-void MainWindow::revertDisk(int no)
-{
-    SimpleDiskImage *img = qobject_cast <SimpleDiskImage*> (sio->getDevice(no + 0x31));
-    if (QMessageBox::question(this, tr("Revert to last saved"),
-            tr("Do you really want to revert '%1' to its last saved state? You will lose the changes that has been made.")
-            .arg(img->originalFileName()), QMessageBox::Yes, QMessageBox::No) == QMessageBox::Yes) {
-        img->lock();
-        img->reopen();
-        img->unlock();
-        deviceStatusChanged(0x31 + no);
-    }
-}
 
 
 
-void MainWindow::on_actionEject_1_triggered() {ejectImage(0);}
-void MainWindow::on_actionEject_2_triggered() {ejectImage(1);}
-void MainWindow::on_actionEject_3_triggered() {ejectImage(2);}
-void MainWindow::on_actionEject_4_triggered() {ejectImage(3);}
-void MainWindow::on_actionEject_5_triggered() {ejectImage(4);}
-void MainWindow::on_actionEject_6_triggered() {ejectImage(5);}
 
-void MainWindow::on_actionWriteProtect_1_triggered() {toggleWriteProtection(0);}
-void MainWindow::on_actionWriteProtect_2_triggered() {toggleWriteProtection(1);}
-void MainWindow::on_actionWriteProtect_3_triggered() {toggleWriteProtection(2);}
-void MainWindow::on_actionWriteProtect_4_triggered() {toggleWriteProtection(3);}
-void MainWindow::on_actionWriteProtect_5_triggered() {toggleWriteProtection(4);}
-void MainWindow::on_actionWriteProtect_6_triggered() {toggleWriteProtection(5);}
 
-void MainWindow::on_actionMountRecent_0_triggered() {mountFileWithDefaultProtection(firstEmptyDiskSlot(), ui->actionMountRecent_0->text());}
-void MainWindow::on_actionMountRecent_1_triggered() {mountFileWithDefaultProtection(firstEmptyDiskSlot(), ui->actionMountRecent_1->text());}
-void MainWindow::on_actionMountRecent_2_triggered() {mountFileWithDefaultProtection(firstEmptyDiskSlot(), ui->actionMountRecent_2->text());}
-void MainWindow::on_actionMountRecent_3_triggered() {mountFileWithDefaultProtection(firstEmptyDiskSlot(), ui->actionMountRecent_3->text());}
-void MainWindow::on_actionMountRecent_4_triggered() {mountFileWithDefaultProtection(firstEmptyDiskSlot(), ui->actionMountRecent_4->text());}
-void MainWindow::on_actionMountRecent_5_triggered() {mountFileWithDefaultProtection(firstEmptyDiskSlot(), ui->actionMountRecent_5->text());}
-void MainWindow::on_actionMountRecent_6_triggered() {mountFileWithDefaultProtection(firstEmptyDiskSlot(), ui->actionMountRecent_6->text());}
-void MainWindow::on_actionMountRecent_7_triggered() {mountFileWithDefaultProtection(firstEmptyDiskSlot(), ui->actionMountRecent_7->text());}
-void MainWindow::on_actionMountRecent_8_triggered() {mountFileWithDefaultProtection(firstEmptyDiskSlot(), ui->actionMountRecent_8->text());}
-void MainWindow::on_actionMountRecent_9_triggered() {mountFileWithDefaultProtection(firstEmptyDiskSlot(), ui->actionMountRecent_9->text());}
 
 
 
@@ -1827,9 +1332,6 @@ void MainWindow::qmlOpenSessionPath(const QString &url)
 
     aspeqtSettings->loadSessionFromFile(fileName);
 
-    setWindowTitle(g_mainWindowTitle + tr(" -- Session: ") + g_sessionFile);
-    setGeometry(aspeqtSettings->lastHorizontalPos(), aspeqtSettings->lastVerticalPos(), aspeqtSettings->lastWidth() , aspeqtSettings->lastHeight());
-
 #ifdef Q_OS_ANDROID
     // Rebuild the slot column (count + gaps) to match the loaded session before
     // restoring its mounts.
@@ -1852,12 +1354,6 @@ void MainWindow::qmlSaveSessionPath(const QString &url)
     }
 
 // Save mainwindow position and size to session file //
-    if (aspeqtSettings->saveWindowsPos()) {
-        aspeqtSettings->setLastHorizontalPos(geometry().x());
-        aspeqtSettings->setLastVerticalPos(geometry().y());
-        aspeqtSettings->setLastWidth(geometry().width());
-        aspeqtSettings->setLastHeight(geometry().height());
-    }
 
     if (!picked.startsWith(QLatin1String("content:"))) {
         aspeqtSettings->setLastSessionDir(QFileInfo(picked).absolutePath());
@@ -1889,20 +1385,8 @@ void MainWindow::qmlSaveSessionPath(const QString &url)
 
 void MainWindow::on_actionQuit_triggered()
 {
-    close();
 }
 
-void MainWindow::trayIconActivated(QSystemTrayIcon::ActivationReason reason)
-{
-    if (reason == QSystemTrayIcon::DoubleClick) {
-        setWindowFlags(oldWindowFlags);
-        setWindowState(oldWindowStates);
-        show();
-        activateWindow();
-        raise();
-        trayIcon.hide();
-    }
-}
 
 
 
@@ -1969,8 +1453,11 @@ QVariantMap MainWindow::qmlStatus()
 {
     extern bool g_printerEmu;
     QVariantMap m;
-    m["running"]   = m_emulationRunning;
-    m["speed"]     = speedLabel ? speedLabel->text() : QString();
+    // Disk SIO is paused while a cassette plays, but the player is driving the
+    // serial line, so the status icon stays "connected" -- as it did when this
+    // was a status-bar pixmap.
+    m["running"]   = m_emulationRunning || (m_casWorker && m_casWorker->isRunning());
+    m["speed"]     = m_sioStatus;
     m["printerOn"] = g_printerEmu;
     return m;
 }
@@ -2018,12 +1505,25 @@ void MainWindow::qmlSwapSlots(int source, int slot)
 void MainWindow::qmlLoaderPlay()              { loaderPlayCas(); }
 void MainWindow::qmlLoaderRetry()             { loaderRetry(); }
 void MainWindow::qmlLoaderEject()             { loaderEject(); }
-void MainWindow::qmlToggleSio()               { ui->actionStartEmulation->trigger(); }
-void MainWindow::qmlTogglePrinter()           { ui->actionPrinterEmulation->trigger(); emit qmlChanged(); }
+void MainWindow::qmlToggleSio()
+{
+    if (m_emulationRunning) {
+        sio->setPriority(QThread::NormalPriority);
+        sio->wait();
+        qApp->processEvents();
+    } else {
+        sio->start(QThread::TimeCriticalPriority);
+    }
+}
+void MainWindow::qmlTogglePrinter()
+{
+    g_printerEmu = !g_printerEmu;
+    qWarning() << "!i" << (g_printerEmu ? tr("Printer emulation started.")
+                                        : tr("Printer emulation stopped."));
+    emit qmlChanged();
+}
 void MainWindow::qmlClearLog()
 {
-    ui->textEdit->clear();
-    emit sendLogText(QString());
     emit qmlChanged();
 }
 
@@ -2076,9 +1576,9 @@ void MainWindow::qmlEjectAll()
         return;
     }
 
-    bool wasRunning = ui->actionStartEmulation->isChecked();
+    bool wasRunning = m_emulationRunning;
     if (wasRunning) {
-        ui->actionStartEmulation->trigger();
+        qmlToggleSio();
     }
 
     for (int i = m_numDisks-1; i >= 0; i--) {
@@ -2091,7 +1591,7 @@ void MainWindow::qmlEjectAll()
             }
             if (answer == QMessageBox::Cancel) {
                 if (wasRunning) {
-                    ui->actionStartEmulation->trigger();
+                    qmlToggleSio();
                 }
                 return;
             }
@@ -2101,14 +1601,14 @@ void MainWindow::qmlEjectAll()
         ejectImage(i, false);
     }
     if (wasRunning) {
-        ui->actionStartEmulation->trigger();
+        qmlToggleSio();
     }
 }
 QString MainWindow::qmlPrinterText()   { return textPrinterWindow ? textPrinterWindow->qmlText() : QString(); }
 QString MainWindow::qmlPrinterTextAtascii() { return textPrinterWindow ? textPrinterWindow->qmlTextAtascii() : QString(); }
 void MainWindow::qmlPrinterClear()     { if (textPrinterWindow) textPrinterWindow->qmlClear(); emit qmlPrinterTextChanged(); }
 void MainWindow::qmlPrinterSave()      { if (textPrinterWindow) textPrinterWindow->qmlSave(); }
-void MainWindow::qmlQuit()             { close(); qApp->quit(); }
+void MainWindow::qmlQuit()             { if (shutdown()) qApp->quit(); }
 
 QStringList MainWindow::qmlRecentFiles()
 {
@@ -2553,17 +2053,13 @@ bool MainWindow::qmlDiskAddFilesPath(const QString &url)
 
 void MainWindow::qmlMountRecent(int index)
 {
-    switch (index) {
-    case 0: on_actionMountRecent_0_triggered(); break;
-    case 1: on_actionMountRecent_1_triggered(); break;
-    case 2: on_actionMountRecent_2_triggered(); break;
-    case 3: on_actionMountRecent_3_triggered(); break;
-    case 4: on_actionMountRecent_4_triggered(); break;
-    case 5: on_actionMountRecent_5_triggered(); break;
-    case 6: on_actionMountRecent_6_triggered(); break;
-    case 7: on_actionMountRecent_7_triggered(); break;
-    case 8: on_actionMountRecent_8_triggered(); break;
-    case 9: on_actionMountRecent_9_triggered(); break;
-    }
+    // Straight from the settings: this used to read the text of the (invisible)
+    // widget menu action, so it only worked if that menu had been refreshed.
+    if (index < 0 || index >= 10)
+        return;
+    const QString fileName = aspeqtSettings->recentImageSetting(index).fileName;
+    if (fileName.isEmpty())
+        return;
+    mountFileWithDefaultProtection(firstEmptyDiskSlot(), fileName);
 }
 #endif // ASPEQT_QML
