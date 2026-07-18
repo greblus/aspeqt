@@ -42,23 +42,6 @@ namespace Ui
 class AutoBoot;
 class AtariFileSystem;
 class SimpleDiskImage;
-class DiskWidgets
-{
-public:
-    QLabel *fileNameLabel = nullptr;
-    QLabel *imagePropertiesLabel = nullptr;
-    QAction *saveAction = nullptr;
-    QAction *autoSaveAction = nullptr;        //
-    QAction *bootOptionAction = nullptr;      //
-    QAction *saveAsAction = nullptr;
-    QAction *revertAction = nullptr;
-    QAction *mountDiskAction = nullptr;
-    QAction *mountFolderAction = nullptr;
-    QAction *ejectAction = nullptr;
-    QAction *writeProtectAction = nullptr;
-    QAction *editAction = nullptr;
-    QFrame *frame = nullptr;
-};
 
 class MainWindow : public QMainWindow
 {
@@ -83,9 +66,14 @@ private:
     Ui::MainWindow *ui;
     SioWorker *sio;
     bool shownFirstTime;
-    DiskWidgets diskWidgets[MAX_DISKS];    //
     int m_numDisks;                        // active number of drive slots
     bool m_emulationRunning = false;       // SIO worker running (mirrored to QML)
+
+    // Per-slot runtime state, moved out of the widgets (DiskWidgets) so the
+    // engine no longer needs them. Presence used to be "diskWidgets[i].frame".
+    bool m_slotPresent[MAX_DISKS] = {};
+    bool m_autoCommit[MAX_DISKS] = {};
+    bool m_writeProtect[MAX_DISKS] = {};
 
     // QML disk viewer state (entries are re-fetched per call, not stored)
     AtariFileSystem *m_dvFs = nullptr;
@@ -105,7 +93,6 @@ private:
     
     void setSession();  //
     void updateRecentFileActions();
-    int containingDiskSlot(const QPoint &point);
     void bootExe(const QString &fileName);
     void mountFile(int no, const QString &fileName, bool prot);
     void mountDiskImage(int no);
@@ -146,41 +133,22 @@ private:
     QMap<int, QString> m_folderTemp;   // slot -> local temp working dir
 
     // --- dynamic drive slots (Android) --------------------------------------
-    // Slots live in a scrollable column: m_numDisks frames plus a trailing "+"
-    // button. buildSlotFrame() creates one slot's widgets/actions and fills
-    // diskWidgets[i]; add/remove append/drop the last slot; a horizontal swipe
-    // on the last frame removes it. The count persists in the session.
-    QScrollArea *m_slotScroll = nullptr;
-    QWidget     *m_slotContainer = nullptr;
-    QVBoxLayout *m_slotBox = nullptr;
-    QToolButton *m_addSlotBtn = nullptr;
-    QFrame      *m_addSlotRow = nullptr;
-    bool         m_slotsOverflowed = false;   // slots taller than the viewport
-    void buildSlotFrame(int i);        // create widgets + actions for slot i
-    void layoutSlotFrame(int i);       // (re)build slot i's inner layout
+    // Slot presence lives in m_slotPresent[]; add fills the lowest gap (or
+    // appends), remove drops one leaving a numbering gap. Persists in the session.
     void androidRebuildSlots();        // (re)populate present slots from settings
 
     // --- top loader slot: inline XEX autoboot / CAS cassette player ----------
-    QFrame       *m_loaderFrame = nullptr;
-    QLabel       *m_loaderBadge = nullptr;
-    QLabel       *m_loaderFileLbl = nullptr;
-    QLabel       *m_loaderTypeLbl = nullptr;
-    QToolButton  *m_loaderLoadBtn = nullptr;
-    QToolButton  *m_loaderPlayBtn = nullptr;
-    QToolButton  *m_loaderRetryBtn = nullptr;
-    QToolButton  *m_loaderEjectBtn = nullptr;
-    QWidget      *m_loaderSpacer1 = nullptr;   // keep icon columns aligned with
-    QWidget      *m_loaderSpacer2 = nullptr;   // the 5-icon disk slots
     QString       m_loaderFile;             // current local (temp) file path
     int           m_loaderKind = 0;         // 0 none, 1 xex, 2 cas
     double        m_loaderFill = 0.0;       // last progress-fill fraction (for QML)
+    QString       m_loaderName;             // display name shown by the QML loader
+    QString       m_loaderTypeText;         // e.g. "Executable (24k)" / "Cassette (1:23)"
     CassetteWorker *m_casWorker = nullptr;
     QTimer       *m_casTimer = nullptr;
     int           m_casTotal = 0, m_casRemaining = 0;
     bool          m_casWasRunning = false;   // emulation paused for cassette play
     AutoBoot     *m_autoBoot = nullptr;
     SioDevice    *m_autoBootOld = nullptr;
-    void androidBuildLoaderSlot();
     void loaderLoad();
     void loaderLoadXex(const QString &path);
     void loaderLoadCas(const QString &path);
@@ -197,8 +165,6 @@ private:
     void androidAddSlot();             // "+" -> fill the lowest gap / append
     void androidRemoveSlot(int i);     // 2nd eject on empty -> drop this slot
     void androidEjectPressed(int i);   // eject if mounted, else remove the slot
-    int  androidBoxPos(int i);         // layout position for slot i in m_slotBox
-    void androidUpdateAddRow();        // show/hide "+" row at the current cap
 #endif
     bool ejectImage(int no, bool ask = true);
     void toggleWriteProtection(int no);
@@ -211,24 +177,10 @@ private:
     void autoSaveDisk(int no);                                              //
 
 protected:
-    void mousePressEvent(QMouseEvent *event);
-    void dragEnterEvent(QDragEnterEvent *event);
-    void dragMoveEvent(QDragMoveEvent *event);
-    void dragLeaveEvent(QDragLeaveEvent *);
-    void dropEvent(QDropEvent *event);
     void closeEvent(QCloseEvent *event);
     void hideEvent(QHideEvent *event);
-    void enterEvent(QEvent *);
-    void leaveEvent(QEvent *);
-    void resizeEvent(QResizeEvent *);
     bool eventFilter(QObject *obj, QEvent *event);
 #ifdef Q_OS_ANDROID
-    // Re-fit the layout to the current screen: apply system-bar insets as window
-    // margins and size the 6 drive rows so the log always keeps usable height.
-    void androidRelayout();
-    // Rebuild each drive slot as a centred button row with the name/type
-    // descriptions left-aligned on a second line below the buttons.
-    void androidBuildSlots();
 #endif
 
 signals:

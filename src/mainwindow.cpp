@@ -410,57 +410,11 @@ MainWindow::MainWindow(QWidget *parent)
     ui->textEdit->installEventFilter(mainWindow);
     changeFonts();
 
-    /* Initialize diskWidgets array and tool button actions */
-
 #ifdef Q_OS_ANDROID
-    // Android uses dynamic, programmatically-built slots in a scroll area; the
-    // .ui's fixed 6 frames are discarded. androidBuildSlots() sets m_numDisks
-    // from the session, builds the scroll column and the first m_numDisks slots.
-    m_numDisks = aspeqtSettings->numberOfDisks();
-    if (m_numDisks < 1)          m_numDisks = DEFAULT_DISKS;
-    if (m_numDisks > MAX_DISKS)  m_numDisks = MAX_DISKS;
-    androidBuildSlots();
-    // The top loader slot replaces the executable/cassette menu items.
-    ui->actionBootExe->setVisible(false);
-    ui->actionPlaybackCassette->setVisible(false);
+    // Slot presence from the session (used to be done by androidBuildSlots()).
+    androidRebuildSlots();
 #else
     m_numDisks = g_numberOfDisks;
-    for (int i = 0; i < m_numDisks; i++) {      //
-
-        diskWidgets[i].fileNameLabel = findChild <QLabel*> (QString("labelFileName_%1").arg(i + 1));
-        diskWidgets[i].imagePropertiesLabel = findChild <QLabel*> (QString("labelImageProperties_%1").arg(i + 1));
-        diskWidgets[i].ejectAction = findChild <QAction*> (QString("actionEject_%1").arg(i + 1));
-        diskWidgets[i].writeProtectAction = findChild <QAction*> (QString("actionWriteProtect_%1").arg(i + 1));
-        diskWidgets[i].editAction = findChild <QAction*> (QString("actionEditDisk_%1").arg(i + 1));
-        diskWidgets[i].mountDiskAction = findChild <QAction*> (QString("actionMountDisk_%1").arg(i + 1));
-        diskWidgets[i].mountFolderAction = findChild <QAction*> (QString("actionMountFolder_%1").arg(i + 1));
-        diskWidgets[i].saveAction = findChild <QAction*> (QString("actionSave_%1").arg(i + 1));
-        diskWidgets[i].autoSaveAction = findChild <QAction*> (QString("actionAutoSave_%1").arg(i + 1));  //
-        if(i == 0)
-            diskWidgets[i].bootOptionAction = findChild <QAction*> (QString("actionBootOption"));       //
-        diskWidgets[i].revertAction = findChild <QAction*> (QString("actionRevert_%1").arg(i + 1));
-        diskWidgets[i].saveAsAction = findChild <QAction*> (QString("actionSaveAs_%1").arg(i + 1));
-        diskWidgets[i].frame = findChild <QFrame*> (QString("horizontalFrame_%1").arg(i + 1));
-
-        if(i == 0)
-            diskWidgets[i].frame->insertAction(0, diskWidgets[i].bootOptionAction); //
-        diskWidgets[i].frame->insertAction(0, diskWidgets[i].saveAction);
-        diskWidgets[i].frame->insertAction(0, diskWidgets[i].autoSaveAction);       //
-        diskWidgets[i].frame->insertAction(0, diskWidgets[i].saveAsAction);
-        diskWidgets[i].frame->insertAction(0, diskWidgets[i].revertAction);
-        diskWidgets[i].frame->insertAction(0, diskWidgets[i].mountDiskAction);
-        diskWidgets[i].frame->insertAction(0, diskWidgets[i].mountFolderAction);
-        diskWidgets[i].frame->insertAction(0, diskWidgets[i].ejectAction);
-        diskWidgets[i].frame->insertAction(0, diskWidgets[i].writeProtectAction);
-        diskWidgets[i].frame->insertAction(0, diskWidgets[i].editAction);
-
-        findChild <QToolButton*> (QString("buttonMountDisk_%1").arg(i + 1)) -> setDefaultAction(diskWidgets[i].mountDiskAction);
-        findChild <QToolButton*> (QString("buttonMountFolder_%1").arg(i + 1)) -> setDefaultAction(diskWidgets[i].mountFolderAction);
-        findChild <QToolButton*> (QString("buttonEject_%1").arg(i + 1)) -> setDefaultAction(diskWidgets[i].ejectAction);
-        findChild <QToolButton*> (QString("buttonSave_%1").arg(i + 1)) -> setDefaultAction(diskWidgets[i].saveAction);
-        findChild <QToolButton*> (QString("autoSave_%1").arg(i + 1)) -> setDefaultAction(diskWidgets[i].autoSaveAction);  //
-        findChild <QToolButton*> (QString("buttonEditDisk_%1").arg(i + 1)) -> setDefaultAction(diskWidgets[i].editAction);
-    }
 #endif
 
     /* Connect SioWorker signals */
@@ -473,6 +427,11 @@ MainWindow::MainWindow(QWidget *parent)
     PCLINK* pclink = new PCLINK(sio);
     sio->installDevice(0x6F, pclink);
 
+#ifdef Q_OS_ANDROID
+    // Loader state (used to be done by androidBuildLoaderSlot()).
+    loaderEject();
+#endif
+
     /* Restore application state */
     for (int i = 0; i < m_numDisks; i++) {      //
         AspeqtSettings::ImageSettings is;
@@ -480,8 +439,6 @@ MainWindow::MainWindow(QWidget *parent)
         mountFile(i, is.fileName, is.isWriteProtected);
     }
     updateRecentFileActions();
-
-    setAcceptDrops(true);
 
     // SmartDevice (ApeTime + URL submit)
     SmartDevice *smart = new SmartDevice(sio);
@@ -534,181 +491,7 @@ MainWindow::~MainWindow()
     delete logFile;
 }
 
- void MainWindow::mousePressEvent(QMouseEvent *event)
- {
-     int slot = containingDiskSlot(event->pos());
-
-     if (event->button() == Qt::LeftButton
-         && slot >= 0) {
-
-         QDrag *drag = new QDrag((QWidget*)this);
-         QMimeData *mimeData = new QMimeData;
-
-         mimeData->setData("application/x-aspeqt-disk-image", QByteArray(1, slot));
-         drag->setMimeData(mimeData);
-
-         drag->exec();
-     }
-
-     if (event->button() == Qt::LeftButton && onOffLabel->geometry().translated(ui->statusBar->geometry().topLeft()).contains(event->pos())) {
-         ui->actionStartEmulation->trigger();
-     }
-     if (event->button() == Qt::LeftButton && prtOnOffLabel->geometry().translated(ui->statusBar->geometry().topLeft()).contains(event->pos())) {
-         ui->actionPrinterEmulation->trigger();     //
-     }
-      if (event->button() == Qt::LeftButton && clearMessagesLabel->geometry().translated(ui->statusBar->geometry().topLeft()).contains(event->pos())) {
-         ui->textEdit->clear();
-         emit sendLogText("");
-     }
-}
-
-void MainWindow::dragEnterEvent(QDragEnterEvent *event)
-{
-    int i = containingDiskSlot(event->pos());
-    if (i >= 0 && (event->mimeData()->hasUrls() ||
-                   event->mimeData()->hasFormat("application/x-aspeqt-disk-image"))) {
-        event->acceptProposedAction();
-    } else {
-        i = -1;
-    }
-    for (int j = 0; j < m_numDisks; j++) { //
-        if (!diskWidgets[j].frame) continue;   // skip removed slots (gaps)
-        if (i == j) {
-            diskWidgets[j].frame->setFrameShadow(QFrame::Sunken);
-        } else {
-            diskWidgets[j].frame->setFrameShadow(QFrame::Raised);
-        }
-    }
-}
-
-void MainWindow::dragMoveEvent(QDragMoveEvent *event)
-{
-    int i = containingDiskSlot(event->pos());
-    if (i >= 0 && (event->mimeData()->hasUrls() ||
-                   event->mimeData()->hasFormat("application/x-aspeqt-disk-image"))) {
-        event->acceptProposedAction();
-    } else {
-        i = -1;
-    }
-    for (int j = 0; j < m_numDisks; j++) { //
-        if (!diskWidgets[j].frame) continue;   // skip removed slots (gaps)
-        if (i == j) {
-            diskWidgets[j].frame->setFrameShadow(QFrame::Sunken);
-        } else {
-            diskWidgets[j].frame->setFrameShadow(QFrame::Raised);
-        }
-    }
-}
-
-void MainWindow::dragLeaveEvent(QDragLeaveEvent *)
-{
-    for (int j = 0; j < m_numDisks; j++) { //
-        if (!diskWidgets[j].frame) continue;   // skip removed slots (gaps)
-        diskWidgets[j].frame->setFrameShadow(QFrame::Raised);
-    }
-}
-
-void MainWindow::dropEvent(QDropEvent *event)
-{
-    for (int j = 0; j < m_numDisks; j++) { //
-        if (!diskWidgets[j].frame) continue;   // skip removed slots (gaps)
-        diskWidgets[j].frame->setFrameShadow(QFrame::Raised);
-    }
-    int slot = containingDiskSlot(event->pos());
-    if (!(event->mimeData()->hasUrls() ||
-          event->mimeData()->hasFormat("application/x-aspeqt-disk-image")) ||
-          slot < 0) {
-        return;
-    }
-
-    if (event->mimeData()->hasFormat("application/x-aspeqt-disk-image")) {
-        int source = event->mimeData()->data("application/x-aspeqt-disk-image").at(0);
-
-        if (slot == source) {
-            return;
-        }
-
-#ifdef Q_OS_ANDROID
-        // Finger scrolling occasionally starts an accidental drag that would
-        // silently swap two drives, so confirm first on touch.
-        if (QMessageBox::question(this, tr("Swap drives"),
-                tr("Swap drive %1 with drive %2?").arg(source + 1).arg(slot + 1),
-                QMessageBox::Yes | QMessageBox::No, QMessageBox::No) != QMessageBox::Yes) {
-            return;
-        }
-#endif
-
-        sio->swapDevices(slot + 0x31, source + 0x31);
-
-        aspeqtSettings->swapImages(slot, source);
-
-        PCLINK* pclink = reinterpret_cast<PCLINK*>(sio->getDevice(0x6F));
-        if(pclink->hasLink(slot+1) || pclink->hasLink(source+1))
-        {
-            sio->uninstallDevice(0x6F);
-            pclink->swapLinks(slot+1, source+1);
-            sio->installDevice(0x6F, pclink);
-        }
-
-        qDebug() << "!n" << tr("Swapped disk %1 with disk %2.").arg(slot + 1).arg(source + 1);
-
-        return;
-    }
-
-    QStringList files;
-    foreach (QUrl url, event->mimeData()->urls()) {
-        if (!url.toLocalFile().isEmpty()) {
-            files.append(url.toLocalFile());
-        }
-    }
-    if (files.isEmpty()) {
-        return;
-    }
-
-    FileTypes::FileType type = FileTypes::getFileType(files.at(0));
-
-    if (type == FileTypes::Xex) {
-        g_exefileName = files.at(0);  //
-        bootExe(files.at(0));
-        return;
-    }
-
-    if (type == FileTypes::Cas) {
-        bool restart;
-        restart = ui->actionStartEmulation->isChecked();
-        if (restart) {
-            ui->actionStartEmulation->trigger();
-            sio->wait();
-            qApp->processEvents();
-        }
-
-        CassetteDialog *dlg = new CassetteDialog(this, files.at(0));
-        dlg->exec();
-        delete dlg;
-
-        if (restart) {
-            ui->actionStartEmulation->trigger();
-        }
-        return;
-    }
-
-    mountFileWithDefaultProtection(slot, files[0]);
-    files.removeAt(0);
-    while (!files.isEmpty() && (slot = firstEmptyDiskSlot(slot, false)) >= 0) {
-        mountFileWithDefaultProtection(slot, files[0]);
-        files.removeAt(0);
-    }
-    slot = 0;
-    while (!files.isEmpty() && (slot = firstEmptyDiskSlot(slot, false)) >= 0) {
-        mountFileWithDefaultProtection(slot, files[0]);
-        files.removeAt(0);
-    }
-    foreach(QString file, files) {
-        qCritical() << "!e" << tr("Cannot mount '%1': No empty disk slots.").arg(file);
-    }
-}
-
-void MainWindow::closeEvent(QCloseEvent *event)
+ void MainWindow::closeEvent(QCloseEvent *event)
 {
     // Save various session settings  //
     if (aspeqtSettings->saveWindowsPos()) {
@@ -786,15 +569,7 @@ void MainWindow::hideEvent(QHideEvent *event)
 
 void MainWindow::show()
 {
-#ifdef Q_OS_ANDROID
-    // Full-screen immersive; androidRelayout() (also called on every resize)
-    // applies the system-bar insets and sizes the drive rows / log.
-    QMainWindow::showMaximized();
-    QTimer::singleShot(300, this, [this]{ androidRelayout(); });
-    QTimer::singleShot(1200, this, [this]{ androidRelayout(); });
-#else
     QMainWindow::show();
-#endif
     if (shownFirstTime) {
         /* Open options dialog if it's the first time */
         if (aspeqtSettings->isFirstTime()) {
@@ -809,378 +584,53 @@ void MainWindow::show()
         ui->actionStartEmulation->trigger();
     }
 }
-void MainWindow::enterEvent(QEvent *)
-{
-    if (g_miniMode && g_shadeMode) {
-       setWindowOpacity(1.0);
-    }
-}
-void MainWindow::leaveEvent(QEvent *)
-{
-    if (g_miniMode && g_shadeMode) {
-       setWindowOpacity(0.25);
-    }
-}
-void MainWindow::resizeEvent(QResizeEvent *)
-{
-#ifdef Q_OS_ANDROID
-    androidRelayout();
-    // A live rotation leaves Qt/Android with a stale surface (overlapping old
-    // rows, a bogus window height, a half-width log). Re-showing the top-level
-    // window once per orientation flip recreates the surface cleanly; the guard
-    // stops the re-show's own resize events from looping.
-    static int lastOri = -1;
-    QScreen *scr = screen();
-    int ori = (scr && scr->size().width() > scr->size().height()) ? 1 : 0;
-    if (ori != lastOri) {
-        lastOri = ori;
-        QTimer::singleShot(500, this, [this]{
-            QMainWindow::hide();
-            QMainWindow::showMaximized();
-            androidRelayout();
-        });
-    }
-#endif
-}
-
-#ifdef Q_OS_ANDROID
-// Create all widgets and actions for one drive slot and fill diskWidgets[i].
-// Buttons carry the same object names the desktop .ui uses so the rest of the
-// code (deviceStatusChanged, androidRelayout) keeps working unchanged.
-void MainWindow::buildSlotFrame(int i)
-{
-    DiskWidgets &d = diskWidgets[i];
-
-    QFrame *f = new QFrame(m_slotContainer);
-    f->setObjectName(QString("horizontalFrame_%1").arg(i + 1));
-    // Border comes from the stylesheet (deviceStatusChanged repaints it per
-    // mount state); NoFrame avoids the native bevel fighting the CSS border.
-    f->setFrameShape(QFrame::NoFrame);
-    f->setStyleSheet(QString("QFrame#%1 { background:#F7F7F7; border:1px solid #B0B0B0;"
-                             " border-radius:6px; }").arg(f->objectName()));
-    f->setContextMenuPolicy(Qt::ActionsContextMenu);
-    d.frame = f;
-
-    QLabel *numLbl = new QLabel(f);
-    numLbl->setObjectName(QString("slotNum_%1").arg(i + 1));
-    d.fileNameLabel = new QLabel(f);
-    d.fileNameLabel->setObjectName(QString("labelFileName_%1").arg(i + 1));
-    d.imagePropertiesLabel = new QLabel(f);
-    d.imagePropertiesLabel->setObjectName(QString("labelImageProperties_%1").arg(i + 1));
-    // Same fonts the desktop applies via changeFonts() (the dynamic labels are
-    // not covered by that ui-> based helper).
-    if (aspeqtSettings->useLargeFont()) {
-        d.fileNameLabel->setFont(QFont("Arial Black", 16, QFont::Normal));
-        d.imagePropertiesLabel->setFont(QFont("Arial Black", 14, QFont::Normal));
-    } else {
-        d.fileNameLabel->setFont(QFont("MS Shell Dlg 2", 10, QFont::Normal));
-        d.imagePropertiesLabel->setFont(QFont("MS Shell Dlg 2", 10, QFont::Normal));
-    }
-
-    auto mkAct = [&](const QString &icon, bool checkable, const QString &text) {
-        QAction *a = new QAction(f);
-        if (!icon.isEmpty()) a->setIcon(QIcon(icon));
-        a->setCheckable(checkable);
-        a->setText(text);
-        a->setToolTip(text);
-        return a;
-    };
-    d.mountDiskAction    = mkAct(":/icons/tango-icons/devices/drive-optical.svg", false, tr("Mount disk image"));
-    d.mountFolderAction  = mkAct(":/icons/tango-icons/places/folder.svg", false, tr("Mount folder image"));
-    d.saveAction         = mkAct(":/icons/tango-icons/devices/media-floppy.svg", false, tr("Save disk"));
-    d.autoSaveAction     = mkAct(":/icons/tango-icons/actions/document-save-as.svg", true, tr("Auto-commit"));
-    d.editAction         = mkAct(":/icons/tango-icons/apps/system-file-manager.svg", true, tr("Disk explorer"));
-    // A new slot starts empty: show the placeholder hint (deviceStatusChanged()
-    // replaces it with the file name once something is mounted).
-    d.fileNameLabel->setText(tr("Mount a disk image or folder."));
-    d.fileNameLabel->setStyleSheet("color:#B0B0B0; font-style:italic; font-weight:normal; font-size:12px;");
-    d.ejectAction        = mkAct(":/icons/tango-icons/actions/media-eject.svg", false, tr("Eject"));
-    // A new slot starts empty, so the eject button starts as the "remove slot"
-    // trash button; deviceStatusChanged() swaps in the eject icon once mounted.
-    d.ejectAction->setIcon(removeSlotIcon());
-    d.ejectAction->setToolTip(tr("Remove slot"));
-    d.writeProtectAction = mkAct(":/icons/silk-icons/icons/lock_open.png", true, tr("Write protect"));
-    d.saveAsAction       = mkAct(":/icons/silk-icons/icons/drive_rename.png", false, tr("Save disk as"));
-    d.revertAction       = mkAct(":/icons/silk-icons/icons/arrow_undo.png", false, tr("Revert to last saved"));
-    d.bootOptionAction   = (i == 0) ? mkAct(":/icons/oxygen-icons/16x16/actions/flag_green.png", false, tr("Boot options")) : nullptr;
-
-    connect(d.mountDiskAction,   &QAction::triggered, this, [this, i]{ mountDiskImage(i); });
-    connect(d.mountFolderAction, &QAction::triggered, this, [this, i]{ mountFolderImage(i); });
-    connect(d.saveAction,        &QAction::triggered, this, [this, i]{ saveDisk(i); });
-    connect(d.autoSaveAction,    &QAction::triggered, this, [this, i]{ autoSaveDisk(i); });
-    connect(d.editAction,        &QAction::triggered, this, [this, i]{ openEditor(i); });
-    connect(d.ejectAction,       &QAction::triggered, this, [this, i]{ androidEjectPressed(i); });
-    connect(d.writeProtectAction,&QAction::triggered, this, [this, i]{ toggleWriteProtection(i); });
-    connect(d.saveAsAction,      &QAction::triggered, this, [this, i]{ saveDiskAs(i); });
-    connect(d.revertAction,      &QAction::triggered, this, [this, i]{ revertDisk(i); });
-    if (d.bootOptionAction)
-        connect(d.bootOptionAction, &QAction::triggered, this, [this]{ on_actionBootOption_triggered(); });
-
-    if (d.bootOptionAction) f->insertAction(0, d.bootOptionAction);
-    f->insertAction(0, d.saveAction);
-    f->insertAction(0, d.autoSaveAction);
-    f->insertAction(0, d.saveAsAction);
-    f->insertAction(0, d.revertAction);
-    f->insertAction(0, d.mountDiskAction);
-    f->insertAction(0, d.mountFolderAction);
-    f->insertAction(0, d.ejectAction);
-    f->insertAction(0, d.writeProtectAction);
-    f->insertAction(0, d.editAction);
-
-    auto mkBtn = [&](const QString &name, QAction *a) {
-        QToolButton *b = new QToolButton(f);
-        b->setObjectName(name.arg(i + 1));
-        b->setDefaultAction(a);
-        return b;
-    };
-    mkBtn("buttonMountDisk_%1",   d.mountDiskAction);
-    mkBtn("buttonMountFolder_%1", d.mountFolderAction);
-    mkBtn("buttonSave_%1",        d.saveAction);
-    mkBtn("autoSave_%1",          d.autoSaveAction);
-    mkBtn("buttonEditDisk_%1",    d.editAction);
-    mkBtn("buttonEject_%1",       d.ejectAction);
-
-    layoutSlotFrame(i);
-}
-
-// (Re)build the inner layout of slot i:
-//   [ number badge | icons row / name+type row ]
-// The five action icons are centred between the badge and the eject icon.
-void MainWindow::layoutSlotFrame(int i)
-{
-    QFrame *f = diskWidgets[i].frame;
-    if (!f) return;
-
-    QLabel *fileLbl = diskWidgets[i].fileNameLabel;
-    QLabel *typeLbl = diskWidgets[i].imagePropertiesLabel;
-    QLabel *numLbl  = f->findChild<QLabel *>(QString("slotNum_%1").arg(i + 1));
-
-    QList<QToolButton *> btns;
-    btns << f->findChild<QToolButton *>(QString("buttonMountDisk_%1").arg(i + 1))
-         << f->findChild<QToolButton *>(QString("buttonMountFolder_%1").arg(i + 1))
-         << f->findChild<QToolButton *>(QString("buttonSave_%1").arg(i + 1))
-         << f->findChild<QToolButton *>(QString("autoSave_%1").arg(i + 1))
-         << f->findChild<QToolButton *>(QString("buttonEditDisk_%1").arg(i + 1))
-         << f->findChild<QToolButton *>(QString("buttonEject_%1").arg(i + 1));
-
-    delete f->layout();
-
-    QHBoxLayout *outer = new QHBoxLayout(f);
-    outer->setContentsMargins(8, 3, 8, 3);
-    outer->setSpacing(8);
-    if (numLbl) {
-        numLbl->setText(QString::number(i + 1));
-        numLbl->setAlignment(Qt::AlignCenter);
-        numLbl->setFixedSize(30, 30);
-        numLbl->setStyleSheet("QLabel { background:#E0A030; color:white;"
-                              " border-radius:8px; font-weight:bold; font-size:14px; }");
-        outer->addWidget(numLbl, 0, Qt::AlignVCenter);
-    }
-
-    QVBoxLayout *col = new QVBoxLayout();
-    col->setSpacing(2);
-
-    QHBoxLayout *btnRow = new QHBoxLayout();
-    btnRow->setSpacing(6);
-    btnRow->addStretch();
-    for (int k = 0; k < btns.size() - 1; ++k)   // first five, centred
-        if (btns[k]) btnRow->addWidget(btns[k], 0, Qt::AlignVCenter);
-    btnRow->addStretch();
-    btnRow->addSpacing(6);
-    if (btns.last())                            // eject -> right edge
-        btnRow->addWidget(btns.last(), 0, Qt::AlignVCenter);
-
-    QHBoxLayout *lblRow = new QHBoxLayout();
-    lblRow->setSpacing(8);
-    if (fileLbl) {
-        fileLbl->setSizePolicy(QSizePolicy::Maximum, QSizePolicy::Preferred);
-        QFont ff = fileLbl->font();
-        ff.setBold(true);
-        fileLbl->setFont(ff);
-        lblRow->addWidget(fileLbl, 0, Qt::AlignBottom);
-    }
-    lblRow->addStretch();
-    if (typeLbl) {
-        // Type right-aligned, kept off the right edge by the same gap the name
-        // has on the left.
-        typeLbl->setSizePolicy(QSizePolicy::Maximum, QSizePolicy::Preferred);
-        QFont tf = typeLbl->font();
-        tf.setPointSize(qMax(1, tf.pointSize() - 1));
-        typeLbl->setFont(tf);
-        typeLbl->setStyleSheet("color:#8A8A8A;");
-        lblRow->addWidget(typeLbl, 0, Qt::AlignBottom);
-        lblRow->addSpacing(6);
-    }
-
-    col->addLayout(btnRow);
-    col->addLayout(lblRow);
-    outer->addLayout(col);
-}
-
-// Build the scrollable slot column and the first m_numDisks slots, then drop it
-// into the grid where the .ui's fixed drive frames used to be.
-void MainWindow::androidBuildSlots()
-{
-    m_slotContainer = new QWidget;
-    m_slotBox = new QVBoxLayout(m_slotContainer);
-    // Match the original grid's row spacing and side margins so the slot column
-    // keeps the exact geometry it had as six fixed rows.
-    m_slotBox->setContentsMargins(ui->gridLayout->contentsMargins().left(), 0,
-                                  ui->gridLayout->contentsMargins().right(), 0);
-    m_slotBox->setSpacing(ui->gridLayout->spacing());
-
-    m_slotScroll = new QScrollArea(ui->centralWidget);
-    m_slotScroll->setObjectName("slotScroll");
-    m_slotScroll->setWidgetResizable(true);
-    // Finger-scroll only (vertical); no scrollbars, no horizontal scrolling.
-    m_slotScroll->setHorizontalScrollBarPolicy(Qt::ScrollBarAlwaysOff);
-    m_slotScroll->setVerticalScrollBarPolicy(Qt::ScrollBarAlwaysOff);
-    m_slotScroll->setFrameShape(QFrame::NoFrame);
-    // Transparent so the window background shows through, matching the area
-    // around the slots instead of a grey scroll-area fill.
-    m_slotScroll->setStyleSheet("QScrollArea { background:transparent; border:none; }");
-    m_slotScroll->viewport()->setAutoFillBackground(false);
-    m_slotScroll->setWidget(m_slotContainer);
-    m_slotContainer->setObjectName("slotContainer");
-    m_slotContainer->setAutoFillBackground(false);
-    m_slotContainer->setStyleSheet("QWidget#slotContainer { background:transparent; }");
-    // Kinetic drag-scroll. Keeping the content exactly viewport-wide (see
-    // androidRelayout) leaves no horizontal range, so QScroller only pans
-    // vertically and horizontal swipes fall through to the slot frames.
-    QScroller::grabGesture(m_slotScroll->viewport(), QScroller::LeftMouseButtonGesture);
-    {
-        QScroller *sc = QScroller::scroller(m_slotScroll->viewport());
-        QScrollerProperties sp = sc->scrollerProperties();
-        sp.setScrollMetric(QScrollerProperties::HorizontalOvershootPolicy,
-                           QVariant::fromValue(QScrollerProperties::OvershootAlwaysOff));
-        sc->setScrollerProperties(sp);
-    }
-
-    // Trailing "+" row that adds a slot; styled like a slot box.
-    m_addSlotRow = new QFrame(m_slotContainer);
-    m_addSlotRow->setObjectName("addSlotRow");
-    // Same look as an empty slot.
-    m_addSlotRow->setStyleSheet("QFrame#addSlotRow { background:#F7F7F7;"
-                                " border:1px solid #B0B0B0; border-radius:6px; }");
-    QHBoxLayout *al = new QHBoxLayout(m_addSlotRow);
-    al->setContentsMargins(8, 2, 8, 2);
-    m_addSlotBtn = new QToolButton(m_addSlotRow);
-    m_addSlotBtn->setObjectName("buttonAddSlot");
-    m_addSlotBtn->setAutoRaise(true);
-    m_addSlotBtn->setIcon(QIcon(":/icons/tango-icons/actions/list-add.svg"));
-    m_addSlotBtn->setToolTip(tr("Add drive slot"));
-    // The whole row is the click target, not just the icon.
-    m_addSlotBtn->setAttribute(Qt::WA_TransparentForMouseEvents, true);
-    m_addSlotRow->setCursor(Qt::PointingHandCursor);
-    m_addSlotRow->installEventFilter(this);
-    al->addStretch();
-    al->addWidget(m_addSlotBtn);
-    al->addStretch();
-
-    m_slotBox->addWidget(m_addSlotRow);
-    m_slotBox->addStretch();
-
-    // The always-on-top loader slot (inserts itself at box position 0).
-    androidBuildLoaderSlot();
-
-    // Remove the .ui's fixed frames from the grid and put the scroll area in
-    // their place (row 1, spanning the six old drive rows).
-    for (int i = 1; i <= 6; ++i)
-        if (QFrame *old = ui->centralWidget->findChild<QFrame *>(QString("horizontalFrame_%1").arg(i))) {
-            ui->gridLayout->removeWidget(old);
-            old->hide();
-        }
-    ui->gridLayout->addWidget(m_slotScroll, 1, 0, 6, 1);
-
-    androidRebuildSlots();
-}
-
-// Layout position (in m_slotBox) for slot i: the number of present slots with a
-// lower index. Used to insert a gap-filling frame in the right place.
-int MainWindow::androidBoxPos(int i)
-{
-    int pos = 0;
-    for (int k = 0; k < i; ++k)
-        if (diskWidgets[k].frame) pos++;
-    return pos;
-}
-
-// Tear down existing slot frames and rebuild the present ones from settings.
-// Absent (removed) indices are skipped, so their slot numbers stay as gaps.
 void MainWindow::androidRebuildSlots()
 {
     for (int i = 0; i < MAX_DISKS; ++i)
-        if (diskWidgets[i].frame) {
-            m_slotBox->removeWidget(diskWidgets[i].frame);
-            delete diskWidgets[i].frame;
-            diskWidgets[i] = DiskWidgets();
-        }
+        m_slotPresent[i] = false;
     m_numDisks = aspeqtSettings->numberOfDisks();
-    if (m_numDisks < 1)         m_numDisks = DEFAULT_DISKS;
+    if (m_numDisks < 1)          m_numDisks = DEFAULT_DISKS;
     if (m_numDisks > MAX_DISKS)  m_numDisks = MAX_DISKS;
-    int base = m_loaderFrame ? 1 : 0;   // loader slot occupies box position 0
-    int pos = 0;
-    for (int i = 0; i < m_numDisks; ++i) {
-        if (!aspeqtSettings->slotPresent(i)) continue;   // removed slot -> gap
-        buildSlotFrame(i);
-        m_slotBox->insertWidget(base + pos, diskWidgets[i].frame);
-        pos++;
-    }
-    androidUpdateAddRow();
+    for (int i = 0; i < m_numDisks; ++i)
+        if (aspeqtSettings->slotPresent(i))   // removed slot -> gap
+            m_slotPresent[i] = true;
 #ifdef ASPEQT_QML
     emit qmlChanged();
 #endif
 }
 
 // Hide the "+" row once every hardware slot index is in use.
-void MainWindow::androidUpdateAddRow()
-{
-    bool room = false;
-    for (int i = 0; i < MAX_DISKS; ++i)
-        if (!diskWidgets[i].frame) { room = true; break; }
-    if (m_addSlotRow) m_addSlotRow->setVisible(room);
-}
-
-// "+" -> fill the lowest number gap, or append a new slot at the end.
 void MainWindow::androidAddSlot()
 {
     int i = -1;
     for (int k = 0; k < MAX_DISKS; ++k)
-        if (!diskWidgets[k].frame) { i = k; break; }
+        if (!m_slotPresent[k]) { i = k; break; }
     if (i < 0) return;                       // all slots present
-    buildSlotFrame(i);
-    m_slotBox->insertWidget((m_loaderFrame ? 1 : 0) + androidBoxPos(i), diskWidgets[i].frame);
+    m_slotPresent[i] = true;
     if (i >= m_numDisks) m_numDisks = i + 1;
     aspeqtSettings->setNumberOfDisks(m_numDisks);
     aspeqtSettings->setSlotPresent(i, true);
-    deviceStatusChanged(i + 0x31);           // paint it as empty
-    androidUpdateAddRow();
-    androidRelayout();
-#ifdef ASPEQT_QML
-    emit qmlChanged();
-#endif
+    deviceStatusChanged(i + 0x31);
 }
 
 // 2nd eject on an empty slot: drop this specific slot, leaving a number gap so
 // the other slots keep their device numbers (important for DOS).
 void MainWindow::androidRemoveSlot(int i)
 {
-    if (i < 0 || i >= MAX_DISKS || !diskWidgets[i].frame) return;
+    if (i < 0 || i >= MAX_DISKS || !m_slotPresent[i]) return;
     int present = 0;
-    for (int k = 0; k < MAX_DISKS; ++k) if (diskWidgets[k].frame) present++;
+    for (int k = 0; k < MAX_DISKS; ++k) if (m_slotPresent[k]) present++;
     if (present <= 1) return;                // keep at least one slot
 
-    m_slotBox->removeWidget(diskWidgets[i].frame);
-    delete diskWidgets[i].frame;
-    diskWidgets[i] = DiskWidgets();
+    m_slotPresent[i] = false;
+    m_autoCommit[i] = false;
+    m_writeProtect[i] = false;
     aspeqtSettings->setSlotPresent(i, false);
     // Shrink the persisted range to the highest still-present slot.
     int hi = 0;
-    for (int k = 0; k < MAX_DISKS; ++k) if (diskWidgets[k].frame) hi = k + 1;
+    for (int k = 0; k < MAX_DISKS; ++k) if (m_slotPresent[k]) hi = k + 1;
     m_numDisks = hi;
     aspeqtSettings->setNumberOfDisks(m_numDisks);
-    androidUpdateAddRow();
-    androidRelayout();
 #ifdef ASPEQT_QML
     emit qmlChanged();
 #endif
@@ -1200,140 +650,21 @@ void MainWindow::androidEjectPressed(int i)
 
 // Build the always-on-top loader slot (badge "cas/xex", load / play / retry /
 // eject buttons, and a load progress bar) and insert it above the disk slots.
-void MainWindow::androidBuildLoaderSlot()
-{
-    QFrame *f = new QFrame(m_slotContainer);
-    f->setObjectName("loaderFrame");
-    f->setFrameShape(QFrame::NoFrame);
-    f->setStyleSheet("QFrame#loaderFrame { background:#F7F7F7; border:1px solid #B0B0B0; border-radius:6px; }");
-    m_loaderFrame = f;
-
-    m_loaderBadge = new QLabel(f);
-    m_loaderBadge->setObjectName("loaderBadge");
-    m_loaderBadge->setAlignment(Qt::AlignCenter);
-    m_loaderBadge->setFixedSize(30, 30);
-    m_loaderBadge->setTextFormat(Qt::RichText);
-    m_loaderBadge->setText(QStringLiteral("cas<br>xex"));
-    m_loaderBadge->setStyleSheet("QLabel#loaderBadge { background:#E0A030; color:white;"
-                                 " border-radius:8px; font-weight:bold; font-size:10px; }");
-
-    m_loaderFileLbl = new QLabel(f);
-    m_loaderFileLbl->setObjectName("loaderFileLbl");
-    m_loaderTypeLbl = new QLabel(f);
-    m_loaderTypeLbl->setObjectName("loaderTypeLbl");
-
-    auto mkBtn = [&](const QString &icon, const QString &tip) {
-        QToolButton *b = new QToolButton(f);
-        b->setIcon(QIcon(icon));
-        b->setToolTip(tip);
-        return b;
-    };
-    m_loaderLoadBtn  = mkBtn(":/icons/tango-icons/categories/applications-system.svg", tr("Load executable or cassette"));
-    m_loaderPlayBtn  = mkBtn(":/icons/tango-icons/actions/media-playback-start.svg", tr("Start cassette playback"));
-    m_loaderRetryBtn = mkBtn(":/icons/tango-icons/actions/view-refresh.svg", tr("Retry"));
-    m_loaderEjectBtn = mkBtn(":/icons/tango-icons/actions/media-eject.svg", tr("Eject"));
-    // Invisible placeholders so the three loader icons line up with the first
-    // three icons of the (five-icon) disk slots.
-    m_loaderSpacer1 = new QWidget(f);
-    m_loaderSpacer2 = new QWidget(f);
-
-    connect(m_loaderLoadBtn,  &QToolButton::clicked, this, [this]{ loaderLoad(); });
-    connect(m_loaderPlayBtn,  &QToolButton::clicked, this, [this]{ loaderPlayCas(); });
-    connect(m_loaderRetryBtn, &QToolButton::clicked, this, [this]{ loaderRetry(); });
-    connect(m_loaderEjectBtn, &QToolButton::clicked, this, [this]{ loaderEject(); });
-
-    QHBoxLayout *outer = new QHBoxLayout(f);
-    outer->setContentsMargins(8, 3, 8, 3);
-    outer->setSpacing(8);
-    outer->addWidget(m_loaderBadge, 0, Qt::AlignVCenter);
-
-    QVBoxLayout *col = new QVBoxLayout();
-    col->setSpacing(2);
-    QHBoxLayout *btnRow = new QHBoxLayout();
-    btnRow->setSpacing(6);
-    btnRow->addStretch();
-    btnRow->addWidget(m_loaderLoadBtn,  0, Qt::AlignVCenter);
-    btnRow->addWidget(m_loaderPlayBtn,  0, Qt::AlignVCenter);
-    btnRow->addWidget(m_loaderRetryBtn, 0, Qt::AlignVCenter);
-    btnRow->addWidget(m_loaderSpacer1,  0, Qt::AlignVCenter);
-    btnRow->addWidget(m_loaderSpacer2,  0, Qt::AlignVCenter);
-    btnRow->addStretch();
-    btnRow->addSpacing(6);
-    btnRow->addWidget(m_loaderEjectBtn, 0, Qt::AlignVCenter);
-
-    // Name + type row, identical to the disk slots (name bold left, type right).
-    if (aspeqtSettings->useLargeFont()) {
-        m_loaderFileLbl->setFont(QFont("Arial Black", 16, QFont::Normal));
-        m_loaderTypeLbl->setFont(QFont("Arial Black", 14, QFont::Normal));
-    } else {
-        m_loaderFileLbl->setFont(QFont("MS Shell Dlg 2", 10, QFont::Normal));
-        m_loaderTypeLbl->setFont(QFont("MS Shell Dlg 2", 10, QFont::Normal));
-    }
-    QHBoxLayout *lblRow = new QHBoxLayout();
-    lblRow->setSpacing(8);
-    m_loaderFileLbl->setSizePolicy(QSizePolicy::Maximum, QSizePolicy::Preferred);
-    QFont ff = m_loaderFileLbl->font();
-    ff.setBold(true);
-    m_loaderFileLbl->setFont(ff);
-    lblRow->addWidget(m_loaderFileLbl, 0, Qt::AlignBottom);
-    lblRow->addStretch();
-    m_loaderTypeLbl->setSizePolicy(QSizePolicy::Maximum, QSizePolicy::Preferred);
-    QFont tf = m_loaderTypeLbl->font();
-    tf.setPointSize(qMax(1, tf.pointSize() - 1));
-    m_loaderTypeLbl->setFont(tf);
-    m_loaderTypeLbl->setStyleSheet("color:#8A8A8A;");
-    lblRow->addWidget(m_loaderTypeLbl, 0, Qt::AlignBottom);
-    lblRow->addSpacing(6);
-
-    col->addLayout(btnRow);
-    col->addLayout(lblRow);
-    outer->addLayout(col);
-
-    m_slotBox->insertWidget(0, f);
-    loaderEject();   // initialise: placeholder text, buttons disabled, no fill
-}
-
-// Fill the whole loader slot left-to-right as a progress bar. frac<=0 or >=1
-// restores the plain background (so the fill disappears once loading is done).
 void MainWindow::loaderSetFill(double frac)
 {
     m_loaderFill = frac;
 #ifdef ASPEQT_QML
-    emit qmlLoaderProgress();   // light: only the loader fill, no full model reset
+    emit qmlLoaderProgress();   // light: only the loader fill
 #endif
-    if (!m_loaderFrame) return;
-    if (frac <= 0.0 || frac >= 1.0) {
-        // Idle: blue accent when a file is loaded, plain otherwise.
-        if (m_loaderKind != 0)
-            m_loaderFrame->setStyleSheet("QFrame#loaderFrame { background:#EAF3FB;"
-                " border:1px solid #6FA8DC; border-radius:6px; }");
-        else
-            m_loaderFrame->setStyleSheet("QFrame#loaderFrame { background:#F7F7F7;"
-                " border:1px solid #B0B0B0; border-radius:6px; }");
-        return;
-    }
-    double p2 = qMin(frac + 0.0005, 1.0);
-    m_loaderFrame->setStyleSheet(QString(
-        "QFrame#loaderFrame { border:1px solid #B0B0B0; border-radius:6px;"
-        " background: qlineargradient(x1:0, y1:0, x2:1, y2:0,"
-        " stop:0 #CFE6FF, stop:%1 #CFE6FF, stop:%2 #F7F7F7, stop:1 #F7F7F7); }")
-        .arg(frac, 0, 'f', 4).arg(p2, 0, 'f', 4));
 }
 
-// Enable/disable the loader buttons for the current state.
 void MainWindow::loaderUpdateButtons()
 {
-    if (!m_loaderPlayBtn) return;
-    bool casReady = (m_loaderKind == 2) && m_casWorker && !m_casWorker->isRunning();
-    m_loaderPlayBtn->setEnabled(casReady);
-    m_loaderRetryBtn->setEnabled(!m_loaderFile.isEmpty());
-    m_loaderEjectBtn->setEnabled(m_loaderKind != 0);
 #ifdef ASPEQT_QML
     emit qmlChanged();
 #endif
 }
 
-// Load button: pick an XEX/CAS file and dispatch by type.
 void MainWindow::loaderLoad()
 {
     QString url = androidOpenUrl(tr("Load executable or cassette"),
@@ -1380,9 +711,8 @@ void MainWindow::loaderLoadXex(const QString &path)
 
     m_loaderKind = 1;
     m_loaderFile = path;
-    m_loaderFileLbl->setStyleSheet("color: rgb(32,32,32); font-weight:bold;");
-    m_loaderFileLbl->setText(friendlyName(path));
-    m_loaderTypeLbl->setText(tr("Executable (%1k)").arg((QFileInfo(path).size() + 512) / 1024));
+    m_loaderName = friendlyName(path);
+    m_loaderTypeText = tr("Executable (%1k)").arg((QFileInfo(path).size() + 512) / 1024);
     loaderSetFill(0);
     loaderUpdateButtons();
     qDebug() << "!i" << tr("Loaded executable '%1'. Start (or reboot) your Atari to run it.")
@@ -1405,12 +735,11 @@ void MainWindow::loaderLoadCas(const QString &path)
     m_casRemaining = m_casTotal;
     m_loaderKind = 2;
     m_loaderFile = path;
-    m_loaderFileLbl->setStyleSheet("color: rgb(32,32,32); font-weight:bold;");
-    m_loaderFileLbl->setText(friendlyName(path));
+    m_loaderName = friendlyName(path);
     {
         int minutes = m_casTotal / 60000;
         int seconds = (m_casTotal - minutes * 60000) / 1000;
-        m_loaderTypeLbl->setText(tr("Cassette (%1:%2)").arg(minutes).arg(seconds, 2, 10, QChar('0')));
+        m_loaderTypeText = tr("Cassette (%1:%2)").arg(minutes).arg(seconds, 2, 10, QChar('0'));
     }
     loaderSetFill(0);
     loaderUpdateButtons();
@@ -1541,11 +870,8 @@ void MainWindow::loaderEject()
     }
     m_loaderKind = 0;
     m_loaderFile.clear();
-    if (m_loaderFileLbl) {
-        m_loaderFileLbl->setText(tr("Load a cas/com/xex file."));
-        m_loaderFileLbl->setStyleSheet("color:#B0B0B0; font-style:italic; font-weight:normal; font-size:12px;");
-    }
-    if (m_loaderTypeLbl) m_loaderTypeLbl->clear();
+    m_loaderName.clear();
+    m_loaderTypeText.clear();
     loaderSetFill(0);
     loaderUpdateButtons();
 }
@@ -1562,168 +888,8 @@ void MainWindow::loaderRetry()
         loaderLoadXex(path);
 }
 
-void MainWindow::androidRelayout()
-{
-    // setContentsMargins()/changeSize() below trigger a relayout (another
-    // resizeEvent); guard against re-entering while we're mid-adjust.
-    static bool busy = false;
-    if (busy) return;
-    busy = true;
-
-    // --- system-bar insets -> window margins (edge-to-edge safe area) ---------
-    // targetSdk 35+ forces the surface full-screen with the status/navigation
-    // bars drawn as overlays. Inset the window so nothing hides under them.
-    long packed = QJniObject::callStaticMethod<jlong>("net/greblus/SerialActivity", "systemBarInsets");
-    qreal dpr = devicePixelRatioF();
-    if (dpr < 1.0) dpr = 1.0;
-    int il = (int)((packed >> 48) & 0xffff);
-    int it = (int)((packed >> 32) & 0xffff);
-    int ir = (int)((packed >> 16) & 0xffff);
-    int ib = (int)( packed        & 0xffff);
-    int ml = qRound(il / dpr);
-    int mt = qRound(it / dpr);   // status bar + ActionBar height (from Java)
-    int mr = qRound(ir / dpr);
-    int mb = qRound(ib / dpr);
-    // A small aesthetic gap below the ActionBar; the sides/bottom clear the nav
-    // bar and any display cutout.
-    const int topPad = 8;
-    setContentsMargins(ml, mt, mr, mb);
-
-    // Insets may not be published yet on the very first layout / just after a
-    // rotation; retry shortly so the window still ends up correctly inset.
-    if (packed == 0)
-        QTimer::singleShot(200, this, [this]{ androidRelayout(); });
-
-    // --- adaptive vertical budget --------------------------------------------
-    // Lay out as: top pad, 6 drive rows, log (fills the rest), status bar. Size
-    // the rows from the available height so the log always keeps a few lines,
-    // shrinking the rows in landscape rather than starving the log.
-    QWidget *central = ui->centralWidget;
-    // Derive the height available to the central widget directly from the window
-    // (minus the inset margins and the status bar) rather than central->height():
-    // when the grid's minimum overflows, central->height() reports the *overflowed*
-    // size and the status bar gets pushed off-screen.
-    int chrome = qMax(statusBar()->height(), statusBar()->sizeHint().height());
-    // Use the screen height, not window height(): after a live rotation the
-    // fullscreen window briefly reports a bogus height (larger than the screen),
-    // which would over-inflate the budget and make the rows too tall.
-    QScreen *scr = screen();
-    int winH   = scr ? scr->size().height() : height();
-    int avail  = winH - contentsMargins().top() - contentsMargins().bottom() - chrome;
-    QFontMetrics fm(ui->textEdit->font());
-    int minLog  = fm.lineSpacing() * 2 + 10;          // keep ~2 log lines
-    int gaps    = ui->gridLayout->spacing() * 8;      // 9 rows -> 8 gaps
-    int margins = 6;                                  // grid top+bottom margins
-    int forRows = avail - topPad - minLog - gaps - margins;
-    // Floor low enough that the log's reserved height survives in cramped
-    // landscape (rows shrink instead of starving the log); cap so portrait rows
-    // stay only a little larger than landscape rather than ballooning.
-    int rowH    = qBound(30, forRows / 6, 46);
-
-    // The frame is the slot "box": give it an equal top/bottom pad and size the
-    // (square) buttons to what's left, so the icons sit centred inside the panel
-    // instead of poking out of the bottom edge.
-    int pad    = 2;                                   // vertical pad inside the box
-    int btnH   = rowH - 2 * pad - 2;                  // -2 for the frame border
-    int iconPx = btnH - 3;                            // less padding -> larger icons
-    // Two-line slot box: pad + button row + gap + description line + pad + border.
-    int labelH = 0;
-    if (QLabel *l0 = findChild<QLabel *>("labelFileName_1"))
-        labelH = QFontMetrics(l0->font()).height();
-    int frameH = 3 + btnH + 2 + labelH + 3 + 2;
-    // Size every active slot frame plus the trailing "+" row.
-    for (int i = 0; i < m_numDisks; ++i)
-        if (diskWidgets[i].frame) {
-            diskWidgets[i].frame->setMinimumHeight(frameH);
-            diskWidgets[i].frame->setMaximumHeight(frameH);
-        }
-    if (m_loaderFrame) {
-        m_loaderFrame->setMinimumHeight(frameH);
-        m_loaderFrame->setMaximumHeight(frameH);
-    }
-    // The "+" row is a compact bar, not a full-height slot.
-    if (m_addSlotRow) {
-        int addH = btnH + 8;
-        m_addSlotRow->setMinimumHeight(addH);
-        m_addSlotRow->setMaximumHeight(addH);
-    }
-    // Size the scroll area to its content so the log expands up to just under
-    // the "+" row (hiding the grey fill), but never taller than the six-row
-    // height it has now — beyond that the slots scroll and the log keeps its
-    // current minimum height.
-    if (m_slotScroll) {
-        int spacing = m_slotBox ? m_slotBox->spacing() : 3;
-        int addH = btnH + 8;
-        int loaderH = m_loaderFrame ? frameH : 0;
-        int loaderN = m_loaderFrame ? 1 : 0;
-        int present = 0;
-        for (int k = 0; k < MAX_DISKS; ++k) if (diskWidgets[k].frame) present++;
-        bool addVisible = m_addSlotRow && m_addSlotRow->isVisible();
-        int items = loaderN + present + (addVisible ? 1 : 0);
-        int content = loaderH + present * frameH + (addVisible ? addH : 0)
-                    + (items > 0 ? (items - 1) * spacing : 0);
-        // Cap so the default set (loader + DEFAULT_DISKS slots + "+") fits; more
-        // slots than that scroll while the log keeps its height.
-        int capItems = loaderN + DEFAULT_DISKS + 1;
-        int cap = loaderH + DEFAULT_DISKS * frameH + addH + (capItems - 1) * spacing;
-        int h = qMin(content, cap);
-        m_slotScroll->setMinimumHeight(h);
-        m_slotScroll->setMaximumHeight(h);
-        // Hint once when the slots first stop fitting (must be scrolled to see
-        // them all); reset when they fit again so it can fire next time.
-        bool over = content > cap;
-        if (over && !m_slotsOverflowed)
-            qWarning() << "!i" << tr("Scroll the slot list to see all of them.");
-        m_slotsOverflowed = over;
-        // Pin the content to the viewport width so there is no horizontal scroll
-        // range (keeps scrolling vertical-only).
-        int vpW = m_slotScroll->maximumViewportSize().width();
-        if (vpW > 0 && m_slotContainer)
-            m_slotContainer->setMaximumWidth(vpW);
-    }
-    foreach (QToolButton *btn, central->findChildren<QToolButton *>()) {
-        btn->setMinimumSize(btnH, btnH);
-        btn->setMaximumSize(btnH, btnH);
-        // The disk-viewer (edit) icon has more internal padding than the others,
-        // so bump its icon size a little to match the visual weight.
-        int px = btn->objectName().startsWith("buttonEditDisk") ? iconPx + 5 : iconPx;
-        btn->setIconSize(QSize(px, px));
-    }
-    // Loader placeholders take a button's footprint so its 3 icons line up with
-    // the disk slots' first 3 icons.
-    if (m_loaderSpacer1) m_loaderSpacer1->setFixedSize(btnH, btnH);
-    if (m_loaderSpacer2) m_loaderSpacer2->setFixedSize(btnH, btnH);
-    ui->verticalSpacer_2->changeSize(0, topPad, QSizePolicy::Fixed, QSizePolicy::Fixed);
-    ui->verticalSpacer->changeSize(0, 0, QSizePolicy::Fixed, QSizePolicy::Fixed);
-    ui->gridLayout->invalidate();
-    ui->gridLayout->activate();    // apply the new geometry synchronously
-    // After a live rotation QAbstractScrollArea leaves the log's viewport stuck
-    // at the previous orientation's width (frame is full width, but the white
-    // viewport background only fills half). layoutChildren() won't fix it, so
-    // resize the viewport widget directly to fill the textEdit's frame.
-    {
-        QRect fr = ui->textEdit->contentsRect();
-        ui->textEdit->viewport()->setGeometry(fr);
-        ui->textEdit->viewport()->update();
-    }
-    ui->centralWidget->update();   // repaint vacated regions after a resize
-
-    busy = false;
-}
-#endif
-
 bool MainWindow::eventFilter(QObject *obj, QEvent *event)
 {
-#ifdef Q_OS_ANDROID
-    // A tap anywhere on the "+" row adds a slot.
-    if (obj == m_addSlotRow) {
-        if (event->type() == QEvent::MouseButtonRelease) {
-            androidAddSlot();
-            return true;
-        }
-        return false;
-    }
-#endif
     if (event->type() == QEvent::MouseButtonDblClick) {
         on_actionLogWindow_triggered();
         return false;
@@ -1940,140 +1106,26 @@ void MainWindow::sioStatusChanged(QString status)
 
 void MainWindow::deviceStatusChanged(int deviceNo)
 {
-    if (deviceNo >= 0x31 && deviceNo <= 0x31 + MAX_DISKS - 1) { //
-        // Skip slots that were removed (their widgets no longer exist).
-        if (!diskWidgets[deviceNo - 0x31].frame)
-            return;
-        SimpleDiskImage *img = qobject_cast <SimpleDiskImage*> (sio->getDevice(deviceNo));
-        if (img) {
-
-            // Show file name without the path and set toolTip & statusTip to show the path separately //
-            QString filenamelabel;
-            int i;
-            if (img->description() == tr("Folder image")) {
-                i = img->originalFileName().lastIndexOf("\\");
-            } else {
-                i = img->originalFileName().lastIndexOf("/");
-            }
-               if (i == -1) {
-                   i = img->originalFileName().lastIndexOf("/");
-               }
-            if ((i != -1) || (img->originalFileName().mid(0, 14) == "Untitled image")) {
-                filenamelabel = img->originalFileName().right(img->originalFileName().size() - ++i);
-            } else {
-                filenamelabel = "!!!!!!!!.!!!";
-                }
-#ifdef Q_OS_ANDROID
-            // content:// URIs have no real path/name; resolve a display name.
-            if (img->originalFileName().startsWith("content:")) {
-                filenamelabel = friendlyName(img->originalFileName());
-            }
-#endif
-
-            diskWidgets[deviceNo - 0x31].fileNameLabel->setToolTip(img->originalFileName().left(i - 1));
-            diskWidgets[deviceNo - 0x31].fileNameLabel->setStatusTip(img->originalFileName());
-            diskWidgets[deviceNo - 0x31].imagePropertiesLabel->setToolTip(img->description());
-
-            diskWidgets[deviceNo - 0x31].fileNameLabel->setText(filenamelabel);
-            diskWidgets[deviceNo - 0x31].imagePropertiesLabel->setText(img->description());
-            diskWidgets[deviceNo - 0x31].ejectAction->setEnabled(true);
-#ifdef Q_OS_ANDROID
-            // Mounted: show the eject icon (empty slots show a trash icon).
-            diskWidgets[deviceNo - 0x31].ejectAction->setIcon(QIcon(":/icons/tango-icons/actions/media-eject.svg"));
-            diskWidgets[deviceNo - 0x31].ejectAction->setToolTip(tr("Eject"));
-#endif
-            diskWidgets[deviceNo - 0x31].editAction->setChecked(img->editDialog() != 0);
-#ifdef Q_OS_ANDROID
-            // Mounted slot: subtle accent box so it stands out from empty ones.
-            diskWidgets[deviceNo - 0x31].frame->setStyleSheet(
-                QString("QFrame#%1 { background:#EAF3FB; border:1px solid #6FA8DC; border-radius:6px; }")
-                    .arg(diskWidgets[deviceNo - 0x31].frame->objectName()));
-#endif
-            if (img->description() == tr("Folder image")) {
-                diskWidgets[deviceNo - 0x31].fileNameLabel->setStyleSheet("color: rgb(54, 168, 164); font-weight: bold");
-                diskWidgets[deviceNo - 0x31].editAction->setEnabled(true);              //
-                diskWidgets[deviceNo - 0x31].saveAsAction->setEnabled(false);
-                diskWidgets[deviceNo - 0x31].saveAction->setEnabled(false);
-                diskWidgets[deviceNo - 0x31].autoSaveAction->setEnabled(false);         //
-                diskWidgets[deviceNo - 0x31].revertAction->setEnabled(false);
-#ifdef Q_OS_ANDROID
-                // For a folder the "save" button becomes "install high-speed DOS".
-                diskWidgets[deviceNo - 0x31].saveAction->setEnabled(true);
-                diskWidgets[deviceNo - 0x31].saveAction->setIcon(dosDriveIcon());
-                diskWidgets[deviceNo - 0x31].saveAction->setToolTip(tr("Install high-speed DOS (MyPicoDOS) into this folder"));
-#endif
-                if(deviceNo - 0x31 == 0)
-                    diskWidgets[deviceNo - 0x31].bootOptionAction->setEnabled(true);   //
-            } else {
-#ifdef Q_OS_ANDROID
-                // Restore the normal "save disk" icon for real disk images.
-                diskWidgets[deviceNo - 0x31].saveAction->setIcon(QIcon(":/icons/tango-icons/devices/media-floppy.svg"));
-                diskWidgets[deviceNo - 0x31].saveAction->setToolTip(tr("Save disk"));
-#endif
-                diskWidgets[deviceNo - 0x31].fileNameLabel->setStyleSheet("color: rgb(32, 32, 32); font-weight: bold");  //
-                diskWidgets[deviceNo - 0x31].editAction->setEnabled(true);
-                diskWidgets[deviceNo - 0x31].saveAsAction->setEnabled(true);
-                diskWidgets[deviceNo - 0x31].autoSaveAction->setEnabled(true);          //
-                if(deviceNo - 0x31 == 0)
-                    diskWidgets[deviceNo - 0x31].bootOptionAction->setEnabled(false);   //
-
-                if (img->isModified()) {
-                    if (!diskWidgets[deviceNo - 0x31].autoSaveAction->isChecked()) {    //
-                        diskWidgets[deviceNo - 0x31].saveAction->setEnabled(true);
-                        diskWidgets[deviceNo - 0x31].revertAction->setEnabled(true);
-                    // Image is modified and autosave is checked, so save the image (no need to lock it)  //
-                    } else {
-                        bool saved;
-                        saved = img->save();
-                        if (!saved) {
-                            if (QMessageBox::question(this, tr("Save failed"), tr("'%1' cannot be saved, do you want to save the image with another name?")
-                                .arg(img->originalFileName()), QMessageBox::Yes, QMessageBox::No) == QMessageBox::Yes) {
-                                saveDiskAs(deviceNo);
-                            }
-                        } else {
-                            diskWidgets[deviceNo - 0x31].saveAction->setEnabled(false);
-                            diskWidgets[deviceNo - 0x31].revertAction->setEnabled(false);
+    if (deviceNo >= 0x31 && deviceNo <= 0x31 + MAX_DISKS - 1) {
+        int no = deviceNo - 0x31;
+        if (m_slotPresent[no]) {
+            SimpleDiskImage *img = qobject_cast <SimpleDiskImage*> (sio->getDevice(deviceNo));
+            if (img) {
+                // Auto-commit: write the image out as soon as it is modified.
+                if (img->isModified() && m_autoCommit[no]) {
+                    if (!img->save()) {
+                        if (QMessageBox::question(this, tr("Save failed"),
+                                tr("'%1' cannot be saved, do you want to save the image with another name?")
+                                .arg(img->originalFileName()),
+                                QMessageBox::Yes, QMessageBox::No) == QMessageBox::Yes) {
+                            saveDiskAs(no);
                         }
                     }
-                } else {
-                    diskWidgets[deviceNo - 0x31].saveAction->setEnabled(false);
-                    diskWidgets[deviceNo - 0x31].revertAction->setEnabled(false);
                 }
+            } else {
+                m_autoCommit[no] = false;
+                m_writeProtect[no] = false;
             }
-        } else {
-#ifdef Q_OS_ANDROID
-            // Empty slot: muted outline, no fill.
-            diskWidgets[deviceNo - 0x31].frame->setStyleSheet(
-                QString("QFrame#%1 { background:#F7F7F7; border:1px solid #B0B0B0; border-radius:6px; }")
-                    .arg(diskWidgets[deviceNo - 0x31].frame->objectName()));
-            // The eject button doubles as "remove slot" when empty: trash icon.
-            diskWidgets[deviceNo - 0x31].ejectAction->setIcon(removeSlotIcon());
-            diskWidgets[deviceNo - 0x31].ejectAction->setToolTip(tr("Remove slot"));
-            diskWidgets[deviceNo - 0x31].ejectAction->setEnabled(true);
-#else
-            diskWidgets[deviceNo - 0x31].ejectAction->setEnabled(false);
-#endif
-            diskWidgets[deviceNo - 0x31].saveAction->setEnabled(false);
-#ifdef Q_OS_ANDROID
-            diskWidgets[deviceNo - 0x31].saveAction->setIcon(QIcon(":/icons/tango-icons/devices/media-floppy.svg"));
-            diskWidgets[deviceNo - 0x31].saveAction->setToolTip(tr("Save disk"));
-            // Empty slot: a muted call-to-action where the file name would be.
-            diskWidgets[deviceNo - 0x31].fileNameLabel->setText(tr("Mount a disk image or folder."));
-            diskWidgets[deviceNo - 0x31].fileNameLabel->setStyleSheet(
-                "color:#B0B0B0; font-style:italic; font-weight:normal; font-size:12px;");
-#else
-            diskWidgets[deviceNo - 0x31].fileNameLabel->clear();
-#endif
-            diskWidgets[deviceNo - 0x31].imagePropertiesLabel->clear();
-            diskWidgets[deviceNo - 0x31].revertAction->setEnabled(false);
-            diskWidgets[deviceNo - 0x31].saveAsAction->setEnabled(false);
-            diskWidgets[deviceNo - 0x31].editAction->setEnabled(false);
-            diskWidgets[deviceNo - 0x31].editAction->setChecked(false);
-            diskWidgets[deviceNo - 0x31].autoSaveAction->setEnabled(false);             //
-            diskWidgets[deviceNo - 0x31].autoSaveAction->setChecked(false);             //
-            if(deviceNo - 0x31 == 0)
-                diskWidgets[deviceNo - 0x31].bootOptionAction->setEnabled(false);             //
-
         }
     }
 #ifdef ASPEQT_QML
@@ -2270,12 +1322,7 @@ bool MainWindow::ejectImage(int no, bool ask)
     m_folderTree.remove(no);
     m_folderTemp.remove(no);
 #endif
-    diskWidgets[no].ejectAction->setEnabled(false);
-    QString fileName = diskWidgets[no].fileNameLabel->text();
-    diskWidgets[no].fileNameLabel->clear();
-    diskWidgets[no].writeProtectAction->setChecked(false);
-    diskWidgets[no].writeProtectAction->setEnabled(false);
-    diskWidgets[no].editAction->setEnabled(false);
+    m_writeProtect[no] = false;
 
     aspeqtSettings->unmountImage(no);
     updateRecentFileActions();
@@ -2284,32 +1331,12 @@ bool MainWindow::ejectImage(int no, bool ask)
     return true;
 }
 
-int MainWindow::containingDiskSlot(const QPoint &point)
-{
-    // Map through global coordinates so this works no matter how the slots are
-    // nested (e.g. inside a scroll area). The old version compared against
-    // frame->geometry() offset by the central widget, which ignored the scroll
-    // position — so once the slot list was scrolled (slots 6+), the hit test
-    // landed on the wrong slot.
-    const QPoint global = mapToGlobal(point);
-    for (int i = 0; i < m_numDisks; i++) {
-        if (!diskWidgets[i].frame) continue;   // skip removed slots (gaps)
-        QRect rect(diskWidgets[i].frame->mapToGlobal(QPoint(0, 0)),
-                   diskWidgets[i].frame->size());
-        if (rect.contains(global)) {
-            return i;
-        }
-    }
-    return -1;
-}
-
 int MainWindow::firstEmptyDiskSlot(int startFrom, bool createOne)
 {
     int i;
     for (i = startFrom; i < m_numDisks; i++) {  //
-        // Skip removed slots (gaps): they have no widgets, so nothing may mount
-        // there.
-        if (!diskWidgets[i].frame) {
+        // Skip removed slots (gaps): nothing may mount there.
+        if (!m_slotPresent[i]) {
             continue;
         }
         if (!sio->getDevice(0x31 + i)) {
@@ -2320,7 +1347,7 @@ int MainWindow::firstEmptyDiskSlot(int startFrom, bool createOne)
         if (createOne) {
             i = m_numDisks-1;
             // Land on a real (present) slot, never a gap.
-            while (i >= 0 && !diskWidgets[i].frame) i--;
+            while (i >= 0 && !m_slotPresent[i]) i--;
         } else {
             i = -1;
         }
@@ -2501,12 +1528,7 @@ void MainWindow::mountFile(int no, const QString &fileName, bool /*prot*/)
                sio->installDevice(0x6F, pclink);
         }
 
-        diskWidgets[no].ejectAction->setEnabled(true);
-        diskWidgets[no].editAction->setEnabled(true);
-        diskWidgets[no].writeProtectAction->setChecked(disk->isReadOnly());
-        diskWidgets[no].writeProtectAction->setEnabled(!disk->isUnmodifiable());
-
-        diskWidgets[no].fileNameLabel->setText(fileName);
+        m_writeProtect[no] = disk->isReadOnly();
 
         aspeqtSettings->mountImage(no, fileName, disk->isReadOnly());
         updateRecentFileActions();
@@ -2703,10 +1725,8 @@ void MainWindow::mountDiskImage(int no)
 {
     QString dir;
 // Always mount from "last image dir" //
-//    if (diskWidgets[no].fileNameLabel->text().isEmpty()) {
         dir = aspeqtSettings->lastDiskImageDir();
 //    } else {
-//        dir = QFileInfo(diskWidgets[no].fileNameLabel->text()).absolutePath();
 //    }
 #ifdef Q_OS_ANDROID
     // The SAF picker cannot filter by the Atari extensions (no MIME types), so
@@ -2787,12 +1807,13 @@ void MainWindow::mountFolderImage(int no)
 void MainWindow::toggleWriteProtection(int no)
 {
     SimpleDiskImage *img = qobject_cast <SimpleDiskImage*> (sio->getDevice(no + 0x31));
-    if (diskWidgets[no].writeProtectAction->isChecked()) {
-        img->setReadOnly(true);
-    } else {
-        img->setReadOnly(false);
-    }
-    aspeqtSettings->setMountedImageSetting(no, diskWidgets[no].fileNameLabel->text(), diskWidgets[no].writeProtectAction->isChecked());
+    if (!img) return;
+    m_writeProtect[no] = !m_writeProtect[no];
+    img->setReadOnly(m_writeProtect[no]);
+    aspeqtSettings->setMountedImageSetting(no, img->originalFileName(), m_writeProtect[no]);
+#ifdef ASPEQT_QML
+    emit qmlChanged();
+#endif
 }
 
 void MainWindow::openEditor(int no)
@@ -2881,122 +1902,38 @@ void MainWindow::saveDisk(int no)
 //
 void MainWindow::autoCommit(int no)
 {
-    switch (no)
-    {
-        case 0 :
-        {
-            if(ui->autoSave_1->isEnabled()) ui->autoSave_1->click();
-
-        }
-        break;
-        case 1 :
-        {
-            if(ui->autoSave_2->isEnabled()) ui->autoSave_2->click();
-
-        }
-        break;
-        case 2 :
-        {
-            if(ui->autoSave_3->isEnabled()) ui->autoSave_3->click();
-
-        }
-        break;
-        case 3 :
-        {
-            if(ui->autoSave_4->isEnabled()) ui->autoSave_4->click();
-
-        }
-        break;
-        case 4 :
-        {
-            if(ui->autoSave_5->isEnabled()) ui->autoSave_5->click();
-
-        }
-        break;
-        case 5 :
-        {
-            if(ui->autoSave_6->isEnabled()) ui->autoSave_6->click();
-
-        }
-        break;
-    }
+    if (no < 0 || no >= MAX_DISKS) return;
+    if (sio->getDevice(no + 0x31)) autoSaveDisk(no);
 }
 
 void MainWindow::autoSaveDisk(int no)
 {
     SimpleDiskImage *img = qobject_cast <SimpleDiskImage*> (sio->getDevice(no + 0x31));
+    if (!img) return;
+
+    // Auto-commit is engine state now (it used to live in the slot widget's
+    // checkable action). Toggling it also commits pending changes, as before.
+    m_autoCommit[no] = !m_autoCommit[no];
+    qDebug() << "!n" << (m_autoCommit[no] ? tr("[Disk %1] Auto-commit ON.").arg(no + 1)
+                                          : tr("[Disk %1] Auto-commit OFF.").arg(no + 1));
 
     if (img->isUnnamed()) {
         saveDiskAs(no);
-        diskWidgets[no].saveAction->setEnabled(false);
-        diskWidgets[no].revertAction->setEnabled(false);
         return;
     }
-    switch (no) {
-        case 0 :
-            if (ui->autoSave_1->isChecked()) {
-                qDebug() << "!n" << tr("[Disk 1] Auto-commit ON.");
-            } else {
-                qDebug() << "!n" << tr("[Disk 1] Auto-commit OFF.");
-              }
-            break;
-
-        case 1 :
-            if (ui->autoSave_2->isChecked()) {
-                qDebug() << "!n" << tr("[Disk 2] Auto-commit ON.");
-            } else {
-                qDebug() << "!n" << tr("[Disk 2] Auto-commit OFF.");
-              }
-            break;
-
-        case 2 :
-            if (ui->autoSave_3->isChecked()) {
-                qDebug() << "!n" << tr("[Disk 3] Auto-commit ON.");
-            } else {
-                qDebug() << "!n" << tr("[Disk 3] Auto-commit OFF.");
-              }
-            break;
-
-        case 3 :
-            if (ui->autoSave_4->isChecked()) {
-                qDebug() << "!n" << tr("[Disk 4] Auto-commit ON.");
-            } else {
-                qDebug() << "!n" << tr("[Disk 4] Auto-commit OFF.");
-              }
-            break;
-
-        case 4 :
-            if (ui->autoSave_5->isChecked()) {
-                qDebug() << "!n" << tr("[Disk 5] Auto-commit ON.");
-            } else {
-                qDebug() << "!n" << tr("[Disk 5] Auto-commit OFF.");
-              }
-            break;
-
-        case 5 :
-            if (ui->autoSave_6->isChecked()) {
-                qDebug() << "!n" << tr("[Disk 6] Auto-commit ON.");
-            } else {
-                qDebug() << "!n" << tr("[Disk 6] Auto-commit OFF.");
-              }
-            break;
-    }
-
-    bool saved;
 
     img->lock();
-    saved = img->save();
+    bool saved = img->save();
     img->unlock();
     if (!saved) {
         if (QMessageBox::question(this, tr("Save failed"), tr("'%1' cannot be saved, do you want to save the image with another name?")
             .arg(img->originalFileName()), QMessageBox::Yes, QMessageBox::No) == QMessageBox::Yes) {
             saveDiskAs(no);
         }
-    } else {
-            diskWidgets[no].saveAction->setEnabled(false);
-            diskWidgets[no].revertAction->setEnabled(false);
-
     }
+#ifdef ASPEQT_QML
+    emit qmlChanged();
+#endif
 }
 //
 void MainWindow::saveDiskAs(int no)
@@ -3505,7 +2442,8 @@ void MainWindow::trayIconActivated(QSystemTrayIcon::ActivationReason reason)
 
 void MainWindow::folderPath(int slot)
 {
-   emit takeFolderPath(diskWidgets[slot].fileNameLabel->statusTip());
+   SimpleDiskImage *img = qobject_cast <SimpleDiskImage*> (sio->getDevice(slot + 0x31));
+   emit takeFolderPath(img ? img->originalFileName() : QString());
 }
 
 void MainWindow::on_actionBootOption_triggered()
@@ -3525,7 +2463,7 @@ QVariantList MainWindow::qmlDriveList()
 {
     QVariantList out;
     for (int i = 0; i < MAX_DISKS; ++i) {
-        if (!diskWidgets[i].frame) continue;   // only slots that are present
+        if (!m_slotPresent[i]) continue;   // only slots that are present
         QVariantMap m;
         m["hwIndex"] = i;
         SimpleDiskImage *img = qobject_cast<SimpleDiskImage *>(sio->getDevice(0x31 + i));
@@ -3542,8 +2480,8 @@ QVariantList MainWindow::qmlDriveList()
             m["typeText"]       = img->description();
             m["modified"]       = img->isModified();
             m["editOpen"]       = img->editDialog() != nullptr;
-            m["autoCommit"]     = diskWidgets[i].autoSaveAction && diskWidgets[i].autoSaveAction->isChecked();
-            m["writeProtected"] = diskWidgets[i].writeProtectAction && diskWidgets[i].writeProtectAction->isChecked();
+            m["autoCommit"]     = m_autoCommit[i];
+            m["writeProtected"] = m_writeProtect[i];
         } else {
             m["mounted"]        = false;
             m["isFolder"]       = false;
@@ -3563,8 +2501,8 @@ QVariantMap MainWindow::qmlLoaderState()
 {
     QVariantMap m;
     m["kind"]        = m_loaderKind;
-    m["fileName"]    = m_loaderFileLbl ? m_loaderFileLbl->text() : QString();
-    m["typeText"]    = m_loaderTypeLbl ? m_loaderTypeLbl->text() : QString();
+    m["fileName"]    = m_loaderName;
+    m["typeText"]    = m_loaderTypeText;
     m["fill"]        = m_loaderFill;
     bool casReady    = (m_loaderKind == 2) && m_casWorker && !m_casWorker->isRunning();
     m["playEnabled"]  = casReady;
@@ -3588,7 +2526,7 @@ QVariantMap MainWindow::qmlStatus()
 bool MainWindow::qmlCanAddSlot()
 {
     for (int i = 0; i < MAX_DISKS; ++i)
-        if (!diskWidgets[i].frame) return true;
+        if (!m_slotPresent[i]) return true;
     return false;
 }
 
@@ -3605,7 +2543,7 @@ int MainWindow::qmlAddSlot()
     // can scroll to and flash the new slot.
     int i = -1;
     for (int k = 0; k < MAX_DISKS; ++k)
-        if (!diskWidgets[k].frame) { i = k; break; }
+        if (!m_slotPresent[k]) { i = k; break; }
     if (i < 0) return -1;
     androidAddSlot();
     return i;
@@ -3617,7 +2555,7 @@ void MainWindow::qmlBootOptions()             { on_actionBootOption_triggered();
 void MainWindow::qmlSwapSlots(int source, int slot)
 {
     if (source == slot || source < 0 || slot < 0) return;
-    if (!diskWidgets[source].frame || !diskWidgets[slot].frame) return;
+    if (!m_slotPresent[source] || !m_slotPresent[slot]) return;
 
     sio->swapDevices(slot + 0x31, source + 0x31);
     aspeqtSettings->swapImages(slot, source);
