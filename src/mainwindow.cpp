@@ -449,7 +449,6 @@ MainWindow::MainWindow(QWidget *parent)
     textPrinterWindow = new TextPrinterWindow();
     // Documentation Display
 
-    connect(textPrinterWindow, SIGNAL(closed()), this, SLOT(textPrinterWindowClosed()));
 
     Printer *printer = new Printer(sio);
     connect(printer, SIGNAL(print(QString)), textPrinterWindow, SLOT(print(QString)));
@@ -1793,8 +1792,9 @@ void MainWindow::qmlOpenSessionPath(const QString &url)
             return;
         }
         {
-            QFile in(picked);
+            ContentFile in(picked);
             if (!in.open(QIODevice::ReadOnly)) {
+                qCritical() << "!e" << tr("Cannot read '%1'.").arg(friendlyName(picked));
                 return;
             }
             tmp.write(in.readAll());
@@ -1874,9 +1874,12 @@ void MainWindow::qmlSaveSessionPath(const QString &url)
     const QString tmpPath = tmp.fileName();
     tmp.close();
     aspeqtSettings->saveSessionToFile(tmpPath);
-    QFile in(tmpPath), out(picked);
+    QFile in(tmpPath);
+    ContentFile out(picked);
     if (in.open(QIODevice::ReadOnly) && out.open(QIODevice::WriteOnly | QIODevice::Truncate)) {
         out.write(in.readAll());
+    } else {
+        qCritical() << "!e" << tr("Cannot write to '%1'.").arg(friendlyName(picked));
     }
 }
 
@@ -2512,8 +2515,14 @@ bool MainWindow::qmlDiskAddFilesPath(const QString &url)
     if (picked.startsWith(QLatin1String("content:"))) {
         // insertRecursive works on real files, so stage the document under its
         // display name (which is also the name it gets on the Atari disk).
-        QFile src(picked);
-        if (!src.open(QIODevice::ReadOnly)) return false;
+        // ContentFile, not QFile: Qt's Android file engine re-encodes the URI
+        // and fails on names holding parens or spaces (silently, until now).
+        ContentFile src(picked);
+        if (!src.open(QIODevice::ReadOnly)) {
+            qmlToast(tr("Cannot add the file, see the log."));
+            qCritical() << "!e" << tr("Cannot read '%1'.").arg(friendlyName(picked));
+            return false;
+        }
         const QByteArray bytes = src.readAll();
         src.close();
         QString displayName = androidDisplayName(picked);
@@ -2523,7 +2532,11 @@ bool MainWindow::qmlDiskAddFilesPath(const QString &url)
         QDir().mkpath(tmpDir);
         const QString tmpPath = tmpDir + "/" + displayName;
         QFile dst(tmpPath);
-        if (!dst.open(QIODevice::WriteOnly | QIODevice::Truncate)) return false;
+        if (!dst.open(QIODevice::WriteOnly | QIODevice::Truncate)) {
+            qmlToast(tr("Cannot add the file, see the log."));
+            qCritical() << "!e" << tr("Cannot write to '%1'.").arg(tmpPath);
+            return false;
+        }
         dst.write(bytes);
         dst.close();
         files.append(tmpPath);
