@@ -119,7 +119,7 @@ public:
     QString printerText() const { return m_printerText; }
     QString printerTextAtascii() const { return m_printerTextAtascii; }
     Q_INVOKABLE void printerClear();
-    Q_INVOKABLE void printerSave();
+    Q_INVOKABLE bool printerSavePath(const QString &url, bool asPdf);
 
     // Actions from QML -> engine wrappers.
     Q_INVOKABLE void eject(int hwIndex);

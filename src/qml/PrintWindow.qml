@@ -24,6 +24,8 @@ Popup {
 
     background: Rectangle { color: Material.background }
 
+    FilePicker { id: pwPicker }
+
     contentItem: ColumnLayout {
         spacing: 0
 
@@ -92,8 +94,17 @@ Popup {
                 }
                 SlotButton {
                     source: Theme.icon("actions/document-save.svg")
-                    tip: qsTr("Save to a file")
-                    onClicked: app.printerSave()
+                    tip: qsTr("Save as text")
+                    onClicked: pwPicker.saveFile(
+                        qsTr("Save printout"), [qsTr("Text files (*.txt)")], "", "printout.txt",
+                        function (url) { if (url.length > 0) app.printerSavePath(url, false) })
+                }
+                SlotButton {
+                    source: Theme.icon("actions/document-print.svg")
+                    tip: qsTr("Save as PDF")
+                    onClicked: pwPicker.saveFile(
+                        qsTr("Save printout"), [qsTr("PDF files (*.pdf)")], "", "printout.pdf",
+                        function (url) { if (url.length > 0) app.printerSavePath(url, true) })
                 }
             }
         }

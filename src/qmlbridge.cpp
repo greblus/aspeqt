@@ -238,7 +238,7 @@ void AppController::clearLog()
 
 void AppController::createDisk(int sc, int ss) { if (m_engine) m_engine->createDisk(sc, ss); }
 void AppController::printerClear()      { if (m_engine) m_engine->printerClear(); }
-void AppController::printerSave()       { if (m_engine) m_engine->printerSave(); }
+bool AppController::printerSavePath(const QString &url, bool asPdf) { return m_engine ? m_engine->printerSavePath(url, asPdf) : false; }
 void AppController::refreshPrinter()
 {
     if (!m_engine) return;

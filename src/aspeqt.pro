@@ -7,7 +7,7 @@ DEFINES += VERSION=\\\"1.0\\\"
 TARGET = AspeQt
 TEMPLATE = app
 CONFIG += qt
-QT += core gui widgets printsupport svg core5compat
+QT += core gui widgets svg core5compat
 CONFIG += mobility
 CONFIG += static
 MOBILITY = bearer
@@ -33,7 +33,7 @@ SOURCES += main.cpp \
     autoboot.cpp \
     atarifilesystem.cpp \
     miscutils.cpp \
-    textprinterwindow.cpp \
+    printeroutput.cpp \
     pclink.cpp
 win32:LIBS += -lwinmm -lz
 win32:SOURCES += serialport-win32.cpp
@@ -78,12 +78,11 @@ HEADERS += engine.h \
     autoboot.h \
     atarifilesystem.h \
     miscutils.h \
-    textprinterwindow.h \
+    printeroutput.h \
     pclink.h
 
 win32:HEADERS += serialport-win32.h
 
-FORMS += textprinterwindow.ui
 
 RESOURCES += icons.qrc \
     atarifiles.qrc \

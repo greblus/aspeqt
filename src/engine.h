@@ -18,7 +18,7 @@
 
 #include "serialport.h"
 #include "sioworker.h"
-#include "textprinterwindow.h"
+#include "printeroutput.h"
 
 #define g_numberOfDisks 6      // desktop: fixed number of drive slots
 
@@ -69,7 +69,7 @@ private:
     int m_dvFsType = 0;                    // current filesystem type (0..5)
     QList<quint16> m_dvDirs;               // directory sector stack
     QStringList m_dvPaths;                 // directory name stack
-    TextPrinterWindow *textPrinterWindow;
+    PrinterOutput *printerOutput = nullptr;
     QTranslator aspeqt_translator, aspeqt_qt_translator;
     
     void setSession();  //
@@ -178,7 +178,7 @@ public:
     QString printerText();
     QString printerTextAtascii();
     void    printerClear();
-    void    printerSave();
+    bool    printerSavePath(const QString &url, bool asPdf);
     void quit();
     QStringList recentFiles();
     void mountRecent(int index);

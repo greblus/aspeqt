@@ -326,12 +326,13 @@ Engine::Engine(QObject *parent)
     AspeCl *acl = new AspeCl(sio);
     sio->installDevice(0x46, acl);
 
-    textPrinterWindow = new TextPrinterWindow();
+    printerOutput = new PrinterOutput(this);
     // Documentation Display
 
 
     Printer *printer = new Printer(sio);
-    connect(printer, SIGNAL(print(QString)), textPrinterWindow, SLOT(print(QString)));
+    connect(printer, SIGNAL(print(QString)), printerOutput, SLOT(print(QString)));
+    connect(printerOutput, &PrinterOutput::textChanged, this, &Engine::printerTextChanged);
 #ifdef ASPEQT_QML
     connect(printer, SIGNAL(print(QString)), this, SIGNAL(printerTextChanged()));
 #endif
@@ -403,8 +404,6 @@ bool Engine::shutdown()
         }
     }
 
-    delete textPrinterWindow;
-    textPrinterWindow = nullptr;
 
     for (int i = 0x31; i < 0x39; i++) {
         SimpleDiskImage *s = qobject_cast <SimpleDiskImage*> (sio->getDevice(i));
@@ -1629,10 +1628,32 @@ void Engine::ejectAll()
         toggleSio();
     }
 }
-QString Engine::printerText()   { return textPrinterWindow ? textPrinterWindow->plainText() : QString(); }
-QString Engine::printerTextAtascii() { return textPrinterWindow ? textPrinterWindow->atasciiText() : QString(); }
-void Engine::printerClear()     { if (textPrinterWindow) textPrinterWindow->clearText(); emit printerTextChanged(); }
-void Engine::printerSave()      { if (textPrinterWindow) textPrinterWindow->saveToFile(); }
+QString Engine::printerText()   { return printerOutput ? printerOutput->plainText() : QString(); }
+QString Engine::printerTextAtascii() { return printerOutput ? printerOutput->atasciiText() : QString(); }
+void Engine::printerClear()     { if (printerOutput) printerOutput->clearText(); }
+// The QML side picks the destination (SAF on Android), so no dialog here.
+bool Engine::printerSavePath(const QString &url, bool asPdf)
+{
+    if (!printerOutput)
+        return false;
+    const QString picked = pathFromPickedUrl(url);
+    if (picked.isEmpty())
+        return false;
+
+    ContentFile out(picked);
+    if (!out.open(QIODevice::WriteOnly | QIODevice::Truncate)) {
+        toast(tr("Cannot save the printout, see the log."));
+        qCritical() << "!e" << tr("Cannot write to '%1'.").arg(friendlyName(picked));
+        return false;
+    }
+    const bool ok = asPdf ? printerOutput->savePdf(&out) : printerOutput->saveText(&out);
+    out.close();
+    if (!ok) {
+        toast(tr("Cannot save the printout, see the log."));
+        qCritical() << "!e" << tr("Cannot write to '%1'.").arg(friendlyName(picked));
+    }
+    return ok;
+}
 void Engine::quit()             { if (shutdown()) qApp->quit(); }
 
 QStringList Engine::recentFiles()
