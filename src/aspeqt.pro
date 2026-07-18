@@ -25,24 +25,16 @@ qmlui {
 SOURCES += main.cpp \
     mainwindow.cpp \
     sioworker.cpp \
-    optionsdialog.cpp \
-    aboutdialog.cpp \
     diskimage.cpp \
     diskimagepro.cpp \
     folderimage.cpp \
     miscdevices.cpp \
-    createimagedialog.cpp \
     diskeditdialog.cpp \
     aspeqtsettings.cpp \
     autoboot.cpp \
-    autobootdialog.cpp \
     atarifilesystem.cpp \
     miscutils.cpp \
     textprinterwindow.cpp \
-    cassettedialog.cpp \
-    docdisplaywindow.cpp \
-    bootoptionsdialog.cpp \
-    logdisplaydialog.cpp \
     pclink.cpp
 win32:LIBS += -lwinmm -lz
 win32:SOURCES += serialport-win32.cpp
@@ -57,9 +49,6 @@ unix:
         SOURCES += serialport-android.cpp
         HEADERS += serialport-android.h
         FORMS += \
-            android/optionsdialog.ui \
-            android/autobootdialog.ui \
-            android/cassettedialog.ui \
             android/diskeditdialog.ui
 
         DISTFILES += \
@@ -84,41 +73,25 @@ unix:
 HEADERS += mainwindow.h \
     serialport.h \
     sioworker.h \
-    optionsdialog.h \
-    aboutdialog.h \
     diskimage.h \
     diskimagepro.h \
     folderimage.h \
     miscdevices.h \
-    createimagedialog.h \
     diskeditdialog.h \
     aspeqtsettings.h \
     autoboot.h \
-    autobootdialog.h \
     atarifilesystem.h \
     miscutils.h \
     textprinterwindow.h \
-    cassettedialog.h \
-    docdisplaywindow.h \
-    bootoptionsdialog.h \
-    logdisplaydialog.h \
     pclink.h
 
 win32:HEADERS += serialport-win32.h
 
 !android:FORMS += \
-    optionsdialog.ui \
-    autobootdialog.ui \
-    cassettedialog.ui \
-    diskeditdialog.ui \
+    diskeditdialog.ui
 
 FORMS += mainwindow.ui \
-    aboutdialog.ui \
-    createimagedialog.ui \
-    textprinterwindow.ui \
-    docdisplaywindow.ui \
-    bootoptionsdialog.ui \
-    logdisplaydialog.ui
+    textprinterwindow.ui
 
 RESOURCES += icons.qrc \
     atarifiles.qrc \

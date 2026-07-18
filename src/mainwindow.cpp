@@ -13,11 +13,7 @@
 #include "pclink.h"
 #include "miscdevices.h"
 #include "aspeqtsettings.h"
-#include "autobootdialog.h"
 #include "autoboot.h"
-#include "cassettedialog.h"
-#include "bootoptionsdialog.h"
-#include "logdisplaydialog.h"
 
 #include <QEvent>
 #include <QDragEnterEvent>
@@ -407,7 +403,6 @@ MainWindow::MainWindow(QWidget *parent)
     ui->statusBar->addPermanentWidget(onOffLabel);
     ui->statusBar->addPermanentWidget(prtOnOffLabel);
     ui->statusBar->addPermanentWidget(clearMessagesLabel);
-    ui->textEdit->installEventFilter(mainWindow);
     changeFonts();
 
 #ifdef Q_OS_ANDROID
@@ -450,7 +445,6 @@ MainWindow::MainWindow(QWidget *parent)
 
     textPrinterWindow = new TextPrinterWindow();
     // Documentation Display
-    docDisplayWindow = new DocDisplayWindow();
 
     connect(textPrinterWindow, SIGNAL(closed()), this, SLOT(textPrinterWindowClosed()));
 
@@ -539,7 +533,6 @@ MainWindow::~MainWindow()
 
     delete textPrinterWindow;
     //
-    delete docDisplayWindow;
 
     for (int i = 0x31; i < 0x39; i++) {
         SimpleDiskImage *s = qobject_cast <SimpleDiskImage*> (sio->getDevice(i));
@@ -888,35 +881,6 @@ void MainWindow::loaderRetry()
         loaderLoadXex(path);
 }
 
-bool MainWindow::eventFilter(QObject *obj, QEvent *event)
-{
-    if (event->type() == QEvent::MouseButtonDblClick) {
-        on_actionLogWindow_triggered();
-        return false;
-    }
-    return true;
-}
-void MainWindow::on_actionLogWindow_triggered()
-{
-    if (g_logOpen == false) {
-        g_logOpen = true;
-        QDialog *ldd = new LogDisplayDialog(this);
-        int x, y, w, h;
-        x = geometry().x();
-        y = geometry().y();
-        w = geometry().width();
-        h = geometry().height();
-        if (!g_miniMode) {
-            ldd->setGeometry(x+w/1.9, y+30, ldd->geometry().width(), geometry().height());
-        } else {
-            ldd->setGeometry(x+20, y+60, w, h*2);
-        }
-        connect(this, SIGNAL(sendLogText(QString)), ldd, SLOT(getLogText(QString)));
-        connect(this, SIGNAL(sendLogTextChange(QString)), ldd, SLOT(getLogTextChange(QString)));
-        emit sendLogText(ui->textEdit->toHtml());
-        ldd->show();
-    }
-}
 void MainWindow::logChanged(QString text)
 {
     emit sendLogTextChange(text);
@@ -1186,33 +1150,6 @@ void MainWindow::uiMessage(int t, QString message)
     logChanged(message);
 }
 
-void MainWindow::on_actionOptions_triggered()
-{
-    bool restart;
-    restart = ui->actionStartEmulation->isChecked();
-    if (restart) {
-        ui->actionStartEmulation->trigger();
-        sio->wait();
-        qApp->processEvents();
-    }
-    OptionsDialog optionsDialog(this);
-    optionsDialog.exec() ;
-
-// Change drive slot description fonts
-    changeFonts();
-
-// load translators and retranslate
-    loadTranslators();
-
-// retranslate Designer Form
-    ui->retranslateUi(this);
-
-    for (int i = 0x31; i <= 0x36; i++) {    //
-        deviceStatusChanged(i);
-    }
-
-    ui->actionStartEmulation->trigger();
-}
 
 void MainWindow::changeFonts()
 {
@@ -1242,16 +1179,7 @@ void MainWindow::changeFonts()
     }
 }
 
-void MainWindow::on_actionAbout_triggered()
-{
-    AboutDialog aboutDialog(this, VERSION);
-    aboutDialog.exec();
-}
 //
-void MainWindow::on_actionDocumentation_triggered()
-{
-    docDisplayWindow->show();
-}
 
 // Restart emulation and re-translate following a session load //
 void MainWindow::setSession()
@@ -1356,38 +1284,7 @@ int MainWindow::firstEmptyDiskSlot(int startFrom, bool createOne)
     return i;
 }
 
-void MainWindow::bootExe(const QString &fileName)
-{
-    SioDevice *old = sio->getDevice(0x31);
-    AutoBoot loader(sio, old);    
-    AutoBootDialog dlg(this);
-    if (!loader.open(fileName, aspeqtSettings->useHighSpeedExeLoader())) {
-        return;
-    }
-
-    sio->uninstallDevice(0x31);
-    sio->installDevice(0x31, &loader);
-    connect(&loader, SIGNAL(booterStarted()), &dlg, SLOT(booterStarted()));
-    connect(&loader, SIGNAL(booterLoaded()), &dlg, SLOT(booterLoaded()));
-    connect(&loader, SIGNAL(blockRead(int, int)), &dlg, SLOT(blockRead(int, int)));
-    connect(&loader, SIGNAL(loaderDone()), &dlg, SLOT(loaderDone()));
-    connect(&dlg, SIGNAL(keepOpen()), this, SLOT(keepBootExeOpen()));
-
-    dlg.exec();
-
-    sio->uninstallDevice(0x31);
-    if (old) {
-        sio->installDevice(0x31, old);
-        SimpleDiskImage *d = qobject_cast <SimpleDiskImage*> (old);
-        d = qobject_cast <SimpleDiskImage*> (sio->getDevice(0x31));
-    }
-    if(!g_exefileName.isEmpty()) bootExe(g_exefileName);
-}
 // Make boot executable dialog persistant until it's manually closed //
-void MainWindow::keepBootExeOpen()
-{
-    bootExe(g_exefileName);
-}
 
 void MainWindow::mountFileWithDefaultProtection(int no, const QString &fileName)
 {
@@ -1816,17 +1713,6 @@ void MainWindow::toggleWriteProtection(int no)
 #endif
 }
 
-void MainWindow::openEditor(int no)
-{
-    SimpleDiskImage *img = qobject_cast <SimpleDiskImage*> (sio->getDevice(no + 0x31));
-    if (img->editDialog()) {
-        img->editDialog()->close();
-    } else {
-        DiskEditDialog *dlg = new DiskEditDialog();
-        dlg->go(img);
-        dlg->show();
-    }
-}
 
 QMessageBox::StandardButton MainWindow::saveImageWhenClosing(int no, QMessageBox::StandardButton previousAnswer, int number)
 {
@@ -2056,90 +1942,6 @@ void MainWindow::on_actionMountRecent_7_triggered() {mountFileWithDefaultProtect
 void MainWindow::on_actionMountRecent_8_triggered() {mountFileWithDefaultProtection(firstEmptyDiskSlot(), ui->actionMountRecent_8->text());}
 void MainWindow::on_actionMountRecent_9_triggered() {mountFileWithDefaultProtection(firstEmptyDiskSlot(), ui->actionMountRecent_9->text());}
 
-void MainWindow::on_actionEditDisk_1_triggered() {openEditor(0);}
-void MainWindow::on_actionEditDisk_2_triggered() {openEditor(1);}
-void MainWindow::on_actionEditDisk_3_triggered() {openEditor(2);}
-void MainWindow::on_actionEditDisk_4_triggered() {openEditor(3);}
-void MainWindow::on_actionEditDisk_5_triggered() {openEditor(4);}
-void MainWindow::on_actionEditDisk_6_triggered() {openEditor(5);}
-
-void MainWindow::on_actionSave_1_triggered() {saveDisk(0);}
-void MainWindow::on_actionSave_2_triggered() {saveDisk(1);}
-void MainWindow::on_actionSave_3_triggered() {saveDisk(2);}
-void MainWindow::on_actionSave_4_triggered() {saveDisk(3);}
-void MainWindow::on_actionSave_5_triggered() {saveDisk(4);}
-void MainWindow::on_actionSave_6_triggered() {saveDisk(5);}
-
-//
-void MainWindow::on_actionAutoSave_1_triggered() {autoSaveDisk(0);}
-void MainWindow::on_actionAutoSave_2_triggered() {autoSaveDisk(1);}
-void MainWindow::on_actionAutoSave_3_triggered() {autoSaveDisk(2);}
-void MainWindow::on_actionAutoSave_4_triggered() {autoSaveDisk(3);}
-void MainWindow::on_actionAutoSave_5_triggered() {autoSaveDisk(4);}
-void MainWindow::on_actionAutoSave_6_triggered() {autoSaveDisk(5);}
-
-void MainWindow::on_actionSaveAs_1_triggered() {saveDiskAs(0);}
-void MainWindow::on_actionSaveAs_2_triggered() {saveDiskAs(1);}
-void MainWindow::on_actionSaveAs_3_triggered() {saveDiskAs(2);}
-void MainWindow::on_actionSaveAs_4_triggered() {saveDiskAs(3);}
-void MainWindow::on_actionSaveAs_5_triggered() {saveDiskAs(4);}
-void MainWindow::on_actionSaveAs_6_triggered() {saveDiskAs(5);}
-
-void MainWindow::on_actionRevert_1_triggered() {revertDisk(0);}
-void MainWindow::on_actionRevert_2_triggered() {revertDisk(1);}
-void MainWindow::on_actionRevert_3_triggered() {revertDisk(2);}
-void MainWindow::on_actionRevert_4_triggered() {revertDisk(3);}
-void MainWindow::on_actionRevert_5_triggered() {revertDisk(4);}
-void MainWindow::on_actionRevert_6_triggered() {revertDisk(5);}
-
-void MainWindow::on_actionEjectAll_triggered()
-{
-    QMessageBox::StandardButton answer = QMessageBox::No;
-
-    int toBeSaved = 0;
-
-    for (int i = 0; i < m_numDisks; i++) {  //
-        SimpleDiskImage *img = qobject_cast <SimpleDiskImage*> (sio->getDevice(i + 0x31));
-        if (img && img->isModified()) {
-            toBeSaved++;
-        }
-    }
-
-    if (!toBeSaved) {
-        for (int i = m_numDisks-1; i >= 0; i--) {
-            ejectImage(i);
-        }
-        return;
-    }
-
-    bool wasRunning = ui->actionStartEmulation->isChecked();
-    if (wasRunning) {
-        ui->actionStartEmulation->trigger();
-    }
-
-    for (int i = m_numDisks-1; i >= 0; i--) {
-        SimpleDiskImage *img = qobject_cast <SimpleDiskImage*> (sio->getDevice(i + 0x31));
-        if (img && img->isModified()) {
-            toBeSaved--;
-            answer = saveImageWhenClosing(i, answer, toBeSaved);
-            if (answer == QMessageBox::NoToAll) {
-                break;
-            }
-            if (answer == QMessageBox::Cancel) {
-                if (wasRunning) {
-                    ui->actionStartEmulation->trigger();
-                }
-                return;
-            }
-        }
-    }
-    for (int i = m_numDisks-1; i >= 0; i--) {
-        ejectImage(i, false);
-    }
-    if (wasRunning) {
-        ui->actionStartEmulation->trigger();
-    }
-}
 void MainWindow::on_actionMountDisk_triggered()
 {
     mountDiskImage(firstEmptyDiskSlot(0, true));
@@ -2150,51 +1952,6 @@ void MainWindow::on_actionMountFolder_triggered()
     mountFolderImage(firstEmptyDiskSlot(0, true));
 }
 
-void MainWindow::on_actionNewImage_triggered()
-{
-    CreateImageDialog dlg(this);
-    if (!dlg.exec()) {
-        return;
-    };
-
-    SimpleDiskImage *disk = new SimpleDiskImage(sio);
-    connect(disk, SIGNAL(statusChanged(int)), this, SLOT(deviceStatusChanged(int)), Qt::QueuedConnection);
-
-    if (!disk->create(++untitledName)) {
-        delete disk;
-        return;
-    }
-
-    DiskGeometry g;
-    uint size = dlg.sectorCount() * dlg.sectorSize();
-    if (dlg.sectorSize() == 256) {
-        if (dlg.sectorCount() >= 3) {
-            size -= 384;
-        } else {
-            size -= dlg.sectorCount() * 128;
-        }
-    }
-    g.initialize(size, dlg.sectorSize());
-
-    if (!disk->format(g)) {
-        delete disk;
-        return;
-    }
-
-    int no = firstEmptyDiskSlot(0, true);
-
-    if (!ejectImage(no)) {
-        delete disk;
-        return;
-    }
-
-    sio->installDevice(0x31 + no, disk);
-    deviceStatusChanged(0x31 + no);
-    qDebug() << "!n" << tr("[%1] Mounted '%2' as '%3'.")
-            .arg(disk->deviceName())
-            .arg(friendlyName(disk->originalFileName()))
-            .arg(disk->description());
-}
 
 void MainWindow::on_actionOpenSession_triggered()
 {
@@ -2238,7 +1995,7 @@ void MainWindow::on_actionOpenSession_triggered()
     g_sessionFilePath = QFileInfo(fileName).absolutePath();
 #endif
 // First eject existing images, then mount session images and restore mainwindow position and size //
-    MainWindow::on_actionEjectAll_triggered();
+    qmlEjectAll();
 
 // Pass Session file name, path and MainWindow title to AspeQtSettings //
 #ifdef Q_OS_ANDROID
@@ -2318,110 +2075,9 @@ void MainWindow::on_actionSaveSession_triggered()
 #endif
 }
 
-void MainWindow::on_actionBootExe_triggered()
-{
-    QString dir = aspeqtSettings->lastExeDir();
-    #ifdef Q_OS_ANDROID
-    g_exefileName = androidOpenUrl(tr("Open executable"),
-                                   tr("Atari executables (*.xex *.com *.exe);;All files (*)"));
-    if (g_exefileName.isEmpty()) {
-        return;
-    }
-    // QFile (used by the boot loader) can't reliably read some SAF content://
-    // URIs; always copy to a temp file first.
-    g_exefileName = androidLocalCopy(g_exefileName);
-    if (g_exefileName.isEmpty())
-        return;
-    {
-        FileTypes::FileType t = FileTypes::getFileType(g_exefileName);
-        if (t != FileTypes::Xex && t != FileTypes::XexGz) {
-            QMessageBox::information(this, tr("Not an executable"),
-                tr("This is not an Atari executable.\nExecutables start with $FFFF; pick a .xex/.com/.exe file."));
-            g_exefileName.clear();
-            return;
-        }
-    }
-    #else
-    g_exefileName = QFileDialog::getOpenFileName(this, tr("Open executable"),
-                                 dir,
-                                 tr(
-                                         "Atari executables (*.xex *.com *.exe);;"
-                                         "All files (*)"));
-    if (g_exefileName.isEmpty()) {
-        return;
-    }
-    aspeqtSettings->setLastExeDir(QFileInfo(g_exefileName).absolutePath());
-    #endif
-    bootExe(g_exefileName);
-}
 
-void MainWindow::on_actionShowPrinterTextOutput_triggered()
-{
-    if (ui->actionShowPrinterTextOutput->isChecked()) {
-        textPrinterWindow->setGeometry(aspeqtSettings->lastPrtHorizontalPos() ,aspeqtSettings->lastPrtVerticalPos(),aspeqtSettings->lastPrtWidth(),aspeqtSettings->lastPrtHeight());
-        textPrinterWindow->show();
-    } else {
-        textPrinterWindow->hide();
-    }
-}
 
-void MainWindow::textPrinterWindowClosed()
-{
-    ui->actionShowPrinterTextOutput->setChecked(false);
-}
 
-void MainWindow::on_actionPlaybackCassette_triggered()
-{
-    QString dir = aspeqtSettings->lastCasDir();
-    QString fileName = NULL;
-    #ifdef Q_OS_ANDROID
-    fileName = androidOpenUrl(tr("Open a cassette image"),
-                              tr("CAS images (*.cas);;All files (*)"));
-    if (fileName.isEmpty()) {
-        return;
-    }
-    // QFile (used by CassetteWorker) can't reliably read some SAF content://
-    // URIs; always copy to a temp file first.
-    fileName = androidLocalCopy(fileName);
-    if (fileName.isEmpty())
-        return;
-    {
-        FileTypes::FileType t = FileTypes::getFileType(fileName);
-        if (t != FileTypes::Cas && t != FileTypes::CasGz) {
-            QMessageBox::information(this, tr("Not a cassette image"),
-                tr("This is not a cassette image.\nPick a .cas file."));
-            return;
-        }
-    }
-    #else
-    fileName = QFileDialog::getOpenFileName(this,
-                                                    tr("Open a cassette image"),
-                                                    aspeqtSettings->lastCasDir(),
-                                                    tr(
-                                                    "CAS images (*.cas);;"
-                                                    "All files (*)"));
-    if (fileName.isEmpty()) {
-        return;
-    }
-    aspeqtSettings->setLastCasDir(QFileInfo(fileName).absolutePath());
-    #endif
-
-    bool restart;
-    restart = ui->actionStartEmulation->isChecked();
-    if (restart) {
-        ui->actionStartEmulation->trigger();
-        sio->wait();
-        qApp->processEvents();
-    }
-
-    CassetteDialog *dlg = new CassetteDialog(this, fileName, friendlyName(fileName));
-    dlg->exec();
-    delete dlg;
-
-    if (restart) {
-        ui->actionStartEmulation->trigger();
-    }
-}
 
 void MainWindow::on_actionQuit_triggered()
 {
@@ -2440,19 +2096,7 @@ void MainWindow::trayIconActivated(QSystemTrayIcon::ActivationReason reason)
     }
 }
 
-void MainWindow::folderPath(int slot)
-{
-   SimpleDiskImage *img = qobject_cast <SimpleDiskImage*> (sio->getDevice(slot + 0x31));
-   emit takeFolderPath(img ? img->originalFileName() : QString());
-}
 
-void MainWindow::on_actionBootOption_triggered()
-{
-    BootOptionsDialog bod(this);
-    connect(&bod, SIGNAL(giveFolderPath(int)), this, SLOT(folderPath(int)));
-    connect(this, SIGNAL(takeFolderPath(QString)), &bod, SLOT(folderPath(QString)));
-    bod.exec();
-}
 
 #ifdef ASPEQT_QML
 // ===========================================================================
@@ -2535,7 +2179,6 @@ void MainWindow::qmlMountFolder(int i)        { mountFolderImage(i); }
 void MainWindow::qmlEjectPressed(int i)       { androidEjectPressed(i); }
 void MainWindow::qmlSave(int i)               { saveDisk(i); }
 void MainWindow::qmlToggleAutoCommit(int i)   { autoSaveDisk(i); }
-void MainWindow::qmlEdit(int i)               { openEditor(i); }
 void MainWindow::qmlToggleWriteProtect(int i) { toggleWriteProtection(i); }
 int MainWindow::qmlAddSlot()
 {
@@ -2548,7 +2191,6 @@ int MainWindow::qmlAddSlot()
     androidAddSlot();
     return i;
 }
-void MainWindow::qmlBootOptions()             { on_actionBootOption_triggered(); }
 
 // Swap two drives (drag-reorder). Same effect as the widget UI's drop handler:
 // device numbers stay put, the mounted images/links exchange places.
@@ -2582,7 +2224,6 @@ void MainWindow::qmlClearLog()
     emit qmlChanged();
 }
 
-void MainWindow::qmlNewImage()         { on_actionNewImage_triggered(); }
 void MainWindow::qmlMountDiskAny()     { on_actionMountDisk_triggered(); }
 
 // Create + format + mount a new disk image (port of on_actionNewImage_triggered
@@ -2614,16 +2255,60 @@ void MainWindow::qmlCreateDisk(int sectorCount, int sectorSize)
     emit qmlChanged();
 }
 void MainWindow::qmlMountFolderAny()   { on_actionMountFolder_triggered(); }
-void MainWindow::qmlEjectAll()         { on_actionEjectAll_triggered(); }
-void MainWindow::qmlShowPrinterOutput(){ on_actionShowPrinterTextOutput_triggered(); }
+void MainWindow::qmlEjectAll()
+{
+    QMessageBox::StandardButton answer = QMessageBox::No;
+
+    int toBeSaved = 0;
+
+    for (int i = 0; i < m_numDisks; i++) {
+        SimpleDiskImage *img = qobject_cast <SimpleDiskImage*> (sio->getDevice(i + 0x31));
+        if (img && img->isModified()) {
+            toBeSaved++;
+        }
+    }
+
+    if (!toBeSaved) {
+        for (int i = m_numDisks-1; i >= 0; i--) {
+            ejectImage(i);
+        }
+        return;
+    }
+
+    bool wasRunning = ui->actionStartEmulation->isChecked();
+    if (wasRunning) {
+        ui->actionStartEmulation->trigger();
+    }
+
+    for (int i = m_numDisks-1; i >= 0; i--) {
+        SimpleDiskImage *img = qobject_cast <SimpleDiskImage*> (sio->getDevice(i + 0x31));
+        if (img && img->isModified()) {
+            toBeSaved--;
+            answer = saveImageWhenClosing(i, answer, toBeSaved);
+            if (answer == QMessageBox::NoToAll) {
+                break;
+            }
+            if (answer == QMessageBox::Cancel) {
+                if (wasRunning) {
+                    ui->actionStartEmulation->trigger();
+                }
+                return;
+            }
+        }
+    }
+    for (int i = m_numDisks-1; i >= 0; i--) {
+        ejectImage(i, false);
+    }
+    if (wasRunning) {
+        ui->actionStartEmulation->trigger();
+    }
+}
 QString MainWindow::qmlPrinterText()   { return textPrinterWindow ? textPrinterWindow->qmlText() : QString(); }
 QString MainWindow::qmlPrinterTextAtascii() { return textPrinterWindow ? textPrinterWindow->qmlTextAtascii() : QString(); }
 void MainWindow::qmlPrinterClear()     { if (textPrinterWindow) textPrinterWindow->qmlClear(); emit qmlPrinterTextChanged(); }
 void MainWindow::qmlPrinterSave()      { if (textPrinterWindow) textPrinterWindow->qmlSave(); }
 void MainWindow::qmlOpenSession()      { on_actionOpenSession_triggered(); }
 void MainWindow::qmlSaveSession()      { on_actionSaveSession_triggered(); }
-void MainWindow::qmlOptions()          { on_actionOptions_triggered(); }
-void MainWindow::qmlLogWindow()        { on_actionLogWindow_triggered(); }
 void MainWindow::qmlQuit()             { close(); qApp->quit(); }
 
 QStringList MainWindow::qmlRecentFiles()

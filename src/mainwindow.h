@@ -17,14 +17,10 @@
 #include <QSystemTrayIcon>
 #include <QTextEdit>
 
-#include "optionsdialog.h"
-#include "aboutdialog.h"
-#include "createimagedialog.h"
 #include "diskeditdialog.h"
 #include "serialport.h"
 #include "sioworker.h"
 #include "textprinterwindow.h"
-#include "docdisplaywindow.h"
 
 #define g_numberOfDisks 6      // desktop: fixed number of drive slots
 
@@ -59,7 +55,6 @@ public slots:
     int firstEmptyDiskSlot(int startFrom = 0, bool createOne = true);       //
     void mountFileWithDefaultProtection(int no, const QString &fileName);   //
     void autoCommit(int no);                                                //
-    void folderPath(int slot);                                              //
 
 private:
     int untitledName;
@@ -83,7 +78,6 @@ private:
     QStringList m_dvPaths;                 // directory name stack
     QLabel *speedLabel, *onOffLabel, *prtOnOffLabel, *netLabel, *clearMessagesLabel;  //
     TextPrinterWindow *textPrinterWindow;
-    DocDisplayWindow *docDisplayWindow;    //
     QTranslator aspeqt_translator, aspeqt_qt_translator;
     QSystemTrayIcon trayIcon;
     Qt::WindowFlags oldWindowFlags;
@@ -93,7 +87,6 @@ private:
     
     void setSession();  //
     void updateRecentFileActions();
-    void bootExe(const QString &fileName);
     void mountFile(int no, const QString &fileName, bool prot);
     void mountDiskImage(int no);
     void mountFolderImage(int no);
@@ -168,7 +161,6 @@ private:
 #endif
     bool ejectImage(int no, bool ask = true);
     void toggleWriteProtection(int no);
-    void openEditor(int no);
     void saveDisk(int no);
     void saveDiskAs(int no);
     void revertDisk(int no);
@@ -179,7 +171,6 @@ private:
 protected:
     void closeEvent(QCloseEvent *event);
     void hideEvent(QHideEvent *event);
-    bool eventFilter(QObject *obj, QEvent *event);
 #ifdef Q_OS_ANDROID
 #endif
 
@@ -187,7 +178,6 @@ signals:
     void logMessage(int type, const QString &msg);
     void newSlot (int slot);
     void fileMounted(bool mounted);
-    void takeFolderPath (QString fPath);
     void sendLogText (QString logText);
     void sendLogTextChange (QString logTextChange);
 
@@ -210,11 +200,9 @@ public:
     void qmlEjectPressed(int i);
     void qmlSave(int i);
     void qmlToggleAutoCommit(int i);
-    void qmlEdit(int i);
     void qmlToggleWriteProtect(int i);
     int qmlAddSlot();    // returns the hardware index of the added slot (-1 none)
     void qmlSwapSlots(int source, int slot);   // drag-reorder: swap two drives
-    void qmlBootOptions();
     void qmlLoaderLoad();
     void qmlLoaderPlay();
     void qmlLoaderRetry();
@@ -223,20 +211,16 @@ public:
     void qmlTogglePrinter();
     void qmlClearLog();
     // menu items (mirror the QtWidgets menu bar)
-    void qmlNewImage();
     void qmlCreateDisk(int sectorCount, int sectorSize);
     void qmlMountDiskAny();
     void qmlMountFolderAny();
     void qmlEjectAll();
-    void qmlShowPrinterOutput();
     QString qmlPrinterText();
     QString qmlPrinterTextAtascii();
     void    qmlPrinterClear();
     void    qmlPrinterSave();
     void qmlOpenSession();
     void qmlSaveSession();
-    void qmlOptions();
-    void qmlLogWindow();
     void qmlQuit();
     QStringList qmlRecentFiles();
     void qmlMountRecent(int index);
@@ -268,21 +252,13 @@ private:
 #endif
 
 private slots:
-    void on_actionPlaybackCassette_triggered();
-    void on_actionShowPrinterTextOutput_triggered();
-    void on_actionBootExe_triggered();
     void on_actionSaveSession_triggered();
     void on_actionOpenSession_triggered();
-    void on_actionNewImage_triggered();
     void on_actionMountFolder_triggered();
     void on_actionMountDisk_triggered();
-    void on_actionEjectAll_triggered();
-    void on_actionOptions_triggered();
     void on_actionStartEmulation_triggered();
     void on_actionPrinterEmulation_triggered();
     void on_actionQuit_triggered();
-    void on_actionAbout_triggered();
-    void on_actionDocumentation_triggered();
     void on_actionMountDisk_1_triggered();
     void on_actionMountDisk_2_triggered();
     void on_actionMountDisk_3_triggered();
@@ -322,53 +298,14 @@ private slots:
     void on_actionMountRecent_8_triggered();
     void on_actionMountRecent_9_triggered();
 
-    void on_actionEditDisk_1_triggered();
-    void on_actionEditDisk_2_triggered();
-    void on_actionEditDisk_3_triggered();
-    void on_actionEditDisk_4_triggered();
-    void on_actionEditDisk_5_triggered();
-    void on_actionEditDisk_6_triggered();
-
-    void on_actionSave_1_triggered();
-    void on_actionSave_2_triggered();
-    void on_actionSave_3_triggered();
-    void on_actionSave_4_triggered();
-    void on_actionSave_5_triggered();
-    void on_actionSave_6_triggered();
-
-    void on_actionAutoSave_1_triggered();
-    void on_actionAutoSave_2_triggered();
-    void on_actionAutoSave_3_triggered();
-    void on_actionAutoSave_4_triggered();
-    void on_actionAutoSave_5_triggered();
-    void on_actionAutoSave_6_triggered();
-
-    void on_actionSaveAs_1_triggered();
-    void on_actionSaveAs_2_triggered();
-    void on_actionSaveAs_3_triggered();
-    void on_actionSaveAs_4_triggered();
-    void on_actionSaveAs_5_triggered();
-    void on_actionSaveAs_6_triggered();
-
-    void on_actionRevert_1_triggered();
-    void on_actionRevert_2_triggered();
-    void on_actionRevert_3_triggered();
-    void on_actionRevert_4_triggered();
-    void on_actionRevert_5_triggered();
-    void on_actionRevert_6_triggered();
-
-    void on_actionBootOption_triggered();
     void on_actionToggleMiniMode_triggered();
     void on_actionToggleShade_triggered();
-    void on_actionLogWindow_triggered();
     void sioFinished();
     void sioStarted();
     void sioStatusChanged(QString status);
-    void textPrinterWindowClosed();
     void deviceStatusChanged(int deviceNo);
     void uiMessage(int t, const QString message);
     void trayIconActivated(QSystemTrayIcon::ActivationReason reason);
-    void keepBootExeOpen();
     void saveWindowGeometry();
     void saveMiniWindowGeometry();
     void logChanged(QString text);
