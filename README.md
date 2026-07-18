@@ -7,9 +7,10 @@ interfaces:
 * **SIO2PC-USB** via an FTDI adapter (USB OTG host support is required), or
 * **SIO2BT** via a SIO2BT bluetooth dongle, supported by most modern Android devices.
 
-> **Branch `qml`:** a work-in-progress redesign of the GUI in **Qt Quick / QML**
-> (Material Design). It faithfully reproduces the existing drive-panel layout with a
-> cleaner, more touch-friendly look. The screenshot below is the QML build.
+> **Since 1.2** the interface is written in **Qt Quick / QML** (Material Design):
+> the same drive-panel layout, but built for touch throughout. The engine behind it
+> — SIO, mounting, sessions, the cassette and executable loader — is unchanged and
+> now runs headless, with no widget code left anywhere in the app.
 
 <p align="center">
   <img src="src/screenshots/aspeqt_qml.jpg" alt="AspeQt QML redesign: loader slot, drive slots and log" width="42%">
@@ -97,6 +98,12 @@ ACK timeout increased). Speed, name and PIN can be configured with
 * All releases (including older ones) are on the [releases page](https://github.com/greblus/aspeqt/releases).
 * The latest compiled APK is always at
   [`apk/aspeqt.apk`](https://github.com/greblus/aspeqt/raw/ng/apk/aspeqt.apk).
+
+## Under the hood
+
+The 1.2 release also cleared out a lot of history. The UI is Qt Quick end to end,
+so the QtWidgets and print-support modules are gone from the build, along with every
+`.ui` form, the old dialogs and the widget-era window handling.
 
 ## Where to get the adapters
 
