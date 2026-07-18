@@ -17,6 +17,9 @@ ApplicationWindow {
     // Max width of the content column (phones use full width; tablets centre it).
     readonly property int contentMaxWidth: 720
     property int pendingFlashHw: -1   // slot to scroll to + flash after an add
+    // The slot column may grow until the log is down to two slots' worth of
+    // height. Adding slots shrinks the log, never hides it.
+    readonly property int logMinHeight: 2 * loaderCard.height
 
     Material.theme: Material.Light
     Material.primary: Theme.primary
@@ -138,6 +141,7 @@ ApplicationWindow {
 
     // ---- body --------------------------------------------------------------
     Item {
+        id: body
         anchors.fill: parent
 
         ColumnLayout {
@@ -153,10 +157,12 @@ ApplicationWindow {
             Layout.leftMargin: 6
             Layout.rightMargin: 6
             Layout.fillHeight: false
-            // Take what the slots need, but always leave the log a usable strip.
-            // (A flat 50% cap clipped a slot mid-row on short desktop windows.)
+            // Take what the slots need, but never squeeze the log below its
+            // minimum. The status bar shares this column, so its height is not
+            // ours to spend either -- forgetting that left the log a sliver.
             Layout.preferredHeight: Math.min(slotCol.implicitHeight + 12,
-                                             win.height - 180)
+                                             Math.max(0, body.height - statusBar.height
+                                                          - win.logMinHeight))
             clip: true
             contentWidth: availableWidth      // clamp: never scroll horizontally
             ScrollBar.horizontal.policy: ScrollBar.AlwaysOff
@@ -169,6 +175,7 @@ ApplicationWindow {
                 y: 6
 
                 LoaderCard {
+                    id: loaderCard
                     Layout.fillWidth: true
                     onRequestLoad: filePicker.openFile(
                         qsTr("Load executable or cassette"),
@@ -290,6 +297,7 @@ ApplicationWindow {
         // bottom status bar: right cluster [speed][connect][printer][clear],
         // flat pixmap icons like the widget statusbar's permanent widgets.
         ToolBar {
+            id: statusBar
             Layout.fillWidth: true
             Material.background: "#ECECEC"
 
