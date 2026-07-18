@@ -52,8 +52,8 @@ Rectangle {
 
             RowLayout {
                 Layout.fillWidth: true
+                Layout.leftMargin: 10   // keep in step with the disk slots
                 spacing: 4
-                Item { Layout.fillWidth: true }
 
                 SlotButton {
                     // Turns into a spinning tape reel while a cassette plays;

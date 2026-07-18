@@ -1,5 +1,4 @@
 #include <QGuiApplication>
-#include <QTextCodec>
 #include <QLibraryInfo>
 #include <QStyleHints>
 #include "engine.h"

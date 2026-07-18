@@ -16,7 +16,8 @@
         #if HAVE_STROPTS_H
         #include <stropts.h>
         #endif
-        #include <termio.h>
+        #include <termios.h>   // termio.h is long gone from glibc
+        #include <sys/ioctl.h> // it used to come in with termio.h
         #include <linux/serial.h>
     #endif
 

@@ -153,8 +153,10 @@ ApplicationWindow {
             Layout.leftMargin: 6
             Layout.rightMargin: 6
             Layout.fillHeight: false
+            // Take what the slots need, but always leave the log a usable strip.
+            // (A flat 50% cap clipped a slot mid-row on short desktop windows.)
             Layout.preferredHeight: Math.min(slotCol.implicitHeight + 12,
-                                             win.height * 0.5)
+                                             win.height - 180)
             clip: true
             contentWidth: availableWidth      // clamp: never scroll horizontally
             ScrollBar.horizontal.policy: ScrollBar.AlwaysOff

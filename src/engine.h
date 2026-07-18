@@ -11,14 +11,8 @@
 #include "sioworker.h"
 #include "printeroutput.h"
 
-#define g_numberOfDisks 6      // desktop: fixed number of drive slots
-
-#ifdef Q_OS_ANDROID
 #define MAX_DISKS 15           // SIO disk device numbers 0x31..0x3F
-#define DEFAULT_DISKS 5
-#else
-#define MAX_DISKS g_numberOfDisks
-#endif
+#define DEFAULT_DISKS 5        // slots a fresh session starts with
 
 class AutoBoot;
 class AtariFileSystem;
@@ -68,18 +62,22 @@ private:
     // Short, human-readable name for logs/labels: the file's base name, or the
     // ContentResolver display name for a content:// URI.
     QString friendlyName(const QString &name);
+    // SAF helpers that platform-independent code calls; outside Android they
+    // fall through (a plain path is already readable, a name is already a name).
+    QString androidDisplayName(const QString &uri);
+    QString androidLocalCopy(const QString &uri);
+    int     androidCopyDirToTree(const QString &src, const QString &tree);
 #ifdef Q_OS_ANDROID
     // Storage Access Framework pickers: return a content:// URI string (empty
     // if cancelled). QFile opens these directly, so no storage permission is
     // needed. Replaces the old filesystem-browsing Java dialog.
     // Human-readable name of a content:// URI (via ContentResolver), for labels.
-    QString androidDisplayName(const QString &uri);
     // Persist access to a content:// URI so it stays usable after a restart.
     void androidTakePersistable(const QString &uri, bool write);
     // Folder images: a SAF tree can't be read as a path, so it is copied to a
     // local temp dir for mounting and copied back on eject.
     int androidCopyTreeToDir(const QString &tree, const QString &dest);
-    int androidCopyDirToTree(const QString &src, const QString &tree);
+
     int androidCopyUriToFile(const QString &uri, const QString &dest);
     // Copy the bundled high-speed MyPicoDOS ($boot.bin + picodos.sys) into a
     // mounted folder so the Atari can boot DOS from it.
@@ -89,17 +87,15 @@ private:
     // it, otherwise a temp copy made via ContentResolver (Qt's QFile fails on
     // some SAF URIs, e.g. files in sub-folders). Keeps the real file name.
     QString androidReadablePath(const QString &uri, int slot);
-    // Always copy a content:// URI to a local temp file (returns the path, or
-    // empty on failure). For read-only loads (CAS/executable) where QFile's SAF
-    // stream can pass open() but fail the repeated reads/seeks/atEnd() they need.
-    QString androidLocalCopy(const QString &uri);
+
     QMap<int, QString> m_folderTree;   // slot -> tree content:// URI
     QMap<int, QString> m_folderTemp;   // slot -> local temp working dir
+#endif
 
-    // --- dynamic drive slots (Android) --------------------------------------
+    // --- dynamic drive slots ------------------------------------------------
     // Slot presence lives in m_slotPresent[]; add fills the lowest gap (or
     // appends), remove drops one leaving a numbering gap. Persists in the session.
-    void androidRebuildSlots();        // (re)populate present slots from settings
+    void rebuildSlots();               // (re)populate present slots from settings
 
     // --- top loader slot: inline XEX autoboot / CAS cassette player ----------
     QString       m_loaderFile;             // current local (temp) file path
@@ -123,10 +119,9 @@ private:
     void loaderCasFinished();
     void loaderBlockRead(int current, int all);
     void loaderBooterDone();
-    void androidAddSlot();             // "+" -> fill the lowest gap / append
-    void androidRemoveSlot(int i);     // 2nd eject on empty -> drop this slot
-    void androidEjectPressed(int i);   // eject if mounted, else remove the slot
-#endif
+    void addSlotAt();                  // "+" -> fill the lowest gap / append
+    void removeSlot(int i);            // 2nd eject on empty -> drop this slot
+    void ejectPressedAt(int i);        // eject if mounted, else remove the slot
     void ejectImage(int no);
     void toggleWriteProtection(int no);
     void loadTranslators();
@@ -205,6 +200,12 @@ public:
     int          toggleAutoCommitDisk(int no);
     bool         saveAsPath(int no, const QString &url);
     void         installDos(int no);
+    QByteArray   readBundled(const QString &resource);
+#ifdef Q_OS_ANDROID
+    bool         writeIntoTree(const QString &tree, const QString &name, const QByteArray &bytes);
+#else
+    bool         writeIntoDir(const QString &dir, const QString &name, const QByteArray &bytes);
+#endif
     void         toast(const QString &text);
     void         loaderRetry();
     void         loaderEject();

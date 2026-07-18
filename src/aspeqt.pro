@@ -7,7 +7,7 @@ DEFINES += VERSION=\\\"1.2\\\"
 TARGET = AspeQt
 TEMPLATE = app
 CONFIG += qt
-QT += core gui svg core5compat
+QT += core gui svg
 CONFIG += mobility
 CONFIG += static
 MOBILITY = bearer

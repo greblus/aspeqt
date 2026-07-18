@@ -131,9 +131,8 @@ Rectangle {
             // icon row
             RowLayout {
                 Layout.fillWidth: true
+                Layout.leftMargin: 10   // breathing room after the number badge
                 spacing: 4
-                Item { Layout.fillWidth: true }   // left stretch (centres the five)
-
                 SlotButton {
                     source: Theme.icon("devices/drive-optical.svg")
                     tip: qsTr("Mount disk image")
@@ -187,7 +186,7 @@ Rectangle {
                     onClicked: card.requestEditor(card.hwIndex)
                 }
 
-                Item { Layout.fillWidth: true }   // right stretch
+                Item { Layout.fillWidth: true }   // pushes eject to the right edge
                 Item { width: 6 }
 
                 // eject (mounted) / remove-slot (empty)

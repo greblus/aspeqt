@@ -22,7 +22,6 @@
 #include <QTranslator>
 #include <QtDebug>
 #include <QFont>
-#include <QTextCodec>
 
 #include "atarifilesystem.h"
 #include "miscutils.h"
@@ -169,8 +168,6 @@ Engine::Engine(QObject *parent)
 
     /* set codec for locale on Windows */
     #ifdef Q_OS_WIN32
-    QTextCodec *codec = QTextCodec::codecForName("UTF-8");
-    QTextCodec::setCodecForLocale(codec);
     #endif
 
     
@@ -240,12 +237,8 @@ Engine::Engine(QObject *parent)
 #else
 #endif
 
-#ifdef Q_OS_ANDROID
-    // Slot presence from the session (used to be done by androidBuildSlots()).
-    androidRebuildSlots();
-#else
-    m_numDisks = g_numberOfDisks;
-#endif
+    // Slot presence comes from the session; the QML UI is the same everywhere.
+    rebuildSlots();
 
     /* Connect SioWorker signals */
     sio = new SioWorker();
@@ -366,7 +359,7 @@ QVariantList Engine::modifiedDisks()
 }
 
 
-void Engine::androidRebuildSlots()
+void Engine::rebuildSlots()
 {
     for (int i = 0; i < MAX_DISKS; ++i)
         m_slotPresent[i] = false;
@@ -380,7 +373,7 @@ void Engine::androidRebuildSlots()
 }
 
 // Hide the "+" row once every hardware slot index is in use.
-void Engine::androidAddSlot()
+void Engine::addSlotAt()
 {
     int i = -1;
     for (int k = 0; k < MAX_DISKS; ++k)
@@ -395,7 +388,7 @@ void Engine::androidAddSlot()
 
 // 2nd eject on an empty slot: drop this specific slot, leaving a number gap so
 // the other slots keep their device numbers (important for DOS).
-void Engine::androidRemoveSlot(int i)
+void Engine::removeSlot(int i)
 {
     if (i < 0 || i >= MAX_DISKS || !m_slotPresent[i]) return;
     int present = 0;
@@ -416,12 +409,12 @@ void Engine::androidRemoveSlot(int i)
 
 // Eject button: eject a mounted image; on an already-empty slot the button
 // shows a trash icon and removes the slot instead.
-void Engine::androidEjectPressed(int i)
+void Engine::ejectPressedAt(int i)
 {
     if (sio->getDevice(i + 0x31))
         ejectImage(i);
     else
-        androidRemoveSlot(i);
+        removeSlot(i);
 }
 
 // ---- top loader slot: inline XEX autoboot / CAS cassette player -------------
@@ -1006,27 +999,39 @@ QString Engine::androidChildOrCreate(const QString &tree, const QString &name)
     return r.isValid() ? r.toString() : QString();
 }
 
+
+#endif
+
 void Engine::installDos(int no)
 {
-    QString tree = m_folderTree.value(no);
+    // The two bundled files the Atari needs to boot DOS from a folder.
+    const QByteArray boot = readBundled(":/dos/boot.bin");
+    const QByteArray dos  = readBundled(":/dos/picodos.sys");
+    if (boot.isEmpty() || dos.isEmpty()) {
+        toast(tr("Could not copy the DOS files into the folder."));
+        return;
+    }
+
+#ifdef Q_OS_ANDROID
+    // A SAF tree is not a path: find-or-create each document and stream into it.
+    const QString tree = m_folderTree.value(no);
     if (tree.isEmpty()) {
         toast(tr("This slot does not hold a mounted folder."));
         return;
     }
-    // Write the two bundled files straight into the SAF folder (find-or-create
-    // the document, then stream the resource into it via a descriptor).
-    auto put = [&](const QString &res, const QString &dstName) -> bool {
-        QString childUri = androidChildOrCreate(tree, dstName);
-        if (childUri.isEmpty())
-            return false;
-        QFile src(res);
-        ContentFile dst(childUri);
-        if (!src.open(QIODevice::ReadOnly) || !dst.open(QIODevice::WriteOnly | QIODevice::Truncate))
-            return false;
-        return dst.write(src.readAll()) >= 0;
-    };
+    const bool ok = writeIntoTree(tree, "$boot.bin", boot)
+                 && writeIntoTree(tree, "picodos.sys", dos);
+#else
+    FolderImage *folder = qobject_cast<FolderImage *>(sio->getDevice(no + 0x31));
+    if (!folder) {
+        toast(tr("This slot does not hold a mounted folder."));
+        return;
+    }
+    const QString dir = folder->originalFileName();
+    const bool ok = writeIntoDir(dir, "$boot.bin", boot)
+                 && writeIntoDir(dir, "picodos.sys", dos);
+#endif
 
-    bool ok = put(":/dos/boot.bin", "$boot.bin") && put(":/dos/picodos.sys", "picodos.sys");
     if (ok) {
         deviceStatusChanged(no + 0x31);   // re-read the folder
         qDebug() << "!i" << tr("Installed high-speed MyPicoDOS into the folder. "
@@ -1036,6 +1041,27 @@ void Engine::installDos(int no)
     }
 }
 
+QByteArray Engine::readBundled(const QString &resource)
+{
+    QFile f(resource);
+    return f.open(QIODevice::ReadOnly) ? f.readAll() : QByteArray();
+}
+
+#ifdef Q_OS_ANDROID
+bool Engine::writeIntoTree(const QString &tree, const QString &name, const QByteArray &bytes)
+{
+    const QString childUri = androidChildOrCreate(tree, name);
+    if (childUri.isEmpty())
+        return false;
+    ContentFile dst(childUri);
+    return dst.open(QIODevice::WriteOnly | QIODevice::Truncate) && dst.write(bytes) >= 0;
+}
+#else
+bool Engine::writeIntoDir(const QString &dir, const QString &name, const QByteArray &bytes)
+{
+    QFile dst(dir + "/" + name);
+    return dst.open(QIODevice::WriteOnly | QIODevice::Truncate) && dst.write(bytes) >= 0;
+}
 #endif
 
 QString Engine::friendlyName(const QString &name)
@@ -1056,6 +1082,13 @@ QString Engine::friendlyName(const QString &name)
     if (i < 0) i = name.lastIndexOf('\\');
     return (i >= 0) ? name.mid(i + 1) : name;
 }
+
+#ifndef Q_OS_ANDROID
+// Outside Android there is no SAF: paths are already readable and already named.
+QString Engine::androidDisplayName(const QString &uri) { return friendlyName(uri); }
+QString Engine::androidLocalCopy(const QString &uri)   { return uri; }
+int     Engine::androidCopyDirToTree(const QString &, const QString &) { return -1; }
+#endif
 
 
 
@@ -1246,7 +1279,7 @@ void Engine::openSessionPath(const QString &url)
 #ifdef Q_OS_ANDROID
     // Rebuild the slot column (count + gaps) to match the loaded session before
     // restoring its mounts.
-    androidRebuildSlots();
+    rebuildSlots();
 #endif
 
     for (int i = 0; i < m_numDisks; i++) {  //
@@ -1377,17 +1410,17 @@ bool Engine::canAddSlot()
     return false;
 }
 
-void Engine::ejectPressed(int i)       { androidEjectPressed(i); }
+void Engine::ejectPressed(int i)       { ejectPressedAt(i); }
 void Engine::toggleWriteProtect(int i) { toggleWriteProtection(i); }
 int Engine::addSlot()
 {
-    // androidAddSlot() fills the lowest empty index; return it so the QML side
+    // addSlotAt() fills the lowest empty index; return it so the QML side
     // can scroll to and flash the new slot.
     int i = -1;
     for (int k = 0; k < MAX_DISKS; ++k)
         if (!m_slotPresent[k]) { i = k; break; }
     if (i < 0) return -1;
-    androidAddSlot();
+    addSlotAt();
     return i;
 }
 
