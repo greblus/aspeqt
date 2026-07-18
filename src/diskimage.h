@@ -8,7 +8,6 @@
 #include "miscutils.h"
 
 class AtariFileSystem;
-class DiskEditDialog;
 
 class DiskGeometry: public QObject
 {
@@ -67,8 +66,6 @@ public:
     inline bool isModified() const {return m_isModified;}
     inline bool isUnmodifiable() const {return m_isUnmodifiable;}
     inline bool isUnnamed() const {return m_isUnnamed;}
-    inline void setEditDialog(DiskEditDialog *aDialog) {m_editDialog = aDialog; emit statusChanged(m_deviceNo);}
-    inline DiskEditDialog* editDialog() {return m_editDialog;}
 
     void handleCommand(quint8 command, quint16 aux);
     virtual bool format(const DiskGeometry &geo);
@@ -93,7 +90,6 @@ protected:
     QByteArray m_originalFileHeader;
     FileTypes::FileType m_originalImageType;
     bool m_gzipped;
-    DiskEditDialog *m_editDialog;
 
     bool seekToSector(quint16 sector);
     void refreshNewGeometry();

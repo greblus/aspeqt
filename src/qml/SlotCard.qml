@@ -20,7 +20,6 @@ Rectangle {
     property bool modified: false
     property bool writeProtected: false
     property bool autoCommit: false
-    property bool editOpen: false
     property bool isBootSlot: false
 
     property bool dropHover: false
@@ -182,7 +181,6 @@ Rectangle {
                 }
                 SlotButton {
                     source: Theme.icon("apps/system-file-manager.svg")
-                    checked: card.editOpen
                     enabledState: card.mounted
                     tip: qsTr("Disk explorer")
                     onClicked: card.requestEditor(card.hwIndex)

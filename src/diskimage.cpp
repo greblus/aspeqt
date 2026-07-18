@@ -5,7 +5,6 @@
 #include "aspeqtsettings.h"
 #include <QDir>
 #include "atarifilesystem.h"
-#include "diskeditdialog.h"
 
 #include <QtDebug>
 
@@ -236,7 +235,6 @@ QString DiskGeometry::humanReadable() const
 SimpleDiskImage::SimpleDiskImage(SioWorker *worker)
     : SioDevice(worker)
 {
-    m_editDialog = 0;
 }
 
 SimpleDiskImage::~SimpleDiskImage()
@@ -835,9 +833,6 @@ void SimpleDiskImage::reopen()
 
 void SimpleDiskImage::close()
 {
-    if (m_editDialog) {
-        delete m_editDialog;
-    }
     file.close();
 }
 

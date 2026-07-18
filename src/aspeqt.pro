@@ -29,7 +29,6 @@ SOURCES += main.cpp \
     diskimagepro.cpp \
     folderimage.cpp \
     miscdevices.cpp \
-    diskeditdialog.cpp \
     aspeqtsettings.cpp \
     autoboot.cpp \
     atarifilesystem.cpp \
@@ -48,8 +47,6 @@ unix:
         QMAKE_LFLAGS += -Wl,-z,max-page-size=16384 -Wl,-z,common-page-size=16384
         SOURCES += serialport-android.cpp
         HEADERS += serialport-android.h
-        FORMS += \
-            android/diskeditdialog.ui
 
         DISTFILES += \
             android/AndroidManifest.xml \
@@ -77,7 +74,6 @@ HEADERS += engine.h \
     diskimagepro.h \
     folderimage.h \
     miscdevices.h \
-    diskeditdialog.h \
     aspeqtsettings.h \
     autoboot.h \
     atarifilesystem.h \
@@ -86,9 +82,6 @@ HEADERS += engine.h \
     pclink.h
 
 win32:HEADERS += serialport-win32.h
-
-!android:FORMS += \
-    diskeditdialog.ui
 
 FORMS += textprinterwindow.ui
 

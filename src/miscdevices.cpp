@@ -5,6 +5,7 @@
 #include "miscdevices.h"
 #include "aspeqtsettings.h"
 #include "engine.h"
+#include "diskimage.h"
 
 
 #include <QDateTime>

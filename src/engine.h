@@ -7,7 +7,6 @@
 #include <QMap>
 #include <QtDebug>
 #include <QFrame>
-#include <QLabel>
 #include <QPushButton>
 #include <QToolButton>
 #include <QScrollArea>
@@ -17,7 +16,6 @@
 #include <QSystemTrayIcon>
 #include <QTextEdit>
 
-#include "diskeditdialog.h"
 #include "serialport.h"
 #include "sioworker.h"
 #include "textprinterwindow.h"
@@ -40,7 +38,7 @@ class Engine : public QObject
     Q_OBJECT
 
 public:
-    Engine(QWidget *parent = 0);
+    Engine(QObject *parent = nullptr);
     ~Engine();
     QString g_sessionFile;
     QString g_sessionFilePath;

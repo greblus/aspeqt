@@ -28,7 +28,6 @@ QVariant DriveModel::data(const QModelIndex &index, int role) const
     case ModifiedRole:       return s.modified;
     case WriteProtectedRole: return s.writeProtected;
     case AutoCommitRole:     return s.autoCommit;
-    case EditOpenRole:       return s.editOpen;
     case IsBootSlotRole:     return s.hwIndex == 0;
     }
     return {};
@@ -46,7 +45,6 @@ QHash<int, QByteArray> DriveModel::roleNames() const
         { ModifiedRole,       "modified" },
         { WriteProtectedRole, "writeProtected" },
         { AutoCommitRole,     "autoCommit" },
-        { EditOpenRole,       "editOpen" },
         { IsBootSlotRole,     "isBootSlot" },
     };
 }
@@ -119,7 +117,6 @@ void AppController::refresh()
         s.modified       = m.value("modified").toBool();
         s.writeProtected = m.value("writeProtected").toBool();
         s.autoCommit     = m.value("autoCommit").toBool();
-        s.editOpen       = m.value("editOpen").toBool();
         rows.append(s);
     }
     m_model.setSlots(rows);

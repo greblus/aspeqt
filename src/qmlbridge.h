@@ -22,8 +22,7 @@ struct SlotData {
     bool operator==(const SlotData &o) const {
         return hwIndex == o.hwIndex && mounted == o.mounted && isFolder == o.isFolder
             && fileName == o.fileName && typeText == o.typeText && modified == o.modified
-            && writeProtected == o.writeProtected && autoCommit == o.autoCommit
-            && editOpen == o.editOpen;
+            && writeProtected == o.writeProtected && autoCommit == o.autoCommit;
     }
 
     int     hwIndex = 0;        // SIO disk index (device = 0x31 + hwIndex)
@@ -34,7 +33,6 @@ struct SlotData {
     bool    modified = false;
     bool    writeProtected = false;
     bool    autoCommit = false;
-    bool    editOpen = false;
 };
 
 class DriveModel : public QAbstractListModel
@@ -51,7 +49,6 @@ public:
         ModifiedRole,
         WriteProtectedRole,
         AutoCommitRole,
-        EditOpenRole,
         IsBootSlotRole,
     };
     Q_ENUM(Roles)

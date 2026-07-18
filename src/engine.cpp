@@ -150,7 +150,7 @@ void Engine::doLogMessage(int type, const QString &msg)
     emit logMessage(type, msg);
 }
 
-Engine::Engine(QWidget *parent)
+Engine::Engine(QObject *parent)
     : QObject(parent)
 {
 
@@ -1427,7 +1427,6 @@ QVariantList Engine::driveList()
             m["fileName"]       = disp;
             m["typeText"]       = img->description();
             m["modified"]       = img->isModified();
-            m["editOpen"]       = img->editDialog() != nullptr;
             m["autoCommit"]     = m_autoCommit[i];
             m["writeProtected"] = m_writeProtect[i];
         } else {
@@ -1436,7 +1435,6 @@ QVariantList Engine::driveList()
             m["fileName"]       = QString();
             m["typeText"]       = QString();
             m["modified"]       = false;
-            m["editOpen"]       = false;
             m["autoCommit"]     = false;
             m["writeProtected"] = false;
         }

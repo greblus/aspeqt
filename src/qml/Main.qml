@@ -188,7 +188,6 @@ ApplicationWindow {
                         modified: model.modified
                         writeProtected: model.writeProtected
                         autoCommit: model.autoCommit
-                        editOpen: model.editOpen
                         isBootSlot: model.isBootSlot
                         onRequestSwap: (fromHw, toHw) => app.swapSlots(fromHw, toHw)
                         onRequestEditor: (hw) => diskViewer.openFor(hw)
