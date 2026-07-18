@@ -141,6 +141,7 @@ public:
     // menu items
     Q_INVOKABLE void createDisk(int sectorCount, int sectorSize);
     Q_INVOKABLE void ejectAll();
+    Q_INVOKABLE QVariantList modifiedDisks();
     Q_INVOKABLE void quit();
     Q_INVOKABLE QStringList recentFiles();
     Q_INVOKABLE void mountRecent(int index);

@@ -4,82 +4,82 @@
 <context>
     <name>AspeCl</name>
     <message>
-        <location filename="../miscdevices.cpp" line="215"/>
+        <location filename="../miscdevices.cpp" line="216"/>
         <source>[%1] Date/time sent to client (%2).</source>
         <translation>[%1] Data/czas wysłane do klienta (%2).</translation>
     </message>
     <message>
-        <location filename="../miscdevices.cpp" line="243"/>
+        <location filename="../miscdevices.cpp" line="244"/>
         <source>[%1] Invalid swap request for drives: (%2)-(%3).</source>
         <translation>[%1] Nieprawidłowe polecenie zamiany dysków: (%2)-(%3).</translation>
     </message>
     <message>
-        <location filename="../miscdevices.cpp" line="237"/>
+        <location filename="../miscdevices.cpp" line="238"/>
         <source>[%1] Swapped disk %2 with disk %3.</source>
         <translation>[%1] Zamieniono dysk %2 z dyskiem %3.</translation>
     </message>
     <message>
-        <location filename="../miscdevices.cpp" line="277"/>
+        <location filename="../miscdevices.cpp" line="278"/>
         <source>[%1] Unmounted disk %2</source>
         <translation>[%1] Odmontowany dysk %2</translation>
     </message>
     <message>
-        <location filename="../miscdevices.cpp" line="281"/>
+        <location filename="../miscdevices.cpp" line="282"/>
         <source>[%1] ALL images were remotely unmounted</source>
         <translation>[%1] Wszystkie obrazy zostały zdalnie odmontowane</translation>
     </message>
     <message>
-        <location filename="../miscdevices.cpp" line="285"/>
+        <location filename="../miscdevices.cpp" line="286"/>
         <source>[%1] Can not remotely unmount ALL images due to pending changes.</source>
         <translation>[%1] Nie można zdalnie odmontować wszystkich obrazów ze względu na oczekiwane zmiany.</translation>
     </message>
     <message>
-        <location filename="../miscdevices.cpp" line="294"/>
+        <location filename="../miscdevices.cpp" line="295"/>
         <source>[%1] Can not remotely unmount disk %2 due to pending changes.</source>
         <translation>[%1] Nie można zdalnie odmontować dysku %2 ze względu na oczekiwane zmiany.</translation>
     </message>
     <message>
-        <location filename="../miscdevices.cpp" line="301"/>
+        <location filename="../miscdevices.cpp" line="302"/>
         <source>[%1] Remotely unmounted disk %2</source>
         <translation>[%1] Zdalnie odmontowany dysk %2</translation>
     </message>
     <message>
-        <location filename="../miscdevices.cpp" line="309"/>
+        <location filename="../miscdevices.cpp" line="310"/>
         <source>[%1] Invalid drive number: %2 for remote unmount</source>
         <translation>[%1] Nieprawidłowy numer dysku: %2 do zdalnego odmontowania</translation>
     </message>
     <message>
-        <location filename="../miscdevices.cpp" line="326"/>
+        <location filename="../miscdevices.cpp" line="327"/>
         <source>[%1] AspeQt can&apos;t determine the folder where the image file must be created/mounted!</source>
         <translation>[%1] AspeQt nie może ustalić katalogu, w którym plik obrazu musi zostać utworzony/zamontowany!</translation>
     </message>
     <message>
-        <location filename="../miscdevices.cpp" line="328"/>
+        <location filename="../miscdevices.cpp" line="329"/>
         <source>[%1] Mount a Folder Image at least once before issuing a remote mount command.</source>
         <translation>[%1] Zamontuj katalog przynajmniej raz, zanim wydasz zdalne polecenie montowania.</translation>
     </message>
     <message>
-        <location filename="../miscdevices.cpp" line="345"/>
+        <location filename="../miscdevices.cpp" line="346"/>
         <source>[%1] Read data frame failed</source>
         <translation>[%1] Czytanie ramki danych nie powiodło się</translation>
     </message>
     <message>
-        <location filename="../miscdevices.cpp" line="360"/>
+        <location filename="../miscdevices.cpp" line="361"/>
         <source>[%1] Invalid image file attribute: %2</source>
         <translation>[%1] Nieprawidłowy atrybut pliku obrazu: %2</translation>
     </message>
     <message>
-        <location filename="../miscdevices.cpp" line="370"/>
+        <location filename="../miscdevices.cpp" line="371"/>
         <source>[%1] Can not create PC File: %2</source>
         <translation>[%1] Nie można utworzyć pliku (PC): %2</translation>
     </message>
     <message>
-        <location filename="../miscdevices.cpp" line="524"/>
+        <location filename="../miscdevices.cpp" line="525"/>
         <source>[%1] Image %2 mounted</source>
         <translation>[%1] Obraz %2 zamontowany</translation>
     </message>
     <message>
-        <location filename="../miscdevices.cpp" line="504"/>
+        <location filename="../miscdevices.cpp" line="505"/>
         <source>[%1] command: $%2, aux: $%3 NAKed.</source>
         <translation>[%1] komenda: $%2, aux: $%3 NAK.</translation>
     </message>
@@ -333,39 +333,39 @@
 <context>
     <name>CassetteWorker</name>
     <message>
-        <location filename="../sioworker.cpp" line="304"/>
-        <location filename="../sioworker.cpp" line="314"/>
+        <location filename="../sioworker.cpp" line="312"/>
+        <location filename="../sioworker.cpp" line="322"/>
         <source>&apos;%1&apos; ends with an incomplete chunk; loaded the complete records only.</source>
         <translation>&apos;%1&apos; kończy się niekompletnym blokiem; wczytano tylko kompletne rekordy.</translation>
     </message>
     <message>
-        <location filename="../sioworker.cpp" line="257"/>
+        <location filename="../sioworker.cpp" line="265"/>
         <source>Cannot open &apos;%1&apos;: %2</source>
         <translation>Nie można otworzyć &apos;%1&apos;: %2</translation>
     </message>
     <message>
-        <location filename="../sioworker.cpp" line="268"/>
-        <location filename="../sioworker.cpp" line="279"/>
+        <location filename="../sioworker.cpp" line="276"/>
+        <location filename="../sioworker.cpp" line="287"/>
         <source>Cannot read &apos;%1&apos;: %2</source>
         <translation>Nie można odczytać &apos;%1&apos;: %2</translation>
     </message>
     <message>
-        <location filename="../sioworker.cpp" line="285"/>
+        <location filename="../sioworker.cpp" line="293"/>
         <source>Cannot open &apos;%1&apos;: The header does not match.</source>
         <translation>Nie można otworzyć &apos;%1&apos;: Nagłówek nie jest zgodny.</translation>
     </message>
     <message>
-        <location filename="../sioworker.cpp" line="290"/>
+        <location filename="../sioworker.cpp" line="298"/>
         <source>[Cassette]: File description &apos;%2&apos;.</source>
         <translation>[Kaseta]: Opis pliku &apos;%2&apos;.</translation>
     </message>
     <message>
-        <location filename="../sioworker.cpp" line="334"/>
+        <location filename="../sioworker.cpp" line="342"/>
         <source>Cannot open &apos;%1&apos;: Unknown chunk header %2.</source>
         <translation>Nie można otworzyć &apos;%1&apos;: Nieznany nagłówek bloku %2.</translation>
     </message>
     <message>
-        <location filename="../sioworker.cpp" line="383"/>
+        <location filename="../sioworker.cpp" line="391"/>
         <source>[Cassette] Playing record %1 of %2 (%3 ms of gap + %4 bytes of data)</source>
         <translation>[Kaseta] Odtwarzanie rekordu %1 z %2 (%3 ms przerwy + %4 B danych)</translation>
     </message>
@@ -454,234 +454,59 @@
     </message>
 </context>
 <context>
-    <name>DiskEditDialog</name>
-    <message>
-        <location filename="../diskeditdialog.cpp" line="491"/>
-        <source>Close</source>
-        <translation>Zamknij</translation>
-    </message>
-    <message>
-        <location filename="../diskeditdialog.cpp" line="497"/>
-        <source>No file system</source>
-        <translation>Brak systemu plików</translation>
-    </message>
-    <message>
-        <location filename="../diskeditdialog.cpp" line="498"/>
-        <source>Atari Dos 1.0</source>
-        <translation></translation>
-    </message>
-    <message>
-        <location filename="../diskeditdialog.cpp" line="499"/>
-        <source>Atari Dos 2.0</source>
-        <translation></translation>
-    </message>
-    <message>
-        <location filename="../diskeditdialog.cpp" line="500"/>
-        <source>Atari Dos 2.5</source>
-        <translation></translation>
-    </message>
-    <message>
-        <location filename="../diskeditdialog.cpp" line="501"/>
-        <source>MyDos</source>
-        <translation></translation>
-    </message>
-    <message>
-        <location filename="../diskeditdialog.cpp" line="502"/>
-        <source>SpartaDos</source>
-        <translation></translation>
-    </message>
-    <message>
-        <location filename="../diskeditdialog.cpp" line="622"/>
-        <location filename="../diskeditdialog.cpp" line="648"/>
-        <location filename="../diskeditdialog.cpp" line="662"/>
-        <source>AspeQt - Exploring %1</source>
-        <translation>AspeQt - przeglądanie %1</translation>
-    </message>
-    <message>
-        <location filename="../diskeditdialog.cpp" line="689"/>
-        <source>Extract files</source>
-        <translation>Wyodrębnij pliki</translation>
-    </message>
-    <message>
-        <location filename="../diskeditdialog.cpp" line="710"/>
-        <location filename="../diskeditdialog.cpp" line="711"/>
-        <source>Text conversion is on</source>
-        <translation>Konwersja tekstu włączona</translation>
-    </message>
-    <message>
-        <location filename="../diskeditdialog.cpp" line="740"/>
-        <location filename="../diskeditdialog.cpp" line="771"/>
-        <source>Add files</source>
-        <translation>Dodaj pliki</translation>
-    </message>
-    <message>
-        <location filename="../android/diskeditdialog.ui" line="272"/>
-        <location filename="../android/diskeditdialog.ui" line="275"/>
-        <location filename="../diskeditdialog.ui" line="204"/>
-        <location filename="../diskeditdialog.ui" line="207"/>
-        <location filename="../diskeditdialog.cpp" line="714"/>
-        <location filename="../diskeditdialog.cpp" line="715"/>
-        <source>Text conversion is off</source>
-        <translation>Konwersja tekstu wyłączona</translation>
-    </message>
-    <message>
-        <location filename="../diskeditdialog.cpp" line="722"/>
-        <source>Confirmation</source>
-        <translation>Potwierdzenie</translation>
-    </message>
-    <message>
-        <location filename="../diskeditdialog.cpp" line="722"/>
-        <source>Are you sure you want to delete selected files?</source>
-        <translation>Czy jesteś pewny, że chcesz skasować wybrane pliki?</translation>
-    </message>
-    <message>
-        <location filename="../android/diskeditdialog.ui" line="23"/>
-        <location filename="../diskeditdialog.ui" line="23"/>
-        <source>MainWindow</source>
-        <translation></translation>
-    </message>
-    <message>
-        <location filename="../diskeditdialog.ui" line="92"/>
-        <source>Stay on Top</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="../android/diskeditdialog.ui" line="179"/>
-        <location filename="../diskeditdialog.ui" line="111"/>
-        <source>toolBar</source>
-        <translation>Pasek narzędzi</translation>
-    </message>
-    <message>
-        <location filename="../android/diskeditdialog.ui" line="218"/>
-        <location filename="../android/diskeditdialog.ui" line="221"/>
-        <location filename="../android/diskeditdialog.ui" line="224"/>
-        <location filename="../diskeditdialog.ui" line="150"/>
-        <location filename="../diskeditdialog.ui" line="153"/>
-        <location filename="../diskeditdialog.ui" line="156"/>
-        <source>Go to the parent directory</source>
-        <translation>Idź do katalogu nadrzędnego</translation>
-    </message>
-    <message>
-        <location filename="../android/diskeditdialog.ui" line="233"/>
-        <location filename="../diskeditdialog.ui" line="165"/>
-        <source>Add files...</source>
-        <translation>Dodaj pliki...</translation>
-    </message>
-    <message>
-        <location filename="../android/diskeditdialog.ui" line="236"/>
-        <location filename="../android/diskeditdialog.ui" line="239"/>
-        <location filename="../diskeditdialog.ui" line="168"/>
-        <location filename="../diskeditdialog.ui" line="171"/>
-        <source>Add files to this directory</source>
-        <translation>Dodaj pliki do tego katalogu</translation>
-    </message>
-    <message>
-        <location filename="../android/diskeditdialog.ui" line="251"/>
-        <location filename="../diskeditdialog.ui" line="183"/>
-        <source>Extract files...</source>
-        <translation>Wyodrębnij pliki...</translation>
-    </message>
-    <message>
-        <location filename="../android/diskeditdialog.ui" line="254"/>
-        <location filename="../android/diskeditdialog.ui" line="257"/>
-        <location filename="../diskeditdialog.ui" line="186"/>
-        <location filename="../diskeditdialog.ui" line="189"/>
-        <source>Extract selected files</source>
-        <translation>Wyodrębnij wybrane pliki</translation>
-    </message>
-    <message>
-        <location filename="../android/diskeditdialog.ui" line="269"/>
-        <location filename="../diskeditdialog.ui" line="201"/>
-        <source>Text conversion</source>
-        <translation>Konwersja tekstu</translation>
-    </message>
-    <message>
-        <location filename="../android/diskeditdialog.ui" line="287"/>
-        <location filename="../diskeditdialog.ui" line="219"/>
-        <source>Delete</source>
-        <translation>Skasuj</translation>
-    </message>
-    <message>
-        <location filename="../android/diskeditdialog.ui" line="290"/>
-        <location filename="../android/diskeditdialog.ui" line="293"/>
-        <location filename="../diskeditdialog.ui" line="222"/>
-        <location filename="../diskeditdialog.ui" line="225"/>
-        <source>Delete selected files</source>
-        <translation>Skasuj wybrane pliki</translation>
-    </message>
-    <message>
-        <location filename="../android/diskeditdialog.ui" line="296"/>
-        <location filename="../diskeditdialog.ui" line="228"/>
-        <source>Del</source>
-        <translation></translation>
-    </message>
-    <message>
-        <location filename="../android/diskeditdialog.ui" line="305"/>
-        <location filename="../diskeditdialog.ui" line="237"/>
-        <source>Print</source>
-        <translation>Drukuj</translation>
-    </message>
-    <message>
-        <location filename="../android/diskeditdialog.ui" line="308"/>
-        <location filename="../diskeditdialog.ui" line="240"/>
-        <source>Print Directory Listing</source>
-        <translation>Drukuj zawartość katalogu</translation>
-    </message>
-</context>
-<context>
     <name>DiskGeometry</name>
     <message>
-        <location filename="../diskimage.cpp" line="208"/>
+        <location filename="../diskimage.cpp" line="207"/>
         <source>SD Diskette</source>
         <translation>Dyskietka SD</translation>
     </message>
     <message>
-        <location filename="../diskimage.cpp" line="210"/>
+        <location filename="../diskimage.cpp" line="209"/>
         <source>ED Diskette</source>
         <translation>Dyskietka ED</translation>
     </message>
     <message>
-        <location filename="../diskimage.cpp" line="212"/>
+        <location filename="../diskimage.cpp" line="211"/>
         <source>DD Diskette</source>
         <translation>Dyskietka DD</translation>
     </message>
     <message>
-        <location filename="../diskimage.cpp" line="214"/>
+        <location filename="../diskimage.cpp" line="213"/>
         <source>QD Diskette</source>
         <translation>Dyskietka QD</translation>
     </message>
     <message>
-        <location filename="../diskimage.cpp" line="217"/>
+        <location filename="../diskimage.cpp" line="216"/>
         <source>Disk %1 s. SD</source>
         <translation>Dysk %1 s. SD</translation>
     </message>
     <message>
-        <location filename="../diskimage.cpp" line="219"/>
+        <location filename="../diskimage.cpp" line="218"/>
         <source>Disk %1 s. DD</source>
         <translation>Dysk %1 s. DD</translation>
     </message>
     <message>
-        <location filename="../diskimage.cpp" line="221"/>
+        <location filename="../diskimage.cpp" line="220"/>
         <source>Disk %1 s. %2B</source>
         <translation>Dysk %1 s. %2B</translation>
     </message>
     <message>
-        <location filename="../diskimage.cpp" line="224"/>
+        <location filename="../diskimage.cpp" line="223"/>
         <source>%1 %2 tracks/side, %3 sectors/track, %4 bytes/sector diskette</source>
         <translation>%1 %2 ścieżki/strona, %3 sektory/ścieżki, %4 bajty/sektor dyskietka</translation>
     </message>
     <message>
-        <location filename="../diskimage.cpp" line="225"/>
+        <location filename="../diskimage.cpp" line="224"/>
         <source>DS</source>
         <translation>DS</translation>
     </message>
     <message>
-        <location filename="../diskimage.cpp" line="225"/>
+        <location filename="../diskimage.cpp" line="224"/>
         <source>SS</source>
         <translation>SS</translation>
     </message>
     <message>
-        <location filename="../diskimage.cpp" line="231"/>
+        <location filename="../diskimage.cpp" line="230"/>
         <source>%1 (%2k)</source>
         <translation></translation>
     </message>
@@ -886,7 +711,7 @@
     <message>
         <location filename="../atarifilesystem.cpp" line="641"/>
         <source>Number of bytes (%1) read from &apos;%2&apos; is not equal to expected data size of (%3)</source>
-        <translation type="unfinished"></translation>
+        <translation>Liczba bajtów (%1) odczytanych z &apos;%2&apos; nie odpowiada oczekiwanemu rozmiarowi danych (%3)</translation>
     </message>
     <message>
         <location filename="../atarifilesystem.cpp" line="679"/>
@@ -936,118 +761,146 @@
 <context>
     <name>Engine</name>
     <message>
-        <location filename="../engine.cpp" line="1971"/>
-        <location filename="../engine.cpp" line="1983"/>
-        <location filename="../engine.cpp" line="1987"/>
+        <location filename="../engine.cpp" line="1876"/>
+        <location filename="../engine.cpp" line="1888"/>
+        <location filename="../engine.cpp" line="1892"/>
         <source>Cannot extract the files, see the log.</source>
         <translation>Nie można wypakować plików, zobacz do log-u</translation>
     </message>
     <message>
-        <location filename="../engine.cpp" line="2000"/>
+        <location filename="../engine.cpp" line="1905"/>
         <source>Cannot delete the files, see the log.</source>
         <translation>Nie można usunąć plików, zobacz do log-u</translation>
     </message>
     <message>
-        <location filename="../engine.cpp" line="2020"/>
-        <location filename="../engine.cpp" line="2034"/>
-        <location filename="../engine.cpp" line="2046"/>
+        <location filename="../engine.cpp" line="1925"/>
+        <location filename="../engine.cpp" line="1939"/>
+        <location filename="../engine.cpp" line="1951"/>
         <source>Cannot add the file, see the log.</source>
         <translation>Nie można dodać pliku, zobacz do log-u</translation>
     </message>
     <message>
-        <location filename="../engine.cpp" line="541"/>
+        <location filename="../engine.cpp" line="492"/>
         <source>Cassette (%1:%2)</source>
         <translation>Kaseta (%1:%2)</translation>
     </message>
     <message>
-        <location filename="../engine.cpp" line="1077"/>
+        <location filename="../engine.cpp" line="1013"/>
         <source>This slot does not hold a mounted folder.</source>
         <translation>Ten slot nie zawiera zamontowanego katalogu.</translation>
     </message>
     <message>
-        <location filename="../engine.cpp" line="1099"/>
+        <location filename="../engine.cpp" line="1035"/>
         <source>Could not copy the DOS files into the folder.</source>
         <translation>Nie udało się skopiować plików DOS do katalogu.</translation>
     </message>
     <message>
-        <location filename="../engine.cpp" line="1096"/>
+        <location filename="../engine.cpp" line="1032"/>
         <source>Installed high-speed MyPicoDOS into the folder. Reboot your Atari to load DOS.</source>
         <translation>Zainstalowano szybkie MyPicoDOS w katalogu. Zrestartuj Atari, aby wczytać DOS.</translation>
     </message>
     <message>
-        <location filename="../engine.cpp" line="514"/>
+        <location filename="../engine.cpp" line="465"/>
         <source>Executable (%1k)</source>
         <translation>Plik exe (%1k)</translation>
     </message>
     <message>
-        <location filename="../engine.cpp" line="1844"/>
+        <location filename="../engine.cpp" line="1749"/>
         <source>Failed to load &apos;%1&apos;.</source>
         <translation>Nie udało się wczytać &apos;%1&apos;.</translation>
     </message>
     <message>
-        <location filename="../engine.cpp" line="1856"/>
+        <location filename="../engine.cpp" line="1761"/>
         <source>Pick an Atari executable (.xex/.com/.exe) or a cassette image (.cas).</source>
         <translation>Wybierz program Atari (.xex/.com/.exe) lub obraz kasety (.cas).</translation>
     </message>
     <message>
-        <location filename="../engine.cpp" line="503"/>
+        <location filename="../engine.cpp" line="454"/>
         <source>Failed to load executable &apos;%1&apos;.</source>
         <translation>Nie udało się załadować programu &apos;%1&apos;.</translation>
     </message>
     <message>
-        <location filename="../engine.cpp" line="517"/>
+        <location filename="../engine.cpp" line="144"/>
+        <source>Migrating the global settings to their new repository (session files are not affected).</source>
+        <translation>Przenoszę ustawienia globalne do nowego repozytorium (pliki sesji pozostają bez zmian).</translation>
+    </message>
+    <message>
+        <location filename="../engine.cpp" line="150"/>
+        <source>Settings migrated successfully.</source>
+        <translation>Ustawienia przeniesione pomyślnie.</translation>
+    </message>
+    <message>
+        <location filename="../engine.cpp" line="206"/>
+        <source>Requested session file not found in the given directory path or the path is incorrect. AspeQt will continue with the default session configuration.</source>
+        <translation>Nie znaleziono pliku sesji we wskazanym katalogu lub ścieżka jest niepoprawna. AspeQt będzie kontynuował z domyślną konfiguracją sesji.</translation>
+    </message>
+    <message>
+        <location filename="../engine.cpp" line="217"/>
+        <source>Requested session file not found in the application&apos;s current directory (no path was specified). AspeQt will continue with the default session configuration.</source>
+        <translation>Nie znaleziono pliku sesji w bieżącym katalogu aplikacji (nie podano ścieżki). AspeQt będzie kontynuował z domyślną konfiguracją sesji.</translation>
+    </message>
+    <message>
+        <location filename="../engine.cpp" line="468"/>
         <source>Loaded executable &apos;%1&apos;. Start (or reboot) your Atari to run it.</source>
         <translation>Załadowano program &apos;%1&apos;. Uruchom (lub zresetuj) Atari, aby go wystartować.</translation>
     </message>
     <message>
-        <location filename="../engine.cpp" line="530"/>
+        <location filename="../engine.cpp" line="481"/>
         <source>Failed to load cassette image &apos;%1&apos;.</source>
         <translation>Nie udało się załadować obrazu kasety &apos;%1&apos;.</translation>
     </message>
     <message>
-        <location filename="../engine.cpp" line="578"/>
+        <location filename="../engine.cpp" line="529"/>
         <source>Playing back cassette image.</source>
         <translation>Odtwarzanie obrazu kasety.</translation>
     </message>
     <message>
-        <location filename="../engine.cpp" line="607"/>
+        <location filename="../engine.cpp" line="558"/>
         <source>Cassette playback finished.</source>
         <translation>Zakończono odtwarzanie kasety.</translation>
     </message>
     <message>
-        <location filename="../engine.cpp" line="618"/>
+        <location filename="../engine.cpp" line="569"/>
         <source>Executable loaded into the Atari.</source>
         <translation>Program załadowany do Atari.</translation>
     </message>
     <message>
-        <location filename="../engine.cpp" line="718"/>
+        <location filename="../engine.cpp" line="670"/>
         <source>[%1] Auto-commit failed.</source>
         <translation>[%1] Autozapis nie powiódł się.</translation>
     </message>
     <message>
-        <location filename="../engine.cpp" line="881"/>
+        <location filename="../engine.cpp" line="823"/>
         <source>Loaded into the cas/xex slot.</source>
         <translation>Zamontowałem w slocie cas/xex.</translation>
     </message>
     <message>
-        <location filename="../engine.cpp" line="1302"/>
-        <location filename="../engine.cpp" line="2021"/>
+        <location filename="../engine.cpp" line="1213"/>
+        <location filename="../engine.cpp" line="1926"/>
         <source>Cannot read &apos;%1&apos;.</source>
-        <translation type="unfinished"></translation>
+        <translation>Nie można odczytać &apos;%1&apos;.</translation>
     </message>
     <message>
-        <location filename="../engine.cpp" line="1378"/>
-        <location filename="../engine.cpp" line="2035"/>
+        <location filename="../engine.cpp" line="1289"/>
+        <location filename="../engine.cpp" line="1503"/>
+        <location filename="../engine.cpp" line="1510"/>
+        <location filename="../engine.cpp" line="1940"/>
         <source>Cannot write to &apos;%1&apos;.</source>
         <translation>Nie można zapisać do pliku &apos;%1&apos;.</translation>
     </message>
     <message>
-        <location filename="../engine.cpp" line="1682"/>
+        <location filename="../engine.cpp" line="1502"/>
+        <location filename="../engine.cpp" line="1509"/>
+        <source>Cannot save the printout, see the log.</source>
+        <translation>Nie można zapisać wydruku, zobacz do log-u</translation>
+    </message>
+    <message>
+        <location filename="../engine.cpp" line="1587"/>
         <source>Automatic</source>
         <translation>Automatyczny</translation>
     </message>
     <message>
-        <location filename="../engine.cpp" line="548"/>
+        <location filename="../engine.cpp" line="499"/>
         <source>AspeQt is ready to playback the cassette image file &apos;%1&apos;.
 
 Do whatever is necessary in your Atari to load this cassette image like rebooting while holding Option and Start buttons or entering &quot;CLOAD&quot; in the BASIC prompt.
@@ -1060,107 +913,63 @@ Wykonaj w Atari czynności potrzebne do wczytania tej kasety, np. zresetuj trzym
 Gdy usłyszysz sygnał, naciśnij przycisk play i mniej więcej w tym samym czasie naciśnij klawisz na Atari.</translation>
     </message>
     <message>
-        <location filename="../engine.cpp" line="1218"/>
+        <location filename="../engine.cpp" line="1129"/>
         <source>[Disk %1] Auto-commit ON.</source>
         <translation>[Dysk %1] Autozapis WŁĄCZONY.</translation>
     </message>
     <message>
-        <location filename="../engine.cpp" line="1219"/>
+        <location filename="../engine.cpp" line="1130"/>
         <source>[Disk %1] Auto-commit OFF.</source>
         <translation>[Dysk %1] Autozapis WYŁĄCZONY.</translation>
     </message>
     <message>
-        <location filename="../engine.cpp" line="1266"/>
+        <location filename="../engine.cpp" line="1177"/>
         <source>&apos;%1&apos; cannot be saved.</source>
         <translation>Nie można zapisać &apos;%1&apos;.</translation>
     </message>
     <message>
-        <location filename="../engine.cpp" line="1502"/>
+        <location filename="../engine.cpp" line="1410"/>
         <source>Swapped disk %1 with disk %2.</source>
         <translation>Zamieniono dysk %1 z dyskiem %2.</translation>
     </message>
     <message>
-        <location filename="../engine.cpp" line="1520"/>
+        <location filename="../engine.cpp" line="1445"/>
         <source>Printer emulation stopped.</source>
-        <translation type="unfinished"></translation>
+        <translation>Emulacja drukarki zatrzymana.</translation>
     </message>
     <message>
-        <location filename="../engine.cpp" line="1519"/>
+        <location filename="../engine.cpp" line="1444"/>
         <source>Printer emulation started.</source>
-        <translation type="unfinished"></translation>
+        <translation>Emulacja drukarki uruchomiona.</translation>
     </message>
     <message>
-        <location filename="../engine.cpp" line="696"/>
+        <location filename="../engine.cpp" line="648"/>
         <source>Emulation stopped.</source>
         <translation>Emulacja zatrzymana.</translation>
     </message>
     <message>
-        <location filename="../engine.cpp" line="165"/>
+        <location filename="../engine.cpp" line="127"/>
         <source>AspeQt started at %1.</source>
         <translation>AspeQt uruchomiono %1.</translation>
     </message>
     <message>
-        <location filename="../engine.cpp" line="182"/>
-        <location filename="../engine.cpp" line="190"/>
-        <source>Migrate Settings</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="../engine.cpp" line="182"/>
-        <source>This version of AspeQt uses a different repository for storing its global settings.
-We will now migrate the existing settings to their new repository, note that settings stored in your existing AspeQt session files are not affected by this change.</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="../engine.cpp" line="190"/>
-        <source>Setting were migrated successfuly.</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="../engine.cpp" line="246"/>
-        <location filename="../engine.cpp" line="256"/>
-        <source>Session file error</source>
-        <translation>Błąd pliku sesji</translation>
-    </message>
-    <message>
-        <location filename="../engine.cpp" line="247"/>
-        <source>Requested session file not found in the given directory path or the path is incorrect. AspeQt will continue with default session configuration.</source>
-        <translation>Plik sesji nie znaleziony w podanej ścieżce dostępu, bądź ścieżka dostępu jest błędna. AspeQt będzie kontynuował z domyślną konfiguracją.</translation>
-    </message>
-    <message>
-        <location filename="../engine.cpp" line="257"/>
-        <source>Requested session file not found in the application&apos;s current directory path
- (No path was specified). AspeQt will continue with default session configuration.</source>
-        <translation>Plik sesji nie znaleziony w aktualnym katalogu aplikacji (ścieżka dostępu nie została podana). AspeQt będzie kontynuował z domyślną konfiguracją.</translation>
-    </message>
-    <message>
-        <location filename="../engine.cpp" line="349"/>
+        <location filename="../engine.cpp" line="321"/>
         <source>AspeQt stopped at %1.</source>
         <translation>AspeQt zatrzymano %1.</translation>
     </message>
     <message>
-        <location filename="../engine.cpp" line="786"/>
+        <location filename="../engine.cpp" line="730"/>
         <source>Unmounted disk %1</source>
         <translation>Odmontowany dysk %1</translation>
     </message>
     <message>
-        <location filename="../engine.cpp" line="965"/>
-        <location filename="../engine.cpp" line="1551"/>
+        <location filename="../engine.cpp" line="901"/>
+        <location filename="../engine.cpp" line="1476"/>
         <source>[%1] Mounted &apos;%2&apos; as &apos;%3&apos;.</source>
         <translation>[%1] Zamontowe &apos;%2&apos; jako &apos;%3&apos;.</translation>
     </message>
     <message>
-        <location filename="../engine.cpp" line="1151"/>
-        <source>Image file unsaved</source>
-        <translation>Plik obrazu zawiera niezapisane zmiany</translation>
-    </message>
-    <message>
-        <location filename="../engine.cpp" line="1151"/>
-        <source>&apos;%1&apos; has unsaved changes, do you want to save it?</source>
-        <translation>&apos;%1&apos; zawiera niezapisane zmiany. Czy chcesz go zapisać?</translation>
-    </message>
-    <message>
-        <location filename="../engine.cpp" line="268"/>
+        <location filename="../engine.cpp" line="230"/>
         <source>AspeQt - Atari Serial Peripheral Emulator for Qt</source>
         <translation>AspeQt - Emulator Szeregowych Peryferiów Atari dla Qt</translation>
     </message>
@@ -1364,13 +1173,13 @@ We will now migrate the existing settings to their new repository, note that set
     </message>
     <message>
         <location filename="../qml/Main.qml" line="54"/>
-        <location filename="../qml/Main.qml" line="320"/>
+        <location filename="../qml/Main.qml" line="329"/>
         <source>Stop emulation</source>
         <translation>Zatrzymaj emulację</translation>
     </message>
     <message>
         <location filename="../qml/Main.qml" line="55"/>
-        <location filename="../qml/Main.qml" line="320"/>
+        <location filename="../qml/Main.qml" line="329"/>
         <source>Start emulation</source>
         <translation>Uruchom emulację</translation>
     </message>
@@ -1403,9 +1212,10 @@ We will now migrate the existing settings to their new repository, note that set
     <message>
         <location filename="../qml/Main.qml" line="76"/>
         <location filename="../qml/Main.qml" line="84"/>
-        <location filename="../qml/Main.qml" line="171"/>
-        <location filename="../qml/Main.qml" line="197"/>
-        <location filename="../qml/Main.qml" line="395"/>
+        <location filename="../qml/Main.qml" line="173"/>
+        <location filename="../qml/Main.qml" line="200"/>
+        <location filename="../qml/Main.qml" line="400"/>
+        <location filename="../qml/Main.qml" line="464"/>
         <source>All files (*)</source>
         <translation>Wszystkie pliki (*)</translation>
     </message>
@@ -1430,27 +1240,49 @@ We will now migrate the existing settings to their new repository, note that set
         <translation>Nowy obraz dysku…</translation>
     </message>
     <message>
-        <location filename="../qml/Main.qml" line="382"/>
+        <location filename="../qml/Main.qml" line="420"/>
+        <location filename="../qml/Main.qml" line="438"/>
+        <source>Unsaved changes</source>
+        <translation>Niezapisane zmiany</translation>
+    </message>
+    <message>
+        <location filename="../qml/Main.qml" line="421"/>
+        <source>These images have unsaved changes:
+
+%1</source>
+        <translation>Te obrazy mają niezapisane zmiany:
+
+%1</translation>
+    </message>
+    <message>
+        <location filename="../qml/Main.qml" line="439"/>
+        <source>&apos;%1&apos; has unsaved changes.</source>
+        <translation>&apos;%1&apos; ma niezapisane zmiany.</translation>
+    </message>
+    <message>
+        <location filename="../qml/Main.qml" line="451"/>
         <source>Install DOS</source>
         <translation>Zainstaluj DOS</translation>
     </message>
     <message>
-        <location filename="../qml/Main.qml" line="383"/>
+        <location filename="../qml/Main.qml" line="452"/>
         <source>Copy high-speed MyPicoDOS ($boot.bin + picodos.sys) into this folder? The Atari will then be able to boot DOS from it.</source>
         <translation>Skopiować szybkie MyPicoDOS ($boot.bin + picodos.sys) do tego katalogu? Atari będzie mogło z niego wystartować DOS.</translation>
     </message>
     <message>
-        <location filename="../qml/Main.qml" line="394"/>
+        <location filename="../qml/Main.qml" line="399"/>
+        <location filename="../qml/Main.qml" line="463"/>
         <source>Save image as</source>
         <translation>Zapisz obraz jako</translation>
     </message>
     <message>
-        <location filename="../qml/Main.qml" line="395"/>
+        <location filename="../qml/Main.qml" line="400"/>
+        <location filename="../qml/Main.qml" line="464"/>
         <source>ATR image (*.atr)</source>
         <translation>Obraz ATR (*.atr)</translation>
     </message>
     <message>
-        <location filename="../qml/Main.qml" line="395"/>
+        <location filename="../qml/Main.qml" line="464"/>
         <source>XFD image (*.xfd)</source>
         <translation>Obraz XFD (*.xfd)</translation>
     </message>
@@ -1460,92 +1292,59 @@ We will now migrate the existing settings to their new repository, note that set
         <translation>Wysuń wszystkie</translation>
     </message>
     <message>
-        <location filename="../qml/Main.qml" line="101"/>
+        <location filename="../qml/Main.qml" line="102"/>
         <source>Recent</source>
         <translation>Ostatnie</translation>
     </message>
     <message>
-        <location filename="../qml/Main.qml" line="128"/>
+        <location filename="../qml/Main.qml" line="129"/>
         <source>Options</source>
         <translation>Opcje</translation>
     </message>
     <message>
-        <location filename="../qml/Main.qml" line="131"/>
+        <location filename="../qml/Main.qml" line="132"/>
         <source>Quit</source>
         <translation>Zakończ</translation>
     </message>
     <message>
-        <location filename="../qml/Main.qml" line="170"/>
+        <location filename="../qml/Main.qml" line="172"/>
         <source>Load executable or cassette</source>
         <translation>Wczytaj program lub kasetę</translation>
     </message>
     <message>
-        <location filename="../qml/Main.qml" line="171"/>
+        <location filename="../qml/Main.qml" line="173"/>
         <source>Atari programs (*.xex *.com *.exe *.cas)</source>
         <translation>Programy Atari (*.xex *.com *.exe *.cas)</translation>
     </message>
     <message>
-        <location filename="../qml/Main.qml" line="196"/>
+        <location filename="../qml/Main.qml" line="199"/>
         <source>Open a disk image</source>
         <translation>Otwórz obraz dysku</translation>
     </message>
     <message>
-        <location filename="../qml/Main.qml" line="197"/>
+        <location filename="../qml/Main.qml" line="200"/>
         <source>All Atari disk images (*.atr *.xfd *.pro)</source>
         <translation>Wszystkie obrazy dysków Atari (*.atr *.xfd *.pro)</translation>
     </message>
     <message>
-        <location filename="../qml/Main.qml" line="203"/>
+        <location filename="../qml/Main.qml" line="211"/>
         <source>Open a folder image</source>
         <translation>Otwórz folder</translation>
     </message>
     <message>
-        <location filename="../qml/Main.qml" line="327"/>
+        <location filename="../qml/Main.qml" line="336"/>
         <source>Stop printer emulation</source>
         <translation>Zatrzymaj emulację drukarki</translation>
     </message>
     <message>
-        <location filename="../qml/Main.qml" line="328"/>
+        <location filename="../qml/Main.qml" line="337"/>
         <source>Start printer emulation</source>
         <translation>Uruchom emulację drukarki</translation>
     </message>
     <message>
-        <location filename="../qml/Main.qml" line="333"/>
+        <location filename="../qml/Main.qml" line="342"/>
         <source>Clear messages</source>
         <translation>Wyczyść komunikaty</translation>
-    </message>
-</context>
-<context>
-    <name>MyModel</name>
-    <message>
-        <location filename="../diskeditdialog.cpp" line="247"/>
-        <source>No</source>
-        <translation>Nr</translation>
-    </message>
-    <message>
-        <location filename="../diskeditdialog.cpp" line="250"/>
-        <source>Name</source>
-        <translation>Nazwa</translation>
-    </message>
-    <message>
-        <location filename="../diskeditdialog.cpp" line="253"/>
-        <source>Extension</source>
-        <translation>Rozszerzenie</translation>
-    </message>
-    <message>
-        <location filename="../diskeditdialog.cpp" line="256"/>
-        <source>Size</source>
-        <translation>Rozmiar</translation>
-    </message>
-    <message>
-        <location filename="../diskeditdialog.cpp" line="259"/>
-        <source>Time</source>
-        <translation>Czas</translation>
-    </message>
-    <message>
-        <location filename="../diskeditdialog.cpp" line="262"/>
-        <source>Notes</source>
-        <translation>Uwagi</translation>
     </message>
 </context>
 <context>
@@ -1617,7 +1416,7 @@ We will now migrate the existing settings to their new repository, note that set
         <translation>Język:</translation>
     </message>
     <message>
-        <location filename="../engine.cpp" line="1694"/>
+        <location filename="../engine.cpp" line="1599"/>
         <source>English</source>
         <translation>Polski</translation>
     </message>
@@ -2220,32 +2019,53 @@ We will now migrate the existing settings to their new repository, note that set
 <context>
     <name>PrintWindow</name>
     <message>
-        <location filename="../qml/PrintWindow.qml" line="41"/>
+        <location filename="../qml/PrintWindow.qml" line="43"/>
         <source>Printer text output</source>
         <translation>Wydruk drukarki</translation>
     </message>
     <message>
-        <location filename="../qml/PrintWindow.qml" line="77"/>
+        <location filename="../qml/PrintWindow.qml" line="79"/>
         <source>Word wrap</source>
         <translation>Zawijanie wierszy</translation>
     </message>
     <message>
-        <location filename="../qml/PrintWindow.qml" line="84"/>
+        <location filename="../qml/PrintWindow.qml" line="86"/>
         <source>Show ATASCII</source>
         <translation>Pokaż ATASCII</translation>
     </message>
     <message>
-        <location filename="../qml/PrintWindow.qml" line="90"/>
+        <location filename="../qml/PrintWindow.qml" line="92"/>
         <source>Clear contents</source>
         <translation>Wyczyść zawartość</translation>
     </message>
     <message>
-        <location filename="../qml/PrintWindow.qml" line="95"/>
-        <source>Save to a file</source>
-        <translation>Zapisz do pliku</translation>
+        <location filename="../qml/PrintWindow.qml" line="97"/>
+        <source>Save as text</source>
+        <translation>Zapisz jako tekst</translation>
     </message>
     <message>
-        <location filename="../qml/PrintWindow.qml" line="145"/>
+        <location filename="../qml/PrintWindow.qml" line="99"/>
+        <location filename="../qml/PrintWindow.qml" line="106"/>
+        <source>Save printout</source>
+        <translation>Zapisz wydruk</translation>
+    </message>
+    <message>
+        <location filename="../qml/PrintWindow.qml" line="99"/>
+        <source>Text files (*.txt)</source>
+        <translation>Pliki tekstowe (*.txt)</translation>
+    </message>
+    <message>
+        <location filename="../qml/PrintWindow.qml" line="104"/>
+        <source>Save as PDF</source>
+        <translation>Zapisz jako PDF</translation>
+    </message>
+    <message>
+        <location filename="../qml/PrintWindow.qml" line="106"/>
+        <source>PDF files (*.pdf)</source>
+        <translation>Pliki PDF (*.pdf)</translation>
+    </message>
+    <message>
+        <location filename="../qml/PrintWindow.qml" line="156"/>
         <source>Close</source>
         <translation>Zamknij</translation>
     </message>
@@ -2253,345 +2073,345 @@ We will now migrate the existing settings to their new repository, note that set
 <context>
     <name>Printer</name>
     <message>
-        <location filename="../miscdevices.cpp" line="40"/>
+        <location filename="../miscdevices.cpp" line="41"/>
         <source>[%1] Get status.</source>
         <translation>[%1] Pobierz stan.</translation>
     </message>
     <message>
-        <location filename="../miscdevices.cpp" line="63"/>
-        <location filename="../miscdevices.cpp" line="100"/>
+        <location filename="../miscdevices.cpp" line="64"/>
+        <location filename="../miscdevices.cpp" line="101"/>
         <source>[%1] command: $%2, aux: $%3 NAKed.</source>
         <translation>[%1] komenda: $%2, aux: $%3 NAK.</translation>
     </message>
     <message>
-        <location filename="../miscdevices.cpp" line="71"/>
+        <location filename="../miscdevices.cpp" line="72"/>
         <source>[%1] Converting Inverse Video Characters for ASCII viewing</source>
         <translation>[%1] Konwersja znaków z inwersją do ASCII</translation>
     </message>
     <message>
-        <location filename="../miscdevices.cpp" line="78"/>
+        <location filename="../miscdevices.cpp" line="79"/>
         <source>[%1] Print: data frame failed</source>
         <translation>[%1] Drukowanie: błąd ramki danych</translation>
     </message>
     <message>
-        <location filename="../miscdevices.cpp" line="84"/>
+        <location filename="../miscdevices.cpp" line="85"/>
         <source>[%1] Print (%2 chars)</source>
         <translation>[%1] Drukowanie (%2 znaków)</translation>
     </message>
     <message>
-        <location filename="../miscdevices.cpp" line="106"/>
+        <location filename="../miscdevices.cpp" line="107"/>
         <source>[%1] ignored</source>
-        <translation type="unfinished"></translation>
+        <translation>[%1] zignorowano</translation>
     </message>
 </context>
 <context>
     <name>SimpleDiskImage</name>
     <message>
-        <location filename="../diskimage.cpp" line="330"/>
+        <location filename="../diskimage.cpp" line="328"/>
         <source>Image size of &apos;%1&apos; is reported as %2 bytes in the header but it&apos;s actually %3.</source>
         <translation>Rozmiar obrazu &apos;%1&apos; jest zgłaszany jako %2 B w nagłówku, ale rzeczywiście ma %3 B.</translation>
     </message>
     <message>
-        <location filename="../diskimage.cpp" line="410"/>
+        <location filename="../diskimage.cpp" line="408"/>
         <source>The file &apos;%1&apos; has some unrecognized fields in its header.</source>
         <translation>Plik &apos;%1&apos; posiada nierozpoznawalne pola w nagłówku.</translation>
     </message>
     <message>
-        <location filename="../diskimage.cpp" line="298"/>
-        <location filename="../diskimage.cpp" line="457"/>
+        <location filename="../diskimage.cpp" line="296"/>
+        <location filename="../diskimage.cpp" line="455"/>
         <source>Cannot create temporary file &apos;%1&apos;: %2</source>
         <translation>Nie mozna stworzyć tymczasowego pliku &apos;%1&apos;: %2</translation>
     </message>
     <message>
-        <location filename="../diskimage.cpp" line="318"/>
-        <location filename="../diskimage.cpp" line="475"/>
+        <location filename="../diskimage.cpp" line="316"/>
+        <location filename="../diskimage.cpp" line="473"/>
         <source>Cannot write to temporary file &apos;%1&apos;: %2</source>
         <translation>Nie można pisać do tymczasowego pliku &apos;%1&apos;: %2</translation>
     </message>
     <message>
-        <location filename="../diskimage.cpp" line="417"/>
+        <location filename="../diskimage.cpp" line="415"/>
         <source>Cannot resize temporary file &apos;%1&apos;: %2</source>
         <translation>Nie można zmienić rozmiaru tymczasowego pliku &apos;%1&apos;: %2</translation>
     </message>
     <message>
-        <location filename="../diskimage.cpp" line="507"/>
+        <location filename="../diskimage.cpp" line="505"/>
         <source>DCM images are not supported yet.</source>
         <translation>Obrazy DCM nie są jeszcze wspierane.</translation>
     </message>
     <message>
-        <location filename="../diskimage.cpp" line="513"/>
+        <location filename="../diskimage.cpp" line="511"/>
         <source>SCP images are not supported yet.</source>
         <translation>Obrazy SCP nie są jeszcze wspierane.</translation>
     </message>
     <message>
-        <location filename="../diskimage.cpp" line="519"/>
+        <location filename="../diskimage.cpp" line="517"/>
         <source>DI images are not supported yet.</source>
         <translation>Obrazy DI nie są jeszcze wspierane.</translation>
     </message>
     <message>
-        <location filename="../diskimage.cpp" line="571"/>
-        <location filename="../diskimage.cpp" line="643"/>
+        <location filename="../diskimage.cpp" line="569"/>
+        <location filename="../diskimage.cpp" line="641"/>
         <source>Cannot rewind temporary file &apos;%1&apos;: %2</source>
         <translation>Nie można przewniąć tymczasowego pliku &apos;%1&apos;: %2</translation>
     </message>
     <message>
-        <location filename="../diskimage.cpp" line="585"/>
-        <location filename="../diskimage.cpp" line="656"/>
+        <location filename="../diskimage.cpp" line="583"/>
+        <location filename="../diskimage.cpp" line="654"/>
         <source>Cannot read from temporay file %1: %2</source>
         <translation>Nie można czytać z pliku tymczasowego %1: %2</translation>
     </message>
     <message>
-        <location filename="../diskimage.cpp" line="602"/>
+        <location filename="../diskimage.cpp" line="600"/>
         <source>Detailed geometry information will be lost when reopening &apos;%1&apos; due to ATR file format limitations.</source>
         <translation>Dokładne dane geometrii dysku będą stracone po ponownym otwarciu &apos;%1&apos; z powodu ograniczeń formatu ATR.</translation>
     </message>
     <message>
-        <location filename="../diskimage.cpp" line="622"/>
+        <location filename="../diskimage.cpp" line="620"/>
         <source>Detailed disk geometry information will be lost when reopening &apos;%1&apos; due to XFD file format limitations.</source>
         <translation>Dokładne dane geometrii dysku będą stracone po ponownym otwarciu &apos;%1&apos; z powodu ograniczeń formatu XFD.</translation>
     </message>
     <message>
-        <location filename="../diskimage.cpp" line="625"/>
+        <location filename="../diskimage.cpp" line="623"/>
         <source>XFD file format cannot handle this disk geometry. Try saving &apos;%1&apos; as ATR.</source>
         <translation>Format XFD nie obsługuje takiej geometrii dysku. Spróbuj zapisać &apos;%1&apos; jako ATR.</translation>
     </message>
     <message>
-        <location filename="../diskimage.cpp" line="680"/>
+        <location filename="../diskimage.cpp" line="678"/>
         <source>Saving DCM images is not supported yet.</source>
         <translation>Zapis obrazów DCM nie jest jeszcze wspierany.</translation>
     </message>
     <message>
-        <location filename="../diskimage.cpp" line="686"/>
+        <location filename="../diskimage.cpp" line="684"/>
         <source>Saving SCP images is not supported yet.</source>
         <translation>Zapis obrazów SCP nie jest jeszcze wspierany.</translation>
     </message>
     <message>
-        <location filename="../diskimage.cpp" line="692"/>
+        <location filename="../diskimage.cpp" line="690"/>
         <source>Saving DI images is not supported yet.</source>
         <translation>Zapis obrazów DI nie jest jeszcze wspierany.</translation>
     </message>
     <message>
-        <location filename="../diskimage.cpp" line="720"/>
+        <location filename="../diskimage.cpp" line="718"/>
         <source>Unknown file extension.</source>
         <translation>Nieznane rozszerzenie pliku.</translation>
     </message>
     <message>
-        <location filename="../diskimage.cpp" line="771"/>
-        <location filename="../diskimage.cpp" line="802"/>
+        <location filename="../diskimage.cpp" line="769"/>
+        <location filename="../diskimage.cpp" line="800"/>
         <source>Unknown file type.</source>
         <translation>Nieznany typ pliku.</translation>
     </message>
     <message>
-        <location filename="../diskimage.cpp" line="811"/>
+        <location filename="../diskimage.cpp" line="809"/>
         <source>Cannot create new image: Cannot create temporary file &apos;%2&apos;: %3.</source>
         <translation>Nie można stowrzyć nowego obrazu: Nie można stworzyć tymczasowego pliku &apos;%2&apos;: %3.</translation>
     </message>
     <message>
-        <location filename="../diskimage.cpp" line="821"/>
+        <location filename="../diskimage.cpp" line="819"/>
         <source>Untitled image %1</source>
         <translation>Obraz bez nazwy %1</translation>
     </message>
     <message>
-        <location filename="../diskimage.cpp" line="854"/>
+        <location filename="../diskimage.cpp" line="849"/>
         <source>[%1] Format ED denied.</source>
         <translation>[%1] Format ED zabroniony.</translation>
     </message>
     <message>
-        <location filename="../diskimage.cpp" line="863"/>
+        <location filename="../diskimage.cpp" line="858"/>
         <source>[%1] Format ED.</source>
         <translation></translation>
     </message>
     <message>
-        <location filename="../diskimage.cpp" line="866"/>
+        <location filename="../diskimage.cpp" line="861"/>
         <source>[%1] Format ED failed.</source>
         <translation>[%1] Format ED nieudany.</translation>
     </message>
     <message>
-        <location filename="../diskimage.cpp" line="879"/>
+        <location filename="../diskimage.cpp" line="874"/>
         <source>[%1] Speed poll.</source>
         <translation>[%1] Badanie prędkości.</translation>
     </message>
     <message>
-        <location filename="../diskimage.cpp" line="890"/>
+        <location filename="../diskimage.cpp" line="885"/>
         <source>[%1] Get PERCOM block (%2).</source>
         <translation>[%1] Pobranie bloku PERCOM (%2).</translation>
     </message>
     <message>
-        <location filename="../diskimage.cpp" line="909"/>
+        <location filename="../diskimage.cpp" line="904"/>
         <source>[%1] Set PERCOM block (%2).</source>
         <translation>[%1] Ustawienie bloku PERCOM (%2).</translation>
     </message>
     <message>
-        <location filename="../diskimage.cpp" line="928"/>
+        <location filename="../diskimage.cpp" line="923"/>
         <source>[%1] Format with custom sector skewing failed.</source>
         <translation>[%1] Formatowanie z własnym skosem sektora nieudane.</translation>
     </message>
     <message>
-        <location filename="../diskimage.cpp" line="933"/>
+        <location filename="../diskimage.cpp" line="928"/>
         <source>[%1] Format with custom sector skewing (%2).</source>
         <translation>[%1] Formatowanie z własnym skosem sektora (%2).</translation>
     </message>
     <message>
-        <location filename="../diskimage.cpp" line="938"/>
+        <location filename="../diskimage.cpp" line="933"/>
         <source>[%1] Format with custom sector skewing denied.</source>
         <translation>[%1] Formatowanie z własnym skosem sektora zabronione.</translation>
     </message>
     <message>
-        <location filename="../diskimage.cpp" line="955"/>
+        <location filename="../diskimage.cpp" line="950"/>
         <source>[%1] Format.</source>
         <translation>[%1] Formatowanie.</translation>
     </message>
     <message>
-        <location filename="../diskimage.cpp" line="958"/>
+        <location filename="../diskimage.cpp" line="953"/>
         <source>[%1] Format denied.</source>
         <translation>[%1] Formatowanie zabronione.</translation>
     </message>
     <message>
-        <location filename="../diskimage.cpp" line="976"/>
+        <location filename="../diskimage.cpp" line="971"/>
         <source>[%1] Write sector %2 denied.</source>
         <translation>[%1] Zapis sektora %2 zabroniony.</translation>
     </message>
     <message>
-        <location filename="../diskimage.cpp" line="981"/>
+        <location filename="../diskimage.cpp" line="976"/>
         <source>[%1] Write sector %2 (%3 bytes).</source>
         <translation>[%1] Zapis sektora %2 (%3 B).</translation>
     </message>
     <message>
-        <location filename="../diskimage.cpp" line="984"/>
+        <location filename="../diskimage.cpp" line="979"/>
         <source>[%1] Write sector %2 failed.</source>
         <translation>[%1] Zapis sektora %2 nieudany.</translation>
     </message>
     <message>
-        <location filename="../diskimage.cpp" line="989"/>
+        <location filename="../diskimage.cpp" line="984"/>
         <source>[%1] Write sector %2 data frame failed.</source>
         <translation>[%1] Zapis ramki danych sektora %2 nieudany.</translation>
     </message>
     <message>
-        <location filename="../diskimage.cpp" line="996"/>
+        <location filename="../diskimage.cpp" line="991"/>
         <source>[%1] Write sector %2 NAKed.</source>
         <translation>[%1] Zapis sektora %2 NAK.</translation>
     </message>
     <message>
-        <location filename="../diskimage.cpp" line="1012"/>
+        <location filename="../diskimage.cpp" line="1007"/>
         <source>[%1] Read sector %2 (%3 bytes).</source>
         <translation>[%1] Odczyt sektora %2 (%3 B).</translation>
     </message>
     <message>
-        <location filename="../diskimage.cpp" line="1017"/>
+        <location filename="../diskimage.cpp" line="1012"/>
         <source>[%1] Read sector %2 failed.</source>
         <translation>[%1] Odczyt sektora %2 nieudany.</translation>
     </message>
     <message>
-        <location filename="../diskimage.cpp" line="1024"/>
+        <location filename="../diskimage.cpp" line="1019"/>
         <source>[%1] Read sector %2 NAKed.</source>
         <translation>[%1] Odczyt sektora %2 NAK.</translation>
     </message>
     <message>
-        <location filename="../diskimage.cpp" line="1041"/>
+        <location filename="../diskimage.cpp" line="1036"/>
         <source>[%1] Get status.</source>
         <translation>[%1] Pobierz stan.</translation>
     </message>
     <message>
-        <location filename="../diskimage.cpp" line="1047"/>
+        <location filename="../diskimage.cpp" line="1042"/>
         <source>[%1] command: $%2, aux: $%3 NAKed.</source>
         <translation>[%1] komenda: $%2, aux: $%3 NAK.</translation>
     </message>
     <message>
-        <location filename="../diskimage.cpp" line="1064"/>
+        <location filename="../diskimage.cpp" line="1059"/>
         <source>[%1] Cannot format: %2</source>
         <translation>[%1] Nie można sformatować: %2</translation>
     </message>
     <message>
-        <location filename="../diskimage.cpp" line="1079"/>
-        <location filename="../diskimage.cpp" line="1093"/>
+        <location filename="../diskimage.cpp" line="1074"/>
+        <location filename="../diskimage.cpp" line="1088"/>
         <source>[%1] Cannot seek to sector %2: %3</source>
         <translation>[%1] Nie można przejść do sektora %2: %3</translation>
     </message>
     <message>
-        <location filename="../diskimage.cpp" line="1082"/>
+        <location filename="../diskimage.cpp" line="1077"/>
         <source>Sector number is out of bounds.</source>
         <translation>Numer sektora poza granicami.</translation>
     </message>
     <message>
-        <location filename="../diskimage.cpp" line="1116"/>
+        <location filename="../diskimage.cpp" line="1111"/>
         <source>[%1] Cannot read from sector %2: %3.</source>
         <translation>[%1] Nie można czytać z sektora %2: %3.</translation>
     </message>
     <message>
-        <location filename="../diskimage.cpp" line="1136"/>
+        <location filename="../diskimage.cpp" line="1131"/>
         <source>[%1] Cannot write to sector %2: %3.</source>
         <translation>[%1] Nie można pisać do sektora %2: %3.</translation>
     </message>
     <message>
-        <location filename="../diskimage.cpp" line="263"/>
-        <location filename="../diskimage.cpp" line="272"/>
-        <location filename="../diskimage.cpp" line="282"/>
-        <location filename="../diskimage.cpp" line="296"/>
-        <location filename="../diskimage.cpp" line="308"/>
-        <location filename="../diskimage.cpp" line="316"/>
-        <location filename="../diskimage.cpp" line="340"/>
-        <location filename="../diskimage.cpp" line="388"/>
-        <location filename="../diskimage.cpp" line="400"/>
-        <location filename="../diskimage.cpp" line="415"/>
-        <location filename="../diskimage.cpp" line="448"/>
-        <location filename="../diskimage.cpp" line="455"/>
-        <location filename="../diskimage.cpp" line="466"/>
-        <location filename="../diskimage.cpp" line="473"/>
-        <location filename="../diskimage.cpp" line="484"/>
-        <location filename="../diskimage.cpp" line="507"/>
-        <location filename="../diskimage.cpp" line="513"/>
-        <location filename="../diskimage.cpp" line="519"/>
-        <location filename="../diskimage.cpp" line="802"/>
+        <location filename="../diskimage.cpp" line="261"/>
+        <location filename="../diskimage.cpp" line="270"/>
+        <location filename="../diskimage.cpp" line="280"/>
+        <location filename="../diskimage.cpp" line="294"/>
+        <location filename="../diskimage.cpp" line="306"/>
+        <location filename="../diskimage.cpp" line="314"/>
+        <location filename="../diskimage.cpp" line="338"/>
+        <location filename="../diskimage.cpp" line="386"/>
+        <location filename="../diskimage.cpp" line="398"/>
+        <location filename="../diskimage.cpp" line="413"/>
+        <location filename="../diskimage.cpp" line="446"/>
+        <location filename="../diskimage.cpp" line="453"/>
+        <location filename="../diskimage.cpp" line="464"/>
+        <location filename="../diskimage.cpp" line="471"/>
+        <location filename="../diskimage.cpp" line="482"/>
+        <location filename="../diskimage.cpp" line="505"/>
+        <location filename="../diskimage.cpp" line="511"/>
+        <location filename="../diskimage.cpp" line="517"/>
+        <location filename="../diskimage.cpp" line="800"/>
         <source>Cannot open &apos;%1&apos;: %2</source>
         <translation>Nie można otworzyć &apos;%1&apos;: %2</translation>
     </message>
     <message>
-        <location filename="../diskimage.cpp" line="274"/>
+        <location filename="../diskimage.cpp" line="272"/>
         <source>Cannot read the header: %1.</source>
         <translation>Nie można odczytać nagłówka: %1.</translation>
     </message>
     <message>
-        <location filename="../diskimage.cpp" line="282"/>
+        <location filename="../diskimage.cpp" line="280"/>
         <source>Not a valid ATR file.</source>
         <translation>To nie jest prawidłowy plik ATR.</translation>
     </message>
     <message>
-        <location filename="../diskimage.cpp" line="340"/>
+        <location filename="../diskimage.cpp" line="338"/>
         <source>Unknown sector size (%1).</source>
         <translation>Nieznany rozmiar sektora (%1).</translation>
     </message>
     <message>
-        <location filename="../diskimage.cpp" line="390"/>
-        <location filename="../diskimage.cpp" line="486"/>
+        <location filename="../diskimage.cpp" line="388"/>
+        <location filename="../diskimage.cpp" line="484"/>
         <source>Invalid image size (%1).</source>
         <translation>Nieprawidłowy rozmiar obrazu (%1).</translation>
     </message>
     <message>
-        <location filename="../diskimage.cpp" line="402"/>
+        <location filename="../diskimage.cpp" line="400"/>
         <source>Too many sectors in the image (%1).</source>
         <translation>Zbyt wiele sektorów w obrazie (%1).</translation>
     </message>
     <message>
-        <location filename="../diskimage.cpp" line="310"/>
-        <location filename="../diskimage.cpp" line="468"/>
+        <location filename="../diskimage.cpp" line="308"/>
+        <location filename="../diskimage.cpp" line="466"/>
         <source>Cannot read from file: %1.</source>
         <translation>Nie można czytać z pliku: %1.</translation>
     </message>
     <message>
-        <location filename="../diskimage.cpp" line="551"/>
-        <location filename="../diskimage.cpp" line="560"/>
-        <location filename="../diskimage.cpp" line="569"/>
-        <location filename="../diskimage.cpp" line="583"/>
-        <location filename="../diskimage.cpp" line="590"/>
-        <location filename="../diskimage.cpp" line="633"/>
-        <location filename="../diskimage.cpp" line="641"/>
-        <location filename="../diskimage.cpp" line="654"/>
-        <location filename="../diskimage.cpp" line="660"/>
-        <location filename="../diskimage.cpp" line="680"/>
-        <location filename="../diskimage.cpp" line="686"/>
-        <location filename="../diskimage.cpp" line="692"/>
-        <location filename="../diskimage.cpp" line="720"/>
-        <location filename="../diskimage.cpp" line="771"/>
+        <location filename="../diskimage.cpp" line="549"/>
+        <location filename="../diskimage.cpp" line="558"/>
+        <location filename="../diskimage.cpp" line="567"/>
+        <location filename="../diskimage.cpp" line="581"/>
+        <location filename="../diskimage.cpp" line="588"/>
+        <location filename="../diskimage.cpp" line="631"/>
+        <location filename="../diskimage.cpp" line="639"/>
+        <location filename="../diskimage.cpp" line="652"/>
+        <location filename="../diskimage.cpp" line="658"/>
+        <location filename="../diskimage.cpp" line="678"/>
+        <location filename="../diskimage.cpp" line="684"/>
+        <location filename="../diskimage.cpp" line="690"/>
+        <location filename="../diskimage.cpp" line="718"/>
+        <location filename="../diskimage.cpp" line="769"/>
         <source>Cannot save &apos;%1&apos;: %2</source>
         <translation>Nie można zapisać &apos;%1&apos;: %2</translation>
     </message>
@@ -2599,57 +2419,57 @@ We will now migrate the existing settings to their new repository, note that set
 <context>
     <name>SioWorker</name>
     <message>
-        <location filename="../sioworker.cpp" line="213"/>
+        <location filename="../sioworker.cpp" line="221"/>
         <source>Printer %1</source>
         <translation>Drukarka %1</translation>
     </message>
     <message>
-        <location filename="../sioworker.cpp" line="219"/>
+        <location filename="../sioworker.cpp" line="227"/>
         <source>AspeQt Client</source>
         <translation>Klient AspeQt</translation>
     </message>
     <message>
-        <location filename="../sioworker.cpp" line="225"/>
+        <location filename="../sioworker.cpp" line="233"/>
         <source>RS232 %1</source>
         <translation></translation>
     </message>
     <message>
-        <location filename="../sioworker.cpp" line="104"/>
+        <location filename="../sioworker.cpp" line="112"/>
         <source>Cannot read command frame.</source>
         <translation>Nie można odczytać ramki komendy.</translation>
     </message>
     <message>
-        <location filename="../sioworker.cpp" line="119"/>
+        <location filename="../sioworker.cpp" line="127"/>
         <source>[%1] command: $%2, aux: $%3 ignored because the image explorer is open.</source>
         <translation>[%1] komenda: $%2, aux: $%3 zignorowana, ponieważ otwarto przeglądarkę obrazów.</translation>
     </message>
     <message>
-        <location filename="../sioworker.cpp" line="125"/>
+        <location filename="../sioworker.cpp" line="133"/>
         <source>[%1] command: $%2, aux: $%3 ignored.</source>
         <translation>[%1] komenda: $%2, aux: $%3 zignorowana.</translation>
     </message>
     <message>
-        <location filename="../sioworker.cpp" line="190"/>
+        <location filename="../sioworker.cpp" line="198"/>
         <source>Disk 1 (below autoboot)</source>
         <translation>Dysk 1 (autoboot)</translation>
     </message>
     <message>
-        <location filename="../sioworker.cpp" line="207"/>
+        <location filename="../sioworker.cpp" line="215"/>
         <source>Disk %1</source>
         <translation>Dysk %1</translation>
     </message>
     <message>
-        <location filename="../sioworker.cpp" line="216"/>
+        <location filename="../sioworker.cpp" line="224"/>
         <source>Smart device (APE time + URL)</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../sioworker.cpp" line="228"/>
+        <location filename="../sioworker.cpp" line="236"/>
         <source>PCLINK</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../sioworker.cpp" line="231"/>
+        <location filename="../sioworker.cpp" line="239"/>
         <source>Device $%1</source>
         <translation>Urządzenie $%1</translation>
     </message>
@@ -2682,17 +2502,17 @@ We will now migrate the existing settings to their new repository, note that set
         <translation>Auto-zapis</translation>
     </message>
     <message>
-        <location filename="../qml/SlotCard.qml" line="187"/>
+        <location filename="../qml/SlotCard.qml" line="186"/>
         <source>Disk explorer</source>
         <translation>Eksplorator dysku</translation>
     </message>
     <message>
-        <location filename="../qml/SlotCard.qml" line="198"/>
+        <location filename="../qml/SlotCard.qml" line="197"/>
         <source>Remove slot</source>
         <translation>Usuń slot</translation>
     </message>
     <message>
-        <location filename="../qml/SlotCard.qml" line="198"/>
+        <location filename="../qml/SlotCard.qml" line="197"/>
         <source>Eject</source>
         <translation>Wysuń</translation>
     </message>
@@ -2705,23 +2525,23 @@ We will now migrate the existing settings to their new repository, note that set
 <context>
     <name>SmartDevice</name>
     <message>
-        <location filename="../miscdevices.cpp" line="137"/>
+        <location filename="../miscdevices.cpp" line="138"/>
         <source>[%1] Read date/time (%2).</source>
         <translation>[%1] Odczyt daty/czasu (%2).</translation>
     </message>
     <message>
-        <location filename="../miscdevices.cpp" line="157"/>
+        <location filename="../miscdevices.cpp" line="158"/>
         <source>[%1] Read data frame failed</source>
         <translation>[%1] Czytanie ramki danych nie powiodło się</translation>
     </message>
     <message>
-        <location filename="../miscdevices.cpp" line="168"/>
+        <location filename="../miscdevices.cpp" line="169"/>
         <source>URL [%1] submitted</source>
-        <translation type="unfinished"></translation>
+        <translation>Przesłano URL [%1]</translation>
     </message>
     <message>
-        <location filename="../miscdevices.cpp" line="173"/>
-        <location filename="../miscdevices.cpp" line="185"/>
+        <location filename="../miscdevices.cpp" line="174"/>
+        <location filename="../miscdevices.cpp" line="186"/>
         <source>[%1] command: $%2, aux: $%3 NAKed.</source>
         <translation>[%1] komenda: $%2, aux: $%3 NAK.</translation>
     </message>
@@ -2997,232 +2817,6 @@ We will now migrate the existing settings to their new repository, note that set
         <location filename="../serialport-win32.cpp" line="506"/>
         <source>Cannot write to serial port: %1</source>
         <translation>Nie pisać do portu szeregowego: %1</translation>
-    </message>
-</context>
-<context>
-    <name>TextPrinterWindow</name>
-    <message>
-        <location filename="../textprinterwindow.cpp" line="59"/>
-        <source>Exit</source>
-        <translation>Wyjście</translation>
-    </message>
-    <message>
-        <location filename="../textprinterwindow.cpp" line="261"/>
-        <source>Save printer text output</source>
-        <translation>Zapisz znakowe wyjście drukarki</translation>
-    </message>
-    <message>
-        <location filename="../textprinterwindow.cpp" line="262"/>
-        <source>Text files (*.txt);;All files (*)</source>
-        <translation>Pliki tekstowe (*.txt);;Wszystkie pliki (*)</translation>
-    </message>
-    <message>
-        <location filename="../textprinterwindow.cpp" line="290"/>
-        <source>Stripping Line Numbers..</source>
-        <translation>Usuwam numery linii.</translation>
-    </message>
-    <message>
-        <location filename="../textprinterwindow.cpp" line="290"/>
-        <source>The text does not seem to contain any line numbers!</source>
-        <translation>Tekst nie zawiera numerów linii!</translation>
-    </message>
-    <message>
-        <location filename="../textprinterwindow.ui" line="14"/>
-        <source>AspeQt - Printer text output</source>
-        <translation>AspeQt - Znakowe wyjście drukarki</translation>
-    </message>
-    <message>
-        <location filename="../textprinterwindow.ui" line="47"/>
-        <location filename="../textprinterwindow.ui" line="50"/>
-        <source>Atari Output (Atascii)</source>
-        <translation>Wyjście Atari (ATASCII)</translation>
-    </message>
-    <message>
-        <location filename="../textprinterwindow.ui" line="69"/>
-        <location filename="../textprinterwindow.ui" line="72"/>
-        <source>Atari Output (Ascii)</source>
-        <translation>Wyjście Atari (ASCII)</translation>
-    </message>
-    <message>
-        <location filename="../textprinterwindow.ui" line="130"/>
-        <source>toolBar</source>
-        <translation></translation>
-    </message>
-    <message>
-        <location filename="../textprinterwindow.ui" line="166"/>
-        <source>Save to a file...</source>
-        <translation>Zapisz do pliku...</translation>
-    </message>
-    <message>
-        <location filename="../textprinterwindow.ui" line="169"/>
-        <source>Save contents to a file (Ctrl+S)</source>
-        <translation>Zapisz zawartość do pliku (Ctrl+S)</translation>
-    </message>
-    <message>
-        <location filename="../textprinterwindow.ui" line="172"/>
-        <source>Save contents to a file</source>
-        <translation>Zapisz zawartość do pliku</translation>
-    </message>
-    <message>
-        <location filename="../textprinterwindow.ui" line="175"/>
-        <location filename="../textprinterwindow.ui" line="362"/>
-        <source>Ctrl+S</source>
-        <translation></translation>
-    </message>
-    <message>
-        <location filename="../textprinterwindow.ui" line="184"/>
-        <source>Clear</source>
-        <translation>Usuń</translation>
-    </message>
-    <message>
-        <location filename="../textprinterwindow.ui" line="187"/>
-        <source>Clear contents (Ctrl+C)</source>
-        <translation>Usuń treść (Ctrl+C)</translation>
-    </message>
-    <message>
-        <location filename="../textprinterwindow.ui" line="190"/>
-        <source>Clear contents</source>
-        <translation>Usuń zawartość</translation>
-    </message>
-    <message>
-        <location filename="../textprinterwindow.ui" line="193"/>
-        <source>Ctrl+C</source>
-        <translation></translation>
-    </message>
-    <message>
-        <location filename="../textprinterwindow.ui" line="208"/>
-        <source>Word wrap</source>
-        <translation>Zawijanie wierszy</translation>
-    </message>
-    <message>
-        <location filename="../textprinterwindow.ui" line="211"/>
-        <source>Toggle word wrapping (Ctrl+W)</source>
-        <translation>Włącz/wyłącz dzielenie wyrazów (Ctrl+W)</translation>
-    </message>
-    <message>
-        <location filename="../textprinterwindow.ui" line="214"/>
-        <source>Toggle word wrapping</source>
-        <translation>Przełącz zawijanie wierszy</translation>
-    </message>
-    <message>
-        <location filename="../textprinterwindow.ui" line="217"/>
-        <source>Ctrl+W</source>
-        <translation></translation>
-    </message>
-    <message>
-        <location filename="../textprinterwindow.ui" line="226"/>
-        <source>Print</source>
-        <translation>Drukuj</translation>
-    </message>
-    <message>
-        <location filename="../textprinterwindow.ui" line="229"/>
-        <source>Send contents to printer (Ctrl+P)</source>
-        <translation>Wyślij zawartość na drukarkę (Ctrl+P)</translation>
-    </message>
-    <message>
-        <location filename="../textprinterwindow.ui" line="232"/>
-        <source>Send contents to printer</source>
-        <translation>Wyślij zawartość na drukarkę</translation>
-    </message>
-    <message>
-        <location filename="../textprinterwindow.ui" line="235"/>
-        <source>Ctrl+P</source>
-        <translation></translation>
-    </message>
-    <message>
-        <location filename="../textprinterwindow.ui" line="245"/>
-        <source>Atascii Font</source>
-        <translation>Czcionka ATASCII</translation>
-    </message>
-    <message>
-        <location filename="../textprinterwindow.ui" line="248"/>
-        <source>Toggle ATASCII fonts (Alt+F)</source>
-        <translation>Przełącz czcionkę ATASCII (Alt+F)</translation>
-    </message>
-    <message>
-        <location filename="../textprinterwindow.ui" line="251"/>
-        <source>Toggle ATASCII fonts</source>
-        <translation>Przełącz czcionkę ATASCII</translation>
-    </message>
-    <message>
-        <location filename="../textprinterwindow.ui" line="254"/>
-        <source>Alt+F</source>
-        <translation></translation>
-    </message>
-    <message>
-        <location filename="../textprinterwindow.ui" line="279"/>
-        <source>Alt+Shift+F</source>
-        <translation></translation>
-    </message>
-    <message>
-        <location filename="../textprinterwindow.ui" line="307"/>
-        <source>Alt+Shift+H</source>
-        <translation></translation>
-    </message>
-    <message>
-        <location filename="../textprinterwindow.ui" line="338"/>
-        <source>Alt+H</source>
-        <translation></translation>
-    </message>
-    <message>
-        <location filename="../textprinterwindow.ui" line="353"/>
-        <source>Strip Line Numbers</source>
-        <translation>Usuń numery linii</translation>
-    </message>
-    <message>
-        <location filename="../textprinterwindow.ui" line="356"/>
-        <source>Strip Line numbers from the text output (Ctrl-S)</source>
-        <translation>Usuń numery linii z wyjścia tekstowego (Ctrl+S)</translation>
-    </message>
-    <message>
-        <location filename="../textprinterwindow.ui" line="359"/>
-        <source>Strip Line numbers from the text output</source>
-        <translation>Usuń numery linii z wyjścia tekstowego</translation>
-    </message>
-    <message>
-        <location filename="../textprinterwindow.ui" line="270"/>
-        <source>Font Size</source>
-        <translation>Rozmiar czcionki</translation>
-    </message>
-    <message>
-        <location filename="../textprinterwindow.ui" line="273"/>
-        <source>Toggle Font Size (6, 9, 12 pt) (Alt+Shift+F)</source>
-        <translation>Przełącz rozmiar czcionki (6, 9, 12 pkt.) (Atl+Shift+F)</translation>
-    </message>
-    <message>
-        <location filename="../textprinterwindow.ui" line="276"/>
-        <source>Toggle Font Size (6, 9, 12 pt)</source>
-        <translation>Przełącz rozmiar czcionki (6, 9, 12 pkt.)</translation>
-    </message>
-    <message>
-        <location filename="../textprinterwindow.ui" line="298"/>
-        <source>Hide/Show Ascii</source>
-        <translation>Ukryj/pokaż ASCII</translation>
-    </message>
-    <message>
-        <location filename="../textprinterwindow.ui" line="301"/>
-        <source>Hide/Show Ascii Printer Output (Alt+Shift+H)</source>
-        <translation>Ukryj/pokaż wyjście drukarki ASCII (Alt+Shift+H)</translation>
-    </message>
-    <message>
-        <location filename="../textprinterwindow.ui" line="304"/>
-        <source>Hide/Show Ascii Printer Output</source>
-        <translation>Ukryj/pokaż wyjście drukarki ASCII</translation>
-    </message>
-    <message>
-        <location filename="../textprinterwindow.ui" line="329"/>
-        <source>HideShow_Atascii</source>
-        <translation>Ukryj/pokaż Atascii</translation>
-    </message>
-    <message>
-        <location filename="../textprinterwindow.ui" line="332"/>
-        <source> Hide/Show Atascii Printer Output (Alt+H)</source>
-        <translation>Ukryj/pokaż wyjście drukarki ATASCII (Alt+H)</translation>
-    </message>
-    <message>
-        <location filename="../textprinterwindow.ui" line="335"/>
-        <source>Hide/Show Atascii Printer Output</source>
-        <translation>Ukryj/pokaż wyjście drukarki ATASCII</translation>
     </message>
 </context>
 </TS>

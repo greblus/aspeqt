@@ -247,6 +247,7 @@ void AppController::refreshPrinter()
     emit printerTextChanged();
 }
 void AppController::ejectAll()          { if (m_engine) m_engine->ejectAll(); }
+QVariantList AppController::modifiedDisks() { return m_engine ? m_engine->modifiedDisks() : QVariantList(); }
 void AppController::quit()              { if (m_engine) m_engine->quit(); }
 QStringList AppController::recentFiles(){ return m_engine ? m_engine->recentFiles() : QStringList(); }
 void AppController::mountRecent(int i)  { if (m_engine) m_engine->mountRecent(i); }

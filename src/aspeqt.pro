@@ -7,21 +7,17 @@ DEFINES += VERSION=\\\"1.0\\\"
 TARGET = AspeQt
 TEMPLATE = app
 CONFIG += qt
-QT += core gui widgets svg core5compat
+QT += core gui svg core5compat
 CONFIG += mobility
 CONFIG += static
 MOBILITY = bearer
 
-# QML UI spike (branch `qml`): build with `qmake CONFIG+=qmlui` to launch the
-# Qt Quick front-end (src/qml/) instead of the QtWidgets MainWindow. The widget
-# build is untouched when qmlui is not set.
-qmlui {
-    DEFINES += ASPEQT_QML
-    QT += quick qml quickdialogs2
-    SOURCES += qmlbridge.cpp
-    HEADERS += qmlbridge.h
-    RESOURCES += qml.qrc
-}
+# The UI is Qt Quick (src/qml/), driven by AppController in qmlbridge.cpp; the
+# engine itself (engine.cpp) is headless and knows nothing about it.
+QT += quick qml quickdialogs2
+SOURCES += qmlbridge.cpp
+HEADERS += qmlbridge.h
+RESOURCES += qml.qrc
 SOURCES += main.cpp \
     engine.cpp \
     sioworker.cpp \

@@ -30,6 +30,7 @@ Rectangle {
     signal requestMountFolder(int hw)
     signal requestSave(int hw, bool isDos)
     signal requestSaveName(int hw)
+    signal requestEject(int hw, bool dirty)
 
     function flash() { flashAnim.restart() }
 
@@ -194,8 +195,9 @@ Rectangle {
                     source: card.ejectIsRemove ? Theme.icon("emblems/emblem-unreadable.svg")
                                                : Theme.icon("actions/media-eject.svg")
                     tip: card.ejectIsRemove ? qsTr("Remove slot") : qsTr("Eject")
-                    onClicked: card.ejectIsRemove ? app.removeSlot(card.hwIndex)
-                                                  : app.eject(card.hwIndex)
+                    onClicked: card.ejectIsRemove
+                               ? app.removeSlot(card.hwIndex)
+                               : card.requestEject(card.hwIndex, card.modified && !card.autoCommit)
                 }
             }
 

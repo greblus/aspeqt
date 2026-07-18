@@ -2,19 +2,10 @@
 #define ENGINE_H
 
 #include <QObject>
-#include <QFileDialog>
-#include <QMessageBox>
 #include <QMap>
 #include <QtDebug>
-#include <QFrame>
-#include <QPushButton>
-#include <QToolButton>
-#include <QScrollArea>
-#include <QVBoxLayout>
-#include <QProgressBar>
+#include <QTimer>
 #include <QTranslator>
-#include <QSystemTrayIcon>
-#include <QTextEdit>
 
 #include "serialport.h"
 #include "sioworker.h"
@@ -136,9 +127,8 @@ private:
     void androidRemoveSlot(int i);     // 2nd eject on empty -> drop this slot
     void androidEjectPressed(int i);   // eject if mounted, else remove the slot
 #endif
-    bool ejectImage(int no, bool ask = true);
+    void ejectImage(int no);
     void toggleWriteProtection(int no);
-    QMessageBox::StandardButton saveImageWhenClosing(int no, QMessageBox::StandardButton previousAnswer, int number);
     void loadTranslators();
     void autoSaveDisk(int no);                                              //
 
@@ -154,12 +144,12 @@ signals:
 public:
     void doLogMessage(int type, const QString &msg);
 
-#ifdef ASPEQT_QML
     // --- state read by the QML UI through AppController ---------------------
     // AppController drives the engine through the actions below and mirrors
     // its state via the readers, refreshing whenever stateChanged() fires.
 public:
-    QVariantList driveList();     // one map per present drive slot
+    QVariantList driveList();
+    QVariantList modifiedDisks();     // one map per present drive slot
     QVariantMap  loaderState();   // loader (XEX/CAS) slot
     QVariantMap  status();        // { running, speed, printerOn }
     bool         canAddSlot();
@@ -218,7 +208,7 @@ public:
     void         toast(const QString &text);
     void         loaderRetry();
     void         loaderEject();
-    bool         shutdown();   // false = user cancelled quitting
+    void         shutdown();
     void         diskEnter(int row);
     void         diskParent();
     void         diskSetTextConversion(bool on);
@@ -242,4 +232,3 @@ private slots:
     void deviceStatusChanged(int deviceNo);
 };
 
-#endif // ENGINE_H

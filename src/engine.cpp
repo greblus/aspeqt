@@ -19,45 +19,7 @@
 #include <QTemporaryFile>
 #include <QStandardPaths>
 #include <QDir>
-#include <QPainter>
-#ifdef Q_OS_ANDROID
-// "Remove slot" affordance for an empty slot: the tango "unreadable" emblem
-// (red X badge).
-static QIcon removeSlotIcon()
-{
-    return QIcon(":/icons/tango-icons/emblems/emblem-unreadable.svg");
-}
-// "Install DOS" affordance for a mounted folder: the hard-disk icon with a
-// "DOS" caption overlaid.
-static QIcon dosDriveIcon()
-{
-    static QIcon cached;
-    if (cached.isNull()) {
-        // Force devicePixelRatio 1 so the pixmap's physical size equals the
-        // logical size QPainter draws in (otherwise the caption lands off-icon).
-        const int S = 96;
-        QPixmap pm = QIcon(":/icons/tango-icons/devices/drive-harddisk.svg").pixmap(QSize(S, S), 1.0);
-        QPainter p(&pm);
-        QFont f = p.font();
-        f.setBold(true);
-        f.setPixelSize(40);
-        p.setFont(f);
-        QRect r(0, S / 2 - 4, S, S / 2);
-        p.setPen(QColor(255, 255, 255));           // white halo for contrast
-        for (int dx = -2; dx <= 2; ++dx)
-            for (int dy = -2; dy <= 2; ++dy)
-                p.drawText(r.translated(dx, dy), Qt::AlignCenter, "DOS");
-        p.setPen(QColor(40, 40, 40));
-        p.drawText(r, Qt::AlignCenter, "DOS");
-        p.end();
-        cached = QIcon(pm);
-    }
-    return cached;
-}
-#endif
 #include <QTranslator>
-#include <QMessageBox>
-#include <QWidget>
 #include <QtDebug>
 #include <QFont>
 #include <QTextCodec>
@@ -179,15 +141,13 @@ Engine::Engine(QObject *parent)
     QSettings newSettings("greblus.net", "AspeQt");
     QStringList oldKeys = oldSettings.allKeys();
     if(oldKeys.size()>0){
-        QMessageBox::information(nullptr, tr("Migrate Settings"), tr("This version of AspeQt uses a different repository "
-                                          "for storing its global settings.\nWe will now migrate the existing "
-                                          "settings to their new repository, note that settings stored in your existing "
-                                          "AspeQt session files are not affected by this change."), QMessageBox::Ok);
+        qWarning() << "!i" << tr("Migrating the global settings to their new repository "
+                                 "(session files are not affected).");
         for (int i=0; i<oldKeys.size(); ++i) {
             newSettings.setValue(oldKeys.value(i), oldSettings.value(oldKeys.value(i)));
         }
         oldSettings.clear();
-        QMessageBox::information(nullptr, tr("Migrate Settings"), tr("Setting were migrated successfuly."), QMessageBox::Ok);
+        qWarning() << "!i" << tr("Settings migrated successfully.");
     }
     /* Set application properties */
     QCoreApplication::setOrganizationName("Atari Forever!");
@@ -243,8 +203,9 @@ Engine::Engine(QObject *parent)
            g_sessionFilePath = QDir::fromNativeSeparators(g_sessionFilePath);
            sess.setFileName(g_sessionFilePath+g_sessionFile);
            if (!sess.exists()) {
-               QMessageBox::question(nullptr, tr("Session file error"),
-               tr("Requested session file not found in the given directory path or the path is incorrect. AspeQt will continue with default session configuration."), QMessageBox::Ok);
+               qCritical() << "!e" << tr("Requested session file not found in the given directory path "
+                                         "or the path is incorrect. AspeQt will continue with the default "
+                                         "session configuration.");
                g_sessionFile = g_sessionFilePath = "";
            }
        } else {
@@ -253,8 +214,9 @@ Engine::Engine(QObject *parent)
                g_sessionFilePath = QDir::currentPath();
                sess.setFileName(g_sessionFile);
                if (!sess.exists()) {
-                   QMessageBox::question(nullptr, tr("Session file error"),
-                   tr("Requested session file not found in the application's current directory path\n (No path was specified). AspeQt will continue with default session configuration."), QMessageBox::Ok);
+                   qCritical() << "!e" << tr("Requested session file not found in the application's current "
+                                             "directory (no path was specified). AspeQt will continue with "
+                                             "the default session configuration.");
                    g_sessionFile = g_sessionFilePath = "";
                }
            }
@@ -333,9 +295,7 @@ Engine::Engine(QObject *parent)
     Printer *printer = new Printer(sio);
     connect(printer, SIGNAL(print(QString)), printerOutput, SLOT(print(QString)));
     connect(printerOutput, &PrinterOutput::textChanged, this, &Engine::printerTextChanged);
-#ifdef ASPEQT_QML
     connect(printer, SIGNAL(print(QString)), this, SIGNAL(printerTextChanged()));
-#endif
     sio->installDevice(0x40, printer);
     untitledName = 0;
 
@@ -368,42 +328,14 @@ Engine::~Engine()
 // devices. Returns false when the user cancelled, so the caller leaves the
 // application running (which close()/event->ignore() used to do -- except
 // quit() then quit anyway, so Cancel did not actually cancel).
-bool Engine::shutdown()
+void Engine::shutdown()
 {
     if (g_sessionFile != "") aspeqtSettings->saveSessionToFile(g_sessionFilePath + "/" + g_sessionFile);
     aspeqtSettings->setD9DOVisible(g_D9DOVisible);
 
-    const bool wasRunning = m_emulationRunning;
-    if (wasRunning) {
+    if (m_emulationRunning) {
         toggleSio();
     }
-
-    int toBeSaved = 0;
-    for (int i = 0; i < m_numDisks; i++) {
-        SimpleDiskImage *img = qobject_cast <SimpleDiskImage*> (sio->getDevice(i + 0x31));
-        if (img && img->isModified()) {
-            toBeSaved++;
-        }
-    }
-
-    QMessageBox::StandardButton answer = QMessageBox::No;
-    for (int i = 0; i < m_numDisks; i++) {
-        SimpleDiskImage *img = qobject_cast <SimpleDiskImage*> (sio->getDevice(i + 0x31));
-        if (img && img->isModified()) {
-            toBeSaved--;
-            answer = saveImageWhenClosing(i, answer, toBeSaved);
-            if (answer == QMessageBox::NoToAll) {
-                break;
-            }
-            if (answer == QMessageBox::Cancel) {
-                if (wasRunning) {
-                    toggleSio();
-                }
-                return false;
-            }
-        }
-    }
-
 
     for (int i = 0x31; i < 0x39; i++) {
         SimpleDiskImage *s = qobject_cast <SimpleDiskImage*> (sio->getDevice(i));
@@ -413,7 +345,24 @@ bool Engine::shutdown()
     }
 
     aspeqtSettings->sync();   // flush settings now; the process may be killed on exit
-    return true;
+}
+
+// Images with changes that are not on disk yet, so the UI can ask about them
+// before ejecting, mounting over them or quitting.
+QVariantList Engine::modifiedDisks()
+{
+    QVariantList out;
+    for (int i = 0; i < m_numDisks; i++) {
+        SimpleDiskImage *img = qobject_cast <SimpleDiskImage*> (sio->getDevice(i + 0x31));
+        if (!img || !img->isModified())
+            continue;
+        QVariantMap m;
+        m["hwIndex"] = i;
+        m["slot"]    = i + 1;
+        m["name"]    = friendlyName(img->originalFileName());
+        out << m;
+    }
+    return out;
 }
 
 
@@ -427,9 +376,7 @@ void Engine::androidRebuildSlots()
     for (int i = 0; i < m_numDisks; ++i)
         if (aspeqtSettings->slotPresent(i))   // removed slot -> gap
             m_slotPresent[i] = true;
-#ifdef ASPEQT_QML
     emit stateChanged();
-#endif
 }
 
 // Hide the "+" row once every hardware slot index is in use.
@@ -464,9 +411,7 @@ void Engine::androidRemoveSlot(int i)
     for (int k = 0; k < MAX_DISKS; ++k) if (m_slotPresent[k]) hi = k + 1;
     m_numDisks = hi;
     aspeqtSettings->setNumberOfDisks(m_numDisks);
-#ifdef ASPEQT_QML
     emit stateChanged();
-#endif
 }
 
 // Eject button: eject a mounted image; on an already-empty slot the button
@@ -486,16 +431,12 @@ void Engine::androidEjectPressed(int i)
 void Engine::loaderSetFill(double frac)
 {
     m_loaderFill = frac;
-#ifdef ASPEQT_QML
     emit loaderProgress();   // light: only the loader fill
-#endif
 }
 
 void Engine::loaderUpdateButtons()
 {
-#ifdef ASPEQT_QML
     emit stateChanged();
-#endif
 }
 
 
@@ -736,9 +677,7 @@ void Engine::deviceStatusChanged(int deviceNo)
             }
         }
     }
-#ifdef ASPEQT_QML
     emit stateChanged();
-#endif
 }
 
 
@@ -767,21 +706,15 @@ void Engine::setSession()
 }
 
 
-bool Engine::ejectImage(int no, bool ask)
+// Unconditional: whether unsaved changes matter is the UI's call, made before
+// this is reached (the QML side knows which images are modified).
+void Engine::ejectImage(int no)
 {
     SimpleDiskImage *img = qobject_cast <SimpleDiskImage*> (sio->getDevice(no + 0x31));
 
-    if (ask && img && img->isModified()) {
-        QMessageBox::StandardButton answer;
-        answer = saveImageWhenClosing(no, QMessageBox::No, 0);
-        if (answer == QMessageBox::Cancel) {
-            return false;
-        }
-    }
-
     sio->uninstallDevice(no + 0x31);
     if (!img) {
-        return true;
+        return;
     }
     delete img;
 #ifdef Q_OS_ANDROID
@@ -795,7 +728,6 @@ bool Engine::ejectImage(int no, bool ask)
     aspeqtSettings->unmountImage(no);
     deviceStatusChanged(no + 0x31);
     qDebug() << "!n" << tr("Unmounted disk %1").arg(no + 1);
-    return true;
 }
 
 int Engine::firstEmptyDiskSlot(int startFrom, bool createOne)
@@ -863,7 +795,6 @@ void Engine::mountFile(int no, const QString &fileName, bool /*prot*/)
 
     FileTypes::FileType type = FileTypes::getFileType(fileName);
 
-#ifdef ASPEQT_QML
     // Executables (.xex/.com/.exe) and cassettes (.cas) don't belong in a disk
     // slot: send them to the loader (cas/xex) slot. Detected by content type and
     // by extension (a .com Atari binary has the same 0xFF 0xFF magic as .xex).
@@ -895,7 +826,6 @@ void Engine::mountFile(int no, const QString &fileName, bool /*prot*/)
             return;
         }
     }
-#endif
 
     if (type == FileTypes::Dir) {
         disk = new FolderImage(sio);
@@ -922,12 +852,7 @@ void Engine::mountFile(int no, const QString &fileName, bool /*prot*/)
         if (fileName.startsWith("content:"))
             androidTakePersistable(fileName, false);
 #endif
-        if (!ejectImage(no)) {
-            aspeqtSettings->unmountImage(no);
-            delete disk;
-            if(g_aspeclFileName.left(1) == "*") emit fileMounted(false);  //
-            return;
-        }
+        ejectImage(no);
 
         sio->installDevice(0x31 + no, disk);
 
@@ -1141,35 +1066,10 @@ void Engine::toggleWriteProtection(int no)
     m_writeProtect[no] = !m_writeProtect[no];
     img->setReadOnly(m_writeProtect[no]);
     aspeqtSettings->setMountedImageSetting(no, img->originalFileName(), m_writeProtect[no]);
-#ifdef ASPEQT_QML
     emit stateChanged();
-#endif
 }
 
 
-QMessageBox::StandardButton Engine::saveImageWhenClosing(int no, QMessageBox::StandardButton previousAnswer, int number)
-{
-    SimpleDiskImage *img = qobject_cast <SimpleDiskImage*> (sio->getDevice(no + 0x31));
-
-    if (previousAnswer != QMessageBox::YesToAll) {
-        QMessageBox::StandardButtons buttons;
-        if (number) {
-            buttons = QMessageBox::Yes | QMessageBox::No | QMessageBox::YesToAll | QMessageBox::NoToAll | QMessageBox::Cancel;
-        } else {
-            buttons = QMessageBox::Yes | QMessageBox::No | QMessageBox::Cancel;
-        }
-        // friendlyName(): a SAF content:// URI is unreadable in a prompt.
-        previousAnswer = QMessageBox::question(nullptr, tr("Image file unsaved"), tr("'%1' has unsaved changes, do you want to save it?")
-                                       .arg(friendlyName(img->originalFileName())), buttons);
-    }
-    if (previousAnswer == QMessageBox::Yes || previousAnswer == QMessageBox::YesToAll) {
-        saveDisk(no);
-    }
-    if (previousAnswer == QMessageBox::Close) {
-        previousAnswer = QMessageBox::Cancel;
-    }
-    return previousAnswer;
-}
 
 void Engine::loadTranslators()
 {
@@ -1401,7 +1301,6 @@ void Engine::on_actionQuit_triggered()
 
 
 
-#ifdef ASPEQT_QML
 // ===========================================================================
 // QML bridge (branch `qml`): expose the engine's state as QVariant and route
 // QML button presses to the existing widget-era slots. See qmlbridge.{h,cpp}.
@@ -1571,7 +1470,7 @@ void Engine::createDisk(int sectorCount, int sectorSize)
     if (!disk->format(g)) { delete disk; return; }
 
     int no = firstEmptyDiskSlot(0, true);
-    if (!ejectImage(no)) { delete disk; return; }
+    ejectImage(no);
     sio->installDevice(0x31 + no, disk);
     deviceStatusChanged(0x31 + no);
     qDebug() << "!n" << tr("[%1] Mounted '%2' as '%3'.")
@@ -1582,50 +1481,8 @@ void Engine::createDisk(int sectorCount, int sectorSize)
 }
 void Engine::ejectAll()
 {
-    QMessageBox::StandardButton answer = QMessageBox::No;
-
-    int toBeSaved = 0;
-
-    for (int i = 0; i < m_numDisks; i++) {
-        SimpleDiskImage *img = qobject_cast <SimpleDiskImage*> (sio->getDevice(i + 0x31));
-        if (img && img->isModified()) {
-            toBeSaved++;
-        }
-    }
-
-    if (!toBeSaved) {
-        for (int i = m_numDisks-1; i >= 0; i--) {
-            ejectImage(i);
-        }
-        return;
-    }
-
-    bool wasRunning = m_emulationRunning;
-    if (wasRunning) {
-        toggleSio();
-    }
-
-    for (int i = m_numDisks-1; i >= 0; i--) {
-        SimpleDiskImage *img = qobject_cast <SimpleDiskImage*> (sio->getDevice(i + 0x31));
-        if (img && img->isModified()) {
-            toBeSaved--;
-            answer = saveImageWhenClosing(i, answer, toBeSaved);
-            if (answer == QMessageBox::NoToAll) {
-                break;
-            }
-            if (answer == QMessageBox::Cancel) {
-                if (wasRunning) {
-                    toggleSio();
-                }
-                return;
-            }
-        }
-    }
-    for (int i = m_numDisks-1; i >= 0; i--) {
-        ejectImage(i, false);
-    }
-    if (wasRunning) {
-        toggleSio();
+    for (int i = m_numDisks - 1; i >= 0; i--) {
+        ejectImage(i);
     }
 }
 QString Engine::printerText()   { return printerOutput ? printerOutput->plainText() : QString(); }
@@ -1654,7 +1511,7 @@ bool Engine::printerSavePath(const QString &url, bool asPdf)
     }
     return ok;
 }
-void Engine::quit()             { if (shutdown()) qApp->quit(); }
+void Engine::quit()             { shutdown(); qApp->quit(); }
 
 QStringList Engine::recentFiles()
 {
@@ -2108,4 +1965,3 @@ void Engine::mountRecent(int index)
         return;
     mountFileWithDefaultProtection(firstEmptyDiskSlot(), fileName);
 }
-#endif // ASPEQT_QML

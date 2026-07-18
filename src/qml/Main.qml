@@ -93,7 +93,8 @@ ApplicationWindow {
                         onAboutToShow: currentIndex = -1
                         onClosed: currentIndex = -1
                         MenuItem { text: qsTr("New disk image…"); onTriggered: createDiskDialog.open2() }
-                        MenuItem { text: qsTr("Eject all");       onTriggered: app.ejectAll() }
+                        MenuItem { text: qsTr("Eject all")
+                                   onTriggered: win.withUnsaved(function () { app.ejectAll() }) }
                     }
 
                     Menu {
@@ -128,7 +129,8 @@ ApplicationWindow {
                         text: qsTr("Options")
                         onTriggered: { optionsDialog.load(); optionsDialog.open() }
                     }
-                    MenuItem { text: qsTr("Quit"); onTriggered: app.quit() }
+                    MenuItem { text: qsTr("Quit")
+                        onTriggered: win.withUnsaved(function () { app.quit() }) }
                 }
             }
         }
@@ -191,17 +193,25 @@ ApplicationWindow {
                         isBootSlot: model.isBootSlot
                         onRequestSwap: (fromHw, toHw) => app.swapSlots(fromHw, toHw)
                         onRequestEditor: (hw) => diskViewer.openFor(hw)
-                        onRequestMount: (hw) => filePicker.openFile(
-                            qsTr("Open a disk image"),
-                            [qsTr("All Atari disk images (*.atr *.xfd *.pro)"), qsTr("All files (*)")],
-                            app.startDir("disk"),
-                            function (url) { if (url.length > 0) app.mountDiskPath(hw, url) })
+                        onRequestMount: (hw) => win.withUnsavedSlot(hw, modified && !autoCommit,
+                            function () {
+                                filePicker.openFile(
+                                    qsTr("Open a disk image"),
+                                    [qsTr("All Atari disk images (*.atr *.xfd *.pro)"), qsTr("All files (*)")],
+                                    app.startDir("disk"),
+                                    function (url) { if (url.length > 0) app.mountDiskPath(hw, url) })
+                            })
                         onRequestSave: (hw, isDos) => win.saveSlot(hw, isDos)
+                        onRequestEject: (hw, dirty) => win.withUnsavedSlot(hw, dirty,
+                            function () { app.eject(hw) })
                         onRequestSaveName: (hw) => win.askSaveName(hw)
-                        onRequestMountFolder: (hw) => filePicker.chooseFolder(
-                            qsTr("Open a folder image"),
-                            app.startDir("folder"),
-                            function (url) { if (url.length > 0) app.mountFolderPath(hw, url) })
+                        onRequestMountFolder: (hw) => win.withUnsavedSlot(hw, modified && !autoCommit,
+                            function () {
+                                filePicker.chooseFolder(
+                                    qsTr("Open a folder image"),
+                                    app.startDir("folder"),
+                                    function (url) { if (url.length > 0) app.mountFolderPath(hw, url) })
+                            })
                     }
                 }
 
@@ -373,6 +383,66 @@ ApplicationWindow {
     FilePicker { id: filePicker }
     ConfirmDialog { id: confirmDialog }
     DiskViewer { id: diskViewer }
+
+
+    // --- unsaved changes -----------------------------------------------------
+    // The engine no longer asks anything: it is told to save, eject or quit.
+    // The decision is made here, where the model already carries `modified`.
+
+    // Saves the listed drives one at a time; a drive with no file name yet
+    // needs the picker, which is asynchronous, hence the chain.
+    function saveEach(list, i, done) {
+        if (i >= list.length) { done(); return }
+        var hw = list[i].hwIndex
+        if (app.save(hw) === 1) {
+            filePicker.saveFile(
+                qsTr("Save image as"),
+                [qsTr("ATR image (*.atr)"), qsTr("All files (*)")],
+                app.startDir("disk"), "disk.atr",
+                function (url) {
+                    if (url.length > 0) app.saveAsPath(hw, url)
+                    win.saveEach(list, i + 1, done)
+                })
+        } else {
+            saveEach(list, i + 1, done)
+        }
+    }
+
+    // Runs `proceed` once the user has settled what to do with every modified
+    // image (one prompt listing them all).
+    function withUnsaved(proceed) {
+        var mods = app.modifiedDisks()
+        if (mods.length === 0) { proceed(); return }
+        var names = []
+        for (var i = 0; i < mods.length; ++i)
+            names.push("D" + mods[i].slot + ": " + mods[i].name)
+        confirmDialog.askSave(
+            qsTr("Unsaved changes"),
+            qsTr("These images have unsaved changes:\n\n%1").arg(names.join("\n")),
+            function (answer) {
+                if (answer === "cancel") return
+                if (answer === "save") win.saveEach(mods, 0, proceed)
+                else proceed()
+            })
+    }
+
+    // A single drive, named so the prompt says which one.
+    function withUnsavedSlot(hw, dirty, proceed) {
+        if (!dirty) { proceed(); return }
+        var mods = app.modifiedDisks()
+        var one = []
+        for (var i = 0; i < mods.length; ++i)
+            if (mods[i].hwIndex === hw) one.push(mods[i])
+        if (one.length === 0) { proceed(); return }
+        confirmDialog.askSave(
+            qsTr("Unsaved changes"),
+            qsTr("'%1' has unsaved changes.").arg(one[0].name),
+            function (answer) {
+                if (answer === "cancel") return
+                if (answer === "save") win.saveEach(one, 0, proceed)
+                else proceed()
+            })
+    }
 
     // Saving asks here rather than in the engine: a modal dialog down there
     // would block the SIO path. app.save() reports 1 when it needs a name.

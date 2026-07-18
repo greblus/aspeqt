@@ -1,4 +1,4 @@
-#include <QApplication>
+#include <QGuiApplication>
 #include <QTextCodec>
 #include <QLibraryInfo>
 #include <QStyleHints>
@@ -6,11 +6,9 @@
 
 extern Engine *g_engine;
 
-#ifdef ASPEQT_QML
 #include <QQmlApplicationEngine>
 #include <QQmlContext>
 #include "qmlbridge.h"
-#endif
 
 #ifdef Q_OS_WIN
 #include <windows.h>
@@ -68,11 +66,10 @@ int main(int argc, char *argv[])
     // the Android surface is momentarily gone. Force the raster backing store.
     qputenv("QT_WIDGETS_RHI", "0");
 #endif
-    QApplication a(argc, argv);
+    QGuiApplication a(argc, argv);
     // The UI (grey icons/text) was designed for a light background; force a light
     // colour scheme so it doesn't render as a black void under the system dark mode.
     a.styleHints()->setColorScheme(Qt::ColorScheme::Light);
-#ifdef ASPEQT_QML
     // QML UI (branch `qml`): Engine runs headless as the emulation engine
     // (never shown); the Qt Quick front-end drives it via AppController.
     qputenv("QT_QUICK_CONTROLS_STYLE", "Material");
@@ -84,11 +81,6 @@ int main(int argc, char *argv[])
     if (engine.rootObjects().isEmpty())
         return -1;
     ret = a.exec();
-#else
-    Engine w;
-    w.show();
-    ret = a.exec();
-#endif
 #ifdef Q_OS_WIN
     timeEndPeriod(1);
 #endif

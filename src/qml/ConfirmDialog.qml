@@ -13,6 +13,17 @@ Dialog {
 
     function ask(titleText, bodyText, cb) {
         _cb = cb
+        standardButtons = Dialog.Yes | Dialog.No
+        title = titleText
+        body.text = bodyText
+        open()
+    }
+
+    // Save / Discard / Cancel, for "this image has unsaved changes". Answers
+    // with "save", "discard" or "cancel".
+    function askSave(titleText, bodyText, cb) {
+        _cb = cb
+        standardButtons = Dialog.Save | Dialog.Discard | Dialog.Cancel
         title = titleText
         body.text = bodyText
         open()
@@ -43,6 +54,8 @@ Dialog {
             cb(answer)
     }
 
-    onAccepted: _deliver(true)
-    onRejected: _deliver(false)
+    // ask()  -> true / false ; askSave() -> "save" / "discard" / "cancel"
+    onAccepted:  _deliver(standardButtons & Dialog.Save ? "save" : true)
+    onDiscarded: _deliver("discard")
+    onRejected:  _deliver(standardButtons & Dialog.Save ? "cancel" : false)
 }
