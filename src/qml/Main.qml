@@ -43,6 +43,12 @@ ApplicationWindow {
                 Menu {
                     id: mainMenu
                     y: parent.height
+                    // The preselected first entry comes from keyboard-focus
+                    // handling; clearing it in onOpened only makes it blink, so
+                    // drop the focus and clear before the menu is shown.
+                    focus: false
+                    onAboutToShow: currentIndex = -1
+                    onClosed: currentIndex = -1
 
                     MenuItem {
                         text: app.sioRunning ? qsTr("Stop emulation")
@@ -60,6 +66,9 @@ ApplicationWindow {
 
                     Menu {
                         title: qsTr("File")
+                        focus: false
+                        onAboutToShow: currentIndex = -1
+                        onClosed: currentIndex = -1
                         MenuItem {
                             text: qsTr("Open session…")
                             onTriggered: filePicker.openFile(
@@ -80,6 +89,9 @@ ApplicationWindow {
 
                     Menu {
                         title: qsTr("Disk")
+                        focus: false
+                        onAboutToShow: currentIndex = -1
+                        onClosed: currentIndex = -1
                         MenuItem { text: qsTr("New disk image…"); onTriggered: createDiskDialog.open2() }
                         MenuItem { text: qsTr("Eject all");       onTriggered: app.ejectAll() }
                     }
@@ -87,7 +99,10 @@ ApplicationWindow {
                     Menu {
                         id: recentMenu
                         title: qsTr("Recent")
+                        focus: false
+                        onClosed: currentIndex = -1
                         onAboutToShow: {
+                            currentIndex = -1
                             var arr = []
                             var files = app.recentFiles()
                             for (var i = 0; i < files.length; ++i)
@@ -182,6 +197,8 @@ ApplicationWindow {
                             [qsTr("All Atari disk images (*.atr *.xfd *.pro)"), qsTr("All files (*)")],
                             app.startDir("disk"),
                             function (url) { if (url.length > 0) app.mountDiskPath(hw, url) })
+                        onRequestSave: (hw, isDos) => win.saveSlot(hw, isDos)
+                        onRequestSaveName: (hw) => win.askSaveName(hw)
                         onRequestMountFolder: (hw) => filePicker.chooseFolder(
                             qsTr("Open a folder image"),
                             app.startDir("folder"),
@@ -355,7 +372,30 @@ ApplicationWindow {
     OptionsDialog { id: optionsDialog }
     LogWindow { id: logWindow }
     FilePicker { id: filePicker }
+    ConfirmDialog { id: confirmDialog }
     DiskViewer { id: diskViewer }
+
+    // Saving asks here rather than in the engine: a modal dialog down there
+    // would block the SIO path. app.save() reports 1 when it needs a name.
+    function saveSlot(hw, isDos) {
+        if (isDos) {
+            confirmDialog.ask(qsTr("Install DOS"),
+                qsTr("Copy high-speed MyPicoDOS ($boot.bin + picodos.sys) into this folder? "
+                     + "The Atari will then be able to boot DOS from it."),
+                function (yes) { if (yes) app.installDos(hw) })
+            return
+        }
+        if (app.save(hw) === 1)
+            askSaveName(hw)
+    }
+
+    function askSaveName(hw) {
+        filePicker.saveFile(
+            qsTr("Save image as"),
+            [qsTr("ATR image (*.atr)"), qsTr("XFD image (*.xfd)"), qsTr("All files (*)")],
+            app.startDir("disk"), "disk.atr",
+            function (url) { if (url.length > 0) app.saveAsPath(hw, url) })
+    }
     CreateDiskDialog { id: createDiskDialog }
     PrintWindow { id: printWindow }
 }

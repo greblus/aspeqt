@@ -108,7 +108,6 @@ private:
     int androidCopyUriToFile(const QString &uri, const QString &dest);
     // Copy the bundled high-speed MyPicoDOS ($boot.bin + picodos.sys) into a
     // mounted folder so the Atari can boot DOS from it.
-    void androidInstallDos(int no);
     // Find-or-create a document by name in a SAF tree; returns its content:// URI.
     QString androidChildOrCreate(const QString &tree, const QString &name);
     // Return a path QFile can read: the content:// URI itself when Qt can open
@@ -157,8 +156,6 @@ private:
 #endif
     bool ejectImage(int no, bool ask = true);
     void toggleWriteProtection(int no);
-    void saveDisk(int no);
-    void saveDiskAs(int no);
     void revertDisk(int no);
     QMessageBox::StandardButton saveImageWhenClosing(int no, QMessageBox::StandardButton previousAnswer, int number);
     void loadTranslators();
@@ -192,8 +189,6 @@ public:
     bool         qmlCanAddSlot();
 
     void qmlEjectPressed(int i);
-    void qmlSave(int i);
-    void qmlToggleAutoCommit(int i);
     void qmlToggleWriteProtect(int i);
     int qmlAddSlot();    // returns the hardware index of the added slot (-1 none)
     void qmlSwapSlots(int source, int slot);   // drag-reorder: swap two drives
@@ -238,6 +233,14 @@ public:
     void         qmlLoaderLoadPath(const QString &url);
     void         qmlOpenSessionPath(const QString &url);
     void         qmlSaveSessionPath(const QString &url);
+    // Saving cannot ask the user from engine code any more (a modal dialog here
+    // blocks the SIO path in a nested event loop), so it reports back instead
+    // and QML drives the file picker / message.
+    enum SaveResult { SaveOk = 0, SaveNeedsName = 1, SaveFailed = 2 };
+    int          qmlSaveDisk(int no);
+    int          qmlToggleAutoCommitDisk(int no);
+    bool         qmlSaveAsPath(int no, const QString &url);
+    void         qmlInstallDos(int no);
     void         qmlToast(const QString &text);
     void         qmlDiskEnter(int row);
     void         qmlDiskParent();

@@ -1056,13 +1056,11 @@ void MainWindow::deviceStatusChanged(int deviceNo)
             if (img) {
                 // Auto-commit: write the image out as soon as it is modified.
                 if (img->isModified() && m_autoCommit[no]) {
+                    // Reached from the SIO status path, possibly mid-transfer:
+                    // report the failure, never block waiting for an answer.
                     if (!img->save()) {
-                        if (QMessageBox::question(this, tr("Save failed"),
-                                tr("'%1' cannot be saved, do you want to save the image with another name?")
-                                .arg(img->originalFileName()),
-                                QMessageBox::Yes, QMessageBox::No) == QMessageBox::Yes) {
-                            saveDiskAs(no);
-                        }
+                        qCritical() << "!e" << tr("[%1] Auto-commit failed.")
+                                       .arg(img->deviceName());
                     }
                 }
             } else {
@@ -1535,19 +1533,13 @@ QString MainWindow::androidChildOrCreate(const QString &tree, const QString &nam
     return r.isValid() ? r.toString() : QString();
 }
 
-void MainWindow::androidInstallDos(int no)
+void MainWindow::qmlInstallDos(int no)
 {
     QString tree = m_folderTree.value(no);
     if (tree.isEmpty()) {
-        QMessageBox::warning(this, tr("Install DOS"), tr("This slot does not hold a mounted folder."));
+        qmlToast(tr("This slot does not hold a mounted folder."));
         return;
     }
-    if (QMessageBox::question(this, tr("Install DOS"),
-            tr("Copy high-speed MyPicoDOS ($boot.bin + picodos.sys) into this folder? "
-               "The Atari will then be able to boot DOS from it."),
-            QMessageBox::Yes | QMessageBox::No, QMessageBox::No) != QMessageBox::Yes)
-        return;
-
     // Write the two bundled files straight into the SAF folder (find-or-create
     // the document, then stream the resource into it via a descriptor).
     auto put = [&](const QString &res, const QString &dstName) -> bool {
@@ -1567,7 +1559,7 @@ void MainWindow::androidInstallDos(int no)
         qDebug() << "!i" << tr("Installed high-speed MyPicoDOS into the folder. "
                                "Reboot your Atari to load DOS.");
     } else {
-        QMessageBox::warning(this, tr("Install DOS"), tr("Could not copy the DOS files into the folder."));
+        qmlToast(tr("Could not copy the DOS files into the folder."));
     }
 }
 
@@ -1622,7 +1614,7 @@ QMessageBox::StandardButton MainWindow::saveImageWhenClosing(int no, QMessageBox
                                        .arg(img->originalFileName()), buttons);
     }
     if (previousAnswer == QMessageBox::Yes || previousAnswer == QMessageBox::YesToAll) {
-        saveDisk(no);
+        qmlSaveDisk(no);
     }
     if (previousAnswer == QMessageBox::Close) {
         previousAnswer = QMessageBox::Cancel;
@@ -1650,137 +1642,97 @@ void MainWindow::loadTranslators()
     }
 }
 
-void MainWindow::saveDisk(int no)
+int MainWindow::qmlSaveDisk(int no)
 {
-#ifdef Q_OS_ANDROID
-    // For a mounted folder the "save" button installs high-speed DOS instead.
-    if (qobject_cast<FolderImage *>(sio->getDevice(no + 0x31))) {
-        androidInstallDos(no);
-        return;
-    }
-#endif
     SimpleDiskImage *img = qobject_cast <SimpleDiskImage*> (sio->getDevice(no + 0x31));
+    if (!img)
+        return SaveFailed;
 
-    if (img->isUnnamed()) {
-        saveDiskAs(no);
-        return;
-    }
-
-    bool saved;
+    if (img->isUnnamed())
+        return SaveNeedsName;
 
     img->lock();
-    saved = img-> save();
+    const bool saved = img->save();
     img->unlock();
-    if (!saved) {
-        if (QMessageBox::question(this, tr("Save failed"), tr("'%1' cannot be saved, do you want to save the image with another name?")
-            .arg(img->originalFileName()), QMessageBox::Yes, QMessageBox::No) == QMessageBox::Yes) {
-            saveDiskAs(no);
-        }
-    }
+    if (!saved)
+        return SaveNeedsName;   // offer "save under another name" in the UI
+
+    deviceStatusChanged(0x31 + no);
+    return SaveOk;
 }
 //
+
+// Remote auto-commit toggle sent by the Atari-side AspeCl client.
 void MainWindow::autoCommit(int no)
 {
     if (no < 0 || no >= MAX_DISKS) return;
-    if (sio->getDevice(no + 0x31)) autoSaveDisk(no);
+    if (sio->getDevice(no + 0x31)) qmlToggleAutoCommitDisk(no);
 }
 
-void MainWindow::autoSaveDisk(int no)
+int MainWindow::qmlToggleAutoCommitDisk(int no)
 {
     SimpleDiskImage *img = qobject_cast <SimpleDiskImage*> (sio->getDevice(no + 0x31));
-    if (!img) return;
+    if (!img) return SaveFailed;
 
     // Auto-commit is engine state now (it used to live in the slot widget's
     // checkable action). Toggling it also commits pending changes, as before.
     m_autoCommit[no] = !m_autoCommit[no];
     qDebug() << "!n" << (m_autoCommit[no] ? tr("[Disk %1] Auto-commit ON.").arg(no + 1)
                                           : tr("[Disk %1] Auto-commit OFF.").arg(no + 1));
+    emit qmlChanged();
 
-    if (img->isUnnamed()) {
-        saveDiskAs(no);
-        return;
-    }
+    if (img->isUnnamed())
+        return SaveNeedsName;
 
     img->lock();
-    bool saved = img->save();
+    const bool saved = img->save();
     img->unlock();
-    if (!saved) {
-        if (QMessageBox::question(this, tr("Save failed"), tr("'%1' cannot be saved, do you want to save the image with another name?")
-            .arg(img->originalFileName()), QMessageBox::Yes, QMessageBox::No) == QMessageBox::Yes) {
-            saveDiskAs(no);
-        }
-    }
-#ifdef ASPEQT_QML
+    if (!saved)
+        return SaveNeedsName;
+
     emit qmlChanged();
-#endif
+    return SaveOk;
 }
 //
-void MainWindow::saveDiskAs(int no)
+bool MainWindow::qmlSaveAsPath(int no, const QString &url)
 {
     SimpleDiskImage *img = qobject_cast <SimpleDiskImage*> (sio->getDevice(no + 0x31));
-    QString dir, fileName;
+    if (!img)
+        return false;
+    const QString fileName = pathFromPickedUrl(url);
+    if (fileName.isEmpty())
+        return false;
+
     bool saved = false;
-
-    if (img->isUnnamed()) {
-        dir = aspeqtSettings->lastDiskImageDir();
+    if (fileName.startsWith(QLatin1String("content:"))) {
+        // A SAF document has no extension of its own, so the format comes from
+        // the display name the user typed (ATR unless they said otherwise).
+        const QString dn = androidDisplayName(fileName);
+        FileTypes::FileType st = FileTypes::Atr;
+        if (dn.endsWith(".xfd", Qt::CaseInsensitive)) st = FileTypes::Xfd;
+        else if (dn.endsWith(".dcm", Qt::CaseInsensitive)) st = FileTypes::Dcm;
+        else if (dn.endsWith(".scp", Qt::CaseInsensitive)) st = FileTypes::Scp;
+        else if (dn.endsWith(".di", Qt::CaseInsensitive))  st = FileTypes::Di;
+        img->lock();
+        saved = img->saveAs(fileName, st);
+        img->unlock();
     } else {
-        dir = QFileInfo(img->originalFileName()).absolutePath();
-    }
-
-    do {
-        #ifdef Q_OS_ANDROID
-            // SAF create-document: the content:// URI has no extension, so pick
-            // the format from the display name the user typed (default ATR).
-            fileName = androidSaveUrl(tr("Save image as"),
-                                      tr("ATR image (*.atr);;XFD image (*.xfd);;All files (*)"));
-            if (fileName.isEmpty()) {
-                return;
-            }
-            QString dn = androidDisplayName(fileName);
-            FileTypes::FileType st = FileTypes::Atr;
-            if (dn.endsWith(".xfd", Qt::CaseInsensitive)) st = FileTypes::Xfd;
-            else if (dn.endsWith(".dcm", Qt::CaseInsensitive)) st = FileTypes::Dcm;
-            else if (dn.endsWith(".scp", Qt::CaseInsensitive)) st = FileTypes::Scp;
-            else if (dn.endsWith(".di", Qt::CaseInsensitive))  st = FileTypes::Di;
-            img->lock();
-            saved = img->saveAs(fileName, st);
-            img->unlock();
-        #else
-        fileName = QFileDialog::getSaveFileName(this, tr("Save image as"),
-                                 dir,
-                                 tr(
-//                                                    "All Atari disk images (*.atr *.xfd *.atx *.pro);;"
-                                                    "All Atari disk images (*.atr *.xfd *.pro);;"
-                                                    "SIO2PC ATR images (*.atr);;"
-                                                    "XFormer XFD images (*.xfd);;"
-//                                                    "ATX images (*.atx);;"
-                                                    "Pro images (*.pro);;"
-                                                    "All files (*)"));
-        if (fileName.isEmpty()) {
-            return;
-        }
-
         img->lock();
         saved = img->saveAs(fileName);
         img->unlock();
-        #endif
-
-        if (!saved) {
-            if (QMessageBox::question(this, tr("Save failed"), tr("'%1' cannot be saved, do you want to save the image with another name?")
-                .arg(fileName), QMessageBox::Yes, QMessageBox::No) == QMessageBox::No) {
-                break;
-            }
-        }
-
-    } while (!saved);
-
-    if (saved) {
-        #ifndef Q_OS_ANDROID
-        aspeqtSettings->setLastDiskImageDir(QFileInfo(fileName).absolutePath());
-        #endif
+        if (saved)
+            aspeqtSettings->setLastDiskImageDir(QFileInfo(fileName).absolutePath());
     }
+
+    if (!saved) {
+        qmlToast(tr("'%1' cannot be saved.").arg(friendlyName(fileName)));
+        return false;
+    }
+
     aspeqtSettings->unmountImage(no);
     aspeqtSettings->mountImage(no, fileName, img->isReadOnly());
+    deviceStatusChanged(0x31 + no);
+    return true;
 }
 
 void MainWindow::revertDisk(int no)
@@ -2028,8 +1980,6 @@ bool MainWindow::qmlCanAddSlot()
 }
 
 void MainWindow::qmlEjectPressed(int i)       { androidEjectPressed(i); }
-void MainWindow::qmlSave(int i)               { saveDisk(i); }
-void MainWindow::qmlToggleAutoCommit(int i)   { autoSaveDisk(i); }
 void MainWindow::qmlToggleWriteProtect(int i) { toggleWriteProtection(i); }
 int MainWindow::qmlAddSlot()
 {
@@ -2543,11 +2493,6 @@ bool MainWindow::qmlDiskExtractPath(const QVariantList &rows, const QString &url
 bool MainWindow::qmlDiskDelete(const QVariantList &rows)
 {
     if (!m_dvFs || m_dvDirs.isEmpty() || rows.isEmpty()) return false;
-    // Same native confirmation dialog as the MyPicoDOS install prompt.
-    if (QMessageBox::question(this, tr("Confirmation"),
-            tr("Are you sure you want to delete selected files?"),
-            QMessageBox::Yes | QMessageBox::No, QMessageBox::No) != QMessageBox::Yes)
-        return false;
     QList<AtariDirEntry> sel = dvPickRows(m_dvFs, m_dvDirs.last(), rows);
     if (sel.isEmpty()) return false;
     if (!m_dvFs->deleteRecursive(sel)) {

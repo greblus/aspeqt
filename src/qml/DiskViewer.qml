@@ -45,6 +45,7 @@ Popup {
     onClosed: app.diskClose()
 
     FilePicker { id: dvPicker }
+    ConfirmDialog { id: dvConfirm }
 
     background: Rectangle { color: Material.background }
 
@@ -135,7 +136,11 @@ Popup {
                     source: Theme.icon("actions/edit-delete.svg")
                     tip: qsTr("Delete selected files")
                     enabledState: !dv.readOnly && dv.sel.length > 0
-                    onClicked: { if (app.diskDelete(dv.sel)) dv.refresh() }
+                    onClicked: dvConfirm.ask(qsTr("Confirmation"),
+                        qsTr("Are you sure you want to delete selected files?"),
+                        function (yes) {
+                            if (yes && app.diskDelete(dv.sel)) dv.refresh()
+                        })
                 }
             }
         }

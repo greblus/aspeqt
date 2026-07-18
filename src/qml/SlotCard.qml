@@ -29,6 +29,8 @@ Rectangle {
     signal requestEditor(int hw)
     signal requestMount(int hw)
     signal requestMountFolder(int hw)
+    signal requestSave(int hw, bool isDos)
+    signal requestSaveName(int hw)
 
     function flash() { flashAnim.restart() }
 
@@ -154,7 +156,7 @@ Rectangle {
                         enabledState: card.saveEnabled
                         tip: card.saveIsDos ? qsTr("Install high-speed DOS into this folder")
                                             : qsTr("Save disk")
-                        onClicked: app.save(card.hwIndex)
+                        onClicked: card.requestSave(card.hwIndex, card.saveIsDos)
                     }
                     // "DOS" caption overlay for the folder hard-disk icon
                     Text {
@@ -173,7 +175,10 @@ Rectangle {
                     checked: card.autoCommit
                     enabledState: card.mounted && !card.isFolder
                     tip: qsTr("Auto-commit")
-                    onClicked: app.toggleAutoCommit(card.hwIndex)
+                    onClicked: {
+                        if (app.toggleAutoCommit(card.hwIndex) === 1)
+                            card.requestSaveName(card.hwIndex)
+                    }
                 }
                 SlotButton {
                     source: Theme.icon("apps/system-file-manager.svg")

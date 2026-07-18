@@ -127,8 +127,8 @@ public:
     // Actions from QML -> engine wrappers.
     Q_INVOKABLE void eject(int hwIndex);
     Q_INVOKABLE void removeSlot(int hwIndex);
-    Q_INVOKABLE void save(int hwIndex);
-    Q_INVOKABLE void toggleAutoCommit(int hwIndex);
+    Q_INVOKABLE int  save(int hwIndex);
+    Q_INVOKABLE int  toggleAutoCommit(int hwIndex);
     Q_INVOKABLE void toggleWriteProtect(int hwIndex);
     Q_INVOKABLE int addSlot();    // hardware index of the added slot (-1 none)
     Q_INVOKABLE void swapSlots(int fromHw, int toHw);
@@ -168,6 +168,8 @@ public:
     Q_INVOKABLE void         mountDiskPath(int hwIndex, const QString &url);
     Q_INVOKABLE void         mountFolderPath(int hwIndex, const QString &url);
     Q_INVOKABLE void         loaderLoadPath(const QString &url);
+    Q_INVOKABLE bool         saveAsPath(int hwIndex, const QString &url);
+    Q_INVOKABLE void         installDos(int hwIndex);
     Q_INVOKABLE void         openSessionPath(const QString &url);
     Q_INVOKABLE void         saveSessionPath(const QString &url);
     // Android SAF pickers; the result arrives via documentPicked().

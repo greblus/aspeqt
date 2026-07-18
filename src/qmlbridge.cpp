@@ -207,8 +207,8 @@ void AppController::rebuildLogCaches() const
 // -- actions ----------------------------------------------------------------
 void AppController::eject(int hwIndex)             { if (m_engine) m_engine->qmlEjectPressed(hwIndex); }
 void AppController::removeSlot(int hwIndex)        { if (m_engine) m_engine->qmlEjectPressed(hwIndex); }
-void AppController::save(int hwIndex)              { if (m_engine) m_engine->qmlSave(hwIndex); }
-void AppController::toggleAutoCommit(int hwIndex)  { if (m_engine) m_engine->qmlToggleAutoCommit(hwIndex); }
+int  AppController::save(int hwIndex)              { return m_engine ? m_engine->qmlSaveDisk(hwIndex) : MainWindow::SaveFailed; }
+int  AppController::toggleAutoCommit(int hwIndex)  { return m_engine ? m_engine->qmlToggleAutoCommitDisk(hwIndex) : MainWindow::SaveFailed; }
 void AppController::toggleWriteProtect(int hwIndex){ if (m_engine) m_engine->qmlToggleWriteProtect(hwIndex); }
 int AppController::addSlot()                       { return m_engine ? m_engine->qmlAddSlot() : -1; }
 void AppController::swapSlots(int fromHw, int toHw){ if (m_engine) m_engine->qmlSwapSlots(fromHw, toHw); }
@@ -260,6 +260,8 @@ QString AppController::startDir(const QString &kind) { return m_engine ? m_engin
 void AppController::mountDiskPath(int i, const QString &url)   { if (m_engine) m_engine->qmlMountDiskPath(i, url); }
 void AppController::mountFolderPath(int i, const QString &url) { if (m_engine) m_engine->qmlMountFolderPath(i, url); }
 void AppController::loaderLoadPath(const QString &url)         { if (m_engine) m_engine->qmlLoaderLoadPath(url); }
+bool AppController::saveAsPath(int i, const QString &url)      { return m_engine ? m_engine->qmlSaveAsPath(i, url) : false; }
+void AppController::installDos(int i)                          { if (m_engine) m_engine->qmlInstallDos(i); }
 void AppController::openSessionPath(const QString &url)        { if (m_engine) m_engine->qmlOpenSessionPath(url); }
 void AppController::saveSessionPath(const QString &url)        { if (m_engine) m_engine->qmlSaveSessionPath(url); }
 void AppController::pickDocument(int r, const QString &m)      { if (m_engine) m_engine->pickDocument(r, m); }
