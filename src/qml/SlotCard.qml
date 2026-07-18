@@ -208,7 +208,9 @@ Rectangle {
                     color: !card.mounted ? Theme.placeholder
                                          : (card.isFolder ? Theme.nameFolder : Theme.nameDark)
                     elide: Text.ElideRight
-                    Layout.maximumWidth: parent.width * 0.6
+                    // Bound to the card, not the enclosing layout: constraining a
+                    // child by its own layout's width makes the rearrange recurse.
+                    Layout.maximumWidth: card.width * 0.6
                 }
                 Item { Layout.fillWidth: true }
                 Text {

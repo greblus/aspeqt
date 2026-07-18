@@ -217,8 +217,11 @@ ApplicationWindow {
                     id: logText
                     width: logFlick.width
                     wrapMode: Text.Wrap
-                    textFormat: Text.RichText
-                    text: app.logHtml
+                    // StyledText, not RichText: the rich-text parser builds a
+                    // whole QTextDocument per update, which cannot keep up with
+                    // fast SIO. StyledText handles <font color> and <br> cheaply.
+                    textFormat: Text.StyledText
+                    text: app.logTailHtml
                     font.pixelSize: 15
                 }
                 onContentHeightChanged:

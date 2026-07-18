@@ -9,12 +9,22 @@
 #include <QAbstractListModel>
 #include <QObject>
 #include <QString>
+#include <QStringList>
+#include <QTimer>
 #include <QVector>
 
 class MainWindow;
 
 // One drive slot as seen by the QML delegate.
 struct SlotData {
+    bool sameShape(const SlotData &o) const { return hwIndex == o.hwIndex; }
+    bool operator==(const SlotData &o) const {
+        return hwIndex == o.hwIndex && mounted == o.mounted && isFolder == o.isFolder
+            && fileName == o.fileName && typeText == o.typeText && modified == o.modified
+            && writeProtected == o.writeProtected && autoCommit == o.autoCommit
+            && editOpen == o.editOpen;
+    }
+
     int     hwIndex = 0;        // SIO disk index (device = 0x31 + hwIndex)
     bool    mounted = false;
     bool    isFolder = false;
@@ -74,6 +84,7 @@ class AppController : public QObject
     Q_PROPERTY(bool    sioRunning READ sioRunning NOTIFY statusChanged)
     Q_PROPERTY(bool    printerOn  READ printerOn  NOTIFY statusChanged)
     Q_PROPERTY(QString logHtml    READ logHtml    NOTIFY logChanged)
+    Q_PROPERTY(QString logTailHtml READ logTailHtml NOTIFY logChanged)
     Q_PROPERTY(bool    canAddSlot READ canAddSlot NOTIFY drivesChanged)
     Q_PROPERTY(QString printerText READ printerText NOTIFY printerTextChanged)
     Q_PROPERTY(QString printerTextAtascii READ printerTextAtascii NOTIFY printerTextChanged)
@@ -96,7 +107,8 @@ public:
     QString statusText() const { return m_statusText; }
     bool    sioRunning() const { return m_sioRunning; }
     bool    printerOn() const  { return m_printerOn; }
-    QString logHtml() const    { return m_logHtml; }
+    QString logHtml() const;
+    QString logTailHtml() const;
     bool    canAddSlot() const { return m_canAddSlot; }
     QString printerText() const { return m_printerText; }
     QString printerTextAtascii() const { return m_printerTextAtascii; }
@@ -110,9 +122,7 @@ public:
     Q_INVOKABLE void removeSlot(int hwIndex);
     Q_INVOKABLE void save(int hwIndex);
     Q_INVOKABLE void toggleAutoCommit(int hwIndex);
-    Q_INVOKABLE void openEditor(int hwIndex);
     Q_INVOKABLE void toggleWriteProtect(int hwIndex);
-    Q_INVOKABLE void bootOptions();
     Q_INVOKABLE int addSlot();    // hardware index of the added slot (-1 none)
     Q_INVOKABLE void swapSlots(int fromHw, int toHw);
 
@@ -126,16 +136,12 @@ public:
     Q_INVOKABLE void clearLog();
 
     // menu items
-    Q_INVOKABLE void newImage();
     Q_INVOKABLE void createDisk(int sectorCount, int sectorSize);
     Q_INVOKABLE void mountDiskAny();
     Q_INVOKABLE void mountFolderAny();
     Q_INVOKABLE void ejectAll();
-    Q_INVOKABLE void showPrinterOutput();
     Q_INVOKABLE void openSession();
     Q_INVOKABLE void saveSession();
-    Q_INVOKABLE void options();
-    Q_INVOKABLE void logWindow();
     Q_INVOKABLE void quit();
     Q_INVOKABLE QStringList recentFiles();
     Q_INVOKABLE void mountRecent(int index);
@@ -193,7 +199,17 @@ private:
     bool    m_sioRunning = false;
     bool    m_printerOn = false;
     bool    m_canAddSlot = true;
-    QString m_logHtml;
+    // The log pane renders this as RichText, so it is re-parsed and re-laid out
+    // on every change: keep it bounded and coalesce bursts (fast SIO logs
+    // hundreds of lines a second, which otherwise stalls the whole UI).
+    static const int kMaxLogLines = 2000;   // full history, for the log window
+    static const int kTailLines   = 150;    // what the main-window pane renders
+    QStringList     m_logLines;
+    mutable QString m_logCache;
+    mutable QString m_logTailCache;
+    mutable bool    m_logDirty = true;
+    QTimer          m_logNotify;
+    void rebuildLogCaches() const;
     QString m_printerText;
     QString m_printerTextAtascii;
 };

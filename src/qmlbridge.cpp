@@ -53,9 +53,27 @@ QHash<int, QByteArray> DriveModel::roleNames() const
 
 void DriveModel::setSlots(const QVector<SlotData> &list)
 {
-    beginResetModel();
-    m_slots = list;
-    endResetModel();
+    // A full reset destroys every delegate, which is fatal if it happens while
+    // one of their signal handlers is still running (mount/eject buttons). When
+    // only the contents changed, update in place and let the views repaint.
+    bool sameShape = list.size() == m_slots.size();
+    for (int i = 0; sameShape && i < list.size(); ++i)
+        sameShape = list.at(i).sameShape(m_slots.at(i));
+
+    if (!sameShape) {
+        beginResetModel();
+        m_slots = list;
+        endResetModel();
+        return;
+    }
+
+    for (int i = 0; i < list.size(); ++i) {
+        if (m_slots.at(i) == list.at(i))
+            continue;
+        m_slots[i] = list.at(i);
+        const QModelIndex ix = index(i, 0);
+        emit dataChanged(ix, ix);
+    }
 }
 
 // ---------------------------------------------------------------------------
@@ -64,8 +82,17 @@ void DriveModel::setSlots(const QVector<SlotData> &list)
 AppController::AppController(MainWindow *engine, QObject *parent)
     : QObject(parent), m_engine(engine)
 {
+    // Repaint the log at most ~10x a second no matter how fast lines arrive.
+    m_logNotify.setSingleShot(true);
+    m_logNotify.setInterval(33);
+    connect(&m_logNotify, &QTimer::timeout, this, &AppController::logChanged);
+
     if (m_engine) {
-        connect(m_engine, &MainWindow::qmlChanged, this, &AppController::refresh);
+        // Queued: the engine emits this from methods QML calls out of signal
+        // handlers, and a structural change there would delete the delegate
+        // whose handler is still on the stack (Qt aborts on that).
+        connect(m_engine, &MainWindow::qmlChanged, this, &AppController::refresh,
+                Qt::QueuedConnection);
         connect(m_engine, &MainWindow::qmlLoaderProgress, this, &AppController::refreshLoader);
         connect(m_engine, &MainWindow::qmlPrinterTextChanged, this, &AppController::refreshPrinter);
         connect(m_engine, &MainWindow::logMessage, this, &AppController::onLogMessage);
@@ -146,8 +173,34 @@ void AppController::onLogMessage(int type, const QString &msg)
     case 'e': colour = "red";   break;
     default:  colour = "purple"; break;
     }
-    m_logHtml += QStringLiteral("<span style='color:%1'>%2</span><br>").arg(colour, text);
-    emit logChanged();
+    m_logLines += QStringLiteral("<font color='%1'>%2</font><br>").arg(colour, text);
+    while (m_logLines.size() > kMaxLogLines)
+        m_logLines.removeFirst();
+    m_logDirty = true;
+    if (!m_logNotify.isActive())
+        m_logNotify.start();
+}
+
+QString AppController::logHtml() const
+{
+    rebuildLogCaches();
+    return m_logCache;
+}
+
+QString AppController::logTailHtml() const
+{
+    rebuildLogCaches();
+    return m_logTailCache;
+}
+
+void AppController::rebuildLogCaches() const
+{
+    if (!m_logDirty) return;
+    m_logCache = m_logLines.join(QString());
+    const int from = qMax(0, m_logLines.size() - kTailLines);
+    m_logTailCache = from == 0 ? m_logCache
+                               : m_logLines.mid(from).join(QString());
+    m_logDirty = false;
 }
 
 // -- actions ----------------------------------------------------------------
@@ -157,9 +210,7 @@ void AppController::eject(int hwIndex)             { if (m_engine) m_engine->qml
 void AppController::removeSlot(int hwIndex)        { if (m_engine) m_engine->qmlEjectPressed(hwIndex); }
 void AppController::save(int hwIndex)              { if (m_engine) m_engine->qmlSave(hwIndex); }
 void AppController::toggleAutoCommit(int hwIndex)  { if (m_engine) m_engine->qmlToggleAutoCommit(hwIndex); }
-void AppController::openEditor(int hwIndex)        { if (m_engine) m_engine->qmlEdit(hwIndex); }
 void AppController::toggleWriteProtect(int hwIndex){ if (m_engine) m_engine->qmlToggleWriteProtect(hwIndex); }
-void AppController::bootOptions()                  { if (m_engine) m_engine->qmlBootOptions(); }
 int AppController::addSlot()                       { return m_engine ? m_engine->qmlAddSlot() : -1; }
 void AppController::swapSlots(int fromHw, int toHw){ if (m_engine) m_engine->qmlSwapSlots(fromHw, toHw); }
 
@@ -170,9 +221,15 @@ void AppController::loaderEject() { if (m_engine) m_engine->qmlLoaderEject(); }
 
 void AppController::toggleSio()     { if (m_engine) m_engine->qmlToggleSio(); }
 void AppController::togglePrinter() { if (m_engine) m_engine->qmlTogglePrinter(); }
-void AppController::clearLog()      { if (m_engine) { m_engine->qmlClearLog(); } m_logHtml.clear(); emit logChanged(); }
+void AppController::clearLog()
+{
+    if (m_engine) m_engine->qmlClearLog();
+    m_logLines.clear();
+    m_logDirty = true;
+    m_logNotify.stop();
+    emit logChanged();
+}
 
-void AppController::newImage()          { if (m_engine) m_engine->qmlNewImage(); }
 void AppController::createDisk(int sc, int ss) { if (m_engine) m_engine->qmlCreateDisk(sc, ss); }
 void AppController::printerClear()      { if (m_engine) m_engine->qmlPrinterClear(); }
 void AppController::printerSave()       { if (m_engine) m_engine->qmlPrinterSave(); }
@@ -186,11 +243,8 @@ void AppController::refreshPrinter()
 void AppController::mountDiskAny()      { if (m_engine) m_engine->qmlMountDiskAny(); }
 void AppController::mountFolderAny()    { if (m_engine) m_engine->qmlMountFolderAny(); }
 void AppController::ejectAll()          { if (m_engine) m_engine->qmlEjectAll(); }
-void AppController::showPrinterOutput() { if (m_engine) m_engine->qmlShowPrinterOutput(); }
 void AppController::openSession()       { if (m_engine) m_engine->qmlOpenSession(); }
 void AppController::saveSession()       { if (m_engine) m_engine->qmlSaveSession(); }
-void AppController::options()           { if (m_engine) m_engine->qmlOptions(); }
-void AppController::logWindow()         { if (m_engine) m_engine->qmlLogWindow(); }
 void AppController::quit()              { if (m_engine) m_engine->qmlQuit(); }
 QStringList AppController::recentFiles(){ return m_engine ? m_engine->qmlRecentFiles() : QStringList(); }
 void AppController::mountRecent(int i)  { if (m_engine) m_engine->qmlMountRecent(i); }
