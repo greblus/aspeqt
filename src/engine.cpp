@@ -1,4 +1,4 @@
-#include "mainwindow.h"
+#include "engine.h"
 
 #include "diskimage.h"
 #include "diskimagepro.h"
@@ -74,7 +74,7 @@ static QIcon dosDriveIcon()
 #include "math.h"
 
 AspeqtSettings *aspeqtSettings;
-MainWindow *mainWindow;
+Engine *g_engine;
 
 // Defined with the rest of the picker plumbing further down.
 static QString pathFromPickedUrl(const QString &url);
@@ -141,21 +141,21 @@ void logMessageOutput(QtMsgType type, const QMessageLogContext &context, const Q
             return;
         }
 #endif
-        mainWindow->doLogMessage(localMsg.at(1), displayMsg);
+        g_engine->doLogMessage(localMsg.at(1), displayMsg);
     }
 }
 
-void MainWindow::doLogMessage(int type, const QString &msg)
+void Engine::doLogMessage(int type, const QString &msg)
 {
     emit logMessage(type, msg);
 }
 
-MainWindow::MainWindow(QWidget *parent)
+Engine::Engine(QWidget *parent)
     : QObject(parent)
 {
 
     /* Setup the logging system */
-    mainWindow = this;
+    g_engine = this;
     g_aspeQtAppPath = QCoreApplication::applicationDirPath();
     g_disablePicoHiSpeed = false;
     logFile = new QFile(QDir::temp().absoluteFilePath("aspeqt.log"));
@@ -260,7 +260,7 @@ MainWindow::MainWindow(QWidget *parent)
            }
          }
     }
-    // Pass Session file name, path and MainWindow title to AspeQtSettings //
+    // Pass Session file name, path and Engine title to AspeQtSettings //
     aspeqtSettings->setSessionFile(g_sessionFile, g_sessionFilePath);
     aspeqtSettings->setMainWindowTitle(g_mainWindowTitle);
 
@@ -300,6 +300,17 @@ MainWindow::MainWindow(QWidget *parent)
     loaderEject();
 #endif
 
+#ifdef Q_OS_ANDROID
+    // Plugging the cable in launches us; start emulating straight away instead
+    // of making the user press start. Queued so the UI is up first.
+    if (QJniObject::callStaticMethod<jboolean>("net/greblus/SerialActivity", "launchedByUsb", "()Z")) {
+        QTimer::singleShot(0, this, [this]{
+            if (!m_emulationRunning)
+                toggleSio();
+        });
+    }
+#endif
+
     /* Restore application state */
     for (int i = 0; i < m_numDisks; i++) {      //
         AspeqtSettings::ImageSettings is;
@@ -322,7 +333,7 @@ MainWindow::MainWindow(QWidget *parent)
     Printer *printer = new Printer(sio);
     connect(printer, SIGNAL(print(QString)), textPrinterWindow, SLOT(print(QString)));
 #ifdef ASPEQT_QML
-    connect(printer, SIGNAL(print(QString)), this, SIGNAL(qmlPrinterTextChanged()));
+    connect(printer, SIGNAL(print(QString)), this, SIGNAL(printerTextChanged()));
 #endif
     sio->installDevice(0x40, printer);
     untitledName = 0;
@@ -337,10 +348,10 @@ MainWindow::MainWindow(QWidget *parent)
 
 }
 
-MainWindow::~MainWindow()
+Engine::~Engine()
 {
     if (m_emulationRunning) {
-        qmlToggleSio();
+        toggleSio();
     }
 
     delete aspeqtSettings;
@@ -355,15 +366,15 @@ MainWindow::~MainWindow()
 // Shut the engine down: stop SIO, offer to save modified images, close the
 // devices. Returns false when the user cancelled, so the caller leaves the
 // application running (which close()/event->ignore() used to do -- except
-// qmlQuit() then quit anyway, so Cancel did not actually cancel).
-bool MainWindow::shutdown()
+// quit() then quit anyway, so Cancel did not actually cancel).
+bool Engine::shutdown()
 {
     if (g_sessionFile != "") aspeqtSettings->saveSessionToFile(g_sessionFilePath + "/" + g_sessionFile);
     aspeqtSettings->setD9DOVisible(g_D9DOVisible);
 
     const bool wasRunning = m_emulationRunning;
     if (wasRunning) {
-        qmlToggleSio();
+        toggleSio();
     }
 
     int toBeSaved = 0;
@@ -385,7 +396,7 @@ bool MainWindow::shutdown()
             }
             if (answer == QMessageBox::Cancel) {
                 if (wasRunning) {
-                    qmlToggleSio();
+                    toggleSio();
                 }
                 return false;
             }
@@ -407,7 +418,7 @@ bool MainWindow::shutdown()
 }
 
 
-void MainWindow::androidRebuildSlots()
+void Engine::androidRebuildSlots()
 {
     for (int i = 0; i < MAX_DISKS; ++i)
         m_slotPresent[i] = false;
@@ -418,12 +429,12 @@ void MainWindow::androidRebuildSlots()
         if (aspeqtSettings->slotPresent(i))   // removed slot -> gap
             m_slotPresent[i] = true;
 #ifdef ASPEQT_QML
-    emit qmlChanged();
+    emit stateChanged();
 #endif
 }
 
 // Hide the "+" row once every hardware slot index is in use.
-void MainWindow::androidAddSlot()
+void Engine::androidAddSlot()
 {
     int i = -1;
     for (int k = 0; k < MAX_DISKS; ++k)
@@ -438,7 +449,7 @@ void MainWindow::androidAddSlot()
 
 // 2nd eject on an empty slot: drop this specific slot, leaving a number gap so
 // the other slots keep their device numbers (important for DOS).
-void MainWindow::androidRemoveSlot(int i)
+void Engine::androidRemoveSlot(int i)
 {
     if (i < 0 || i >= MAX_DISKS || !m_slotPresent[i]) return;
     int present = 0;
@@ -455,13 +466,13 @@ void MainWindow::androidRemoveSlot(int i)
     m_numDisks = hi;
     aspeqtSettings->setNumberOfDisks(m_numDisks);
 #ifdef ASPEQT_QML
-    emit qmlChanged();
+    emit stateChanged();
 #endif
 }
 
 // Eject button: eject a mounted image; on an already-empty slot the button
 // shows a trash icon and removes the slot instead.
-void MainWindow::androidEjectPressed(int i)
+void Engine::androidEjectPressed(int i)
 {
     if (sio->getDevice(i + 0x31))
         ejectImage(i);
@@ -473,25 +484,25 @@ void MainWindow::androidEjectPressed(int i)
 
 // Build the always-on-top loader slot (badge "cas/xex", load / play / retry /
 // eject buttons, and a load progress bar) and insert it above the disk slots.
-void MainWindow::loaderSetFill(double frac)
+void Engine::loaderSetFill(double frac)
 {
     m_loaderFill = frac;
 #ifdef ASPEQT_QML
-    emit qmlLoaderProgress();   // light: only the loader fill
+    emit loaderProgress();   // light: only the loader fill
 #endif
 }
 
-void MainWindow::loaderUpdateButtons()
+void Engine::loaderUpdateButtons()
 {
 #ifdef ASPEQT_QML
-    emit qmlChanged();
+    emit stateChanged();
 #endif
 }
 
 
 // XEX: install the autoboot loader on D1 and let the running emulation boot it,
 // driving the progress bar from the loader's blockRead signal.
-void MainWindow::loaderLoadXex(const QString &path)
+void Engine::loaderLoadXex(const QString &path)
 {
     loaderEject();                       // clear any previous load
     m_autoBootOld = sio->getDevice(0x31);
@@ -505,8 +516,8 @@ void MainWindow::loaderLoadXex(const QString &path)
     }
     sio->uninstallDevice(0x31);
     sio->installDevice(0x31, m_autoBoot);
-    connect(m_autoBoot, &AutoBoot::blockRead, this, &MainWindow::loaderBlockRead);
-    connect(m_autoBoot, &AutoBoot::loaderDone, this, &MainWindow::loaderBooterDone);
+    connect(m_autoBoot, &AutoBoot::blockRead, this, &Engine::loaderBlockRead);
+    connect(m_autoBoot, &AutoBoot::loaderDone, this, &Engine::loaderBooterDone);
 
     m_loaderKind = 1;
     m_loaderFile = path;
@@ -520,7 +531,7 @@ void MainWindow::loaderLoadXex(const QString &path)
 
 // CAS: load the cassette image, log the playback instructions and arm the play
 // button (playback itself is started by the user, in sync with the Atari).
-void MainWindow::loaderLoadCas(const QString &path)
+void Engine::loaderLoadCas(const QString &path)
 {
     loaderEject();
     m_casWorker = new CassetteWorker;
@@ -556,7 +567,7 @@ void MainWindow::loaderLoadCas(const QString &path)
 }
 
 // Play button: start streaming the loaded cassette image.
-void MainWindow::loaderPlayCas()
+void Engine::loaderPlayCas()
 {
     if (m_loaderKind != 2 || !m_casWorker || m_casWorker->isRunning())
         return;
@@ -564,21 +575,21 @@ void MainWindow::loaderPlayCas()
     // must be paused while it runs (AspeQt never drives cassette + disk at once).
     m_casWasRunning = m_emulationRunning;
     if (m_casWasRunning) {
-        qmlToggleSio();
+        toggleSio();
         sio->wait();
         qApp->processEvents();
     }
-    connect(m_casWorker, &CassetteWorker::statusChanged, this, &MainWindow::loaderCasStatus, Qt::QueuedConnection);
-    connect(m_casWorker, &QThread::finished, this, &MainWindow::loaderCasFinished);
+    connect(m_casWorker, &CassetteWorker::statusChanged, this, &Engine::loaderCasStatus, Qt::QueuedConnection);
+    connect(m_casWorker, &QThread::finished, this, &Engine::loaderCasFinished);
     m_casWorker->start(QThread::TimeCriticalPriority);
     m_casTimer = new QTimer(this);
-    connect(m_casTimer, &QTimer::timeout, this, &MainWindow::loaderCasTick);
+    connect(m_casTimer, &QTimer::timeout, this, &Engine::loaderCasTick);
     m_casTimer->start(1000);
     loaderUpdateButtons();
     qDebug() << "!i" << tr("Playing back cassette image.");
 }
 
-void MainWindow::loaderCasStatus(int remainingTime)
+void Engine::loaderCasStatus(int remainingTime)
 {
     if (!m_casWorker) return;
     m_casTotal = m_casWorker->mTotalDuration;
@@ -586,14 +597,14 @@ void MainWindow::loaderCasStatus(int remainingTime)
     loaderSetFill(m_casTotal > 0 ? double(m_casTotal - m_casRemaining) / m_casTotal : 0.0);
 }
 
-void MainWindow::loaderCasTick()
+void Engine::loaderCasTick()
 {
     if (m_casRemaining < 1000)
         m_casRemaining = 1000;
     loaderCasStatus(m_casRemaining - 1000);
 }
 
-void MainWindow::loaderCasFinished()
+void Engine::loaderCasFinished()
 {
     if (m_casTimer) { m_casTimer->stop(); }
     loaderSetFill(0);            // fill disappears when done
@@ -601,18 +612,18 @@ void MainWindow::loaderCasFinished()
     if (m_casWasRunning) {
         m_casWasRunning = false;
         if (!m_emulationRunning)
-            qmlToggleSio();
+            toggleSio();
     }
     loaderUpdateButtons();
     qDebug() << "!i" << tr("Cassette playback finished.");
 }
 
-void MainWindow::loaderBlockRead(int current, int all)
+void Engine::loaderBlockRead(int current, int all)
 {
     loaderSetFill(all > 0 ? double(current) / all : 0.0);
 }
 
-void MainWindow::loaderBooterDone()
+void Engine::loaderBooterDone()
 {
     loaderSetFill(0);           // fill disappears once loaded
     qDebug() << "!i" << tr("Executable loaded into the Atari.");
@@ -629,7 +640,7 @@ void MainWindow::loaderBooterDone()
 }
 
 // Eject: stop any playback/boot and clear the loader slot.
-void MainWindow::loaderEject()
+void Engine::loaderEject()
 {
     if (m_casTimer) { m_casTimer->stop(); m_casTimer->deleteLater(); m_casTimer = nullptr; }
     if (m_casWorker) {
@@ -644,7 +655,7 @@ void MainWindow::loaderEject()
     if (m_casWasRunning) {
         m_casWasRunning = false;
         if (!m_emulationRunning)
-            qmlToggleSio();
+            toggleSio();
     }
     if (m_autoBoot) {
         sio->uninstallDevice(0x31);
@@ -663,7 +674,7 @@ void MainWindow::loaderEject()
 }
 
 // Retry: re-run the last load (e.g. after a failed boot).
-void MainWindow::loaderRetry()
+void Engine::loaderRetry()
 {
     if (m_loaderFile.isEmpty()) return;
     QString path = m_loaderFile;   // loaderEject() (via load*) clears m_loaderKind
@@ -683,27 +694,28 @@ void MainWindow::loaderRetry()
 // Toggle printer Emulation ON/OFF //
 
 
-void MainWindow::sioStarted()
+void Engine::sioStarted()
 {
     m_emulationRunning = true;
-    emit qmlChanged();
+    emit stateChanged();
 }
 
-void MainWindow::sioFinished()
+void Engine::sioFinished()
 {
+    sio->wait();          // already finished: this just closes the port
     m_emulationRunning = false;
     m_sioStatus.clear();
     qWarning() << "!i" << tr("Emulation stopped.");
-    emit qmlChanged();
+    emit stateChanged();
 }
 
-void MainWindow::sioStatusChanged(QString status)
+void Engine::sioStatusChanged(QString status)
 {
     m_sioStatus = status;
-    emit qmlChanged();
+    emit stateChanged();
 }
 
-void MainWindow::deviceStatusChanged(int deviceNo)
+void Engine::deviceStatusChanged(int deviceNo)
 {
     if (deviceNo >= 0x31 && deviceNo <= 0x31 + MAX_DISKS - 1) {
         int no = deviceNo - 0x31;
@@ -726,7 +738,7 @@ void MainWindow::deviceStatusChanged(int deviceNo)
         }
     }
 #ifdef ASPEQT_QML
-    emit qmlChanged();
+    emit stateChanged();
 #endif
 }
 
@@ -736,12 +748,12 @@ void MainWindow::deviceStatusChanged(int deviceNo)
 //
 
 // Restart emulation and re-translate following a session load //
-void MainWindow::setSession()
+void Engine::setSession()
 {
     bool restart;
     restart = m_emulationRunning;
     if (restart) {
-        qmlToggleSio();
+        toggleSio();
        sio->wait();
         qApp->processEvents();
     }
@@ -752,11 +764,11 @@ void MainWindow::setSession()
         deviceStatusChanged(0x31 + i);
     }
 
-    qmlToggleSio();
+    toggleSio();
 }
 
 
-bool MainWindow::ejectImage(int no, bool ask)
+bool Engine::ejectImage(int no, bool ask)
 {
     SimpleDiskImage *img = qobject_cast <SimpleDiskImage*> (sio->getDevice(no + 0x31));
 
@@ -787,7 +799,7 @@ bool MainWindow::ejectImage(int no, bool ask)
     return true;
 }
 
-int MainWindow::firstEmptyDiskSlot(int startFrom, bool createOne)
+int Engine::firstEmptyDiskSlot(int startFrom, bool createOne)
 {
     int i;
     for (i = startFrom; i < m_numDisks; i++) {  //
@@ -814,7 +826,7 @@ int MainWindow::firstEmptyDiskSlot(int startFrom, bool createOne)
 
 // Make boot executable dialog persistant until it's manually closed //
 
-void MainWindow::mountFileWithDefaultProtection(int no, const QString &fileName)
+void Engine::mountFileWithDefaultProtection(int no, const QString &fileName)
 {
     // If fileName was passed from AspeCL it is an 8.1 name, so we need to find
     // the full PC name in order to validate it.  //
@@ -840,7 +852,7 @@ void MainWindow::mountFileWithDefaultProtection(int no, const QString &fileName)
     mountFile(no, atariFileName, prot);
 }
 
-void MainWindow::mountFile(int no, const QString &fileName, bool /*prot*/)
+void Engine::mountFile(int no, const QString &fileName, bool /*prot*/)
 {
     SimpleDiskImage *disk;
     bool isDir = false;
@@ -974,7 +986,7 @@ void MainWindow::mountFile(int no, const QString &fileName, bool /*prot*/)
 #ifdef Q_OS_ANDROID
 
 
-QString MainWindow::androidDisplayName(const QString &uri)
+QString Engine::androidDisplayName(const QString &uri)
 {
     QJniObject juri = QJniObject::fromString(uri);
     QJniObject res = QJniObject::callStaticObjectMethod(
@@ -983,7 +995,7 @@ QString MainWindow::androidDisplayName(const QString &uri)
     return res.isValid() ? res.toString() : QString();
 }
 
-void MainWindow::androidTakePersistable(const QString &uri, bool write)
+void Engine::androidTakePersistable(const QString &uri, bool write)
 {
     QJniObject juri = QJniObject::fromString(uri);
     QJniObject::callStaticMethod<void>(
@@ -992,7 +1004,7 @@ void MainWindow::androidTakePersistable(const QString &uri, bool write)
 }
 
 
-int MainWindow::androidCopyTreeToDir(const QString &tree, const QString &dest)
+int Engine::androidCopyTreeToDir(const QString &tree, const QString &dest)
 {
     QJniObject jt = QJniObject::fromString(tree);
     QJniObject jd = QJniObject::fromString(dest);
@@ -1001,7 +1013,7 @@ int MainWindow::androidCopyTreeToDir(const QString &tree, const QString &dest)
         "(Ljava/lang/String;Ljava/lang/String;)I", jt.object<jstring>(), jd.object<jstring>());
 }
 
-int MainWindow::androidCopyDirToTree(const QString &src, const QString &tree)
+int Engine::androidCopyDirToTree(const QString &src, const QString &tree)
 {
     QJniObject js = QJniObject::fromString(src);
     QJniObject jt = QJniObject::fromString(tree);
@@ -1010,7 +1022,7 @@ int MainWindow::androidCopyDirToTree(const QString &src, const QString &tree)
         "(Ljava/lang/String;Ljava/lang/String;)I", js.object<jstring>(), jt.object<jstring>());
 }
 
-int MainWindow::androidCopyUriToFile(const QString &uri, const QString &dest)
+int Engine::androidCopyUriToFile(const QString &uri, const QString &dest)
 {
     QJniObject ju = QJniObject::fromString(uri);
     QJniObject jd = QJniObject::fromString(dest);
@@ -1019,7 +1031,7 @@ int MainWindow::androidCopyUriToFile(const QString &uri, const QString &dest)
         "(Ljava/lang/String;Ljava/lang/String;)I", ju.object<jstring>(), jd.object<jstring>());
 }
 
-QString MainWindow::androidReadablePath(const QString &uri, int slot)
+QString Engine::androidReadablePath(const QString &uri, int slot)
 {
     if (!uri.startsWith("content:"))
         return uri;
@@ -1043,7 +1055,7 @@ QString MainWindow::androidReadablePath(const QString &uri, int slot)
     return tmpPath;
 }
 
-QString MainWindow::androidLocalCopy(const QString &uri)
+QString Engine::androidLocalCopy(const QString &uri)
 {
     if (!uri.startsWith("content:"))
         return uri;
@@ -1059,7 +1071,7 @@ QString MainWindow::androidLocalCopy(const QString &uri)
     return tmpPath;
 }
 
-QString MainWindow::androidChildOrCreate(const QString &tree, const QString &name)
+QString Engine::androidChildOrCreate(const QString &tree, const QString &name)
 {
     QJniObject jt = QJniObject::fromString(tree);
     QJniObject jn = QJniObject::fromString(name);
@@ -1070,11 +1082,11 @@ QString MainWindow::androidChildOrCreate(const QString &tree, const QString &nam
     return r.isValid() ? r.toString() : QString();
 }
 
-void MainWindow::qmlInstallDos(int no)
+void Engine::installDos(int no)
 {
     QString tree = m_folderTree.value(no);
     if (tree.isEmpty()) {
-        qmlToast(tr("This slot does not hold a mounted folder."));
+        toast(tr("This slot does not hold a mounted folder."));
         return;
     }
     // Write the two bundled files straight into the SAF folder (find-or-create
@@ -1096,13 +1108,13 @@ void MainWindow::qmlInstallDos(int no)
         qDebug() << "!i" << tr("Installed high-speed MyPicoDOS into the folder. "
                                "Reboot your Atari to load DOS.");
     } else {
-        qmlToast(tr("Could not copy the DOS files into the folder."));
+        toast(tr("Could not copy the DOS files into the folder."));
     }
 }
 
 #endif
 
-QString MainWindow::friendlyName(const QString &name)
+QString Engine::friendlyName(const QString &name)
 {
 #ifdef Q_OS_ANDROID
     if (name.startsWith("content:")) {
@@ -1123,7 +1135,7 @@ QString MainWindow::friendlyName(const QString &name)
 
 
 
-void MainWindow::toggleWriteProtection(int no)
+void Engine::toggleWriteProtection(int no)
 {
     SimpleDiskImage *img = qobject_cast <SimpleDiskImage*> (sio->getDevice(no + 0x31));
     if (!img) return;
@@ -1131,12 +1143,12 @@ void MainWindow::toggleWriteProtection(int no)
     img->setReadOnly(m_writeProtect[no]);
     aspeqtSettings->setMountedImageSetting(no, img->originalFileName(), m_writeProtect[no]);
 #ifdef ASPEQT_QML
-    emit qmlChanged();
+    emit stateChanged();
 #endif
 }
 
 
-QMessageBox::StandardButton MainWindow::saveImageWhenClosing(int no, QMessageBox::StandardButton previousAnswer, int number)
+QMessageBox::StandardButton Engine::saveImageWhenClosing(int no, QMessageBox::StandardButton previousAnswer, int number)
 {
     SimpleDiskImage *img = qobject_cast <SimpleDiskImage*> (sio->getDevice(no + 0x31));
 
@@ -1152,7 +1164,7 @@ QMessageBox::StandardButton MainWindow::saveImageWhenClosing(int no, QMessageBox
                                        .arg(friendlyName(img->originalFileName())), buttons);
     }
     if (previousAnswer == QMessageBox::Yes || previousAnswer == QMessageBox::YesToAll) {
-        qmlSaveDisk(no);
+        saveDisk(no);
     }
     if (previousAnswer == QMessageBox::Close) {
         previousAnswer = QMessageBox::Cancel;
@@ -1160,7 +1172,7 @@ QMessageBox::StandardButton MainWindow::saveImageWhenClosing(int no, QMessageBox
     return previousAnswer;
 }
 
-void MainWindow::loadTranslators()
+void Engine::loadTranslators()
 {
     qApp->removeTranslator(&aspeqt_qt_translator);
     qApp->removeTranslator(&aspeqt_translator);
@@ -1180,7 +1192,7 @@ void MainWindow::loadTranslators()
     }
 }
 
-int MainWindow::qmlSaveDisk(int no)
+int Engine::saveDisk(int no)
 {
     SimpleDiskImage *img = qobject_cast <SimpleDiskImage*> (sio->getDevice(no + 0x31));
     if (!img)
@@ -1201,13 +1213,13 @@ int MainWindow::qmlSaveDisk(int no)
 //
 
 // Remote auto-commit toggle sent by the Atari-side AspeCl client.
-void MainWindow::autoCommit(int no)
+void Engine::autoCommit(int no)
 {
     if (no < 0 || no >= MAX_DISKS) return;
-    if (sio->getDevice(no + 0x31)) qmlToggleAutoCommitDisk(no);
+    if (sio->getDevice(no + 0x31)) toggleAutoCommitDisk(no);
 }
 
-int MainWindow::qmlToggleAutoCommitDisk(int no)
+int Engine::toggleAutoCommitDisk(int no)
 {
     SimpleDiskImage *img = qobject_cast <SimpleDiskImage*> (sio->getDevice(no + 0x31));
     if (!img) return SaveFailed;
@@ -1217,7 +1229,7 @@ int MainWindow::qmlToggleAutoCommitDisk(int no)
     m_autoCommit[no] = !m_autoCommit[no];
     qDebug() << "!n" << (m_autoCommit[no] ? tr("[Disk %1] Auto-commit ON.").arg(no + 1)
                                           : tr("[Disk %1] Auto-commit OFF.").arg(no + 1));
-    emit qmlChanged();
+    emit stateChanged();
 
     if (img->isUnnamed())
         return SaveNeedsName;
@@ -1228,11 +1240,11 @@ int MainWindow::qmlToggleAutoCommitDisk(int no)
     if (!saved)
         return SaveNeedsName;
 
-    emit qmlChanged();
+    emit stateChanged();
     return SaveOk;
 }
 //
-bool MainWindow::qmlSaveAsPath(int no, const QString &url)
+bool Engine::saveAsPath(int no, const QString &url)
 {
     SimpleDiskImage *img = qobject_cast <SimpleDiskImage*> (sio->getDevice(no + 0x31));
     if (!img)
@@ -1263,7 +1275,7 @@ bool MainWindow::qmlSaveAsPath(int no, const QString &url)
     }
 
     if (!saved) {
-        qmlToast(tr("'%1' cannot be saved.").arg(friendlyName(fileName)));
+        toast(tr("'%1' cannot be saved.").arg(friendlyName(fileName)));
         return false;
     }
 
@@ -1282,7 +1294,7 @@ bool MainWindow::qmlSaveAsPath(int no, const QString &url)
 
 
 
-void MainWindow::qmlOpenSessionPath(const QString &url)
+void Engine::openSessionPath(const QString &url)
 {
     const QString picked = pathFromPickedUrl(url);
     if (picked.isEmpty()) {
@@ -1316,9 +1328,9 @@ void MainWindow::qmlOpenSessionPath(const QString &url)
         g_sessionFilePath = QFileInfo(fileName).absolutePath();
     }
 // First eject existing images, then mount session images and restore mainwindow position and size //
-    qmlEjectAll();
+    ejectAll();
 
-// Pass Session file name, path and MainWindow title to AspeQtSettings //
+// Pass Session file name, path and Engine title to AspeQtSettings //
 #ifdef Q_OS_ANDROID
     // Android always launches into the default session (no named-session file
     // argument), so keep the default as the write target (empty session name).
@@ -1346,7 +1358,7 @@ void MainWindow::qmlOpenSessionPath(const QString &url)
 
     setSession();
 }
-void MainWindow::qmlSaveSessionPath(const QString &url)
+void Engine::saveSessionPath(const QString &url)
 {
     const QString picked = pathFromPickedUrl(url);
     if (picked.isEmpty()) {
@@ -1383,7 +1395,7 @@ void MainWindow::qmlSaveSessionPath(const QString &url)
 
 
 
-void MainWindow::on_actionQuit_triggered()
+void Engine::on_actionQuit_triggered()
 {
 }
 
@@ -1395,7 +1407,7 @@ void MainWindow::on_actionQuit_triggered()
 // QML bridge (branch `qml`): expose the engine's state as QVariant and route
 // QML button presses to the existing widget-era slots. See qmlbridge.{h,cpp}.
 // ===========================================================================
-QVariantList MainWindow::qmlDriveList()
+QVariantList Engine::driveList()
 {
     QVariantList out;
     for (int i = 0; i < MAX_DISKS; ++i) {
@@ -1433,7 +1445,7 @@ QVariantList MainWindow::qmlDriveList()
     return out;
 }
 
-QVariantMap MainWindow::qmlLoaderState()
+QVariantMap Engine::loaderState()
 {
     QVariantMap m;
     m["kind"]        = m_loaderKind;
@@ -1449,7 +1461,7 @@ QVariantMap MainWindow::qmlLoaderState()
     return m;
 }
 
-QVariantMap MainWindow::qmlStatus()
+QVariantMap Engine::status()
 {
     extern bool g_printerEmu;
     QVariantMap m;
@@ -1462,16 +1474,16 @@ QVariantMap MainWindow::qmlStatus()
     return m;
 }
 
-bool MainWindow::qmlCanAddSlot()
+bool Engine::canAddSlot()
 {
     for (int i = 0; i < MAX_DISKS; ++i)
         if (!m_slotPresent[i]) return true;
     return false;
 }
 
-void MainWindow::qmlEjectPressed(int i)       { androidEjectPressed(i); }
-void MainWindow::qmlToggleWriteProtect(int i) { toggleWriteProtection(i); }
-int MainWindow::qmlAddSlot()
+void Engine::ejectPressed(int i)       { androidEjectPressed(i); }
+void Engine::toggleWriteProtect(int i) { toggleWriteProtection(i); }
+int Engine::addSlot()
 {
     // androidAddSlot() fills the lowest empty index; return it so the QML side
     // can scroll to and flash the new slot.
@@ -1485,7 +1497,7 @@ int MainWindow::qmlAddSlot()
 
 // Swap two drives (drag-reorder). Same effect as the widget UI's drop handler:
 // device numbers stay put, the mounted images/links exchange places.
-void MainWindow::qmlSwapSlots(int source, int slot)
+void Engine::swapSlots(int source, int slot)
 {
     if (source == slot || source < 0 || slot < 0) return;
     if (!m_slotPresent[source] || !m_slotPresent[slot]) return;
@@ -1500,37 +1512,52 @@ void MainWindow::qmlSwapSlots(int source, int slot)
         sio->installDevice(0x6F, pclink);
     }
     qDebug() << "!n" << tr("Swapped disk %1 with disk %2.").arg(slot + 1).arg(source + 1);
-    emit qmlChanged();
+    emit stateChanged();
 }
-void MainWindow::qmlLoaderPlay()              { loaderPlayCas(); }
-void MainWindow::qmlLoaderRetry()             { loaderRetry(); }
-void MainWindow::qmlLoaderEject()             { loaderEject(); }
-void MainWindow::qmlToggleSio()
+void Engine::loaderPlay()              { loaderPlayCas(); }
+void Engine::toggleSio()
 {
+    // While a cassette plays it owns the serial line and disk SIO is paused --
+    // which is why the status icon shows "connected". Stop the playback here:
+    // starting SIO instead would put two threads on the same port (the loading
+    // then stutters and never disconnects). loaderCasFinished() brings disk
+    // emulation back if it was running before.
+    if (m_casWorker && m_casWorker->isRunning()) {
+        // Pressing disconnect means "stay disconnected", so don't let
+        // loaderCasFinished() bring disk SIO back (a tape reaching its end
+        // still does, which is what m_casWasRunning is for).
+        m_casWasRunning = false;
+        m_casWorker->setPriority(QThread::NormalPriority);
+        m_casWorker->wait();
+        return;
+    }
+
     if (m_emulationRunning) {
+        // Non-blocking: wait() here would freeze the UI until the worker leaves
+        // the SIO command it is serving, which is exactly when the user presses
+        // stop. sioFinished() closes the port once the thread is really done.
         sio->setPriority(QThread::NormalPriority);
-        sio->wait();
-        qApp->processEvents();
+        sio->requestStop();
     } else {
         sio->start(QThread::TimeCriticalPriority);
     }
 }
-void MainWindow::qmlTogglePrinter()
+void Engine::togglePrinter()
 {
     g_printerEmu = !g_printerEmu;
     qWarning() << "!i" << (g_printerEmu ? tr("Printer emulation started.")
                                         : tr("Printer emulation stopped."));
-    emit qmlChanged();
+    emit stateChanged();
 }
-void MainWindow::qmlClearLog()
+void Engine::clearLog()
 {
-    emit qmlChanged();
+    emit stateChanged();
 }
 
 
 // Create + format + mount a new disk image (port of on_actionNewImage_triggered
 // without the widget dialog; geometry chosen in the QML CreateDiskDialog).
-void MainWindow::qmlCreateDisk(int sectorCount, int sectorSize)
+void Engine::createDisk(int sectorCount, int sectorSize)
 {
     if (sectorCount <= 0 || sectorSize <= 0) return;
     SimpleDiskImage *disk = new SimpleDiskImage(sio);
@@ -1554,9 +1581,9 @@ void MainWindow::qmlCreateDisk(int sectorCount, int sectorSize)
             .arg(disk->deviceName())
             .arg(friendlyName(disk->originalFileName()))
             .arg(disk->description());
-    emit qmlChanged();
+    emit stateChanged();
 }
-void MainWindow::qmlEjectAll()
+void Engine::ejectAll()
 {
     QMessageBox::StandardButton answer = QMessageBox::No;
 
@@ -1578,7 +1605,7 @@ void MainWindow::qmlEjectAll()
 
     bool wasRunning = m_emulationRunning;
     if (wasRunning) {
-        qmlToggleSio();
+        toggleSio();
     }
 
     for (int i = m_numDisks-1; i >= 0; i--) {
@@ -1591,7 +1618,7 @@ void MainWindow::qmlEjectAll()
             }
             if (answer == QMessageBox::Cancel) {
                 if (wasRunning) {
-                    qmlToggleSio();
+                    toggleSio();
                 }
                 return;
             }
@@ -1601,16 +1628,16 @@ void MainWindow::qmlEjectAll()
         ejectImage(i, false);
     }
     if (wasRunning) {
-        qmlToggleSio();
+        toggleSio();
     }
 }
-QString MainWindow::qmlPrinterText()   { return textPrinterWindow ? textPrinterWindow->qmlText() : QString(); }
-QString MainWindow::qmlPrinterTextAtascii() { return textPrinterWindow ? textPrinterWindow->qmlTextAtascii() : QString(); }
-void MainWindow::qmlPrinterClear()     { if (textPrinterWindow) textPrinterWindow->qmlClear(); emit qmlPrinterTextChanged(); }
-void MainWindow::qmlPrinterSave()      { if (textPrinterWindow) textPrinterWindow->qmlSave(); }
-void MainWindow::qmlQuit()             { if (shutdown()) qApp->quit(); }
+QString Engine::printerText()   { return textPrinterWindow ? textPrinterWindow->plainText() : QString(); }
+QString Engine::printerTextAtascii() { return textPrinterWindow ? textPrinterWindow->atasciiText() : QString(); }
+void Engine::printerClear()     { if (textPrinterWindow) textPrinterWindow->clearText(); emit printerTextChanged(); }
+void Engine::printerSave()      { if (textPrinterWindow) textPrinterWindow->saveToFile(); }
+void Engine::quit()             { if (shutdown()) qApp->quit(); }
 
-QStringList MainWindow::qmlRecentFiles()
+QStringList Engine::recentFiles()
 {
     QStringList out;
     for (int i = 0; i < 10; ++i) {
@@ -1626,7 +1653,7 @@ QStringList MainWindow::qmlRecentFiles()
     return out;
 }
 
-QVariantMap MainWindow::qmlLoadOptions()
+QVariantMap Engine::loadOptions()
 {
     QVariantMap o;
     o["iface"]            = (aspeqtSettings->serialPortInterface() == SIO2BT) ? 1 : 0;
@@ -1646,7 +1673,7 @@ QVariantMap MainWindow::qmlLoadOptions()
     return o;
 }
 
-void MainWindow::qmlApplyOptions(const QVariantMap &o)
+void Engine::applyOptions(const QVariantMap &o)
 {
     int ifaceVal = o.value("iface").toInt() == 1 ? SIO2BT : 0;
     aspeqtSettings->setSerialPortName(ifaceVal == SIO2BT ? "SIO2BT" : "SIO2PC");
@@ -1673,12 +1700,12 @@ void MainWindow::qmlApplyOptions(const QVariantMap &o)
 #endif
     aspeqtSettings->setBackend(0);
     aspeqtSettings->setI18nLanguage(o.value("language").toString());
-    emit qmlChanged();
+    emit stateChanged();
 }
 
 // Available UI languages: Automatic + English + every bundled aspeqt_*.qm
 // (native name = that translation's rendering of "English").
-QVariantList MainWindow::qmlLanguages()
+QVariantList Engine::languages()
 {
     QVariantList langs;
     langs << QVariantMap{ { "code", "auto" }, { "name", tr("Automatic") } };
@@ -1714,9 +1741,9 @@ static AtariFileSystem *createDiskFs(int index, SimpleDiskImage *disk)
     return nullptr;
 }
 
-bool MainWindow::qmlDiskOpen(int hwIndex)
+bool Engine::diskOpen(int hwIndex)
 {
-    qmlDiskClose();
+    diskClose();
     SimpleDiskImage *img = qobject_cast<SimpleDiskImage *>(sio->getDevice(0x31 + hwIndex));
     if (!img) return false;
     m_dvDisk = img;
@@ -1731,13 +1758,13 @@ bool MainWindow::qmlDiskOpen(int hwIndex)
     return true;
 }
 
-bool MainWindow::qmlDiskReadOnly()
+bool Engine::diskReadOnly()
 {
     // Folder images are read-only virtual disks (writeSector is a no-op).
     return !m_dvDisk || qobject_cast<FolderImage *>(m_dvDisk) != nullptr;
 }
 
-int MainWindow::qmlDiskFsType() { return m_dvFsType; }
+int Engine::diskFsType() { return m_dvFsType; }
 
 
 // ---------------------------------------------------------------------------
@@ -1760,7 +1787,7 @@ static QString pathFromPickedUrl(const QString &url)
     return url;
 }
 
-void MainWindow::pickDocument(int reqId, const QString &mimeType)
+void Engine::pickDocument(int reqId, const QString &mimeType)
 {
 #ifdef Q_OS_ANDROID
     QJniObject::callStaticMethod<void>("net/greblus/SerialActivity", "pickDocument",
@@ -1771,7 +1798,7 @@ void MainWindow::pickDocument(int reqId, const QString &mimeType)
 #endif
 }
 
-void MainWindow::createDocument(int reqId, const QString &mimeType, const QString &suggestedName)
+void Engine::createDocument(int reqId, const QString &mimeType, const QString &suggestedName)
 {
 #ifdef Q_OS_ANDROID
     QJniObject::callStaticMethod<void>("net/greblus/SerialActivity", "createDocument",
@@ -1783,7 +1810,7 @@ void MainWindow::createDocument(int reqId, const QString &mimeType, const QStrin
 #endif
 }
 
-void MainWindow::pickFolder(int reqId)
+void Engine::pickFolder(int reqId)
 {
 #ifdef Q_OS_ANDROID
     QJniObject::callStaticMethod<void>("net/greblus/SerialActivity", "pickFolder",
@@ -1793,12 +1820,12 @@ void MainWindow::pickFolder(int reqId)
 #endif
 }
 
-void MainWindow::documentPicked(int reqId, const QString &uri)
+void Engine::onDocumentPicked(int reqId, const QString &uri)
 {
-    emit qmlDocumentPicked(reqId, uri);
+    emit documentPicked(reqId, uri);
 }
 
-QString MainWindow::qmlStartDir(const QString &kind)
+QString Engine::startDir(const QString &kind)
 {
     if (kind == QLatin1String("disk"))    return aspeqtSettings->lastDiskImageDir();
     if (kind == QLatin1String("folder"))  return aspeqtSettings->lastFolderImageDir();
@@ -1807,7 +1834,7 @@ QString MainWindow::qmlStartDir(const QString &kind)
     return QString();
 }
 
-void MainWindow::qmlMountDiskPath(int no, const QString &url)
+void Engine::mountDiskPath(int no, const QString &url)
 {
     const QString fileName = pathFromPickedUrl(url);
     if (fileName.isEmpty())
@@ -1817,7 +1844,7 @@ void MainWindow::qmlMountDiskPath(int no, const QString &url)
     mountFileWithDefaultProtection(no, fileName);
 }
 
-void MainWindow::qmlMountFolderPath(int no, const QString &url)
+void Engine::mountFolderPath(int no, const QString &url)
 {
     const QString fileName = pathFromPickedUrl(url);
     if (fileName.isEmpty())
@@ -1833,7 +1860,7 @@ void MainWindow::qmlMountFolderPath(int no, const QString &url)
     mountFileWithDefaultProtection(no, fileName);
 }
 
-void MainWindow::qmlLoaderLoadPath(const QString &url)
+void Engine::loaderLoadPath(const QString &url)
 {
     const QString picked = pathFromPickedUrl(url);
     if (picked.isEmpty())
@@ -1855,10 +1882,10 @@ void MainWindow::qmlLoaderLoadPath(const QString &url)
     else if (t == FileTypes::Xex || t == FileTypes::XexGz)
         loaderLoadXex(path);
     else
-        qmlToast(tr("Pick an Atari executable (.xex/.com/.exe) or a cassette image (.cas)."));
+        toast(tr("Pick an Atari executable (.xex/.com/.exe) or a cassette image (.cas)."));
 }
 
-void MainWindow::qmlToast(const QString &text)
+void Engine::toast(const QString &text)
 {
 #ifdef Q_OS_ANDROID
     QJniObject::callStaticMethod<void>("net/greblus/SerialActivity", "showToast",
@@ -1868,7 +1895,7 @@ void MainWindow::qmlToast(const QString &text)
 #endif
 }
 
-bool MainWindow::qmlDiskSetFsType(int index)
+bool Engine::diskSetFsType(int index)
 {
     if (!m_dvDisk) return false;
 
@@ -1889,7 +1916,7 @@ bool MainWindow::qmlDiskSetFsType(int index)
     return true;
 }
 
-void MainWindow::qmlDiskClose()
+void Engine::diskClose()
 {
     if (m_dvFs)   { delete m_dvFs; m_dvFs = nullptr; }
     if (m_dvDisk) { m_dvDisk->unlock(); m_dvDisk = nullptr; }
@@ -1897,7 +1924,7 @@ void MainWindow::qmlDiskClose()
     m_dvPaths.clear();
 }
 
-QVariantList MainWindow::qmlDiskEntries()
+QVariantList Engine::diskEntries()
 {
     QVariantList out;
     if (!m_dvFs || m_dvDirs.isEmpty()) return out;
@@ -1914,7 +1941,7 @@ QVariantList MainWindow::qmlDiskEntries()
     return out;
 }
 
-QString MainWindow::qmlDiskPath()
+QString Engine::diskPath()
 {
     if (!m_dvFs || !m_dvDisk) return QString();
     QString p = QString("D%1:").arg(m_dvDisk->deviceNo() - 0x30);
@@ -1922,9 +1949,9 @@ QString MainWindow::qmlDiskPath()
     return p;
 }
 
-bool MainWindow::qmlDiskCanParent() { return !m_dvPaths.isEmpty(); }
+bool Engine::diskCanParent() { return !m_dvPaths.isEmpty(); }
 
-void MainWindow::qmlDiskEnter(int row)
+void Engine::diskEnter(int row)
 {
     if (!m_dvFs || m_dvDirs.isEmpty()) return;
     const QList<AtariDirEntry> entries = m_dvFs->getEntries(m_dvDirs.last());
@@ -1935,7 +1962,7 @@ void MainWindow::qmlDiskEnter(int row)
     m_dvDirs.append(e.firstSector);
 }
 
-void MainWindow::qmlDiskParent()
+void Engine::diskParent()
 {
     if (m_dvPaths.isEmpty()) return;
     m_dvPaths.removeLast();
@@ -1953,12 +1980,12 @@ static QList<AtariDirEntry> dvPickRows(AtariFileSystem *fs, quint16 dir, const Q
     return out;
 }
 
-void MainWindow::qmlDiskSetTextConversion(bool on)
+void Engine::diskSetTextConversion(bool on)
 {
     if (m_dvFs) m_dvFs->setTextConversion(on);
 }
 
-bool MainWindow::qmlDiskExtractPath(const QVariantList &rows, const QString &url)
+bool Engine::diskExtractPath(const QVariantList &rows, const QString &url)
 {
     if (!m_dvFs || m_dvDirs.isEmpty() || rows.isEmpty()) return false;
     QList<AtariDirEntry> sel = dvPickRows(m_dvFs, m_dvDirs.last(), rows);
@@ -1970,7 +1997,7 @@ bool MainWindow::qmlDiskExtractPath(const QVariantList &rows, const QString &url
 
     if (!target.startsWith(QLatin1String("content:"))) {
         if (!m_dvFs->extractRecursive(sel, target)) {
-            qmlToast(tr("Cannot extract the files, see the log."));
+            toast(tr("Cannot extract the files, see the log."));
             return false;
         }
         return true;
@@ -1982,30 +2009,30 @@ bool MainWindow::qmlDiskExtractPath(const QVariantList &rows, const QString &url
     QDir(tmpDir).removeRecursively();
     QDir().mkpath(tmpDir);
     if (!m_dvFs->extractRecursive(sel, tmpDir)) {
-        qmlToast(tr("Cannot extract the files, see the log."));
+        toast(tr("Cannot extract the files, see the log."));
         return false;
     }
     if (androidCopyDirToTree(tmpDir, target) < 0) {
-        qmlToast(tr("Cannot extract the files, see the log."));
+        toast(tr("Cannot extract the files, see the log."));
         return false;
     }
     QDir(tmpDir).removeRecursively();
     return true;
 }
 
-bool MainWindow::qmlDiskDelete(const QVariantList &rows)
+bool Engine::diskDelete(const QVariantList &rows)
 {
     if (!m_dvFs || m_dvDirs.isEmpty() || rows.isEmpty()) return false;
     QList<AtariDirEntry> sel = dvPickRows(m_dvFs, m_dvDirs.last(), rows);
     if (sel.isEmpty()) return false;
     if (!m_dvFs->deleteRecursive(sel)) {
-        qmlToast(tr("Cannot delete the files, see the log."));
+        toast(tr("Cannot delete the files, see the log."));
         return false;
     }
     return true;
 }
 
-bool MainWindow::qmlDiskAddFilesPath(const QString &url)
+bool Engine::diskAddFilesPath(const QString &url)
 {
     if (!m_dvFs || m_dvDirs.isEmpty()) return false;
     const QString picked = pathFromPickedUrl(url);
@@ -2019,7 +2046,7 @@ bool MainWindow::qmlDiskAddFilesPath(const QString &url)
         // and fails on names holding parens or spaces (silently, until now).
         ContentFile src(picked);
         if (!src.open(QIODevice::ReadOnly)) {
-            qmlToast(tr("Cannot add the file, see the log."));
+            toast(tr("Cannot add the file, see the log."));
             qCritical() << "!e" << tr("Cannot read '%1'.").arg(friendlyName(picked));
             return false;
         }
@@ -2033,7 +2060,7 @@ bool MainWindow::qmlDiskAddFilesPath(const QString &url)
         const QString tmpPath = tmpDir + "/" + displayName;
         QFile dst(tmpPath);
         if (!dst.open(QIODevice::WriteOnly | QIODevice::Truncate)) {
-            qmlToast(tr("Cannot add the file, see the log."));
+            toast(tr("Cannot add the file, see the log."));
             qCritical() << "!e" << tr("Cannot write to '%1'.").arg(tmpPath);
             return false;
         }
@@ -2045,13 +2072,13 @@ bool MainWindow::qmlDiskAddFilesPath(const QString &url)
     }
 
     if (m_dvFs->insertRecursive(m_dvDirs.last(), files).isEmpty()) {
-        qmlToast(tr("Cannot add the file, see the log."));
+        toast(tr("Cannot add the file, see the log."));
         return false;
     }
     return true;
 }
 
-void MainWindow::qmlMountRecent(int index)
+void Engine::mountRecent(int index)
 {
     // Straight from the settings: this used to read the text of the (invisible)
     // widget menu action, so it only worked if that menu had been refreshed.

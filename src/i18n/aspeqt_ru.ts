@@ -159,7 +159,7 @@ p, li { white-space: pre-wrap; }
     <message>
         <location filename="../miscdevices.cpp" line="417"/>
         <source>[%1] command: $%2, aux: $%3 NAKed.</source>
-        <translation type="unfinished">[%1] команда: $%2, aux: $%3 NAKed.</translation>
+        <translation>[%1] команда: $%2, aux: $%3 NAKed.</translation>
     </message>
     <message>
         <location filename="../miscdevices.cpp" line="437"/>
@@ -693,7 +693,7 @@ Estimated time left: %1:%2</source>
     <message>
         <location filename="../createimagedialog.ui" line="147"/>
         <source>8192 bytes per sector</source>
-        <translation type="unfinished">512 байт на сектор {8192 ?}</translation>
+        <translation>512 байт на сектор {8192 ?}</translation>
     </message>
     <message>
         <location filename="../createimagedialog.ui" line="163"/>
@@ -1519,738 +1519,738 @@ p, li { white-space: pre-wrap; }
     </message>
 </context>
 <context>
-    <name>MainWindow</name>
+    <name>Engine</name>
     <message>
-        <location filename="../mainwindow.cpp" line="256"/>
+        <location filename="../engine.cpp" line="256"/>
         <source>AspeQt - Atari Serial Peripheral Emulator for Qt</source>
         <translation>AspeQt - эмулятор SIO-периферии для Atari под Qt</translation>
     </message>
     <message>
-        <location filename="../mainwindow.ui" line="3350"/>
+        <location filename="../engine.cpp" line="3350"/>
         <source>&amp;Disk</source>
         <translation>&amp;Диск</translation>
     </message>
     <message>
-        <location filename="../mainwindow.ui" line="3370"/>
+        <location filename="../engine.cpp" line="3370"/>
         <source>&amp;File</source>
         <translation>&amp;Файл</translation>
     </message>
     <message>
-        <location filename="../mainwindow.ui" line="3386"/>
+        <location filename="../engine.cpp" line="3386"/>
         <source>&amp;Tools</source>
         <translation>&amp;Инструменты</translation>
     </message>
     <message>
-        <location filename="../mainwindow.ui" line="3392"/>
+        <location filename="../engine.cpp" line="3392"/>
         <source>&amp;Help</source>
         <translation>&amp;Справка</translation>
     </message>
     <message>
-        <location filename="../mainwindow.ui" line="3425"/>
+        <location filename="../engine.cpp" line="3425"/>
         <source>Unmount &amp;all</source>
         <translation>Отключить &amp;все</translation>
     </message>
     <message>
-        <location filename="../mainwindow.ui" line="3428"/>
+        <location filename="../engine.cpp" line="3428"/>
         <source>Unmount all</source>
         <translation>Отключить все</translation>
     </message>
     <message>
-        <location filename="../mainwindow.ui" line="3443"/>
-        <location filename="../mainwindow.ui" line="3461"/>
-        <location filename="../mainwindow.ui" line="3479"/>
-        <location filename="../mainwindow.ui" line="3497"/>
-        <location filename="../mainwindow.ui" line="3515"/>
-        <location filename="../mainwindow.ui" line="3533"/>
-        <location filename="../mainwindow.ui" line="3551"/>
-        <location filename="../mainwindow.ui" line="3569"/>
-        <location filename="../mainwindow.ui" line="3587"/>
-        <location filename="../mainwindow.ui" line="3605"/>
-        <location filename="../mainwindow.ui" line="3623"/>
-        <location filename="../mainwindow.ui" line="3641"/>
-        <location filename="../mainwindow.ui" line="3659"/>
-        <location filename="../mainwindow.ui" line="3677"/>
-        <location filename="../mainwindow.ui" line="3695"/>
+        <location filename="../engine.cpp" line="3443"/>
+        <location filename="../engine.cpp" line="3461"/>
+        <location filename="../engine.cpp" line="3479"/>
+        <location filename="../engine.cpp" line="3497"/>
+        <location filename="../engine.cpp" line="3515"/>
+        <location filename="../engine.cpp" line="3533"/>
+        <location filename="../engine.cpp" line="3551"/>
+        <location filename="../engine.cpp" line="3569"/>
+        <location filename="../engine.cpp" line="3587"/>
+        <location filename="../engine.cpp" line="3605"/>
+        <location filename="../engine.cpp" line="3623"/>
+        <location filename="../engine.cpp" line="3641"/>
+        <location filename="../engine.cpp" line="3659"/>
+        <location filename="../engine.cpp" line="3677"/>
+        <location filename="../engine.cpp" line="3695"/>
         <source>Mount disk image...</source>
         <translation>Подключить образ диска...</translation>
     </message>
     <message>
-        <location filename="../mainwindow.ui" line="3446"/>
-        <location filename="../mainwindow.ui" line="3449"/>
+        <location filename="../engine.cpp" line="3446"/>
+        <location filename="../engine.cpp" line="3449"/>
         <source>Mount a disk image to D1</source>
         <translation>Подключить образ диска в D1</translation>
     </message>
     <message>
-        <location filename="../mainwindow.ui" line="3452"/>
+        <location filename="../engine.cpp" line="3452"/>
         <source>Alt+1</source>
         <translation></translation>
     </message>
     <message>
-        <location filename="../mainwindow.ui" line="3464"/>
-        <location filename="../mainwindow.ui" line="3467"/>
+        <location filename="../engine.cpp" line="3464"/>
+        <location filename="../engine.cpp" line="3467"/>
         <source>Mount a disk image to D2</source>
         <translation>Подключить образ диска в D2</translation>
     </message>
     <message>
-        <location filename="../mainwindow.ui" line="3470"/>
+        <location filename="../engine.cpp" line="3470"/>
         <source>Alt+2</source>
         <translation></translation>
     </message>
     <message>
-        <location filename="../mainwindow.ui" line="3482"/>
-        <location filename="../mainwindow.ui" line="3485"/>
+        <location filename="../engine.cpp" line="3482"/>
+        <location filename="../engine.cpp" line="3485"/>
         <source>Mount a disk image to D3</source>
         <translation>Подключить образ диска в D3</translation>
     </message>
     <message>
-        <location filename="../mainwindow.ui" line="3488"/>
+        <location filename="../engine.cpp" line="3488"/>
         <source>Alt+3</source>
         <translation></translation>
     </message>
     <message>
-        <location filename="../mainwindow.ui" line="3500"/>
-        <location filename="../mainwindow.ui" line="3503"/>
+        <location filename="../engine.cpp" line="3500"/>
+        <location filename="../engine.cpp" line="3503"/>
         <source>Mount a disk image to D4</source>
         <translation>Подключить образ диска в D4</translation>
     </message>
     <message>
-        <location filename="../mainwindow.ui" line="3506"/>
+        <location filename="../engine.cpp" line="3506"/>
         <source>Alt+4</source>
         <translation></translation>
     </message>
     <message>
-        <location filename="../mainwindow.ui" line="3518"/>
-        <location filename="../mainwindow.ui" line="3521"/>
+        <location filename="../engine.cpp" line="3518"/>
+        <location filename="../engine.cpp" line="3521"/>
         <source>Mount a disk image to D5</source>
         <translation>Подключить образ диска в D5</translation>
     </message>
     <message>
-        <location filename="../mainwindow.ui" line="3524"/>
+        <location filename="../engine.cpp" line="3524"/>
         <source>Alt+5</source>
         <translation></translation>
     </message>
     <message>
-        <location filename="../mainwindow.ui" line="3536"/>
-        <location filename="../mainwindow.ui" line="3539"/>
+        <location filename="../engine.cpp" line="3536"/>
+        <location filename="../engine.cpp" line="3539"/>
         <source>Mount a disk image to D6</source>
         <translation>Подключить образ диска в D6</translation>
     </message>
     <message>
-        <location filename="../mainwindow.ui" line="3542"/>
+        <location filename="../engine.cpp" line="3542"/>
         <source>Alt+6</source>
         <translation></translation>
     </message>
     <message>
-        <location filename="../mainwindow.ui" line="3554"/>
-        <location filename="../mainwindow.ui" line="3557"/>
+        <location filename="../engine.cpp" line="3554"/>
+        <location filename="../engine.cpp" line="3557"/>
         <source>Mount a disk image to D7</source>
         <translation>Подключить образ диска в D7</translation>
     </message>
     <message>
-        <location filename="../mainwindow.ui" line="3560"/>
+        <location filename="../engine.cpp" line="3560"/>
         <source>Alt+7</source>
         <translation></translation>
     </message>
     <message>
-        <location filename="../mainwindow.ui" line="3572"/>
-        <location filename="../mainwindow.ui" line="3575"/>
+        <location filename="../engine.cpp" line="3572"/>
+        <location filename="../engine.cpp" line="3575"/>
         <source>Mount a disk image to D8</source>
         <translation>Подключить образ диска в D8</translation>
     </message>
     <message>
-        <location filename="../mainwindow.ui" line="3578"/>
+        <location filename="../engine.cpp" line="3578"/>
         <source>Alt+8</source>
         <translation></translation>
     </message>
     <message>
-        <location filename="../mainwindow.ui" line="3590"/>
-        <location filename="../mainwindow.ui" line="3593"/>
+        <location filename="../engine.cpp" line="3590"/>
+        <location filename="../engine.cpp" line="3593"/>
         <source>Mount a disk image to D9</source>
-        <translation type="unfinished">Подключить образ диска в D9</translation>
+        <translation>Подключить образ диска в D9</translation>
     </message>
     <message>
-        <location filename="../mainwindow.ui" line="3596"/>
+        <location filename="../engine.cpp" line="3596"/>
         <source>Alt+9</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../mainwindow.ui" line="3608"/>
-        <location filename="../mainwindow.ui" line="3611"/>
+        <location filename="../engine.cpp" line="3608"/>
+        <location filename="../engine.cpp" line="3611"/>
         <source>Mount a disk image to D10</source>
-        <translation type="unfinished">Подключить образ диска в D10</translation>
+        <translation>Подключить образ диска в D10</translation>
     </message>
     <message>
-        <location filename="../mainwindow.ui" line="3626"/>
-        <location filename="../mainwindow.ui" line="3629"/>
+        <location filename="../engine.cpp" line="3626"/>
+        <location filename="../engine.cpp" line="3629"/>
         <source>Mount a disk image to D11</source>
-        <translation type="unfinished">Подключить образ диска в D11</translation>
+        <translation>Подключить образ диска в D11</translation>
     </message>
     <message>
-        <location filename="../mainwindow.ui" line="3644"/>
-        <location filename="../mainwindow.ui" line="3647"/>
+        <location filename="../engine.cpp" line="3644"/>
+        <location filename="../engine.cpp" line="3647"/>
         <source>Mount a disk image to D12</source>
-        <translation type="unfinished">Подключить образ диска в D12</translation>
+        <translation>Подключить образ диска в D12</translation>
     </message>
     <message>
-        <location filename="../mainwindow.ui" line="3662"/>
-        <location filename="../mainwindow.ui" line="3665"/>
+        <location filename="../engine.cpp" line="3662"/>
+        <location filename="../engine.cpp" line="3665"/>
         <source>Mount a disk image to D13</source>
-        <translation type="unfinished">Подключить образ диска в D13</translation>
+        <translation>Подключить образ диска в D13</translation>
     </message>
     <message>
-        <location filename="../mainwindow.ui" line="3680"/>
-        <location filename="../mainwindow.ui" line="3683"/>
+        <location filename="../engine.cpp" line="3680"/>
+        <location filename="../engine.cpp" line="3683"/>
         <source>Mount a disk image to D14</source>
-        <translation type="unfinished">Подключить образ диска в D14</translation>
+        <translation>Подключить образ диска в D14</translation>
     </message>
     <message>
-        <location filename="../mainwindow.ui" line="3698"/>
-        <location filename="../mainwindow.ui" line="3701"/>
+        <location filename="../engine.cpp" line="3698"/>
+        <location filename="../engine.cpp" line="3701"/>
         <source>Mount a disk image to D15</source>
-        <translation type="unfinished">Подключить образ диска в D15</translation>
+        <translation>Подключить образ диска в D15</translation>
     </message>
     <message>
-        <location filename="../mainwindow.ui" line="5141"/>
+        <location filename="../engine.cpp" line="5141"/>
         <source>Alt+O</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../mainwindow.ui" line="3713"/>
-        <location filename="../mainwindow.ui" line="3731"/>
-        <location filename="../mainwindow.ui" line="3749"/>
-        <location filename="../mainwindow.ui" line="3767"/>
-        <location filename="../mainwindow.ui" line="3785"/>
-        <location filename="../mainwindow.ui" line="3803"/>
-        <location filename="../mainwindow.ui" line="3821"/>
-        <location filename="../mainwindow.ui" line="3839"/>
-        <location filename="../mainwindow.ui" line="3857"/>
-        <location filename="../mainwindow.ui" line="3875"/>
-        <location filename="../mainwindow.ui" line="3893"/>
-        <location filename="../mainwindow.ui" line="3911"/>
-        <location filename="../mainwindow.ui" line="3929"/>
-        <location filename="../mainwindow.ui" line="3947"/>
-        <location filename="../mainwindow.ui" line="3965"/>
+        <location filename="../engine.cpp" line="3713"/>
+        <location filename="../engine.cpp" line="3731"/>
+        <location filename="../engine.cpp" line="3749"/>
+        <location filename="../engine.cpp" line="3767"/>
+        <location filename="../engine.cpp" line="3785"/>
+        <location filename="../engine.cpp" line="3803"/>
+        <location filename="../engine.cpp" line="3821"/>
+        <location filename="../engine.cpp" line="3839"/>
+        <location filename="../engine.cpp" line="3857"/>
+        <location filename="../engine.cpp" line="3875"/>
+        <location filename="../engine.cpp" line="3893"/>
+        <location filename="../engine.cpp" line="3911"/>
+        <location filename="../engine.cpp" line="3929"/>
+        <location filename="../engine.cpp" line="3947"/>
+        <location filename="../engine.cpp" line="3965"/>
         <source>Mount folder image...</source>
         <translation>Подключить образ папки...</translation>
     </message>
     <message>
-        <location filename="../mainwindow.ui" line="3716"/>
-        <location filename="../mainwindow.ui" line="3719"/>
+        <location filename="../engine.cpp" line="3716"/>
+        <location filename="../engine.cpp" line="3719"/>
         <source>Mount a folder image to D1</source>
         <translation>Подключить образ папки в D1</translation>
     </message>
     <message>
-        <location filename="../mainwindow.ui" line="3722"/>
+        <location filename="../engine.cpp" line="3722"/>
         <source>Ctrl+1</source>
         <translation></translation>
     </message>
     <message>
-        <location filename="../mainwindow.ui" line="3734"/>
-        <location filename="../mainwindow.ui" line="3737"/>
+        <location filename="../engine.cpp" line="3734"/>
+        <location filename="../engine.cpp" line="3737"/>
         <source>Mount a folder image to D2</source>
         <translation>Подключить образ папки в D2</translation>
     </message>
     <message>
-        <location filename="../mainwindow.ui" line="3740"/>
+        <location filename="../engine.cpp" line="3740"/>
         <source>Ctrl+2</source>
         <translation></translation>
     </message>
     <message>
-        <location filename="../mainwindow.ui" line="3752"/>
-        <location filename="../mainwindow.ui" line="3755"/>
+        <location filename="../engine.cpp" line="3752"/>
+        <location filename="../engine.cpp" line="3755"/>
         <source>Mount a folder image to D3</source>
         <translation>Подключить образ папки в D3</translation>
     </message>
     <message>
-        <location filename="../mainwindow.ui" line="3758"/>
+        <location filename="../engine.cpp" line="3758"/>
         <source>Ctrl+3</source>
         <translation></translation>
     </message>
     <message>
-        <location filename="../mainwindow.ui" line="3770"/>
-        <location filename="../mainwindow.ui" line="3773"/>
+        <location filename="../engine.cpp" line="3770"/>
+        <location filename="../engine.cpp" line="3773"/>
         <source>Mount a folder image to D4</source>
         <translation>Подключить образ папки в D4</translation>
     </message>
     <message>
-        <location filename="../mainwindow.ui" line="3776"/>
+        <location filename="../engine.cpp" line="3776"/>
         <source>Ctrl+4</source>
         <translation></translation>
     </message>
     <message>
-        <location filename="../mainwindow.ui" line="3788"/>
-        <location filename="../mainwindow.ui" line="3791"/>
+        <location filename="../engine.cpp" line="3788"/>
+        <location filename="../engine.cpp" line="3791"/>
         <source>Mount a folder image to D5</source>
         <translation>Подключить образ папки в D5</translation>
     </message>
     <message>
-        <location filename="../mainwindow.ui" line="3794"/>
+        <location filename="../engine.cpp" line="3794"/>
         <source>Ctrl+5</source>
         <translation></translation>
     </message>
     <message>
-        <location filename="../mainwindow.ui" line="3806"/>
-        <location filename="../mainwindow.ui" line="3809"/>
+        <location filename="../engine.cpp" line="3806"/>
+        <location filename="../engine.cpp" line="3809"/>
         <source>Mount a folder image to D6</source>
         <translation>Подключить образ папки в D6</translation>
     </message>
     <message>
-        <location filename="../mainwindow.ui" line="3812"/>
+        <location filename="../engine.cpp" line="3812"/>
         <source>Ctrl+6</source>
         <translation></translation>
     </message>
     <message>
-        <location filename="../mainwindow.ui" line="3824"/>
-        <location filename="../mainwindow.ui" line="3827"/>
+        <location filename="../engine.cpp" line="3824"/>
+        <location filename="../engine.cpp" line="3827"/>
         <source>Mount a folder image to D7</source>
         <translation>Подключить образ папки в D7</translation>
     </message>
     <message>
-        <location filename="../mainwindow.ui" line="3830"/>
+        <location filename="../engine.cpp" line="3830"/>
         <source>Ctrl+7</source>
         <translation></translation>
     </message>
     <message>
-        <location filename="../mainwindow.ui" line="3842"/>
-        <location filename="../mainwindow.ui" line="3845"/>
+        <location filename="../engine.cpp" line="3842"/>
+        <location filename="../engine.cpp" line="3845"/>
         <source>Mount a folder image to D8</source>
         <translation>Подключить образ папки в D8</translation>
     </message>
     <message>
-        <location filename="../mainwindow.ui" line="3848"/>
+        <location filename="../engine.cpp" line="3848"/>
         <source>Ctrl+8</source>
         <translation></translation>
     </message>
     <message>
-        <location filename="../mainwindow.ui" line="3860"/>
-        <location filename="../mainwindow.ui" line="3863"/>
+        <location filename="../engine.cpp" line="3860"/>
+        <location filename="../engine.cpp" line="3863"/>
         <source>Mount a folder image to D9</source>
-        <translation type="unfinished">Подключить образ папки в D9</translation>
+        <translation>Подключить образ папки в D9</translation>
     </message>
     <message>
-        <location filename="../mainwindow.ui" line="3866"/>
+        <location filename="../engine.cpp" line="3866"/>
         <source>Ctrl+9</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../mainwindow.ui" line="3878"/>
-        <location filename="../mainwindow.ui" line="3881"/>
+        <location filename="../engine.cpp" line="3878"/>
+        <location filename="../engine.cpp" line="3881"/>
         <source>Mount a folder image to D10</source>
-        <translation type="unfinished">Подключить образ папки в D10</translation>
+        <translation>Подключить образ папки в D10</translation>
     </message>
     <message>
-        <location filename="../mainwindow.ui" line="3896"/>
-        <location filename="../mainwindow.ui" line="3899"/>
+        <location filename="../engine.cpp" line="3896"/>
+        <location filename="../engine.cpp" line="3899"/>
         <source>Mount a folder image to D11</source>
-        <translation type="unfinished">Подключить образ папки в D11</translation>
+        <translation>Подключить образ папки в D11</translation>
     </message>
     <message>
-        <location filename="../mainwindow.ui" line="3914"/>
-        <location filename="../mainwindow.ui" line="3917"/>
+        <location filename="../engine.cpp" line="3914"/>
+        <location filename="../engine.cpp" line="3917"/>
         <source>Mount a folder image to D12</source>
-        <translation type="unfinished">Подключить образ папки в D12</translation>
+        <translation>Подключить образ папки в D12</translation>
     </message>
     <message>
-        <location filename="../mainwindow.ui" line="6488"/>
-        <location filename="../mainwindow.ui" line="6491"/>
-        <location filename="../mainwindow.ui" line="6494"/>
+        <location filename="../engine.cpp" line="6488"/>
+        <location filename="../engine.cpp" line="6491"/>
+        <location filename="../engine.cpp" line="6494"/>
         <source>Open log window</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../mainwindow.ui" line="6497"/>
+        <location filename="../engine.cpp" line="6497"/>
         <source>Ctrl+L</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../mainwindow.ui" line="3932"/>
-        <location filename="../mainwindow.ui" line="3935"/>
+        <location filename="../engine.cpp" line="3932"/>
+        <location filename="../engine.cpp" line="3935"/>
         <source>Mount a folder image to D13</source>
-        <translation type="unfinished">Подключить образ папки в D13</translation>
+        <translation>Подключить образ папки в D13</translation>
     </message>
     <message>
-        <location filename="../mainwindow.ui" line="6464"/>
+        <location filename="../engine.cpp" line="6464"/>
         <source>Ctrl+M</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../mainwindow.ui" line="3950"/>
-        <location filename="../mainwindow.ui" line="3953"/>
+        <location filename="../engine.cpp" line="3950"/>
+        <location filename="../engine.cpp" line="3953"/>
         <source>Mount a folder image to D14</source>
-        <translation type="unfinished">Подключить образ папки в D14</translation>
+        <translation>Подключить образ папки в D14</translation>
     </message>
     <message>
-        <location filename="../mainwindow.ui" line="3968"/>
-        <location filename="../mainwindow.ui" line="3971"/>
+        <location filename="../engine.cpp" line="3968"/>
+        <location filename="../engine.cpp" line="3971"/>
         <source>Mount a folder image to D15</source>
-        <translation type="unfinished">Подключить образ папки в D15</translation>
+        <translation>Подключить образ папки в D15</translation>
     </message>
     <message>
-        <location filename="../mainwindow.ui" line="3986"/>
-        <location filename="../mainwindow.ui" line="4004"/>
-        <location filename="../mainwindow.ui" line="4022"/>
-        <location filename="../mainwindow.ui" line="4040"/>
-        <location filename="../mainwindow.ui" line="4058"/>
-        <location filename="../mainwindow.ui" line="4076"/>
-        <location filename="../mainwindow.ui" line="4094"/>
-        <location filename="../mainwindow.ui" line="4112"/>
-        <location filename="../mainwindow.ui" line="4130"/>
-        <location filename="../mainwindow.ui" line="4148"/>
-        <location filename="../mainwindow.ui" line="4166"/>
-        <location filename="../mainwindow.ui" line="4184"/>
-        <location filename="../mainwindow.ui" line="4202"/>
-        <location filename="../mainwindow.ui" line="4220"/>
-        <location filename="../mainwindow.ui" line="4238"/>
+        <location filename="../engine.cpp" line="3986"/>
+        <location filename="../engine.cpp" line="4004"/>
+        <location filename="../engine.cpp" line="4022"/>
+        <location filename="../engine.cpp" line="4040"/>
+        <location filename="../engine.cpp" line="4058"/>
+        <location filename="../engine.cpp" line="4076"/>
+        <location filename="../engine.cpp" line="4094"/>
+        <location filename="../engine.cpp" line="4112"/>
+        <location filename="../engine.cpp" line="4130"/>
+        <location filename="../engine.cpp" line="4148"/>
+        <location filename="../engine.cpp" line="4166"/>
+        <location filename="../engine.cpp" line="4184"/>
+        <location filename="../engine.cpp" line="4202"/>
+        <location filename="../engine.cpp" line="4220"/>
+        <location filename="../engine.cpp" line="4238"/>
         <source>Unmount</source>
         <translation>Отключить</translation>
     </message>
     <message>
-        <location filename="../mainwindow.ui" line="3989"/>
-        <location filename="../mainwindow.ui" line="3992"/>
+        <location filename="../engine.cpp" line="3989"/>
+        <location filename="../engine.cpp" line="3992"/>
         <source>Unmount D1</source>
         <translation>Отключить D1</translation>
     </message>
     <message>
-        <location filename="../mainwindow.ui" line="4007"/>
-        <location filename="../mainwindow.ui" line="4010"/>
+        <location filename="../engine.cpp" line="4007"/>
+        <location filename="../engine.cpp" line="4010"/>
         <source>Unmount D2</source>
         <translation>Отключить D2</translation>
     </message>
     <message>
-        <location filename="../mainwindow.ui" line="4025"/>
-        <location filename="../mainwindow.ui" line="4028"/>
+        <location filename="../engine.cpp" line="4025"/>
+        <location filename="../engine.cpp" line="4028"/>
         <source>Unmount D3</source>
         <translation>Отключить D3</translation>
     </message>
     <message>
-        <location filename="../mainwindow.ui" line="4043"/>
-        <location filename="../mainwindow.ui" line="4046"/>
+        <location filename="../engine.cpp" line="4043"/>
+        <location filename="../engine.cpp" line="4046"/>
         <source>Unmount D4</source>
         <translation>Отключить D4</translation>
     </message>
     <message>
-        <location filename="../mainwindow.ui" line="4061"/>
-        <location filename="../mainwindow.ui" line="4064"/>
+        <location filename="../engine.cpp" line="4061"/>
+        <location filename="../engine.cpp" line="4064"/>
         <source>Unmount D5</source>
         <translation>Отключить D5</translation>
     </message>
     <message>
-        <location filename="../mainwindow.ui" line="4079"/>
-        <location filename="../mainwindow.ui" line="4082"/>
+        <location filename="../engine.cpp" line="4079"/>
+        <location filename="../engine.cpp" line="4082"/>
         <source>Unmount D6</source>
         <translation>Отключить D6</translation>
     </message>
     <message>
-        <location filename="../mainwindow.ui" line="4097"/>
-        <location filename="../mainwindow.ui" line="4100"/>
+        <location filename="../engine.cpp" line="4097"/>
+        <location filename="../engine.cpp" line="4100"/>
         <source>Unmount D7</source>
         <translation>Отключить D7</translation>
     </message>
     <message>
-        <location filename="../mainwindow.ui" line="4115"/>
-        <location filename="../mainwindow.ui" line="4118"/>
+        <location filename="../engine.cpp" line="4115"/>
+        <location filename="../engine.cpp" line="4118"/>
         <source>Unmount D8</source>
         <translation>Отключить D8</translation>
     </message>
     <message>
-        <location filename="../mainwindow.ui" line="4133"/>
-        <location filename="../mainwindow.ui" line="4136"/>
+        <location filename="../engine.cpp" line="4133"/>
+        <location filename="../engine.cpp" line="4136"/>
         <source>Unmount D9</source>
-        <translation type="unfinished">Отключить D9</translation>
+        <translation>Отключить D9</translation>
     </message>
     <message>
-        <location filename="../mainwindow.ui" line="4151"/>
-        <location filename="../mainwindow.ui" line="4154"/>
+        <location filename="../engine.cpp" line="4151"/>
+        <location filename="../engine.cpp" line="4154"/>
         <source>Unmount D10</source>
-        <translation type="unfinished">Отключить D10</translation>
+        <translation>Отключить D10</translation>
     </message>
     <message>
-        <location filename="../mainwindow.ui" line="4169"/>
-        <location filename="../mainwindow.ui" line="4172"/>
+        <location filename="../engine.cpp" line="4169"/>
+        <location filename="../engine.cpp" line="4172"/>
         <source>Unmount D11</source>
-        <translation type="unfinished">Отключить D11</translation>
+        <translation>Отключить D11</translation>
     </message>
     <message>
-        <location filename="../mainwindow.ui" line="4187"/>
-        <location filename="../mainwindow.ui" line="4190"/>
+        <location filename="../engine.cpp" line="4187"/>
+        <location filename="../engine.cpp" line="4190"/>
         <source>Unmount D12</source>
-        <translation type="unfinished">Отключить D12</translation>
+        <translation>Отключить D12</translation>
     </message>
     <message>
-        <location filename="../mainwindow.ui" line="4205"/>
-        <location filename="../mainwindow.ui" line="4208"/>
+        <location filename="../engine.cpp" line="4205"/>
+        <location filename="../engine.cpp" line="4208"/>
         <source>Unmount D13</source>
-        <translation type="unfinished">Отключить D13</translation>
+        <translation>Отключить D13</translation>
     </message>
     <message>
-        <location filename="../mainwindow.ui" line="4223"/>
-        <location filename="../mainwindow.ui" line="4226"/>
+        <location filename="../engine.cpp" line="4223"/>
+        <location filename="../engine.cpp" line="4226"/>
         <source>Unmount D14</source>
-        <translation type="unfinished">Отключить D14</translation>
+        <translation>Отключить D14</translation>
     </message>
     <message>
-        <location filename="../mainwindow.ui" line="4241"/>
-        <location filename="../mainwindow.ui" line="4244"/>
+        <location filename="../engine.cpp" line="4241"/>
+        <location filename="../engine.cpp" line="4244"/>
         <source>Unmount D15</source>
-        <translation type="unfinished">Отключить D15</translation>
+        <translation>Отключить D15</translation>
     </message>
     <message>
-        <location filename="../mainwindow.ui" line="4260"/>
-        <location filename="../mainwindow.ui" line="4282"/>
-        <location filename="../mainwindow.ui" line="4304"/>
-        <location filename="../mainwindow.ui" line="4326"/>
-        <location filename="../mainwindow.ui" line="4348"/>
-        <location filename="../mainwindow.ui" line="4370"/>
-        <location filename="../mainwindow.ui" line="4392"/>
-        <location filename="../mainwindow.ui" line="4417"/>
-        <location filename="../mainwindow.ui" line="4439"/>
-        <location filename="../mainwindow.ui" line="4461"/>
-        <location filename="../mainwindow.ui" line="4483"/>
-        <location filename="../mainwindow.ui" line="4505"/>
-        <location filename="../mainwindow.ui" line="4527"/>
-        <location filename="../mainwindow.ui" line="4549"/>
-        <location filename="../mainwindow.ui" line="4571"/>
+        <location filename="../engine.cpp" line="4260"/>
+        <location filename="../engine.cpp" line="4282"/>
+        <location filename="../engine.cpp" line="4304"/>
+        <location filename="../engine.cpp" line="4326"/>
+        <location filename="../engine.cpp" line="4348"/>
+        <location filename="../engine.cpp" line="4370"/>
+        <location filename="../engine.cpp" line="4392"/>
+        <location filename="../engine.cpp" line="4417"/>
+        <location filename="../engine.cpp" line="4439"/>
+        <location filename="../engine.cpp" line="4461"/>
+        <location filename="../engine.cpp" line="4483"/>
+        <location filename="../engine.cpp" line="4505"/>
+        <location filename="../engine.cpp" line="4527"/>
+        <location filename="../engine.cpp" line="4549"/>
+        <location filename="../engine.cpp" line="4571"/>
         <source>Write protected</source>
         <translation>Защищен от записи</translation>
     </message>
     <message>
-        <location filename="../mainwindow.ui" line="4263"/>
-        <location filename="../mainwindow.ui" line="4266"/>
+        <location filename="../engine.cpp" line="4263"/>
+        <location filename="../engine.cpp" line="4266"/>
         <source>Toggle write protection for D1</source>
         <translation>Включить/отключить защиту от записи для D1</translation>
     </message>
     <message>
-        <location filename="../mainwindow.ui" line="4285"/>
-        <location filename="../mainwindow.ui" line="4288"/>
+        <location filename="../engine.cpp" line="4285"/>
+        <location filename="../engine.cpp" line="4288"/>
         <source>Toggle write protection for D2</source>
         <translation>Включить/отключить защиту от записи для D2</translation>
     </message>
     <message>
-        <location filename="../mainwindow.ui" line="4307"/>
-        <location filename="../mainwindow.ui" line="4310"/>
+        <location filename="../engine.cpp" line="4307"/>
+        <location filename="../engine.cpp" line="4310"/>
         <source>Toggle write protection for D3</source>
         <translation>Включить/отключить защиту от записи для D3</translation>
     </message>
     <message>
-        <location filename="../mainwindow.ui" line="4329"/>
-        <location filename="../mainwindow.ui" line="4332"/>
+        <location filename="../engine.cpp" line="4329"/>
+        <location filename="../engine.cpp" line="4332"/>
         <source>Toggle write protection for D4</source>
         <translation>Включить/отключить защиту от записи для D4</translation>
     </message>
     <message>
-        <location filename="../mainwindow.ui" line="4351"/>
-        <location filename="../mainwindow.ui" line="4354"/>
+        <location filename="../engine.cpp" line="4351"/>
+        <location filename="../engine.cpp" line="4354"/>
         <source>Toggle write protection for D5</source>
         <translation>Включить/отключить защиту от записи для D5</translation>
     </message>
     <message>
-        <location filename="../mainwindow.ui" line="4373"/>
-        <location filename="../mainwindow.ui" line="4376"/>
+        <location filename="../engine.cpp" line="4373"/>
+        <location filename="../engine.cpp" line="4376"/>
         <source>Toggle write protection for D6</source>
         <translation>Включить/отключить защиту от записи для D6</translation>
     </message>
     <message>
-        <location filename="../mainwindow.ui" line="4395"/>
-        <location filename="../mainwindow.ui" line="4398"/>
+        <location filename="../engine.cpp" line="4395"/>
+        <location filename="../engine.cpp" line="4398"/>
         <source>Toggle write protection for D7</source>
         <translation>Включить/отключить защиту от записи для D7</translation>
     </message>
     <message>
-        <location filename="../mainwindow.ui" line="4420"/>
-        <location filename="../mainwindow.ui" line="4423"/>
+        <location filename="../engine.cpp" line="4420"/>
+        <location filename="../engine.cpp" line="4423"/>
         <source>Toggle write protection for D8</source>
         <translation>Включить/отключить защиту от записи для D8</translation>
     </message>
     <message>
-        <location filename="../mainwindow.ui" line="4442"/>
-        <location filename="../mainwindow.ui" line="4445"/>
+        <location filename="../engine.cpp" line="4442"/>
+        <location filename="../engine.cpp" line="4445"/>
         <source>Toggle write protection for D9</source>
-        <translation type="unfinished">Включить/отключить защиту от записи для D9</translation>
+        <translation>Включить/отключить защиту от записи для D9</translation>
     </message>
     <message>
-        <location filename="../mainwindow.ui" line="4464"/>
-        <location filename="../mainwindow.ui" line="4467"/>
+        <location filename="../engine.cpp" line="4464"/>
+        <location filename="../engine.cpp" line="4467"/>
         <source>Toggle write protection for D10</source>
-        <translation type="unfinished">Включить/отключить защиту от записи для D10</translation>
+        <translation>Включить/отключить защиту от записи для D10</translation>
     </message>
     <message>
-        <location filename="../mainwindow.ui" line="4486"/>
-        <location filename="../mainwindow.ui" line="4489"/>
+        <location filename="../engine.cpp" line="4486"/>
+        <location filename="../engine.cpp" line="4489"/>
         <source>Toggle write protection for D11</source>
-        <translation type="unfinished">Включить/отключить защиту от записи для D11</translation>
+        <translation>Включить/отключить защиту от записи для D11</translation>
     </message>
     <message>
-        <location filename="../mainwindow.ui" line="4508"/>
-        <location filename="../mainwindow.ui" line="4511"/>
+        <location filename="../engine.cpp" line="4508"/>
+        <location filename="../engine.cpp" line="4511"/>
         <source>Toggle write protection for D12</source>
-        <translation type="unfinished">Включить/отключить защиту от записи для D12</translation>
+        <translation>Включить/отключить защиту от записи для D12</translation>
     </message>
     <message>
-        <location filename="../mainwindow.ui" line="4530"/>
-        <location filename="../mainwindow.ui" line="4533"/>
+        <location filename="../engine.cpp" line="4530"/>
+        <location filename="../engine.cpp" line="4533"/>
         <source>Toggle write protection for D13</source>
-        <translation type="unfinished">Включить/отключить защиту от записи для D13</translation>
+        <translation>Включить/отключить защиту от записи для D13</translation>
     </message>
     <message>
-        <location filename="../mainwindow.ui" line="4552"/>
-        <location filename="../mainwindow.ui" line="4555"/>
+        <location filename="../engine.cpp" line="4552"/>
+        <location filename="../engine.cpp" line="4555"/>
         <source>Toggle write protection for D14</source>
-        <translation type="unfinished">Включить/отключить защиту от записи для D14</translation>
+        <translation>Включить/отключить защиту от записи для D14</translation>
     </message>
     <message>
-        <location filename="../mainwindow.ui" line="4574"/>
-        <location filename="../mainwindow.ui" line="4577"/>
+        <location filename="../engine.cpp" line="4574"/>
+        <location filename="../engine.cpp" line="4577"/>
         <source>Toggle write protection for D15</source>
-        <translation type="unfinished">Включить/отключить защиту от записи для D15</translation>
+        <translation>Включить/отключить защиту от записи для D15</translation>
     </message>
     <message>
-        <location filename="../mainwindow.ui" line="4586"/>
+        <location filename="../engine.cpp" line="4586"/>
         <source>&amp;Options...</source>
         <translation>&amp;Настройки...</translation>
     </message>
     <message>
-        <location filename="../mainwindow.ui" line="4589"/>
-        <location filename="../mainwindow.ui" line="4592"/>
+        <location filename="../engine.cpp" line="4589"/>
+        <location filename="../engine.cpp" line="4592"/>
         <source>Open options dialog</source>
         <translation>Открыть диалог настроек</translation>
     </message>
     <message>
-        <location filename="../mainwindow.ui" line="4611"/>
-        <location filename="../mainwindow.cpp" line="849"/>
+        <location filename="../engine.cpp" line="4611"/>
+        <location filename="../engine.cpp" line="849"/>
         <source>&amp;Start emulation</source>
         <translation>&amp;Пуск эмуляции</translation>
     </message>
     <message>
-        <location filename="../mainwindow.ui" line="4614"/>
-        <location filename="../mainwindow.ui" line="4617"/>
-        <location filename="../mainwindow.cpp" line="850"/>
-        <location filename="../mainwindow.cpp" line="851"/>
+        <location filename="../engine.cpp" line="4614"/>
+        <location filename="../engine.cpp" line="4617"/>
+        <location filename="../engine.cpp" line="850"/>
+        <location filename="../engine.cpp" line="851"/>
         <source>Start SIO peripheral emulation</source>
         <translation>Запуск эмуляции SIO-периферии</translation>
     </message>
     <message>
-        <location filename="../mainwindow.ui" line="5123"/>
+        <location filename="../engine.cpp" line="5123"/>
         <source>Alt+S</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../mainwindow.ui" line="4631"/>
-        <location filename="../mainwindow.ui" line="4634"/>
-        <location filename="../mainwindow.ui" line="4642"/>
-        <location filename="../mainwindow.ui" line="4645"/>
-        <location filename="../mainwindow.ui" line="4653"/>
-        <location filename="../mainwindow.ui" line="4656"/>
-        <location filename="../mainwindow.ui" line="4664"/>
-        <location filename="../mainwindow.ui" line="4667"/>
-        <location filename="../mainwindow.ui" line="4675"/>
-        <location filename="../mainwindow.ui" line="4678"/>
-        <location filename="../mainwindow.ui" line="4686"/>
-        <location filename="../mainwindow.ui" line="4689"/>
-        <location filename="../mainwindow.ui" line="4697"/>
-        <location filename="../mainwindow.ui" line="4700"/>
-        <location filename="../mainwindow.ui" line="4708"/>
-        <location filename="../mainwindow.ui" line="4711"/>
-        <location filename="../mainwindow.ui" line="4719"/>
-        <location filename="../mainwindow.ui" line="4722"/>
-        <location filename="../mainwindow.ui" line="4730"/>
-        <location filename="../mainwindow.ui" line="4733"/>
+        <location filename="../engine.cpp" line="4631"/>
+        <location filename="../engine.cpp" line="4634"/>
+        <location filename="../engine.cpp" line="4642"/>
+        <location filename="../engine.cpp" line="4645"/>
+        <location filename="../engine.cpp" line="4653"/>
+        <location filename="../engine.cpp" line="4656"/>
+        <location filename="../engine.cpp" line="4664"/>
+        <location filename="../engine.cpp" line="4667"/>
+        <location filename="../engine.cpp" line="4675"/>
+        <location filename="../engine.cpp" line="4678"/>
+        <location filename="../engine.cpp" line="4686"/>
+        <location filename="../engine.cpp" line="4689"/>
+        <location filename="../engine.cpp" line="4697"/>
+        <location filename="../engine.cpp" line="4700"/>
+        <location filename="../engine.cpp" line="4708"/>
+        <location filename="../engine.cpp" line="4711"/>
+        <location filename="../engine.cpp" line="4719"/>
+        <location filename="../engine.cpp" line="4722"/>
+        <location filename="../engine.cpp" line="4730"/>
+        <location filename="../engine.cpp" line="4733"/>
         <source>Mount to the first available slot</source>
         <translation>Подключить в первый доступный слот</translation>
     </message>
     <message>
-        <location filename="../mainwindow.ui" line="4742"/>
+        <location filename="../engine.cpp" line="4742"/>
         <source>Mount &amp;disk image...</source>
         <translation>Подключить образ &amp;диска...</translation>
     </message>
     <message>
-        <location filename="../mainwindow.ui" line="4745"/>
-        <location filename="../mainwindow.ui" line="4748"/>
+        <location filename="../engine.cpp" line="4745"/>
+        <location filename="../engine.cpp" line="4748"/>
         <source>Mount a disk image to the first available slot</source>
         <translation>Подключить образ диска в первый свободный слот</translation>
     </message>
     <message>
-        <location filename="../mainwindow.ui" line="4751"/>
+        <location filename="../engine.cpp" line="4751"/>
         <source>Ctrl+D</source>
         <translation></translation>
     </message>
     <message>
-        <location filename="../mainwindow.ui" line="4760"/>
+        <location filename="../engine.cpp" line="4760"/>
         <source>Mount &amp;folder image...</source>
         <translation>Подключить образ &amp;папки...</translation>
     </message>
     <message>
-        <location filename="../mainwindow.ui" line="4763"/>
-        <location filename="../mainwindow.ui" line="4766"/>
+        <location filename="../engine.cpp" line="4763"/>
+        <location filename="../engine.cpp" line="4766"/>
         <source>Mount a folder image to the first available slot</source>
         <translation>Подключить образ папки в первый свободный слот</translation>
     </message>
     <message>
-        <location filename="../mainwindow.ui" line="4769"/>
+        <location filename="../engine.cpp" line="4769"/>
         <source>Ctrl+F</source>
         <translation></translation>
     </message>
     <message>
-        <location filename="../mainwindow.ui" line="4778"/>
+        <location filename="../engine.cpp" line="4778"/>
         <source>New disk image...</source>
         <translation>Новый образ диска...</translation>
     </message>
     <message>
-        <location filename="../mainwindow.ui" line="4781"/>
-        <location filename="../mainwindow.ui" line="4784"/>
+        <location filename="../engine.cpp" line="4781"/>
+        <location filename="../engine.cpp" line="4784"/>
         <source>Create a new disk image file and mount it to the first available slot</source>
         <translation>Создать новый файл образа диска и подключить его в первый свободный слот</translation>
     </message>
     <message>
-        <location filename="../mainwindow.ui" line="5996"/>
+        <location filename="../engine.cpp" line="5996"/>
         <source>Alt+Shift+T</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../mainwindow.ui" line="6029"/>
+        <location filename="../engine.cpp" line="6029"/>
         <source>Alt+Q</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../mainwindow.ui" line="6041"/>
+        <location filename="../engine.cpp" line="6041"/>
         <source>Ctrl+A</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../mainwindow.ui" line="6080"/>
+        <location filename="../engine.cpp" line="6080"/>
         <source>Ctrl+Shift+U</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../mainwindow.ui" line="6416"/>
+        <location filename="../engine.cpp" line="6416"/>
         <source>Folder Boot Options</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../mainwindow.ui" line="6419"/>
+        <location filename="../engine.cpp" line="6419"/>
         <source>Change Boot Options</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../mainwindow.ui" line="6434"/>
-        <location filename="../mainwindow.ui" line="6437"/>
-        <location filename="../mainwindow.cpp" line="815"/>
-        <location filename="../mainwindow.cpp" line="816"/>
-        <location filename="../mainwindow.cpp" line="819"/>
+        <location filename="../engine.cpp" line="6434"/>
+        <location filename="../engine.cpp" line="6437"/>
+        <location filename="../engine.cpp" line="815"/>
+        <location filename="../engine.cpp" line="816"/>
+        <location filename="../engine.cpp" line="819"/>
         <source>Stop printer emulation</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../mainwindow.ui" line="6440"/>
+        <location filename="../engine.cpp" line="6440"/>
         <source>Alt+P</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../mainwindow.ui" line="6452"/>
+        <location filename="../engine.cpp" line="6452"/>
         <source>Ctrl+H</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../mainwindow.ui" line="4787"/>
+        <location filename="../engine.cpp" line="4787"/>
         <source>Ctrl+N</source>
         <translation></translation>
     </message>
@@ -2259,78 +2259,78 @@ p, li { white-space: pre-wrap; }
         <translation type="obsolete">Свойства...</translation>
     </message>
     <message>
-        <location filename="../mainwindow.ui" line="4808"/>
-        <location filename="../mainwindow.ui" line="4811"/>
+        <location filename="../engine.cpp" line="4808"/>
+        <location filename="../engine.cpp" line="4811"/>
         <source>Show D1&apos;s properties</source>
         <translation>Показать свойства D1</translation>
     </message>
     <message>
-        <location filename="../mainwindow.ui" line="4829"/>
-        <location filename="../mainwindow.ui" line="4832"/>
+        <location filename="../engine.cpp" line="4829"/>
+        <location filename="../engine.cpp" line="4832"/>
         <source>Show D2&apos;s properties</source>
         <translation>Показать свойства D2</translation>
     </message>
     <message>
-        <location filename="../mainwindow.ui" line="4850"/>
-        <location filename="../mainwindow.ui" line="4853"/>
+        <location filename="../engine.cpp" line="4850"/>
+        <location filename="../engine.cpp" line="4853"/>
         <source>Show D3&apos;s properties</source>
         <translation>Показать свойства D3</translation>
     </message>
     <message>
-        <location filename="../mainwindow.ui" line="4871"/>
-        <location filename="../mainwindow.ui" line="4874"/>
+        <location filename="../engine.cpp" line="4871"/>
+        <location filename="../engine.cpp" line="4874"/>
         <source>Show D4&apos;s properties</source>
         <translation>Показать свойства D4</translation>
     </message>
     <message>
-        <location filename="../mainwindow.ui" line="4892"/>
-        <location filename="../mainwindow.ui" line="4895"/>
+        <location filename="../engine.cpp" line="4892"/>
+        <location filename="../engine.cpp" line="4895"/>
         <source>Show D5&apos;s properties</source>
         <translation>Показать свойства D5</translation>
     </message>
     <message>
-        <location filename="../mainwindow.ui" line="4913"/>
-        <location filename="../mainwindow.ui" line="4916"/>
+        <location filename="../engine.cpp" line="4913"/>
+        <location filename="../engine.cpp" line="4916"/>
         <source>Show D6&apos;s properties</source>
         <translation>Показать свойства D6</translation>
     </message>
     <message>
-        <location filename="../mainwindow.ui" line="4934"/>
-        <location filename="../mainwindow.ui" line="4937"/>
+        <location filename="../engine.cpp" line="4934"/>
+        <location filename="../engine.cpp" line="4937"/>
         <source>Show D7&apos;s properties</source>
         <translation>Показать свойства D7</translation>
     </message>
     <message>
-        <location filename="../mainwindow.ui" line="4955"/>
-        <location filename="../mainwindow.ui" line="4958"/>
+        <location filename="../engine.cpp" line="4955"/>
+        <location filename="../engine.cpp" line="4958"/>
         <source>Show D8&apos;s properties</source>
         <translation>Показать свойства D8</translation>
     </message>
     <message>
-        <location filename="../mainwindow.ui" line="5114"/>
+        <location filename="../engine.cpp" line="5114"/>
         <source>&amp;Save session</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../mainwindow.ui" line="6116"/>
-        <location filename="../mainwindow.ui" line="6137"/>
-        <location filename="../mainwindow.ui" line="6158"/>
-        <location filename="../mainwindow.ui" line="6179"/>
-        <location filename="../mainwindow.ui" line="6200"/>
-        <location filename="../mainwindow.ui" line="6221"/>
-        <location filename="../mainwindow.ui" line="6242"/>
-        <location filename="../mainwindow.ui" line="6263"/>
-        <location filename="../mainwindow.ui" line="6284"/>
-        <location filename="../mainwindow.ui" line="6305"/>
-        <location filename="../mainwindow.ui" line="6326"/>
-        <location filename="../mainwindow.ui" line="6347"/>
-        <location filename="../mainwindow.ui" line="6368"/>
-        <location filename="../mainwindow.ui" line="6389"/>
+        <location filename="../engine.cpp" line="6116"/>
+        <location filename="../engine.cpp" line="6137"/>
+        <location filename="../engine.cpp" line="6158"/>
+        <location filename="../engine.cpp" line="6179"/>
+        <location filename="../engine.cpp" line="6200"/>
+        <location filename="../engine.cpp" line="6221"/>
+        <location filename="../engine.cpp" line="6242"/>
+        <location filename="../engine.cpp" line="6263"/>
+        <location filename="../engine.cpp" line="6284"/>
+        <location filename="../engine.cpp" line="6305"/>
+        <location filename="../engine.cpp" line="6326"/>
+        <location filename="../engine.cpp" line="6347"/>
+        <location filename="../engine.cpp" line="6368"/>
+        <location filename="../engine.cpp" line="6389"/>
         <source>Auto Commit</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../mainwindow.ui" line="6404"/>
+        <location filename="../engine.cpp" line="6404"/>
         <source>Save mounted image group as default</source>
         <translation type="unfinished"></translation>
     </message>
@@ -2339,660 +2339,660 @@ p, li { white-space: pre-wrap; }
         <translation type="obsolete">&amp;Сохранить сессию как...</translation>
     </message>
     <message>
-        <location filename="../mainwindow.ui" line="5117"/>
+        <location filename="../engine.cpp" line="5117"/>
         <source>Save current session to a file</source>
         <translation>Сохранить текущую сессию в файл</translation>
     </message>
     <message>
-        <location filename="../mainwindow.ui" line="5120"/>
+        <location filename="../engine.cpp" line="5120"/>
         <source>Save current session</source>
         <translation>Сохранить текущую сессию</translation>
     </message>
     <message>
-        <location filename="../mainwindow.ui" line="6449"/>
+        <location filename="../engine.cpp" line="6449"/>
         <source>Hide drives D9-DO</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../mainwindow.ui" line="6461"/>
+        <location filename="../engine.cpp" line="6461"/>
         <source>Toggle single slot mode</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../mainwindow.ui" line="6476"/>
+        <location filename="../engine.cpp" line="6476"/>
         <source>Toggle shade mode</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../mainwindow.ui" line="6479"/>
+        <location filename="../engine.cpp" line="6479"/>
         <source>Ctrl+S</source>
         <translation></translation>
     </message>
     <message>
-        <location filename="../mainwindow.ui" line="5132"/>
+        <location filename="../engine.cpp" line="5132"/>
         <source>&amp;Open session...</source>
         <translation>&amp;Открыть сессию...</translation>
     </message>
     <message>
-        <location filename="../mainwindow.ui" line="5135"/>
-        <location filename="../mainwindow.ui" line="5138"/>
+        <location filename="../engine.cpp" line="5135"/>
+        <location filename="../engine.cpp" line="5138"/>
         <source>Open a previously saved session</source>
         <translation>Открыть предварительно сохраненную сессию</translation>
     </message>
     <message>
-        <location filename="../mainwindow.ui" line="4595"/>
+        <location filename="../engine.cpp" line="4595"/>
         <source>Ctrl+O</source>
         <translation></translation>
     </message>
     <message>
-        <location filename="../mainwindow.ui" line="164"/>
+        <location filename="../engine.cpp" line="164"/>
         <source>5:</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../mainwindow.ui" line="731"/>
+        <location filename="../engine.cpp" line="731"/>
         <source>6:</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../mainwindow.ui" line="1808"/>
+        <location filename="../engine.cpp" line="1808"/>
         <source>2:</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../mainwindow.ui" line="2341"/>
+        <location filename="../engine.cpp" line="2341"/>
         <source>3:</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../mainwindow.ui" line="1252"/>
+        <location filename="../engine.cpp" line="1252"/>
         <source>4:</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../mainwindow.ui" line="2895"/>
+        <location filename="../engine.cpp" line="2895"/>
         <source>1:</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../mainwindow.ui" line="3402"/>
+        <location filename="../engine.cpp" line="3402"/>
         <source>Window</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../mainwindow.ui" line="3431"/>
+        <location filename="../engine.cpp" line="3431"/>
         <source>Ctrl+U</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../mainwindow.ui" line="3614"/>
+        <location filename="../engine.cpp" line="3614"/>
         <source>Alt+=</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../mainwindow.ui" line="3632"/>
+        <location filename="../engine.cpp" line="3632"/>
         <source>Alt+!</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../mainwindow.ui" line="3650"/>
+        <location filename="../engine.cpp" line="3650"/>
         <source>Alt+&apos;</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../mainwindow.ui" line="3668"/>
+        <location filename="../engine.cpp" line="3668"/>
         <source>Alt+#</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../mainwindow.ui" line="3686"/>
+        <location filename="../engine.cpp" line="3686"/>
         <source>Alt+$</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../mainwindow.ui" line="3704"/>
+        <location filename="../engine.cpp" line="3704"/>
         <source>Alt+%</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../mainwindow.ui" line="3884"/>
+        <location filename="../engine.cpp" line="3884"/>
         <source>Ctrl+0</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../mainwindow.ui" line="3902"/>
+        <location filename="../engine.cpp" line="3902"/>
         <source>Ctrl+Alt+1</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../mainwindow.ui" line="3920"/>
+        <location filename="../engine.cpp" line="3920"/>
         <source>Ctrl+Alt+2</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../mainwindow.ui" line="3938"/>
+        <location filename="../engine.cpp" line="3938"/>
         <source>Ctrl+Alt+3</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../mainwindow.ui" line="3956"/>
+        <location filename="../engine.cpp" line="3956"/>
         <source>Ctrl+Alt+4</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../mainwindow.ui" line="3974"/>
+        <location filename="../engine.cpp" line="3974"/>
         <source>Ctrl+Alt+5</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../mainwindow.ui" line="4620"/>
+        <location filename="../engine.cpp" line="4620"/>
         <source>Alt+E</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../mainwindow.ui" line="4805"/>
-        <location filename="../mainwindow.ui" line="4826"/>
-        <location filename="../mainwindow.ui" line="4847"/>
-        <location filename="../mainwindow.ui" line="4868"/>
-        <location filename="../mainwindow.ui" line="4889"/>
-        <location filename="../mainwindow.ui" line="4910"/>
-        <location filename="../mainwindow.ui" line="4931"/>
-        <location filename="../mainwindow.ui" line="4952"/>
-        <location filename="../mainwindow.ui" line="4973"/>
-        <location filename="../mainwindow.ui" line="4994"/>
-        <location filename="../mainwindow.ui" line="5015"/>
-        <location filename="../mainwindow.ui" line="5036"/>
-        <location filename="../mainwindow.ui" line="5057"/>
-        <location filename="../mainwindow.ui" line="5078"/>
-        <location filename="../mainwindow.ui" line="5099"/>
+        <location filename="../engine.cpp" line="4805"/>
+        <location filename="../engine.cpp" line="4826"/>
+        <location filename="../engine.cpp" line="4847"/>
+        <location filename="../engine.cpp" line="4868"/>
+        <location filename="../engine.cpp" line="4889"/>
+        <location filename="../engine.cpp" line="4910"/>
+        <location filename="../engine.cpp" line="4931"/>
+        <location filename="../engine.cpp" line="4952"/>
+        <location filename="../engine.cpp" line="4973"/>
+        <location filename="../engine.cpp" line="4994"/>
+        <location filename="../engine.cpp" line="5015"/>
+        <location filename="../engine.cpp" line="5036"/>
+        <location filename="../engine.cpp" line="5057"/>
+        <location filename="../engine.cpp" line="5078"/>
+        <location filename="../engine.cpp" line="5099"/>
         <source>Explore..</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../mainwindow.ui" line="4976"/>
-        <location filename="../mainwindow.ui" line="4979"/>
+        <location filename="../engine.cpp" line="4976"/>
+        <location filename="../engine.cpp" line="4979"/>
         <source>Show D9&apos;s properties</source>
-        <translation type="unfinished">Показать свойства D8 {9&apos;?}</translation>
+        <translation>Показать свойства D8 {9&apos;?}</translation>
     </message>
     <message>
-        <location filename="../mainwindow.ui" line="4997"/>
-        <location filename="../mainwindow.ui" line="5000"/>
+        <location filename="../engine.cpp" line="4997"/>
+        <location filename="../engine.cpp" line="5000"/>
         <source>Show D10&apos;s properties</source>
-        <translation type="unfinished">Показать свойства D8 {10&apos;?}</translation>
+        <translation>Показать свойства D8 {10&apos;?}</translation>
     </message>
     <message>
-        <location filename="../mainwindow.ui" line="5018"/>
-        <location filename="../mainwindow.ui" line="5021"/>
+        <location filename="../engine.cpp" line="5018"/>
+        <location filename="../engine.cpp" line="5021"/>
         <source>Show D11&apos;s properties</source>
-        <translation type="unfinished">Показать свойства D8 {11&apos;?}</translation>
+        <translation>Показать свойства D8 {11&apos;?}</translation>
     </message>
     <message>
-        <location filename="../mainwindow.ui" line="5039"/>
-        <location filename="../mainwindow.ui" line="5042"/>
+        <location filename="../engine.cpp" line="5039"/>
+        <location filename="../engine.cpp" line="5042"/>
         <source>Show D12&apos;s properties</source>
-        <translation type="unfinished">Показать свойства D8 {12&apos;?}</translation>
+        <translation>Показать свойства D8 {12&apos;?}</translation>
     </message>
     <message>
-        <location filename="../mainwindow.ui" line="5060"/>
-        <location filename="../mainwindow.ui" line="5063"/>
+        <location filename="../engine.cpp" line="5060"/>
+        <location filename="../engine.cpp" line="5063"/>
         <source>Show D13&apos;s properties</source>
-        <translation type="unfinished">Показать свойства D8 {13&apos;?}</translation>
+        <translation>Показать свойства D8 {13&apos;?}</translation>
     </message>
     <message>
-        <location filename="../mainwindow.ui" line="5081"/>
-        <location filename="../mainwindow.ui" line="5084"/>
+        <location filename="../engine.cpp" line="5081"/>
+        <location filename="../engine.cpp" line="5084"/>
         <source>Show D14&apos;s properties</source>
-        <translation type="unfinished">Показать свойства D8 {14&apos;?}</translation>
+        <translation>Показать свойства D8 {14&apos;?}</translation>
     </message>
     <message>
-        <location filename="../mainwindow.ui" line="5102"/>
-        <location filename="../mainwindow.ui" line="5105"/>
+        <location filename="../engine.cpp" line="5102"/>
+        <location filename="../engine.cpp" line="5105"/>
         <source>Show D15&apos;s properties</source>
-        <translation type="unfinished">Показать свойства D8 {15&apos;?}</translation>
+        <translation>Показать свойства D8 {15&apos;?}</translation>
     </message>
     <message>
-        <location filename="../mainwindow.ui" line="5150"/>
+        <location filename="../engine.cpp" line="5150"/>
         <source>&amp;Boot Atari executable...</source>
         <translation>&amp;Загрузить исполняемый файл Atari...</translation>
     </message>
     <message>
-        <location filename="../mainwindow.ui" line="5153"/>
-        <location filename="../mainwindow.ui" line="5156"/>
+        <location filename="../engine.cpp" line="5153"/>
+        <location filename="../engine.cpp" line="5156"/>
         <source>Boot an Atari executable</source>
         <translation>Загружить исполняемый файл Atari</translation>
     </message>
     <message>
-        <location filename="../mainwindow.ui" line="5159"/>
+        <location filename="../engine.cpp" line="5159"/>
         <source>Alt+B</source>
         <translation></translation>
     </message>
     <message>
-        <location filename="../mainwindow.ui" line="5177"/>
-        <location filename="../mainwindow.ui" line="5195"/>
-        <location filename="../mainwindow.ui" line="5213"/>
-        <location filename="../mainwindow.ui" line="5231"/>
-        <location filename="../mainwindow.ui" line="5249"/>
-        <location filename="../mainwindow.ui" line="5267"/>
-        <location filename="../mainwindow.ui" line="5285"/>
-        <location filename="../mainwindow.ui" line="5303"/>
-        <location filename="../mainwindow.ui" line="5861"/>
-        <location filename="../mainwindow.ui" line="5879"/>
-        <location filename="../mainwindow.ui" line="5897"/>
-        <location filename="../mainwindow.ui" line="5915"/>
-        <location filename="../mainwindow.ui" line="5933"/>
-        <location filename="../mainwindow.ui" line="5951"/>
-        <location filename="../mainwindow.ui" line="5969"/>
+        <location filename="../engine.cpp" line="5177"/>
+        <location filename="../engine.cpp" line="5195"/>
+        <location filename="../engine.cpp" line="5213"/>
+        <location filename="../engine.cpp" line="5231"/>
+        <location filename="../engine.cpp" line="5249"/>
+        <location filename="../engine.cpp" line="5267"/>
+        <location filename="../engine.cpp" line="5285"/>
+        <location filename="../engine.cpp" line="5303"/>
+        <location filename="../engine.cpp" line="5861"/>
+        <location filename="../engine.cpp" line="5879"/>
+        <location filename="../engine.cpp" line="5897"/>
+        <location filename="../engine.cpp" line="5915"/>
+        <location filename="../engine.cpp" line="5933"/>
+        <location filename="../engine.cpp" line="5951"/>
+        <location filename="../engine.cpp" line="5969"/>
         <source>Save</source>
         <translation>Сохранить</translation>
     </message>
     <message>
-        <location filename="../mainwindow.ui" line="5180"/>
-        <location filename="../mainwindow.ui" line="5183"/>
+        <location filename="../engine.cpp" line="5180"/>
+        <location filename="../engine.cpp" line="5183"/>
         <source>Save D1</source>
         <translation>Сохранить D1</translation>
     </message>
     <message>
-        <location filename="../mainwindow.ui" line="5198"/>
-        <location filename="../mainwindow.ui" line="5201"/>
+        <location filename="../engine.cpp" line="5198"/>
+        <location filename="../engine.cpp" line="5201"/>
         <source>Save D2</source>
         <translation>Сохранить D2</translation>
     </message>
     <message>
-        <location filename="../mainwindow.ui" line="5216"/>
-        <location filename="../mainwindow.ui" line="5219"/>
+        <location filename="../engine.cpp" line="5216"/>
+        <location filename="../engine.cpp" line="5219"/>
         <source>Save D3</source>
         <translation>Сохранить D3</translation>
     </message>
     <message>
-        <location filename="../mainwindow.ui" line="5234"/>
-        <location filename="../mainwindow.ui" line="5237"/>
+        <location filename="../engine.cpp" line="5234"/>
+        <location filename="../engine.cpp" line="5237"/>
         <source>Save D4</source>
         <translation>Сохранить D4</translation>
     </message>
     <message>
-        <location filename="../mainwindow.ui" line="5252"/>
-        <location filename="../mainwindow.ui" line="5255"/>
+        <location filename="../engine.cpp" line="5252"/>
+        <location filename="../engine.cpp" line="5255"/>
         <source>Save D5</source>
         <translation>Сохранить D5</translation>
     </message>
     <message>
-        <location filename="../mainwindow.ui" line="5270"/>
-        <location filename="../mainwindow.ui" line="5273"/>
+        <location filename="../engine.cpp" line="5270"/>
+        <location filename="../engine.cpp" line="5273"/>
         <source>Save D6</source>
         <translation>Сохранить D6</translation>
     </message>
     <message>
-        <location filename="../mainwindow.ui" line="5288"/>
-        <location filename="../mainwindow.ui" line="5291"/>
+        <location filename="../engine.cpp" line="5288"/>
+        <location filename="../engine.cpp" line="5291"/>
         <source>Save D7</source>
         <translation>Сохранить D7</translation>
     </message>
     <message>
-        <location filename="../mainwindow.ui" line="5306"/>
-        <location filename="../mainwindow.ui" line="5309"/>
+        <location filename="../engine.cpp" line="5306"/>
+        <location filename="../engine.cpp" line="5309"/>
         <source>Save D8</source>
         <translation>Сохранить D8</translation>
     </message>
     <message>
-        <location filename="../mainwindow.ui" line="5321"/>
-        <location filename="../mainwindow.ui" line="5339"/>
-        <location filename="../mainwindow.ui" line="5357"/>
-        <location filename="../mainwindow.ui" line="5375"/>
-        <location filename="../mainwindow.ui" line="5393"/>
-        <location filename="../mainwindow.ui" line="5411"/>
-        <location filename="../mainwindow.ui" line="5429"/>
-        <location filename="../mainwindow.ui" line="5447"/>
-        <location filename="../mainwindow.ui" line="5465"/>
-        <location filename="../mainwindow.ui" line="5483"/>
-        <location filename="../mainwindow.ui" line="5501"/>
-        <location filename="../mainwindow.ui" line="5519"/>
-        <location filename="../mainwindow.ui" line="5537"/>
-        <location filename="../mainwindow.ui" line="5555"/>
-        <location filename="../mainwindow.ui" line="5573"/>
+        <location filename="../engine.cpp" line="5321"/>
+        <location filename="../engine.cpp" line="5339"/>
+        <location filename="../engine.cpp" line="5357"/>
+        <location filename="../engine.cpp" line="5375"/>
+        <location filename="../engine.cpp" line="5393"/>
+        <location filename="../engine.cpp" line="5411"/>
+        <location filename="../engine.cpp" line="5429"/>
+        <location filename="../engine.cpp" line="5447"/>
+        <location filename="../engine.cpp" line="5465"/>
+        <location filename="../engine.cpp" line="5483"/>
+        <location filename="../engine.cpp" line="5501"/>
+        <location filename="../engine.cpp" line="5519"/>
+        <location filename="../engine.cpp" line="5537"/>
+        <location filename="../engine.cpp" line="5555"/>
+        <location filename="../engine.cpp" line="5573"/>
         <source>Revert to original</source>
         <translation>Вернуть к оригиналу</translation>
     </message>
     <message>
-        <location filename="../mainwindow.ui" line="5324"/>
-        <location filename="../mainwindow.ui" line="5327"/>
+        <location filename="../engine.cpp" line="5324"/>
+        <location filename="../engine.cpp" line="5327"/>
         <source>Revert D1 to its last saved state</source>
         <translation>Вернуть D1 к сохраненному состоянию</translation>
     </message>
     <message>
-        <location filename="../mainwindow.ui" line="5342"/>
-        <location filename="../mainwindow.ui" line="5345"/>
+        <location filename="../engine.cpp" line="5342"/>
+        <location filename="../engine.cpp" line="5345"/>
         <source>Revert D2 to its last saved state</source>
         <translation>Вернуть D2 к сохраненному состоянию</translation>
     </message>
     <message>
-        <location filename="../mainwindow.ui" line="5360"/>
-        <location filename="../mainwindow.ui" line="5363"/>
+        <location filename="../engine.cpp" line="5360"/>
+        <location filename="../engine.cpp" line="5363"/>
         <source>Revert D3 to its last saved state</source>
         <translation>Вернуть D3 к сохраненному состоянию</translation>
     </message>
     <message>
-        <location filename="../mainwindow.ui" line="5378"/>
-        <location filename="../mainwindow.ui" line="5381"/>
+        <location filename="../engine.cpp" line="5378"/>
+        <location filename="../engine.cpp" line="5381"/>
         <source>Revert D4 to its last saved state</source>
         <translation>Вернуть D4 к сохраненному состоянию</translation>
     </message>
     <message>
-        <location filename="../mainwindow.ui" line="5396"/>
-        <location filename="../mainwindow.ui" line="5399"/>
+        <location filename="../engine.cpp" line="5396"/>
+        <location filename="../engine.cpp" line="5399"/>
         <source>Revert D5 to its last saved state</source>
         <translation>Вернуть D5 к сохраненному состоянию</translation>
     </message>
     <message>
-        <location filename="../mainwindow.ui" line="5414"/>
-        <location filename="../mainwindow.ui" line="5417"/>
+        <location filename="../engine.cpp" line="5414"/>
+        <location filename="../engine.cpp" line="5417"/>
         <source>Revert D6 to its last saved state</source>
         <translation>Вернуть D6 к сохраненному состоянию</translation>
     </message>
     <message>
-        <location filename="../mainwindow.ui" line="5432"/>
-        <location filename="../mainwindow.ui" line="5435"/>
+        <location filename="../engine.cpp" line="5432"/>
+        <location filename="../engine.cpp" line="5435"/>
         <source>Revert D7 to its last saved state</source>
         <translation>Вернуть D7 к сохраненному состоянию</translation>
     </message>
     <message>
-        <location filename="../mainwindow.ui" line="5450"/>
-        <location filename="../mainwindow.ui" line="5453"/>
+        <location filename="../engine.cpp" line="5450"/>
+        <location filename="../engine.cpp" line="5453"/>
         <source>Revert D8 to its last saved state</source>
         <translation>Вернуть D8 к сохраненному состоянию</translation>
     </message>
     <message>
-        <location filename="../mainwindow.ui" line="5468"/>
-        <location filename="../mainwindow.ui" line="5471"/>
+        <location filename="../engine.cpp" line="5468"/>
+        <location filename="../engine.cpp" line="5471"/>
         <source>Revert D9 to its last saved state</source>
-        <translation type="unfinished">Вернуть D8 к сохраненному состоянию {9 ?}</translation>
+        <translation>Вернуть D8 к сохраненному состоянию {9 ?}</translation>
     </message>
     <message>
-        <location filename="../mainwindow.ui" line="5486"/>
-        <location filename="../mainwindow.ui" line="5489"/>
+        <location filename="../engine.cpp" line="5486"/>
+        <location filename="../engine.cpp" line="5489"/>
         <source>Revert D10 to its last saved state</source>
-        <translation type="unfinished">Вернуть D8 к сохраненному состоянию {10 ?}</translation>
+        <translation>Вернуть D8 к сохраненному состоянию {10 ?}</translation>
     </message>
     <message>
-        <location filename="../mainwindow.ui" line="5504"/>
-        <location filename="../mainwindow.ui" line="5507"/>
+        <location filename="../engine.cpp" line="5504"/>
+        <location filename="../engine.cpp" line="5507"/>
         <source>Revert D11 to its last saved state</source>
-        <translation type="unfinished">Вернуть D8 к сохраненному состоянию {11 ?}</translation>
+        <translation>Вернуть D8 к сохраненному состоянию {11 ?}</translation>
     </message>
     <message>
-        <location filename="../mainwindow.ui" line="5522"/>
-        <location filename="../mainwindow.ui" line="5525"/>
+        <location filename="../engine.cpp" line="5522"/>
+        <location filename="../engine.cpp" line="5525"/>
         <source>Revert D12 to its last saved state</source>
-        <translation type="unfinished">Вернуть D8 к сохраненному состоянию {12 ?}</translation>
+        <translation>Вернуть D8 к сохраненному состоянию {12 ?}</translation>
     </message>
     <message>
-        <location filename="../mainwindow.ui" line="5540"/>
-        <location filename="../mainwindow.ui" line="5543"/>
+        <location filename="../engine.cpp" line="5540"/>
+        <location filename="../engine.cpp" line="5543"/>
         <source>Revert D13 to its last saved state</source>
-        <translation type="unfinished">Вернуть D8 к сохраненному состоянию {13 ?}</translation>
+        <translation>Вернуть D8 к сохраненному состоянию {13 ?}</translation>
     </message>
     <message>
-        <location filename="../mainwindow.ui" line="5558"/>
-        <location filename="../mainwindow.ui" line="5561"/>
+        <location filename="../engine.cpp" line="5558"/>
+        <location filename="../engine.cpp" line="5561"/>
         <source>Revert D14 to its last saved state</source>
-        <translation type="unfinished">Вернуть D8 к сохраненному состоянию {14 ?}</translation>
+        <translation>Вернуть D8 к сохраненному состоянию {14 ?}</translation>
     </message>
     <message>
-        <location filename="../mainwindow.ui" line="5576"/>
-        <location filename="../mainwindow.ui" line="5579"/>
+        <location filename="../engine.cpp" line="5576"/>
+        <location filename="../engine.cpp" line="5579"/>
         <source>Revert D15 to its last saved state</source>
-        <translation type="unfinished">Вернуть D8 к сохраненному состоянию {15 ?}</translation>
+        <translation>Вернуть D8 к сохраненному состоянию {15 ?}</translation>
     </message>
     <message>
-        <location filename="../mainwindow.ui" line="5591"/>
-        <location filename="../mainwindow.ui" line="5609"/>
-        <location filename="../mainwindow.ui" line="5627"/>
-        <location filename="../mainwindow.ui" line="5645"/>
-        <location filename="../mainwindow.ui" line="5663"/>
-        <location filename="../mainwindow.ui" line="5681"/>
-        <location filename="../mainwindow.ui" line="5699"/>
-        <location filename="../mainwindow.ui" line="5717"/>
-        <location filename="../mainwindow.ui" line="5735"/>
-        <location filename="../mainwindow.ui" line="5753"/>
-        <location filename="../mainwindow.ui" line="5771"/>
-        <location filename="../mainwindow.ui" line="5789"/>
-        <location filename="../mainwindow.ui" line="5807"/>
-        <location filename="../mainwindow.ui" line="5825"/>
-        <location filename="../mainwindow.ui" line="5843"/>
+        <location filename="../engine.cpp" line="5591"/>
+        <location filename="../engine.cpp" line="5609"/>
+        <location filename="../engine.cpp" line="5627"/>
+        <location filename="../engine.cpp" line="5645"/>
+        <location filename="../engine.cpp" line="5663"/>
+        <location filename="../engine.cpp" line="5681"/>
+        <location filename="../engine.cpp" line="5699"/>
+        <location filename="../engine.cpp" line="5717"/>
+        <location filename="../engine.cpp" line="5735"/>
+        <location filename="../engine.cpp" line="5753"/>
+        <location filename="../engine.cpp" line="5771"/>
+        <location filename="../engine.cpp" line="5789"/>
+        <location filename="../engine.cpp" line="5807"/>
+        <location filename="../engine.cpp" line="5825"/>
+        <location filename="../engine.cpp" line="5843"/>
         <source>Save as...</source>
         <translation>Сохранить как...</translation>
     </message>
     <message>
-        <location filename="../mainwindow.ui" line="5594"/>
-        <location filename="../mainwindow.ui" line="5597"/>
+        <location filename="../engine.cpp" line="5594"/>
+        <location filename="../engine.cpp" line="5597"/>
         <source>Save D1 to a file</source>
         <translation>Сохранить D1 в файл</translation>
     </message>
     <message>
-        <location filename="../mainwindow.ui" line="5612"/>
-        <location filename="../mainwindow.ui" line="5615"/>
+        <location filename="../engine.cpp" line="5612"/>
+        <location filename="../engine.cpp" line="5615"/>
         <source>Save D2 to a file</source>
         <translation>Сохранить D2 в файл</translation>
     </message>
     <message>
-        <location filename="../mainwindow.ui" line="5630"/>
-        <location filename="../mainwindow.ui" line="5633"/>
+        <location filename="../engine.cpp" line="5630"/>
+        <location filename="../engine.cpp" line="5633"/>
         <source>Save D3 to a file</source>
         <translation>Сохранить D3 в файл</translation>
     </message>
     <message>
-        <location filename="../mainwindow.ui" line="5648"/>
-        <location filename="../mainwindow.ui" line="5651"/>
+        <location filename="../engine.cpp" line="5648"/>
+        <location filename="../engine.cpp" line="5651"/>
         <source>Save D4 to a file</source>
         <translation>Сохранить D4 в файл</translation>
     </message>
     <message>
-        <location filename="../mainwindow.ui" line="5666"/>
-        <location filename="../mainwindow.ui" line="5669"/>
+        <location filename="../engine.cpp" line="5666"/>
+        <location filename="../engine.cpp" line="5669"/>
         <source>Save D5 to a file</source>
         <translation>Сохранить D5 в файл</translation>
     </message>
     <message>
-        <location filename="../mainwindow.ui" line="5684"/>
-        <location filename="../mainwindow.ui" line="5687"/>
+        <location filename="../engine.cpp" line="5684"/>
+        <location filename="../engine.cpp" line="5687"/>
         <source>Save D6 to a file</source>
         <translation>Сохранить D6 в файл</translation>
     </message>
     <message>
-        <location filename="../mainwindow.ui" line="5702"/>
-        <location filename="../mainwindow.ui" line="5705"/>
+        <location filename="../engine.cpp" line="5702"/>
+        <location filename="../engine.cpp" line="5705"/>
         <source>Save D7 to a file</source>
         <translation>Сохранить D7 в файл</translation>
     </message>
     <message>
-        <location filename="../mainwindow.ui" line="5720"/>
-        <location filename="../mainwindow.ui" line="5723"/>
+        <location filename="../engine.cpp" line="5720"/>
+        <location filename="../engine.cpp" line="5723"/>
         <source>Save D8 to a file</source>
         <translation>Сохранить D8 в файл</translation>
     </message>
     <message>
-        <location filename="../mainwindow.ui" line="5738"/>
-        <location filename="../mainwindow.ui" line="5741"/>
+        <location filename="../engine.cpp" line="5738"/>
+        <location filename="../engine.cpp" line="5741"/>
         <source>Save D9 to a file</source>
-        <translation type="unfinished">Сохранить D8 в файл {9 ?}</translation>
+        <translation>Сохранить D8 в файл {9 ?}</translation>
     </message>
     <message>
-        <location filename="../mainwindow.ui" line="5756"/>
-        <location filename="../mainwindow.ui" line="5759"/>
+        <location filename="../engine.cpp" line="5756"/>
+        <location filename="../engine.cpp" line="5759"/>
         <source>Save D10 to a file</source>
-        <translation type="unfinished">Сохранить D8 в файл {10 ?}</translation>
+        <translation>Сохранить D8 в файл {10 ?}</translation>
     </message>
     <message>
-        <location filename="../mainwindow.ui" line="5774"/>
-        <location filename="../mainwindow.ui" line="5777"/>
+        <location filename="../engine.cpp" line="5774"/>
+        <location filename="../engine.cpp" line="5777"/>
         <source>Save D11 to a file</source>
-        <translation type="unfinished">Сохранить D8 в файл {11 ?}</translation>
+        <translation>Сохранить D8 в файл {11 ?}</translation>
     </message>
     <message>
-        <location filename="../mainwindow.ui" line="5792"/>
-        <location filename="../mainwindow.ui" line="5795"/>
+        <location filename="../engine.cpp" line="5792"/>
+        <location filename="../engine.cpp" line="5795"/>
         <source>Save D12 to a file</source>
-        <translation type="unfinished">Сохранить D8 в файл {12 ?}</translation>
+        <translation>Сохранить D8 в файл {12 ?}</translation>
     </message>
     <message>
-        <location filename="../mainwindow.ui" line="5810"/>
-        <location filename="../mainwindow.ui" line="5813"/>
+        <location filename="../engine.cpp" line="5810"/>
+        <location filename="../engine.cpp" line="5813"/>
         <source>Save D13 to a file</source>
-        <translation type="unfinished">Сохранить D8 в файл {13 ?}</translation>
+        <translation>Сохранить D8 в файл {13 ?}</translation>
     </message>
     <message>
-        <location filename="../mainwindow.ui" line="5828"/>
-        <location filename="../mainwindow.ui" line="5831"/>
+        <location filename="../engine.cpp" line="5828"/>
+        <location filename="../engine.cpp" line="5831"/>
         <source>Save D14 to a file</source>
-        <translation type="unfinished">Сохранить D8 в файл {14 ?}</translation>
+        <translation>Сохранить D8 в файл {14 ?}</translation>
     </message>
     <message>
-        <location filename="../mainwindow.ui" line="5846"/>
-        <location filename="../mainwindow.ui" line="5849"/>
+        <location filename="../engine.cpp" line="5846"/>
+        <location filename="../engine.cpp" line="5849"/>
         <source>Save D15 to a file</source>
-        <translation type="unfinished">Сохранить D8 в файл {15 ?}</translation>
+        <translation>Сохранить D8 в файл {15 ?}</translation>
     </message>
     <message>
-        <location filename="../mainwindow.ui" line="5864"/>
-        <location filename="../mainwindow.ui" line="5867"/>
+        <location filename="../engine.cpp" line="5864"/>
+        <location filename="../engine.cpp" line="5867"/>
         <source>Save D9</source>
-        <translation type="unfinished">Сохранить D9</translation>
+        <translation>Сохранить D9</translation>
     </message>
     <message>
-        <location filename="../mainwindow.ui" line="5882"/>
-        <location filename="../mainwindow.ui" line="5885"/>
+        <location filename="../engine.cpp" line="5882"/>
+        <location filename="../engine.cpp" line="5885"/>
         <source>Save D10</source>
-        <translation type="unfinished">Сохранить D10</translation>
+        <translation>Сохранить D10</translation>
     </message>
     <message>
-        <location filename="../mainwindow.ui" line="5900"/>
-        <location filename="../mainwindow.ui" line="5903"/>
+        <location filename="../engine.cpp" line="5900"/>
+        <location filename="../engine.cpp" line="5903"/>
         <source>Save D11</source>
-        <translation type="unfinished">Сохранить D11</translation>
+        <translation>Сохранить D11</translation>
     </message>
     <message>
-        <location filename="../mainwindow.ui" line="5918"/>
-        <location filename="../mainwindow.ui" line="5921"/>
+        <location filename="../engine.cpp" line="5918"/>
+        <location filename="../engine.cpp" line="5921"/>
         <source>Save D12</source>
-        <translation type="unfinished">Сохранить D12</translation>
+        <translation>Сохранить D12</translation>
     </message>
     <message>
-        <location filename="../mainwindow.ui" line="5936"/>
-        <location filename="../mainwindow.ui" line="5939"/>
+        <location filename="../engine.cpp" line="5936"/>
+        <location filename="../engine.cpp" line="5939"/>
         <source>Save D13</source>
-        <translation type="unfinished">Сохранить D13</translation>
+        <translation>Сохранить D13</translation>
     </message>
     <message>
-        <location filename="../mainwindow.ui" line="5954"/>
-        <location filename="../mainwindow.ui" line="5957"/>
+        <location filename="../engine.cpp" line="5954"/>
+        <location filename="../engine.cpp" line="5957"/>
         <source>Save D14</source>
-        <translation type="unfinished">Сохранить D14</translation>
+        <translation>Сохранить D14</translation>
     </message>
     <message>
-        <location filename="../mainwindow.ui" line="5972"/>
-        <location filename="../mainwindow.ui" line="5975"/>
+        <location filename="../engine.cpp" line="5972"/>
+        <location filename="../engine.cpp" line="5975"/>
         <source>Save D15</source>
-        <translation type="unfinished">Сохранить D15</translation>
+        <translation>Сохранить D15</translation>
     </message>
     <message>
-        <location filename="../mainwindow.ui" line="5987"/>
-        <location filename="../mainwindow.ui" line="5990"/>
-        <location filename="../mainwindow.ui" line="5993"/>
+        <location filename="../engine.cpp" line="5987"/>
+        <location filename="../engine.cpp" line="5990"/>
+        <location filename="../engine.cpp" line="5993"/>
         <source>Show printer text output</source>
         <translation>Показать текст с принтера</translation>
     </message>
     <message>
-        <location filename="../mainwindow.ui" line="6005"/>
+        <location filename="../engine.cpp" line="6005"/>
         <source>Playback cassette image...</source>
         <translation>Проиграть образ кассеты...</translation>
     </message>
     <message>
-        <location filename="../mainwindow.ui" line="6008"/>
-        <location filename="../mainwindow.ui" line="6011"/>
+        <location filename="../engine.cpp" line="6008"/>
+        <location filename="../engine.cpp" line="6011"/>
         <source>Playback a cassette image</source>
         <translation>Проиграть образ кассеты</translation>
     </message>
     <message>
-        <location filename="../mainwindow.ui" line="6014"/>
+        <location filename="../engine.cpp" line="6014"/>
         <source>Alt+C</source>
         <translation></translation>
     </message>
     <message>
-        <location filename="../mainwindow.ui" line="6023"/>
+        <location filename="../engine.cpp" line="6023"/>
         <source>&amp;Quit</source>
         <translation>&amp;Выход</translation>
     </message>
     <message>
-        <location filename="../mainwindow.ui" line="6026"/>
+        <location filename="../engine.cpp" line="6026"/>
         <source>Quit AspeQt</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../mainwindow.ui" line="6038"/>
+        <location filename="../engine.cpp" line="6038"/>
         <source>&amp;About AspeQt</source>
         <translation>&amp;О программе AspeQt</translation>
     </message>
     <message>
-        <location filename="../mainwindow.ui" line="6046"/>
+        <location filename="../engine.cpp" line="6046"/>
         <source>Help</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../mainwindow.ui" line="6054"/>
+        <location filename="../engine.cpp" line="6054"/>
         <source>Contents</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../mainwindow.ui" line="6059"/>
+        <location filename="../engine.cpp" line="6059"/>
         <source>Index</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../mainwindow.ui" line="6071"/>
-        <location filename="../mainwindow.ui" line="6074"/>
-        <location filename="../mainwindow.ui" line="6077"/>
+        <location filename="../engine.cpp" line="6071"/>
+        <location filename="../engine.cpp" line="6074"/>
+        <location filename="../engine.cpp" line="6077"/>
         <source>User Manual</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../mainwindow.ui" line="6098"/>
-        <location filename="../mainwindow.ui" line="6119"/>
-        <location filename="../mainwindow.ui" line="6140"/>
-        <location filename="../mainwindow.ui" line="6161"/>
-        <location filename="../mainwindow.ui" line="6182"/>
-        <location filename="../mainwindow.ui" line="6203"/>
-        <location filename="../mainwindow.ui" line="6224"/>
-        <location filename="../mainwindow.ui" line="6245"/>
-        <location filename="../mainwindow.ui" line="6266"/>
-        <location filename="../mainwindow.ui" line="6287"/>
-        <location filename="../mainwindow.ui" line="6308"/>
-        <location filename="../mainwindow.ui" line="6329"/>
-        <location filename="../mainwindow.ui" line="6350"/>
-        <location filename="../mainwindow.ui" line="6371"/>
-        <location filename="../mainwindow.ui" line="6392"/>
+        <location filename="../engine.cpp" line="6098"/>
+        <location filename="../engine.cpp" line="6119"/>
+        <location filename="../engine.cpp" line="6140"/>
+        <location filename="../engine.cpp" line="6161"/>
+        <location filename="../engine.cpp" line="6182"/>
+        <location filename="../engine.cpp" line="6203"/>
+        <location filename="../engine.cpp" line="6224"/>
+        <location filename="../engine.cpp" line="6245"/>
+        <location filename="../engine.cpp" line="6266"/>
+        <location filename="../engine.cpp" line="6287"/>
+        <location filename="../engine.cpp" line="6308"/>
+        <location filename="../engine.cpp" line="6329"/>
+        <location filename="../engine.cpp" line="6350"/>
+        <location filename="../engine.cpp" line="6371"/>
+        <location filename="../engine.cpp" line="6392"/>
         <source>Commit changes to this disk automatically</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../mainwindow.ui" line="6101"/>
-        <location filename="../mainwindow.ui" line="6122"/>
-        <location filename="../mainwindow.ui" line="6143"/>
-        <location filename="../mainwindow.ui" line="6164"/>
-        <location filename="../mainwindow.ui" line="6185"/>
-        <location filename="../mainwindow.ui" line="6206"/>
-        <location filename="../mainwindow.ui" line="6227"/>
-        <location filename="../mainwindow.ui" line="6248"/>
-        <location filename="../mainwindow.ui" line="6269"/>
-        <location filename="../mainwindow.ui" line="6290"/>
-        <location filename="../mainwindow.ui" line="6311"/>
-        <location filename="../mainwindow.ui" line="6332"/>
-        <location filename="../mainwindow.ui" line="6353"/>
-        <location filename="../mainwindow.ui" line="6374"/>
-        <location filename="../mainwindow.ui" line="6395"/>
+        <location filename="../engine.cpp" line="6101"/>
+        <location filename="../engine.cpp" line="6122"/>
+        <location filename="../engine.cpp" line="6143"/>
+        <location filename="../engine.cpp" line="6164"/>
+        <location filename="../engine.cpp" line="6185"/>
+        <location filename="../engine.cpp" line="6206"/>
+        <location filename="../engine.cpp" line="6227"/>
+        <location filename="../engine.cpp" line="6248"/>
+        <location filename="../engine.cpp" line="6269"/>
+        <location filename="../engine.cpp" line="6290"/>
+        <location filename="../engine.cpp" line="6311"/>
+        <location filename="../engine.cpp" line="6332"/>
+        <location filename="../engine.cpp" line="6353"/>
+        <location filename="../engine.cpp" line="6374"/>
+        <location filename="../engine.cpp" line="6395"/>
         <source>Toggle Auto Commit ON/OFF</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../mainwindow.cpp" line="127"/>
+        <location filename="../engine.cpp" line="127"/>
         <source>AspeQt started at %1.</source>
         <translation>AspeQt запущен в %1.</translation>
     </message>
@@ -3001,32 +3001,32 @@ p, li { white-space: pre-wrap; }
         <translation type="vanished">19200 бит/сек</translation>
     </message>
     <message>
-        <location filename="../mainwindow.cpp" line="279"/>
+        <location filename="../engine.cpp" line="279"/>
         <source>Clear messages</source>
         <translation>Очистить сообщения</translation>
     </message>
     <message>
-        <location filename="../mainwindow.cpp" line="388"/>
+        <location filename="../engine.cpp" line="388"/>
         <source>AspeQt stopped at %1.</source>
         <translation>AspeQt остановлен в %1.</translation>
     </message>
     <message>
-        <location filename="../mainwindow.cpp" line="496"/>
+        <location filename="../engine.cpp" line="496"/>
         <source>Swapped disk %1 with disk %2.</source>
         <translation>Диск %1 заменен на диск %2.</translation>
     </message>
     <message>
-        <location filename="../mainwindow.cpp" line="550"/>
+        <location filename="../engine.cpp" line="550"/>
         <source>Cannot mount &apos;%1&apos;: No empty disk slots.</source>
         <translation>Невозможно подключить &apos;%1&apos;: нет свободных слотов.</translation>
     </message>
     <message>
-        <location filename="../mainwindow.cpp" line="635"/>
+        <location filename="../engine.cpp" line="635"/>
         <source>First run</source>
         <translation>Первый запуск</translation>
     </message>
     <message>
-        <location filename="../mainwindow.cpp" line="636"/>
+        <location filename="../engine.cpp" line="636"/>
         <source>You are running AspeQt for the first time.
 
 Do you want to open the options dialog?</source>
@@ -3035,245 +3035,245 @@ Do you want to open the options dialog?</source>
 Открыть диалог настроек?</translation>
     </message>
     <message>
-        <location filename="../mainwindow.cpp" line="839"/>
+        <location filename="../engine.cpp" line="839"/>
         <source>&amp;Stop emulation</source>
         <translation>&amp;Остановить эмуляцию</translation>
     </message>
     <message>
-        <location filename="../mainwindow.cpp" line="840"/>
-        <location filename="../mainwindow.cpp" line="841"/>
+        <location filename="../engine.cpp" line="840"/>
+        <location filename="../engine.cpp" line="841"/>
         <source>Stop SIO peripheral emulation</source>
         <translation>Остановить эмуляцию SIO-периферии</translation>
     </message>
     <message>
-        <location filename="../mainwindow.cpp" line="858"/>
+        <location filename="../engine.cpp" line="858"/>
         <source>Emulation stopped.</source>
         <translation>Эмуляция остановлена.</translation>
     </message>
     <message>
-        <location filename="../mainwindow.cpp" line="876"/>
-        <location filename="../mainwindow.cpp" line="898"/>
+        <location filename="../engine.cpp" line="876"/>
+        <location filename="../engine.cpp" line="898"/>
         <source>Folder image</source>
         <translation>Образ папки</translation>
     </message>
     <message>
-        <location filename="../mainwindow.cpp" line="1149"/>
+        <location filename="../engine.cpp" line="1149"/>
         <source>Unmounted disk %1</source>
         <translation>Диск %1 отключен</translation>
     </message>
     <message>
-        <location filename="../mainwindow.cpp" line="1321"/>
-        <location filename="../mainwindow.cpp" line="1857"/>
+        <location filename="../engine.cpp" line="1321"/>
+        <location filename="../engine.cpp" line="1857"/>
         <source>[%1] Mounted &apos;%2&apos; as &apos;%3&apos;.</source>
         <translation>[%1] Подключен &apos;%2&apos; как &apos;%3&apos;.</translation>
     </message>
     <message>
-        <location filename="../mainwindow.cpp" line="1355"/>
+        <location filename="../engine.cpp" line="1355"/>
         <source>Open a disk image</source>
         <translation>Открыть образ диска</translation>
     </message>
     <message>
-        <location filename="../mainwindow.cpp" line="1357"/>
-        <location filename="../mainwindow.cpp" line="1638"/>
+        <location filename="../engine.cpp" line="1357"/>
+        <location filename="../engine.cpp" line="1638"/>
         <source>All Atari disk images (*.atr *.xfd *.pro);;SIO2PC ATR images (*.atr);;XFormer XFD images (*.xfd);;Pro images (*.pro);;All files (*)</source>
-        <translation type="unfinished">Все образы дисков Atari (*.atr *.xfd *.pro);;ATR-образы SIO2PC (*.atr);;XFD-образы XFormer (*.xfd);;Pro-образы (*.pro);;Все файлы (*)</translation>
+        <translation>Все образы дисков Atari (*.atr *.xfd *.pro);;ATR-образы SIO2PC (*.atr);;XFD-образы XFormer (*.xfd);;Pro-образы (*.pro);;Все файлы (*)</translation>
     </message>
     <message>
-        <location filename="../mainwindow.cpp" line="1394"/>
+        <location filename="../engine.cpp" line="1394"/>
         <source>Open a folder image</source>
         <translation>Открыть образ папки</translation>
     </message>
     <message>
-        <location filename="../mainwindow.cpp" line="1438"/>
+        <location filename="../engine.cpp" line="1438"/>
         <source>Image file unsaved</source>
         <translation>Файл образа не сохранен</translation>
     </message>
     <message>
-        <location filename="../mainwindow.cpp" line="1438"/>
+        <location filename="../engine.cpp" line="1438"/>
         <source>&apos;%1&apos; has unsaved changes, do you want to save it?</source>
         <translation>&apos;%1&apos; содержит несохраненные изменения, хотите сохранить их?</translation>
     </message>
     <message>
-        <location filename="../mainwindow.cpp" line="924"/>
-        <location filename="../mainwindow.cpp" line="1483"/>
-        <location filename="../mainwindow.cpp" line="1599"/>
-        <location filename="../mainwindow.cpp" line="1656"/>
+        <location filename="../engine.cpp" line="924"/>
+        <location filename="../engine.cpp" line="1483"/>
+        <location filename="../engine.cpp" line="1599"/>
+        <location filename="../engine.cpp" line="1656"/>
         <source>Save failed</source>
         <translation>Ошибка при сохранении</translation>
     </message>
     <message>
-        <location filename="../mainwindow.cpp" line="144"/>
-        <location filename="../mainwindow.cpp" line="152"/>
+        <location filename="../engine.cpp" line="144"/>
+        <location filename="../engine.cpp" line="152"/>
         <source>Migrate Settings</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../mainwindow.cpp" line="144"/>
+        <location filename="../engine.cpp" line="144"/>
         <source>This version of AspeQt uses a different repository for storing its global settings.
 We will now migrate the existing settings to their new repository, note that settings stored in your existing AspeQt session files are not affected by this change.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../mainwindow.cpp" line="152"/>
+        <location filename="../engine.cpp" line="152"/>
         <source>Setting were migrated successfuly.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../mainwindow.cpp" line="234"/>
-        <location filename="../mainwindow.cpp" line="244"/>
+        <location filename="../engine.cpp" line="234"/>
+        <location filename="../engine.cpp" line="244"/>
         <source>Session file error</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../mainwindow.cpp" line="235"/>
+        <location filename="../engine.cpp" line="235"/>
         <source>Requested session file not found in the given directory path or the path is incorrect. AspeQt will continue with default session configuration.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../mainwindow.cpp" line="245"/>
+        <location filename="../engine.cpp" line="245"/>
         <source>Requested session file not found in the application&apos;s current directory path
  (No path was specified). AspeQt will continue with default session configuration.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../mainwindow.cpp" line="258"/>
-        <location filename="../mainwindow.cpp" line="1903"/>
+        <location filename="../engine.cpp" line="258"/>
+        <location filename="../engine.cpp" line="1903"/>
         <source> -- Session: </source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../mainwindow.cpp" line="806"/>
-        <location filename="../mainwindow.cpp" line="807"/>
-        <location filename="../mainwindow.cpp" line="810"/>
+        <location filename="../engine.cpp" line="806"/>
+        <location filename="../engine.cpp" line="807"/>
+        <location filename="../engine.cpp" line="810"/>
         <source>Start printer emulation</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../mainwindow.cpp" line="813"/>
+        <location filename="../engine.cpp" line="813"/>
         <source>Printer emulation stopped.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../mainwindow.cpp" line="822"/>
+        <location filename="../engine.cpp" line="822"/>
         <source>Printer emulation started.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../mainwindow.cpp" line="924"/>
-        <location filename="../mainwindow.cpp" line="1483"/>
-        <location filename="../mainwindow.cpp" line="1599"/>
-        <location filename="../mainwindow.cpp" line="1656"/>
+        <location filename="../engine.cpp" line="924"/>
+        <location filename="../engine.cpp" line="1483"/>
+        <location filename="../engine.cpp" line="1599"/>
+        <location filename="../engine.cpp" line="1656"/>
         <source>&apos;%1&apos; cannot be saved, do you want to save the image with another name?</source>
         <translation>&apos;%1&apos; не может быть сохранен, вы хотите сохранить этот образ под другим именем?</translation>
     </message>
     <message>
-        <location filename="../mainwindow.cpp" line="1546"/>
+        <location filename="../engine.cpp" line="1546"/>
         <source>[Disk 1] Auto-commit ON.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../mainwindow.cpp" line="1548"/>
+        <location filename="../engine.cpp" line="1548"/>
         <source>[Disk 1] Auto-commit OFF.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../mainwindow.cpp" line="1554"/>
+        <location filename="../engine.cpp" line="1554"/>
         <source>[Disk 2] Auto-commit ON.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../mainwindow.cpp" line="1556"/>
+        <location filename="../engine.cpp" line="1556"/>
         <source>[Disk 2] Auto-commit OFF.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../mainwindow.cpp" line="1562"/>
+        <location filename="../engine.cpp" line="1562"/>
         <source>[Disk 3] Auto-commit ON.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../mainwindow.cpp" line="1564"/>
+        <location filename="../engine.cpp" line="1564"/>
         <source>[Disk 3] Auto-commit OFF.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../mainwindow.cpp" line="1570"/>
+        <location filename="../engine.cpp" line="1570"/>
         <source>[Disk 4] Auto-commit ON.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../mainwindow.cpp" line="1572"/>
+        <location filename="../engine.cpp" line="1572"/>
         <source>[Disk 4] Auto-commit OFF.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../mainwindow.cpp" line="1578"/>
+        <location filename="../engine.cpp" line="1578"/>
         <source>[Disk 5] Auto-commit ON.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../mainwindow.cpp" line="1580"/>
+        <location filename="../engine.cpp" line="1580"/>
         <source>[Disk 5] Auto-commit OFF.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../mainwindow.cpp" line="1586"/>
+        <location filename="../engine.cpp" line="1586"/>
         <source>[Disk 6] Auto-commit ON.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../mainwindow.cpp" line="1588"/>
+        <location filename="../engine.cpp" line="1588"/>
         <source>[Disk 6] Auto-commit OFF.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../mainwindow.cpp" line="1636"/>
+        <location filename="../engine.cpp" line="1636"/>
         <source>Save image as</source>
         <translation>Сохранить образ как</translation>
     </message>
     <message>
-        <location filename="../mainwindow.cpp" line="1674"/>
+        <location filename="../engine.cpp" line="1674"/>
         <source>Revert to last saved</source>
         <translation>Вернуть к последнему сохраненному</translation>
     </message>
     <message>
-        <location filename="../mainwindow.cpp" line="1675"/>
+        <location filename="../engine.cpp" line="1675"/>
         <source>Do you really want to revert &apos;%1&apos; to its last saved state? You will lose the changes that has been made.</source>
         <translation>Вы действительно хотите вернуть &apos;%1&apos; к последнему сохраненному состоянию? Вы потеряете сделанные изменения.</translation>
     </message>
     <message>
-        <location filename="../mainwindow.cpp" line="1881"/>
+        <location filename="../engine.cpp" line="1881"/>
         <source>Open session</source>
         <translation>Открыть сессию</translation>
     </message>
     <message>
-        <location filename="../mainwindow.cpp" line="1883"/>
-        <location filename="../mainwindow.cpp" line="1934"/>
+        <location filename="../engine.cpp" line="1883"/>
+        <location filename="../engine.cpp" line="1934"/>
         <source>AspeQt sessions (*.aspeqt);;All files (*)</source>
         <translation>Сессии AspeQt (*.aspeqt);;Все файлы (*)</translation>
     </message>
     <message>
-        <location filename="../mainwindow.cpp" line="1932"/>
+        <location filename="../engine.cpp" line="1932"/>
         <source>Save session as</source>
         <translation>Сохранить сессию как</translation>
     </message>
     <message>
-        <location filename="../mainwindow.cpp" line="1969"/>
+        <location filename="../engine.cpp" line="1969"/>
         <source>Open executable</source>
         <translation>Открыть исполняемый файл</translation>
     </message>
     <message>
-        <location filename="../mainwindow.cpp" line="1971"/>
+        <location filename="../engine.cpp" line="1971"/>
         <source>Atari executables (*.xex *.com *.exe);;All files (*)</source>
         <translation>Исполняемые файлы Atari (*.xex *.com *.exe);;Все файлы (*)</translation>
     </message>
     <message>
-        <location filename="../mainwindow.cpp" line="2015"/>
+        <location filename="../engine.cpp" line="2015"/>
         <source>Open a cassette image</source>
         <translation>Открыть образ кассеты</translation>
     </message>
     <message>
-        <location filename="../mainwindow.cpp" line="2017"/>
+        <location filename="../engine.cpp" line="2017"/>
         <source>CAS images (*.cas);;All files (*)</source>
         <translation>CAS-образы (*.cas);;Все файлы (*)</translation>
     </message>
@@ -3407,7 +3407,7 @@ We will now migrate the existing settings to their new repository, note that set
     <message>
         <location filename="../android/optionsdialog.ui" line="179"/>
         <source>Save</source>
-        <translation type="unfinished">Сохранить</translation>
+        <translation>Сохранить</translation>
     </message>
     <message>
         <location filename="../android/optionsdialog.ui" line="484"/>
@@ -3625,7 +3625,7 @@ We will now migrate the existing settings to their new repository, note that set
     <message>
         <location filename="../pclink.cpp" line="207"/>
         <source>[%1] command: $%2, aux: $%3 NAKed.</source>
-        <translation type="unfinished">[%1] команда: $%2, aux: $%3 NAKed.</translation>
+        <translation>[%1] команда: $%2, aux: $%3 NAKed.</translation>
     </message>
     <message>
         <location filename="../pclink.cpp" line="240"/>

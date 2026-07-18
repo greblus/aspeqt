@@ -152,6 +152,16 @@ public class SerialActivity extends QtActivity
         // bracket is dropped as "not existing"; going through the intent
         // directly also keeps Android's exact URI encoding, which the content
         // resolver needs.
+        // True when Android started us because the SIO cable was plugged in
+        // (the manifest has a USB_DEVICE_ATTACHED filter), so the engine can
+        // begin emulating without the user having to press start.
+        public static boolean launchedByUsb() {
+            if (s_activity == null)
+                return false;
+            Intent i = s_activity.getIntent();
+            return i != null && UsbManager.ACTION_USB_DEVICE_ATTACHED.equals(i.getAction());
+        }
+
         public static void pickDocument(int reqId, String mimeType) {
             m_safReqId = reqId;
             Intent i = new Intent(Intent.ACTION_OPEN_DOCUMENT);

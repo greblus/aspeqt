@@ -2,9 +2,9 @@
 #include <QTextCodec>
 #include <QLibraryInfo>
 #include <QStyleHints>
-#include "mainwindow.h"
+#include "engine.h"
 
-extern MainWindow *mainWindow;
+extern Engine *g_engine;
 
 #ifdef ASPEQT_QML
 #include <QQmlApplicationEngine>
@@ -39,7 +39,7 @@ extern "C" {
 
     // Result of a SAF pick. Arrives on Android's UI thread, so hand it to the
     // engine through a queued call. The URI is Android's own string: it must
-    // not be re-encoded on the way (see MainWindow::documentPicked).
+    // not be re-encoded on the way (see Engine::documentPicked).
     JNIEXPORT void JNICALL
     Java_net_greblus_SerialActivity_documentPicked(JNIEnv *env,
     jclass /*cls*/, jint reqId, jstring juri)
@@ -48,9 +48,9 @@ extern "C" {
             const QString uri = chars ? QString::fromUtf8(chars) : QString();
             if (chars)
                 env->ReleaseStringUTFChars(juri, chars);
-            if (!mainWindow)
+            if (!g_engine)
                 return;
-            QMetaObject::invokeMethod(mainWindow, "documentPicked", Qt::QueuedConnection,
+            QMetaObject::invokeMethod(g_engine, "onDocumentPicked", Qt::QueuedConnection,
                                       Q_ARG(int, (int)reqId), Q_ARG(QString, uri));
         }
 }
@@ -73,10 +73,10 @@ int main(int argc, char *argv[])
     // colour scheme so it doesn't render as a black void under the system dark mode.
     a.styleHints()->setColorScheme(Qt::ColorScheme::Light);
 #ifdef ASPEQT_QML
-    // QML UI (branch `qml`): MainWindow runs headless as the emulation engine
+    // QML UI (branch `qml`): Engine runs headless as the emulation engine
     // (never shown); the Qt Quick front-end drives it via AppController.
     qputenv("QT_QUICK_CONTROLS_STYLE", "Material");
-    MainWindow engineWindow;              // the engine: SIO, mounting, log
+    Engine engineWindow;              // the engine: SIO, mounting, log
     QQmlApplicationEngine engine;
     AppController controller(&engineWindow);
     engine.rootContext()->setContextProperty("app", &controller);
@@ -85,7 +85,7 @@ int main(int argc, char *argv[])
         return -1;
     ret = a.exec();
 #else
-    MainWindow w;
+    Engine w;
     w.show();
     ret = a.exec();
 #endif

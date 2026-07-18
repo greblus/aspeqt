@@ -1,6 +1,6 @@
 #include "aspeqtsettings.h"
 #include "serialport.h"
-#include "mainwindow.h"    //
+#include "engine.h"    //
 
 AspeqtSettings::AspeqtSettings()
 {
@@ -221,7 +221,7 @@ void AspeqtSettings::saveSessionToFile(const QString &fileName)
     }
     s.endArray();
 }
-// Get MainWindow title from MainWindow  //
+// Get the window title from the engine  //
 void AspeqtSettings::setMainWindowTitle(const QString &g_mainWindowTitle)
 {
     mMainWindowTitle = g_mainWindowTitle;

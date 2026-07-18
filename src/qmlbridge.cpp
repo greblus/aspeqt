@@ -1,5 +1,5 @@
 #include "qmlbridge.h"
-#include "mainwindow.h"
+#include "engine.h"
 
 #include <QVariant>
 
@@ -79,7 +79,7 @@ void DriveModel::setSlots(const QVector<SlotData> &list)
 // ---------------------------------------------------------------------------
 // AppController
 // ---------------------------------------------------------------------------
-AppController::AppController(MainWindow *engine, QObject *parent)
+AppController::AppController(Engine *engine, QObject *parent)
     : QObject(parent), m_engine(engine)
 {
     // Repaint the log at most ~10x a second no matter how fast lines arrive.
@@ -91,12 +91,12 @@ AppController::AppController(MainWindow *engine, QObject *parent)
         // Queued: the engine emits this from methods QML calls out of signal
         // handlers, and a structural change there would delete the delegate
         // whose handler is still on the stack (Qt aborts on that).
-        connect(m_engine, &MainWindow::qmlChanged, this, &AppController::refresh,
+        connect(m_engine, &Engine::stateChanged, this, &AppController::refresh,
                 Qt::QueuedConnection);
-        connect(m_engine, &MainWindow::qmlLoaderProgress, this, &AppController::refreshLoader);
-        connect(m_engine, &MainWindow::qmlPrinterTextChanged, this, &AppController::refreshPrinter);
-        connect(m_engine, &MainWindow::logMessage, this, &AppController::onLogMessage);
-        connect(m_engine, &MainWindow::qmlDocumentPicked, this, &AppController::documentPicked);
+        connect(m_engine, &Engine::loaderProgress, this, &AppController::refreshLoader);
+        connect(m_engine, &Engine::printerTextChanged, this, &AppController::refreshPrinter);
+        connect(m_engine, &Engine::logMessage, this, &AppController::onLogMessage);
+        connect(m_engine, &Engine::documentPicked, this, &AppController::documentPicked);
     }
     refresh();
 }
@@ -107,7 +107,7 @@ void AppController::refresh()
 
     // drive slots
     QVector<SlotData> rows;
-    const QVariantList list = m_engine->qmlDriveList();
+    const QVariantList list = m_engine->driveList();
     for (const QVariant &v : list) {
         const QVariantMap m = v.toMap();
         SlotData s;
@@ -124,7 +124,7 @@ void AppController::refresh()
     }
     m_model.setSlots(rows);
 
-    bool add = m_engine->qmlCanAddSlot();
+    bool add = m_engine->canAddSlot();
     if (add != m_canAddSlot) { m_canAddSlot = add; }
     emit drivesChanged();
 
@@ -132,7 +132,7 @@ void AppController::refresh()
     refreshLoader();
 
     // status bar
-    const QVariantMap st = m_engine->qmlStatus();
+    const QVariantMap st = m_engine->status();
     m_sioRunning = st.value("running").toBool();
     m_statusText = st.value("speed").toString();
     m_printerOn  = st.value("printerOn").toBool();
@@ -142,7 +142,7 @@ void AppController::refresh()
 void AppController::refreshLoader()
 {
     if (!m_engine) return;
-    const QVariantMap l = m_engine->qmlLoaderState();
+    const QVariantMap l = m_engine->loaderState();
     m_loaderKind         = l.value("kind").toInt();
     m_loaderFileName     = l.value("fileName").toString();
     m_loaderTypeText     = l.value("typeText").toString();
@@ -155,7 +155,7 @@ void AppController::refreshLoader()
     emit loaderChanged();
 }
 
-// Format one engine log line the same way MainWindow::uiMessage colours it.
+// Format one engine log line the same way Engine::uiMessage colours it.
 void AppController::onLogMessage(int type, const QString &msg)
 {
     // Match the widget UI's uiMessage(): do NOT HTML-escape — messages may embed
@@ -216,71 +216,71 @@ void AppController::rebuildLogCaches() const
 }
 
 // -- actions ----------------------------------------------------------------
-void AppController::eject(int hwIndex)             { if (m_engine) m_engine->qmlEjectPressed(hwIndex); }
-void AppController::removeSlot(int hwIndex)        { if (m_engine) m_engine->qmlEjectPressed(hwIndex); }
-int  AppController::save(int hwIndex)              { return m_engine ? m_engine->qmlSaveDisk(hwIndex) : MainWindow::SaveFailed; }
-int  AppController::toggleAutoCommit(int hwIndex)  { return m_engine ? m_engine->qmlToggleAutoCommitDisk(hwIndex) : MainWindow::SaveFailed; }
-void AppController::toggleWriteProtect(int hwIndex){ if (m_engine) m_engine->qmlToggleWriteProtect(hwIndex); }
-int AppController::addSlot()                       { return m_engine ? m_engine->qmlAddSlot() : -1; }
-void AppController::swapSlots(int fromHw, int toHw){ if (m_engine) m_engine->qmlSwapSlots(fromHw, toHw); }
+void AppController::eject(int hwIndex)             { if (m_engine) m_engine->ejectPressed(hwIndex); }
+void AppController::removeSlot(int hwIndex)        { if (m_engine) m_engine->ejectPressed(hwIndex); }
+int  AppController::save(int hwIndex)              { return m_engine ? m_engine->saveDisk(hwIndex) : Engine::SaveFailed; }
+int  AppController::toggleAutoCommit(int hwIndex)  { return m_engine ? m_engine->toggleAutoCommitDisk(hwIndex) : Engine::SaveFailed; }
+void AppController::toggleWriteProtect(int hwIndex){ if (m_engine) m_engine->toggleWriteProtect(hwIndex); }
+int AppController::addSlot()                       { return m_engine ? m_engine->addSlot() : -1; }
+void AppController::swapSlots(int fromHw, int toHw){ if (m_engine) m_engine->swapSlots(fromHw, toHw); }
 
-void AppController::loaderPlay()  { if (m_engine) m_engine->qmlLoaderPlay(); }
-void AppController::loaderRetry() { if (m_engine) m_engine->qmlLoaderRetry(); }
-void AppController::loaderEject() { if (m_engine) m_engine->qmlLoaderEject(); }
+void AppController::loaderPlay()  { if (m_engine) m_engine->loaderPlay(); }
+void AppController::loaderRetry() { if (m_engine) m_engine->loaderRetry(); }
+void AppController::loaderEject() { if (m_engine) m_engine->loaderEject(); }
 
-void AppController::toggleSio()     { if (m_engine) m_engine->qmlToggleSio(); }
-void AppController::togglePrinter() { if (m_engine) m_engine->qmlTogglePrinter(); }
+void AppController::toggleSio()     { if (m_engine) m_engine->toggleSio(); }
+void AppController::togglePrinter() { if (m_engine) m_engine->togglePrinter(); }
 void AppController::clearLog()
 {
-    if (m_engine) m_engine->qmlClearLog();
+    if (m_engine) m_engine->clearLog();
     m_logLines.clear();
     m_logDirty = true;
     m_logNotify.stop();
     emit logChanged();
 }
 
-void AppController::createDisk(int sc, int ss) { if (m_engine) m_engine->qmlCreateDisk(sc, ss); }
-void AppController::printerClear()      { if (m_engine) m_engine->qmlPrinterClear(); }
-void AppController::printerSave()       { if (m_engine) m_engine->qmlPrinterSave(); }
+void AppController::createDisk(int sc, int ss) { if (m_engine) m_engine->createDisk(sc, ss); }
+void AppController::printerClear()      { if (m_engine) m_engine->printerClear(); }
+void AppController::printerSave()       { if (m_engine) m_engine->printerSave(); }
 void AppController::refreshPrinter()
 {
     if (!m_engine) return;
-    m_printerText = m_engine->qmlPrinterText();
-    m_printerTextAtascii = m_engine->qmlPrinterTextAtascii();
+    m_printerText = m_engine->printerText();
+    m_printerTextAtascii = m_engine->printerTextAtascii();
     emit printerTextChanged();
 }
-void AppController::ejectAll()          { if (m_engine) m_engine->qmlEjectAll(); }
-void AppController::quit()              { if (m_engine) m_engine->qmlQuit(); }
-QStringList AppController::recentFiles(){ return m_engine ? m_engine->qmlRecentFiles() : QStringList(); }
-void AppController::mountRecent(int i)  { if (m_engine) m_engine->qmlMountRecent(i); }
+void AppController::ejectAll()          { if (m_engine) m_engine->ejectAll(); }
+void AppController::quit()              { if (m_engine) m_engine->quit(); }
+QStringList AppController::recentFiles(){ return m_engine ? m_engine->recentFiles() : QStringList(); }
+void AppController::mountRecent(int i)  { if (m_engine) m_engine->mountRecent(i); }
 
-QVariantMap AppController::loadOptions()          { return m_engine ? m_engine->qmlLoadOptions() : QVariantMap(); }
-void AppController::applyOptions(const QVariantMap &o) { if (m_engine) m_engine->qmlApplyOptions(o); }
-QVariantList AppController::languages()           { return m_engine ? m_engine->qmlLanguages() : QVariantList(); }
+QVariantMap AppController::loadOptions()          { return m_engine ? m_engine->loadOptions() : QVariantMap(); }
+void AppController::applyOptions(const QVariantMap &o) { if (m_engine) m_engine->applyOptions(o); }
+QVariantList AppController::languages()           { return m_engine ? m_engine->languages() : QVariantList(); }
 
-bool AppController::diskOpen(int hw)      { return m_engine ? m_engine->qmlDiskOpen(hw) : false; }
-void AppController::diskClose()           { if (m_engine) m_engine->qmlDiskClose(); }
-QVariantList AppController::diskEntries()  { return m_engine ? m_engine->qmlDiskEntries() : QVariantList(); }
-QString AppController::diskPath()          { return m_engine ? m_engine->qmlDiskPath() : QString(); }
-bool AppController::diskCanParent()        { return m_engine ? m_engine->qmlDiskCanParent() : false; }
-bool AppController::diskReadOnly()         { return m_engine ? m_engine->qmlDiskReadOnly() : true; }
-int AppController::diskFsType()            { return m_engine ? m_engine->qmlDiskFsType() : 0; }
-bool AppController::diskSetFsType(int i)   { return m_engine ? m_engine->qmlDiskSetFsType(i) : false; }
-void AppController::toast(const QString &t)  { if (m_engine) m_engine->qmlToast(t); }
-QString AppController::startDir(const QString &kind) { return m_engine ? m_engine->qmlStartDir(kind) : QString(); }
-void AppController::mountDiskPath(int i, const QString &url)   { if (m_engine) m_engine->qmlMountDiskPath(i, url); }
-void AppController::mountFolderPath(int i, const QString &url) { if (m_engine) m_engine->qmlMountFolderPath(i, url); }
-void AppController::loaderLoadPath(const QString &url)         { if (m_engine) m_engine->qmlLoaderLoadPath(url); }
-bool AppController::saveAsPath(int i, const QString &url)      { return m_engine ? m_engine->qmlSaveAsPath(i, url) : false; }
-void AppController::installDos(int i)                          { if (m_engine) m_engine->qmlInstallDos(i); }
-void AppController::openSessionPath(const QString &url)        { if (m_engine) m_engine->qmlOpenSessionPath(url); }
-void AppController::saveSessionPath(const QString &url)        { if (m_engine) m_engine->qmlSaveSessionPath(url); }
+bool AppController::diskOpen(int hw)      { return m_engine ? m_engine->diskOpen(hw) : false; }
+void AppController::diskClose()           { if (m_engine) m_engine->diskClose(); }
+QVariantList AppController::diskEntries()  { return m_engine ? m_engine->diskEntries() : QVariantList(); }
+QString AppController::diskPath()          { return m_engine ? m_engine->diskPath() : QString(); }
+bool AppController::diskCanParent()        { return m_engine ? m_engine->diskCanParent() : false; }
+bool AppController::diskReadOnly()         { return m_engine ? m_engine->diskReadOnly() : true; }
+int AppController::diskFsType()            { return m_engine ? m_engine->diskFsType() : 0; }
+bool AppController::diskSetFsType(int i)   { return m_engine ? m_engine->diskSetFsType(i) : false; }
+void AppController::toast(const QString &t)  { if (m_engine) m_engine->toast(t); }
+QString AppController::startDir(const QString &kind) { return m_engine ? m_engine->startDir(kind) : QString(); }
+void AppController::mountDiskPath(int i, const QString &url)   { if (m_engine) m_engine->mountDiskPath(i, url); }
+void AppController::mountFolderPath(int i, const QString &url) { if (m_engine) m_engine->mountFolderPath(i, url); }
+void AppController::loaderLoadPath(const QString &url)         { if (m_engine) m_engine->loaderLoadPath(url); }
+bool AppController::saveAsPath(int i, const QString &url)      { return m_engine ? m_engine->saveAsPath(i, url) : false; }
+void AppController::installDos(int i)                          { if (m_engine) m_engine->installDos(i); }
+void AppController::openSessionPath(const QString &url)        { if (m_engine) m_engine->openSessionPath(url); }
+void AppController::saveSessionPath(const QString &url)        { if (m_engine) m_engine->saveSessionPath(url); }
 void AppController::pickDocument(int r, const QString &m)      { if (m_engine) m_engine->pickDocument(r, m); }
 void AppController::createDocument(int r, const QString &m, const QString &n) { if (m_engine) m_engine->createDocument(r, m, n); }
 void AppController::pickFolder(int r)                          { if (m_engine) m_engine->pickFolder(r); }
-void AppController::diskEnter(int row)     { if (m_engine) m_engine->qmlDiskEnter(row); }
-void AppController::diskParent()           { if (m_engine) m_engine->qmlDiskParent(); }
-void AppController::diskSetTextConversion(bool on) { if (m_engine) m_engine->qmlDiskSetTextConversion(on); }
-bool AppController::diskExtractPath(const QVariantList &r, const QString &url) { return m_engine ? m_engine->qmlDiskExtractPath(r, url) : false; }
-bool AppController::diskDelete(const QVariantList &rows)  { return m_engine ? m_engine->qmlDiskDelete(rows) : false; }
-bool AppController::diskAddFilesPath(const QString &url) { return m_engine ? m_engine->qmlDiskAddFilesPath(url) : false; }
+void AppController::diskEnter(int row)     { if (m_engine) m_engine->diskEnter(row); }
+void AppController::diskParent()           { if (m_engine) m_engine->diskParent(); }
+void AppController::diskSetTextConversion(bool on) { if (m_engine) m_engine->diskSetTextConversion(on); }
+bool AppController::diskExtractPath(const QVariantList &r, const QString &url) { return m_engine ? m_engine->diskExtractPath(r, url) : false; }
+bool AppController::diskDelete(const QVariantList &rows)  { return m_engine ? m_engine->diskDelete(rows) : false; }
+bool AppController::diskAddFilesPath(const QString &url) { return m_engine ? m_engine->diskAddFilesPath(url) : false; }

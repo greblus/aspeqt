@@ -1,10 +1,10 @@
 #ifndef QMLBRIDGE_H
 #define QMLBRIDGE_H
 
-// Thin C++<->QML bridge for the QML UI (branch `qml`). MainWindow runs headless
+// Thin C++<->QML bridge for the QML UI (branch `qml`). Engine runs headless
 // as the emulation engine; AppController drives it through its qml*() wrappers
 // and mirrors its state (drive slots, loader, status, log) into a QML-friendly
-// model, refreshing whenever the engine emits qmlChanged().
+// model, refreshing whenever the engine emits stateChanged().
 
 #include <QAbstractListModel>
 #include <QObject>
@@ -14,7 +14,7 @@
 #include <QTimer>
 #include <QVector>
 
-class MainWindow;
+class Engine;
 
 // One drive slot as seen by the QML delegate.
 struct SlotData {
@@ -92,7 +92,7 @@ class AppController : public QObject
     Q_PROPERTY(QString printerTextAtascii READ printerTextAtascii NOTIFY printerTextChanged)
 
 public:
-    explicit AppController(MainWindow *engine, QObject *parent = nullptr);
+    explicit AppController(Engine *engine, QObject *parent = nullptr);
 
     DriveModel *drives() { return &m_model; }
 
@@ -198,7 +198,7 @@ private slots:
     void onLogMessage(int type, const QString &msg);
 
 private:
-    MainWindow *m_engine;
+    Engine *m_engine;
     DriveModel  m_model;
 
     int     m_loaderKind = 0;

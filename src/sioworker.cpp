@@ -47,6 +47,14 @@ SioWorker::~SioWorker()
     delete deviceMutex;
 }
 
+void SioWorker::requestStop()
+{
+    mustTerminate = true;
+    if (mPort) {
+        mPort->cancel();
+    }
+}
+
 bool SioWorker::wait(unsigned long time)
 {
     mustTerminate = true;

@@ -23,7 +23,7 @@ qmlui {
     RESOURCES += qml.qrc
 }
 SOURCES += main.cpp \
-    mainwindow.cpp \
+    engine.cpp \
     sioworker.cpp \
     diskimage.cpp \
     diskimagepro.cpp \
@@ -70,7 +70,7 @@ unix:
     }
 }
 
-HEADERS += mainwindow.h \
+HEADERS += engine.h \
     serialport.h \
     sioworker.h \
     diskimage.h \

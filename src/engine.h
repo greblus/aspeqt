@@ -1,5 +1,5 @@
-#ifndef MAINWINDOW_H
-#define MAINWINDOW_H
+#ifndef ENGINE_H
+#define ENGINE_H
 
 #include <QObject>
 #include <QFileDialog>
@@ -35,13 +35,13 @@ class AutoBoot;
 class AtariFileSystem;
 class SimpleDiskImage;
 
-class MainWindow : public QObject
+class Engine : public QObject
 {
     Q_OBJECT
 
 public:
-    MainWindow(QWidget *parent = 0);
-    ~MainWindow();
+    Engine(QWidget *parent = 0);
+    ~Engine();
     QString g_sessionFile;
     QString g_sessionFilePath;
     QString g_mainWindowTitle;
@@ -127,8 +127,6 @@ private:
     void loaderLoadXex(const QString &path);
     void loaderLoadCas(const QString &path);
     void loaderPlayCas();
-    void loaderEject();
-    void loaderRetry();
     void loaderUpdateButtons();
     void loaderSetFill(double frac);   // fill the whole slot as a progress bar
     void loaderCasStatus(int remainingTime);
@@ -159,82 +157,81 @@ public:
     void doLogMessage(int type, const QString &msg);
 
 #ifdef ASPEQT_QML
-    // --- bridge for the QML UI (branch `qml`) -------------------------------
-    // MainWindow runs headless (never shown) as the emulation engine; the QML
-    // AppController drives it through these wrappers and mirrors its state via
-    // the qml*() readers, refreshing whenever qmlChanged() fires.
+    // --- state read by the QML UI through AppController ---------------------
+    // AppController drives the engine through the actions below and mirrors
+    // its state via the readers, refreshing whenever stateChanged() fires.
 public:
-    QVariantList qmlDriveList();     // one map per present drive slot
-    QVariantMap  qmlLoaderState();   // loader (XEX/CAS) slot
-    QVariantMap  qmlStatus();        // { running, speed, printerOn }
-    bool         qmlCanAddSlot();
+    QVariantList driveList();     // one map per present drive slot
+    QVariantMap  loaderState();   // loader (XEX/CAS) slot
+    QVariantMap  status();        // { running, speed, printerOn }
+    bool         canAddSlot();
 
-    void qmlEjectPressed(int i);
-    void qmlToggleWriteProtect(int i);
-    int qmlAddSlot();    // returns the hardware index of the added slot (-1 none)
-    void qmlSwapSlots(int source, int slot);   // drag-reorder: swap two drives
-    void qmlLoaderPlay();
-    void qmlLoaderRetry();
-    void qmlLoaderEject();
-    void qmlToggleSio();
-    void qmlTogglePrinter();
-    void qmlClearLog();
+    void ejectPressed(int i);
+    void toggleWriteProtect(int i);
+    int addSlot();    // returns the hardware index of the added slot (-1 none)
+    void swapSlots(int source, int slot);   // drag-reorder: swap two drives
+    void loaderPlay();
+    void toggleSio();
+    void togglePrinter();
+    void clearLog();
     // menu items (mirror the QtWidgets menu bar)
-    void qmlCreateDisk(int sectorCount, int sectorSize);
-    void qmlEjectAll();
-    QString qmlPrinterText();
-    QString qmlPrinterTextAtascii();
-    void    qmlPrinterClear();
-    void    qmlPrinterSave();
-    void qmlQuit();
-    QStringList qmlRecentFiles();
-    void qmlMountRecent(int index);
+    void createDisk(int sectorCount, int sectorSize);
+    void ejectAll();
+    QString printerText();
+    QString printerTextAtascii();
+    void    printerClear();
+    void    printerSave();
+    void quit();
+    QStringList recentFiles();
+    void mountRecent(int index);
     // options window
-    QVariantMap  qmlLoadOptions();
-    void         qmlApplyOptions(const QVariantMap &o);
-    QVariantList qmlLanguages();
+    QVariantMap  loadOptions();
+    void         applyOptions(const QVariantMap &o);
+    QVariantList languages();
     // disk viewer/editor
-    bool         qmlDiskOpen(int hwIndex);
-    void         qmlDiskClose();
-    QVariantList qmlDiskEntries();
-    QString      qmlDiskPath();
-    bool         qmlDiskCanParent();
-    bool         qmlDiskReadOnly();
-    int          qmlDiskFsType();
-    bool         qmlDiskSetFsType(int index);
+    bool         diskOpen(int hwIndex);
+    void         diskClose();
+    QVariantList diskEntries();
+    QString      diskPath();
+    bool         diskCanParent();
+    bool         diskReadOnly();
+    int          diskFsType();
+    bool         diskSetFsType(int index);
     // Called from JNI when a SAF pick finishes (empty uri = cancelled).
-    Q_INVOKABLE void documentPicked(int reqId, const QString &uri);
+    Q_INVOKABLE void onDocumentPicked(int reqId, const QString &uri);
     Q_INVOKABLE void pickDocument(int reqId, const QString &mimeType);
     Q_INVOKABLE void createDocument(int reqId, const QString &mimeType, const QString &suggestedName);
     Q_INVOKABLE void pickFolder(int reqId);
 
-    QString      qmlStartDir(const QString &kind);
-    void         qmlMountDiskPath(int no, const QString &url);
-    void         qmlMountFolderPath(int no, const QString &url);
-    void         qmlLoaderLoadPath(const QString &url);
-    void         qmlOpenSessionPath(const QString &url);
-    void         qmlSaveSessionPath(const QString &url);
+    QString      startDir(const QString &kind);
+    void         mountDiskPath(int no, const QString &url);
+    void         mountFolderPath(int no, const QString &url);
+    void         loaderLoadPath(const QString &url);
+    void         openSessionPath(const QString &url);
+    void         saveSessionPath(const QString &url);
     // Saving cannot ask the user from engine code any more (a modal dialog here
     // blocks the SIO path in a nested event loop), so it reports back instead
     // and QML drives the file picker / message.
     enum SaveResult { SaveOk = 0, SaveNeedsName = 1, SaveFailed = 2 };
-    int          qmlSaveDisk(int no);
-    int          qmlToggleAutoCommitDisk(int no);
-    bool         qmlSaveAsPath(int no, const QString &url);
-    void         qmlInstallDos(int no);
-    void         qmlToast(const QString &text);
+    int          saveDisk(int no);
+    int          toggleAutoCommitDisk(int no);
+    bool         saveAsPath(int no, const QString &url);
+    void         installDos(int no);
+    void         toast(const QString &text);
+    void         loaderRetry();
+    void         loaderEject();
     bool         shutdown();   // false = user cancelled quitting
-    void         qmlDiskEnter(int row);
-    void         qmlDiskParent();
-    void         qmlDiskSetTextConversion(bool on);
-    bool         qmlDiskExtractPath(const QVariantList &rows, const QString &url);
-    bool         qmlDiskDelete(const QVariantList &rows);
-    bool         qmlDiskAddFilesPath(const QString &url);
+    void         diskEnter(int row);
+    void         diskParent();
+    void         diskSetTextConversion(bool on);
+    bool         diskExtractPath(const QVariantList &rows, const QString &url);
+    bool         diskDelete(const QVariantList &rows);
+    bool         diskAddFilesPath(const QString &url);
 signals:
-    void qmlChanged();
-    void qmlLoaderProgress();   // frequent, loader-only (progress fill)
-    void qmlPrinterTextChanged();
-    void qmlDocumentPicked(int reqId, const QString &uri);
+    void stateChanged();
+    void loaderProgress();   // frequent, loader-only (progress fill)
+    void printerTextChanged();
+    void documentPicked(int reqId, const QString &uri);
 private:
 #endif
 
@@ -247,4 +244,4 @@ private slots:
     void deviceStatusChanged(int deviceNo);
 };
 
-#endif // MAINWINDOW_H
+#endif // ENGINE_H

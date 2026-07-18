@@ -60,6 +60,10 @@ public:
     ~SioWorker();
 
     bool wait (unsigned long time = ULONG_MAX);
+    // Ask the loop to finish without blocking the caller: the UI must stay
+    // responsive while the worker completes the SIO command it is in the
+    // middle of. The port is closed by wait() once finished() has fired.
+    void requestStop();
 
     void run();
 

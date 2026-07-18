@@ -4,7 +4,7 @@
 
 #include "miscdevices.h"
 #include "aspeqtsettings.h"
-#include "mainwindow.h"
+#include "engine.h"
 
 
 #include <QDateTime>
@@ -458,7 +458,7 @@ void AspeCl::handleCommand(quint8 command, quint16 aux)
 
               imageFileName = "*" + imageFileName;
 
-              // Ask the MainWindow for the next available slot number
+              // Ask the Engine for the next available slot number
               emit findNewSlot(0, true);
 
           } else {
@@ -513,7 +513,7 @@ void AspeCl::gotNewSlot(int slot)
 {
    g_aspeclSlotNo = slot;
 
-   // Ask the MainWindow to mount the file
+   // Ask the Engine to mount the file
    emit mountFile(slot, imageFileName);
 }
 

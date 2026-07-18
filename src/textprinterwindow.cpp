@@ -68,22 +68,22 @@ TextPrinterWindow::~TextPrinterWindow()
     delete ui;
 }
 
-QString TextPrinterWindow::qmlText() const
+QString TextPrinterWindow::plainText() const
 {
     return ui->printerTextEditASCII->toPlainText();
 }
 
-QString TextPrinterWindow::qmlTextAtascii() const
+QString TextPrinterWindow::atasciiText() const
 {
     return ui->printerTextEdit->toPlainText();
 }
 
-void TextPrinterWindow::qmlClear()
+void TextPrinterWindow::clearText()
 {
     on_actionClear_triggered();
 }
 
-void TextPrinterWindow::qmlSave()
+void TextPrinterWindow::saveToFile()
 {
     on_actionSave_triggered();
 }
