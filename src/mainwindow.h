@@ -237,6 +237,16 @@ public:
     bool         qmlDiskReadOnly();
     int          qmlDiskFsType();
     bool         qmlDiskSetFsType(int index);
+    // Called from JNI when a SAF pick finishes (empty uri = cancelled).
+    Q_INVOKABLE void documentPicked(int reqId, const QString &uri);
+    Q_INVOKABLE void pickDocument(int reqId, const QString &mimeType);
+    Q_INVOKABLE void createDocument(int reqId, const QString &mimeType, const QString &suggestedName);
+    Q_INVOKABLE void pickFolder(int reqId);
+
+    QString      qmlStartDir(const QString &kind);
+    void         qmlMountDiskPath(int no, const QString &url);
+    void         qmlMountFolderPath(int no, const QString &url);
+    void         qmlLoaderLoadPath(const QString &url);
     void         qmlToast(const QString &text);
     void         qmlDiskEnter(int row);
     void         qmlDiskParent();
@@ -248,6 +258,7 @@ signals:
     void qmlChanged();
     void qmlLoaderProgress();   // frequent, loader-only (progress fill)
     void qmlPrinterTextChanged();
+    void qmlDocumentPicked(int reqId, const QString &uri);
 private:
 #endif
 

@@ -10,6 +10,7 @@
 #include <QObject>
 #include <QString>
 #include <QStringList>
+#include <QUrl>
 #include <QTimer>
 #include <QVector>
 
@@ -83,6 +84,7 @@ class AppController : public QObject
     Q_PROPERTY(QString statusText READ statusText NOTIFY statusChanged)
     Q_PROPERTY(bool    sioRunning READ sioRunning NOTIFY statusChanged)
     Q_PROPERTY(bool    printerOn  READ printerOn  NOTIFY statusChanged)
+    Q_PROPERTY(bool isAndroid     READ isAndroid  CONSTANT)
     Q_PROPERTY(QString logHtml    READ logHtml    NOTIFY logChanged)
     Q_PROPERTY(QString logTailHtml READ logTailHtml NOTIFY logChanged)
     Q_PROPERTY(bool    canAddSlot READ canAddSlot NOTIFY drivesChanged)
@@ -107,6 +109,13 @@ public:
     QString statusText() const { return m_statusText; }
     bool    sioRunning() const { return m_sioRunning; }
     bool    printerOn() const  { return m_printerOn; }
+    bool    isAndroid() const {
+#ifdef Q_OS_ANDROID
+        return true;
+#else
+        return false;
+#endif
+    }
     QString logHtml() const;
     QString logTailHtml() const;
     bool    canAddSlot() const { return m_canAddSlot; }
@@ -161,6 +170,15 @@ public:
     Q_INVOKABLE int          diskFsType();
     Q_INVOKABLE bool         diskSetFsType(int index);
     Q_INVOKABLE void         toast(const QString &text);
+    // File picking: QML asks the user, then calls back with the chosen URL.
+    Q_INVOKABLE QString      startDir(const QString &kind);
+    Q_INVOKABLE void         mountDiskPath(int hwIndex, const QString &url);
+    Q_INVOKABLE void         mountFolderPath(int hwIndex, const QString &url);
+    Q_INVOKABLE void         loaderLoadPath(const QString &url);
+    // Android SAF pickers; the result arrives via documentPicked().
+    Q_INVOKABLE void         pickDocument(int reqId, const QString &mimeType);
+    Q_INVOKABLE void         createDocument(int reqId, const QString &mimeType, const QString &suggestedName);
+    Q_INVOKABLE void         pickFolder(int reqId);
     Q_INVOKABLE void         diskEnter(int row);
     Q_INVOKABLE void         diskParent();
     Q_INVOKABLE void         diskSetTextConversion(bool on);
@@ -172,6 +190,7 @@ signals:
     void loaderChanged();
     void statusChanged();
     void logChanged();
+    void documentPicked(int reqId, const QString &uri);
     void drivesChanged();
     void printerTextChanged();
 

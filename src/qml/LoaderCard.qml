@@ -8,6 +8,8 @@ import "."
 // the right, and a left-to-right progress fill during loading.
 Rectangle {
     id: card
+
+    signal requestLoad()
     readonly property bool loaded: app.loaderKind !== 0
 
     radius: Theme.cardRadius
@@ -61,7 +63,7 @@ Rectangle {
                     spinning: app.loaderLoading || app.loaderCasPlaying
                     spinDuration: app.loaderCasPlaying ? 9000 : 2000
                     tip: qsTr("Load executable or cassette")
-                    onClicked: app.loaderLoad()
+                    onClicked: card.requestLoad()
                 }
                 SlotButton {
                     source: Theme.icon("actions/media-playback-start.svg")

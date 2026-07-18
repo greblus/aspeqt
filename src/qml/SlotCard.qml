@@ -27,6 +27,8 @@ Rectangle {
 
     signal requestSwap(int fromHw, int toHw)
     signal requestEditor(int hw)
+    signal requestMount(int hw)
+    signal requestMountFolder(int hw)
 
     function flash() { flashAnim.restart() }
 
@@ -133,12 +135,12 @@ Rectangle {
                 SlotButton {
                     source: Theme.icon("devices/drive-optical.svg")
                     tip: qsTr("Mount disk image")
-                    onClicked: app.mountDisk(card.hwIndex)
+                    onClicked: card.requestMount(card.hwIndex)
                 }
                 SlotButton {
                     source: Theme.icon("places/folder.svg")
                     tip: qsTr("Mount folder image")
-                    onClicked: app.mountFolder(card.hwIndex)
+                    onClicked: card.requestMountFolder(card.hwIndex)
                 }
                 // save / install-DOS
                 Item {

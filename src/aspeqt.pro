@@ -17,7 +17,7 @@ MOBILITY = bearer
 # build is untouched when qmlui is not set.
 qmlui {
     DEFINES += ASPEQT_QML
-    QT += quick qml
+    QT += quick qml quickdialogs2
     SOURCES += qmlbridge.cpp
     HEADERS += qmlbridge.h
     RESOURCES += qml.qrc

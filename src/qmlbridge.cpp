@@ -96,6 +96,7 @@ AppController::AppController(MainWindow *engine, QObject *parent)
         connect(m_engine, &MainWindow::qmlLoaderProgress, this, &AppController::refreshLoader);
         connect(m_engine, &MainWindow::qmlPrinterTextChanged, this, &AppController::refreshPrinter);
         connect(m_engine, &MainWindow::logMessage, this, &AppController::onLogMessage);
+        connect(m_engine, &MainWindow::qmlDocumentPicked, this, &AppController::documentPicked);
     }
     refresh();
 }
@@ -262,6 +263,13 @@ bool AppController::diskReadOnly()         { return m_engine ? m_engine->qmlDisk
 int AppController::diskFsType()            { return m_engine ? m_engine->qmlDiskFsType() : 0; }
 bool AppController::diskSetFsType(int i)   { return m_engine ? m_engine->qmlDiskSetFsType(i) : false; }
 void AppController::toast(const QString &t)  { if (m_engine) m_engine->qmlToast(t); }
+QString AppController::startDir(const QString &kind) { return m_engine ? m_engine->qmlStartDir(kind) : QString(); }
+void AppController::mountDiskPath(int i, const QString &url)   { if (m_engine) m_engine->qmlMountDiskPath(i, url); }
+void AppController::mountFolderPath(int i, const QString &url) { if (m_engine) m_engine->qmlMountFolderPath(i, url); }
+void AppController::loaderLoadPath(const QString &url)         { if (m_engine) m_engine->qmlLoaderLoadPath(url); }
+void AppController::pickDocument(int r, const QString &m)      { if (m_engine) m_engine->pickDocument(r, m); }
+void AppController::createDocument(int r, const QString &m, const QString &n) { if (m_engine) m_engine->createDocument(r, m, n); }
+void AppController::pickFolder(int r)                          { if (m_engine) m_engine->pickFolder(r); }
 void AppController::diskEnter(int row)     { if (m_engine) m_engine->qmlDiskEnter(row); }
 void AppController::diskParent()           { if (m_engine) m_engine->qmlDiskParent(); }
 void AppController::diskSetTextConversion(bool on) { if (m_engine) m_engine->qmlDiskSetTextConversion(on); }

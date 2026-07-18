@@ -4,6 +4,8 @@
 #include <QStyleHints>
 #include "mainwindow.h"
 
+extern MainWindow *mainWindow;
+
 #ifdef ASPEQT_QML
 #include <QQmlApplicationEngine>
 #include <QQmlContext>
@@ -33,6 +35,23 @@ extern "C" {
             rbuf = reinterpret_cast<char *>(jrbuf);
             jwbuf = (jbyte *)env->GetDirectBufferAddress(wbf);
             wbuf = reinterpret_cast<char *>(jwbuf);
+        }
+
+    // Result of a SAF pick. Arrives on Android's UI thread, so hand it to the
+    // engine through a queued call. The URI is Android's own string: it must
+    // not be re-encoded on the way (see MainWindow::documentPicked).
+    JNIEXPORT void JNICALL
+    Java_net_greblus_SerialActivity_documentPicked(JNIEnv *env,
+    jclass /*cls*/, jint reqId, jstring juri)
+        {
+            const char *chars = juri ? env->GetStringUTFChars(juri, nullptr) : nullptr;
+            const QString uri = chars ? QString::fromUtf8(chars) : QString();
+            if (chars)
+                env->ReleaseStringUTFChars(juri, chars);
+            if (!mainWindow)
+                return;
+            QMetaObject::invokeMethod(mainWindow, "documentPicked", Qt::QueuedConnection,
+                                      Q_ARG(int, (int)reqId), Q_ARG(QString, uri));
         }
 }
 #endif

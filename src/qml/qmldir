@@ -3,6 +3,7 @@ Badge Badge.qml
 SlotButton SlotButton.qml
 SlotCard SlotCard.qml
 LoaderCard LoaderCard.qml
+FilePicker FilePicker.qml
 OptionsDialog OptionsDialog.qml
 LogWindow LogWindow.qml
 DiskViewer DiskViewer.qml

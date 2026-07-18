@@ -36,6 +36,10 @@ public class SerialActivity extends QtActivity
         protected static byte wb[] = new byte [65535];
         protected static byte t[] = new byte [1024];
         public static native void sendBufAddr(ByteBuffer rbuf, ByteBuffer wbuf);
+        // Result of a SAF pick, delivered to the engine (empty when cancelled).
+        public static native void documentPicked(int reqId, String uri);
+        private static final int SAF_REQ_BASE = 0x5AF0;
+        private static int m_safReqId = 0;
         protected static ByteBuffer rbuf = ByteBuffer.allocateDirect(65535);
         protected static ByteBuffer wbuf = ByteBuffer.allocateDirect(65535);
         public static String m_chosen;
@@ -141,6 +145,55 @@ public class SerialActivity extends QtActivity
         public void onPause() {
            m_chosen = "Cancelled";
            super.onPause();
+        }
+
+        // Own SAF pickers. Qt's file dialog validates the document it returns
+        // by stat()ing a partly-decoded URI, so any name with a space or
+        // bracket is dropped as "not existing"; going through the intent
+        // directly also keeps Android's exact URI encoding, which the content
+        // resolver needs.
+        public static void pickDocument(int reqId, String mimeType) {
+            m_safReqId = reqId;
+            Intent i = new Intent(Intent.ACTION_OPEN_DOCUMENT);
+            i.addCategory(Intent.CATEGORY_OPENABLE);
+            i.setType(mimeType == null || mimeType.length() == 0 ? "*/*" : mimeType);
+            i.addFlags(Intent.FLAG_GRANT_READ_URI_PERMISSION
+                     | Intent.FLAG_GRANT_PERSISTABLE_URI_PERMISSION);
+            s_activity.startActivityForResult(i, SAF_REQ_BASE);
+        }
+
+        public static void createDocument(int reqId, String mimeType, String suggestedName) {
+            m_safReqId = reqId;
+            Intent i = new Intent(Intent.ACTION_CREATE_DOCUMENT);
+            i.addCategory(Intent.CATEGORY_OPENABLE);
+            i.setType(mimeType == null || mimeType.length() == 0 ? "*/*" : mimeType);
+            if (suggestedName != null && suggestedName.length() > 0)
+                i.putExtra(Intent.EXTRA_TITLE, suggestedName);
+            i.addFlags(Intent.FLAG_GRANT_READ_URI_PERMISSION
+                     | Intent.FLAG_GRANT_WRITE_URI_PERMISSION
+                     | Intent.FLAG_GRANT_PERSISTABLE_URI_PERMISSION);
+            s_activity.startActivityForResult(i, SAF_REQ_BASE + 1);
+        }
+
+        public static void pickFolder(int reqId) {
+            m_safReqId = reqId;
+            Intent i = new Intent(Intent.ACTION_OPEN_DOCUMENT_TREE);
+            i.addFlags(Intent.FLAG_GRANT_READ_URI_PERMISSION
+                     | Intent.FLAG_GRANT_WRITE_URI_PERMISSION
+                     | Intent.FLAG_GRANT_PERSISTABLE_URI_PERMISSION);
+            s_activity.startActivityForResult(i, SAF_REQ_BASE + 2);
+        }
+
+        @Override
+        protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+            if (requestCode >= SAF_REQ_BASE && requestCode <= SAF_REQ_BASE + 2) {
+                String uri = "";
+                if (resultCode == RESULT_OK && data != null && data.getData() != null)
+                    uri = data.getData().toString();
+                documentPicked(m_safReqId, uri);
+                return;
+            }
+            super.onActivityResult(requestCode, resultCode, data);
         }
 
         public static void runFileChooser(int filter, int action, String dir) {

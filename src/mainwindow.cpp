@@ -2440,6 +2440,125 @@ bool MainWindow::qmlDiskReadOnly()
 
 int MainWindow::qmlDiskFsType() { return m_dvFsType; }
 
+
+// ---------------------------------------------------------------------------
+// Picker results. The QML side asks the user (see FilePicker.qml) and calls
+// these with the chosen URL, so the engine never opens a dialog itself.
+// ---------------------------------------------------------------------------
+
+// A Qt Quick dialog hands back a URL: keep Android's content:// documents in
+// the exact encoding the SAF descriptors expect, and turn file:// into a path.
+static QString pathFromPickedUrl(const QString &url)
+{
+    // Android's SAF picker hands back its own URI string; re-encoding it (or
+    // even round-tripping it through QUrl) breaks names containing spaces or
+    // brackets, so it is passed through verbatim. Only the desktop dialogs
+    // return file:// URLs that need turning into a path.
+    if (url.startsWith(QLatin1String("content:")))
+        return url;
+    if (url.startsWith(QLatin1String("file:")))
+        return QUrl(url).toLocalFile();
+    return url;
+}
+
+void MainWindow::pickDocument(int reqId, const QString &mimeType)
+{
+#ifdef Q_OS_ANDROID
+    QJniObject::callStaticMethod<void>("net/greblus/SerialActivity", "pickDocument",
+        "(ILjava/lang/String;)V", (jint)reqId,
+        QJniObject::fromString(mimeType).object<jstring>());
+#else
+    Q_UNUSED(reqId) Q_UNUSED(mimeType)
+#endif
+}
+
+void MainWindow::createDocument(int reqId, const QString &mimeType, const QString &suggestedName)
+{
+#ifdef Q_OS_ANDROID
+    QJniObject::callStaticMethod<void>("net/greblus/SerialActivity", "createDocument",
+        "(ILjava/lang/String;Ljava/lang/String;)V", (jint)reqId,
+        QJniObject::fromString(mimeType).object<jstring>(),
+        QJniObject::fromString(suggestedName).object<jstring>());
+#else
+    Q_UNUSED(reqId) Q_UNUSED(mimeType) Q_UNUSED(suggestedName)
+#endif
+}
+
+void MainWindow::pickFolder(int reqId)
+{
+#ifdef Q_OS_ANDROID
+    QJniObject::callStaticMethod<void>("net/greblus/SerialActivity", "pickFolder",
+        "(I)V", (jint)reqId);
+#else
+    Q_UNUSED(reqId)
+#endif
+}
+
+void MainWindow::documentPicked(int reqId, const QString &uri)
+{
+    emit qmlDocumentPicked(reqId, uri);
+}
+
+QString MainWindow::qmlStartDir(const QString &kind)
+{
+    if (kind == QLatin1String("disk"))    return aspeqtSettings->lastDiskImageDir();
+    if (kind == QLatin1String("folder"))  return aspeqtSettings->lastFolderImageDir();
+    if (kind == QLatin1String("exe"))     return aspeqtSettings->lastExeDir();
+    if (kind == QLatin1String("session")) return aspeqtSettings->lastSessionDir();
+    return QString();
+}
+
+void MainWindow::qmlMountDiskPath(int no, const QString &url)
+{
+    const QString fileName = pathFromPickedUrl(url);
+    if (fileName.isEmpty())
+        return;
+    if (!fileName.startsWith(QLatin1String("content:")))
+        aspeqtSettings->setLastDiskImageDir(QFileInfo(fileName).absolutePath());
+    mountFileWithDefaultProtection(no, fileName);
+}
+
+void MainWindow::qmlMountFolderPath(int no, const QString &url)
+{
+    const QString fileName = pathFromPickedUrl(url);
+    if (fileName.isEmpty())
+        return;
+#ifdef Q_OS_ANDROID
+    // The folder image reads files in place through content:// descriptors, so
+    // the tree permission has to survive a restart.
+    androidTakePersistable(fileName, true);
+    m_folderTree[no] = fileName;
+#else
+    aspeqtSettings->setLastFolderImageDir(fileName);
+#endif
+    mountFileWithDefaultProtection(no, fileName);
+}
+
+void MainWindow::qmlLoaderLoadPath(const QString &url)
+{
+    const QString picked = pathFromPickedUrl(url);
+    if (picked.isEmpty())
+        return;
+    // Always copy a content:// pick to a real temp file: QFile on a SAF stream
+    // can pass a one-shot open() probe yet fail the repeated sequential reads /
+    // atEnd() that CAS parsing and the boot loader need.
+    const QString path = androidLocalCopy(picked);
+    if (path.isEmpty()) {
+        qWarning() << "!i" << tr("Failed to load '%1'.").arg(friendlyName(picked));
+        return;
+    }
+    if (!picked.startsWith(QLatin1String("content:")))
+        aspeqtSettings->setLastExeDir(QFileInfo(picked).absolutePath());
+
+    const FileTypes::FileType t = FileTypes::getFileType(path);
+    if (t == FileTypes::Cas || t == FileTypes::CasGz)
+        loaderLoadCas(path);
+    else if (t == FileTypes::Xex || t == FileTypes::XexGz)
+        loaderLoadXex(path);
+    else
+        qmlToast(tr("Pick an Atari executable (.xex/.com/.exe) or a cassette image (.cas)."));
+}
+
 void MainWindow::qmlToast(const QString &text)
 {
 #ifdef Q_OS_ANDROID

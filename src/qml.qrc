@@ -6,6 +6,7 @@
         <file>qml/SlotButton.qml</file>
         <file>qml/SlotCard.qml</file>
         <file>qml/LoaderCard.qml</file>
+        <file>qml/FilePicker.qml</file>
         <file>qml/OptionsDialog.qml</file>
         <file>qml/LogWindow.qml</file>
         <file>qml/DiskViewer.qml</file>

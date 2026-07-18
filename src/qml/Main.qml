@@ -135,7 +135,14 @@ ApplicationWindow {
                 spacing: 6
                 y: 6
 
-                LoaderCard { Layout.fillWidth: true }
+                LoaderCard {
+                    Layout.fillWidth: true
+                    onRequestLoad: filePicker.openFile(
+                        qsTr("Load executable or cassette"),
+                        [qsTr("Atari programs (*.xex *.com *.exe *.cas)"), qsTr("All files (*)")],
+                        app.startDir("exe"),
+                        function (url) { if (url.length > 0) app.loaderLoadPath(url) })
+                }
 
                 Repeater {
                     id: slotRepeater
@@ -156,6 +163,15 @@ ApplicationWindow {
                         isBootSlot: model.isBootSlot
                         onRequestSwap: (fromHw, toHw) => app.swapSlots(fromHw, toHw)
                         onRequestEditor: (hw) => diskViewer.openFor(hw)
+                        onRequestMount: (hw) => filePicker.openFile(
+                            qsTr("Open a disk image"),
+                            [qsTr("All Atari disk images (*.atr *.xfd *.pro)"), qsTr("All files (*)")],
+                            app.startDir("disk"),
+                            function (url) { if (url.length > 0) app.mountDiskPath(hw, url) })
+                        onRequestMountFolder: (hw) => filePicker.chooseFolder(
+                            qsTr("Open a folder image"),
+                            app.startDir("folder"),
+                            function (url) { if (url.length > 0) app.mountFolderPath(hw, url) })
                     }
                 }
 
@@ -324,6 +340,7 @@ ApplicationWindow {
 
     OptionsDialog { id: optionsDialog }
     LogWindow { id: logWindow }
+    FilePicker { id: filePicker }
     DiskViewer { id: diskViewer }
     CreateDiskDialog { id: createDiskDialog }
     PrintWindow { id: printWindow }
