@@ -39,4 +39,5 @@ QtObject {
     readonly property int gap:        6
 
     function icon(name) { return "qrc:/icons/tango-icons/" + name }
+    function image(name) { return "qrc:/images/" + name }
 }

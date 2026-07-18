@@ -54,14 +54,17 @@ Rectangle {
                 Item { Layout.fillWidth: true }
 
                 SlotButton {
-                    source: Theme.icon("categories/applications-system.svg")
-                    spinning: app.loaderLoading
+                    // Turns into a spinning tape reel while a cassette plays;
+                    // reverts to the load icon once it stops or is ejected.
+                    source: app.loaderCasPlaying ? Theme.image("tape-reel.png")
+                                                 : Theme.icon("categories/applications-system.svg")
+                    spinning: app.loaderLoading || app.loaderCasPlaying
+                    spinDuration: app.loaderCasPlaying ? 9000 : 2000
                     tip: qsTr("Load executable or cassette")
                     onClicked: app.loaderLoad()
                 }
                 SlotButton {
                     source: Theme.icon("actions/media-playback-start.svg")
-                    spinning: app.loaderCasPlaying
                     enabledState: app.loaderPlayEnabled
                     tip: qsTr("Start cassette playback")
                     onClicked: app.loaderPlay()
@@ -99,7 +102,8 @@ Rectangle {
                     font.pixelSize: card.loaded ? 15 : 12
                     color: card.loaded ? Theme.nameDark : Theme.placeholder
                     elide: Text.ElideRight
-                    Layout.maximumWidth: parent.width * 0.6
+                    // See SlotCard: binding to the layout's own width recurses.
+                    Layout.maximumWidth: card.width * 0.6
                 }
                 Item { Layout.fillWidth: true }
                 Text {

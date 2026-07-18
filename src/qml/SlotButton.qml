@@ -12,6 +12,7 @@ Item {
     property bool checked: false
     property string tip: ""
     property bool spinning: false          // rotate the icon (e.g. XEX loading)
+    property int  spinDuration: 2000       // ms per turn
     property url animatedSource: ""        // GIF shown while `animated` is true
     property bool animated: false          // e.g. CAS playing -> tape.gif
     signal clicked
@@ -47,12 +48,25 @@ Item {
         fillMode: Image.PreserveAspectFit
         smooth: true
         RotationAnimator on rotation {
+            id: spinAnim
             running: root.spinning
             loops: Animation.Infinite
             from: 0; to: 360
-            duration: 2000
+            duration: root.spinDuration
         }
         onVisibleChanged: if (!visible) rotation = 0
+        // Animators hand their config to the render thread when they start, so
+        // a duration change while spinning is ignored until it restarts.
+        Connections {
+            target: root
+            function onSpinDurationChanged() {
+                if (!root.spinning) return
+                // Restore the binding after the imperative restart, or the
+                // animation can never be stopped again.
+                spinAnim.running = false
+                spinAnim.running = Qt.binding(function () { return root.spinning })
+            }
+        }
     }
 
     AnimatedImage {
