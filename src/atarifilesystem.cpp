@@ -418,6 +418,18 @@ Dos10FileSystem::Dos10FileSystem(SimpleDiskImage *image)
     m_image->readSector(360, vtoc);
     bitmap = vtoc.mid(10, 90);
     m_freeSectors = (quint8)vtoc.at(3) + (quint8)vtoc.at(4) * 256;
+
+    // Reject a VTOC that cannot describe this image at all (raw-data or wrongly
+    // forced disk); derived DOS types skip their own extra parsing when unset.
+    const int imgSectors = m_image->geometry().sectorCount();
+    m_valid = false;
+    if (imgSectors >= 368 && vtoc.size() >= 5) {
+        uint v = (quint8)vtoc.at(0);
+        uint s = (quint8)vtoc.at(1) + (quint8)vtoc.at(2) * 256;
+        m_valid = v >= 1 && v <= 64
+                  && s > 0 && s <= (uint)imgSectors
+                  && m_freeSectors <= s;
+    }
 }
 
 QList <AtariDirEntry> Dos10FileSystem::getEntries(quint16 dir)
@@ -928,6 +940,12 @@ uint Dos20FileSystem::totalCapacity()
 Dos25FileSystem::Dos25FileSystem(SimpleDiskImage *image)
     : Dos20FileSystem(image)
 {
+    if (m_valid && m_image->geometry().sectorCount() < 1024) {
+        m_valid = false;
+    }
+    if (!m_valid) {
+        return;
+    }
     m_image->readSector(1024, vtoc2);
     bitmap.append(vtoc2.mid(84, 38));
     m_freeSectors = (quint8)vtoc.at(3) + (quint8)vtoc.at(4) * 256 +
@@ -975,6 +993,9 @@ uint Dos25FileSystem::totalCapacity()
 MyDosFileSystem::MyDosFileSystem(SimpleDiskImage *image)
     : Dos20FileSystem(image)
 {
+    if (!m_valid) {
+        return;
+    }
     int xvtocCount;
     if (m_image->geometry().bytesPerSector() == 256) {
         xvtocCount = (quint8)vtoc.at(0) - 2;
@@ -1122,7 +1143,9 @@ bool SpartaDosFile::seek(uint position)
 QByteArray SpartaDosFile::read(uint bytes)
 {
     QByteArray result;
+    int rguard = 0;
     while (bytes) {
+        if (++rguard > 4096) break;      // runaway map chain on a corrupt image
         uint left = m_currentSector.count() - m_currentSectorOffset;
         if (bytes > left) {
             result.append(m_currentSector.right(left));
@@ -1176,6 +1199,22 @@ SpartaDosFileSystem::SpartaDosFileSystem(SimpleDiskImage *image)
     m_fileSystemVersion = (quint8)boot.at(32);
     m_sequenceNumber = (quint8)boot.at(38);
 
+    // Sanity-check the boot sector before touching the disk any further: on a
+    // non-SpartaDOS image these fields are junk, and walking a bogus bitmap
+    // means hundreds of failing sector reads (each one logged), which froze the
+    // UI for ~10s before yielding an empty listing anyway.
+    const int imgSectors = m_image->geometry().sectorCount();
+    m_valid = m_sectorCount > 0
+              && m_bitmapCount > 0
+              && m_rootDirMap >= 1 && m_rootDirMap <= imgSectors
+              && m_firstBitmapSector >= 1
+              && m_firstBitmapSector + m_bitmapCount - 1 <= imgSectors
+              && m_firstDataSector <= imgSectors
+              && m_firstDirSector <= imgSectors;
+    if (!m_valid) {
+        return;
+    }
+
     QByteArray map;
     for (int i = m_firstBitmapSector; i < m_firstBitmapSector + m_bitmapCount; i++) {
         m_image->readSector(i, map);
@@ -1186,6 +1225,9 @@ SpartaDosFileSystem::SpartaDosFileSystem(SimpleDiskImage *image)
 QList <AtariDirEntry> SpartaDosFileSystem::getEntries(quint16 dir)
 {
     QList <AtariDirEntry> list;
+    if (!m_valid) {
+        return list;
+    }
 
     SpartaDosFile sf(this, dir, -1);
 
@@ -1202,7 +1244,14 @@ QList <AtariDirEntry> SpartaDosFileSystem::getEntries(quint16 dir)
     int dirLen = (quint8)dosEntry.at(3) + (quint8)dosEntry.at(4) * 256 + (quint8)dosEntry.at(5) * 65536 - 23;
     int no = 0;
 
-    while (dirLen > 0) {
+    // Garbage data (a raw/unformatted image, or the wrong DOS type picked in the
+    // viewer) can yield an absurd directory length and spin this loop for
+    // millions of sector reads. Cap it to what the image could possibly hold.
+    const int maxLen = m_image->geometry().sectorCount() * m_image->geometry().bytesPerSector();
+    if (dirLen > maxLen) dirLen = maxLen;
+    int guard = 0;
+
+    while (dirLen > 0 && ++guard <= 4096) {
         AtariDirEntry entry;
         dosEntry = sf.read(23);
         if (dosEntry.isEmpty()) {

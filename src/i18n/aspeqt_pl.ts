@@ -1234,6 +1234,11 @@ Kiedy usłyszysz sygnał, naciśnij przycisk OK poniżej i jednocześnie naciśn
 <context>
     <name>DiskViewer</name>
     <message>
+        <location filename="../qml/DiskViewer.qml" line="222" />
+        <source>This is not a %1 disk.</source>
+        <translation>To nie jest dysk %1.</translation>
+    </message>
+    <message>
         <location filename="../qml/DiskViewer.qml" line="78" />
         <source>Disk explorer</source>
         <translation>Eksplorator dysku</translation>

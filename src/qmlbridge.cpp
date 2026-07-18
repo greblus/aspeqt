@@ -206,7 +206,8 @@ QString AppController::diskPath()          { return m_engine ? m_engine->qmlDisk
 bool AppController::diskCanParent()        { return m_engine ? m_engine->qmlDiskCanParent() : false; }
 bool AppController::diskReadOnly()         { return m_engine ? m_engine->qmlDiskReadOnly() : true; }
 int AppController::diskFsType()            { return m_engine ? m_engine->qmlDiskFsType() : 0; }
-void AppController::diskSetFsType(int i)   { if (m_engine) m_engine->qmlDiskSetFsType(i); }
+bool AppController::diskSetFsType(int i)   { return m_engine ? m_engine->qmlDiskSetFsType(i) : false; }
+void AppController::toast(const QString &t)  { if (m_engine) m_engine->qmlToast(t); }
 void AppController::diskEnter(int row)     { if (m_engine) m_engine->qmlDiskEnter(row); }
 void AppController::diskParent()           { if (m_engine) m_engine->qmlDiskParent(); }
 void AppController::diskSetTextConversion(bool on) { if (m_engine) m_engine->qmlDiskSetTextConversion(on); }

@@ -252,7 +252,8 @@ public:
     bool         qmlDiskCanParent();
     bool         qmlDiskReadOnly();
     int          qmlDiskFsType();
-    void         qmlDiskSetFsType(int index);
+    bool         qmlDiskSetFsType(int index);
+    void         qmlToast(const QString &text);
     void         qmlDiskEnter(int row);
     void         qmlDiskParent();
     void         qmlDiskSetTextConversion(bool on);

@@ -216,7 +216,15 @@ Popup {
                     font.pixelSize: 13
                     model: [qsTr("No file system"), "Atari Dos 1.0", "Atari Dos 2.0",
                             "Atari Dos 2.5", "MyDos", "SpartaDos"]
-                    onActivated: (index) => { app.diskSetFsType(index); dv.refresh() }
+                    onActivated: (index) => {
+                        if (app.diskSetFsType(index)) {
+                            dv.refresh()
+                        } else {
+                            // Image doesn't hold that file system — keep the old one.
+                            app.toast(qsTr("This is not a %1 disk.").arg(model[index]))
+                            currentIndex = dv.fsType
+                        }
+                    }
                 }
                 Item { Layout.fillWidth: true }
                 Button {

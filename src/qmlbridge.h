@@ -153,7 +153,8 @@ public:
     Q_INVOKABLE bool         diskCanParent();
     Q_INVOKABLE bool         diskReadOnly();
     Q_INVOKABLE int          diskFsType();
-    Q_INVOKABLE void         diskSetFsType(int index);
+    Q_INVOKABLE bool         diskSetFsType(int index);
+    Q_INVOKABLE void         toast(const QString &text);
     Q_INVOKABLE void         diskEnter(int row);
     Q_INVOKABLE void         diskParent();
     Q_INVOKABLE void         diskSetTextConversion(bool on);

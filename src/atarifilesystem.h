@@ -66,6 +66,7 @@ protected:
     SimpleDiskImage *m_image;
     bool m_textConversion;
     bool m_isConnected;
+    bool m_valid;
     QByteArray bitmap;
     quint16 m_freeSectors;
     quint16 findFreeSector(quint16 from = 0);
@@ -73,7 +74,12 @@ protected:
     void freeSector(quint16 sector);
     bool sectorIsFree(quint16 sector);
 public:
-    AtariFileSystem(SimpleDiskImage *image) {m_image = image; m_textConversion = false;}
+    AtariFileSystem(SimpleDiskImage *image) {m_image = image; m_textConversion = false; m_valid = true;}
+    // False when the on-disk structures clearly don't match this DOS type, so
+    // callers can reject a manual file-system override instead of parsing junk.
+    // Deliberately looser than SimpleDiskImage::defaultFileSystem(): the override
+    // must still work on non-standard images auto-detection gets wrong.
+    bool isValid() const {return m_valid;}
     virtual QList <AtariDirEntry> getEntries(quint16 dir) = 0;
     virtual uint totalCapacity() = 0;
     virtual uint freeSpace() = 0;

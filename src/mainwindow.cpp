@@ -2755,15 +2755,35 @@ bool MainWindow::qmlDiskReadOnly()
 
 int MainWindow::qmlDiskFsType() { return m_dvFsType; }
 
-void MainWindow::qmlDiskSetFsType(int index)
+void MainWindow::qmlToast(const QString &text)
 {
-    if (!m_dvDisk) return;
+#ifdef Q_OS_ANDROID
+    QJniObject::callStaticMethod<void>("net/greblus/SerialActivity", "showToast",
+        "(Ljava/lang/String;)V", QJniObject::fromString(text).object<jstring>());
+#else
+    Q_UNUSED(text)
+#endif
+}
+
+bool MainWindow::qmlDiskSetFsType(int index)
+{
+    if (!m_dvDisk) return false;
+
+    // Build the new file system first: if the image plainly isn't of that DOS
+    // type, keep the current one and let the caller tell the user.
+    AtariFileSystem *fs = createDiskFs(index, m_dvDisk);
+    if (fs && !fs->isValid()) {
+        delete fs;
+        return false;
+    }
+
     if (m_dvFs) { delete m_dvFs; m_dvFs = nullptr; }
     m_dvFsType = index;
-    m_dvFs = createDiskFs(index, m_dvDisk);
+    m_dvFs = fs;
     m_dvPaths.clear();
     m_dvDirs.clear();
     if (m_dvFs) m_dvDirs.append(m_dvFs->rootDir());
+    return true;
 }
 
 void MainWindow::qmlDiskClose()
