@@ -60,8 +60,22 @@ ApplicationWindow {
 
                     Menu {
                         title: qsTr("File")
-                        MenuItem { text: qsTr("Open session…"); onTriggered: app.openSession() }
-                        MenuItem { text: qsTr("Save session…"); onTriggered: app.saveSession() }
+                        MenuItem {
+                            text: qsTr("Open session…")
+                            onTriggered: filePicker.openFile(
+                                qsTr("Open session"),
+                                [qsTr("AspeQt sessions (*.aspeqt)"), qsTr("All files (*)")],
+                                app.startDir("session"),
+                                function (url) { if (url.length > 0) app.openSessionPath(url) })
+                        }
+                        MenuItem {
+                            text: qsTr("Save session…")
+                            onTriggered: filePicker.saveFile(
+                                qsTr("Save session as"),
+                                [qsTr("AspeQt sessions (*.aspeqt)"), qsTr("All files (*)")],
+                                app.startDir("session"), "aspeqt.aspeqt",
+                                function (url) { if (url.length > 0) app.saveSessionPath(url) })
+                        }
                     }
 
                     Menu {

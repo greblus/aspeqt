@@ -93,6 +93,9 @@ static QIcon dosDriveIcon()
 AspeqtSettings *aspeqtSettings;
 MainWindow *mainWindow;
 
+// Defined with the rest of the picker plumbing further down.
+static QString pathFromPickedUrl(const QString &url);
+
 QFile *logFile;
 QMutex *logMutex;
 QString g_exefileName;
@@ -658,30 +661,6 @@ void MainWindow::loaderUpdateButtons()
 #endif
 }
 
-void MainWindow::loaderLoad()
-{
-    QString url = androidOpenUrl(tr("Load executable or cassette"),
-        tr("Atari programs (*.xex *.com *.exe *.cas);;All files (*)"));
-    if (url.isEmpty())
-        return;
-    // Always copy a content:// pick to a real temp file: QFile on a SAF stream
-    // can pass a one-shot open() probe yet fail the repeated sequential reads /
-    // atEnd() that CAS parsing and the boot loader need (seen as "Unknown
-    // error" on some files but not others, depending on their SAF location).
-    QString path = androidLocalCopy(url);
-    if (path.isEmpty()) {
-        qWarning() << "!i" << tr("Failed to load '%1'.").arg(friendlyName(url));
-        return;
-    }
-    FileTypes::FileType t = FileTypes::getFileType(path);
-    if (t == FileTypes::Cas || t == FileTypes::CasGz)
-        loaderLoadCas(path);
-    else if (t == FileTypes::Xex || t == FileTypes::XexGz)
-        loaderLoadXex(path);
-    else
-        QMessageBox::information(this, tr("Unsupported file"),
-            tr("Pick an Atari executable (.xex/.com/.exe) or a cassette image (.cas)."));
-}
 
 // XEX: install the autoboot loader on D1 and let the running emulation boot it,
 // driving the progress bar from the loader's blockRead signal.
@@ -1445,11 +1424,6 @@ void MainWindow::mountFile(int no, const QString &fileName, bool /*prot*/)
 }
 
 #ifdef Q_OS_ANDROID
-QString MainWindow::androidOpenUrl(const QString &caption, const QString &filter)
-{
-    QUrl u = QFileDialog::getOpenFileUrl(this, caption, QUrl(), filter);
-    return u.isEmpty() ? QString() : androidContentUri(u);
-}
 
 QString MainWindow::androidSaveUrl(const QString &caption, const QString &filter)
 {
@@ -1618,88 +1592,7 @@ QString MainWindow::friendlyName(const QString &name)
     return (i >= 0) ? name.mid(i + 1) : name;
 }
 
-void MainWindow::mountDiskImage(int no)
-{
-    QString dir;
-// Always mount from "last image dir" //
-        dir = aspeqtSettings->lastDiskImageDir();
-//    } else {
-//    }
-#ifdef Q_OS_ANDROID
-    // The SAF picker cannot filter by the Atari extensions (no MIME types), so
-    // it shows every file. Validate the picked file's real type and reject the
-    // ones that belong to other actions.
-    QString fileName = androidOpenUrl(tr("Open a disk image"),
-                                      tr("All Atari disk images (*.atr *.xfd *.pro);;All files (*)"));
-    if (fileName.isEmpty()) {
-        return;
-    }
-    // Mount the SAF document in place (opened via a file descriptor); no copy
-    // into app storage. The content:// URI flows straight through open().
-#ifndef ASPEQT_QML
-    // Widget build: reject executables/cassettes here. In the QML build they are
-    // redirected to the loader slot by mountFile() instead.
-    {
-        FileTypes::FileType t = FileTypes::getFileType(fileName);
-        if (t == FileTypes::Xex || t == FileTypes::XexGz) {
-            QMessageBox::information(this, tr("Not a disk image"),
-                tr("This is an Atari executable, not a disk image.\nUse \"File / Boot Atari executable\" to run it."));
-            return;
-        }
-        if (t == FileTypes::Cas || t == FileTypes::CasGz) {
-            QMessageBox::information(this, tr("Not a disk image"),
-                tr("This is a cassette image, not a disk image.\nUse \"File / Play cassette image\" to run it."));
-            return;
-        }
-    }
-#endif
-#else
-        QString fileName = QFileDialog::getOpenFileName(this,
-                                                        tr("Open a disk image"),
-                                                        dir,
-                                                        tr(
-    //                                                    "All Atari disk images (*.atr *.xfd *.atx *.pro);;"
-                                                        "All Atari disk images (*.atr *.xfd *.pro);;"
-                                                        "SIO2PC ATR images (*.atr);;"
-                                                        "XFormer XFD images (*.xfd);;"
-    //                                                    "ATX images (*.atx);;"
-                                                        "Pro images (*.pro);;"
-                                                        "All files (*)"));
-    if (fileName.isEmpty()) {
-        return;
-    }
-    aspeqtSettings->setLastDiskImageDir(QFileInfo(fileName).absolutePath());
-#endif
 
-    mountFileWithDefaultProtection(no, fileName);
-}
-
-void MainWindow::mountFolderImage(int no)
-{
-    QString dir;
-// Always mount from "last folder dir" //
-    dir = aspeqtSettings->lastFolderImageDir();
-#ifdef Q_OS_ANDROID
-    // Pick a folder via SAF (ACTION_OPEN_DOCUMENT_TREE) and mount the tree URI
-    // directly: the folder image reads files in place through content://
-    // descriptors, so nothing is copied into app storage.
-    QUrl treeUrl = QFileDialog::getExistingDirectoryUrl(this, tr("Open a folder image"), QUrl());
-    QString fileName = treeUrl.isEmpty() ? QString() : androidContentUri(treeUrl);
-    if (fileName.isEmpty()) {
-        return;
-    }
-    androidTakePersistable(fileName, true);
-    m_folderTree[no] = fileName;
-#else
-    QString fileName = QFileDialog::getExistingDirectory(this, tr("Open a folder image"), dir);
-    fileName = QDir::fromNativeSeparators(fileName);
-    if (fileName.isEmpty()) {
-        return;
-    }
-    aspeqtSettings->setLastFolderImageDir(fileName);
-#endif
-    mountFileWithDefaultProtection(no, fileName);
-}
 
 void MainWindow::toggleWriteProtection(int no)
 {
@@ -1903,19 +1796,7 @@ void MainWindow::revertDisk(int no)
     }
 }
 
-void MainWindow::on_actionMountDisk_1_triggered() {mountDiskImage(0);}
-void MainWindow::on_actionMountDisk_2_triggered() {mountDiskImage(1);}
-void MainWindow::on_actionMountDisk_3_triggered() {mountDiskImage(2);}
-void MainWindow::on_actionMountDisk_4_triggered() {mountDiskImage(3);}
-void MainWindow::on_actionMountDisk_5_triggered() {mountDiskImage(4);}
-void MainWindow::on_actionMountDisk_6_triggered() {mountDiskImage(5);}
 
-void MainWindow::on_actionMountFolder_1_triggered() {mountFolderImage(0);}
-void MainWindow::on_actionMountFolder_2_triggered() {mountFolderImage(1);}
-void MainWindow::on_actionMountFolder_3_triggered() {mountFolderImage(2);}
-void MainWindow::on_actionMountFolder_4_triggered() {mountFolderImage(3);}
-void MainWindow::on_actionMountFolder_5_triggered() {mountFolderImage(4);}
-void MainWindow::on_actionMountFolder_6_triggered() {mountFolderImage(5);}
 
 void MainWindow::on_actionEject_1_triggered() {ejectImage(0);}
 void MainWindow::on_actionEject_2_triggered() {ejectImage(1);}
@@ -1942,58 +1823,41 @@ void MainWindow::on_actionMountRecent_7_triggered() {mountFileWithDefaultProtect
 void MainWindow::on_actionMountRecent_8_triggered() {mountFileWithDefaultProtection(firstEmptyDiskSlot(), ui->actionMountRecent_8->text());}
 void MainWindow::on_actionMountRecent_9_triggered() {mountFileWithDefaultProtection(firstEmptyDiskSlot(), ui->actionMountRecent_9->text());}
 
-void MainWindow::on_actionMountDisk_triggered()
-{
-    mountDiskImage(firstEmptyDiskSlot(0, true));
-}
-
-void MainWindow::on_actionMountFolder_triggered()
-{
-    mountFolderImage(firstEmptyDiskSlot(0, true));
-}
 
 
-void MainWindow::on_actionOpenSession_triggered()
+
+void MainWindow::qmlOpenSessionPath(const QString &url)
 {
-    QString dir = aspeqtSettings->lastSessionDir();
+    const QString picked = pathFromPickedUrl(url);
+    if (picked.isEmpty()) {
+        return;
+    }
     QString fileName;   // path QSettings can read
-#ifdef Q_OS_ANDROID
+    QTemporaryFile tmp; // kept alive until the end: holds the local copy
+    if (picked.startsWith(QLatin1String("content:"))) {
     // QSettings can't read a content:// URI, so copy the picked session into a
-    // local temp file and load QSettings from there. Keep tmp alive till the end.
-    QTemporaryFile tmp;
-    QString url = androidOpenUrl(tr("Open session"),
-                                 tr("AspeQt sessions (*.aspeqt);;All files (*)"));
-    if (url.isEmpty()) {
-        return;
-    }
-    if (!tmp.open()) {
-        return;
-    }
-    {
-        QFile in(url);
-        if (!in.open(QIODevice::ReadOnly)) {
+    // local temp file and load QSettings from there.
+        if (!tmp.open()) {
             return;
         }
-        tmp.write(in.readAll());
+        {
+            QFile in(picked);
+            if (!in.open(QIODevice::ReadOnly)) {
+                return;
+            }
+            tmp.write(in.readAll());
+        }
+        tmp.flush();
+        tmp.close();
+        fileName = tmp.fileName();
+        g_sessionFile = friendlyName(picked);
+        g_sessionFilePath = QString();
+    } else {
+        fileName = picked;
+        aspeqtSettings->setLastSessionDir(QFileInfo(fileName).absolutePath());
+        g_sessionFile = QFileInfo(fileName).fileName();
+        g_sessionFilePath = QFileInfo(fileName).absolutePath();
     }
-    tmp.flush();
-    tmp.close();
-    fileName = tmp.fileName();
-    g_sessionFile = friendlyName(url);
-    g_sessionFilePath = QString();
-#else
-    fileName = QFileDialog::getOpenFileName(this, tr("Open session"),
-                                 dir,
-                                 tr(
-                                         "AspeQt sessions (*.aspeqt);;"
-                                         "All files (*)"));
-    if (fileName.isEmpty()) {
-        return;
-    }
-    aspeqtSettings->setLastSessionDir(QFileInfo(fileName).absolutePath());
-    g_sessionFile = QFileInfo(fileName).fileName();
-    g_sessionFilePath = QFileInfo(fileName).absolutePath();
-#endif
 // First eject existing images, then mount session images and restore mainwindow position and size //
     qmlEjectAll();
 
@@ -2028,26 +1892,12 @@ void MainWindow::on_actionOpenSession_triggered()
 
     setSession();
 }
-void MainWindow::on_actionSaveSession_triggered()
+void MainWindow::qmlSaveSessionPath(const QString &url)
 {
-    QString dir = aspeqtSettings->lastSessionDir();
-#ifdef Q_OS_ANDROID
-    QString url = androidSaveUrl(tr("Save session as"),
-                                 tr("AspeQt sessions (*.aspeqt);;All files (*)"));
-    if (url.isEmpty()) {
+    const QString picked = pathFromPickedUrl(url);
+    if (picked.isEmpty()) {
         return;
     }
-#else
-    QString fileName = QFileDialog::getSaveFileName(this, tr("Save session as"),
-                                 dir,
-                                 tr(
-                                         "AspeQt sessions (*.aspeqt);;"
-                                         "All files (*)"));
-    if (fileName.isEmpty()) {
-        return;
-    }
-    aspeqtSettings->setLastSessionDir(QFileInfo(fileName).absolutePath());
-#endif
 
 // Save mainwindow position and size to session file //
     if (aspeqtSettings->saveWindowsPos()) {
@@ -2056,23 +1906,26 @@ void MainWindow::on_actionSaveSession_triggered()
         aspeqtSettings->setLastWidth(geometry().width());
         aspeqtSettings->setLastHeight(geometry().height());
     }
-#ifdef Q_OS_ANDROID
+
+    if (!picked.startsWith(QLatin1String("content:"))) {
+        aspeqtSettings->setLastSessionDir(QFileInfo(picked).absolutePath());
+        aspeqtSettings->saveSessionToFile(picked);
+        return;
+    }
+
     // QSettings needs a real path: write to a temp file, then copy the bytes to
     // the SAF content:// target.
     QTemporaryFile tmp;
     if (!tmp.open()) {
         return;
     }
-    QString tmpPath = tmp.fileName();
+    const QString tmpPath = tmp.fileName();
     tmp.close();
     aspeqtSettings->saveSessionToFile(tmpPath);
-    QFile in(tmpPath), out(url);
+    QFile in(tmpPath), out(picked);
     if (in.open(QIODevice::ReadOnly) && out.open(QIODevice::WriteOnly | QIODevice::Truncate)) {
         out.write(in.readAll());
     }
-#else
-    aspeqtSettings->saveSessionToFile(fileName);
-#endif
 }
 
 
@@ -2174,8 +2027,6 @@ bool MainWindow::qmlCanAddSlot()
     return false;
 }
 
-void MainWindow::qmlMountDisk(int i)          { mountDiskImage(i); }
-void MainWindow::qmlMountFolder(int i)        { mountFolderImage(i); }
 void MainWindow::qmlEjectPressed(int i)       { androidEjectPressed(i); }
 void MainWindow::qmlSave(int i)               { saveDisk(i); }
 void MainWindow::qmlToggleAutoCommit(int i)   { autoSaveDisk(i); }
@@ -2211,7 +2062,6 @@ void MainWindow::qmlSwapSlots(int source, int slot)
     qDebug() << "!n" << tr("Swapped disk %1 with disk %2.").arg(slot + 1).arg(source + 1);
     emit qmlChanged();
 }
-void MainWindow::qmlLoaderLoad()              { loaderLoad(); }
 void MainWindow::qmlLoaderPlay()              { loaderPlayCas(); }
 void MainWindow::qmlLoaderRetry()             { loaderRetry(); }
 void MainWindow::qmlLoaderEject()             { loaderEject(); }
@@ -2224,7 +2074,6 @@ void MainWindow::qmlClearLog()
     emit qmlChanged();
 }
 
-void MainWindow::qmlMountDiskAny()     { on_actionMountDisk_triggered(); }
 
 // Create + format + mount a new disk image (port of on_actionNewImage_triggered
 // without the widget dialog; geometry chosen in the QML CreateDiskDialog).
@@ -2254,7 +2103,6 @@ void MainWindow::qmlCreateDisk(int sectorCount, int sectorSize)
             .arg(disk->description());
     emit qmlChanged();
 }
-void MainWindow::qmlMountFolderAny()   { on_actionMountFolder_triggered(); }
 void MainWindow::qmlEjectAll()
 {
     QMessageBox::StandardButton answer = QMessageBox::No;
@@ -2307,8 +2155,6 @@ QString MainWindow::qmlPrinterText()   { return textPrinterWindow ? textPrinterW
 QString MainWindow::qmlPrinterTextAtascii() { return textPrinterWindow ? textPrinterWindow->qmlTextAtascii() : QString(); }
 void MainWindow::qmlPrinterClear()     { if (textPrinterWindow) textPrinterWindow->qmlClear(); emit qmlPrinterTextChanged(); }
 void MainWindow::qmlPrinterSave()      { if (textPrinterWindow) textPrinterWindow->qmlSave(); }
-void MainWindow::qmlOpenSession()      { on_actionOpenSession_triggered(); }
-void MainWindow::qmlSaveSession()      { on_actionSaveSession_triggered(); }
 void MainWindow::qmlQuit()             { close(); qApp->quit(); }
 
 QStringList MainWindow::qmlRecentFiles()
@@ -2659,30 +2505,38 @@ void MainWindow::qmlDiskSetTextConversion(bool on)
     if (m_dvFs) m_dvFs->setTextConversion(on);
 }
 
-bool MainWindow::qmlDiskExtract(const QVariantList &rows)
+bool MainWindow::qmlDiskExtractPath(const QVariantList &rows, const QString &url)
 {
     if (!m_dvFs || m_dvDirs.isEmpty() || rows.isEmpty()) return false;
     QList<AtariDirEntry> sel = dvPickRows(m_dvFs, m_dvDirs.last(), rows);
     if (sel.isEmpty()) return false;
 
-    QString target;
-#ifdef Q_OS_ANDROID
-    QJniObject jdir = QJniObject::fromString(aspeqtSettings->lastExtractDir());
-    QJniObject::callStaticMethod<void>("net/greblus/SerialActivity", "runDirChooser",
-        "(Ljava/lang/String;)V", jdir.object<jstring>());
-    do {
-        QJniObject j = QJniObject::getStaticObjectField<jstring>("net/greblus/SerialActivity", "m_chosen");
-        target = j.toString();
-        if (target == "Cancelled") { target.clear(); break; }
-        if (target == "None") QThread::yieldCurrentThread();
-    } while (target == "None");
-#endif
+    const QString target = pathFromPickedUrl(url);
     if (target.isEmpty()) return false;
     aspeqtSettings->setLastExtractDir(target);
-    if (!m_dvFs->extractRecursive(sel, target)) {
+
+    if (!target.startsWith(QLatin1String("content:"))) {
+        if (!m_dvFs->extractRecursive(sel, target)) {
+            qmlToast(tr("Cannot extract the files, see the log."));
+            return false;
+        }
+        return true;
+    }
+
+    // A SAF tree can't be written through QFile: extract into a scratch dir and
+    // hand the whole directory to the content resolver.
+    const QString tmpDir = QStandardPaths::writableLocation(QStandardPaths::CacheLocation) + "/extract";
+    QDir(tmpDir).removeRecursively();
+    QDir().mkpath(tmpDir);
+    if (!m_dvFs->extractRecursive(sel, tmpDir)) {
         qmlToast(tr("Cannot extract the files, see the log."));
         return false;
     }
+    if (androidCopyDirToTree(tmpDir, target) < 0) {
+        qmlToast(tr("Cannot extract the files, see the log."));
+        return false;
+    }
+    QDir(tmpDir).removeRecursively();
     return true;
 }
 
@@ -2703,35 +2557,35 @@ bool MainWindow::qmlDiskDelete(const QVariantList &rows)
     return true;
 }
 
-bool MainWindow::qmlDiskAddFiles()
+bool MainWindow::qmlDiskAddFilesPath(const QString &url)
 {
     if (!m_dvFs || m_dvDirs.isEmpty()) return false;
+    const QString picked = pathFromPickedUrl(url);
+    if (picked.isEmpty()) return false;
+
     QStringList files;
-#ifdef Q_OS_ANDROID
-    QUrl url = QFileDialog::getOpenFileUrl(this, tr("Add files"), QUrl());
-    if (url.isEmpty()) return false;
-    QString uri = androidContentUri(url);
-    QFile src(uri);
-    if (!src.open(QIODevice::ReadOnly)) return false;
-    QByteArray bytes = src.readAll();
-    src.close();
-    QJniObject jn = QJniObject::callStaticObjectMethod(
-        "net/greblus/SerialActivity", "displayName",
-        "(Ljava/lang/String;)Ljava/lang/String;",
-        QJniObject::fromString(uri).object<jstring>());
-    QString displayName = jn.isValid() ? jn.toString() : QString();
-    if (displayName.isEmpty()) displayName = QStringLiteral("FILE");
-    QString tmpDir = QStandardPaths::writableLocation(QStandardPaths::CacheLocation) + "/addfile";
-    QDir(tmpDir).removeRecursively();
-    QDir().mkpath(tmpDir);
-    QString tmpPath = tmpDir + "/" + displayName;
-    QFile dst(tmpPath);
-    if (!dst.open(QIODevice::WriteOnly | QIODevice::Truncate)) return false;
-    dst.write(bytes);
-    dst.close();
-    files.append(tmpPath);
-#endif
-    if (files.isEmpty()) return false;
+    if (picked.startsWith(QLatin1String("content:"))) {
+        // insertRecursive works on real files, so stage the document under its
+        // display name (which is also the name it gets on the Atari disk).
+        QFile src(picked);
+        if (!src.open(QIODevice::ReadOnly)) return false;
+        const QByteArray bytes = src.readAll();
+        src.close();
+        QString displayName = androidDisplayName(picked);
+        if (displayName.isEmpty()) displayName = QStringLiteral("FILE");
+        const QString tmpDir = QStandardPaths::writableLocation(QStandardPaths::CacheLocation) + "/addfile";
+        QDir(tmpDir).removeRecursively();
+        QDir().mkpath(tmpDir);
+        const QString tmpPath = tmpDir + "/" + displayName;
+        QFile dst(tmpPath);
+        if (!dst.open(QIODevice::WriteOnly | QIODevice::Truncate)) return false;
+        dst.write(bytes);
+        dst.close();
+        files.append(tmpPath);
+    } else {
+        files.append(picked);
+    }
+
     if (m_dvFs->insertRecursive(m_dvDirs.last(), files).isEmpty()) {
         qmlToast(tr("Cannot add the file, see the log."));
         return false;

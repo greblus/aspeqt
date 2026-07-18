@@ -88,8 +88,6 @@ private:
     void setSession();  //
     void updateRecentFileActions();
     void mountFile(int no, const QString &fileName, bool prot);
-    void mountDiskImage(int no);
-    void mountFolderImage(int no);
     // Short, human-readable name for logs/labels: the file's base name, or the
     // ContentResolver display name for a content:// URI.
     QString friendlyName(const QString &name);
@@ -97,7 +95,6 @@ private:
     // Storage Access Framework pickers: return a content:// URI string (empty
     // if cancelled). QFile opens these directly, so no storage permission is
     // needed. Replaces the old filesystem-browsing Java dialog.
-    QString androidOpenUrl(const QString &caption, const QString &filter);
     QString androidSaveUrl(const QString &caption, const QString &filter);
     // Human-readable name of a content:// URI (via ContentResolver), for labels.
     QString androidDisplayName(const QString &uri);
@@ -142,7 +139,6 @@ private:
     bool          m_casWasRunning = false;   // emulation paused for cassette play
     AutoBoot     *m_autoBoot = nullptr;
     SioDevice    *m_autoBootOld = nullptr;
-    void loaderLoad();
     void loaderLoadXex(const QString &path);
     void loaderLoadCas(const QString &path);
     void loaderPlayCas();
@@ -195,15 +191,12 @@ public:
     QVariantMap  qmlStatus();        // { running, speed, printerOn }
     bool         qmlCanAddSlot();
 
-    void qmlMountDisk(int i);
-    void qmlMountFolder(int i);
     void qmlEjectPressed(int i);
     void qmlSave(int i);
     void qmlToggleAutoCommit(int i);
     void qmlToggleWriteProtect(int i);
     int qmlAddSlot();    // returns the hardware index of the added slot (-1 none)
     void qmlSwapSlots(int source, int slot);   // drag-reorder: swap two drives
-    void qmlLoaderLoad();
     void qmlLoaderPlay();
     void qmlLoaderRetry();
     void qmlLoaderEject();
@@ -212,15 +205,11 @@ public:
     void qmlClearLog();
     // menu items (mirror the QtWidgets menu bar)
     void qmlCreateDisk(int sectorCount, int sectorSize);
-    void qmlMountDiskAny();
-    void qmlMountFolderAny();
     void qmlEjectAll();
     QString qmlPrinterText();
     QString qmlPrinterTextAtascii();
     void    qmlPrinterClear();
     void    qmlPrinterSave();
-    void qmlOpenSession();
-    void qmlSaveSession();
     void qmlQuit();
     QStringList qmlRecentFiles();
     void qmlMountRecent(int index);
@@ -247,13 +236,15 @@ public:
     void         qmlMountDiskPath(int no, const QString &url);
     void         qmlMountFolderPath(int no, const QString &url);
     void         qmlLoaderLoadPath(const QString &url);
+    void         qmlOpenSessionPath(const QString &url);
+    void         qmlSaveSessionPath(const QString &url);
     void         qmlToast(const QString &text);
     void         qmlDiskEnter(int row);
     void         qmlDiskParent();
     void         qmlDiskSetTextConversion(bool on);
-    bool         qmlDiskExtract(const QVariantList &rows);
+    bool         qmlDiskExtractPath(const QVariantList &rows, const QString &url);
     bool         qmlDiskDelete(const QVariantList &rows);
-    bool         qmlDiskAddFiles();
+    bool         qmlDiskAddFilesPath(const QString &url);
 signals:
     void qmlChanged();
     void qmlLoaderProgress();   // frequent, loader-only (progress fill)
@@ -263,26 +254,9 @@ private:
 #endif
 
 private slots:
-    void on_actionSaveSession_triggered();
-    void on_actionOpenSession_triggered();
-    void on_actionMountFolder_triggered();
-    void on_actionMountDisk_triggered();
     void on_actionStartEmulation_triggered();
     void on_actionPrinterEmulation_triggered();
     void on_actionQuit_triggered();
-    void on_actionMountDisk_1_triggered();
-    void on_actionMountDisk_2_triggered();
-    void on_actionMountDisk_3_triggered();
-    void on_actionMountDisk_4_triggered();
-    void on_actionMountDisk_5_triggered();
-    void on_actionMountDisk_6_triggered();
-
-    void on_actionMountFolder_1_triggered();
-    void on_actionMountFolder_2_triggered();
-    void on_actionMountFolder_3_triggered();
-    void on_actionMountFolder_4_triggered();
-    void on_actionMountFolder_5_triggered();
-    void on_actionMountFolder_6_triggered();
 
     void on_actionEject_1_triggered();
     void on_actionEject_2_triggered();

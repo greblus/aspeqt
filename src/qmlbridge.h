@@ -125,8 +125,6 @@ public:
     Q_INVOKABLE void printerSave();
 
     // Actions from QML -> engine wrappers.
-    Q_INVOKABLE void mountDisk(int hwIndex);
-    Q_INVOKABLE void mountFolder(int hwIndex);
     Q_INVOKABLE void eject(int hwIndex);
     Q_INVOKABLE void removeSlot(int hwIndex);
     Q_INVOKABLE void save(int hwIndex);
@@ -135,7 +133,6 @@ public:
     Q_INVOKABLE int addSlot();    // hardware index of the added slot (-1 none)
     Q_INVOKABLE void swapSlots(int fromHw, int toHw);
 
-    Q_INVOKABLE void loaderLoad();
     Q_INVOKABLE void loaderPlay();
     Q_INVOKABLE void loaderRetry();
     Q_INVOKABLE void loaderEject();
@@ -146,11 +143,7 @@ public:
 
     // menu items
     Q_INVOKABLE void createDisk(int sectorCount, int sectorSize);
-    Q_INVOKABLE void mountDiskAny();
-    Q_INVOKABLE void mountFolderAny();
     Q_INVOKABLE void ejectAll();
-    Q_INVOKABLE void openSession();
-    Q_INVOKABLE void saveSession();
     Q_INVOKABLE void quit();
     Q_INVOKABLE QStringList recentFiles();
     Q_INVOKABLE void mountRecent(int index);
@@ -175,6 +168,8 @@ public:
     Q_INVOKABLE void         mountDiskPath(int hwIndex, const QString &url);
     Q_INVOKABLE void         mountFolderPath(int hwIndex, const QString &url);
     Q_INVOKABLE void         loaderLoadPath(const QString &url);
+    Q_INVOKABLE void         openSessionPath(const QString &url);
+    Q_INVOKABLE void         saveSessionPath(const QString &url);
     // Android SAF pickers; the result arrives via documentPicked().
     Q_INVOKABLE void         pickDocument(int reqId, const QString &mimeType);
     Q_INVOKABLE void         createDocument(int reqId, const QString &mimeType, const QString &suggestedName);
@@ -182,9 +177,9 @@ public:
     Q_INVOKABLE void         diskEnter(int row);
     Q_INVOKABLE void         diskParent();
     Q_INVOKABLE void         diskSetTextConversion(bool on);
-    Q_INVOKABLE bool         diskExtract(const QVariantList &rows);
+    Q_INVOKABLE bool         diskExtractPath(const QVariantList &rows, const QString &url);
     Q_INVOKABLE bool         diskDelete(const QVariantList &rows);
-    Q_INVOKABLE bool         diskAddFiles();
+    Q_INVOKABLE bool         diskAddFilesPath(const QString &url);
 
 signals:
     void loaderChanged();

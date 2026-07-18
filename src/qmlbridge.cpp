@@ -205,8 +205,6 @@ void AppController::rebuildLogCaches() const
 }
 
 // -- actions ----------------------------------------------------------------
-void AppController::mountDisk(int hwIndex)         { if (m_engine) m_engine->qmlMountDisk(hwIndex); }
-void AppController::mountFolder(int hwIndex)       { if (m_engine) m_engine->qmlMountFolder(hwIndex); }
 void AppController::eject(int hwIndex)             { if (m_engine) m_engine->qmlEjectPressed(hwIndex); }
 void AppController::removeSlot(int hwIndex)        { if (m_engine) m_engine->qmlEjectPressed(hwIndex); }
 void AppController::save(int hwIndex)              { if (m_engine) m_engine->qmlSave(hwIndex); }
@@ -215,7 +213,6 @@ void AppController::toggleWriteProtect(int hwIndex){ if (m_engine) m_engine->qml
 int AppController::addSlot()                       { return m_engine ? m_engine->qmlAddSlot() : -1; }
 void AppController::swapSlots(int fromHw, int toHw){ if (m_engine) m_engine->qmlSwapSlots(fromHw, toHw); }
 
-void AppController::loaderLoad()  { if (m_engine) m_engine->qmlLoaderLoad(); }
 void AppController::loaderPlay()  { if (m_engine) m_engine->qmlLoaderPlay(); }
 void AppController::loaderRetry() { if (m_engine) m_engine->qmlLoaderRetry(); }
 void AppController::loaderEject() { if (m_engine) m_engine->qmlLoaderEject(); }
@@ -241,11 +238,7 @@ void AppController::refreshPrinter()
     m_printerTextAtascii = m_engine->qmlPrinterTextAtascii();
     emit printerTextChanged();
 }
-void AppController::mountDiskAny()      { if (m_engine) m_engine->qmlMountDiskAny(); }
-void AppController::mountFolderAny()    { if (m_engine) m_engine->qmlMountFolderAny(); }
 void AppController::ejectAll()          { if (m_engine) m_engine->qmlEjectAll(); }
-void AppController::openSession()       { if (m_engine) m_engine->qmlOpenSession(); }
-void AppController::saveSession()       { if (m_engine) m_engine->qmlSaveSession(); }
 void AppController::quit()              { if (m_engine) m_engine->qmlQuit(); }
 QStringList AppController::recentFiles(){ return m_engine ? m_engine->qmlRecentFiles() : QStringList(); }
 void AppController::mountRecent(int i)  { if (m_engine) m_engine->qmlMountRecent(i); }
@@ -267,12 +260,14 @@ QString AppController::startDir(const QString &kind) { return m_engine ? m_engin
 void AppController::mountDiskPath(int i, const QString &url)   { if (m_engine) m_engine->qmlMountDiskPath(i, url); }
 void AppController::mountFolderPath(int i, const QString &url) { if (m_engine) m_engine->qmlMountFolderPath(i, url); }
 void AppController::loaderLoadPath(const QString &url)         { if (m_engine) m_engine->qmlLoaderLoadPath(url); }
+void AppController::openSessionPath(const QString &url)        { if (m_engine) m_engine->qmlOpenSessionPath(url); }
+void AppController::saveSessionPath(const QString &url)        { if (m_engine) m_engine->qmlSaveSessionPath(url); }
 void AppController::pickDocument(int r, const QString &m)      { if (m_engine) m_engine->pickDocument(r, m); }
 void AppController::createDocument(int r, const QString &m, const QString &n) { if (m_engine) m_engine->createDocument(r, m, n); }
 void AppController::pickFolder(int r)                          { if (m_engine) m_engine->pickFolder(r); }
 void AppController::diskEnter(int row)     { if (m_engine) m_engine->qmlDiskEnter(row); }
 void AppController::diskParent()           { if (m_engine) m_engine->qmlDiskParent(); }
 void AppController::diskSetTextConversion(bool on) { if (m_engine) m_engine->qmlDiskSetTextConversion(on); }
-bool AppController::diskExtract(const QVariantList &rows) { return m_engine ? m_engine->qmlDiskExtract(rows) : false; }
+bool AppController::diskExtractPath(const QVariantList &r, const QString &url) { return m_engine ? m_engine->qmlDiskExtractPath(r, url) : false; }
 bool AppController::diskDelete(const QVariantList &rows)  { return m_engine ? m_engine->qmlDiskDelete(rows) : false; }
-bool AppController::diskAddFiles()         { return m_engine ? m_engine->qmlDiskAddFiles() : false; }
+bool AppController::diskAddFilesPath(const QString &url) { return m_engine ? m_engine->qmlDiskAddFilesPath(url) : false; }

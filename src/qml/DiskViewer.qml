@@ -44,6 +44,8 @@ Popup {
     }
     onClosed: app.diskClose()
 
+    FilePicker { id: dvPicker }
+
     background: Rectangle { color: Material.background }
 
     contentItem: ColumnLayout {
@@ -100,13 +102,23 @@ Popup {
                     source: Theme.icon("actions/list-add.svg")
                     tip: qsTr("Add files")
                     enabledState: !dv.readOnly
-                    onClicked: { if (app.diskAddFiles()) dv.refresh() }
+                    onClicked: dvPicker.openFile(
+                        qsTr("Add files"), [qsTr("All files (*)")], "",
+                        function (url) {
+                            if (url.length > 0 && app.diskAddFilesPath(url)) dv.refresh()
+                        })
                 }
                 SlotButton {
                     source: Theme.icon("actions/document-save-as.svg")
                     tip: qsTr("Extract selected files")
                     enabledState: !dv.readOnly && dv.sel.length > 0
-                    onClicked: app.diskExtract(dv.sel)
+                    onClicked: {
+                        var rows = dv.sel
+                        dvPicker.chooseFolder(qsTr("Extract files to"), "",
+                            function (url) {
+                                if (url.length > 0) app.diskExtractPath(rows, url)
+                            })
+                    }
                 }
                 SlotButton {
                     source: Theme.icon("mimetypes/text-x-generic.svg")
