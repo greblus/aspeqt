@@ -1932,6 +1932,21 @@ p, li { white-space: pre-wrap; }
 <context>
     <name>MainWindow</name>
     <message>
+        <location filename="../mainwindow.cpp" line="0" />
+        <source>Cannot extract the files, see the log.</source>
+        <translation>Nie można wypakować plików, zobacz do log-u</translation>
+    </message>
+    <message>
+        <location filename="../mainwindow.cpp" line="0" />
+        <source>Cannot delete the files, see the log.</source>
+        <translation>Nie można usunąć plików, zobacz do log-u</translation>
+    </message>
+    <message>
+        <location filename="../mainwindow.cpp" line="0" />
+        <source>Cannot add the file, see the log.</source>
+        <translation>Nie można dodać pliku, zobacz do log-u</translation>
+    </message>
+    <message>
         <location filename="../mainwindow.cpp" line="387" />
         <source>Clear messages</source>
         <translation>Usuń wiadomości</translation>

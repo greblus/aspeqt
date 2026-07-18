@@ -2560,7 +2560,10 @@ bool MainWindow::qmlDiskExtract(const QVariantList &rows)
 #endif
     if (target.isEmpty()) return false;
     aspeqtSettings->setLastExtractDir(target);
-    m_dvFs->extractRecursive(sel, target);
+    if (!m_dvFs->extractRecursive(sel, target)) {
+        qmlToast(tr("Cannot extract the files, see the log."));
+        return false;
+    }
     return true;
 }
 
@@ -2574,7 +2577,10 @@ bool MainWindow::qmlDiskDelete(const QVariantList &rows)
         return false;
     QList<AtariDirEntry> sel = dvPickRows(m_dvFs, m_dvDirs.last(), rows);
     if (sel.isEmpty()) return false;
-    m_dvFs->deleteRecursive(sel);
+    if (!m_dvFs->deleteRecursive(sel)) {
+        qmlToast(tr("Cannot delete the files, see the log."));
+        return false;
+    }
     return true;
 }
 
@@ -2607,7 +2613,10 @@ bool MainWindow::qmlDiskAddFiles()
     files.append(tmpPath);
 #endif
     if (files.isEmpty()) return false;
-    m_dvFs->insertRecursive(m_dvDirs.last(), files);
+    if (m_dvFs->insertRecursive(m_dvDirs.last(), files).isEmpty()) {
+        qmlToast(tr("Cannot add the file, see the log."));
+        return false;
+    }
     return true;
 }
 

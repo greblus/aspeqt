@@ -2,8 +2,17 @@
 
 #include <QtGlobal>
 #include <QDir>
-#include <QMessageBox>
-#include "diskeditdialog.h"
+#include <QRegularExpression>
+
+// Errors here used to pop a modal QMessageBox parented to the disk editor.
+// The QML UI has no such window, and a modal widget dialog on the headless
+// engine window can neither be shown nor dismissed -- it just hangs the app.
+// Report through the same log channel the rest of the engine uses instead.
+static void fsError(const QString &text)
+{
+    qCritical() << "!e" << text;
+}
+
 
 /* Compare functions */
 
@@ -250,7 +259,7 @@ bool AtariFileSystem::extractRecursive(QList<AtariDirEntry> &entries, const QStr
         if (e.attributes & AtariDirEntry::Directory) {
             QString newDir = target + "/" + e.niceName();
             if (!QDir(newDir).mkdir(newDir)) {
-                QMessageBox::critical(m_image->editDialog(), tr("Atari file system error"), tr("Cannot create directory '%1'.").arg(e.niceName()));
+                fsError(tr("Cannot create directory '%1'.").arg(e.niceName()));
                 return false;
             }
             QList <AtariDirEntry> subs = getEntries(e.firstSector);
@@ -484,7 +493,7 @@ bool Dos10FileSystem::extract(const AtariDirEntry &entry, const QString &target)
     mode = QFile::WriteOnly | QFile::Truncate;
 
     if (!file.open(mode)) {
-        QMessageBox::critical(m_image->editDialog(), tr("Atari file system error"), tr("Cannot create file '%1'.").arg(entry.niceName()));
+        fsError(tr("Cannot create file '%1'.").arg(entry.niceName()));
         return false;
     }
 
@@ -492,13 +501,13 @@ bool Dos10FileSystem::extract(const AtariDirEntry &entry, const QString &target)
     for (uint n = entry.size / (m_image->geometry().bytesPerSector() - 3); n > 0 && sector != 0; n--) {
         QByteArray data;
         if (!m_image->readSector(sector, data)) {
-            QMessageBox::critical(m_image->editDialog(), tr("Atari file system error"), tr("Cannot read '%1': %2").arg(entry.niceName()).arg(tr("Sector read failed.")));
+            fsError(tr("Cannot read '%1': %2").arg(entry.niceName()).arg(tr("Sector read failed.")));
             return false;
         }
         if (!(entry.attributes & AtariDirEntry::MyDos)) {
             int fileNo = (quint8)data.at(data.count() - 3) >> 2;
             if (fileNo != entry.no) {
-                QMessageBox::critical(m_image->editDialog(), tr("Atari file system error"), tr("Cannot read '%1': %2").arg(entry.niceName()).arg(tr("File number mismatch.")));
+                fsError(tr("Cannot read '%1': %2").arg(entry.niceName()).arg(tr("File number mismatch.")));
                 return false;
             }
             sector = ((quint8)data.at(data.count() - 3) & 0x03) * 256 + (quint8)data.at(data.count() - 2);
@@ -552,7 +561,7 @@ bool Dos10FileSystem::extract(const AtariDirEntry &entry, const QString &target)
             nData = data;
         }
         if (file.write(nData) != nData.count()) {
-            QMessageBox::critical(m_image->editDialog(), tr("Atari file system error"), tr("Cannot write to '%1': %2").arg(file.fileName()).arg(file.errorString()));
+            fsError(tr("Cannot write to '%1': %2").arg(file.fileName()).arg(file.errorString()));
             return false;
         }
     }
@@ -565,12 +574,12 @@ AtariDirEntry Dos10FileSystem::insert(quint16 dir, const QString &name)
     AtariDirEntry result;
     QByteArray dosEntry = findName(dir, name);
     if (dosEntry.isEmpty()) {
-        QMessageBox::critical(m_image->editDialog(), tr("Atari file system error"), tr("Cannot insert '%1': %2").arg(name).arg(tr("Cannot find a suitable file name.")));
+        fsError(tr("Cannot insert '%1': %2").arg(name).arg(tr("Cannot find a suitable file name.")));
         return result;
     }
     int no = findFreeFileNo(dir);
     if (no < 0) {
-        QMessageBox::critical(m_image->editDialog(), tr("Atari file system error"), tr("Cannot insert '%1': %2").arg(name).arg(tr("Directory is full.")));
+        fsError(tr("Cannot insert '%1': %2").arg(name).arg(tr("Directory is full.")));
         return result;
     }
 
@@ -587,12 +596,12 @@ AtariDirEntry Dos10FileSystem::insert(quint16 dir, const QString &name)
     }
 
     if (!file.open(mode)) {
-        QMessageBox::critical(m_image->editDialog(), tr("Atari file system error"), tr("Cannot open '%1': %2").arg(name).arg(file.errorString()));
+        fsError(tr("Cannot open '%1': %2").arg(name).arg(file.errorString()));
         return result;
     }
 
     if (file.size() > freeSpace()) {
-        QMessageBox::critical(m_image->editDialog(), tr("Atari file system error"), tr("Cannot insert '%1': %2").arg(name).arg(tr("Disk is full.")));
+        fsError(tr("Cannot insert '%1': %2").arg(name).arg(tr("Disk is full.")));
         return result;
     }
 
@@ -605,7 +614,7 @@ AtariDirEntry Dos10FileSystem::insert(quint16 dir, const QString &name)
     int firstSector = findFreeSector(0);
     sector = firstSector;
     if (sector == 0) {
-        QMessageBox::critical(m_image->editDialog(), tr("Atari file system error"), tr("Cannot insert '%1': %2").arg(name).arg(tr("Disk is full.")));
+        fsError(tr("Cannot insert '%1': %2").arg(name).arg(tr("Disk is full.")));
         return result;
     }
     allocateSector(sector);
@@ -629,7 +638,7 @@ AtariDirEntry Dos10FileSystem::insert(quint16 dir, const QString &name)
             if(mode == (QFile::ReadOnly | QFile::Text)) {
                 size = data.count();
             } else {
-                QMessageBox::critical(m_image->editDialog(), tr("File system error"), tr("Number of bytes (%1) read from '%2' is not equal to expected data size of (%3)").arg(data.count()).arg(name).arg(size));
+                fsError(tr("Number of bytes (%1) read from '%2' is not equal to expected data size of (%3)").arg(data.count()).arg(name).arg(size));
             return result;
             }
         }
@@ -667,7 +676,7 @@ AtariDirEntry Dos10FileSystem::insert(quint16 dir, const QString &name)
             }
         }
         if (!m_image->writeSector(sector, data)) {
-            QMessageBox::critical(m_image->editDialog(), tr("Atari file system error"), tr("Cannot insert '%1': %2").arg(name).arg(tr("Sector write failed.")));
+            fsError(tr("Cannot insert '%1': %2").arg(name).arg(tr("Sector write failed.")));
             return result;
         }
         sector = newSector;
@@ -677,7 +686,7 @@ AtariDirEntry Dos10FileSystem::insert(quint16 dir, const QString &name)
     int start = (no % 8) * 16;
     QByteArray data;
     if (!image()->readSector(dirsec, data)) {
-        QMessageBox::critical(m_image->editDialog(), tr("Atari file system error"), tr("Cannot insert '%1': %2").arg(name).arg(tr("Sector read failed.")));
+        fsError(tr("Cannot insert '%1': %2").arg(name).arg(tr("Sector read failed.")));
         return result;
     }
 
@@ -700,7 +709,7 @@ AtariDirEntry Dos10FileSystem::insert(quint16 dir, const QString &name)
     data.replace(start, 16, dosEntry);
 
     if (!image()->writeSector(dirsec, data)) {
-        QMessageBox::critical(m_image->editDialog(), tr("Atari file system error"), tr("Cannot insert '%1': %2").arg(name).arg(tr("Sector write failed.")));
+        fsError(tr("Cannot insert '%1': %2").arg(name).arg(tr("Sector write failed.")));
         return result;
     }
 
@@ -715,12 +724,12 @@ AtariDirEntry Dos10FileSystem::makeDir(quint16 dir, const QString &name)
     AtariDirEntry result;
     QByteArray dosEntry = findName(dir, name);
     if (dosEntry.isEmpty()) {
-        QMessageBox::critical(m_image->editDialog(), tr("Atari file system error"), tr("Cannot insert '%1': %2").arg(name).arg(tr("Cannot find a suitable file name.")));
+        fsError(tr("Cannot insert '%1': %2").arg(name).arg(tr("Cannot find a suitable file name.")));
         return result;
     }
     int no = findFreeFileNo(dir);
     if (no < 0) {
-        QMessageBox::critical(m_image->editDialog(), tr("Atari file system error"), tr("Cannot insert '%1': %2").arg(name).arg(tr("Directory is full.")));
+        fsError(tr("Cannot insert '%1': %2").arg(name).arg(tr("Directory is full.")));
         return result;
     }
 
@@ -731,7 +740,7 @@ AtariDirEntry Dos10FileSystem::makeDir(quint16 dir, const QString &name)
     int first = findFreeSector(369);
     int sector = first;
     if (sector == 0) {
-        QMessageBox::critical(m_image->editDialog(), tr("Atari file system error"), tr("Cannot insert '%1': %2").arg(name).arg(tr("Disk is full.")));
+        fsError(tr("Cannot insert '%1': %2").arg(name).arg(tr("Disk is full.")));
         return result;
     }
     bool found = false;
@@ -750,7 +759,7 @@ AtariDirEntry Dos10FileSystem::makeDir(quint16 dir, const QString &name)
     } while (sector != first);
 
     if (!found) {
-        QMessageBox::critical(m_image->editDialog(), tr("Atari file system error"), tr("Cannot insert '%1': %2").arg(name).arg(tr("Disk is full.")));
+        fsError(tr("Cannot insert '%1': %2").arg(name).arg(tr("Disk is full.")));
         return result;
     }
 
@@ -759,7 +768,7 @@ AtariDirEntry Dos10FileSystem::makeDir(quint16 dir, const QString &name)
     for (int i = sector; i < sector + 8; i++) {
         allocateSector(i);
         if (!m_image->writeSector(i, empty)) {
-            QMessageBox::critical(m_image->editDialog(), tr("Atari file system error"), tr("Cannot insert '%1': %2").arg(name).arg(tr("Sector write failed.")));
+            fsError(tr("Cannot insert '%1': %2").arg(name).arg(tr("Sector write failed.")));
             return result;
         }
     }
@@ -771,14 +780,14 @@ AtariDirEntry Dos10FileSystem::makeDir(quint16 dir, const QString &name)
     int start = (no % 8) * 16;
     QByteArray data;
     if (!image()->readSector(dirsec, data)) {
-        QMessageBox::critical(m_image->editDialog(), tr("Atari file system error"), tr("Cannot insert '%1': %2").arg(name).arg(tr("Sector read failed.")));
+        fsError(tr("Cannot insert '%1': %2").arg(name).arg(tr("Sector read failed.")));
         return result;
     }
 
     data.replace(start, 16, dosEntry);
 
     if (!image()->writeSector(dirsec, data)) {
-        QMessageBox::critical(m_image->editDialog(), tr("Atari file system error"), tr("Cannot insert '%1': %2").arg(name).arg(tr("Sector write failed.")));
+        fsError(tr("Cannot insert '%1': %2").arg(name).arg(tr("Sector write failed.")));
         return result;
     }
 
@@ -794,12 +803,12 @@ bool Dos10FileSystem::erase(const AtariDirEntry &entry)
     int start = (entry.no % 8) * 16;
     QByteArray data;
     if (!image()->readSector(dirsec, data)) {
-        QMessageBox::critical(m_image->editDialog(), tr("Atari file system error"), tr("Cannot delete '%1': %2").arg(entry.niceName()).arg(tr("Sector read failed.")));
+        fsError(tr("Cannot delete '%1': %2").arg(entry.niceName()).arg(tr("Sector read failed.")));
         return false;
     }
     data[start] = 0x80;
     if (!image()->writeSector(dirsec, data)) {
-        QMessageBox::critical(m_image->editDialog(), tr("Atari file system error"), tr("Cannot delete '%1': %2").arg(entry.niceName()).arg(tr("Sector write failed.")));
+        fsError(tr("Cannot delete '%1': %2").arg(entry.niceName()).arg(tr("Sector write failed.")));
         return false;
     }
 
@@ -808,13 +817,13 @@ bool Dos10FileSystem::erase(const AtariDirEntry &entry)
         freeSector(sector);
         QByteArray data;
         if (!m_image->readSector(sector, data)) {
-            QMessageBox::critical(m_image->editDialog(), tr("Atari file system error"), tr("Cannot delete '%1': %2").arg(entry.niceName()).arg(tr("Sector read failed.")));
+            fsError(tr("Cannot delete '%1': %2").arg(entry.niceName()).arg(tr("Sector read failed.")));
             return false;
         }
         if (!(entry.attributes & AtariDirEntry::MyDos)) {
             int fileNo = (quint8)data.at(data.count() - 3) >> 2;
             if (fileNo != entry.no) {
-                QMessageBox::critical(m_image->editDialog(), tr("Atari file system error"), tr("Cannot delete '%1': %2").arg(entry.niceName()).arg(tr("File number mismatch.")));
+                fsError(tr("Cannot delete '%1': %2").arg(entry.niceName()).arg(tr("File number mismatch.")));
                 return false;
             }
             sector = ((quint8)data.at(data.count() - 3) & 0x03) * 256 + (quint8)data.at(data.count() - 2);
@@ -824,7 +833,7 @@ bool Dos10FileSystem::erase(const AtariDirEntry &entry)
     }
 
     if (!writeBitmap()) {
-        QMessageBox::critical(m_image->editDialog(), tr("Atari file system error"), tr("Cannot delete '%1': %2").arg(entry.niceName()).arg(tr("Bitmap write failed.")));
+        fsError(tr("Cannot delete '%1': %2").arg(entry.niceName()).arg(tr("Bitmap write failed.")));
         return false;
     }
     return true;
@@ -902,12 +911,12 @@ bool Dos10FileSystem::removeDir(const AtariDirEntry &entry)
     int start = (entry.no % 8) * 16;
     QByteArray data;
     if (!image()->readSector(dirsec, data)) {
-        QMessageBox::critical(m_image->editDialog(), tr("Atari file system error"), tr("Cannot delete '%1': %2").arg(entry.niceName()).arg(tr("Sector read failed.")));
+        fsError(tr("Cannot delete '%1': %2").arg(entry.niceName()).arg(tr("Sector read failed.")));
         return false;
     }
     data[start] = 0x80;
     if (!image()->writeSector(dirsec, data)) {
-        QMessageBox::critical(m_image->editDialog(), tr("Atari file system error"), tr("Cannot delete '%1': %2").arg(entry.niceName()).arg(tr("Sector write failed.")));
+        fsError(tr("Cannot delete '%1': %2").arg(entry.niceName()).arg(tr("Sector write failed.")));
         return false;
     }
 
@@ -916,7 +925,7 @@ bool Dos10FileSystem::removeDir(const AtariDirEntry &entry)
     }
 
     if (!writeBitmap()) {
-        QMessageBox::critical(m_image->editDialog(), tr("Atari file system error"), tr("Cannot delete '%1': %2").arg(entry.niceName()).arg(tr("Bitmap write failed.")));
+        fsError(tr("Cannot delete '%1': %2").arg(entry.niceName()).arg(tr("Bitmap write failed.")));
         return false;
     }
 
@@ -1306,7 +1315,7 @@ bool SpartaDosFileSystem::extract(const AtariDirEntry &entry, const QString &tar
     }
 
     if (!file.open(mode)) {
-        QMessageBox::critical(m_image->editDialog(), tr("Atari file system error"), tr("Cannot create file '%1'.").arg(entry.niceName()));
+        fsError(tr("Cannot create file '%1'.").arg(entry.niceName()));
         return false;
     }
 
@@ -1335,7 +1344,7 @@ bool SpartaDosFileSystem::extract(const AtariDirEntry &entry, const QString &tar
             }
         }
         if (file.write(buffer) != bufSize) {
-            QMessageBox::critical(m_image->editDialog(), tr("Atari file system error"), tr("Cannot write to '%1'.").arg(entry.niceName()));
+            fsError(tr("Cannot write to '%1'.").arg(entry.niceName()));
             return false;
         }
         rest -= bufSize;
