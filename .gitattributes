@@ -1,0 +1,15 @@
+# Everything text is stored and checked out with LF. The tree used to be a
+# mix of CRLF (the older Windows-era sources) and LF, which made every edit
+# risk flipping a whole file's line endings.
+* text=auto eol=lf
+
+# Binaries git might otherwise sniff as text.
+*.atr    binary
+*.xex    binary
+*.cas    binary
+*.obj    binary
+*.png    binary
+*.jpg    binary
+*.ico    binary
+*.qm     binary
+*.jar    binary
