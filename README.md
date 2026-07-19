@@ -103,6 +103,29 @@ The 1.2 release also cleared out a lot of history. The UI is Qt Quick end to end
 so the QtWidgets and print-support modules are gone from the build, along with every
 `.ui` form, the old dialogs and the widget-era window handling.
 
+## Building
+
+Clone shallow unless you actually need the history:
+
+```
+git clone --depth 1 https://github.com/greblus/aspeqt.git
+```
+
+The repository carries years of prebuilt APKs in its history. They are no longer
+in the working tree, but the old commits still reference them, so a plain
+`git clone` transfers about 430 MB. `--depth 1` fetches only the tip commit and
+gets you the same sources in roughly 2 MB.
+
+Desktop (Linux/macOS/Windows) — qmake, no CMake:
+
+```
+qmake src/aspeqt.pro
+make
+```
+
+For Android, open `src/aspeqt.pro` in Qt Creator with an Android Qt 6.x kit and
+build from there.
+
 ## Where to get the adapters
 
 For SIO2BT see the
