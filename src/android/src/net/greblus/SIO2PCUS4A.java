@@ -358,6 +358,30 @@ public class SIO2PCUS4A implements SerialDevice
     return ret;
     }
 
+    // Level read of COMMAND for the R: device's stream mode: no waiting, no
+    // reading, just "is the Atari asserting it right now". Masks match
+    // getHWCommandFrame: 64 = RI, 32 = DSR, 16 = CTS.
+    public boolean isCommandAsserted(int mMethod) {
+    int mask;
+
+    switch (mMethod) {
+        case 0:
+            mask = 64;
+            break;
+        case 1:
+            mask = 32;
+            break;
+        case 2:
+            mask = 16;
+            break;
+        default:
+            mask = 32; }
+
+    int status = getModemStatus();
+    if (status < 0) return false;
+    return (status & mask) > 0;
+    }
+
     public int getSWCommandFrame() {
     int expected = 0, sync_attempts = 0, got = 1, total_retries = 0;
     int ret = 0, total = 0;

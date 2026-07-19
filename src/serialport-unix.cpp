@@ -316,24 +316,36 @@ int StandardSerialPortBackend::speed()
     return mSpeed;
 }
 
+// Which modem status line the SIO2PC cable wires COMMAND to.
+int StandardSerialPortBackend::commandLineMask() const
+{
+    switch (mMethod) {
+    case 0:  return TIOCM_RI;
+    case 1:  return TIOCM_DSR;
+    case 2:  return TIOCM_CTS;
+    default: return TIOCM_DSR;
+    }
+}
+
+// Used only in stream mode, where the loop is shuttling modem bytes and has to
+// notice the Atari wanting to talk SIO again. A plain level read: no waiting.
+bool StandardSerialPortBackend::isCommandLineAsserted()
+{
+    int status;
+    if (ioctl(mHandle, TIOCMGET, &status) < 0)
+        return false;
+    return (status & commandLineMask()) != 0;
+}
+
+void StandardSerialPortBackend::setStreamMode(bool stream)
+{
+    m_isStreamMode = stream;
+}
+
 QByteArray StandardSerialPortBackend::readCommandFrame()
 {
     QByteArray data;
-    int mask;
-
-    switch (mMethod) {
-    case 0:
-        mask = TIOCM_RI;
-        break;
-    case 1:
-        mask = TIOCM_DSR;
-        break;
-    case 2:
-        mask = TIOCM_CTS;
-        break;
-    default:
-        mask = TIOCM_DSR;
-    }
+    int mask = commandLineMask();
 
     int status;
     int retries = 0, totalRetries = 0;
@@ -486,7 +498,9 @@ QByteArray StandardSerialPortBackend::readRawFrame(uint size, bool verbose)
     total = 0;
     rest = size;
     QTime startTime = QTime::currentTime();
-    int timeOut = data.count() * 12000 / mSpeed + 10;
+    // In stream mode `size` is just the buffer ceiling, not an expected frame
+    // length -- whatever the user typed is all there is -- so don't wait for it.
+    int timeOut = m_isStreamMode ? 0 : data.size() * 12000 / mSpeed + 10;
     int elapsed;
 
     do {
@@ -502,10 +516,20 @@ QByteArray StandardSerialPortBackend::readRawFrame(uint size, bool verbose)
         }
         total += result;
         rest -= result;
+        // Stream mode: hand the bytes over the moment any arrive, so typing
+        // echoes immediately instead of waiting for a full buffer.
+        if (m_isStreamMode && total > 0) {
+            break;
+        }
         elapsed = QTime::currentTime().msecsTo(startTime);
     } while (total < size && elapsed > -timeOut);
 
     if ((uint)total != size) {
+        // A short read is the normal case in stream mode, not an error.
+        if (m_isStreamMode) {
+            data.resize(total);
+            return data;
+        }
         if (verbose) {
             data.resize(total);
             qCritical() << "!e" << tr("Serial port read timeout.");

@@ -290,6 +290,14 @@ Engine::Engine(QObject *parent)
     connect(printerOutput, &PrinterOutput::textChanged, this, &Engine::printerTextChanged);
     connect(printer, SIGNAL(print(QString)), this, SIGNAL(printerTextChanged()));
     sio->installDevice(0x40, printer);
+
+    // R: device -- 850 emulation, dials BBSes over TCP. It decides for itself
+    // whether it is enabled (RDevice/Enabled), but it has to be installed
+    // either way so the Atari's handler can find it and toggling the setting
+    // does not need a restart.
+    m_rDevice = new RDevice(sio, 0);
+    sio->installDevice(RS232_BASE_CDEVIC, m_rDevice);
+
     untitledName = 0;
 
 

@@ -638,6 +638,10 @@ public class SerialActivity extends QtActivity
         public static int getHWCommandFrame(int mMethod) {
              return m_device.getHWCommandFrame(mMethod);
         }
+
+        public static boolean isCommandAsserted(int mMethod) {
+             return m_device.isCommandAsserted(mMethod);
+        }
 }
     class FileChooser implements Runnable
     {

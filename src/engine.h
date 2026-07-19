@@ -10,6 +10,7 @@
 #include "serialport.h"
 #include "sioworker.h"
 #include "printeroutput.h"
+#include "rdevice.h"
 
 #define MAX_DISKS 15           // SIO disk device numbers 0x31..0x3F
 #define DEFAULT_DISKS 5        // slots a fresh session starts with
@@ -55,6 +56,7 @@ private:
     QList<quint16> m_dvDirs;               // directory sector stack
     QStringList m_dvPaths;                 // directory name stack
     PrinterOutput *printerOutput = nullptr;
+    RDevice *m_rDevice = nullptr;
     QTranslator aspeqt_translator, aspeqt_qt_translator;
     
     void setSession();  //

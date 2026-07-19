@@ -269,6 +269,13 @@ public class SIO2BT implements SerialDevice
     public int getHWCommandFrame(int mMethod) {
          return 1;
     }
+
+    // Bluetooth carries no modem status lines, so COMMAND cannot be read at
+    // all here. The R: device's stream mode relies on this, and therefore
+    // only works over SIO2PC-USB.
+    public boolean isCommandAsserted(int mMethod) {
+         return false;
+    }
     public static int sioChecksum(byte[] data, int size)
     {
             int sum = 0;

@@ -29,6 +29,11 @@ public:
     bool writeError();
     bool setSpeed(int speed);
     bool writeRawFrame(const QByteArray &data);
+    QByteArray readRawFrame(uint size, bool verbose = true) override;
+
+    void setStreamMode(bool stream) override;
+    bool isStreamMode() const override { return m_isStreamMode; }
+    bool isCommandLineAsserted() override;
 
 private:
     bool mCanceled;
@@ -36,13 +41,13 @@ private:
     int mSpeed;
     int mMethod;
     bool mSpdChanged;
+    bool m_isStreamMode = false;
 
     bool setNormalSpeed();
     bool setHighSpeed();
     int speed();
     bool mHighSpeed;
     quint8 sioChecksum(const QByteArray &data, uint size);
-    QByteArray readRawFrame(uint size, bool verbose = true);
     QString lastErrorMessage();
 };
 

@@ -197,6 +197,22 @@ int StandardSerialPortBackend::speed()
     return mSpeed;
 }
 
+void StandardSerialPortBackend::setStreamMode(bool stream)
+{
+    m_isStreamMode = stream;
+}
+
+// Stream mode only: a level read of the COMMAND line, telling us the Atari
+// wants to talk SIO again. Needs a real modem status line, so it works on
+// SIO2PC-USB (FTDI CTS/DSR/RI) but not on SIO2BT, where bluetooth has no such
+// lines -- there the Java side reports false and stream mode simply never
+// gets interrupted this way.
+bool StandardSerialPortBackend::isCommandLineAsserted()
+{
+    return QJniObject::callStaticMethod<jboolean>(
+        "net/greblus/SerialActivity", "isCommandAsserted", "(I)Z", mMethod);
+}
+
 QByteArray StandardSerialPortBackend::readCommandFrame()
 {
     QByteArray data;
@@ -351,8 +367,18 @@ QByteArray StandardSerialPortBackend::readRawFrame(uint size, bool verbose)
         if (result < 0) result = 0;
         total += result;
         rest -= result;
+        // Stream mode: `size` is only the buffer ceiling, so pass on whatever
+        // arrived rather than waiting for the buffer to fill.
+        if (m_isStreamMode && total > 0) break;
         elapsed = QTime::currentTime().msecsTo(startTime);
     } while (total < size && elapsed > -timeOut);
+
+    // A short read is normal in stream mode; setRawData does not copy, so the
+    // length has to be right here rather than resized afterwards.
+    if (m_isStreamMode) {
+        data.setRawData(rbuf, total);
+        return data;
+    }
 
     data.setRawData(rbuf, size);
 
