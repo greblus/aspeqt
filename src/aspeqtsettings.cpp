@@ -799,6 +799,50 @@ void AspeqtSettings::setfilterUnderscore(bool filter)
     mSettings->setValue("FilterUnderscore", mFilterUnderscore);
 }
 
+// R: device settings. Read straight from QSettings rather than cached in a
+// member: they are touched when the device is created or reconfigured, not on
+// the SIO hot path.
+
+bool AspeqtSettings::rDeviceEnabled()
+{
+    return mSettings->value("RDevice/Enabled", false).toBool();
+}
+
+void AspeqtSettings::setRDeviceEnabled(bool enable)
+{
+    mSettings->setValue("RDevice/Enabled", enable);
+}
+
+QString AspeqtSettings::phonebookPath()
+{
+    return mSettings->value("RDevice/PhonebookPath", "").toString();
+}
+
+void AspeqtSettings::setPhonebookPath(const QString &path)
+{
+    mSettings->setValue("RDevice/PhonebookPath", path);
+}
+
+bool AspeqtSettings::bbsListenerEnabled(int portIndex)
+{
+    return mSettings->value(QString("RDevice/Listen%1Enabled").arg(portIndex), false).toBool();
+}
+
+void AspeqtSettings::setBbsListenerEnabled(int portIndex, bool enable)
+{
+    mSettings->setValue(QString("RDevice/Listen%1Enabled").arg(portIndex), enable);
+}
+
+int AspeqtSettings::modemListenPort(int portIndex)
+{
+    return mSettings->value(QString("RDevice/Listen%1Port").arg(portIndex), 2323).toInt();
+}
+
+void AspeqtSettings::setModemListenPort(int portIndex, int port)
+{
+    mSettings->setValue(QString("RDevice/Listen%1Port").arg(portIndex), port);
+}
+
 void AspeqtSettings::writeRecentImageSettings()
 {
     mSettings->beginWriteArray("RecentImageSettings");

@@ -1,4 +1,5 @@
 #include "sioworker.h"
+#include "rdevice.h"
 
 #include "aspeqtsettings.h"
 #include <QFile>
@@ -35,6 +36,7 @@ SioWorker::SioWorker()
         devices[i] = 0;
     }
     mPort = 0;
+    m_isStreaming = false;
 }
 
 SioWorker::~SioWorker()
@@ -52,6 +54,81 @@ void SioWorker::requestStop()
     mustTerminate = true;
     if (mPort) {
         mPort->cancel();
+    }
+}
+
+/* Stream (modem) mode ---------------------------------------------------
+   The Atari's 850 handler switches the line to concurrent mode, after which
+   it is a plain serial link carrying modem traffic, not SIO command frames.
+   One pass shuttles whatever is pending in each direction. */
+void SioWorker::runStreamMode()
+{
+    bool hasActivity = false;
+
+    deviceMutex->lock();
+    RDevice *rdev = qobject_cast<RDevice*>(devices[RS232_BASE_CDEVIC]);
+
+    /* network -> Atari */
+    if (rdev) {
+        QByteArray txData = rdev->dequeueNetworkData();
+        if (!txData.isEmpty()) {
+            mPort->writeRawFrame(txData);
+            hasActivity = true;
+        }
+    }
+    deviceMutex->unlock();
+
+    /* Atari -> network */
+    QByteArray rawData = mPort->readRawFrame(128, false);
+    if (!rawData.isEmpty() && rdev) {
+        deviceMutex->lock();
+        rdev->processSerialData(rawData);
+        deviceMutex->unlock();
+        hasActivity = true;
+    }
+
+    /* The Atari asserting COMMAND means it wants to talk SIO again. Checked
+       on a guard interval because on FTDI this is a USB round trip, not a
+       pin read. */
+    if (m_streamGuardTimer.elapsed() > STREAM_GUARD_MS) {
+        m_streamGuardTimer.restart();
+        if (mPort->isCommandLineAsserted()) {
+            qDebug() << "!d" << tr("[SioWorker] Atari asserted COMMAND; leaving stream mode.");
+            deviceMutex->lock();
+            if (rdev) rdev->forceCommandMode();
+            deviceMutex->unlock();
+        }
+    }
+
+    if (!hasActivity) {
+        usleep(1000);
+    }
+}
+
+void SioWorker::onChangeBaudRate(int baudRate)
+{
+    if (!mPort) return;
+    qDebug() << "!d" << tr("[SioWorker] Stream mode at %1 baud.").arg(baudRate);
+    mPort->setSpeed(baudRate);
+    m_streamGuardTimer.start();
+    mPort->setStreamMode(true);
+    m_isStreaming = true;
+}
+
+void SioWorker::onStreamFinished()
+{
+    qDebug() << "!d" << tr("[SioWorker] Stream mode finished; restoring SIO.");
+    m_isStreaming = false;
+    if (mPort) {
+        mPort->setStreamMode(false);
+        mPort->setSpeed(19200);
+    }
+}
+
+void SioWorker::onWriteRawData(const QByteArray &data)
+{
+    if (mPort && m_isStreaming) {
+        mPort->writeRawFrame(data);
     }
 }
 
@@ -103,6 +180,13 @@ void SioWorker::run()
     while (!mustTerminate) {
 
 //        qDebug() << "!d" << tr("DBG -- SIOWORKER...");
+
+        /* While the R: device holds the line there are no command frames to
+           read -- see runStreamMode(). */
+        if (m_isStreaming) {
+            runStreamMode();
+            continue;
+        }
 
         QByteArray cmd = mPort->readCommandFrame();
         if (mustTerminate) {

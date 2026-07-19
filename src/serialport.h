@@ -52,6 +52,18 @@ public:
     virtual bool writeError() = 0;
     virtual bool setSpeed(int speed) = 0;
     virtual bool writeRawFrame(const QByteArray &data) = 0;
+
+    // Raw, frameless I/O for the R: device's stream (modem) mode, where the
+    // line carries modem traffic instead of SIO command frames. In stream mode
+    // a read returns as soon as any byte arrives rather than waiting for a full
+    // frame, and the worker polls the COMMAND line to notice the Atari wanting
+    // to talk SIO again. Backends that do not implement it simply never enter
+    // stream mode.
+    virtual QByteArray readRawFrame(uint size, bool verbose = true)
+        { Q_UNUSED(size); Q_UNUSED(verbose); return QByteArray(); }
+    virtual void setStreamMode(bool stream) { Q_UNUSED(stream); }
+    virtual bool isStreamMode() const { return false; }
+    virtual bool isCommandLineAsserted() { return false; }
 signals:
     void statusChanged(QString status);
 };

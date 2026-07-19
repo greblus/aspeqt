@@ -1,0 +1,47 @@
+AspeQt -- authors and third-party code
+======================================
+
+AspeQt itself
+-------------
+
+* Original code up to version 0.6.0 -- Copyright 2009 by Fatih Aygun.
+* Updates since v0.6.0 -- Copyright 2012 by Ray Ataergin.
+* Android port and subsequent work -- Wiktor Grebla.
+
+Licensed under the GNU General Public License, version 2. See license.txt.
+
+
+R: device / 850 emulation
+-------------------------
+
+The R: device (850 interface emulation with a Hayes-compatible modem over
+TCP) is derived from AspeQt-2k26 by Paul Jones <pjones1063@gmail.com>:
+
+    https://github.com/pjones1063/AspeQt-2k26
+
+Files taken from that project and adapted here:
+
+    rdevice.cpp, rdevice.h      -- SIO-side 850 emulation, AT command set,
+                                   Telnet negotiation
+    phonedirectory.cpp/.h       -- BBS phonebook
+    bbsdata.h                   -- phonebook entry struct
+
+
+850 handler firmware (rdevice_handler.h)
+----------------------------------------
+
+The 6502 handler blob uploaded to the Atari is the replacement 850 interface
+firmware from Altirra:
+
+    Copyright (C) 2008-2017 Avery Lee
+
+    Copying and distribution of this file, with or without modification,
+    are permitted in any medium without royalty provided the copyright
+    notice and this notice are preserved.  This file is offered as-is,
+    without any warranty.
+
+Source: the Altirra distribution, src/Kernel/source/850/handler.s
+        https://www.virtualdub.org/altirra.html
+
+It is a clean reimplementation and contains no code from Atari. The notice
+above is reproduced in rdevice_handler.h as the licence requires.

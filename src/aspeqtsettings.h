@@ -180,6 +180,20 @@ public:
     bool explorerOnTop();
     void setExplorerOnTop(bool expOnTop);
 
+// R: device (850 emulation with a modem over TCP) //
+    bool rDeviceEnabled();
+    void setRDeviceEnabled(bool enable);
+
+    QString phonebookPath();
+    void setPhonebookPath(const QString &path);
+
+    // Answering inbound calls: one listener per emulated port.
+    bool bbsListenerEnabled(int portIndex);
+    void setBbsListenerEnabled(int portIndex, bool enable);
+
+    int modemListenPort(int portIndex);
+    void setModemListenPort(int portIndex, int port);
+
 private:
     QSettings *mSettings;
 

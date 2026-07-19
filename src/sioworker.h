@@ -4,6 +4,7 @@
 #include <QThread>
 #include <QRecursiveMutex>
 #include <QMutex>
+#include <QElapsedTimer>
 #include <climits>
 
 #include "serialport.h"
@@ -32,6 +33,10 @@ public:
     SioDevice(SioWorker *worker);
     virtual ~SioDevice();
     virtual void handleCommand(quint8 command, quint16 aux) = 0;
+    // Only meaningful for a device that takes over the line outside the SIO
+    // command protocol -- currently just RDevice in its stream (modem) mode.
+    virtual void processSerialData(const QByteArray &data) { Q_UNUSED(data); }
+    virtual void forceCommandMode(bool sendAlert = false) { Q_UNUSED(sendAlert); }
     virtual QString deviceName();
     inline void lock() {mLock.lock();}
     inline bool tryLock() {return mLock.tryLock();}
@@ -52,6 +57,13 @@ private:
     SioDevice* devices[256];
     AbstractSerialPortBackend *mPort;
     bool mustTerminate;
+
+    // Stream (modem) mode: while the R: device holds the line, the loop stops
+    // reading SIO command frames and shuttles raw bytes both ways instead.
+    static const int STREAM_GUARD_MS = 50;   // how often to poll COMMAND
+    bool m_isStreaming;
+    QElapsedTimer m_streamGuardTimer;
+    void runStreamMode();
 public:
     AbstractSerialPortBackend* port() {return mPort;}
     int maxSpeed;
@@ -78,6 +90,12 @@ signals:
     void statusChanged(QString status);
 public slots:
     void start(Priority p = InheritPriority);
+
+    // Driven by RDevice when the Atari's 850 handler enters and leaves
+    // concurrent (stream) mode.
+    void onChangeBaudRate(int baudRate);
+    void onStreamFinished();
+    void onWriteRawData(const QByteArray &data);
 };
 
 class CassetteRecord {

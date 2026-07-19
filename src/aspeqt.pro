@@ -8,6 +8,8 @@ TARGET = AspeQt
 TEMPLATE = app
 CONFIG += qt
 QT += core gui svg
+# network: the R: device (850 emulation) bridges the Atari to TCP.
+QT += network
 CONFIG += mobility
 CONFIG += static
 MOBILITY = bearer
@@ -30,6 +32,8 @@ SOURCES += main.cpp \
     atarifilesystem.cpp \
     miscutils.cpp \
     printeroutput.cpp \
+    rdevice.cpp \
+    phonebook.cpp \
     pclink.cpp
 win32:LIBS += -lwinmm -lz
 win32:SOURCES += serialport-win32.cpp
@@ -75,6 +79,10 @@ HEADERS += engine.h \
     atarifilesystem.h \
     miscutils.h \
     printeroutput.h \
+    rdevice.h \
+    rdevice_handler.h \
+    phonebook.h \
+    bbsdata.h \
     pclink.h
 
 win32:HEADERS += serialport-win32.h
