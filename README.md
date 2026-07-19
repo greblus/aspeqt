@@ -96,8 +96,6 @@ ACK timeout increased). Speed, name and PIN can be configured with
 
 * **AspeQt** will soon be available again from [Google Play Store](https://play.google.com/store/search?q=aspeqt).
 * All releases (including older ones) are on the [releases page](https://github.com/greblus/aspeqt/releases).
-* The latest compiled APK is always at
-  [`apk/aspeqt.apk`](https://github.com/greblus/aspeqt/raw/ng/apk/aspeqt.apk).
 
 ## Under the hood
 
