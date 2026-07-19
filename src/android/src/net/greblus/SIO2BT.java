@@ -158,6 +158,22 @@ public class SIO2BT implements SerialDevice
         return rd;
     }
 
+    // Stream (modem) mode read: whatever is available now, no fill loop. Streamed
+    // R: over bluetooth is unsupported anyway (no COMMAND line), but keep the
+    // interface honest.
+    public int readStream(int maxSize)
+    {
+        int rd = 0;
+        try {
+            int avail = m_input.available();
+            if (avail <= 0) return 0;
+            sa.rbuf.position(0);
+            rd = m_input.read(sa.rb, 0, Math.min(avail, maxSize));
+            if (rd > 0) sa.rbuf.put(sa.rb, 0, rd);
+        } catch (IOException e) {}
+        return rd < 0 ? 0 : rd;
+    }
+
     public int write(int size, int total)
     {
         sa.wbuf.position(total);

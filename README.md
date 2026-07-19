@@ -151,6 +151,10 @@ You may freely copy, use, modify and distribute it under the **GPL 2.0** license
 * The high-speed code used in the EXE loader was written by Matthias Reichl —
   <http://www.horus.com/~hias/atari/>.
 * PCLINK by TheMontezuma — <https://github.com/TheMontezuma/RespeQt>.
+* R: device (850 emulation) derived from AspeQt-2k26 by Paul Jones —
+  <https://github.com/pjones1063/AspeQt-2k26>.
+* 850 handler firmware from [Altirra](https://www.virtualdub.org/altirra.html) by
+  Avery Lee — see `src/AUTHORS.txt` for more info.
 
 ## Contact
 

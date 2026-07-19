@@ -562,6 +562,11 @@ public class SerialActivity extends QtActivity
             return rd;
         }
 
+        public static int readStream(int maxSize)
+        {
+            return m_device.readStream(maxSize);
+        }
+
         public static int write(int size, int total)
         {
             m_device.write(size, total);

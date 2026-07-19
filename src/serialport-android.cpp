@@ -353,6 +353,18 @@ QByteArray StandardSerialPortBackend::readRawFrame(uint size, bool verbose)
     uint total, rest;
     QByteArray data;
 
+    // Stream (modem) mode: the Java read() loops until it has filled `size`
+    // bytes, which never happens when the Atari sends fewer -- it would spin
+    // forever. readStream() instead returns one packet's worth (0 if none), so
+    // the SIO worker's own loop can poll without blocking.
+    if (m_isStreamMode) {
+        int got = QJniObject::callStaticMethod<jint>(
+            "net/greblus/SerialActivity", "readStream", "(I)I", (jint)size);
+        if (got > 0)
+            data.setRawData(rbuf, got);
+        return data;
+    }
+
     total = 0;
     rest = size;
     QTime startTime = QTime::currentTime();
@@ -367,18 +379,8 @@ QByteArray StandardSerialPortBackend::readRawFrame(uint size, bool verbose)
         if (result < 0) result = 0;
         total += result;
         rest -= result;
-        // Stream mode: `size` is only the buffer ceiling, so pass on whatever
-        // arrived rather than waiting for the buffer to fill.
-        if (m_isStreamMode && total > 0) break;
         elapsed = QTime::currentTime().msecsTo(startTime);
     } while (total < size && elapsed > -timeOut);
-
-    // A short read is normal in stream mode; setRawData does not copy, so the
-    // length has to be right here rather than resized afterwards.
-    if (m_isStreamMode) {
-        data.setRawData(rbuf, total);
-        return data;
-    }
 
     data.setRawData(rbuf, size);
 

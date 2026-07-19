@@ -274,6 +274,23 @@ public class SIO2PCUS4A implements SerialDevice
     return ret;
     }
 
+    // Stream (modem) mode read: one packet, return whatever arrived (0 if only
+    // the FTDI status header came in). Unlike read(), it never loops to fill
+    // the buffer -- in stream mode the incoming byte count is unknown, so the
+    // fill loop would spin forever waiting for bytes the Atari never sends.
+    public int readStream(int maxSize)
+    {
+    sa.rbuf.position(0);
+    try {
+        int rd = sioRead(sa.rb, maxSize, 100);
+        if (rd > 0) sa.rbuf.put(sa.rb, 0, rd);
+        return rd;
+    } catch (IOException e) {
+        if (debug) Log.i("USB", "Can't read stream");
+        return 0;
+    }
+    }
+
     public int write(int size, int total) {
     // Upstream write() writes the whole buffer or throws (SerialTimeoutException
     // is an IOException), so no manual chunk loop is needed here.
