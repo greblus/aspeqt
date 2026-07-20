@@ -109,6 +109,15 @@ public class SIO2PCUS4A implements SerialDevice
     // disk commands missing their leading $31.
     private volatile boolean skipPurgeOnce = false;
 
+    // Payload of the packet in which COMMAND went active. Those bytes are the
+    // start of a command frame, not modem traffic, so readStream() parks them
+    // here instead of handing them to the modem and getHWCommandFrame() picks
+    // them up. Without this the frame loses its first byte -- the log showed
+    // disk writes arriving as "31"-less frames, and the Atari could not save a
+    // downloaded file.
+    private final byte[] pendingFrame = new byte[64];
+    private volatile int pendingLen = 0;
+
     // Strip the 2-byte FTDI modem-status header that prefixes each 64-byte USB
     // packet, compacting the real payload down in place. Returns the payload
     // length. (Mirrors the old fork's filterStatusBytes.)
@@ -296,17 +305,41 @@ public class SIO2PCUS4A implements SerialDevice
     // the FTDI status header came in). Unlike read(), it never loops to fill
     // the buffer -- in stream mode the incoming byte count is unknown, so the
     // fill loop would spin forever waiting for bytes the Atari never sends.
-    public int readStream(int maxSize)
+    public int readStream(int maxSize, int mMethod)
     {
+    int mask = commandMask(mMethod);
     sa.rbuf.position(0);
     try {
         int rd = sioRead(sa.rb, maxSize, 100);
+
+        if ((cmdSeenMask & mask) != 0) {
+            // COMMAND went active during this packet: what came with it belongs
+            // to a command frame. Keep it for getHWCommandFrame and report no
+            // modem data, so none of it is sent to the far end.
+            pendingLen = 0;
+            if (rd > 0) {
+                int n = Math.min(rd, pendingFrame.length);
+                System.arraycopy(sa.rb, 0, pendingFrame, 0, n);
+                pendingLen = n;
+            }
+            return 0;
+        }
+
         if (rd > 0) sa.rbuf.put(sa.rb, 0, rd);
         return rd;
     } catch (IOException e) {
         if (debug) Log.i("USB", "Can't read stream");
         return 0;
     }
+    }
+
+    private int commandMask(int mMethod) {
+        switch (mMethod) {
+            case 0:  return 64;   // RI
+            case 1:  return 32;   // DSR
+            case 2:  return 16;   // CTS
+            default: return 32;
+        }
     }
 
     public int write(int size, int total) {
@@ -542,7 +575,21 @@ public class SIO2PCUS4A implements SerialDevice
             if (!ret) if (debug) Log.i("USB", "Cannot clear serial port");
         }
 
+        // Assemble into a local frame: sa.rb is overwritten by every sioRead,
+        // so a frame arriving in two chunks used to be checksummed against
+        // whatever the last chunk left behind.
+        byte[] frame = new byte[5];
         total = 0; total_retries = 0;
+
+        // Head of the frame, if it arrived in the packet that carried the
+        // COMMAND assertion while we were still in stream mode.
+        if (pendingLen > 0) {
+            int n = Math.min(pendingLen, 5);
+            System.arraycopy(pendingFrame, 0, frame, 0, n);
+            total = n;
+            pendingLen = 0;
+        }
+
         do {
             res = 0;
             try {
@@ -551,17 +598,19 @@ public class SIO2PCUS4A implements SerialDevice
             catch (IOException e) {};
 
             if (res > 0) {
-                for (int i=0; i<res; i++) {
+                for (int i=0; i<res && total<5; i++) {
                    if (debug) Log.i("USB", "CF: " + (sa.rb[i] & 0xff));
-                   sa.rbuf.put((byte)(sa.rb[i] & 0xff));
-                   total += 1;
+                   frame[total++] = sa.rb[i];
                 }
             } else
                 total_retries++;
         } while (total<5);
 
-        int expected = (byte) sa.rb[4] & 0xff;
-        int got = sioChecksum(sa.rb, 4);
+        sa.rbuf.position(0);
+        sa.rbuf.put(frame, 0, 5);
+
+        int expected = frame[4] & 0xff;
+        int got = sioChecksum(frame, 4);
 
         if (expected != got) return 2;
 

@@ -7,7 +7,7 @@ public interface SerialDevice {
     public int read(int size, int total);
     // One-packet read for the R: device's stream mode: returns available bytes
     // (0 if none), never loops to fill the buffer.
-    public int readStream(int maxSize);
+    public int readStream(int maxSize, int mMethod);
     public int write(int size, int total);
     public boolean purge();
     public boolean purgeTX();

@@ -370,7 +370,7 @@ QByteArray StandardSerialPortBackend::readRawFrame(uint size, bool verbose)
     // the SIO worker's own loop can poll without blocking.
     if (m_isStreamMode) {
         int got = QJniObject::callStaticMethod<jint>(
-            "net/greblus/SerialActivity", "readStream", "(I)I", (jint)size);
+            "net/greblus/SerialActivity", "readStream", "(II)I", (jint)size, (jint)mMethod);
         if (got > 0)
             data.setRawData(rbuf, got);
         return data;

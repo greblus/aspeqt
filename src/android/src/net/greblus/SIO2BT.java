@@ -161,7 +161,7 @@ public class SIO2BT implements SerialDevice
     // Stream (modem) mode read: whatever is available now, no fill loop. Streamed
     // R: over bluetooth is unsupported anyway (no COMMAND line), but keep the
     // interface honest.
-    public int readStream(int maxSize)
+    public int readStream(int maxSize, int mMethod)
     {
         int rd = 0;
         try {
