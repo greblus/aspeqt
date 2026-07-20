@@ -40,6 +40,7 @@ bool PhoneBook::load(const QString &path)
         e.login      = a.value("login").toString();
         e.password   = a.value("password").toString();
         e.privateKey = a.value("keyfile").toString();
+        e.favourite  = a.value("favourite").toString() == QLatin1String("true");
         m_entries.append(e);
     }
 
@@ -78,6 +79,8 @@ bool PhoneBook::save(const QString &path) const
         xml.writeAttribute("login", e.login);
         xml.writeAttribute("password", e.password);
         xml.writeAttribute("keyfile", e.privateKey);
+        if (e.favourite)
+            xml.writeAttribute("favourite", "true");
         xml.writeEndElement();
     }
     xml.writeEndElement();

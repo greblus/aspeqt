@@ -65,6 +65,7 @@ ApplicationWindow {
                         onTriggered: app.togglePrinter()
                     }
                     MenuItem { text: qsTr("Show printer output"); onTriggered: printWindow.open() }
+                    MenuItem { text: qsTr("Phonebook…"); onTriggered: phoneBookDialog.openBook() }
                     MenuSeparator {}
 
                     Menu {
@@ -476,5 +477,6 @@ ApplicationWindow {
             function (url) { if (url.length > 0) app.saveAsPath(hw, url) })
     }
     CreateDiskDialog { id: createDiskDialog }
+    PhoneBookDialog { id: phoneBookDialog }
     PrintWindow { id: printWindow }
 }

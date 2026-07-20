@@ -13,6 +13,9 @@ struct BbsEntry {
     QString privateKey;
     QString font;
     QString keyMap;
+    // Our own extension to the AspeQt-2k26 file format. That program ignores
+    // attributes it does not know, so phonebooks stay interchangeable.
+    bool favourite = false;
 
 
     // Helper to get "ip:port"

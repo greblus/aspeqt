@@ -151,6 +151,14 @@ public:
     Q_INVOKABLE void         applyOptions(const QVariantMap &o);
     Q_INVOKABLE QVariantList languages();
 
+    // BBS phonebook (R: device)
+    Q_INVOKABLE QVariantList phonebookEntries();
+    Q_INVOKABLE bool         phonebookSave(const QVariantList &list);
+    Q_INVOKABLE QString      phonebookPath();
+    Q_INVOKABLE QString      phonebookUseBundled();
+    Q_INVOKABLE QString      phonebookBundledPath();
+    Q_INVOKABLE void         phonebookDial(const QVariantMap &entry);
+
     // disk viewer/editor
     Q_INVOKABLE bool         diskOpen(int hwIndex);
     Q_INVOKABLE void         diskClose();

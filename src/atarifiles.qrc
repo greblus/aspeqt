@@ -7,4 +7,7 @@
         <file alias="boot.bin">dosassets/boot.bin</file>
         <file alias="picodos.sys">dosassets/picodos.sys</file>
     </qresource>
+    <qresource prefix="/data">
+        <file alias="phonebook.xml">phonebook.xml</file>
+    </qresource>
 </RCC>

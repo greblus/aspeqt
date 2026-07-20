@@ -256,6 +256,13 @@ QVariantMap AppController::loadOptions()          { return m_engine ? m_engine->
 void AppController::applyOptions(const QVariantMap &o) { if (m_engine) m_engine->applyOptions(o); }
 QVariantList AppController::languages()           { return m_engine ? m_engine->languages() : QVariantList(); }
 
+QVariantList AppController::phonebookEntries()    { return m_engine ? m_engine->phonebookEntries() : QVariantList(); }
+bool AppController::phonebookSave(const QVariantList &l) { return m_engine ? m_engine->phonebookSave(l) : false; }
+QString AppController::phonebookPath()            { return m_engine ? m_engine->phonebookPath() : QString(); }
+QString AppController::phonebookUseBundled()      { return m_engine ? m_engine->phonebookUseBundled() : QString(); }
+QString AppController::phonebookBundledPath()     { return m_engine ? m_engine->phonebookBundledPath() : QString(); }
+void AppController::phonebookDial(const QVariantMap &e)  { if (m_engine) m_engine->phonebookDial(e); }
+
 bool AppController::diskOpen(int hw)      { return m_engine ? m_engine->diskOpen(hw) : false; }
 void AppController::diskClose()           { if (m_engine) m_engine->diskClose(); }
 QVariantList AppController::diskEntries()  { return m_engine ? m_engine->diskEntries() : QVariantList(); }

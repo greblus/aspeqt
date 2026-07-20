@@ -15,10 +15,13 @@ Item {
     property int  spinDuration: 2000       // ms per turn
     property url animatedSource: ""        // GIF shown while `animated` is true
     property bool animated: false          // e.g. CAS playing -> tape.gif
+    // Per-instance override; the phonebook packs four of these into a row and
+    // needs them smaller than the drive slots do.
+    property int iconSize: Theme.iconSize
     signal clicked
 
-    implicitWidth: Theme.iconSize + 2 * Theme.btnPad
-    implicitHeight: Theme.iconSize + 2 * Theme.btnPad
+    implicitWidth: root.iconSize + 2 * Theme.btnPad
+    implicitHeight: root.iconSize + 2 * Theme.btnPad
     opacity: enabledState ? 1.0 : 0.38
 
     Rectangle {
@@ -40,11 +43,11 @@ Item {
         id: icon
         visible: !(root.animated && root.animatedSource != "")
         anchors.centerIn: parent
-        width: Theme.iconSize
-        height: Theme.iconSize
+        width: root.iconSize
+        height: root.iconSize
         source: root.source
-        sourceSize.width: Theme.iconSize * 2
-        sourceSize.height: Theme.iconSize * 2
+        sourceSize.width: root.iconSize * 2
+        sourceSize.height: root.iconSize * 2
         fillMode: Image.PreserveAspectFit
         smooth: true
         RotationAnimator on rotation {
@@ -72,8 +75,8 @@ Item {
     AnimatedImage {
         visible: root.animated && root.animatedSource != ""
         anchors.centerIn: parent
-        width: Theme.iconSize
-        height: Theme.iconSize
+        width: root.iconSize
+        height: root.iconSize
         source: root.animatedSource
         fillMode: Image.PreserveAspectFit
         playing: visible

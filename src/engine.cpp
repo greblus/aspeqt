@@ -1587,6 +1587,10 @@ QVariantMap Engine::loadOptions()
     o["saveWinPos"]       = aspeqtSettings->saveWindowsPos();
     o["largeFont"]        = aspeqtSettings->useLargeFont();
     o["language"]         = aspeqtSettings->i18nLanguage();
+    o["rEnabled"]         = aspeqtSettings->rDeviceEnabled();
+    o["rPhonebook"]       = aspeqtSettings->phonebookPath();
+    o["rListen"]          = aspeqtSettings->bbsListenerEnabled(0);
+    o["rListenPort"]      = aspeqtSettings->modemListenPort(0);
     return o;
 }
 
@@ -1617,7 +1621,132 @@ void Engine::applyOptions(const QVariantMap &o)
 #endif
     aspeqtSettings->setBackend(0);
     aspeqtSettings->setI18nLanguage(o.value("language").toString());
+
+    // R: device. Applied live: the device reads these itself, so toggling it
+    // does not need a restart.
+    aspeqtSettings->setRDeviceEnabled(o.value("rEnabled").toBool());
+    aspeqtSettings->setPhonebookPath(o.value("rPhonebook").toString());
+    aspeqtSettings->setBbsListenerEnabled(0, o.value("rListen").toBool());
+    aspeqtSettings->setModemListenPort(0, o.value("rListenPort").toInt());
+    if (m_rDevice) {
+        m_rDevice->setEnabled(aspeqtSettings->rDeviceEnabled());
+        m_rDevice->loadPhonebook(aspeqtSettings->phonebookPath());
+        m_rDevice->updateListenerConfig();
+    }
+
     emit stateChanged();
+}
+
+/* BBS phonebook ------------------------------------------------------------
+   Kept on disk in the AspeQt-2k26 XML format so the two programs can share a
+   file. The R: device holds its own copy for dial-by-name (ATDT <name>), so it
+   is reloaded whenever the list is written. */
+
+QVariantList Engine::phonebookEntries()
+{
+    PhoneBook pb;
+    pb.load(aspeqtSettings->phonebookPath());
+
+    QVariantList out;
+    for (const BbsEntry &e : pb.entries()) {
+        QVariantMap m;
+        m["name"]     = e.name;
+        m["ip"]       = e.ip;
+        m["port"]     = e.port;
+        m["protocol"] = e.protocol;
+        m["login"]    = e.login;
+        m["password"] = e.password;
+        m["favourite"] = e.favourite;
+        out.append(m);
+    }
+    return out;
+}
+
+bool Engine::phonebookSave(const QVariantList &list)
+{
+    const QString path = aspeqtSettings->phonebookPath();
+    if (path.isEmpty()) {
+        qCritical() << "!e" << tr("No phonebook file chosen (see Options).");
+        return false;
+    }
+
+    QList<BbsEntry> entries;
+    for (const QVariant &v : list) {
+        const QVariantMap m = v.toMap();
+        BbsEntry e;
+        e.name     = m.value("name").toString();
+        e.ip       = m.value("ip").toString();
+        e.port     = m.value("port", 23).toInt();
+        e.protocol = m.value("protocol", QStringLiteral("TELNET")).toString();
+        e.login    = m.value("login").toString();
+        e.password = m.value("password").toString();
+        e.favourite = m.value("favourite").toBool();
+        entries.append(e);
+    }
+
+    PhoneBook pb;
+    pb.setEntries(entries);
+    if (!pb.save(path))
+        return false;
+
+    if (m_rDevice)
+        m_rDevice->loadPhonebook(path);
+    return true;
+}
+
+QString Engine::phonebookPath()
+{
+    return aspeqtSettings->phonebookPath();
+}
+
+// Where the writable copy of the bundled BBS list lives. Split out so the UI
+// can tell whether the phonebook currently in use is that copy.
+QString Engine::phonebookBundledPath()
+{
+    return QStandardPaths::writableLocation(QStandardPaths::AppDataLocation)
+           + "/phonebook.xml";
+}
+
+// Point the phonebook at a writable copy of the bundled BBS list. Never
+// clobbers an existing file: if the copy is already there it is simply adopted,
+// so a list the user has edited survives switching this back on.
+QString Engine::phonebookUseBundled()
+{
+    const QString dest = phonebookBundledPath();
+    QDir().mkpath(QFileInfo(dest).absolutePath());
+
+    if (!QFile::exists(dest)) {
+        QFile src(":/data/phonebook.xml");
+        QFile out(dest);
+        if (!src.open(QIODevice::ReadOnly) || !out.open(QIODevice::WriteOnly)) {
+            qCritical() << "!e" << tr("Cannot write the bundled phonebook to %1").arg(dest);
+            return QString();
+        }
+        out.write(src.readAll());
+        out.close();
+    }
+
+    aspeqtSettings->setPhonebookPath(dest);
+    if (m_rDevice)
+        m_rDevice->loadPhonebook(dest);
+    return dest;
+}
+
+void Engine::phonebookDial(const QVariantMap &entry)
+{
+    if (!m_rDevice || !m_rDevice->isEnabled()) {
+        qCritical() << "!e" << tr("The R: device is not enabled (see Options).");
+        return;
+    }
+
+    BbsEntry e;
+    e.name     = entry.value("name").toString();
+    e.ip       = entry.value("ip").toString();
+    e.port     = entry.value("port", 23).toInt();
+    e.protocol = entry.value("protocol", QStringLiteral("TELNET")).toString();
+    e.login    = entry.value("login").toString();
+    e.password = entry.value("password").toString();
+    m_rDevice->dial(e);
 }
 
 // Available UI languages: Automatic + English + every bundled aspeqt_*.qm

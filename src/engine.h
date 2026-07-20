@@ -173,6 +173,16 @@ public:
     QVariantMap  loadOptions();
     void         applyOptions(const QVariantMap &o);
     QVariantList languages();
+
+    // BBS phonebook for the R: device. Entries are maps of
+    // name/ip/port/protocol/login/password, read from and written to the XML
+    // file at aspeqtSettings->phonebookPath().
+    QVariantList phonebookEntries();
+    bool         phonebookSave(const QVariantList &list);
+    QString      phonebookPath();
+    QString      phonebookUseBundled();
+    QString      phonebookBundledPath();
+    void         phonebookDial(const QVariantMap &entry);
     // disk viewer/editor
     bool         diskOpen(int hwIndex);
     void         diskClose();

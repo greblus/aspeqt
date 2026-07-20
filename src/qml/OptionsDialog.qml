@@ -33,6 +33,12 @@ Popup {
         useCustomCas.checked = o.useCustomCasBaud
         customCasBaud.value = o.customCasBaud
         filterUscore.checked = o.filterUscore
+        rEnabled.checked = o.rEnabled
+        dlg.phonebook = o.rPhonebook
+        rBundled.checked = o.rPhonebook.length > 0
+                           && o.rPhonebook === app.phonebookBundledPath()
+        rListen.checked = o.rListen
+        rListenPort.text = o.rListenPort
         langBox.model = app.languages()
         langBox.currentIndex = Math.max(0, langBox.indexOfValue(o.language))
     }
@@ -50,12 +56,20 @@ Popup {
             "useCustomCasBaud": useCustomCas.checked,
             "customCasBaud": customCasBaud.value,
             "filterUscore": filterUscore.checked,
+            "rEnabled": rEnabled.checked,
+            "rPhonebook": dlg.phonebook,
+            "rListen": rListen.checked,
+            "rListenPort": rListenPort.value,
             "language": langBox.currentValue
         })
         dlg.close()
     }
 
     readonly property bool isBT: ifaceGroup.value === 1
+
+    // Phonebook file path; picked with the file dialog, shown by basename.
+    property string phonebook: ""
+    FilePicker { id: optPicker }
 
     // A radio group that remembers an integer value per button.
     component IntGroup: QtObject {
@@ -233,6 +247,97 @@ Popup {
                     color: Theme.typeGrey
                     font.pixelSize: 12
                     Layout.leftMargin: 8
+                }
+
+                MenuSeparator { Layout.fillWidth: true }
+
+                // ---- R: device (850 modem emulation) ----------------------
+                SectionTitle { text: qsTr("R: device (modem)") }
+                CheckBox { id: rEnabled; text: qsTr("Emulate an Atari 850 interface") }
+                Label {
+                    text: qsTr("Dial BBSes over TCP with a terminal program. Needs a hardware "
+                             + "handshake method (RI/DSR/CTS), not SOFT.")
+                    color: Theme.typeGrey
+                    font.pixelSize: 12
+                    wrapMode: Text.WordWrap
+                    Layout.fillWidth: true
+                    Layout.leftMargin: 8
+                }
+
+                CheckBox {
+                    id: rBundled
+                    text: qsTr("Use the bundled BBS list")
+                    enabled: rEnabled.checked
+                    // State is set in load(); toggling installs/clears the path,
+                    // so no binding here (it would fight the click).
+                    onToggled: {
+                        if (checked) {
+                            var p = app.phonebookUseBundled()
+                            if (p.length > 0) {
+                                dlg.phonebook = p
+                            } else {
+                                checked = false
+                                app.toast(qsTr("Could not install the bundled list, see the log."))
+                            }
+                        } else {
+                            dlg.phonebook = ""
+                        }
+                    }
+                }
+                Label {
+                    text: qsTr("A copy of the telnet BBS list that ships with AspeQt-2k26. "
+                             + "An existing copy is kept, not overwritten.")
+                    color: Theme.typeGrey
+                    font.pixelSize: 12
+                    wrapMode: Text.WordWrap
+                    Layout.fillWidth: true
+                    Layout.leftMargin: 8
+                }
+
+                FieldLabel {
+                    text: qsTr("Phonebook file:")
+                    enabled: rEnabled.checked && !rBundled.checked
+                }
+                RowLayout {
+                    Layout.fillWidth: true
+                    enabled: rEnabled.checked && !rBundled.checked
+                    Label {
+                        text: dlg.phonebook.length > 0
+                              ? dlg.phonebook.split("/").pop().split("%2F").pop()
+                              : qsTr("(none)")
+                        color: dlg.phonebook.length > 0 ? Theme.nameDark : Theme.placeholder
+                        font.italic: dlg.phonebook.length === 0
+                        elide: Text.ElideMiddle
+                        Layout.fillWidth: true
+                    }
+                    Button {
+                        text: qsTr("Choose")
+                        flat: true
+                        onClicked: optPicker.openFile(
+                            qsTr("Phonebook file"), [qsTr("XML files (*.xml)"), qsTr("All files (*)")], "",
+                            function (url) { if (url.length > 0) dlg.phonebook = url })
+                    }
+                }
+
+                CheckBox {
+                    id: rListen
+                    text: qsTr("Answer incoming calls")
+                    enabled: rEnabled.checked
+                }
+                RowLayout {
+                    Layout.fillWidth: true
+                    enabled: rEnabled.checked && rListen.checked
+                    FieldLabel { text: qsTr("Listen on port:"); Layout.fillWidth: true }
+                    TextField {
+                        id: rListenPort
+                        // A stepper would be unusable over a 1..65535 range.
+                        property int value: parseInt(text) || 2323
+                        text: "2323"
+                        inputMethodHints: Qt.ImhDigitsOnly
+                        validator: IntValidator { bottom: 1; top: 65535 }
+                        Layout.preferredWidth: 96
+                        horizontalAlignment: Text.AlignHCenter
+                    }
                 }
 
                 MenuSeparator { Layout.fillWidth: true }
