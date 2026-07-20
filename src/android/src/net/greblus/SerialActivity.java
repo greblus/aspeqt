@@ -647,6 +647,14 @@ public class SerialActivity extends QtActivity
         public static boolean isCommandAsserted(int mMethod) {
              return m_device.isCommandAsserted(mMethod);
         }
+
+        public static void resetCommandLatch() {
+             m_device.resetCommandLatch();
+        }
+
+        public static void armFrameResync() {
+             m_device.armFrameResync();
+        }
 }
     class FileChooser implements Runnable
     {

@@ -292,6 +292,12 @@ public class SIO2BT implements SerialDevice
     public boolean isCommandAsserted(int mMethod) {
          return false;
     }
+
+    public void resetCommandLatch() {
+    }
+
+    public void armFrameResync() {
+    }
     public static int sioChecksum(byte[] data, int size)
     {
             int sum = 0;

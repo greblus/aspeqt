@@ -92,6 +92,23 @@ public class SIO2PCUS4A implements SerialDevice
         }
     }
 
+    // The Atari asserts COMMAND only for as long as it takes to send a command
+    // frame (~2.6 ms at 19200) -- far shorter than the interval at which stream
+    // mode can afford to poll the line over USB, so a poll usually misses it.
+    // Every packet header carries the modem status anyway, so latch it as the
+    // packets arrive and let isCommandAsserted() read the latch. Without this a
+    // reset during a modem session goes unnoticed, stream mode never ends and
+    // the Atari cannot boot.
+    private volatile int cmdSeenMask = 0;
+
+    // Set when stream mode ends. We learn about COMMAND from the packet
+    // headers, i.e. together with the data or just after it, so by then the
+    // Atari has usually already put the first byte of its command frame on the
+    // wire. Purging at that point discards exactly that byte and every
+    // following read is one byte out of step -- which shows up in the log as
+    // disk commands missing their leading $31.
+    private volatile boolean skipPurgeOnce = false;
+
     // Strip the 2-byte FTDI modem-status header that prefixes each 64-byte USB
     // packet, compacting the real payload down in place. Returns the payload
     // length. (Mirrors the old fork's filterStatusBytes.)
@@ -100,6 +117,7 @@ public class SIO2PCUS4A implements SerialDevice
         int packets = (total + mp - 1) / mp;
         int dst = 0;
         for (int p = 0; p < packets; p++) {
+            cmdSeenMask |= buf[p * mp] & 0xff;
             int count = (p == packets - 1) ? total - p * mp - 2 : mp - 2;
             if (count > 0) {
                 System.arraycopy(buf, p * mp + 2, buf, dst, count);
@@ -378,6 +396,17 @@ public class SIO2PCUS4A implements SerialDevice
     // Level read of COMMAND for the R: device's stream mode: no waiting, no
     // reading, just "is the Atari asserting it right now". Masks match
     // getHWCommandFrame: 64 = RI, 32 = DSR, 16 = CTS.
+    // Called when stream mode is engaged. The command frame that asked for
+    // stream mode asserted COMMAND itself, so without this the very first poll
+    // sees that stale bit and drops straight back out of stream mode.
+    public void resetCommandLatch() {
+        cmdSeenMask = 0;
+    }
+
+    public void armFrameResync() {
+        skipPurgeOnce = true;
+    }
+
     public boolean isCommandAsserted(int mMethod) {
     int mask;
 
@@ -393,6 +422,14 @@ public class SIO2PCUS4A implements SerialDevice
             break;
         default:
             mask = 32; }
+
+    // Latched from the packet headers first: a COMMAND pulse is usually over
+    // before the caller gets round to asking.
+    if ((cmdSeenMask & mask) != 0) {
+        cmdSeenMask = 0;
+        return true;
+    }
+    cmdSeenMask = 0;
 
     int status = getModemStatus();
     if (status < 0) return false;
@@ -495,8 +532,15 @@ public class SIO2PCUS4A implements SerialDevice
             }
         } while (!((status & mask) > 0));
 
-        ret = purge();
-        if (!ret) if (debug) Log.i("USB", "Cannot clear serial port");
+        if (skipPurgeOnce) {
+            // First frame after stream mode: keep what is already buffered, it
+            // is the start of this very frame. A bad guess only costs one
+            // retry, as a checksum mismatch below re-reads with a purge.
+            skipPurgeOnce = false;
+        } else {
+            ret = purge();
+            if (!ret) if (debug) Log.i("USB", "Cannot clear serial port");
+        }
 
         total = 0; total_retries = 0;
         do {

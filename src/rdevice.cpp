@@ -204,8 +204,15 @@ void RDevice::handlePollType1() {
     sendDataToAtari(bootBlock);
 }
 
+// Reply: handler size (LSB, MSB), the SIO address to load it from, revision.
+// The Atari puts this in DVSTAT and then fetches the handler from that address.
+//
+// $4F/$4F is the real "type 3" poll the OS broadcasts at boot ("does anyone
+// have a handler?"); $52/$01 is a poll directed at R1 and $00 a generic one.
+// The type 4 null poll ($4E/$4E) means "stop answering", so it must not match.
 void RDevice::handlePollType3(quint8 aux1, quint8 aux2) {
-    if ((aux1 == 0x52 && aux2 == 0x01) || aux1 == 0x00) {
+    if ((aux1 == 0x4F && aux2 == 0x4F)
+     || (aux1 == 0x52 && aux2 == 0x01) || aux1 == 0x00) {
         if (!sio->port()->writeCommandAck()) return;
 
         QByteArray resp(4, 0);
@@ -285,8 +292,13 @@ void RDevice::handleStream() {
     sendDataToAtari(response);
 
     {
+        // Carry over whatever the network sent while we were in command mode.
+        // A terminal steps out of concurrent mode to write to disk in the
+        // middle of a download and comes straight back; discarding here loses
+        // the block in flight. A text session survives that, a file transfer
+        // does not (it stalls after the first kilobyte).
         QMutexLocker locker(&m_bufferMutex);
-        m_networkToSioBuffer.clear();
+        m_networkToSioBuffer.prepend(m_txBuffer);
         m_txBuffer.clear();
     }
 
@@ -296,9 +308,16 @@ void RDevice::handleStream() {
 
     sio->onChangeBaudRate(m_currentBaudRate);
 
+    // Let the line settle after the SIO exchange, then take whatever is already
+    // waiting -- but pass it on rather than dropping it. Upstream discarded it,
+    // which costs a protocol ACK every time a terminal re-enters concurrent
+    // mode after writing a block to disk, and XMODEM then sits out its ~10 s
+    // timeout before retrying. That is what makes a download crawl.
     SioWorker::usleep(1100);
     if (sio->port()) {
-        sio->port()->readRawFrame(256, false);
+        const QByteArray pending = sio->port()->readRawFrame(256, false);
+        if (!pending.isEmpty())
+            processSerialData(pending);
     }
 
     qDebug() << "!d" << "[RDevice] Stream active" << m_currentBaudRate;
@@ -308,6 +327,16 @@ void RDevice::handleWrite(quint16 aux) {
     if (!sio->port()->writeCommandAck()) return;
 
     quint8 logicalLen = aux & 0xFF;
+
+    // A zero-length write carries no data frame. Reading one anyway swallows
+    // the command frames that follow, which the log shows as a data-frame
+    // checksum error (the "data" is the next command frame) and then a burst of
+    // "ignored command" lines while SIO re-syncs.
+    if (logicalLen == 0) {
+        sio->port()->writeComplete();
+        return;
+    }
+
     QByteArray data = sio->port()->readDataFrame(64);
 
     if (data.isEmpty()) {
@@ -508,6 +537,15 @@ void RDevice::processAtCommand(const QString &rawCmd) {
     QString cmd = rawCmd.trimmed().toUpper();
     if (cmd.startsWith("AT")) cmd.remove(0, 2);
 
+    // Dial first: everything after DT is the target, so it must not be scanned
+    // for the E0/E1/V0/V1 flags below -- a BBS name like "V01D C1PH3R" would
+    // otherwise be swallowed by the verbose-response branch and never dialled.
+    if (cmd.startsWith("DT")) {
+        int dtIndex = rawCmd.toUpper().indexOf("DT");
+        at_handle_dial(rawCmd.mid(dtIndex + 2).trimmed());
+        return;
+    }
+
     if (cmd.contains("E0")) {
         echoEnabled = false; cmd.replace("E0", "");
     }
@@ -559,11 +597,6 @@ void RDevice::processAtCommand(const QString &rawCmd) {
         sendResultCode(RESULT_OK);
     }
 
-    else if (cmd.startsWith("DT")) {
-        int dtIndex = rawCmd.toUpper().indexOf("DT");
-        QString target = rawCmd.mid(dtIndex + 2).trimmed();
-        at_handle_dial(target);
-    }
 
 
     else if (cmd == "H") {
@@ -697,8 +730,11 @@ void RDevice::forceCommandMode(bool sendAlert) {
 
         state = ModemState::CommandMode;
         {
+            // Keep undelivered network data (see handleStream): the Atari is
+            // normally only stepping out for some SIO and will want the rest.
+            // A real hangup/ATZ clears these buffers anyway.
             QMutexLocker locker(&m_bufferMutex);
-            m_txBuffer.clear();
+            m_txBuffer.prepend(m_networkToSioBuffer);
             m_networkToSioBuffer.clear();
         }
 
@@ -796,6 +832,16 @@ void RDevice::dial(const BbsEntry &entry) {
 }
 
 
+void RDevice::injectDial(const QString &target)
+{
+    const QString cmd = QStringLiteral("ATDT") + target;
+
+    // Show it on the Atari, then run it through the normal AT path. Queued, so
+    // it lands on this object's thread like a command typed by the user.
+    sendAtResponse(QStringLiteral("\r\n") + cmd + QStringLiteral("\r\n"));
+    emit executeAtCommand(cmd);
+}
+
 void RDevice::hangup() {
     {
         QMutexLocker locker(&m_bufferMutex);
@@ -883,4 +929,16 @@ void RDevice::onAutoAnswerTriggered() {
 
         sendResultCode(RESULT_CONNECT);
     }
+}
+
+// Poll broadcasts arriving on $4F, handed to the R: device so it can offer its
+// handler. Anything else on this address is not ours -- stay quiet rather than
+// NAK it, since $4F is a broadcast every peripheral hears.
+void RDevicePoll::handleCommand(quint8 command, quint16 aux)
+{
+    if (!m_device || !m_device->isEnabled())
+        return;
+
+    if (command == CMD_POLL_TYPE1 || command == CMD_POLL_TYPE3)
+        m_device->handleCommand(command, aux);
 }

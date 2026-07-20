@@ -199,6 +199,17 @@ int StandardSerialPortBackend::speed()
 
 void StandardSerialPortBackend::setStreamMode(bool stream)
 {
+    // Entering: drop whatever COMMAND assertion is still latched. The command
+    // frame that asked for stream mode asserted the line itself, so a stale
+    // latch would make the worker leave stream mode on its very first poll.
+    if (stream && !m_isStreamMode)
+        QJniObject::callStaticMethod<void>("net/greblus/SerialActivity", "resetCommandLatch", "()V");
+
+    // Leaving: the command frame that pulled us out is already arriving, so the
+    // next read must not purge it away (see armFrameResync).
+    if (!stream && m_isStreamMode)
+        QJniObject::callStaticMethod<void>("net/greblus/SerialActivity", "armFrameResync", "()V");
+
     m_isStreamMode = stream;
 }
 

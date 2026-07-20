@@ -18,4 +18,8 @@ public interface SerialDevice {
     // Level read of the COMMAND line, used by the R: device's stream mode.
     // Adapters without modem status lines (SIO2BT) return false.
     public boolean isCommandAsserted(int mMethod);
+    // Drop any COMMAND assertion latched so far (see SIO2PCUS4A).
+    public void resetCommandLatch();
+    // Leaving stream mode: do not purge before the next command frame.
+    public void armFrameResync();
 }

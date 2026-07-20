@@ -53,6 +53,14 @@ public:
     QByteArray dequeueNetworkData();
     void processSerialData(const QByteArray &data);
     void dial(const BbsEntry &entry);
+    // Dial the way the user would: echo "ATDT <target>" to the Atari and feed it
+    // through the AT parser, so the terminal shows the command and the usual
+    // result codes, instead of the socket opening silently behind its back.
+    void injectDial(const QString &target);
+    // Does the phonebook we have loaded know this name? Dialling by name only
+    // works if it does; otherwise the name would be taken for a hostname.
+    bool knowsBbs(const QString &name) const
+        { return !m_phonebook.findByName(name).name.isEmpty(); }
     void injectMacro(char macroType);
     void forceCommandMode(bool sendAlert = false) override;
     void updateListenerConfig();
@@ -135,6 +143,33 @@ private:
     void handleStream();
     void at_handle_dial(const QString &target);
 
+};
+
+// The Atari broadcasts its boot-time handler poll to device $4F ("does any
+// peripheral have a handler for me?"), not to $50 where the R: device lives, so
+// RDevice never saw it and the handler had to be loaded by hand (RDRIVER.COM).
+// This stub answers on its behalf.
+//
+// It is a separate object rather than the same RDevice installed twice:
+// SioWorker owns everything in its device table and deletes every entry, so one
+// pointer in two slots would be freed twice.
+//
+// Only the polls come here. The reply tells the Atari which SIO address to load
+// from ($50), so the relocator and the handler itself are fetched from RDevice
+// by the normal route.
+class RDevicePoll : public SioDevice
+{
+    Q_OBJECT
+
+public:
+    RDevicePoll(SioWorker *worker, RDevice *device)
+        : SioDevice(worker), m_device(device) {}
+
+    void handleCommand(quint8 command, quint16 aux) override;
+    QString deviceName() override { return "R: handler poll"; }
+
+private:
+    RDevice *m_device;
 };
 
 #endif // RDEVICE_H
