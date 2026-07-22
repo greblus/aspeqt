@@ -199,14 +199,18 @@ int StandardSerialPortBackend::speed()
 
 void StandardSerialPortBackend::setStreamMode(bool stream)
 {
+    // Entering: clear the stale COMMAND latch left by the frame that asked for
+    // stream mode. Leaving: don't purge the frame that is pulling us out.
+    if (stream && !m_isStreamMode)
+        QJniObject::callStaticMethod<void>("net/greblus/SerialActivity", "resetCommandLatch", "()V");
+    if (!stream && m_isStreamMode)
+        QJniObject::callStaticMethod<void>("net/greblus/SerialActivity", "armFrameResync", "()V");
+
     m_isStreamMode = stream;
 }
 
-// Stream mode only: a level read of the COMMAND line, telling us the Atari
-// wants to talk SIO again. Needs a real modem status line, so it works on
-// SIO2PC-USB (FTDI CTS/DSR/RI) but not on SIO2BT, where bluetooth has no such
-// lines -- there the Java side reports false and stream mode simply never
-// gets interrupted this way.
+// Level read of the COMMAND line (FTDI CTS/DSR/RI). SIO2BT has no such line, so
+// the Java side reports false there and stream mode is never interrupted this way.
 bool StandardSerialPortBackend::isCommandLineAsserted()
 {
     return QJniObject::callStaticMethod<jboolean>(
@@ -353,13 +357,11 @@ QByteArray StandardSerialPortBackend::readRawFrame(uint size, bool verbose)
     uint total, rest;
     QByteArray data;
 
-    // Stream (modem) mode: the Java read() loops until it has filled `size`
-    // bytes, which never happens when the Atari sends fewer -- it would spin
-    // forever. readStream() instead returns one packet's worth (0 if none), so
-    // the SIO worker's own loop can poll without blocking.
+    // Stream mode: return one packet's worth (0 if none) instead of blocking to
+    // fill `size`, which would spin forever when the Atari sends fewer bytes.
     if (m_isStreamMode) {
         int got = QJniObject::callStaticMethod<jint>(
-            "net/greblus/SerialActivity", "readStream", "(I)I", (jint)size);
+            "net/greblus/SerialActivity", "readStream", "(II)I", (jint)size, (jint)mMethod);
         if (got > 0)
             data.setRawData(rbuf, got);
         return data;

@@ -18,6 +18,10 @@
 
 #define ESCAPE_GUARD_TIME   1000
 
+// Ice-T flushes its 16K buffer to disk and loses serial input while doing so, so
+// hold the backlog briefly on re-entry instead of dumping it before it listens.
+static const int kResumeHoldMs = 150;
+
 RDevice::RDevice(SioWorker *worker, int portIndex) : SioDevice(worker), m_portIndex(portIndex) // <-- Add to initializer
 {
 
@@ -51,8 +55,6 @@ RDevice::RDevice(SioWorker *worker, int portIndex) : SioDevice(worker), m_portIn
 
     connect(this, &RDevice::dispatchToNetwork, this, [this](const QByteArray &data){
         if (m_isNetworkConnected) {
-            // [FIX] Removed the duplicate parsing of macros and escape sequences!
-            // We just pass the clean, pre-filtered data straight to the socket.
             tcpSocket->write(data);
         }
         else {
@@ -118,19 +120,11 @@ void RDevice::handleCommand(quint8 command, quint16 aux)
     quint8 aux1 = (aux & 0xFF);
     quint8 aux2 = (aux >> 8) & 0xFF;
 
-    if (command != CMD_STATUS && command != CMD_POLL_TYPE1 &&
-        command != CMD_POLL_TYPE3 && command != CMD_RELOCATOR &&
-        command != CMD_DOWNLOAD && command != CMD_STREAM) {
-        qDebug() << "!d" << "[RDevice] Cmd:" << QString::number(command, 16).toUpper()
-        << "Aux1:" << QString::number(aux1, 16).toUpper()
-        << "Aux2:" << QString::number(aux2, 16).toUpper();
-    }
-
     switch (command) {
     case CMD_POLL_TYPE1: handlePollType1(); break;
     case CMD_POLL_TYPE3: handlePollType3(aux1, aux2); break;
     case CMD_RELOCATOR:  handleDownloadRelocator(); break;
-    case CMD_DOWNLOAD:   handleDownloadDriver(); break;
+    case CMD_DOWNLOAD:   handleDownloadDriver(aux); break;
     case CMD_STATUS:     handleStatus(); break;
     case CMD_WRITE:      handleWrite(aux); break;
     case CMD_READ:       handleRead(aux); break;
@@ -174,7 +168,6 @@ void RDevice::handleConfigure(quint8 aux1, quint8 aux2) {
     default:   m_currentBaudRate = 19200; break;
     }
 
-    qDebug() << "!d" << "[RDevice] Configure: Requested Baud Rate set to:" << m_currentBaudRate;
     sio->port()->writeComplete();
 }
 
@@ -204,18 +197,13 @@ void RDevice::handlePollType1() {
     sendDataToAtari(bootBlock);
 }
 
+// Type 3/4 poll ($4F/$40): stay silent. Our handler blob is raw 6502 for the
+// 850 relocator, not the relocatable-record format a poll reply promises, so
+// answering makes the OS parse garbage and hang. The handler loads via the
+// Type 1 poll ($3F) -> relocator ($21) -> download ($26) path instead.
 void RDevice::handlePollType3(quint8 aux1, quint8 aux2) {
-    if ((aux1 == 0x52 && aux2 == 0x01) || aux1 == 0x00) {
-        if (!sio->port()->writeCommandAck()) return;
-
-        QByteArray resp(4, 0);
-        resp[0] = sizeof(driver_850)&0xFF;
-        resp[1] = sizeof(driver_850)>>8;
-        resp[2] = 0x50;
-        resp[3] = 0x00;
-
-        sendDataToAtari(resp);
-    }
+    Q_UNUSED(aux1);
+    Q_UNUSED(aux2);
 }
 
 void RDevice::handleDownloadRelocator() {
@@ -224,7 +212,9 @@ void RDevice::handleDownloadRelocator() {
     sendDataToAtari(payload);
 }
 
-void RDevice::handleDownloadDriver() {
+// The 850 relocator asks once and expects the whole handler in one data frame.
+void RDevice::handleDownloadDriver(quint16 aux) {
+    Q_UNUSED(aux);
     if (!sio->port()->writeCommandAck()) return;
     QByteArray payload((const char*)driver_850, sizeof(driver_850));
     sendDataToAtari(payload);
@@ -236,7 +226,6 @@ void RDevice::handleStatus() {
     QByteArray status(4, 0);
     status[1] = 0xC0 | 0x30;
 
-    // [FIX] We now use the thread-safe atomic flag instead of touching tcpSocket
     if (m_isNetworkConnected) {
         status[1] |= 0x0C;
     }
@@ -250,7 +239,6 @@ void RDevice::handleRead(quint16 len) {
     int readLen = (len > 0) ? len : 128;
     QByteArray chunk;
 
-    // [FIX] Protect the extraction of data to prevent Main Thread crashes
     {
         QMutexLocker locker(&m_bufferMutex);
         chunk = m_txBuffer.left(readLen);
@@ -285,29 +273,42 @@ void RDevice::handleStream() {
     sendDataToAtari(response);
 
     {
+        // Carry over network data buffered in command mode; dropping it loses
+        // the block a terminal left in flight when it stepped out to write disk.
         QMutexLocker locker(&m_bufferMutex);
-        m_networkToSioBuffer.clear();
+        m_networkToSioBuffer.prepend(m_txBuffer);
         m_txBuffer.clear();
     }
 
     state = ModemState::StreamMode;
+    m_streamEntered.start();
     m_escapeTimer.start();
     m_plusCount = 0;
 
     sio->onChangeBaudRate(m_currentBaudRate);
 
+    // Let the line settle, then forward (not drop) whatever already waits --
+    // dropping it costs an ACK per concurrent-mode re-entry and stalls XMODEM.
     SioWorker::usleep(1100);
     if (sio->port()) {
-        sio->port()->readRawFrame(256, false);
+        const QByteArray pending = sio->port()->readRawFrame(256, false);
+        if (!pending.isEmpty())
+            processSerialData(pending);
     }
-
-    qDebug() << "!d" << "[RDevice] Stream active" << m_currentBaudRate;
 }
 
 void RDevice::handleWrite(quint16 aux) {
     if (!sio->port()->writeCommandAck()) return;
 
     quint8 logicalLen = aux & 0xFF;
+
+    // A zero-length write (Atari leaving concurrent mode) carries no data frame;
+    // reading one anyway would swallow the next command frame.
+    if (logicalLen == 0) {
+        sio->port()->writeComplete();
+        return;
+    }
+
     QByteArray data = sio->port()->readDataFrame(64);
 
     if (data.isEmpty()) {
@@ -316,6 +317,13 @@ void RDevice::handleWrite(quint16 aux) {
     }
 
     sio->port()->writeDataAck();
+
+    // Connected: these bytes are modem traffic, not an AT command.
+    if (m_isNetworkConnected) {
+        emit dispatchToNetwork(data.left(qMin<int>(logicalLen, data.size())));
+        sio->port()->writeComplete();
+        return;
+    }
 
     for (int i = 0; i < logicalLen && i < data.size(); i++) {
         char c = data.at(i);
@@ -340,11 +348,8 @@ void RDevice::handleControl(quint16 aux) {
 
     quint8 ctrl = aux & 0xFF;
 
-    // Atari 850 CMD_CONTROL (0x41) Aux1 bits:
-    // Bit 7 (0x80) = DTR (Data Terminal Ready).
-    // If BBS Express clears this bit, it physically drops the line to hang up.
+    // Aux1 bit 7 = DTR; clearing it (e.g. BBS Express hanging up) drops the line.
     if ((ctrl & 0x80) == 0) {
-        qDebug() << "!i [RDevice] DTR drop detected via CMD_CONTROL. Forcing hangup.";
         QMetaObject::invokeMethod(this, "hangup", Qt::QueuedConnection);
     }
 
@@ -353,7 +358,6 @@ void RDevice::handleControl(quint16 aux) {
 
 void RDevice::handleListen(quint16 aux) {
     if (tcpServer->isListening()) {
-        // [FIX] If BBS Listener is already active, acknowledge silently
         sio->port()->writeCommandAck();
         sio->port()->writeComplete();
     } else if (tcpServer->listen(QHostAddress::Any, aux)) {
@@ -401,8 +405,8 @@ void RDevice::processSerialData(const QByteArray &data) {
             escPending = true;
 
         } else {
-
-            // --- TIES: Pass-Through Logic ---
+            // +++ escape: pass the plusses through, arm the guard timer on the
+            // third, cancel on any other byte (TIES-style).
             if (m_isNetworkConnected) {
                 if (c == '+') {
                     m_escapeBuffer.append(c);
@@ -436,7 +440,6 @@ void RDevice::onEscapeTriggered() {
         qDebug() << "!i [RDevice] +++ Escape Sequence triggered. Dropping to AT Mode.";
         sendResultCode(RESULT_OK);
     }
-    // No flushing needed, just clear the tracker
     m_escapeBuffer.clear();
 }
 
@@ -445,7 +448,6 @@ void RDevice::onEscapeTriggered() {
 void RDevice::onSocketReadyRead() {
     QByteArray data = tcpSocket->readAll();
 
-    // [FIX] Wrap all background modifications to the Tx buffer in a mutex lock
     QMutexLocker locker(&m_bufferMutex);
     parseTelnet(data);
 
@@ -508,6 +510,15 @@ void RDevice::processAtCommand(const QString &rawCmd) {
     QString cmd = rawCmd.trimmed().toUpper();
     if (cmd.startsWith("AT")) cmd.remove(0, 2);
 
+    // Dial first: everything after DT is the target, so it must not be scanned
+    // for the E0/E1/V0/V1 flags below -- a BBS name like "V01D C1PH3R" would
+    // otherwise be swallowed by the verbose-response branch and never dialled.
+    if (cmd.startsWith("DT")) {
+        int dtIndex = rawCmd.toUpper().indexOf("DT");
+        at_handle_dial(rawCmd.mid(dtIndex + 2).trimmed());
+        return;
+    }
+
     if (cmd.contains("E0")) {
         echoEnabled = false; cmd.replace("E0", "");
     }
@@ -524,7 +535,7 @@ void RDevice::processAtCommand(const QString &rawCmd) {
     else if (cmd == "A" || cmd.startsWith("A ")) {
         if (m_ringPhase && pendingSocket) {
             m_ringTimer->stop();
-            tcpSocket->disconnect(this); // [FIX] Safe disconnect
+            tcpSocket->disconnect(this);
             tcpSocket->deleteLater();
             tcpSocket = pendingSocket;
             pendingSocket = nullptr;
@@ -559,11 +570,6 @@ void RDevice::processAtCommand(const QString &rawCmd) {
         sendResultCode(RESULT_OK);
     }
 
-    else if (cmd.startsWith("DT")) {
-        int dtIndex = rawCmd.toUpper().indexOf("DT");
-        QString target = rawCmd.mid(dtIndex + 2).trimmed();
-        at_handle_dial(target);
-    }
 
 
     else if (cmd == "H") {
@@ -593,18 +599,15 @@ void RDevice::processAtCommand(const QString &rawCmd) {
     // --- RETURN TO ONLINE (ATO) ---
     else if (cmd == "O" || cmd.startsWith("O0") || cmd.startsWith("O ")) {
 
-        // BULLETPROOF CHECK: Interrogate the actual physical socket
         bool hasActiveConnection = (tcpSocket->state() == QAbstractSocket::ConnectedState);
 
         if (hasActiveConnection) {
             m_isNetworkConnected = true; // Restore routing to the network
 
-            // Reset the escape sequence timers
             m_plusCount = 0;
             m_escapeTimer.restart();
             if (m_escapeActionTimer->isActive()) m_escapeActionTimer->stop();
 
-            // SIO StreamMode was never interrupted, so we just say CONNECT
             sendResultCode(RESULT_CONNECT);
         } else {
             m_isNetworkConnected = false;
@@ -697,23 +700,24 @@ void RDevice::forceCommandMode(bool sendAlert) {
 
         state = ModemState::CommandMode;
         {
+            // Keep undelivered network data; the Atari usually only stepped out
+            // for some SIO and wants the rest. Hangup/ATZ clears it anyway.
             QMutexLocker locker(&m_bufferMutex);
-            m_txBuffer.clear();
+            m_txBuffer.prepend(m_networkToSioBuffer);
             m_networkToSioBuffer.clear();
         }
 
         sio->onStreamFinished();
-
-        qDebug() << "!d" << "[RDevice] Exited Stream Mode. Signaled SioWorker to restore SIO state.";
     }
 }
 
-// [FIX] Update Atomic State flag on connect/disconnect
+
 void RDevice::onSocketConnected() {
     m_isNetworkConnected = true;
     sendResultCode(RESULT_CONNECT);
 }
 void RDevice::onSocketDisconnected() {
+    qDebug() << "!i" << "[RDevice] TCP disconnected.";
     m_isNetworkConnected = false;
     sendResultCode(RESULT_NO_CARRIER);
 }
@@ -722,6 +726,7 @@ void RDevice::onSocketError(QAbstractSocket::SocketError socketError) {
     Q_UNUSED(socketError);
 
     QString errorMsg = tcpSocket->errorString();
+    qDebug() << "!w" << "[RDevice] socket error:" << errorMsg;
 
     // If we aren't connected yet (e.g. dialing failed), show the verbose error
     if (!m_isNetworkConnected) {
@@ -764,7 +769,7 @@ void RDevice::onRingTimeout() {
 
 void RDevice::onPendingSocketDisconnected() {
     if (pendingSocket) {
-        pendingSocket->disconnect(this); // [FIX] Safe disconnect
+        pendingSocket->disconnect(this);
         pendingSocket->deleteLater();
         pendingSocket = nullptr;
         m_ringTimer->stop();
@@ -775,6 +780,9 @@ void RDevice::onPendingSocketDisconnected() {
 }
 
 QByteArray RDevice::dequeueNetworkData() {
+    if (m_streamEntered.isValid() && m_streamEntered.elapsed() < kResumeHoldMs)
+        return QByteArray();
+
     QMutexLocker locker(&m_bufferMutex);
     QByteArray data = m_networkToSioBuffer;
     m_networkToSioBuffer.clear();
@@ -796,6 +804,16 @@ void RDevice::dial(const BbsEntry &entry) {
 }
 
 
+void RDevice::injectDial(const QString &target)
+{
+    const QString cmd = QStringLiteral("ATDT") + target;
+
+    // Show it on the Atari, then run it through the normal AT path. Queued, so
+    // it lands on this object's thread like a command typed by the user.
+    sendAtResponse(QStringLiteral("\r\n") + cmd + QStringLiteral("\r\n"));
+    emit executeAtCommand(cmd);
+}
+
 void RDevice::hangup() {
     {
         QMutexLocker locker(&m_bufferMutex);
@@ -804,7 +822,7 @@ void RDevice::hangup() {
         m_atCmdBuffer.clear();
     }
     if (tcpSocket->state() == QAbstractSocket::ConnectedState) tcpSocket->disconnectFromHost();
-    // [FIX] Moved this cleanup from injectMacro to here where it belongs!
+
     if (pendingSocket) {
         pendingSocket->disconnect(this); // Prevent signal loops
         pendingSocket->disconnectFromHost();

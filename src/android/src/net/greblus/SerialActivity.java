@@ -562,9 +562,9 @@ public class SerialActivity extends QtActivity
             return rd;
         }
 
-        public static int readStream(int maxSize)
+        public static int readStream(int maxSize, int mMethod)
         {
-            return m_device.readStream(maxSize);
+            return m_device.readStream(maxSize, mMethod);
         }
 
         public static int write(int size, int total)
@@ -646,6 +646,14 @@ public class SerialActivity extends QtActivity
 
         public static boolean isCommandAsserted(int mMethod) {
              return m_device.isCommandAsserted(mMethod);
+        }
+
+        public static void resetCommandLatch() {
+             m_device.resetCommandLatch();
+        }
+
+        public static void armFrameResync() {
+             m_device.armFrameResync();
         }
 }
     class FileChooser implements Runnable

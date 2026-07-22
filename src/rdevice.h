@@ -53,6 +53,14 @@ public:
     QByteArray dequeueNetworkData();
     void processSerialData(const QByteArray &data);
     void dial(const BbsEntry &entry);
+    // Dial the way the user would: echo "ATDT <target>" to the Atari and feed it
+    // through the AT parser, so the terminal shows the command and the usual
+    // result codes, instead of the socket opening silently behind its back.
+    void injectDial(const QString &target);
+    // Does the phonebook we have loaded know this name? Dialling by name only
+    // works if it does; otherwise the name would be taken for a hostname.
+    bool knowsBbs(const QString &name) const
+        { return !m_phonebook.findByName(name).name.isEmpty(); }
     void injectMacro(char macroType);
     void forceCommandMode(bool sendAlert = false) override;
     void updateListenerConfig();
@@ -112,6 +120,7 @@ private:
     int m_currentBaudRate = 19200;
 
     QElapsedTimer m_escapeTimer;
+    QElapsedTimer m_streamEntered;
     int m_plusCount = 0;
 
     PhoneBook m_phonebook;
@@ -126,7 +135,7 @@ private:
     void handlePollType3(quint8 aux1, quint8 aux2);
     void handleConfigure(quint8 aux1, quint8 aux2);
     void handleDownloadRelocator();
-    void handleDownloadDriver();
+    void handleDownloadDriver(quint16 aux);
     void handleStatus();
     void handleRead(quint16 len);
     void handleWrite(quint16 aux);

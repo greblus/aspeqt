@@ -60,7 +60,10 @@ private:
 
     // Stream (modem) mode: while the R: device holds the line, the loop stops
     // reading SIO command frames and shuttles raw bytes both ways instead.
-    static const int STREAM_GUARD_MS = 50;   // how often to poll COMMAND
+    // How often to check COMMAND while streaming. The backend latches the line
+    // from the data it is already receiving, so the check is cheap and a short
+    // interval mainly bounds how fast we notice an Atari reset.
+    static const int STREAM_GUARD_MS = 20;
     bool m_isStreaming;
     QElapsedTimer m_streamGuardTimer;
     void runStreamMode();

@@ -7,7 +7,7 @@ public interface SerialDevice {
     public int read(int size, int total);
     // One-packet read for the R: device's stream mode: returns available bytes
     // (0 if none), never loops to fill the buffer.
-    public int readStream(int maxSize);
+    public int readStream(int maxSize, int mMethod);
     public int write(int size, int total);
     public boolean purge();
     public boolean purgeTX();
@@ -18,4 +18,8 @@ public interface SerialDevice {
     // Level read of the COMMAND line, used by the R: device's stream mode.
     // Adapters without modem status lines (SIO2BT) return false.
     public boolean isCommandAsserted(int mMethod);
+    // Drop any COMMAND assertion latched so far (see SIO2PCUS4A).
+    public void resetCommandLatch();
+    // Leaving stream mode: do not purge before the next command frame.
+    public void armFrameResync();
 }

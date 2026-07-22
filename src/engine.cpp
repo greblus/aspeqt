@@ -120,7 +120,14 @@ Engine::Engine(QObject *parent)
     g_aspeQtAppPath = QCoreApplication::applicationDirPath();
     g_disablePicoHiSpeed = false;
     logFile = new QFile(QDir::temp().absoluteFilePath("aspeqt.log"));
-    logFile->open(QFile::WriteOnly | QFile::Truncate | QFile::Unbuffered | QFile::Text);
+    // Append across runs. Truncating here used to throw away exactly the
+    // history needed to diagnose anything that only shows up after a restart
+    // (an Atari reset, a reconnect). Rolled over once it gets large so it
+    // cannot grow without bound.
+    const qint64 kMaxLog = 8 * 1024 * 1024;
+    QFile::OpenMode logMode = QFile::WriteOnly | QFile::Unbuffered | QFile::Text;
+    logMode |= (logFile->size() > kMaxLog) ? QFile::Truncate : QFile::Append;
+    logFile->open(logMode);
     logMutex = new QMutex();
     qInstallMessageHandler(logMessageOutput);
     qDebug() << "!d" << tr("AspeQt started at %1.").arg(QDateTime::currentDateTime().toString());
@@ -1739,14 +1746,26 @@ void Engine::phonebookDial(const QVariantMap &entry)
         return;
     }
 
-    BbsEntry e;
-    e.name     = entry.value("name").toString();
-    e.ip       = entry.value("ip").toString();
-    e.port     = entry.value("port", 23).toInt();
-    e.protocol = entry.value("protocol", QStringLiteral("TELNET")).toString();
-    e.login    = entry.value("login").toString();
-    e.password = entry.value("password").toString();
-    m_rDevice->dial(e);
+    // Dial by name where we can: at_handle_dial then looks the entry up in the
+    // phonebook the device has loaded and keeps its login/password, which is
+    // what the ESC-U / ESC-P macros type. Falls back to host:port for an
+    // unnamed entry.
+    const QString name = entry.value("name").toString().trimmed();
+    QString target = name;
+    // Unknown to the device (e.g. added but not saved yet) -> dial the address,
+    // otherwise the name would be resolved as a hostname and fail.
+    if (!target.isEmpty() && !m_rDevice->knowsBbs(target))
+        target.clear();
+    if (target.isEmpty()) {
+        target = entry.value("ip").toString().trimmed()
+                 + QLatin1Char(':') + QString::number(entry.value("port", 23).toInt());
+    }
+    if (target.isEmpty()) {
+        qCritical() << "!e" << tr("This phonebook entry has no address.");
+        return;
+    }
+
+    m_rDevice->injectDial(target);
 }
 
 // Available UI languages: Automatic + English + every bundled aspeqt_*.qm

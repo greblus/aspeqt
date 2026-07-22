@@ -72,6 +72,7 @@ void SioWorker::runStreamMode()
     if (rdev) {
         QByteArray txData = rdev->dequeueNetworkData();
         if (!txData.isEmpty()) {
+            qDebug() << "!d" << "[stream] ->atari" << txData.size() << txData.left(16).toHex();
             mPort->writeRawFrame(txData);
             hasActivity = true;
         }
@@ -81,6 +82,7 @@ void SioWorker::runStreamMode()
     /* Atari -> network */
     QByteArray rawData = mPort->readRawFrame(128, false);
     if (!rawData.isEmpty() && rdev) {
+        qDebug() << "!d" << "[stream] atari->" << rawData.size() << rawData.left(16).toHex();
         deviceMutex->lock();
         rdev->processSerialData(rawData);
         deviceMutex->unlock();
@@ -90,7 +92,10 @@ void SioWorker::runStreamMode()
     /* The Atari asserting COMMAND means it wants to talk SIO again. Checked
        on a guard interval because on FTDI this is a USB round trip, not a
        pin read. */
-    if (m_streamGuardTimer.elapsed() > STREAM_GUARD_MS) {
+    // Only consider leaving on a pass that read nothing: the Atari sends a
+    // transfer's closing byte (XMODEM EOT-ACK) just before raising COMMAND, and
+    // switching while bytes are still arriving drops it, hanging the sender.
+    if (rawData.isEmpty() && m_streamGuardTimer.elapsed() > STREAM_GUARD_MS) {
         m_streamGuardTimer.restart();
         if (mPort->isCommandLineAsserted()) {
             qDebug() << "!d" << tr("[SioWorker] Atari asserted COMMAND; leaving stream mode.");

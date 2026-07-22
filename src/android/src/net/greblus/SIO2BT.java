@@ -161,7 +161,7 @@ public class SIO2BT implements SerialDevice
     // Stream (modem) mode read: whatever is available now, no fill loop. Streamed
     // R: over bluetooth is unsupported anyway (no COMMAND line), but keep the
     // interface honest.
-    public int readStream(int maxSize)
+    public int readStream(int maxSize, int mMethod)
     {
         int rd = 0;
         try {
@@ -291,6 +291,12 @@ public class SIO2BT implements SerialDevice
     // only works over SIO2PC-USB.
     public boolean isCommandAsserted(int mMethod) {
          return false;
+    }
+
+    public void resetCommandLatch() {
+    }
+
+    public void armFrameResync() {
     }
     public static int sioChecksum(byte[] data, int size)
     {
