@@ -278,6 +278,9 @@ void RDevice::handleStream() {
         QMutexLocker locker(&m_bufferMutex);
         m_networkToSioBuffer.prepend(m_txBuffer);
         m_txBuffer.clear();
+        // Drop any half-typed AT command: left over, it can later join fresh
+        // bytes into a complete one and redial by itself.
+        m_atCmdBuffer.clear();
     }
 
     state = ModemState::StreamMode;
@@ -719,6 +722,10 @@ void RDevice::onSocketConnected() {
 void RDevice::onSocketDisconnected() {
     qDebug() << "!i" << "[RDevice] TCP disconnected.";
     m_isNetworkConnected = false;
+    {
+        QMutexLocker locker(&m_bufferMutex);
+        m_atCmdBuffer.clear();
+    }
     sendResultCode(RESULT_NO_CARRIER);
 }
 

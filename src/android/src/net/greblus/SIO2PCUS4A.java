@@ -579,9 +579,13 @@ public class SIO2PCUS4A implements SerialDevice
             }
         } while (!((status & mask) > 0));
 
-        if (skipPurgeOnce) {
-            skipPurgeOnce = false;   // first frame after stream mode: don't purge
+        // Skip the purge only while the frame head is still on the wire. Once
+        // readStream() has parked a complete frame, purging is free and drops
+        // stale modem bytes that would otherwise be replayed as AT commands.
+        if (skipPurgeOnce && pendingLen < 5) {
+            skipPurgeOnce = false;
         } else {
+            skipPurgeOnce = false;
             ret = purge();
             if (!ret) if (debug) Log.i("USB", "Cannot clear serial port");
         }
