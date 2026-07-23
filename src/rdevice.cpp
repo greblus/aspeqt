@@ -39,6 +39,14 @@ RDevice::RDevice(SioWorker *worker, int portIndex) : SioDevice(worker), m_portIn
     connect(tcpServer, &QTcpServer::newConnection, this, &RDevice::onNewConnection);
     pendingSocket = nullptr;
 
+#ifdef HAVE_LIBSSH
+    m_ssh = new SshClient(this);
+    connect(m_ssh, &SshClient::connected,    this, &RDevice::onSshConnected);
+    connect(m_ssh, &SshClient::disconnected, this, &RDevice::onSshDisconnected);
+    connect(m_ssh, &SshClient::rxData,       this, &RDevice::onSshDataReceived);
+    connect(m_ssh, &SshClient::error,        this, &RDevice::onSshError);
+#endif
+
     m_ringTimer = new QTimer(this);
     m_ringTimer->setSingleShot(true);
     connect(m_ringTimer, &QTimer::timeout, this, &RDevice::onRingTimeout);
@@ -55,6 +63,9 @@ RDevice::RDevice(SioWorker *worker, int portIndex) : SioDevice(worker), m_portIn
 
     connect(this, &RDevice::dispatchToNetwork, this, [this](const QByteArray &data){
         if (m_isNetworkConnected) {
+#ifdef HAVE_LIBSSH
+            if (m_isSshMode) m_ssh->write(data); else
+#endif
             tcpSocket->write(data);
         }
         else {
@@ -585,6 +596,10 @@ void RDevice::processAtCommand(const QString &rawCmd) {
             m_networkToSioBuffer.clear();
             m_atCmdBuffer.clear();
         }
+#ifdef HAVE_LIBSSH
+        if (m_ssh->isConnected()) m_ssh->disconnectFromHost();
+#endif
+        m_isSshMode = false;
         tcpSocket->abort();
 
         if (pendingSocket) {
@@ -648,7 +663,8 @@ void RDevice::sendResultCode(int code) {
     }
 }
 
-// ATD<target>: dial either a phonebook name or a literal host[:port].
+// ATD<target>: dial a phonebook name, or a literal host[:port]. An "ssh:" or
+// "sshauth:" prefix -- or a phonebook entry whose protocol says SSH -- picks SSH.
 void RDevice::at_handle_dial(const QString &target) {
 
     const BbsEntry entry = m_phonebook.findByName(target);
@@ -658,17 +674,59 @@ void RDevice::at_handle_dial(const QString &target) {
     } else {
         QString host = target;
         int port = 23;
-        if (target.contains(":")) {
-            QStringList parts = target.split(":");
+        m_currentConnection = BbsEntry();
+
+        const QString upper = host.toUpper();
+        if (upper.startsWith("SSHAUTH:") || upper.startsWith("SSH-AUTH:")) {
+            m_currentConnection.protocol = "SSH-AUTH";
+            host = host.mid(host.indexOf(':') + 1);
+            port = 22;
+        } else if (upper.startsWith("SSH:")) {
+            m_currentConnection.protocol = "SSH";
+            host = host.mid(4);
+            port = 22;
+        }
+        if (host.contains(":")) {
+            const QStringList parts = host.split(":");
             host = parts[0];
             port = parts[1].toInt();
         }
-        m_currentConnection = BbsEntry();
         m_currentConnection.ip = host;
         m_currentConnection.port = port;
     }
 
     sendAtResponse("DIALING " + m_currentConnection.ip + "...\r\n");
+    startCall();
+}
+
+void RDevice::startCall() {
+    const QString proto = m_currentConnection.protocol.toUpper();
+    const bool wantSsh = proto.startsWith("SSH") || m_currentConnection.port == 22;
+
+#ifdef HAVE_LIBSSH
+    if (wantSsh) {
+        m_isSshMode = true;
+        if (tcpSocket->state() != QAbstractSocket::UnconnectedState) tcpSocket->abort();
+        // SSH-AUTH carries credentials; plain SSH lets the BBS prompt for them.
+        if (proto == "SSH-AUTH") {
+            const QString user = m_currentConnection.login.isEmpty()
+                               ? QStringLiteral("guest") : m_currentConnection.login;
+            m_ssh->connectToHost(m_currentConnection.ip, m_currentConnection.port,
+                                 user, m_currentConnection.password);
+        } else {
+            m_ssh->connectToHost(m_currentConnection.ip, m_currentConnection.port, "", "");
+        }
+        return;
+    }
+    m_isSshMode = false;
+    if (m_ssh->isConnected()) m_ssh->disconnectFromHost();
+#else
+    if (wantSsh) {
+        sendAtResponse("\r\nERROR: SSH not available in this build\r\n");
+        sendResultCode(RESULT_NO_CARRIER);
+        return;
+    }
+#endif
     tcpSocket->connectToHost(m_currentConnection.ip, m_currentConnection.port);
 }
 
@@ -744,6 +802,44 @@ void RDevice::onSocketError(QAbstractSocket::SocketError socketError) {
         sendResultCode(RESULT_ERROR);
     }
 }
+#ifdef HAVE_LIBSSH
+void RDevice::onSshConnected() {
+    m_isNetworkConnected = true;
+    sendResultCode(RESULT_CONNECT);
+}
+
+void RDevice::onSshDisconnected() {
+    qDebug() << "!i" << "[RDevice] SSH disconnected.";
+    m_isNetworkConnected = false;
+    if (!m_isSshMode) return;
+    {
+        QMutexLocker locker(&m_bufferMutex);
+        m_atCmdBuffer.clear();
+    }
+    sendResultCode(RESULT_NO_CARRIER);
+}
+
+// SSH carries no telnet negotiation, so this bypasses parseTelnet().
+void RDevice::onSshDataReceived(const QByteArray &data) {
+    QMutexLocker locker(&m_bufferMutex);
+    if (state == ModemState::StreamMode)
+        m_networkToSioBuffer.append(data);
+    else
+        m_txBuffer.append(data);
+}
+
+void RDevice::onSshError(const QString &msg) {
+    if (!m_isSshMode) return;
+    qDebug() << "!w" << "[RDevice] SSH error:" << msg;
+    if (!m_isNetworkConnected) {
+        sendAtResponse("\r\nERROR: SSH - " + msg + "\r\n");
+        sendResultCode(RESULT_NO_CARRIER);
+    } else {
+        sendResultCode(RESULT_ERROR);
+    }
+}
+#endif
+
 void RDevice::onNewConnection() {
     QTcpSocket *client = tcpServer->nextPendingConnection();
 
@@ -806,8 +902,8 @@ void RDevice::dial(const BbsEntry &entry) {
 
     // 2. Execute the dial
     m_isNetworkConnected = false;
-    qDebug() << "!i" << tr("[RDevice] Dialing Telnet %1:%2...").arg(entry.ip).arg(entry.port);
-    tcpSocket->connectToHost(entry.ip, entry.port);
+    qDebug() << "!i" << tr("[RDevice] Dialing %1:%2...").arg(entry.ip).arg(entry.port);
+    startCall();
 }
 
 
@@ -828,6 +924,10 @@ void RDevice::hangup() {
         m_networkToSioBuffer.clear();
         m_atCmdBuffer.clear();
     }
+#ifdef HAVE_LIBSSH
+    if (m_ssh->isConnected()) m_ssh->disconnectFromHost();
+#endif
+    m_isSshMode = false;
     if (tcpSocket->state() == QAbstractSocket::ConnectedState) tcpSocket->disconnectFromHost();
 
     if (pendingSocket) {

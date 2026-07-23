@@ -3,8 +3,7 @@
 // rdevice_handler.h) and then talks to it as device $50.
 //
 // Derived from AspeQt-2k26 by Paul Jones <pjones1063@gmail.com>, GPL-2.
-// See AUTHORS.txt. The SSH transport of the original was left out; only
-// Telnet is implemented here.
+// See AUTHORS.txt. Telnet always; SSH when built with HAVE_LIBSSH.
 
 #ifndef RDEVICE_H
 #define RDEVICE_H
@@ -21,6 +20,9 @@
 #include <atomic>
 #include "bbsdata.h"
 #include "phonebook.h"
+#ifdef HAVE_LIBSSH
+#include "sshclient.h"
+#endif
 
 #define CMD_RELOCATOR    0x21
 #define CMD_DOWNLOAD     0x26
@@ -79,6 +81,13 @@ private slots:
     void onSocketReadyRead();
     void onSocketError(QAbstractSocket::SocketError);
 
+#ifdef HAVE_LIBSSH
+    void onSshConnected();
+    void onSshDisconnected();
+    void onSshDataReceived(const QByteArray &data);
+    void onSshError(const QString &msg);
+#endif
+
     void onNewConnection();
     void onPendingSocketDisconnected();
     void onRingTimeout();
@@ -105,6 +114,13 @@ private:
     QTimer *m_ringTimer;
     QByteArray m_escapeBuffer;
     QTimer *m_escapeActionTimer;
+
+#ifdef HAVE_LIBSSH
+    SshClient *m_ssh = nullptr;
+#endif
+    // True while the current call is SSH rather than telnet. Kept out of the
+    // #ifdef so the routing below reads the same either way.
+    bool m_isSshMode = false;
 
     QTcpSocket *tcpSocket;
     QTcpServer *tcpServer;
@@ -143,6 +159,8 @@ private:
     void handleListen(quint16 aux);
     void handleStream();
     void at_handle_dial(const QString &target);
+    // Opens the call on whichever transport m_currentConnection asks for.
+    void startCall();
 
 };
 
