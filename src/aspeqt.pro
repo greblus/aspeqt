@@ -48,6 +48,37 @@ unix:
         SOURCES += serialport-android.cpp
         HEADERS += serialport-android.h
 
+        # Qt dlopens libssl/libcrypto at runtime but may not ship them, so bundle
+        # the Qt-recommended KDAB prebuilts. We build arm64-v8a only, hence the
+        # explicit pair rather than including their all-ABI openssl.pri.
+        # Override with: qmake ANDROID_OPENSSL_DIR=/path/to/android_openssl
+        isEmpty(ANDROID_OPENSSL_DIR): ANDROID_OPENSSL_DIR = $$PWD/../../android_openssl
+        exists($$ANDROID_OPENSSL_DIR/ssl_3/arm64-v8a/libssl_3.so) {
+            ANDROID_EXTRA_LIBS += \
+                $$ANDROID_OPENSSL_DIR/ssl_3/arm64-v8a/libcrypto_3.so \
+                $$ANDROID_OPENSSL_DIR/ssl_3/arm64-v8a/libssl_3.so
+        } else {
+            warning("OpenSSL not found under $$ANDROID_OPENSSL_DIR -- TLS and SSH will be unavailable. Clone https://github.com/KDAB/android_openssl")
+        }
+
+        # libssh, cross-built static (Android will not load versioned .so, and a
+        # static lib keeps it out of the package). See src/doc/build-libssh.md.
+        # Override with: qmake LIBSSH_SRC=... LIBSSH_BUILD=...
+        isEmpty(LIBSSH_SRC):   LIBSSH_SRC   = $$PWD/../../libssh
+        isEmpty(LIBSSH_BUILD): LIBSSH_BUILD = $$PWD/../../build-libssh-arm64
+        exists($$LIBSSH_BUILD/src/libssh.a) {
+            DEFINES     += HAVE_LIBSSH
+            INCLUDEPATH += $$LIBSSH_SRC/include $$LIBSSH_BUILD/include
+            SOURCES     += sshclient.cpp
+            HEADERS     += sshclient.h
+            # Order matters: libssh.a first, then the crypto it depends on.
+            LIBS        += $$LIBSSH_BUILD/src/libssh.a \
+                           $$ANDROID_OPENSSL_DIR/ssl_3/arm64-v8a/libssl.so \
+                           $$ANDROID_OPENSSL_DIR/ssl_3/arm64-v8a/libcrypto.so
+        } else {
+            warning("libssh.a not found at $$LIBSSH_BUILD -- SSH dialling will be unavailable. See src/doc/build-libssh.md")
+        }
+
         DISTFILES += \
             android/AndroidManifest.xml \
             android/gradle/wrapper/gradle-wrapper.jar \
