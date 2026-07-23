@@ -92,9 +92,13 @@ bool PhoneBook::save(const QString &path) const
 
 BbsEntry PhoneBook::findByName(const QString &name) const
 {
-    for (const BbsEntry &e : m_entries) {
+    // Exact match wins, so two entries differing only in case (e.g. a Telnet
+    // "Mylocal" and an SSH "mylocal") each dial their own protocol.
+    for (const BbsEntry &e : m_entries)
+        if (e.name == name)
+            return e;
+    for (const BbsEntry &e : m_entries)
         if (e.name.compare(name, Qt::CaseInsensitive) == 0)
             return e;
-    }
     return BbsEntry();
 }

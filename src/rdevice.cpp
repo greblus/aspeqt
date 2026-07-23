@@ -113,6 +113,10 @@ void RDevice::setEnabled(bool enable)
 {
     m_isEnabled = enable;
     if (!enable) {
+#ifdef HAVE_LIBSSH
+        if (m_ssh->isConnected()) m_ssh->disconnectFromHost();
+#endif
+        m_isSshMode = false;
         tcpSocket->disconnectFromHost();
         tcpServer->close();
         state = ModemState::CommandMode;
@@ -707,15 +711,14 @@ void RDevice::startCall() {
     if (wantSsh) {
         m_isSshMode = true;
         if (tcpSocket->state() != QAbstractSocket::UnconnectedState) tcpSocket->abort();
-        // SSH-AUTH carries credentials; plain SSH lets the BBS prompt for them.
-        if (proto == "SSH-AUTH") {
-            const QString user = m_currentConnection.login.isEmpty()
-                               ? QStringLiteral("guest") : m_currentConnection.login;
-            m_ssh->connectToHost(m_currentConnection.ip, m_currentConnection.port,
-                                 user, m_currentConnection.password);
-        } else {
-            m_ssh->connectToHost(m_currentConnection.ip, m_currentConnection.port, "", "");
-        }
+        if (m_ssh->isConnected()) m_ssh->disconnectFromHost();  // drop a prior call
+        // Authenticate with the entry's login/password when it has them; an
+        // empty login means anonymous (the BBS does its own login). SSH-AUTH
+        // with no login falls back to "guest".
+        QString user = m_currentConnection.login;
+        if (proto == "SSH-AUTH" && user.isEmpty()) user = QStringLiteral("guest");
+        m_ssh->connectToHost(m_currentConnection.ip, m_currentConnection.port,
+                             user, m_currentConnection.password);
         return;
     }
     m_isSshMode = false;
@@ -727,6 +730,9 @@ void RDevice::startCall() {
         return;
     }
 #endif
+    // Reset a socket left mid-connect by a previous attempt, or connectToHost()
+    // errors with "already looking up or connecting".
+    if (tcpSocket->state() != QAbstractSocket::UnconnectedState) tcpSocket->abort();
     tcpSocket->connectToHost(m_currentConnection.ip, m_currentConnection.port);
 }
 
@@ -805,7 +811,18 @@ void RDevice::onSocketError(QAbstractSocket::SocketError socketError) {
 #ifdef HAVE_LIBSSH
 void RDevice::onSshConnected() {
     m_isNetworkConnected = true;
+    m_sshDataSinceConnect = false;
     sendResultCode(RESULT_CONNECT);
+
+    // SSH has no telnet TTYPE negotiation, so BBSes like Mystic detect the
+    // terminal in-band and stay silent until a keypress before drawing their
+    // login. Send that Enter -- but only if the server has stayed silent: one
+    // that drew its login already sent data, and an Enter would submit an empty
+    // username there.
+    QTimer::singleShot(700, this, [this]() {
+        if (m_isSshMode && m_isNetworkConnected && !m_sshDataSinceConnect)
+            m_ssh->write(QByteArray("\r"));
+    });
 }
 
 void RDevice::onSshDisconnected() {
@@ -821,6 +838,7 @@ void RDevice::onSshDisconnected() {
 
 // SSH carries no telnet negotiation, so this bypasses parseTelnet().
 void RDevice::onSshDataReceived(const QByteArray &data) {
+    m_sshDataSinceConnect = true;
     QMutexLocker locker(&m_bufferMutex);
     if (state == ModemState::StreamMode)
         m_networkToSioBuffer.append(data);

@@ -108,25 +108,21 @@ void SshBackend::processConnection(const QString &host, int port, const QString 
         ssh_key privkey = nullptr;
         const char* passphrase = password.isEmpty() ? nullptr : password.toUtf8().constData();
 
-        // Attempt to load the private key file
         int import_rc = ssh_pki_import_privkey_file(privateKeyPath.toUtf8().constData(), passphrase, nullptr, nullptr, &privkey);
-
         if (import_rc != SSH_OK) {
             emit errorOccurred(QString("SSH Key Error: Could not load private key from %1. Check path or passphrase.").arg(privateKeyPath));
             cleanup();
             return;
         }
 
-        // Authenticate using the loaded key
         rc = ssh_userauth_publickey(m_session, nullptr, privkey);
-        ssh_key_free(privkey); // Free the key memory immediately after attempt
+        ssh_key_free(privkey);
 
         if (rc != SSH_AUTH_SUCCESS) {
             emit errorOccurred(QString("SSH Key Auth Failed: %1").arg(ssh_get_error(m_session)));
             cleanup();
             return;
         }
-
     } else {
         // 2. STANDARD PASSWORD AUTHENTICATION
         rc = ssh_userauth_password(m_session, nullptr, password.toUtf8().constData());
@@ -154,7 +150,8 @@ void SshBackend::processConnection(const QString &host, int port, const QString 
             return;
         }
 
-        // Request a PTY (Terminal)
+        // Request a PTY (Terminal). libssh's default type gives Mystic colour;
+        // forcing "ansi" made it serve monochrome, so keep the default.
         rc = ssh_channel_request_pty(m_channel);
         if (rc != SSH_OK) {
             emit errorOccurred(QString("SSH PTY Error: %1").arg(ssh_get_error(m_session)));

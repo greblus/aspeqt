@@ -121,6 +121,9 @@ private:
     // True while the current call is SSH rather than telnet. Kept out of the
     // #ifdef so the routing below reads the same either way.
     bool m_isSshMode = false;
+    // Set when SSH data arrives; lets onSshConnected skip the auto-Enter
+    // for a server that draws its login on its own.
+    bool m_sshDataSinceConnect = false;
 
     QTcpSocket *tcpSocket;
     QTcpServer *tcpServer;

@@ -325,7 +325,7 @@ Popup {
         function openNew() {
             pb.editIndex = -1
             fName.text = ""; fHost.text = ""; fPort.text = "23"
-            fLogin.text = ""; fPass.text = ""
+            fLogin.text = ""; fPass.text = ""; fProto.currentIndex = 0
             open()
         }
         function openAt(i) {
@@ -333,6 +333,8 @@ Popup {
             var e = pb.entries[i]
             fName.text = e.name; fHost.text = e.ip; fPort.text = e.port
             fLogin.text = e.login; fPass.text = e.password
+            fProto.currentIndex =
+                (e.protocol && e.protocol.toUpperCase().indexOf("SSH") === 0) ? 1 : 0
             open()
         }
 
@@ -341,9 +343,12 @@ Popup {
                 "name": fName.text.trim(),
                 "ip": fHost.text.trim(),
                 "port": parseInt(fPort.text) || 23,
-                "protocol": "TELNET",
+                "protocol": fProto.currentText,
                 "login": fLogin.text,
-                "password": fPass.text
+                "password": fPass.text,
+                // Preserve the star; editing must not silently unfavourite.
+                "favourite": (pb.editIndex >= 0
+                              && pb.entries[pb.editIndex].favourite) === true
             }
             var a = pb.entries.slice()
             if (pb.editIndex < 0) a.push(e); else a[pb.editIndex] = e
@@ -375,6 +380,15 @@ Popup {
                     inputMethodHints: Qt.ImhDigitsOnly
                     validator: IntValidator { bottom: 1; top: 65535 }
                 }
+            }
+
+            Label { text: qsTr("Protocol:"); font.bold: true }
+            ComboBox {
+                id: fProto
+                Layout.fillWidth: true
+                model: ["TELNET", "SSH"]
+                // Nudge the port to the SSH default when it is still the telnet one.
+                onActivated: if (currentText === "SSH" && fPort.text === "23") fPort.text = "22"
             }
 
             Label { text: qsTr("Login (ESC-U):"); font.bold: true }

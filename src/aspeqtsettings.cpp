@@ -813,6 +813,7 @@ void AspeqtSettings::setRDeviceEnabled(bool enable)
     mSettings->setValue("RDevice/Enabled", enable);
 }
 
+
 QString AspeqtSettings::phonebookPath()
 {
     return mSettings->value("RDevice/PhonebookPath", "").toString();
