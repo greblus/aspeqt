@@ -34,6 +34,18 @@ Rectangle {
 
     function flash() { flashAnim.restart() }
 
+    // Hard cap on the displayed name so a long one can't widen the card and push
+    // the eject button off-screen (layout eliding alone is not enough because the
+    // name's max width is tied back to the card width). Middle-truncates, keeping
+    // the extension visible.
+    function shortName(n) {
+        var max = 30
+        if (!n || n.length <= max) return n || ""
+        var head = Math.ceil((max - 1) * 0.6)
+        var tail = max - 1 - head
+        return n.substring(0, head) + "…" + n.substring(n.length - tail)
+    }
+
     // Brief accent overlay to highlight a freshly added slot.
     Rectangle {
         id: flashOverlay
@@ -206,7 +218,7 @@ Rectangle {
                 spacing: Theme.gap
 
                 Text {
-                    text: card.mounted ? card.fileName
+                    text: card.mounted ? card.shortName(card.fileName)
                                        : qsTr("Mount a disk image or folder.")
                     font.bold: card.mounted
                     font.italic: !card.mounted
@@ -214,11 +226,12 @@ Rectangle {
                     color: !card.mounted ? Theme.placeholder
                                          : (card.isFolder ? Theme.nameFolder : Theme.nameDark)
                     elide: Text.ElideRight
-                    // Bound to the card, not the enclosing layout: constraining a
-                    // child by its own layout's width makes the rearrange recurse.
-                    Layout.maximumWidth: card.width * 0.6
+                    // Fill the leftover space and elide within it. preferredWidth 0
+                    // stops the name from inflating the card's minimum width (which
+                    // is what pushed the eject button off-screen).
+                    Layout.fillWidth: true
+                    Layout.preferredWidth: 0
                 }
-                Item { Layout.fillWidth: true }
                 Text {
                     visible: card.mounted && card.typeText.length > 0
                     text: card.typeText
