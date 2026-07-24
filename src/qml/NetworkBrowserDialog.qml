@@ -69,7 +69,7 @@ Popup {
     Connections {
         target: netbrowser
         function onError(message) { nb.notify(message) }
-        function onMounted(localPath) { app.mountDiskPath(0, localPath); nb.close() }
+        function onMounted(localPath) { app.mountNetworkTemp(0, localPath); nb.close() }
         function onSaved(localPath) { nb.notify(qsTr("Saved to ") + localPath) }
         function onEntriesChanged() { nb.rebuildFilter() }
         function onPathChanged() { if (netbrowser.connected) nb.syncAddress() }

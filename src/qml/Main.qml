@@ -103,7 +103,8 @@ ApplicationWindow {
                         onClosed: currentIndex = -1
                         MenuItem { text: qsTr("New disk image…"); onTriggered: createDiskDialog.open2() }
                         MenuItem { text: qsTr("Eject all")
-                                   onTriggered: win.withUnsaved(function () { app.ejectAll() }) }
+                                   onTriggered: win.withNetworkTemps(function () {
+                                       win.withUnsaved(function () { app.ejectAll() }) }) }
                     }
 
                     Menu {
@@ -139,7 +140,8 @@ ApplicationWindow {
                         onTriggered: { optionsDialog.load(); optionsDialog.open() }
                     }
                     MenuItem { text: qsTr("Quit")
-                        onTriggered: win.withUnsaved(function () { app.quit() }) }
+                        onTriggered: win.withNetworkTemps(function () {
+                            win.withUnsaved(function () { app.quit() }) }) }
                 }
             }
         }
@@ -217,8 +219,12 @@ ApplicationWindow {
                                     function (url) { if (url.length > 0) app.mountDiskPath(hw, url) })
                             })
                         onRequestSave: (hw, isDos) => win.saveSlot(hw, isDos)
-                        onRequestEject: (hw, dirty) => win.withUnsavedSlot(hw, dirty,
-                            function () { app.eject(hw) })
+                        onRequestEject: (hw, dirty) => {
+                            if (app.isNetworkTempSlot(hw))
+                                win.ejectNetworkTemp(hw)
+                            else
+                                win.withUnsavedSlot(hw, dirty, function () { app.eject(hw) })
+                        }
                         onRequestSaveName: (hw) => win.askSaveName(hw)
                         onRequestMountFolder: (hw) => win.withUnsavedSlot(hw, modified && !autoCommit,
                             function () {
@@ -439,6 +445,63 @@ ApplicationWindow {
                 if (answer === "cancel") return
                 if (answer === "save") win.saveEach(mods, 0, proceed)
                 else proceed()
+            })
+    }
+
+    // Network mounts live only in the cache. Ejecting one always asks whether to
+    // keep it: Save writes it to a user-chosen file (saveAsPath re-associates the
+    // slot, so the now-permanent image is remembered) and it stays mounted;
+    // Discard ejects it (the engine deletes the cache file); Cancel keeps it.
+    function ejectNetworkTemp(hw) {
+        confirmDialog.askSave(
+            qsTr("Downloaded image"),
+            qsTr("This image is only in the cache. Save it before ejecting?"),
+            function (answer) {
+                if (answer === "cancel") return
+                if (answer === "save") {
+                    filePicker.saveFile(
+                        qsTr("Save image as"),
+                        [qsTr("ATR image (*.atr)"), qsTr("All files (*)")],
+                        app.startDir("disk"), app.netTempName(hw),
+                        function (url) {
+                            if (url.length > 0) {
+                                app.saveAsPath(hw, url)
+                                app.clearNetworkTemp(hw)
+                            }
+                        })
+                } else {
+                    app.eject(hw)
+                }
+            })
+    }
+
+    // Offer to keep every cache-only network mount before quitting/ejecting all.
+    function withNetworkTemps(proceed) {
+        var list = app.networkTempDisks()
+        if (list.length === 0) { proceed(); return }
+        var names = []
+        for (var i = 0; i < list.length; ++i)
+            names.push("D" + list[i].slot + ": " + list[i].name)
+        confirmDialog.askSave(
+            qsTr("Downloaded images"),
+            qsTr("These images are only in the cache and will be lost:\n\n%1").arg(names.join("\n")),
+            function (answer) {
+                if (answer === "cancel") return
+                if (answer === "save") win.saveNetTempEach(list, 0, proceed)
+                else proceed()
+            })
+    }
+
+    function saveNetTempEach(list, i, done) {
+        if (i >= list.length) { done(); return }
+        var hw = list[i].hwIndex
+        filePicker.saveFile(
+            qsTr("Save image as"),
+            [qsTr("ATR image (*.atr)"), qsTr("All files (*)")],
+            app.startDir("disk"), app.netTempName(hw),
+            function (url) {
+                if (url.length > 0) { app.saveAsPath(hw, url); app.clearNetworkTemp(hw) }
+                win.saveNetTempEach(list, i + 1, done)
             })
     }
 

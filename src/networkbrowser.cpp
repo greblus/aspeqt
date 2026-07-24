@@ -108,8 +108,15 @@ public slots:
 
         QString dirPath = localDir;
         if (dirPath.startsWith("file:")) dirPath = QUrl(dirPath).toLocalFile();
-        if (dirPath.isEmpty())
-            dirPath = QStandardPaths::writableLocation(QStandardPaths::DownloadLocation);
+        if (dirPath.isEmpty()) {
+            // Mounts (action 1) go to a throwaway cache the engine cleans up on
+            // eject; an explicit Download (action 0) goes to the user's folder.
+            if (action == 1)
+                dirPath = QStandardPaths::writableLocation(QStandardPaths::CacheLocation)
+                          + QLatin1String("/netmount");
+            else
+                dirPath = QStandardPaths::writableLocation(QStandardPaths::DownloadLocation);
+        }
         if (dirPath.isEmpty())
             dirPath = QStandardPaths::writableLocation(QStandardPaths::AppDataLocation);
         QDir dir(dirPath);

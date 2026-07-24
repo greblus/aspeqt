@@ -39,6 +39,7 @@ Engine *g_engine;
 
 // Defined with the rest of the picker plumbing further down.
 static QString pathFromPickedUrl(const QString &url);
+static QString netTempDir();
 
 QFile *logFile;
 QMutex *logMutex;
@@ -117,6 +118,9 @@ Engine::Engine(QObject *parent)
 
     /* Setup the logging system */
     g_engine = this;
+    // Nothing in the network-mount cache is validly mounted at startup, so wipe
+    // it: a previous run that was killed without ejecting would leak files here.
+    QDir(netTempDir()).removeRecursively();
     g_aspeQtAppPath = QCoreApplication::applicationDirPath();
     g_disablePicoHiSpeed = false;
     logFile = new QFile(QDir::temp().absoluteFilePath("aspeqt.log"));
@@ -368,6 +372,52 @@ QVariantList Engine::modifiedDisks()
         m["hwIndex"] = i;
         m["slot"]    = i + 1;
         m["name"]    = friendlyName(img->originalFileName());
+        out << m;
+    }
+    return out;
+}
+
+// Directory the network browser drops throwaway "mount" downloads into. Purged
+// at startup (nothing there is validly mounted) so a killed app never bloats.
+static QString netTempDir()
+{
+    return QStandardPaths::writableLocation(QStandardPaths::CacheLocation)
+           + QLatin1String("/netmount");
+}
+
+void Engine::mountNetworkTemp(int no, const QString &path)
+{
+    mountFileWithDefaultProtection(no, path);
+    if (!sio->getDevice(no + 0x31))
+        return;                       // mount failed
+    // The cache file is temporary: keep it out of the saved session (a dead
+    // reference next launch) and remember it so eject can clean it up. Saving
+    // (saveAsPath) re-associates the slot with the real file and re-adds it.
+    aspeqtSettings->unmountImage(no);
+    m_netTempPath[no] = path;
+    deviceStatusChanged(no + 0x31);
+}
+
+QString Engine::netTempName(int no) const
+{
+    const QString p = m_netTempPath.value(no);
+    return p.isEmpty() ? QStringLiteral("disk.atr") : QFileInfo(p).fileName();
+}
+
+void Engine::clearNetworkTemp(int no)
+{
+    if (m_netTempPath.contains(no))
+        QFile::remove(m_netTempPath.take(no));
+}
+
+QVariantList Engine::networkTempDisks() const
+{
+    QVariantList out;
+    for (auto it = m_netTempPath.constBegin(); it != m_netTempPath.constEnd(); ++it) {
+        QVariantMap m;
+        m["hwIndex"] = it.key();
+        m["slot"]    = it.key() + 1;
+        m["name"]    = QFileInfo(it.value()).fileName();
         out << m;
     }
     return out;
@@ -734,6 +784,9 @@ void Engine::ejectImage(int no)
     m_writeProtect[no] = false;
 
     aspeqtSettings->unmountImage(no);
+    // A network mount lived only in the cache; drop it with the drive.
+    if (m_netTempPath.contains(no))
+        QFile::remove(m_netTempPath.take(no));
     deviceStatusChanged(no + 0x31);
     qDebug() << "!n" << tr("Unmounted disk %1").arg(no + 1);
 }

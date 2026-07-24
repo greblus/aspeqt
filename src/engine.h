@@ -92,6 +92,7 @@ private:
 
     QMap<int, QString> m_folderTree;   // slot -> tree content:// URI
     QMap<int, QString> m_folderTemp;   // slot -> local temp working dir
+    QMap<int, QString> m_netTempPath;  // slot -> cache file backing a network mount
 #endif
 
     // --- dynamic drive slots ------------------------------------------------
@@ -147,6 +148,13 @@ public:
 public:
     QVariantList driveList();
     QVariantList modifiedDisks();     // one map per present drive slot
+    // Network-browser images are mounted from a throwaway cache file; they are
+    // kept out of the saved session and cleaned up on eject unless saved.
+    void mountNetworkTemp(int no, const QString &path);
+    bool isNetworkTempSlot(int no) const { return m_netTempPath.contains(no); }
+    QString netTempName(int no) const;
+    void clearNetworkTemp(int no);
+    QVariantList networkTempDisks() const;
     QVariantMap  loaderState();   // loader (XEX/CAS) slot
     QVariantMap  status();        // { running, speed, printerOn }
     bool         canAddSlot();
