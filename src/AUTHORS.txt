@@ -9,6 +9,10 @@ AspeQt -- authors and third-party code
   http://www.horus.com/~hias/atari/
 * PCLINK by TheMontezuma — https://github.com/TheMontezuma/RespeQt
 * R: device / 850 emulation is derived from AspeQt-2k26 by Paul Jones <pjones1063@gmail.com>
+* The network file-system clients are ported from AspeQt-2k26 by Paul Jones, GPL-2:
+  inetworkclient.h, tnfsclient.{h,cpp} (TNFS), ftpclient.{h,cpp} (FTP/FTPS),
+  sshclient.{h,cpp} (SSH terminal + SFTP) and sftpclient.{h,cpp}. The Qt Quick
+  network browser (networkbrowser.{h,cpp}, NetworkBrowserDialog.qml) is original.
 * 850 handler firmware (rdevice_handler.h): The 6502 handler blob uploaded to the Atari
   is the replacement 850 interface firmware from Altirra project by Avery Lee:
 
