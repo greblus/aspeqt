@@ -150,7 +150,7 @@ public:
     QVariantList modifiedDisks();     // one map per present drive slot
     // Network-browser images are mounted from a throwaway cache file; they are
     // kept out of the saved session and cleaned up on eject unless saved.
-    void mountNetworkTemp(int no, const QString &path);
+    void mountNetworkTemp(const QString &path);   // picks an empty slot / adds one
     bool isNetworkTempSlot(int no) const { return m_netTempPath.contains(no); }
     QString netTempName(int no) const;
     void clearNetworkTemp(int no);

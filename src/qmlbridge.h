@@ -174,7 +174,7 @@ public:
     // File picking: QML asks the user, then calls back with the chosen URL.
     Q_INVOKABLE QString      startDir(const QString &kind);
     Q_INVOKABLE void         mountDiskPath(int hwIndex, const QString &url);
-    Q_INVOKABLE void         mountNetworkTemp(int hwIndex, const QString &path);
+    Q_INVOKABLE void         mountNetworkTemp(const QString &path);
     Q_INVOKABLE bool         isNetworkTempSlot(int hwIndex);
     Q_INVOKABLE QString      netTempName(int hwIndex);
     Q_INVOKABLE void         clearNetworkTemp(int hwIndex);

@@ -275,7 +275,7 @@ bool AppController::diskSetFsType(int i)   { return m_engine ? m_engine->diskSet
 void AppController::toast(const QString &t)  { if (m_engine) m_engine->toast(t); }
 QString AppController::startDir(const QString &kind) { return m_engine ? m_engine->startDir(kind) : QString(); }
 void AppController::mountDiskPath(int i, const QString &url)   { if (m_engine) m_engine->mountDiskPath(i, url); }
-void AppController::mountNetworkTemp(int i, const QString &path) { if (m_engine) m_engine->mountNetworkTemp(i, path); }
+void AppController::mountNetworkTemp(const QString &path) { if (m_engine) m_engine->mountNetworkTemp(path); }
 bool AppController::isNetworkTempSlot(int i)   { return m_engine && m_engine->isNetworkTempSlot(i); }
 QString AppController::netTempName(int i)      { return m_engine ? m_engine->netTempName(i) : QString(); }
 void AppController::clearNetworkTemp(int i)    { if (m_engine) m_engine->clearNetworkTemp(i); }

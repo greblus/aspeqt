@@ -69,7 +69,7 @@ Popup {
     Connections {
         target: netbrowser
         function onError(message) { nb.notify(message) }
-        function onMounted(localPath) { app.mountNetworkTemp(0, localPath); nb.close() }
+        function onMounted(localPath) { app.mountNetworkTemp(localPath); nb.close() }
         function onSaved(localPath) { nb.notify(qsTr("Saved to ") + localPath) }
         function onEntriesChanged() { nb.rebuildFilter() }
         function onPathChanged() { if (netbrowser.connected) nb.syncAddress() }
@@ -204,7 +204,7 @@ Popup {
                             netbrowser.enter(modelData.name)
                         } else if (modelData.isDisk) {
                             nbConfirm.ask(qsTr("Mount"),
-                                qsTr("Mount \"%1\" in drive 1?").arg(modelData.name),
+                                qsTr("Mount \"%1\" in a free slot?").arg(modelData.name),
                                 function (yes) { if (yes) netbrowser.mount(modelData.name) })
                         } else {
                             nbConfirm.ask(qsTr("Download"),
@@ -232,7 +232,7 @@ Popup {
                             iconSize: 26
                             visible: modelData.isDisk
                             source: Theme.icon("devices/drive-harddisk.svg")
-                            tip: qsTr("Mount in drive 1")
+                            tip: qsTr("Mount")
                             onClicked: netbrowser.mount(modelData.name)
                         }
                         SlotButton {

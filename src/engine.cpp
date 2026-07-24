@@ -385,8 +385,16 @@ static QString netTempDir()
            + QLatin1String("/netmount");
 }
 
-void Engine::mountNetworkTemp(int no, const QString &path)
+void Engine::mountNetworkTemp(const QString &path)
 {
+    // Land on the first present-but-empty slot; if the drives are all full,
+    // grow the rack by one; only reuse drive 1 when we've hit the hard limit.
+    int no = -1;
+    for (int i = 0; i < m_numDisks; ++i)
+        if (m_slotPresent[i] && !sio->getDevice(0x31 + i)) { no = i; break; }
+    if (no < 0) no = canAddSlot() ? addSlot() : 0;
+    if (no < 0) return;
+
     mountFileWithDefaultProtection(no, path);
     if (!sio->getDevice(no + 0x31))
         return;                       // mount failed

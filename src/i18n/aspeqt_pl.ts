@@ -760,168 +760,168 @@
 <context>
     <name>Engine</name>
     <message>
-        <location filename="../engine.cpp" line="2065" />
-        <location filename="../engine.cpp" line="2077" />
-        <location filename="../engine.cpp" line="2081" />
+        <location filename="../engine.cpp" line="2126" />
+        <location filename="../engine.cpp" line="2138" />
+        <location filename="../engine.cpp" line="2142" />
         <source>Cannot extract the files, see the log.</source>
         <translation>Nie można wypakować plików, zobacz do log-u</translation>
     </message>
     <message>
-        <location filename="../engine.cpp" line="2094" />
+        <location filename="../engine.cpp" line="2155" />
         <source>Cannot delete the files, see the log.</source>
         <translation>Nie można usunąć plików, zobacz do log-u</translation>
     </message>
     <message>
-        <location filename="../engine.cpp" line="2114" />
-        <location filename="../engine.cpp" line="2128" />
-        <location filename="../engine.cpp" line="2140" />
+        <location filename="../engine.cpp" line="2175" />
+        <location filename="../engine.cpp" line="2189" />
+        <location filename="../engine.cpp" line="2201" />
         <source>Cannot add the file, see the log.</source>
         <translation>Nie można dodać pliku, zobacz do log-u</translation>
     </message>
     <message>
-        <location filename="../engine.cpp" line="500" />
+        <location filename="../engine.cpp" line="558" />
         <source>Cassette (%1:%2)</source>
         <translation>Kaseta (%1:%2)</translation>
     </message>
     <message>
-        <location filename="../engine.cpp" line="1034" />
-        <location filename="../engine.cpp" line="1042" />
+        <location filename="../engine.cpp" line="1095" />
+        <location filename="../engine.cpp" line="1103" />
         <source>This slot does not hold a mounted folder.</source>
         <translation>Ten slot nie zawiera zamontowanego katalogu.</translation>
     </message>
     <message>
-        <location filename="../engine.cpp" line="1026" />
-        <location filename="../engine.cpp" line="1055" />
+        <location filename="../engine.cpp" line="1087" />
+        <location filename="../engine.cpp" line="1116" />
         <source>Could not copy the DOS files into the folder.</source>
         <translation>Nie udało się skopiować plików DOS do katalogu.</translation>
     </message>
     <message>
-        <location filename="../engine.cpp" line="1052" />
+        <location filename="../engine.cpp" line="1113" />
         <source>Installed high-speed MyPicoDOS into the folder. Reboot your Atari to load DOS.</source>
         <translation>Zainstalowano szybkie MyPicoDOS w katalogu. Zrestartuj Atari, aby wczytać DOS.</translation>
     </message>
     <message>
-        <location filename="../engine.cpp" line="473" />
+        <location filename="../engine.cpp" line="531" />
         <source>Executable (%1k)</source>
         <translation>Plik exe (%1k)</translation>
     </message>
     <message>
-        <location filename="../engine.cpp" line="1938" />
+        <location filename="../engine.cpp" line="1999" />
         <source>Failed to load '%1'.</source>
         <translation>Nie udało się wczytać '%1'.</translation>
     </message>
     <message>
-        <location filename="../engine.cpp" line="1950" />
+        <location filename="../engine.cpp" line="2011" />
         <source>Pick an Atari executable (.xex/.com/.exe) or a cassette image (.cas).</source>
         <translation>Wybierz program Atari (.xex/.com/.exe) lub obraz kasety (.cas).</translation>
     </message>
     <message>
-        <location filename="../engine.cpp" line="462" />
+        <location filename="../engine.cpp" line="520" />
         <source>Failed to load executable '%1'.</source>
         <translation>Nie udało się załadować programu '%1'.</translation>
     </message>
     <message>
-        <location filename="../engine.cpp" line="150" />
+        <location filename="../engine.cpp" line="154" />
         <source>Migrating the global settings to their new repository (session files are not affected).</source>
         <translation>Przenoszę ustawienia globalne do nowego repozytorium (pliki sesji pozostają bez zmian).</translation>
     </message>
     <message>
-        <location filename="../engine.cpp" line="156" />
+        <location filename="../engine.cpp" line="160" />
         <source>Settings migrated successfully.</source>
         <translation>Ustawienia przeniesione pomyślnie.</translation>
     </message>
     <message>
-        <location filename="../engine.cpp" line="210" />
+        <location filename="../engine.cpp" line="214" />
         <source>Requested session file not found in the given directory path or the path is incorrect. AspeQt will continue with the default session configuration.</source>
         <translation>Nie znaleziono pliku sesji we wskazanym katalogu lub ścieżka jest niepoprawna. AspeQt będzie kontynuował z domyślną konfiguracją sesji.</translation>
     </message>
     <message>
-        <location filename="../engine.cpp" line="221" />
+        <location filename="../engine.cpp" line="225" />
         <source>Requested session file not found in the application's current directory (no path was specified). AspeQt will continue with the default session configuration.</source>
         <translation>Nie znaleziono pliku sesji w bieżącym katalogu aplikacji (nie podano ścieżki). AspeQt będzie kontynuował z domyślną konfiguracją sesji.</translation>
     </message>
     <message>
-        <location filename="../engine.cpp" line="476" />
+        <location filename="../engine.cpp" line="534" />
         <source>Loaded executable '%1'. Start (or reboot) your Atari to run it.</source>
         <translation>Załadowano program '%1'. Uruchom (lub zresetuj) Atari, aby go wystartować.</translation>
     </message>
     <message>
-        <location filename="../engine.cpp" line="489" />
+        <location filename="../engine.cpp" line="547" />
         <source>Failed to load cassette image '%1'.</source>
         <translation>Nie udało się załadować obrazu kasety '%1'.</translation>
     </message>
     <message>
-        <location filename="../engine.cpp" line="537" />
+        <location filename="../engine.cpp" line="595" />
         <source>Playing back cassette image.</source>
         <translation>Odtwarzanie obrazu kasety.</translation>
     </message>
     <message>
-        <location filename="../engine.cpp" line="566" />
+        <location filename="../engine.cpp" line="624" />
         <source>Cassette playback finished.</source>
         <translation>Zakończono odtwarzanie kasety.</translation>
     </message>
     <message>
-        <location filename="../engine.cpp" line="577" />
+        <location filename="../engine.cpp" line="635" />
         <source>Executable loaded into the Atari.</source>
         <translation>Program załadowany do Atari.</translation>
     </message>
     <message>
-        <location filename="../engine.cpp" line="678" />
+        <location filename="../engine.cpp" line="736" />
         <source>[%1] Auto-commit failed.</source>
         <translation>[%1] Autozapis nie powiódł się.</translation>
     </message>
     <message>
-        <location filename="../engine.cpp" line="831" />
+        <location filename="../engine.cpp" line="892" />
         <source>Loaded into the cas/xex slot.</source>
         <translation>Zamontowałem w slocie cas/xex.</translation>
     </message>
     <message>
-        <location filename="../engine.cpp" line="1261" />
-        <location filename="../engine.cpp" line="2115" />
+        <location filename="../engine.cpp" line="1322" />
+        <location filename="../engine.cpp" line="2176" />
         <source>Cannot read '%1'.</source>
         <translation>Nie można odczytać '%1'.</translation>
     </message>
     <message>
-        <location filename="../engine.cpp" line="1337" />
-        <location filename="../engine.cpp" line="1551" />
-        <location filename="../engine.cpp" line="1558" />
-        <location filename="../engine.cpp" line="2129" />
+        <location filename="../engine.cpp" line="1398" />
+        <location filename="../engine.cpp" line="1612" />
+        <location filename="../engine.cpp" line="1619" />
+        <location filename="../engine.cpp" line="2190" />
         <source>Cannot write to '%1'.</source>
         <translation>Nie można zapisać do pliku '%1'.</translation>
     </message>
     <message>
-        <location filename="../engine.cpp" line="1550" />
-        <location filename="../engine.cpp" line="1557" />
+        <location filename="../engine.cpp" line="1611" />
+        <location filename="../engine.cpp" line="1618" />
         <source>Cannot save the printout, see the log.</source>
         <translation>Nie można zapisać wydruku, zobacz do log-u</translation>
     </message>
     <message>
-        <location filename="../engine.cpp" line="1676" />
+        <location filename="../engine.cpp" line="1737" />
         <source>No phonebook file chosen (see Options).</source>
         <translation>Nie wybrano pliku książki telefonicznej (zobacz Ustawienia).</translation>
     </message>
     <message>
-        <location filename="../engine.cpp" line="1729" />
+        <location filename="../engine.cpp" line="1790" />
         <source>Cannot write the bundled phonebook to %1</source>
         <translation>Nie można zapisać dołączonej książki telefonicznej do %1</translation>
     </message>
     <message>
-        <location filename="../engine.cpp" line="1745" />
+        <location filename="../engine.cpp" line="1806" />
         <source>The R: device is not enabled (see Options).</source>
         <translation>Urządzenie R: nie jest włączone (zobacz Ustawienia).</translation>
     </message>
     <message>
-        <location filename="../engine.cpp" line="1764" />
+        <location filename="../engine.cpp" line="1825" />
         <source>This phonebook entry has no address.</source>
         <translation>Ten wpis książki telefonicznej nie ma adresu.</translation>
     </message>
     <message>
-        <location filename="../engine.cpp" line="1776" />
+        <location filename="../engine.cpp" line="1837" />
         <source>Automatic</source>
         <translation>Automatyczny</translation>
     </message>
     <message>
-        <location filename="../engine.cpp" line="507" />
+        <location filename="../engine.cpp" line="565" />
         <source>AspeQt is ready to playback the cassette image file '%1'.
 
 Do whatever is necessary in your Atari to load this cassette image like rebooting while holding Option and Start buttons or entering "CLOAD" in the BASIC prompt.
@@ -934,63 +934,63 @@ Wykonaj w Atari czynności potrzebne do wczytania tej kasety, np. zresetuj trzym
 Gdy usłyszysz sygnał, naciśnij przycisk play i mniej więcej w tym samym czasie naciśnij klawisz na Atari.</translation>
     </message>
     <message>
-        <location filename="../engine.cpp" line="1177" />
+        <location filename="../engine.cpp" line="1238" />
         <source>[Disk %1] Auto-commit ON.</source>
         <translation>[Dysk %1] Autozapis WŁĄCZONY.</translation>
     </message>
     <message>
-        <location filename="../engine.cpp" line="1178" />
+        <location filename="../engine.cpp" line="1239" />
         <source>[Disk %1] Auto-commit OFF.</source>
         <translation>[Dysk %1] Autozapis WYŁĄCZONY.</translation>
     </message>
     <message>
-        <location filename="../engine.cpp" line="1225" />
+        <location filename="../engine.cpp" line="1286" />
         <source>'%1' cannot be saved.</source>
         <translation>Nie można zapisać '%1'.</translation>
     </message>
     <message>
-        <location filename="../engine.cpp" line="1458" />
+        <location filename="../engine.cpp" line="1519" />
         <source>Swapped disk %1 with disk %2.</source>
         <translation>Zamieniono dysk %1 z dyskiem %2.</translation>
     </message>
     <message>
-        <location filename="../engine.cpp" line="1493" />
+        <location filename="../engine.cpp" line="1554" />
         <source>Printer emulation stopped.</source>
         <translation>Emulacja drukarki zatrzymana.</translation>
     </message>
     <message>
-        <location filename="../engine.cpp" line="1492" />
+        <location filename="../engine.cpp" line="1553" />
         <source>Printer emulation started.</source>
         <translation>Emulacja drukarki uruchomiona.</translation>
     </message>
     <message>
-        <location filename="../engine.cpp" line="656" />
+        <location filename="../engine.cpp" line="714" />
         <source>Emulation stopped.</source>
         <translation>Emulacja zatrzymana.</translation>
     </message>
     <message>
-        <location filename="../engine.cpp" line="133" />
+        <location filename="../engine.cpp" line="137" />
         <source>AspeQt started at %1.</source>
         <translation>AspeQt uruchomiono %1.</translation>
     </message>
     <message>
-        <location filename="../engine.cpp" line="329" />
+        <location filename="../engine.cpp" line="333" />
         <source>AspeQt stopped at %1.</source>
         <translation>AspeQt zatrzymano %1.</translation>
     </message>
     <message>
-        <location filename="../engine.cpp" line="738" />
+        <location filename="../engine.cpp" line="799" />
         <source>Unmounted disk %1</source>
         <translation>Odmontowany dysk %1</translation>
     </message>
     <message>
-        <location filename="../engine.cpp" line="909" />
-        <location filename="../engine.cpp" line="1524" />
+        <location filename="../engine.cpp" line="970" />
+        <location filename="../engine.cpp" line="1585" />
         <source>[%1] Mounted '%2' as '%3'.</source>
         <translation>[%1] Zamontowe '%2' jako '%3'.</translation>
     </message>
     <message>
-        <location filename="../engine.cpp" line="234" />
+        <location filename="../engine.cpp" line="238" />
         <source>AspeQt - Atari Serial Peripheral Emulator for Qt</source>
         <translation>AspeQt - Emulator Szeregowych Peryferiów Atari dla Qt</translation>
     </message>
@@ -1194,13 +1194,13 @@ Gdy usłyszysz sygnał, naciśnij przycisk play i mniej więcej w tym samym czas
     </message>
     <message>
         <location filename="../qml/Main.qml" line="57" />
-        <location filename="../qml/Main.qml" line="345" />
+        <location filename="../qml/Main.qml" line="351" />
         <source>Stop emulation</source>
         <translation>Zatrzymaj emulację</translation>
     </message>
     <message>
         <location filename="../qml/Main.qml" line="58" />
-        <location filename="../qml/Main.qml" line="345" />
+        <location filename="../qml/Main.qml" line="351" />
         <source>Start emulation</source>
         <translation>Uruchom emulację</translation>
     </message>
@@ -1243,10 +1243,12 @@ Gdy usłyszysz sygnał, naciśnij przycisk play i mniej więcej w tym samym czas
     <message>
         <location filename="../qml/Main.qml" line="85" />
         <location filename="../qml/Main.qml" line="93" />
-        <location filename="../qml/Main.qml" line="188" />
-        <location filename="../qml/Main.qml" line="215" />
-        <location filename="../qml/Main.qml" line="416" />
-        <location filename="../qml/Main.qml" line="480" />
+        <location filename="../qml/Main.qml" line="190" />
+        <location filename="../qml/Main.qml" line="217" />
+        <location filename="../qml/Main.qml" line="422" />
+        <location filename="../qml/Main.qml" line="464" />
+        <location filename="../qml/Main.qml" line="500" />
+        <location filename="../qml/Main.qml" line="543" />
         <source>All files (*)</source>
         <translation>Wszystkie pliki (*)</translation>
     </message>
@@ -1271,13 +1273,13 @@ Gdy usłyszysz sygnał, naciśnij przycisk play i mniej więcej w tym samym czas
         <translation>Nowy obraz dysku…</translation>
     </message>
     <message>
-        <location filename="../qml/Main.qml" line="436" />
-        <location filename="../qml/Main.qml" line="454" />
+        <location filename="../qml/Main.qml" line="442" />
+        <location filename="../qml/Main.qml" line="517" />
         <source>Unsaved changes</source>
         <translation>Niezapisane zmiany</translation>
     </message>
     <message>
-        <location filename="../qml/Main.qml" line="437" />
+        <location filename="../qml/Main.qml" line="443" />
         <source>These images have unsaved changes:
 
 %1</source>
@@ -1286,34 +1288,60 @@ Gdy usłyszysz sygnał, naciśnij przycisk play i mniej więcej w tym samym czas
 %1</translation>
     </message>
     <message>
-        <location filename="../qml/Main.qml" line="455" />
+        <location filename="../qml/Main.qml" line="457" />
+        <source>Downloaded image</source>
+        <translation type="unfinished" />
+    </message>
+    <message>
+        <location filename="../qml/Main.qml" line="458" />
+        <source>This image is only in the cache. Save it before ejecting?</source>
+        <translation type="unfinished" />
+    </message>
+    <message>
+        <location filename="../qml/Main.qml" line="486" />
+        <source>Downloaded images</source>
+        <translation type="unfinished" />
+    </message>
+    <message>
+        <location filename="../qml/Main.qml" line="487" />
+        <source>These images are only in the cache and will be lost:
+
+%1</source>
+        <translation type="unfinished" />
+    </message>
+    <message>
+        <location filename="../qml/Main.qml" line="518" />
         <source>'%1' has unsaved changes.</source>
         <translation>'%1' ma niezapisane zmiany.</translation>
     </message>
     <message>
-        <location filename="../qml/Main.qml" line="467" />
+        <location filename="../qml/Main.qml" line="530" />
         <source>Install DOS</source>
         <translation>Zainstaluj DOS</translation>
     </message>
     <message>
-        <location filename="../qml/Main.qml" line="468" />
+        <location filename="../qml/Main.qml" line="531" />
         <source>Copy high-speed MyPicoDOS ($boot.bin + picodos.sys) into this folder? The Atari will then be able to boot DOS from it.</source>
         <translation>Skopiować szybkie MyPicoDOS ($boot.bin + picodos.sys) do tego katalogu? Atari będzie mogło z niego wystartować DOS.</translation>
     </message>
     <message>
-        <location filename="../qml/Main.qml" line="415" />
-        <location filename="../qml/Main.qml" line="479" />
+        <location filename="../qml/Main.qml" line="421" />
+        <location filename="../qml/Main.qml" line="463" />
+        <location filename="../qml/Main.qml" line="499" />
+        <location filename="../qml/Main.qml" line="542" />
         <source>Save image as</source>
         <translation>Zapisz obraz jako</translation>
     </message>
     <message>
-        <location filename="../qml/Main.qml" line="416" />
-        <location filename="../qml/Main.qml" line="480" />
+        <location filename="../qml/Main.qml" line="422" />
+        <location filename="../qml/Main.qml" line="464" />
+        <location filename="../qml/Main.qml" line="500" />
+        <location filename="../qml/Main.qml" line="543" />
         <source>ATR image (*.atr)</source>
         <translation>Obraz ATR (*.atr)</translation>
     </message>
     <message>
-        <location filename="../qml/Main.qml" line="480" />
+        <location filename="../qml/Main.qml" line="543" />
         <source>XFD image (*.xfd)</source>
         <translation>Obraz XFD (*.xfd)</translation>
     </message>
@@ -1323,57 +1351,57 @@ Gdy usłyszysz sygnał, naciśnij przycisk play i mniej więcej w tym samym czas
         <translation>Wysuń wszystkie</translation>
     </message>
     <message>
-        <location filename="../qml/Main.qml" line="111" />
+        <location filename="../qml/Main.qml" line="112" />
         <source>Recent</source>
         <translation>Ostatnie</translation>
     </message>
     <message>
-        <location filename="../qml/Main.qml" line="138" />
+        <location filename="../qml/Main.qml" line="139" />
         <source>Options</source>
         <translation>Opcje</translation>
     </message>
     <message>
-        <location filename="../qml/Main.qml" line="141" />
+        <location filename="../qml/Main.qml" line="142" />
         <source>Quit</source>
         <translation>Zakończ</translation>
     </message>
     <message>
-        <location filename="../qml/Main.qml" line="187" />
+        <location filename="../qml/Main.qml" line="189" />
         <source>Load executable or cassette</source>
         <translation>Wczytaj program lub kasetę</translation>
     </message>
     <message>
-        <location filename="../qml/Main.qml" line="188" />
+        <location filename="../qml/Main.qml" line="190" />
         <source>Atari programs (*.xex *.com *.exe *.cas)</source>
         <translation>Programy Atari (*.xex *.com *.exe *.cas)</translation>
     </message>
     <message>
-        <location filename="../qml/Main.qml" line="214" />
+        <location filename="../qml/Main.qml" line="216" />
         <source>Open a disk image</source>
         <translation>Otwórz obraz dysku</translation>
     </message>
     <message>
-        <location filename="../qml/Main.qml" line="215" />
+        <location filename="../qml/Main.qml" line="217" />
         <source>All Atari disk images (*.atr *.xfd *.pro)</source>
         <translation>Wszystkie obrazy dysków Atari (*.atr *.xfd *.pro)</translation>
     </message>
     <message>
-        <location filename="../qml/Main.qml" line="226" />
+        <location filename="../qml/Main.qml" line="232" />
         <source>Open a folder image</source>
         <translation>Otwórz folder</translation>
     </message>
     <message>
-        <location filename="../qml/Main.qml" line="352" />
+        <location filename="../qml/Main.qml" line="358" />
         <source>Stop printer emulation</source>
         <translation>Zatrzymaj emulację drukarki</translation>
     </message>
     <message>
-        <location filename="../qml/Main.qml" line="353" />
+        <location filename="../qml/Main.qml" line="359" />
         <source>Start printer emulation</source>
         <translation>Uruchom emulację drukarki</translation>
     </message>
     <message>
-        <location filename="../qml/Main.qml" line="358" />
+        <location filename="../qml/Main.qml" line="364" />
         <source>Clear messages</source>
         <translation>Wyczyść komunikaty</translation>
     </message>
@@ -1406,63 +1434,59 @@ Gdy usłyszysz sygnał, naciśnij przycisk play i mniej więcej w tym samym czas
         <translation>Odśwież</translation>
     </message>
     <message>
-        <location filename="../qml/NetworkBrowserDialog.qml" line="200" />
+        <location filename="../qml/NetworkBrowserDialog.qml" line="206" />
+        <location filename="../qml/NetworkBrowserDialog.qml" line="235" />
         <source>Mount</source>
         <translation>Montowanie</translation>
     </message>
     <message>
-        <location filename="../qml/NetworkBrowserDialog.qml" line="201" />
-        <source>Mount "%1" in drive 1?</source>
-        <translation>Zamontować „%1” w napędzie 1?</translation>
-    </message>
-    <message>
-        <location filename="../qml/NetworkBrowserDialog.qml" line="204" />
-        <location filename="../qml/NetworkBrowserDialog.qml" line="236" />
+        <location filename="../qml/NetworkBrowserDialog.qml" line="210" />
+        <location filename="../qml/NetworkBrowserDialog.qml" line="242" />
         <source>Download</source>
         <translation>Pobierz</translation>
     </message>
     <message>
-        <location filename="../qml/NetworkBrowserDialog.qml" line="205" />
+        <location filename="../qml/NetworkBrowserDialog.qml" line="211" />
         <source>Download "%1"?</source>
         <translation>Pobrać „%1”?</translation>
     </message>
     <message>
-        <location filename="../qml/NetworkBrowserDialog.qml" line="229" />
-        <source>Mount in drive 1</source>
-        <translation>Zamontuj w napędzie 1</translation>
+        <location filename="../qml/NetworkBrowserDialog.qml" line="207" />
+        <source>Mount "%1" in a free slot?</source>
+        <translation>Zamontować „%1” w wolnym slocie?</translation>
     </message>
     <message>
-        <location filename="../qml/NetworkBrowserDialog.qml" line="245" />
+        <location filename="../qml/NetworkBrowserDialog.qml" line="251" />
         <source>(no match)</source>
         <translation>(brak dopasowań)</translation>
     </message>
     <message>
-        <location filename="../qml/NetworkBrowserDialog.qml" line="245" />
+        <location filename="../qml/NetworkBrowserDialog.qml" line="251" />
         <source>(empty)</source>
         <translation>(pusto)</translation>
     </message>
     <message>
-        <location filename="../qml/NetworkBrowserDialog.qml" line="278" />
+        <location filename="../qml/NetworkBrowserDialog.qml" line="284" />
         <source>Remove from favourites</source>
         <translation>Usuń z ulubionych</translation>
     </message>
     <message>
-        <location filename="../qml/NetworkBrowserDialog.qml" line="290" />
+        <location filename="../qml/NetworkBrowserDialog.qml" line="296" />
         <source>No favourite servers yet. Enter a tnfs://, sftp:// or ftp:// address, connect, and tap the star to save it.</source>
         <translation>Brak ulubionych serwerów. Wpisz adres tnfs://, sftp:// lub ftp://, połącz się i dotknij gwiazdki, aby go zapisać.</translation>
     </message>
     <message>
-        <location filename="../qml/NetworkBrowserDialog.qml" line="313" />
+        <location filename="../qml/NetworkBrowserDialog.qml" line="319" />
         <source>Filter files…</source>
         <translation>Filtruj pliki…</translation>
     </message>
     <message>
-        <location filename="../qml/NetworkBrowserDialog.qml" line="322" />
+        <location filename="../qml/NetworkBrowserDialog.qml" line="328" />
         <source>Clear filter</source>
         <translation>Wyczyść filtr</translation>
     </message>
     <message>
-        <location filename="../qml/NetworkBrowserDialog.qml" line="355" />
+        <location filename="../qml/NetworkBrowserDialog.qml" line="361" />
         <source>Close</source>
         <translation type="unfinished">Zamknij</translation>
     </message>
@@ -1491,27 +1515,27 @@ Gdy usłyszysz sygnał, naciśnij przycisk play i mniej więcej w tym samym czas
     </message>
     <message>
         <location filename="../networkbrowser.cpp" line="107" />
-        <location filename="../networkbrowser.cpp" line="169" />
+        <location filename="../networkbrowser.cpp" line="176" />
         <source>Not connected.</source>
         <translation>Nie połączono.</translation>
     </message>
     <message>
-        <location filename="../networkbrowser.cpp" line="120" />
+        <location filename="../networkbrowser.cpp" line="127" />
         <source>Cannot write %1.</source>
         <translation>Nie można zapisać %1.</translation>
     </message>
     <message>
-        <location filename="../networkbrowser.cpp" line="131" />
+        <location filename="../networkbrowser.cpp" line="138" />
         <source>Cannot open %1.</source>
         <translation>Nie można otworzyć %1.</translation>
     </message>
     <message>
-        <location filename="../networkbrowser.cpp" line="147" />
+        <location filename="../networkbrowser.cpp" line="154" />
         <source>Download of %1 failed (empty).</source>
         <translation>Pobieranie %1 nie powiodło się (pusty plik).</translation>
     </message>
     <message>
-        <location filename="../networkbrowser.cpp" line="171" />
+        <location filename="../networkbrowser.cpp" line="178" />
         <source>Could not open %1.</source>
         <translation>Nie można otworzyć %1.</translation>
     </message>
@@ -1585,7 +1609,7 @@ Gdy usłyszysz sygnał, naciśnij przycisk play i mniej więcej w tym samym czas
         <translation>Język:</translation>
     </message>
     <message>
-        <location filename="../engine.cpp" line="1788" />
+        <location filename="../engine.cpp" line="1849" />
         <source>English</source>
         <translation>Polski</translation>
     </message>
@@ -2916,47 +2940,47 @@ Gdy usłyszysz sygnał, naciśnij przycisk play i mniej więcej w tym samym czas
 <context>
     <name>SlotCard</name>
     <message>
-        <location filename="../qml/SlotCard.qml" line="138" />
+        <location filename="../qml/SlotCard.qml" line="150" />
         <source>Mount disk image</source>
         <translation>Zamontuj obraz dysku</translation>
     </message>
     <message>
-        <location filename="../qml/SlotCard.qml" line="143" />
+        <location filename="../qml/SlotCard.qml" line="155" />
         <source>Mount folder image</source>
         <translation>Zamontuj katalog</translation>
     </message>
     <message>
-        <location filename="../qml/SlotCard.qml" line="156" />
+        <location filename="../qml/SlotCard.qml" line="168" />
         <source>Install high-speed DOS into this folder</source>
         <translation>Zainstaluj szybki DOS w tym katalogu</translation>
     </message>
     <message>
-        <location filename="../qml/SlotCard.qml" line="157" />
+        <location filename="../qml/SlotCard.qml" line="169" />
         <source>Save disk</source>
         <translation>Zapisz dysk</translation>
     </message>
     <message>
-        <location filename="../qml/SlotCard.qml" line="176" />
+        <location filename="../qml/SlotCard.qml" line="188" />
         <source>Auto-commit</source>
         <translation>Auto-zapis</translation>
     </message>
     <message>
-        <location filename="../qml/SlotCard.qml" line="185" />
+        <location filename="../qml/SlotCard.qml" line="197" />
         <source>Disk explorer</source>
         <translation>Eksplorator dysku</translation>
     </message>
     <message>
-        <location filename="../qml/SlotCard.qml" line="196" />
+        <location filename="../qml/SlotCard.qml" line="208" />
         <source>Remove slot</source>
         <translation>Usuń slot</translation>
     </message>
     <message>
-        <location filename="../qml/SlotCard.qml" line="196" />
+        <location filename="../qml/SlotCard.qml" line="208" />
         <source>Eject</source>
         <translation>Wysuń</translation>
     </message>
     <message>
-        <location filename="../qml/SlotCard.qml" line="210" />
+        <location filename="../qml/SlotCard.qml" line="222" />
         <source>Mount a disk image or folder.</source>
         <translation>Zamontuj obraz dysku lub katalog.</translation>
     </message>
