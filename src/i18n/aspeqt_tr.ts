@@ -1367,24 +1367,26 @@ Bip sesini duyduğunuzda oynat düğmesine basın ve yaklaşık aynı anda Atari
     <message>
         <location filename="../qml/Main.qml" line="457" />
         <source>Downloaded image</source>
-        <translation type="unfinished" />
+        <translation>İndirilen imaj</translation>
     </message>
     <message>
         <location filename="../qml/Main.qml" line="458" />
         <source>This image is only in the cache. Save it before ejecting?</source>
-        <translation type="unfinished" />
+        <translation>Bu imaj yalnızca önbellekte. Çıkarmadan önce kaydedilsin mi?</translation>
     </message>
     <message>
         <location filename="../qml/Main.qml" line="486" />
         <source>Downloaded images</source>
-        <translation type="unfinished" />
+        <translation>İndirilen imajlar</translation>
     </message>
     <message>
         <location filename="../qml/Main.qml" line="487" />
         <source>These images are only in the cache and will be lost:
 
 %1</source>
-        <translation type="unfinished" />
+        <translation>Bu imajlar yalnızca önbellekte ve kaybolacak:
+
+%1</translation>
     </message>
     <message>
         <location filename="../qml/Main.qml" line="518" />

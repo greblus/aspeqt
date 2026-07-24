@@ -1366,24 +1366,26 @@ Keď zaznie pípnutie, stlačte tlačidlo prehrávania a približne súčasne kl
     <message>
         <location filename="../qml/Main.qml" line="457" />
         <source>Downloaded image</source>
-        <translation type="unfinished" />
+        <translation>Stiahnutý obraz</translation>
     </message>
     <message>
         <location filename="../qml/Main.qml" line="458" />
         <source>This image is only in the cache. Save it before ejecting?</source>
-        <translation type="unfinished" />
+        <translation>Tento obraz je len vo vyrovnávacej pamäti. Uložiť ho pred vysunutím?</translation>
     </message>
     <message>
         <location filename="../qml/Main.qml" line="486" />
         <source>Downloaded images</source>
-        <translation type="unfinished" />
+        <translation>Stiahnuté obrazy</translation>
     </message>
     <message>
         <location filename="../qml/Main.qml" line="487" />
         <source>These images are only in the cache and will be lost:
 
 %1</source>
-        <translation type="unfinished" />
+        <translation>Tieto obrazy sú len vo vyrovnávacej pamäti a budú stratené:
+
+%1</translation>
     </message>
     <message>
         <location filename="../qml/Main.qml" line="518" />

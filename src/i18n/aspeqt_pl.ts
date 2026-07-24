@@ -1290,24 +1290,26 @@ Gdy usłyszysz sygnał, naciśnij przycisk play i mniej więcej w tym samym czas
     <message>
         <location filename="../qml/Main.qml" line="457" />
         <source>Downloaded image</source>
-        <translation type="unfinished" />
+        <translation>Pobrany obraz</translation>
     </message>
     <message>
         <location filename="../qml/Main.qml" line="458" />
         <source>This image is only in the cache. Save it before ejecting?</source>
-        <translation type="unfinished" />
+        <translation>Ten obraz jest tylko w pamięci podręcznej. Zapisać go przed odmontowaniem?</translation>
     </message>
     <message>
         <location filename="../qml/Main.qml" line="486" />
         <source>Downloaded images</source>
-        <translation type="unfinished" />
+        <translation>Pobrane obrazy</translation>
     </message>
     <message>
         <location filename="../qml/Main.qml" line="487" />
         <source>These images are only in the cache and will be lost:
 
 %1</source>
-        <translation type="unfinished" />
+        <translation>Te obrazy są tylko w pamięci podręcznej i zostaną utracone:
+
+%1</translation>
     </message>
     <message>
         <location filename="../qml/Main.qml" line="518" />

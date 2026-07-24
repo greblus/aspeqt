@@ -1366,24 +1366,26 @@ When you hear the beep sound, push the play button and press a key on your Atari
     <message>
         <location filename="../qml/Main.qml" line="457" />
         <source>Downloaded image</source>
-        <translation type="unfinished" />
+        <translation>Загруженный образ</translation>
     </message>
     <message>
         <location filename="../qml/Main.qml" line="458" />
         <source>This image is only in the cache. Save it before ejecting?</source>
-        <translation type="unfinished" />
+        <translation>Этот образ только в кэше. Сохранить его перед извлечением?</translation>
     </message>
     <message>
         <location filename="../qml/Main.qml" line="486" />
         <source>Downloaded images</source>
-        <translation type="unfinished" />
+        <translation>Загруженные образы</translation>
     </message>
     <message>
         <location filename="../qml/Main.qml" line="487" />
         <source>These images are only in the cache and will be lost:
 
 %1</source>
-        <translation type="unfinished" />
+        <translation>Эти образы только в кэше и будут потеряны:
+
+%1</translation>
     </message>
     <message>
         <location filename="../qml/Main.qml" line="518" />

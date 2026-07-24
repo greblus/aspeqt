@@ -1367,24 +1367,26 @@ Cuando oigas el pitido, pulsa el botón de reproducción y una tecla del Atari c
     <message>
         <location filename="../qml/Main.qml" line="457" />
         <source>Downloaded image</source>
-        <translation type="unfinished" />
+        <translation>Imagen descargada</translation>
     </message>
     <message>
         <location filename="../qml/Main.qml" line="458" />
         <source>This image is only in the cache. Save it before ejecting?</source>
-        <translation type="unfinished" />
+        <translation>Esta imagen solo está en la caché. ¿Guardarla antes de expulsar?</translation>
     </message>
     <message>
         <location filename="../qml/Main.qml" line="486" />
         <source>Downloaded images</source>
-        <translation type="unfinished" />
+        <translation>Imágenes descargadas</translation>
     </message>
     <message>
         <location filename="../qml/Main.qml" line="487" />
         <source>These images are only in the cache and will be lost:
 
 %1</source>
-        <translation type="unfinished" />
+        <translation>Estas imágenes solo están en la caché y se perderán:
+
+%1</translation>
     </message>
     <message>
         <location filename="../qml/Main.qml" line="518" />
