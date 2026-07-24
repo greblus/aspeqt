@@ -8,6 +8,7 @@ extern Engine *g_engine;
 #include <QQmlApplicationEngine>
 #include <QQmlContext>
 #include "qmlbridge.h"
+#include "networkbrowser.h"
 
 #ifdef Q_OS_WIN
 #include <windows.h>
@@ -75,7 +76,9 @@ int main(int argc, char *argv[])
     Engine engineWindow;              // the engine: SIO, mounting, log
     QQmlApplicationEngine engine;
     AppController controller(&engineWindow);
+    NetworkBrowser netBrowser;
     engine.rootContext()->setContextProperty("app", &controller);
+    engine.rootContext()->setContextProperty("netbrowser", &netBrowser);
     engine.load(QUrl(QStringLiteral("qrc:/qml/Main.qml")));
     if (engine.rootObjects().isEmpty())
         return -1;

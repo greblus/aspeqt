@@ -65,7 +65,12 @@ ApplicationWindow {
                         onTriggered: app.togglePrinter()
                     }
                     MenuItem { text: qsTr("Show printer output"); onTriggered: printWindow.open() }
-                    MenuItem { text: qsTr("Phonebook…"); onTriggered: phoneBookDialog.openBook() }
+                    MenuItem {
+                        text: qsTr("Phonebook…")
+                        enabled: app.modemEnabled
+                        onTriggered: phoneBookDialog.openBook()
+                    }
+                    MenuItem { text: qsTr("Network browser…"); onTriggered: networkBrowserDialog.openBrowser() }
                     MenuSeparator {}
 
                     Menu {
@@ -478,5 +483,6 @@ ApplicationWindow {
     }
     CreateDiskDialog { id: createDiskDialog }
     PhoneBookDialog { id: phoneBookDialog }
+    NetworkBrowserDialog { id: networkBrowserDialog }
     PrintWindow { id: printWindow }
 }

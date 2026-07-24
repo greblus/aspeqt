@@ -13,6 +13,7 @@
         <file>qml/DiskViewer.qml</file>
         <file>qml/CreateDiskDialog.qml</file>
         <file>qml/PhoneBookDialog.qml</file>
+        <file>qml/NetworkBrowserDialog.qml</file>
         <file>qml/PrintWindow.qml</file>
         <file>qml/Main.qml</file>
     </qresource>

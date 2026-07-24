@@ -34,6 +34,9 @@ SOURCES += main.cpp \
     printeroutput.cpp \
     rdevice.cpp \
     phonebook.cpp \
+    tnfsclient.cpp \
+    ftpclient.cpp \
+    networkbrowser.cpp \
     pclink.cpp
 win32:LIBS += -lwinmm -lz
 win32:SOURCES += serialport-win32.cpp
@@ -69,8 +72,8 @@ unix:
         exists($$LIBSSH_BUILD/src/libssh.a) {
             DEFINES     += HAVE_LIBSSH
             INCLUDEPATH += $$LIBSSH_SRC/include $$LIBSSH_BUILD/include
-            SOURCES     += sshclient.cpp
-            HEADERS     += sshclient.h
+            SOURCES     += sshclient.cpp sftpclient.cpp
+            HEADERS     += sshclient.h sftpclient.h
             # Order matters: libssh.a first, then the crypto it depends on.
             LIBS        += $$LIBSSH_BUILD/src/libssh.a \
                            $$ANDROID_OPENSSL_DIR/ssl_3/arm64-v8a/libssl.so \
@@ -114,6 +117,10 @@ HEADERS += engine.h \
     rdevice_handler.h \
     phonebook.h \
     bbsdata.h \
+    inetworkclient.h \
+    tnfsclient.h \
+    ftpclient.h \
+    networkbrowser.h \
     pclink.h
 
 win32:HEADERS += serialport-win32.h

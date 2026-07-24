@@ -1,5 +1,6 @@
 #include "qmlbridge.h"
 #include "engine.h"
+#include "aspeqtsettings.h"
 
 #include <QVariant>
 
@@ -274,6 +275,10 @@ bool AppController::diskSetFsType(int i)   { return m_engine ? m_engine->diskSet
 void AppController::toast(const QString &t)  { if (m_engine) m_engine->toast(t); }
 QString AppController::startDir(const QString &kind) { return m_engine ? m_engine->startDir(kind) : QString(); }
 void AppController::mountDiskPath(int i, const QString &url)   { if (m_engine) m_engine->mountDiskPath(i, url); }
+
+// The R: device (850/modem) emulation option. The network browser is only
+// offered when it is on, so a QML binding gates the menu item on this.
+bool AppController::modemEnabled() const { return aspeqtSettings && aspeqtSettings->rDeviceEnabled(); }
 void AppController::mountFolderPath(int i, const QString &url) { if (m_engine) m_engine->mountFolderPath(i, url); }
 void AppController::loaderLoadPath(const QString &url)         { if (m_engine) m_engine->loaderLoadPath(url); }
 bool AppController::saveAsPath(int i, const QString &url)      { return m_engine ? m_engine->saveAsPath(i, url) : false; }

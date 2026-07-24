@@ -81,6 +81,7 @@ class AppController : public QObject
     Q_PROPERTY(QString statusText READ statusText NOTIFY statusChanged)
     Q_PROPERTY(bool    sioRunning READ sioRunning NOTIFY statusChanged)
     Q_PROPERTY(bool    printerOn  READ printerOn  NOTIFY statusChanged)
+    Q_PROPERTY(bool    modemEnabled READ modemEnabled NOTIFY statusChanged)
     Q_PROPERTY(bool isAndroid     READ isAndroid  CONSTANT)
     Q_PROPERTY(QString logHtml    READ logHtml    NOTIFY logChanged)
     Q_PROPERTY(QString logTailHtml READ logTailHtml NOTIFY logChanged)
@@ -106,6 +107,7 @@ public:
     QString statusText() const { return m_statusText; }
     bool    sioRunning() const { return m_sioRunning; }
     bool    printerOn() const  { return m_printerOn; }
+    bool    modemEnabled() const;
     bool    isAndroid() const {
 #ifdef Q_OS_ANDROID
         return true;
