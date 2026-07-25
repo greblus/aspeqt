@@ -11,6 +11,7 @@
 #include <QDateTime>
 #include <QtDebug>
 #include <QDesktopServices>
+#include <QCoreApplication>
 #include <QUrl>
 
 extern char g_aspeclSlotNo;
@@ -74,7 +75,12 @@ void SmartDevice::handleCommand(quint8 command, quint16 aux)
             sio->port()->writeComplete();
 
             QString urlstr(data);
-            QDesktopServices::openUrl(QUrl(urlstr));
+            // Hand the URL to the main thread: this runs on the SIO worker, and
+            // openUrl() ends up in the platform layer (an Android Intent here),
+            // which is only safe to touch from the thread that owns the GUI.
+            QMetaObject::invokeMethod(qApp, [urlstr]() {
+                QDesktopServices::openUrl(QUrl(urlstr));
+            }, Qt::QueuedConnection);
 
             qDebug() << "!n" << tr("URL [%1] submitted").arg(urlstr);
         }
@@ -107,7 +113,10 @@ void SmartDevice::handleCommand(quint8 command, quint16 aux)
 
 void AspeCl::handleCommand(quint8 command, quint16 aux)
 {
-    QByteArray data(5, 0);
+    // Six, not five: the date/time reply below fills data[0..5], and used to
+    // write one byte past the end. The other commands either reassign this
+    // buffer or use a local one, so the size only matters here.
+    QByteArray data(6, 0);
     QDateTime dateTime = QDateTime::currentDateTime();
 
     switch (command) {
