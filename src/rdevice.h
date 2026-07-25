@@ -86,6 +86,10 @@ private slots:
     void onSshDisconnected();
     void onSshDataReceived(const QByteArray &data);
     void onSshError(const QString &msg);
+    // Interactive login (SSH-SHELL): shown on the Atari, answered from it.
+    void onSshHostKey(const QString &fingerprint, int status);
+    void onSshPrompt(const QString &prompt, bool echo);
+    void onSshAuthFailed(const QString &msg);
 #endif
 
     void onNewConnection();
@@ -121,6 +125,20 @@ private:
     // True while the current call is SSH rather than telnet. Kept out of the
     // #ifdef so the routing below reads the same either way.
     bool m_isSshMode = false;
+    // While an interactive login runs, bytes from the Atari answer our prompts
+    // instead of going to the (not yet open) shell channel.
+    enum class SshAsk { None, HostKey, Line };
+    SshAsk m_sshAsk = SshAsk::None;
+    bool m_sshAskEcho = true;
+    QString m_sshAskBuffer;
+    void handleSshPromptByte(char c);
+    // Drops OSC sequences (ESC ] ... BEL/ST) from the incoming stream: they
+    // carry terminal metadata -- window titles, systemd's session context -- that
+    // an Atari terminal cannot act on and would print as garbage. Colour and
+    // cursor (CSI) sequences pass through untouched. Stateful: a sequence can
+    // straddle two packets.
+    int m_oscState = 0;
+    QByteArray stripOsc(const QByteArray &in);
     // Set when SSH data arrives; lets onSshConnected skip the auto-Enter
     // for a server that draws its login on its own.
     bool m_sshDataSinceConnect = false;

@@ -333,8 +333,10 @@ Popup {
             var e = pb.entries[i]
             fName.text = e.name; fHost.text = e.ip; fPort.text = e.port
             fLogin.text = e.login; fPass.text = e.password
-            fProto.currentIndex =
-                (e.protocol && e.protocol.toUpperCase().indexOf("SSH") === 0) ? 1 : 0
+            // Exact match: "SSH-SHELL" also starts with "SSH", so a prefix test
+            // would land it on the wrong entry.
+            var p = (e.protocol || "").toUpperCase()
+            fProto.currentIndex = (p === "SSH-SHELL") ? 2 : (p.indexOf("SSH") === 0 ? 1 : 0)
             open()
         }
 
@@ -386,26 +388,42 @@ Popup {
             ComboBox {
                 id: fProto
                 Layout.fillWidth: true
-                model: ["TELNET", "SSH"]
+                // SSH-SHELL asks for the host key and the credentials on the
+                // Atari instead of storing them, so the entry keeps only host+port.
+                model: ["TELNET", "SSH", "SSH-SHELL"]
                 // Nudge the port to the SSH default when it is still the telnet one.
-                onActivated: if (currentText === "SSH" && fPort.text === "23") fPort.text = "22"
+                onActivated: if (currentText !== "TELNET" && fPort.text === "23") fPort.text = "22"
             }
 
-            Label { text: qsTr("Login (ESC-U):"); font.bold: true }
+            // SSH-SHELL types its credentials on the Atari, so there is nothing
+            // to store -- and nothing to leak from the phonebook file.
+            readonly property bool wantsCreds: fProto.currentText !== "SSH-SHELL"
+
+            Label {
+                text: qsTr("Login (ESC-U):"); font.bold: true
+                visible: parent.wantsCreds
+            }
             TextField {
                 id: fLogin
+                visible: parent.wantsCreds
                 Layout.fillWidth: true
                 inputMethodHints: Qt.ImhNoAutoUppercase | Qt.ImhNoPredictiveText
             }
 
-            Label { text: qsTr("Password (ESC-P):"); font.bold: true }
+            Label {
+                text: qsTr("Password (ESC-P):"); font.bold: true
+                visible: parent.wantsCreds
+            }
             TextField {
                 id: fPass
+                visible: parent.wantsCreds
                 Layout.fillWidth: true
                 inputMethodHints: Qt.ImhNoAutoUppercase | Qt.ImhNoPredictiveText
             }
             Label {
-                text: qsTr("Stored as plain text in the phonebook file.")
+                text: parent.wantsCreds
+                      ? qsTr("Stored as plain text in the phonebook file.")
+                      : qsTr("Asked for on the Atari at dial time; nothing is stored.")
                 color: Theme.typeGrey
                 font.pixelSize: 12
                 wrapMode: Text.WordWrap

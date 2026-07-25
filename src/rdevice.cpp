@@ -45,6 +45,9 @@ RDevice::RDevice(SioWorker *worker, int portIndex) : SioDevice(worker), m_portIn
     connect(m_ssh, &SshClient::disconnected, this, &RDevice::onSshDisconnected);
     connect(m_ssh, &SshClient::rxData,       this, &RDevice::onSshDataReceived);
     connect(m_ssh, &SshClient::error,        this, &RDevice::onSshError);
+    connect(m_ssh, &SshClient::hostKeyReady,  this, &RDevice::onSshHostKey);
+    connect(m_ssh, &SshClient::promptNeeded,  this, &RDevice::onSshPrompt);
+    connect(m_ssh, &SshClient::authFailed,    this, &RDevice::onSshAuthFailed);
 #endif
 
     m_ringTimer = new QTimer(this);
@@ -62,6 +65,14 @@ RDevice::RDevice(SioWorker *worker, int portIndex) : SioDevice(worker), m_portIn
     updateListenerConfig();
 
     connect(this, &RDevice::dispatchToNetwork, this, [this](const QByteArray &data){
+#ifdef HAVE_LIBSSH
+        // An interactive login is asking something: the answer is ours, not the
+        // server's, until the shell is up.
+        if (m_sshAsk != SshAsk::None) {
+            for (char c : data) handleSshPromptByte(c);
+            return;
+        }
+#endif
         if (m_isNetworkConnected) {
 #ifdef HAVE_LIBSSH
             if (m_isSshMode) m_ssh->write(data); else
@@ -681,7 +692,11 @@ void RDevice::at_handle_dial(const QString &target) {
         m_currentConnection = BbsEntry();
 
         const QString upper = host.toUpper();
-        if (upper.startsWith("SSHAUTH:") || upper.startsWith("SSH-AUTH:")) {
+        if (upper.startsWith("SSHSHELL:") || upper.startsWith("SSH-SHELL:")) {
+            m_currentConnection.protocol = "SSH-SHELL";
+            host = host.mid(host.indexOf(':') + 1);
+            port = 22;
+        } else if (upper.startsWith("SSHAUTH:") || upper.startsWith("SSH-AUTH:")) {
             m_currentConnection.protocol = "SSH-AUTH";
             host = host.mid(host.indexOf(':') + 1);
             port = 22;
@@ -710,8 +725,17 @@ void RDevice::startCall() {
 #ifdef HAVE_LIBSSH
     if (wantSsh) {
         m_isSshMode = true;
+        m_sshAsk = SshAsk::None;
+        m_oscState = 0;
         if (tcpSocket->state() != QAbstractSocket::UnconnectedState) tcpSocket->abort();
         if (m_ssh->isConnected()) m_ssh->disconnectFromHost();  // drop a prior call
+
+        // SSH-SHELL: nothing is stored, so the host key and the credentials are
+        // asked for on the Atari, like a real ssh client.
+        if (proto == "SSH-SHELL") {
+            m_ssh->connectInteractive(m_currentConnection.ip, m_currentConnection.port);
+            return;
+        }
         // Authenticate with the entry's login/password when it has them; an
         // empty login means anonymous (the BBS does its own login). SSH-AUTH
         // with no login falls back to "guest".
@@ -825,9 +849,82 @@ void RDevice::onSshConnected() {
     });
 }
 
+// The server's key, shown the way a real ssh client does. libssh has already
+// compared it with our known_hosts; only an unknown or changed key needs asking.
+void RDevice::onSshHostKey(const QString &fingerprint, int status) {
+    if (!m_isSshMode) return;
+
+    if (status == SSH_KNOWN_HOSTS_OK) {
+        m_ssh->acceptHostKey(true);            // seen before and unchanged
+        return;
+    }
+    if (status == SSH_KNOWN_HOSTS_CHANGED || status == SSH_KNOWN_HOSTS_OTHER) {
+        sendAtResponse("\r\nWARNING: the host key has CHANGED.\r\n"
+                       "Someone may be impersonating the server.\r\n"
+                       + fingerprint + "\r\nAccept anyway (y/n)? ");
+    } else {
+        sendAtResponse("\r\nUnknown host key:\r\n" + fingerprint
+                       + "\r\nAccept and remember (y/n)? ");
+    }
+    m_sshAsk = SshAsk::HostKey;
+    m_sshAskEcho = true;
+    m_sshAskBuffer.clear();
+}
+
+void RDevice::onSshPrompt(const QString &prompt, bool echo) {
+    if (!m_isSshMode) return;
+    sendAtResponse("\r\n" + prompt);
+    m_sshAsk = SshAsk::Line;
+    m_sshAskEcho = echo;
+    m_sshAskBuffer.clear();
+}
+
+void RDevice::onSshAuthFailed(const QString &msg) {
+    if (!m_isSshMode) return;
+    m_sshAsk = SshAsk::None;
+    sendAtResponse("\r\nLogin failed: " + msg + "\r\n");
+    m_ssh->disconnectFromHost();
+    sendResultCode(RESULT_NO_CARRIER);
+}
+
+// One byte of an answer to our own prompt. Echo is ours to control, which is
+// what lets a password be typed without showing.
+void RDevice::handleSshPromptByte(char c) {
+    if (m_sshAsk == SshAsk::HostKey) {
+        if (c == 'y' || c == 'Y' || c == 'n' || c == 'N') {
+            const bool yes = (c == 'y' || c == 'Y');
+            sendAtResponse(QString(QChar(c)) + "\r\n");
+            m_sshAsk = SshAsk::None;
+            m_ssh->acceptHostKey(yes);
+            if (!yes)
+                sendAtResponse("Rejected.\r\n");
+        }
+        return;                                 // ignore anything else
+    }
+
+    if (c == 0x0D || (quint8)c == 0x9B) {       // Return: submit the line
+        const QString answer = m_sshAskBuffer;
+        m_sshAskBuffer.clear();
+        m_sshAsk = SshAsk::None;
+        sendAtResponse("\r\n");
+        m_ssh->sendAnswer(answer);
+        return;
+    }
+    if (c == 8 || c == 126 || c == 127) {       // Backspace / Delete
+        if (!m_sshAskBuffer.isEmpty()) {
+            m_sshAskBuffer.chop(1);
+            if (m_sshAskEcho) sendAtResponse("\b \b");
+        }
+        return;
+    }
+    m_sshAskBuffer.append(QChar::fromLatin1(c));
+    if (m_sshAskEcho) sendAtResponse(QString(QChar::fromLatin1(c)));
+}
+
 void RDevice::onSshDisconnected() {
     qDebug() << "!i" << "[RDevice] SSH disconnected.";
     m_isNetworkConnected = false;
+    m_sshAsk = SshAsk::None;
     if (!m_isSshMode) return;
     {
         QMutexLocker locker(&m_bufferMutex);
@@ -836,19 +933,56 @@ void RDevice::onSshDisconnected() {
     sendResultCode(RESULT_NO_CARRIER);
 }
 
+QByteArray RDevice::stripOsc(const QByteArray &in) {
+    QByteArray out;
+    out.reserve(in.size());
+    for (char c : in) {
+        switch (m_oscState) {
+        case 0:                                     // normal text
+            if (c == 0x1B) m_oscState = 1;          // hold the ESC back
+            else           out.append(c);
+            break;
+        case 1:                                     // just after an ESC
+            if (c == ']') {                         // OSC: swallow the whole thing
+                m_oscState = 2;
+            } else {                                // CSI and friends: let it out
+                out.append(char(0x1B));
+                if (c == 0x1B) break;               // ESC ESC: still pending
+                out.append(c);
+                m_oscState = 0;
+            }
+            break;
+        case 2:                                     // inside the OSC body
+            if (c == 0x07)      m_oscState = 0;     // BEL terminates
+            else if (c == 0x1B) m_oscState = 3;     // maybe ST
+            break;
+        case 3:                                     // ESC inside the body
+            if (c == '\\')      m_oscState = 0;     // ST terminates
+            else if (c != 0x1B) m_oscState = 2;     // false alarm, keep eating
+            break;
+        }
+    }
+    return out;
+}
+
 // SSH carries no telnet negotiation, so this bypasses parseTelnet().
 void RDevice::onSshDataReceived(const QByteArray &data) {
-    m_sshDataSinceConnect = true;
+    m_sshDataSinceConnect = true;                   // the server spoke, stripped or not
+    const QByteArray clean = stripOsc(data);
+    if (clean.isEmpty()) return;
     QMutexLocker locker(&m_bufferMutex);
     if (state == ModemState::StreamMode)
-        m_networkToSioBuffer.append(data);
+        m_networkToSioBuffer.append(clean);
     else
-        m_txBuffer.append(data);
+        m_txBuffer.append(clean);
 }
 
 void RDevice::onSshError(const QString &msg) {
     if (!m_isSshMode) return;
     qDebug() << "!w" << "[RDevice] SSH error:" << msg;
+    // An error mid-login leaves no one to answer our prompt; go back to
+    // accepting AT commands rather than eating the Atari's keystrokes.
+    m_sshAsk = SshAsk::None;
     if (!m_isNetworkConnected) {
         sendAtResponse("\r\nERROR: SSH - " + msg + "\r\n");
         sendResultCode(RESULT_NO_CARRIER);

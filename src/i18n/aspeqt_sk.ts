@@ -795,32 +795,32 @@
         <translation>AspeQt zastavil na %1.</translation>
     </message>
     <message>
-        <location filename="../engine.cpp" line="588" />
+        <location filename="../engine.cpp" line="592" />
         <source>Failed to load executable '%1'.</source>
         <translation>Program „%1“ sa nepodarilo načítať.</translation>
     </message>
     <message>
-        <location filename="../engine.cpp" line="599" />
+        <location filename="../engine.cpp" line="603" />
         <source>Executable (%1k)</source>
         <translation>Program (%1k)</translation>
     </message>
     <message>
-        <location filename="../engine.cpp" line="602" />
+        <location filename="../engine.cpp" line="606" />
         <source>Loaded executable '%1'. Start (or reboot) your Atari to run it.</source>
         <translation>Program „%1“ načítaný. Zapnite (alebo reštartujte) Atari na jeho spustenie.</translation>
     </message>
     <message>
-        <location filename="../engine.cpp" line="615" />
+        <location filename="../engine.cpp" line="619" />
         <source>Failed to load cassette image '%1'.</source>
         <translation>Obraz kazety „%1“ sa nepodarilo načítať.</translation>
     </message>
     <message>
-        <location filename="../engine.cpp" line="626" />
+        <location filename="../engine.cpp" line="630" />
         <source>Cassette (%1:%2)</source>
         <translation>Kazeta (%1:%2)</translation>
     </message>
     <message>
-        <location filename="../engine.cpp" line="633" />
+        <location filename="../engine.cpp" line="637" />
         <source>AspeQt is ready to playback the cassette image file '%1'.
 
 Do whatever is necessary in your Atari to load this cassette image like rebooting while holding Option and Start buttons or entering "CLOAD" in the BASIC prompt.
@@ -833,166 +833,166 @@ Pripravte Atari na načítanie tejto kazety: reštartujte s podržanými kláves
 Keď zaznie pípnutie, stlačte tlačidlo prehrávania a približne súčasne kláves na Atari.</translation>
     </message>
     <message>
-        <location filename="../engine.cpp" line="663" />
+        <location filename="../engine.cpp" line="667" />
         <source>Playing back cassette image.</source>
         <translation>Prehráva sa obraz kazety.</translation>
     </message>
     <message>
-        <location filename="../engine.cpp" line="692" />
+        <location filename="../engine.cpp" line="696" />
         <source>Cassette playback finished.</source>
         <translation>Prehrávanie kazety skončilo.</translation>
     </message>
     <message>
-        <location filename="../engine.cpp" line="703" />
+        <location filename="../engine.cpp" line="707" />
         <source>Executable loaded into the Atari.</source>
         <translation>Program načítaný do Atari.</translation>
     </message>
     <message>
-        <location filename="../engine.cpp" line="804" />
+        <location filename="../engine.cpp" line="808" />
         <source>[%1] Auto-commit failed.</source>
         <translation>[%1] Automatické ukladanie zlyhalo.</translation>
     </message>
     <message>
-        <location filename="../engine.cpp" line="960" />
+        <location filename="../engine.cpp" line="964" />
         <source>Loaded into the cas/xex slot.</source>
         <translation>Načítané do slotu cas/xex.</translation>
     </message>
     <message>
-        <location filename="../engine.cpp" line="1163" />
-        <location filename="../engine.cpp" line="1171" />
+        <location filename="../engine.cpp" line="1167" />
+        <location filename="../engine.cpp" line="1175" />
         <source>This slot does not hold a mounted folder.</source>
         <translation>V tomto slote nie je pripojený priečinok.</translation>
     </message>
     <message>
-        <location filename="../engine.cpp" line="1181" />
+        <location filename="../engine.cpp" line="1185" />
         <source>Installed high-speed MyPicoDOS into the folder. Reboot your Atari to load DOS.</source>
         <translation>Rýchly MyPicoDOS bol nainštalovaný do priečinka. Reštartujte Atari na načítanie DOS-u.</translation>
     </message>
     <message>
-        <location filename="../engine.cpp" line="1155" />
-        <location filename="../engine.cpp" line="1184" />
+        <location filename="../engine.cpp" line="1159" />
+        <location filename="../engine.cpp" line="1188" />
         <source>Could not copy the DOS files into the folder.</source>
         <translation>Súbory DOS sa nepodarilo skopírovať do priečinka.</translation>
     </message>
     <message>
-        <location filename="../engine.cpp" line="1306" />
+        <location filename="../engine.cpp" line="1310" />
         <source>[Disk %1] Auto-commit ON.</source>
         <translation>[Disk %1] Automatické ukladanie ZAP.</translation>
     </message>
     <message>
-        <location filename="../engine.cpp" line="1307" />
+        <location filename="../engine.cpp" line="1311" />
         <source>[Disk %1] Auto-commit OFF.</source>
         <translation>[Disk %1] Automatické ukladanie VYP.</translation>
     </message>
     <message>
-        <location filename="../engine.cpp" line="479" />
-        <location filename="../engine.cpp" line="486" />
-        <location filename="../engine.cpp" line="1354" />
+        <location filename="../engine.cpp" line="483" />
+        <location filename="../engine.cpp" line="490" />
+        <location filename="../engine.cpp" line="1358" />
         <source>'%1' cannot be saved.</source>
         <translation>„%1“ sa nedá uložiť.</translation>
     </message>
     <message>
-        <location filename="../engine.cpp" line="1390" />
-        <location filename="../engine.cpp" line="2249" />
+        <location filename="../engine.cpp" line="1394" />
+        <location filename="../engine.cpp" line="2266" />
         <source>Cannot read '%1'.</source>
         <translation>„%1“ sa nedá načítať.</translation>
     </message>
     <message>
-        <location filename="../engine.cpp" line="1466" />
-        <location filename="../engine.cpp" line="1680" />
-        <location filename="../engine.cpp" line="1687" />
-        <location filename="../engine.cpp" line="2263" />
+        <location filename="../engine.cpp" line="1470" />
+        <location filename="../engine.cpp" line="1684" />
+        <location filename="../engine.cpp" line="1691" />
+        <location filename="../engine.cpp" line="2280" />
         <source>Cannot write to '%1'.</source>
         <translation>Nemožno zapisovať do %1 .</translation>
     </message>
     <message>
-        <location filename="../engine.cpp" line="1587" />
+        <location filename="../engine.cpp" line="1591" />
         <source>Swapped disk %1 with disk %2.</source>
         <translation>Výmena disku %1 za disk %2.</translation>
     </message>
     <message>
-        <location filename="../engine.cpp" line="1679" />
-        <location filename="../engine.cpp" line="1686" />
+        <location filename="../engine.cpp" line="1683" />
+        <location filename="../engine.cpp" line="1690" />
         <source>Cannot save the printout, see the log.</source>
         <translation>Výtlačok sa nedá uložiť, pozrite denník.</translation>
     </message>
     <message>
-        <location filename="../engine.cpp" line="1805" />
+        <location filename="../engine.cpp" line="1809" />
         <source>No phonebook file chosen (see Options).</source>
         <translation>Nie je vybraný súbor telefónneho zoznamu (pozri Nastavenia).</translation>
     </message>
     <message>
-        <location filename="../engine.cpp" line="1858" />
+        <location filename="../engine.cpp" line="1862" />
         <source>Cannot write the bundled phonebook to %1</source>
         <translation>Priložený telefónny zoznam sa nedá zapísať do %1</translation>
     </message>
     <message>
-        <location filename="../engine.cpp" line="1874" />
+        <location filename="../engine.cpp" line="1878" />
         <source>The R: device is not enabled (see Options).</source>
         <translation>Zariadenie R: nie je povolené (pozri Nastavenia).</translation>
     </message>
     <message>
-        <location filename="../engine.cpp" line="1893" />
+        <location filename="../engine.cpp" line="1897" />
         <source>This phonebook entry has no address.</source>
         <translation>Táto položka telefónneho zoznamu nemá adresu.</translation>
     </message>
     <message>
-        <location filename="../engine.cpp" line="1905" />
+        <location filename="../engine.cpp" line="1909" />
         <source>Automatic</source>
         <translation>Automatický</translation>
     </message>
     <message>
-        <location filename="../engine.cpp" line="2072" />
+        <location filename="../engine.cpp" line="2089" />
         <source>Failed to load '%1'.</source>
         <translation>„%1“ sa nepodarilo načítať.</translation>
     </message>
     <message>
-        <location filename="../engine.cpp" line="2084" />
+        <location filename="../engine.cpp" line="2101" />
         <source>Pick an Atari executable (.xex/.com/.exe) or a cassette image (.cas).</source>
         <translation>Vyberte program Atari (.xex/.com/.exe) alebo obraz kazety (.cas).</translation>
     </message>
     <message>
-        <location filename="../engine.cpp" line="2199" />
-        <location filename="../engine.cpp" line="2211" />
-        <location filename="../engine.cpp" line="2215" />
+        <location filename="../engine.cpp" line="2216" />
+        <location filename="../engine.cpp" line="2228" />
+        <location filename="../engine.cpp" line="2232" />
         <source>Cannot extract the files, see the log.</source>
         <translation>Súbory sa nedajú rozbaliť, pozrite denník.</translation>
     </message>
     <message>
-        <location filename="../engine.cpp" line="2228" />
+        <location filename="../engine.cpp" line="2245" />
         <source>Cannot delete the files, see the log.</source>
         <translation>Súbory sa nedajú zmazať, pozrite denník.</translation>
     </message>
     <message>
-        <location filename="../engine.cpp" line="2248" />
-        <location filename="../engine.cpp" line="2262" />
-        <location filename="../engine.cpp" line="2274" />
+        <location filename="../engine.cpp" line="2265" />
+        <location filename="../engine.cpp" line="2279" />
+        <location filename="../engine.cpp" line="2291" />
         <source>Cannot add the file, see the log.</source>
         <translation>Súbor sa nedá pridať, pozrite denník.</translation>
     </message>
     <message>
-        <location filename="../engine.cpp" line="1622" />
+        <location filename="../engine.cpp" line="1626" />
         <source>Printer emulation stopped.</source>
         <translation>Emulácia tlačiarne zastavená.</translation>
     </message>
     <message>
-        <location filename="../engine.cpp" line="1621" />
+        <location filename="../engine.cpp" line="1625" />
         <source>Printer emulation started.</source>
         <translation>Emulácia tlačiarne spustená.</translation>
     </message>
     <message>
-        <location filename="../engine.cpp" line="782" />
+        <location filename="../engine.cpp" line="786" />
         <source>Emulation stopped.</source>
         <translation>Emulácia zastavená.</translation>
     </message>
     <message>
-        <location filename="../engine.cpp" line="867" />
+        <location filename="../engine.cpp" line="871" />
         <source>Unmounted disk %1</source>
         <translation>Odpojený disk %1</translation>
     </message>
     <message>
-        <location filename="../engine.cpp" line="1038" />
-        <location filename="../engine.cpp" line="1653" />
+        <location filename="../engine.cpp" line="1042" />
+        <location filename="../engine.cpp" line="1657" />
         <source>[%1] Mounted '%2' as '%3'.</source>
         <translation>[%1] Pripojený '%2' ako '%3'.</translation>
     </message>
@@ -1734,7 +1734,7 @@ Keď zaznie pípnutie, stlačte tlačidlo prehrávania a približne súčasne kl
         <translation>Jazzk:</translation>
     </message>
     <message>
-        <location filename="../engine.cpp" line="1917" />
+        <location filename="../engine.cpp" line="1921" />
         <source>English</source>
         <translation>Slovak</translation>
     </message>
@@ -2423,39 +2423,44 @@ Keď zaznie pípnutie, stlačte tlačidlo prehrávania a približne súčasne kl
         <translation>Upraviť BBS</translation>
     </message>
     <message>
-        <location filename="../qml/PhoneBookDialog.qml" line="363" />
+        <location filename="../qml/PhoneBookDialog.qml" line="365" />
         <source>Name (used by ATDT &lt;name&gt;):</source>
         <translation>Názov (používa ATDT &lt;názov&gt;):</translation>
     </message>
     <message>
-        <location filename="../qml/PhoneBookDialog.qml" line="364" />
+        <location filename="../qml/PhoneBookDialog.qml" line="366" />
         <source>Basement BBS</source>
         <translation>Pivničný BBS</translation>
     </message>
     <message>
-        <location filename="../qml/PhoneBookDialog.qml" line="366" />
+        <location filename="../qml/PhoneBookDialog.qml" line="368" />
         <source>Address:</source>
         <translation>Adresa:</translation>
     </message>
     <message>
-        <location filename="../qml/PhoneBookDialog.qml" line="385" />
+        <location filename="../qml/PhoneBookDialog.qml" line="387" />
         <source>Protocol:</source>
         <translation>Protokol:</translation>
     </message>
     <message>
-        <location filename="../qml/PhoneBookDialog.qml" line="394" />
+        <location filename="../qml/PhoneBookDialog.qml" line="403" />
         <source>Login (ESC-U):</source>
         <translation>Prihlásenie (ESC-U):</translation>
     </message>
     <message>
-        <location filename="../qml/PhoneBookDialog.qml" line="401" />
+        <location filename="../qml/PhoneBookDialog.qml" line="414" />
         <source>Password (ESC-P):</source>
         <translation>Heslo (ESC-P):</translation>
     </message>
     <message>
-        <location filename="../qml/PhoneBookDialog.qml" line="408" />
+        <location filename="../qml/PhoneBookDialog.qml" line="425" />
         <source>Stored as plain text in the phonebook file.</source>
         <translation>Uložené ako čistý text v súbore telefónneho zoznamu.</translation>
+    </message>
+    <message>
+        <location filename="../qml/PhoneBookDialog.qml" line="426" />
+        <source>Asked for on the Atari at dial time; nothing is stored.</source>
+        <translation>Pýta sa na Atari pri vytáčaní; nič sa neukladá.</translation>
     </message>
 </context>
 <context>
@@ -2567,7 +2572,7 @@ Keď zaznie pípnutie, stlačte tlačidlo prehrávania a približne súčasne kl
 <context>
     <name>RDevice</name>
     <message>
-        <location filename="../rdevice.cpp" line="923" />
+        <location filename="../rdevice.cpp" line="1019" />
         <source>[RDevice] Dialing %1:%2...</source>
         <translation type="unfinished" />
     </message>

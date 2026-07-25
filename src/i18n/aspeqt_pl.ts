@@ -760,63 +760,63 @@
 <context>
     <name>Engine</name>
     <message>
-        <location filename="../engine.cpp" line="2199" />
-        <location filename="../engine.cpp" line="2211" />
-        <location filename="../engine.cpp" line="2215" />
+        <location filename="../engine.cpp" line="2216" />
+        <location filename="../engine.cpp" line="2228" />
+        <location filename="../engine.cpp" line="2232" />
         <source>Cannot extract the files, see the log.</source>
         <translation>Nie można wypakować plików, zobacz do log-u</translation>
     </message>
     <message>
-        <location filename="../engine.cpp" line="2228" />
+        <location filename="../engine.cpp" line="2245" />
         <source>Cannot delete the files, see the log.</source>
         <translation>Nie można usunąć plików, zobacz do log-u</translation>
     </message>
     <message>
-        <location filename="../engine.cpp" line="2248" />
-        <location filename="../engine.cpp" line="2262" />
-        <location filename="../engine.cpp" line="2274" />
+        <location filename="../engine.cpp" line="2265" />
+        <location filename="../engine.cpp" line="2279" />
+        <location filename="../engine.cpp" line="2291" />
         <source>Cannot add the file, see the log.</source>
         <translation>Nie można dodać pliku, zobacz do log-u</translation>
     </message>
     <message>
-        <location filename="../engine.cpp" line="626" />
+        <location filename="../engine.cpp" line="630" />
         <source>Cassette (%1:%2)</source>
         <translation>Kaseta (%1:%2)</translation>
     </message>
     <message>
-        <location filename="../engine.cpp" line="1163" />
-        <location filename="../engine.cpp" line="1171" />
+        <location filename="../engine.cpp" line="1167" />
+        <location filename="../engine.cpp" line="1175" />
         <source>This slot does not hold a mounted folder.</source>
         <translation>Ten slot nie zawiera zamontowanego katalogu.</translation>
     </message>
     <message>
-        <location filename="../engine.cpp" line="1155" />
-        <location filename="../engine.cpp" line="1184" />
+        <location filename="../engine.cpp" line="1159" />
+        <location filename="../engine.cpp" line="1188" />
         <source>Could not copy the DOS files into the folder.</source>
         <translation>Nie udało się skopiować plików DOS do katalogu.</translation>
     </message>
     <message>
-        <location filename="../engine.cpp" line="1181" />
+        <location filename="../engine.cpp" line="1185" />
         <source>Installed high-speed MyPicoDOS into the folder. Reboot your Atari to load DOS.</source>
         <translation>Zainstalowano szybkie MyPicoDOS w katalogu. Zrestartuj Atari, aby wczytać DOS.</translation>
     </message>
     <message>
-        <location filename="../engine.cpp" line="599" />
+        <location filename="../engine.cpp" line="603" />
         <source>Executable (%1k)</source>
         <translation>Plik exe (%1k)</translation>
     </message>
     <message>
-        <location filename="../engine.cpp" line="2072" />
+        <location filename="../engine.cpp" line="2089" />
         <source>Failed to load '%1'.</source>
         <translation>Nie udało się wczytać '%1'.</translation>
     </message>
     <message>
-        <location filename="../engine.cpp" line="2084" />
+        <location filename="../engine.cpp" line="2101" />
         <source>Pick an Atari executable (.xex/.com/.exe) or a cassette image (.cas).</source>
         <translation>Wybierz program Atari (.xex/.com/.exe) lub obraz kasety (.cas).</translation>
     </message>
     <message>
-        <location filename="../engine.cpp" line="588" />
+        <location filename="../engine.cpp" line="592" />
         <source>Failed to load executable '%1'.</source>
         <translation>Nie udało się załadować programu '%1'.</translation>
     </message>
@@ -841,87 +841,87 @@
         <translation>Nie znaleziono pliku sesji w bieżącym katalogu aplikacji (nie podano ścieżki). AspeQt będzie kontynuował z domyślną konfiguracją sesji.</translation>
     </message>
     <message>
-        <location filename="../engine.cpp" line="602" />
+        <location filename="../engine.cpp" line="606" />
         <source>Loaded executable '%1'. Start (or reboot) your Atari to run it.</source>
         <translation>Załadowano program '%1'. Uruchom (lub zresetuj) Atari, aby go wystartować.</translation>
     </message>
     <message>
-        <location filename="../engine.cpp" line="615" />
+        <location filename="../engine.cpp" line="619" />
         <source>Failed to load cassette image '%1'.</source>
         <translation>Nie udało się załadować obrazu kasety '%1'.</translation>
     </message>
     <message>
-        <location filename="../engine.cpp" line="663" />
+        <location filename="../engine.cpp" line="667" />
         <source>Playing back cassette image.</source>
         <translation>Odtwarzanie obrazu kasety.</translation>
     </message>
     <message>
-        <location filename="../engine.cpp" line="692" />
+        <location filename="../engine.cpp" line="696" />
         <source>Cassette playback finished.</source>
         <translation>Zakończono odtwarzanie kasety.</translation>
     </message>
     <message>
-        <location filename="../engine.cpp" line="703" />
+        <location filename="../engine.cpp" line="707" />
         <source>Executable loaded into the Atari.</source>
         <translation>Program załadowany do Atari.</translation>
     </message>
     <message>
-        <location filename="../engine.cpp" line="804" />
+        <location filename="../engine.cpp" line="808" />
         <source>[%1] Auto-commit failed.</source>
         <translation>[%1] Autozapis nie powiódł się.</translation>
     </message>
     <message>
-        <location filename="../engine.cpp" line="960" />
+        <location filename="../engine.cpp" line="964" />
         <source>Loaded into the cas/xex slot.</source>
         <translation>Zamontowałem w slocie cas/xex.</translation>
     </message>
     <message>
-        <location filename="../engine.cpp" line="1390" />
-        <location filename="../engine.cpp" line="2249" />
+        <location filename="../engine.cpp" line="1394" />
+        <location filename="../engine.cpp" line="2266" />
         <source>Cannot read '%1'.</source>
         <translation>Nie można odczytać '%1'.</translation>
     </message>
     <message>
-        <location filename="../engine.cpp" line="1466" />
-        <location filename="../engine.cpp" line="1680" />
-        <location filename="../engine.cpp" line="1687" />
-        <location filename="../engine.cpp" line="2263" />
+        <location filename="../engine.cpp" line="1470" />
+        <location filename="../engine.cpp" line="1684" />
+        <location filename="../engine.cpp" line="1691" />
+        <location filename="../engine.cpp" line="2280" />
         <source>Cannot write to '%1'.</source>
         <translation>Nie można zapisać do pliku '%1'.</translation>
     </message>
     <message>
-        <location filename="../engine.cpp" line="1679" />
-        <location filename="../engine.cpp" line="1686" />
+        <location filename="../engine.cpp" line="1683" />
+        <location filename="../engine.cpp" line="1690" />
         <source>Cannot save the printout, see the log.</source>
         <translation>Nie można zapisać wydruku, zobacz do log-u</translation>
     </message>
     <message>
-        <location filename="../engine.cpp" line="1805" />
+        <location filename="../engine.cpp" line="1809" />
         <source>No phonebook file chosen (see Options).</source>
         <translation>Nie wybrano pliku książki telefonicznej (zobacz Ustawienia).</translation>
     </message>
     <message>
-        <location filename="../engine.cpp" line="1858" />
+        <location filename="../engine.cpp" line="1862" />
         <source>Cannot write the bundled phonebook to %1</source>
         <translation>Nie można zapisać dołączonej książki telefonicznej do %1</translation>
     </message>
     <message>
-        <location filename="../engine.cpp" line="1874" />
+        <location filename="../engine.cpp" line="1878" />
         <source>The R: device is not enabled (see Options).</source>
         <translation>Urządzenie R: nie jest włączone (zobacz Ustawienia).</translation>
     </message>
     <message>
-        <location filename="../engine.cpp" line="1893" />
+        <location filename="../engine.cpp" line="1897" />
         <source>This phonebook entry has no address.</source>
         <translation>Ten wpis książki telefonicznej nie ma adresu.</translation>
     </message>
     <message>
-        <location filename="../engine.cpp" line="1905" />
+        <location filename="../engine.cpp" line="1909" />
         <source>Automatic</source>
         <translation>Automatyczny</translation>
     </message>
     <message>
-        <location filename="../engine.cpp" line="633" />
+        <location filename="../engine.cpp" line="637" />
         <source>AspeQt is ready to playback the cassette image file '%1'.
 
 Do whatever is necessary in your Atari to load this cassette image like rebooting while holding Option and Start buttons or entering "CLOAD" in the BASIC prompt.
@@ -934,39 +934,39 @@ Wykonaj w Atari czynności potrzebne do wczytania tej kasety, np. zresetuj trzym
 Gdy usłyszysz sygnał, naciśnij przycisk play i mniej więcej w tym samym czasie naciśnij klawisz na Atari.</translation>
     </message>
     <message>
-        <location filename="../engine.cpp" line="1306" />
+        <location filename="../engine.cpp" line="1310" />
         <source>[Disk %1] Auto-commit ON.</source>
         <translation>[Dysk %1] Autozapis WŁĄCZONY.</translation>
     </message>
     <message>
-        <location filename="../engine.cpp" line="1307" />
+        <location filename="../engine.cpp" line="1311" />
         <source>[Disk %1] Auto-commit OFF.</source>
         <translation>[Dysk %1] Autozapis WYŁĄCZONY.</translation>
     </message>
     <message>
-        <location filename="../engine.cpp" line="479" />
-        <location filename="../engine.cpp" line="486" />
-        <location filename="../engine.cpp" line="1354" />
+        <location filename="../engine.cpp" line="483" />
+        <location filename="../engine.cpp" line="490" />
+        <location filename="../engine.cpp" line="1358" />
         <source>'%1' cannot be saved.</source>
         <translation>Nie można zapisać '%1'.</translation>
     </message>
     <message>
-        <location filename="../engine.cpp" line="1587" />
+        <location filename="../engine.cpp" line="1591" />
         <source>Swapped disk %1 with disk %2.</source>
         <translation>Zamieniono dysk %1 z dyskiem %2.</translation>
     </message>
     <message>
-        <location filename="../engine.cpp" line="1622" />
+        <location filename="../engine.cpp" line="1626" />
         <source>Printer emulation stopped.</source>
         <translation>Emulacja drukarki zatrzymana.</translation>
     </message>
     <message>
-        <location filename="../engine.cpp" line="1621" />
+        <location filename="../engine.cpp" line="1625" />
         <source>Printer emulation started.</source>
         <translation>Emulacja drukarki uruchomiona.</translation>
     </message>
     <message>
-        <location filename="../engine.cpp" line="782" />
+        <location filename="../engine.cpp" line="786" />
         <source>Emulation stopped.</source>
         <translation>Emulacja zatrzymana.</translation>
     </message>
@@ -981,13 +981,13 @@ Gdy usłyszysz sygnał, naciśnij przycisk play i mniej więcej w tym samym czas
         <translation>AspeQt zatrzymano %1.</translation>
     </message>
     <message>
-        <location filename="../engine.cpp" line="867" />
+        <location filename="../engine.cpp" line="871" />
         <source>Unmounted disk %1</source>
         <translation>Odmontowany dysk %1</translation>
     </message>
     <message>
-        <location filename="../engine.cpp" line="1038" />
-        <location filename="../engine.cpp" line="1653" />
+        <location filename="../engine.cpp" line="1042" />
+        <location filename="../engine.cpp" line="1657" />
         <source>[%1] Mounted '%2' as '%3'.</source>
         <translation>[%1] Zamontowe '%2' jako '%3'.</translation>
     </message>
@@ -1630,7 +1630,7 @@ Gdy usłyszysz sygnał, naciśnij przycisk play i mniej więcej w tym samym czas
         <translation>Język:</translation>
     </message>
     <message>
-        <location filename="../engine.cpp" line="1917" />
+        <location filename="../engine.cpp" line="1921" />
         <source>English</source>
         <translation>Polski</translation>
     </message>
@@ -2424,39 +2424,44 @@ Gdy usłyszysz sygnał, naciśnij przycisk play i mniej więcej w tym samym czas
         <translation>Edytuj BBS</translation>
     </message>
     <message>
-        <location filename="../qml/PhoneBookDialog.qml" line="363" />
+        <location filename="../qml/PhoneBookDialog.qml" line="365" />
         <source>Name (used by ATDT &lt;name&gt;):</source>
         <translation>Nazwa (używana przez ATDT &lt;nazwa&gt;):</translation>
     </message>
     <message>
-        <location filename="../qml/PhoneBookDialog.qml" line="364" />
+        <location filename="../qml/PhoneBookDialog.qml" line="366" />
         <source>Basement BBS</source>
         <translation>Piwniczny BBS</translation>
     </message>
     <message>
-        <location filename="../qml/PhoneBookDialog.qml" line="366" />
+        <location filename="../qml/PhoneBookDialog.qml" line="368" />
         <source>Address:</source>
         <translation>Adres:</translation>
     </message>
     <message>
-        <location filename="../qml/PhoneBookDialog.qml" line="385" />
+        <location filename="../qml/PhoneBookDialog.qml" line="387" />
         <source>Protocol:</source>
         <translation>Protokół:</translation>
     </message>
     <message>
-        <location filename="../qml/PhoneBookDialog.qml" line="394" />
+        <location filename="../qml/PhoneBookDialog.qml" line="403" />
         <source>Login (ESC-U):</source>
         <translation>Login (ESC-U):</translation>
     </message>
     <message>
-        <location filename="../qml/PhoneBookDialog.qml" line="401" />
+        <location filename="../qml/PhoneBookDialog.qml" line="414" />
         <source>Password (ESC-P):</source>
         <translation>Hasło (ESC-P):</translation>
     </message>
     <message>
-        <location filename="../qml/PhoneBookDialog.qml" line="408" />
+        <location filename="../qml/PhoneBookDialog.qml" line="425" />
         <source>Stored as plain text in the phonebook file.</source>
         <translation>Przechowywane jawnym tekstem w pliku książki telefonicznej.</translation>
+    </message>
+    <message>
+        <location filename="../qml/PhoneBookDialog.qml" line="426" />
+        <source>Asked for on the Atari at dial time; nothing is stored.</source>
+        <translation>Pytane na Atari przy dzwonieniu; nic nie jest zapisywane.</translation>
     </message>
 </context>
 <context>
@@ -2568,7 +2573,7 @@ Gdy usłyszysz sygnał, naciśnij przycisk play i mniej więcej w tym samym czas
 <context>
     <name>RDevice</name>
     <message>
-        <location filename="../rdevice.cpp" line="923" />
+        <location filename="../rdevice.cpp" line="1019" />
         <source>[RDevice] Dialing %1:%2...</source>
         <translation type="unfinished" />
     </message>

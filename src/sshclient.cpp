@@ -4,6 +4,9 @@
 #include "sshclient.h"
 #include <fcntl.h>
 #include <QDebug>
+#include <QDir>
+#include <QFileInfo>
+#include <QStandardPaths>
 #include <QRegularExpression> // <-- NEW: Added for filtering
 
 // ============================================================================
@@ -38,17 +41,7 @@ void SshBackend::cleanup() {
     }
 }
 
-void SshBackend::processConnection(const QString &host, int port, const QString &user, const QString &password, const QString &privateKeyPath, SshMode mode) {
-    // Ensure clean state before starting
-    cleanup();
-
-    m_currentMode = mode;
-    m_session = ssh_new();
-    if (!m_session) {
-        emit errorOccurred("Internal Error: Failed to create SSH session structure.");
-        return;
-    }
-
+void SshBackend::applyOptions(const QString &host, int port, const QString &user) {
     // Set SSH Options
     ssh_options_set(m_session, SSH_OPTIONS_HOST, host.toUtf8().constData());
     int portInt = port;
@@ -57,6 +50,13 @@ void SshBackend::processConnection(const QString &host, int port, const QString 
     if (!user.isEmpty()) {
         ssh_options_set(m_session, SSH_OPTIONS_USER, user.toUtf8().constData());
     }
+
+    // Keep known hosts inside the app's data dir: libssh's default (~/.ssh) is
+    // not writable on Android, and the interactive login needs to remember keys.
+    const QString kh = QStandardPaths::writableLocation(QStandardPaths::AppDataLocation)
+                       + QLatin1String("/known_hosts");
+    QDir().mkpath(QFileInfo(kh).absolutePath());
+    ssh_options_set(m_session, SSH_OPTIONS_KNOWNHOSTS, kh.toUtf8().constData());
 
     // ---------------------------------------------------------
     // CRITICAL FIX: The Ultimate Retro-SSH Compatibility Block
@@ -90,9 +90,20 @@ void SshBackend::processConnection(const QString &host, int port, const QString 
                               "hmac-sha1-96,hmac-md5-96";
     ssh_options_set(m_session, SSH_OPTIONS_HMAC_C_S, legacy_macs);
     ssh_options_set(m_session, SSH_OPTIONS_HMAC_S_C, legacy_macs);
+}
 
-    // ---------------------------------------------------------
+void SshBackend::processConnection(const QString &host, int port, const QString &user, const QString &password, const QString &privateKeyPath, SshMode mode) {
+    // Ensure clean state before starting
+    cleanup();
 
+    m_currentMode = mode;
+    m_session = ssh_new();
+    if (!m_session) {
+        emit errorOccurred("Internal Error: Failed to create SSH session structure.");
+        return;
+    }
+
+    applyOptions(host, port, user);
 
     // Connect to Server
     int rc = ssh_connect(m_session);
@@ -135,43 +146,7 @@ void SshBackend::processConnection(const QString &host, int port, const QString 
 
     // --- MODE ROUTING (Terminal vs SFTP) ---
     if (m_currentMode == ModeTerminal) {
-        // Open a Channel
-        m_channel = ssh_channel_new(m_session);
-        if (!m_channel) {
-            emit errorOccurred("SSH Channel Error: Failed to create channel.");
-            cleanup();
-            return;
-        }
-
-        rc = ssh_channel_open_session(m_channel);
-        if (rc != SSH_OK) {
-            emit errorOccurred(QString("SSH Session Error: %1").arg(ssh_get_error(m_session)));
-            cleanup();
-            return;
-        }
-
-        // Request a PTY (Terminal). libssh's default type gives Mystic colour;
-        // forcing "ansi" made it serve monochrome, so keep the default.
-        rc = ssh_channel_request_pty(m_channel);
-        if (rc != SSH_OK) {
-            emit errorOccurred(QString("SSH PTY Error: %1").arg(ssh_get_error(m_session)));
-            cleanup();
-            return;
-        }
-
-        // Request a Shell
-        rc = ssh_channel_request_shell(m_channel);
-        if (rc != SSH_OK) {
-            emit errorOccurred(QString("SSH Shell Error: %1").arg(ssh_get_error(m_session)));
-            cleanup();
-            return;
-        }
-
-        m_isConnected = true;
-        emit connected();
-
-        // Start polling loop for Terminal mode
-        QTimer::singleShot(0, this, &SshBackend::pollLoop);
+        openTerminal();
 
     } else if (m_currentMode == ModeSftp) {
         // Initialize SFTP Subsystem
@@ -192,6 +167,179 @@ void SshBackend::processConnection(const QString &host, int port, const QString 
         m_isConnected = true;
         emit connected();
         // Note: No pollLoop for SFTP. It is driven by processSftpRequest
+    }
+}
+
+bool SshBackend::openTerminal() {
+    m_channel = ssh_channel_new(m_session);
+    if (!m_channel) {
+        emit errorOccurred("SSH Channel Error: Failed to create channel.");
+        cleanup();
+        return false;
+    }
+
+    if (ssh_channel_open_session(m_channel) != SSH_OK) {
+        emit errorOccurred(QString("SSH Session Error: %1").arg(ssh_get_error(m_session)));
+        cleanup();
+        return false;
+    }
+
+    // Request a PTY (Terminal). libssh's default type gives Mystic colour;
+    // forcing "ansi" made it serve monochrome, so keep the default.
+    if (ssh_channel_request_pty(m_channel) != SSH_OK) {
+        emit errorOccurred(QString("SSH PTY Error: %1").arg(ssh_get_error(m_session)));
+        cleanup();
+        return false;
+    }
+
+    if (ssh_channel_request_shell(m_channel) != SSH_OK) {
+        emit errorOccurred(QString("SSH Shell Error: %1").arg(ssh_get_error(m_session)));
+        cleanup();
+        return false;
+    }
+
+    m_isConnected = true;
+    emit connected();
+    QTimer::singleShot(0, this, &SshBackend::pollLoop);
+    return true;
+}
+
+// ---------------------------------------------------------------------------
+// Interactive login (SSH-SHELL)
+// ---------------------------------------------------------------------------
+
+void SshBackend::processInteractiveConnect(const QString &host, int port) {
+    cleanup();
+    m_stage = IStage::None;
+    m_currentMode = ModeTerminal;
+
+    m_session = ssh_new();
+    if (!m_session) {
+        emit errorOccurred("Internal Error: Failed to create SSH session structure.");
+        return;
+    }
+    applyOptions(host, port, QString());
+
+    if (ssh_connect(m_session) != SSH_OK) {
+        emit errorOccurred(QString("SSH Connection Failed: %1").arg(ssh_get_error(m_session)));
+        cleanup();
+        return;
+    }
+
+    // Fingerprint of whatever answered, plus how it compares to known_hosts.
+    QString fp;
+    ssh_key key = nullptr;
+    if (ssh_get_server_publickey(m_session, &key) == SSH_OK) {
+        unsigned char *hash = nullptr;
+        size_t hlen = 0;
+        if (ssh_get_publickey_hash(key, SSH_PUBLICKEY_HASH_SHA256, &hash, &hlen) == 0) {
+            char *text = ssh_get_fingerprint_hash(SSH_PUBLICKEY_HASH_SHA256, hash, hlen);
+            if (text) {
+                fp = QString::fromUtf8(text);
+                ssh_string_free_char(text);
+            }
+            ssh_clean_pubkey_hash(&hash);
+        }
+        ssh_key_free(key);
+    }
+
+    const int status = ssh_session_is_known_server(m_session);
+    m_stage = IStage::HostKey;
+    emit hostKeyReady(fp, status);
+}
+
+void SshBackend::processHostKeyDecision(bool accept) {
+    if (!m_session || m_stage != IStage::HostKey)
+        return;
+    if (!accept) {
+        cleanup();
+        emit disconnected();
+        return;
+    }
+    // Trust on first use: remember it, so a later change is noticed.
+    ssh_session_update_known_hosts(m_session);
+    m_stage = IStage::User;
+    emit promptNeeded(QStringLiteral("login: "), true);
+}
+
+// Ask the server's own keyboard-interactive questions one at a time. Returns
+// with m_stage set to Kbdint while answers are outstanding.
+void SshBackend::pumpKbdint() {
+    int rc = ssh_userauth_kbdint(m_session, nullptr, nullptr);
+    while (rc == SSH_AUTH_INFO) {
+        m_kbdCount = ssh_userauth_kbdint_getnprompts(m_session);
+        if (m_kbdCount > 0) {
+            m_kbdPrompt = 0;
+            char echo = 0;
+            const char *p = ssh_userauth_kbdint_getprompt(m_session, 0, &echo);
+            m_stage = IStage::Kbdint;
+            emit promptNeeded(QString::fromUtf8(p ? p : "Password: "), echo != 0);
+            return;                       // wait for the answer
+        }
+        rc = ssh_userauth_kbdint(m_session, nullptr, nullptr);  // informational round
+    }
+
+    if (rc == SSH_AUTH_SUCCESS) {
+        finishAuth();
+        return;
+    }
+    m_stage = IStage::None;
+    emit authFailed(QString::fromUtf8(ssh_get_error(m_session)));
+}
+
+void SshBackend::finishAuth() {
+    m_stage = IStage::None;
+    openTerminal();
+}
+
+void SshBackend::processAuthAnswer(const QString &answer) {
+    if (!m_session)
+        return;
+
+    if (m_stage == IStage::User) {
+        m_pendingUser = answer.trimmed();
+        ssh_options_set(m_session, SSH_OPTIONS_USER, m_pendingUser.toUtf8().constData());
+
+        // A "none" attempt is what makes the server list its methods; some
+        // accept it outright (open guest shells).
+        int rc = ssh_userauth_none(m_session, nullptr);
+        if (rc == SSH_AUTH_SUCCESS) {
+            finishAuth();
+            return;
+        }
+        const int methods = ssh_userauth_list(m_session, nullptr);
+        if (methods & SSH_AUTH_METHOD_INTERACTIVE) {
+            pumpKbdint();
+        } else if (methods & SSH_AUTH_METHOD_PASSWORD) {
+            m_stage = IStage::Password;
+            emit promptNeeded(QStringLiteral("password: "), false);
+        } else {
+            m_stage = IStage::None;
+            emit authFailed(QStringLiteral("server offers no password login"));
+        }
+        return;
+    }
+
+    if (m_stage == IStage::Password) {
+        int rc = ssh_userauth_password(m_session, nullptr, answer.toUtf8().constData());
+        if (rc == SSH_AUTH_SUCCESS) {
+            finishAuth();
+        } else {
+            m_stage = IStage::None;
+            emit authFailed(QString::fromUtf8(ssh_get_error(m_session)));
+        }
+        return;
+    }
+
+    if (m_stage == IStage::Kbdint) {
+        ssh_userauth_kbdint_setanswer(m_session, m_kbdPrompt, answer.toUtf8().constData());
+        if (++m_kbdPrompt < m_kbdCount) {
+            char echo = 0;
+            const char *p = ssh_userauth_kbdint_getprompt(m_session, m_kbdPrompt, &echo);
+            emit promptNeeded(QString::fromUtf8(p ? p : ""), echo != 0);
+            return;                       // more questions in this round
+        }
+        pumpKbdint();                // round complete: submit it
     }
 }
 
@@ -441,6 +589,9 @@ SshClient::SshClient(QObject *parent) : QObject(parent), m_connectedStatus(false
     connect(this, &SshClient::_sigSftpAction, m_backend, &SshBackend::processSftpAction);
     connect(this, &SshClient::_sigSftpWrite, m_backend, &SshBackend::processSftpWrite);
     connect(this, &SshClient::_sigSftpRename, m_backend, &SshBackend::processSftpRename);
+    connect(this, &SshClient::_sigInteractiveConnect, m_backend, &SshBackend::processInteractiveConnect);
+    connect(this, &SshClient::_sigHostKeyDecision, m_backend, &SshBackend::processHostKeyDecision);
+    connect(this, &SshClient::_sigAuthAnswer, m_backend, &SshBackend::processAuthAnswer);
 
     // ---------------------------------------------------------
     // Signal Wiring (Worker Thread -> Main Thread)
@@ -459,6 +610,9 @@ SshClient::SshClient(QObject *parent) : QObject(parent), m_connectedStatus(false
     connect(m_backend, &SshBackend::dataReceived, this, &SshClient::rxData);
     connect(m_backend, &SshBackend::sftpTransferFinished, this, &SshClient::sftpFinished);
     connect(m_backend, &SshBackend::sftpActionFinished, this, &SshClient::sftpActionFinished);
+    connect(m_backend, &SshBackend::hostKeyReady, this, &SshClient::hostKeyReady);
+    connect(m_backend, &SshBackend::promptNeeded, this, &SshClient::promptNeeded);
+    connect(m_backend, &SshBackend::authFailed, this, &SshClient::authFailed);
 
     // ---------------------------------------------------------
     // Thread Lifecycle
@@ -478,6 +632,18 @@ SshClient::~SshClient() {
 
 void SshClient::connectToHost(const QString &host, int port, const QString &user, const QString &password, const QString &privateKeyPath, SshMode mode) {
     emit _sigConnect(host, port, user, password, privateKeyPath, mode);
+}
+
+void SshClient::connectInteractive(const QString &host, int port) {
+    emit _sigInteractiveConnect(host, port);
+}
+
+void SshClient::acceptHostKey(bool accept) {
+    emit _sigHostKeyDecision(accept);
+}
+
+void SshClient::sendAnswer(const QString &answer) {
+    emit _sigAuthAnswer(answer);
 }
 
 void SshClient::disconnectFromHost() {

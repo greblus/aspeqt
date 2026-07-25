@@ -38,6 +38,12 @@ public:
 public slots:
     // Actions triggered by the main thread
     void processConnection(const QString &host, int port, const QString &user, const QString &password, const QString &privateKeyPath, SshMode mode);
+    // Interactive ("SSH-SHELL") login: the handshake stops so the caller can show
+    // the host-key fingerprint and collect credentials from the Atari, the way a
+    // real ssh client does. Each stage answers with a signal and waits.
+    void processInteractiveConnect(const QString &host, int port);
+    void processHostKeyDecision(bool accept);
+    void processAuthAnswer(const QString &answer);
     void processWrite(const QByteArray &data);
     void processDisconnect();
     void setPollingInterval(int ms);
@@ -54,11 +60,20 @@ signals:
     void dataReceived(const QByteArray &data);
     void sftpTransferFinished();
     void sftpActionFinished(bool success, const QString &errorMsg);
+    // Interactive login. status is an SSH_KNOWN_HOSTS_* value; prompts carry the
+    // server's own wording (keyboard-interactive can ask more than once, e.g. 2FA).
+    void hostKeyReady(const QString &fingerprint, int status);
+    void promptNeeded(const QString &prompt, bool echo);
+    void authFailed(const QString &msg);
 
 private slots:
     void pollLoop(); // Non-blocking read loop
 
 private:
+    // Where an interactive login has got to, so the answer coming back from the
+    // Atari can be routed to the right libssh call.
+    enum class IStage { None, HostKey, User, Password, Kbdint };
+
     ssh_session m_session;
     ssh_channel m_channel;
     bool m_isConnected;
@@ -66,8 +81,20 @@ private:
     sftp_session m_sftp;
     SshMode m_currentMode;
 
+    IStage m_stage = IStage::None;
+    QString m_pendingUser;
+    int m_kbdPrompt = 0;      // index of the kbdint prompt being answered
+    int m_kbdCount = 0;
+
     // Helper to clean up libssh structs
     void cleanup();
+    // Shared setup: legacy algorithm lists, host, port, user, known_hosts path.
+    void applyOptions(const QString &host, int port, const QString &user);
+    // PTY + shell + polling; used by both the stored-credential and interactive paths.
+    bool openTerminal();
+    // Drive keyboard-interactive: emit the next prompt, or finish the round.
+    void pumpKbdint();
+    void finishAuth();        // auth succeeded -> open the terminal
 };
 
 // ============================================================================
@@ -82,6 +109,11 @@ public:
 
     // -- Public API --
     void connectToHost(const QString &host, int port = 22, const QString &user = "", const QString &password = "", const QString &privateKeyPath = "", SshMode mode = ModeTerminal);
+    // Interactive login: emits hostKeyReady(), then promptNeeded() for the user
+    // name, password and any keyboard-interactive questions.
+    void connectInteractive(const QString &host, int port = 22);
+    void acceptHostKey(bool accept);
+    void sendAnswer(const QString &answer);
     void requestSftp(const QString &path, bool isDirectory, const QString &filter = ""); // <-- UPDATED
     void requestSftpAction(const QString &path, SftpAction action);
     void requestSftpWrite(const QString &path, const QByteArray &data);
@@ -98,6 +130,9 @@ signals:
     void rxData(const QByteArray &data);
     void sftpFinished();
     void sftpActionFinished(bool success, const QString &errorMsg);
+    void hostKeyReady(const QString &fingerprint, int status);
+    void promptNeeded(const QString &prompt, bool echo);
+    void authFailed(const QString &message);
 
 private:
     // Internal Thread Management
@@ -113,6 +148,9 @@ signals:
     void _sigSftpRename(const QString &oldPath, const QString &newPath);
     void _sigWrite(const QByteArray &data);
     void _sigDisconnect();
+    void _sigInteractiveConnect(const QString &host, int port);
+    void _sigHostKeyDecision(bool accept);
+    void _sigAuthAnswer(const QString &answer);
 };
 
 #endif // SSHCLIENT_H
