@@ -88,6 +88,8 @@ Popup {
     // main group title (blue, large)
     component SectionTitle: Label {
         Layout.topMargin: 10
+        Layout.fillWidth: true
+        wrapMode: Text.WordWrap
         font.pixelSize: 21
         font.bold: true
         color: Theme.primary
@@ -95,6 +97,8 @@ Popup {
     // sub-category label (bold)
     component FieldLabel: Label {
         Layout.topMargin: 4
+        Layout.fillWidth: true
+        wrapMode: Text.WordWrap
         font.bold: true
     }
     // Compact -/value/+ stepper (the Material SpinBox is far too tall/wide here).
@@ -163,6 +167,7 @@ Popup {
 
         // scrollable body
         ScrollView {
+            id: optScroll
             Layout.fillWidth: true
             Layout.fillHeight: true
             clip: true
@@ -171,7 +176,10 @@ Popup {
 
             ColumnLayout {
                 x: 14
-                width: parent.width - 28      // internal horizontal padding
+                // Bind to the view, not to `parent`: inside a ScrollView the
+                // parent is the content item, whose width follows the content --
+                // so anything too wide silently widened the whole column.
+                width: optScroll.availableWidth - 28
                 spacing: 6
 
                 // ---- SIO port emulation -----------------------------------
@@ -271,15 +279,19 @@ Popup {
                     Layout.fillWidth: true
                     Layout.leftMargin: 8
                 }
-                RowLayout {
+                // Stacked, not side by side: the two labels do not fit on one
+                // line on a phone.
+                ColumnLayout {
                     Layout.fillWidth: true
-                    Layout.leftMargin: 8
-                    spacing: 8
+                    Layout.topMargin: 4
+                    spacing: 6
                     Button {
+                        Layout.alignment: Qt.AlignHCenter
                         text: qsTr("Print a test page")
                         onClicked: { app.printerTestPage(); dlg.showPrinter() }
                     }
                     Button {
+                        Layout.alignment: Qt.AlignHCenter
                         flat: true
                         text: qsTr("Replay a capture…")
                         onClicked: optPicker.openFile(
