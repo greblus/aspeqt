@@ -71,6 +71,10 @@ Popup {
     property string phonebook: ""
     FilePicker { id: optPicker }
 
+    // Raised after printing a test page / replaying a capture, so the main
+    // window can bring the printer output up (this dialog does not own it).
+    signal showPrinter()
+
     // A radio group that remembers an integer value per button.
     component IntGroup: QtObject {
         property ButtonGroup group: ButtonGroup {}
@@ -247,6 +251,42 @@ Popup {
                     color: Theme.typeGrey
                     font.pixelSize: 12
                     Layout.leftMargin: 8
+                }
+
+                MenuSeparator { Layout.fillWidth: true }
+
+                // ---- printer ----------------------------------------------
+                SectionTitle { text: qsTr("Printer emulation") }
+                CheckBox {
+                    text: qsTr("Emulate an Epson ESC/P printer")
+                    checked: app.printerOn
+                    onToggled: if (checked !== app.printerOn) app.togglePrinter()
+                }
+                Label {
+                    text: qsTr("What the Atari prints is rendered onto a page you can view "
+                             + "and save. The font is chosen in the printer output window.")
+                    color: Theme.typeGrey
+                    font.pixelSize: 12
+                    wrapMode: Text.WordWrap
+                    Layout.fillWidth: true
+                    Layout.leftMargin: 8
+                }
+                RowLayout {
+                    Layout.fillWidth: true
+                    Layout.leftMargin: 8
+                    spacing: 8
+                    Button {
+                        text: qsTr("Print a test page")
+                        onClicked: { app.printerTestPage(); dlg.showPrinter() }
+                    }
+                    Button {
+                        flat: true
+                        text: qsTr("Replay a capture…")
+                        onClicked: optPicker.openFile(
+                            qsTr("Open a print capture"),
+                            [qsTr("Print captures (*.prn)"), qsTr("All files (*)")], "",
+                            function (url) { if (url.length > 0) { app.printerReplay(url); dlg.showPrinter() } })
+                    }
                 }
 
                 MenuSeparator { Layout.fillWidth: true }

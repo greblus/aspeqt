@@ -406,7 +406,7 @@ ApplicationWindow {
         }
     }
 
-    OptionsDialog { id: optionsDialog }
+    OptionsDialog { id: optionsDialog; onShowPrinter: printWindow.open() }
     LogWindow { id: logWindow }
     FilePicker { id: filePicker }
     ConfirmDialog { id: confirmDialog }

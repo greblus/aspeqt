@@ -10,4 +10,7 @@
     <qresource prefix="/data">
         <file alias="phonebook.xml">phonebook.xml</file>
     </qresource>
+    <qresource prefix="/printer">
+        <file>printer/epson-test.prn</file>
+    </qresource>
 </RCC>
