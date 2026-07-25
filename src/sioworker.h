@@ -2,6 +2,7 @@
 #define SIOWORKER_H
 
 #include <QThread>
+#include <atomic>
 #include <QRecursiveMutex>
 #include <QMutex>
 #include <QElapsedTimer>
@@ -56,7 +57,8 @@ private:
     QRecursiveMutex *deviceMutex;
     SioDevice* devices[256];
     AbstractSerialPortBackend *mPort;
-    bool mustTerminate;
+    // Same reason as mCanceled: the worker polls this between frames.
+    std::atomic<bool> mustTerminate{false};
 
     // Stream (modem) mode: while the R: device holds the line, the loop stops
     // reading SIO command frames and shuttles raw bytes both ways instead.
@@ -64,7 +66,8 @@ private:
     // from the data it is already receiving, so the check is cheap and a short
     // interval mainly bounds how fast we notice an Atari reset.
     static const int STREAM_GUARD_MS = 20;
-    bool m_isStreaming;
+    // Toggled from the R: device's thread, polled by the worker loop.
+    std::atomic<bool> m_isStreaming{false};
     QElapsedTimer m_streamGuardTimer;
     void runStreamMode();
 public:

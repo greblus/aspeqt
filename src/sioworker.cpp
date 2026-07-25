@@ -169,6 +169,11 @@ void SioWorker::start(Priority p)
     }
 
     mustTerminate = false;
+    // A session that was stopped mid-stream (the R: device holding the line for
+    // a modem call) left this set, and the loop below would then never read a
+    // command frame again -- the Atari would just be ignored after a restart.
+    m_isStreaming = false;
+    if (mPort) mPort->setStreamMode(false);
     QThread::start(p);
 }
 
