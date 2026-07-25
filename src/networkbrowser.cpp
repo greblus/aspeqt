@@ -7,6 +7,7 @@
 #endif
 
 #include <QUrl>
+#include <QRegularExpression>
 #include <QDir>
 #include <QFile>
 #include <QSettings>
@@ -32,6 +33,7 @@ static bool looksLikeDisk(const QString &name)
 static QString normalizeUrl(const QString &raw)
 {
     QString t = raw.trimmed();
+    t.remove(QRegularExpression("\\s"));      // stray spaces from phone keyboards
     if (t.isEmpty() || t.contains("://")) return t;
     if (t.startsWith("ftps.", Qt::CaseInsensitive)) return "ftps://" + t;
     if (t.startsWith("ftp.",  Qt::CaseInsensitive)) return "ftp://"  + t;
@@ -61,6 +63,12 @@ public slots:
         const int port = u.port(0);
         const QString path = u.path().isEmpty() ? "/" : u.path();
 
+        if (!u.isValid()) {
+            // Report the parse error: a mistyped address used to surface as
+            // "could not connect to demo", naming a fragment as the host.
+            emit failed(tr("Bad address: %1").arg(u.errorString()));
+            return;
+        }
         if (host.isEmpty()) { emit failed(tr("No host in the address.")); return; }
 
         if (scheme == "ftp" || scheme == "ftps") {

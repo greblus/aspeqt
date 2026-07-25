@@ -119,6 +119,10 @@ Popup {
                 editable: true
                 model: nb.addressModel
                 font.pixelSize: 14
+                // Without these Android runs autocorrect over the address and
+                // will happily drop the "@" or slip a space into it.
+                inputMethodHints: Qt.ImhUrlCharactersOnly | Qt.ImhNoAutoUppercase
+                                  | Qt.ImhNoPredictiveText
                 onAccepted: netbrowser.open(editText)
                 onActivated: (i) => { editText = nb.addressModel[i]; netbrowser.open(editText) }
                 Component.onCompleted: nb.syncAddress()
