@@ -38,6 +38,9 @@ public class SerialActivity extends QtActivity
         public static native void sendBufAddr(ByteBuffer rbuf, ByteBuffer wbuf);
         // Result of a SAF pick, delivered to the engine (empty when cancelled).
         public static native void documentPicked(int reqId, String uri);
+
+        // The SIO cable was plugged in while we were already running.
+        public static native void usbAttached();
         private static final int SAF_REQ_BASE = 0x5AF0;
         private static int m_safReqId = 0;
         protected static ByteBuffer rbuf = ByteBuffer.allocateDirect(65535);
@@ -69,6 +72,20 @@ public class SerialActivity extends QtActivity
             getWindow().addFlags(WindowManager.LayoutParams.FLAG_KEEP_SCREEN_ON);
             applyImmersive();
             sendBufAddr(rbuf, wbuf);
+        }
+
+        // Plugging the cable in while we are already running goes here, not
+        // through onCreate (launchMode is singleTop). getIntent() would keep
+        // returning the original launch intent, so store the new one -- and tell
+        // the engine, which only sampled launchedByUsb() once at startup.
+        @Override
+        protected void onNewIntent(Intent intent) {
+            super.onNewIntent(intent);
+            if (intent == null)
+                return;
+            setIntent(intent);
+            if (UsbManager.ACTION_USB_DEVICE_ATTACHED.equals(intent.getAction()))
+                usbAttached();
         }
 
         @Override

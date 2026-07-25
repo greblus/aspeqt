@@ -1951,6 +1951,19 @@ void Engine::onDocumentPicked(int reqId, const QString &uri)
     emit documentPicked(reqId, uri);
 }
 
+// Start emulating as soon as the cable shows up, the same as when the plug-in
+// launched us. Give Android a moment to finish enumerating the device first, or
+// openDevice() finds nothing to open.
+void Engine::onUsbAttached()
+{
+    if (m_emulationRunning)
+        return;
+    QTimer::singleShot(600, this, [this]{
+        if (!m_emulationRunning)
+            toggleSio();
+    });
+}
+
 QString Engine::startDir(const QString &kind)
 {
     if (kind == QLatin1String("disk"))    return aspeqtSettings->lastDiskImageDir();

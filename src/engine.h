@@ -202,6 +202,7 @@ public:
     bool         diskSetFsType(int index);
     // Called from JNI when a SAF pick finishes (empty uri = cancelled).
     Q_INVOKABLE void onDocumentPicked(int reqId, const QString &uri);
+    Q_INVOKABLE void onUsbAttached();   // cable plugged in while already running
     Q_INVOKABLE void pickDocument(int reqId, const QString &mimeType);
     Q_INVOKABLE void createDocument(int reqId, const QString &mimeType, const QString &suggestedName);
     Q_INVOKABLE void pickFolder(int reqId);

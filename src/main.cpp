@@ -51,6 +51,16 @@ extern "C" {
             QMetaObject::invokeMethod(g_engine, "onDocumentPicked", Qt::QueuedConnection,
                                       Q_ARG(int, (int)reqId), Q_ARG(QString, uri));
         }
+
+    // Cable plugged in while the app was already running. Arrives on Android's
+    // UI thread, so hand it to the engine through a queued call.
+    JNIEXPORT void JNICALL
+    Java_net_greblus_SerialActivity_usbAttached(JNIEnv * /*env*/, jclass /*cls*/)
+        {
+            if (!g_engine)
+                return;
+            QMetaObject::invokeMethod(g_engine, "onUsbAttached", Qt::QueuedConnection);
+        }
 }
 #endif
 
