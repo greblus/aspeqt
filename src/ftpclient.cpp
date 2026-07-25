@@ -13,6 +13,12 @@ FtpClient::FtpClient(QObject *parent) : INetworkClient(parent)
     // Retro/hobbyist FTPS servers commonly use self-signed certificates; a file
     // browser has no trust store to check them against, so don't verify.
     m_controlSocket->setPeerVerifyMode(QSslSocket::VerifyNone);
+    // Qt throws the TLS session away once the handshake is done. Keep it: FTPS
+    // servers routinely demand that the data connection *resume* the control
+    // connection's session, and without it they answer LIST with 425.
+    QSslConfiguration ctrlCfg = m_controlSocket->sslConfiguration();
+    ctrlCfg.setSslOption(QSsl::SslOptionDisableSessionPersistence, false);
+    m_controlSocket->setSslConfiguration(ctrlCfg);
     m_dataSocket = nullptr;
     m_listingFinished = true;
 }
@@ -167,9 +173,14 @@ bool FtpClient::openDataConnection()
     if (!m_dataSocket->waitForConnected(5000)) return false;
 
     if (m_tls) {
-        // Reuse the control channel's TLS session: servers that enforce it
-        // (vsftpd require_ssl_reuse) reject a fresh handshake on the data port.
-        m_dataSocket->setSslConfiguration(m_controlSocket->sslConfiguration());
+        // Resume the control channel's TLS session; a fresh handshake here is
+        // what servers enforcing session reuse reject. Copying the whole
+        // configuration is not enough -- the ticket has to be carried over.
+        QSslConfiguration cfg = m_dataSocket->sslConfiguration();
+        cfg.setSslOption(QSsl::SslOptionDisableSessionPersistence, false);
+        cfg.setSessionTicket(m_controlSocket->sslConfiguration().sessionTicket());
+        cfg.setProtocol(m_controlSocket->sslConfiguration().sessionProtocol());
+        m_dataSocket->setSslConfiguration(cfg);
         m_dataSocket->startClientEncryption();
         if (!m_dataSocket->waitForEncrypted(5000)) {
             qCritical() << "!e" << "FTPS: data-channel TLS handshake failed.";
