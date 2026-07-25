@@ -185,6 +185,12 @@ ApplicationWindow {
                 LoaderCard {
                     id: loaderCard
                     Layout.fillWidth: true
+                    onRequestEject: {
+                        if (app.isLoaderNetworkTemp())
+                            win.ejectLoaderTemp()
+                        else
+                            app.loaderEject()
+                    }
                     onRequestLoad: filePicker.openFile(
                         qsTr("Load executable or cassette"),
                         [qsTr("Atari programs (*.xex *.com *.exe *.cas)"), qsTr("All files (*)")],
@@ -475,13 +481,34 @@ ApplicationWindow {
             })
     }
 
+    // Same deal for the loader slot, which holds a downloaded XEX/CAS rather than
+    // a disk image, so keeping it copies the file out and reloads from there.
+    function ejectLoaderTemp() {
+        confirmDialog.askSave(
+            qsTr("Downloaded image"),
+            qsTr("This image is only in the cache. Save it before ejecting?"),
+            function (answer) {
+                if (answer === "cancel") return
+                if (answer === "save") {
+                    filePicker.saveFile(
+                        qsTr("Save program as"),
+                        [qsTr("Atari programs (*.xex *.com *.exe *.cas)"), qsTr("All files (*)")],
+                        app.startDir("exe"), app.loaderNetTempName(),
+                        function (url) { if (url.length > 0) app.saveLoaderTempAs(url) })
+                } else {
+                    app.loaderEjectDiscard()
+                }
+            })
+    }
+
     // Offer to keep every cache-only network mount before quitting/ejecting all.
     function withNetworkTemps(proceed) {
         var list = app.networkTempDisks()
         if (list.length === 0) { proceed(); return }
         var names = []
         for (var i = 0; i < list.length; ++i)
-            names.push("D" + list[i].slot + ": " + list[i].name)
+            names.push((list[i].hwIndex < 0 ? qsTr("Loader") : "D" + list[i].slot)
+                       + ": " + list[i].name)
         confirmDialog.askSave(
             qsTr("Downloaded images"),
             qsTr("These images are only in the cache and will be lost:\n\n%1").arg(names.join("\n")),
@@ -495,6 +522,17 @@ ApplicationWindow {
     function saveNetTempEach(list, i, done) {
         if (i >= list.length) { done(); return }
         var hw = list[i].hwIndex
+        if (hw < 0) {                      // the loader slot (a program, not a disk)
+            filePicker.saveFile(
+                qsTr("Save program as"),
+                [qsTr("Atari programs (*.xex *.com *.exe *.cas)"), qsTr("All files (*)")],
+                app.startDir("exe"), app.loaderNetTempName(),
+                function (url) {
+                    if (url.length > 0) app.saveLoaderTempAs(url)
+                    win.saveNetTempEach(list, i + 1, done)
+                })
+            return
+        }
         filePicker.saveFile(
             qsTr("Save image as"),
             [qsTr("ATR image (*.atr)"), qsTr("All files (*)")],

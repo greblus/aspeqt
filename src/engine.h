@@ -93,6 +93,7 @@ private:
     QMap<int, QString> m_folderTree;   // slot -> tree content:// URI
     QMap<int, QString> m_folderTemp;   // slot -> local temp working dir
     QMap<int, QString> m_netTempPath;  // slot -> cache file backing a network mount
+    QString m_netTempLoader;           // cache file backing the loader (xex/cas) slot
 #endif
 
     // --- dynamic drive slots ------------------------------------------------
@@ -155,6 +156,12 @@ public:
     QString netTempName(int no) const;
     void clearNetworkTemp(int no);
     QVariantList networkTempDisks() const;
+    // Executables and cassettes land in the loader slot, which has no disk image
+    // to "save as": keeping one means copying the cache file out and reloading.
+    bool isLoaderNetworkTemp() const { return !m_netTempLoader.isEmpty(); }
+    QString loaderNetTempName() const;
+    void loaderEjectDiscard();
+    bool saveLoaderTempAs(const QString &url);
     QVariantMap  loaderState();   // loader (XEX/CAS) slot
     QVariantMap  status();        // { running, speed, printerOn }
     bool         canAddSlot();

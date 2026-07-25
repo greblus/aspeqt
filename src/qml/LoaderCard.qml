@@ -10,6 +10,7 @@ Rectangle {
     id: card
 
     signal requestLoad()
+    signal requestEject()
     readonly property bool loaded: app.loaderKind !== 0
 
     radius: Theme.cardRadius
@@ -89,7 +90,7 @@ Rectangle {
                     source: Theme.icon("actions/media-eject.svg")
                     enabledState: app.loaderEjectEnabled
                     tip: qsTr("Eject")
-                    onClicked: app.loaderEject()
+                    onClicked: card.requestEject()
                 }
             }
 

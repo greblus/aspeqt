@@ -280,6 +280,10 @@ bool AppController::isNetworkTempSlot(int i)   { return m_engine && m_engine->is
 QString AppController::netTempName(int i)      { return m_engine ? m_engine->netTempName(i) : QString(); }
 void AppController::clearNetworkTemp(int i)    { if (m_engine) m_engine->clearNetworkTemp(i); }
 QVariantList AppController::networkTempDisks() { return m_engine ? m_engine->networkTempDisks() : QVariantList(); }
+bool AppController::isLoaderNetworkTemp()      { return m_engine && m_engine->isLoaderNetworkTemp(); }
+QString AppController::loaderNetTempName()     { return m_engine ? m_engine->loaderNetTempName() : QString(); }
+void AppController::loaderEjectDiscard()       { if (m_engine) m_engine->loaderEjectDiscard(); }
+bool AppController::saveLoaderTempAs(const QString &url) { return m_engine && m_engine->saveLoaderTempAs(url); }
 
 // The R: device (850/modem) emulation option. The network browser is only
 // offered when it is on, so a QML binding gates the menu item on this.

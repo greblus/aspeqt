@@ -179,6 +179,10 @@ public:
     Q_INVOKABLE QString      netTempName(int hwIndex);
     Q_INVOKABLE void         clearNetworkTemp(int hwIndex);
     Q_INVOKABLE QVariantList networkTempDisks();
+    Q_INVOKABLE bool         isLoaderNetworkTemp();
+    Q_INVOKABLE QString      loaderNetTempName();
+    Q_INVOKABLE void         loaderEjectDiscard();
+    Q_INVOKABLE bool         saveLoaderTempAs(const QString &url);
     Q_INVOKABLE void         mountFolderPath(int hwIndex, const QString &url);
     Q_INVOKABLE void         loaderLoadPath(const QString &url);
     Q_INVOKABLE bool         saveAsPath(int hwIndex, const QString &url);

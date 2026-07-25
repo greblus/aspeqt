@@ -795,32 +795,32 @@
         <translation>AspeQt %1 de durduruldu.</translation>
     </message>
     <message>
-        <location filename="../engine.cpp" line="520" />
+        <location filename="../engine.cpp" line="588" />
         <source>Failed to load executable '%1'.</source>
         <translation>'%1' programı yüklenemedi.</translation>
     </message>
     <message>
-        <location filename="../engine.cpp" line="531" />
+        <location filename="../engine.cpp" line="599" />
         <source>Executable (%1k)</source>
         <translation>Program (%1k)</translation>
     </message>
     <message>
-        <location filename="../engine.cpp" line="534" />
+        <location filename="../engine.cpp" line="602" />
         <source>Loaded executable '%1'. Start (or reboot) your Atari to run it.</source>
         <translation>'%1' programı yüklendi. Çalıştırmak için Atari'yi başlatın (veya yeniden başlatın).</translation>
     </message>
     <message>
-        <location filename="../engine.cpp" line="547" />
+        <location filename="../engine.cpp" line="615" />
         <source>Failed to load cassette image '%1'.</source>
         <translation>'%1' kaset imajı yüklenemedi.</translation>
     </message>
     <message>
-        <location filename="../engine.cpp" line="558" />
+        <location filename="../engine.cpp" line="626" />
         <source>Cassette (%1:%2)</source>
         <translation>Kaset (%1:%2)</translation>
     </message>
     <message>
-        <location filename="../engine.cpp" line="565" />
+        <location filename="../engine.cpp" line="633" />
         <source>AspeQt is ready to playback the cassette image file '%1'.
 
 Do whatever is necessary in your Atari to load this cassette image like rebooting while holding Option and Start buttons or entering "CLOAD" in the BASIC prompt.
@@ -833,164 +833,166 @@ Atari'nizde bu kaseti yüklemek için gerekeni yapın: Option ve Start tuşları
 Bip sesini duyduğunuzda oynat düğmesine basın ve yaklaşık aynı anda Atari'de bir tuşa basın.</translation>
     </message>
     <message>
-        <location filename="../engine.cpp" line="595" />
+        <location filename="../engine.cpp" line="663" />
         <source>Playing back cassette image.</source>
         <translation>Kaset imajı oynatılıyor.</translation>
     </message>
     <message>
-        <location filename="../engine.cpp" line="624" />
+        <location filename="../engine.cpp" line="692" />
         <source>Cassette playback finished.</source>
         <translation>Kaset oynatma tamamlandı.</translation>
     </message>
     <message>
-        <location filename="../engine.cpp" line="635" />
+        <location filename="../engine.cpp" line="703" />
         <source>Executable loaded into the Atari.</source>
         <translation>Program Atari'ye yüklendi.</translation>
     </message>
     <message>
-        <location filename="../engine.cpp" line="736" />
+        <location filename="../engine.cpp" line="804" />
         <source>[%1] Auto-commit failed.</source>
         <translation>[%1] Otomatik kaydetme başarısız.</translation>
     </message>
     <message>
-        <location filename="../engine.cpp" line="892" />
+        <location filename="../engine.cpp" line="960" />
         <source>Loaded into the cas/xex slot.</source>
         <translation>cas/xex yuvasına yüklendi.</translation>
     </message>
     <message>
-        <location filename="../engine.cpp" line="1095" />
-        <location filename="../engine.cpp" line="1103" />
+        <location filename="../engine.cpp" line="1163" />
+        <location filename="../engine.cpp" line="1171" />
         <source>This slot does not hold a mounted folder.</source>
         <translation>Bu yuvada bağlı bir klasör yok.</translation>
     </message>
     <message>
-        <location filename="../engine.cpp" line="1113" />
+        <location filename="../engine.cpp" line="1181" />
         <source>Installed high-speed MyPicoDOS into the folder. Reboot your Atari to load DOS.</source>
         <translation>Hızlı MyPicoDOS klasöre kuruldu. DOS'u yüklemek için Atari'yi yeniden başlatın.</translation>
     </message>
     <message>
-        <location filename="../engine.cpp" line="1087" />
-        <location filename="../engine.cpp" line="1116" />
+        <location filename="../engine.cpp" line="1155" />
+        <location filename="../engine.cpp" line="1184" />
         <source>Could not copy the DOS files into the folder.</source>
         <translation>DOS dosyaları klasöre kopyalanamadı.</translation>
     </message>
     <message>
-        <location filename="../engine.cpp" line="1238" />
+        <location filename="../engine.cpp" line="1306" />
         <source>[Disk %1] Auto-commit ON.</source>
         <translation>[Disk %1] Otomatik kaydetme AÇIK.</translation>
     </message>
     <message>
-        <location filename="../engine.cpp" line="1239" />
+        <location filename="../engine.cpp" line="1307" />
         <source>[Disk %1] Auto-commit OFF.</source>
         <translation>[Disk %1] Otomatik kaydetme KAPALI.</translation>
     </message>
     <message>
-        <location filename="../engine.cpp" line="1286" />
+        <location filename="../engine.cpp" line="479" />
+        <location filename="../engine.cpp" line="486" />
+        <location filename="../engine.cpp" line="1354" />
         <source>'%1' cannot be saved.</source>
         <translation>'%1' kaydedilemiyor.</translation>
     </message>
     <message>
-        <location filename="../engine.cpp" line="1322" />
-        <location filename="../engine.cpp" line="2176" />
+        <location filename="../engine.cpp" line="1390" />
+        <location filename="../engine.cpp" line="2249" />
         <source>Cannot read '%1'.</source>
         <translation>'%1' okunamıyor.</translation>
     </message>
     <message>
-        <location filename="../engine.cpp" line="1398" />
-        <location filename="../engine.cpp" line="1612" />
-        <location filename="../engine.cpp" line="1619" />
-        <location filename="../engine.cpp" line="2190" />
+        <location filename="../engine.cpp" line="1466" />
+        <location filename="../engine.cpp" line="1680" />
+        <location filename="../engine.cpp" line="1687" />
+        <location filename="../engine.cpp" line="2263" />
         <source>Cannot write to '%1'.</source>
         <translation>%1 yazılamıyor.</translation>
     </message>
     <message>
-        <location filename="../engine.cpp" line="1519" />
+        <location filename="../engine.cpp" line="1587" />
         <source>Swapped disk %1 with disk %2.</source>
         <translation>Disk %1, dısk %2 ile takas edildi.</translation>
     </message>
     <message>
-        <location filename="../engine.cpp" line="1611" />
-        <location filename="../engine.cpp" line="1618" />
+        <location filename="../engine.cpp" line="1679" />
+        <location filename="../engine.cpp" line="1686" />
         <source>Cannot save the printout, see the log.</source>
         <translation>Çıktı kaydedilemedi, günlüğe bakın.</translation>
     </message>
     <message>
-        <location filename="../engine.cpp" line="1737" />
+        <location filename="../engine.cpp" line="1805" />
         <source>No phonebook file chosen (see Options).</source>
         <translation>Telefon defteri dosyası seçilmedi (Seçenekler'e bakın).</translation>
     </message>
     <message>
-        <location filename="../engine.cpp" line="1790" />
+        <location filename="../engine.cpp" line="1858" />
         <source>Cannot write the bundled phonebook to %1</source>
         <translation>Yerleşik telefon defteri %1 konumuna yazılamıyor</translation>
     </message>
     <message>
-        <location filename="../engine.cpp" line="1806" />
+        <location filename="../engine.cpp" line="1874" />
         <source>The R: device is not enabled (see Options).</source>
         <translation>R: aygıtı etkin değil (Seçenekler'e bakın).</translation>
     </message>
     <message>
-        <location filename="../engine.cpp" line="1825" />
+        <location filename="../engine.cpp" line="1893" />
         <source>This phonebook entry has no address.</source>
         <translation>Bu telefon defteri kaydının adresi yok.</translation>
     </message>
     <message>
-        <location filename="../engine.cpp" line="1837" />
+        <location filename="../engine.cpp" line="1905" />
         <source>Automatic</source>
         <translation>Otomatık</translation>
     </message>
     <message>
-        <location filename="../engine.cpp" line="1999" />
+        <location filename="../engine.cpp" line="2072" />
         <source>Failed to load '%1'.</source>
         <translation>'%1' yüklenemedi.</translation>
     </message>
     <message>
-        <location filename="../engine.cpp" line="2011" />
+        <location filename="../engine.cpp" line="2084" />
         <source>Pick an Atari executable (.xex/.com/.exe) or a cassette image (.cas).</source>
         <translation>Bir Atari programı (.xex/.com/.exe) veya kaset imajı (.cas) seçin.</translation>
     </message>
     <message>
-        <location filename="../engine.cpp" line="2126" />
-        <location filename="../engine.cpp" line="2138" />
-        <location filename="../engine.cpp" line="2142" />
+        <location filename="../engine.cpp" line="2199" />
+        <location filename="../engine.cpp" line="2211" />
+        <location filename="../engine.cpp" line="2215" />
         <source>Cannot extract the files, see the log.</source>
         <translation>Dosyalar çıkarılamadı, günlüğe bakın.</translation>
     </message>
     <message>
-        <location filename="../engine.cpp" line="2155" />
+        <location filename="../engine.cpp" line="2228" />
         <source>Cannot delete the files, see the log.</source>
         <translation>Dosyalar silinemedi, günlüğe bakın.</translation>
     </message>
     <message>
-        <location filename="../engine.cpp" line="2175" />
-        <location filename="../engine.cpp" line="2189" />
-        <location filename="../engine.cpp" line="2201" />
+        <location filename="../engine.cpp" line="2248" />
+        <location filename="../engine.cpp" line="2262" />
+        <location filename="../engine.cpp" line="2274" />
         <source>Cannot add the file, see the log.</source>
         <translation>Dosya eklenemedi, günlüğe bakın.</translation>
     </message>
     <message>
-        <location filename="../engine.cpp" line="714" />
+        <location filename="../engine.cpp" line="782" />
         <source>Emulation stopped.</source>
         <translation>Emülasyon durdu.</translation>
     </message>
     <message>
-        <location filename="../engine.cpp" line="799" />
+        <location filename="../engine.cpp" line="867" />
         <source>Unmounted disk %1</source>
         <translation>Disk %1 indirildi</translation>
     </message>
     <message>
-        <location filename="../engine.cpp" line="970" />
-        <location filename="../engine.cpp" line="1585" />
+        <location filename="../engine.cpp" line="1038" />
+        <location filename="../engine.cpp" line="1653" />
         <source>[%1] Mounted '%2' as '%3'.</source>
         <translation>[%1] '%2', '%3' olarak yüklendi.</translation>
     </message>
     <message>
-        <location filename="../engine.cpp" line="1554" />
+        <location filename="../engine.cpp" line="1622" />
         <source>Printer emulation stopped.</source>
         <translation>Yazıcı emülasyonu durdu</translation>
     </message>
     <message>
-        <location filename="../engine.cpp" line="1553" />
+        <location filename="../engine.cpp" line="1621" />
         <source>Printer emulation started.</source>
         <translation>Yazıcı emülasyonu başladı</translation>
     </message>
@@ -1128,27 +1130,27 @@ Bip sesini duyduğunuzda oynat düğmesine basın ve yaklaşık aynı anda Atari
 <context>
     <name>LoaderCard</name>
     <message>
-        <location filename="../qml/LoaderCard.qml" line="65" />
+        <location filename="../qml/LoaderCard.qml" line="66" />
         <source>Load executable or cassette</source>
         <translation>Program veya kaset yükle</translation>
     </message>
     <message>
-        <location filename="../qml/LoaderCard.qml" line="71" />
+        <location filename="../qml/LoaderCard.qml" line="72" />
         <source>Start cassette playback</source>
         <translation>Kaset oynatmayı başlat</translation>
     </message>
     <message>
-        <location filename="../qml/LoaderCard.qml" line="77" />
+        <location filename="../qml/LoaderCard.qml" line="78" />
         <source>Retry</source>
         <translation>Yeniden dene</translation>
     </message>
     <message>
-        <location filename="../qml/LoaderCard.qml" line="91" />
+        <location filename="../qml/LoaderCard.qml" line="92" />
         <source>Eject</source>
         <translation>Çıkar</translation>
     </message>
     <message>
-        <location filename="../qml/LoaderCard.qml" line="101" />
+        <location filename="../qml/LoaderCard.qml" line="102" />
         <source>Load an executable or cassette.</source>
         <translation>Bir program veya kaset yükleyin.</translation>
     </message>
@@ -1190,13 +1192,13 @@ Bip sesini duyduğunuzda oynat düğmesine basın ve yaklaşık aynı anda Atari
     <name>Main</name>
     <message>
         <location filename="../qml/Main.qml" line="57" />
-        <location filename="../qml/Main.qml" line="351" />
+        <location filename="../qml/Main.qml" line="357" />
         <source>Stop emulation</source>
         <translation>Emülasyonu durdur</translation>
     </message>
     <message>
         <location filename="../qml/Main.qml" line="58" />
-        <location filename="../qml/Main.qml" line="351" />
+        <location filename="../qml/Main.qml" line="357" />
         <source>Start emulation</source>
         <translation>Emülasyonu başlat</translation>
     </message>
@@ -1244,12 +1246,14 @@ Bip sesini duyduğunuzda oynat düğmesine basın ve yaklaşık aynı anda Atari
     <message>
         <location filename="../qml/Main.qml" line="85" />
         <location filename="../qml/Main.qml" line="93" />
-        <location filename="../qml/Main.qml" line="190" />
-        <location filename="../qml/Main.qml" line="217" />
-        <location filename="../qml/Main.qml" line="422" />
-        <location filename="../qml/Main.qml" line="464" />
-        <location filename="../qml/Main.qml" line="500" />
-        <location filename="../qml/Main.qml" line="543" />
+        <location filename="../qml/Main.qml" line="196" />
+        <location filename="../qml/Main.qml" line="223" />
+        <location filename="../qml/Main.qml" line="428" />
+        <location filename="../qml/Main.qml" line="470" />
+        <location filename="../qml/Main.qml" line="495" />
+        <location filename="../qml/Main.qml" line="528" />
+        <location filename="../qml/Main.qml" line="538" />
+        <location filename="../qml/Main.qml" line="581" />
         <source>All files (*)</source>
         <translation>Tüm dosyalar (*)</translation>
     </message>
@@ -1294,69 +1298,71 @@ Bip sesini duyduğunuzda oynat düğmesine basın ve yaklaşık aynı anda Atari
         <translation>Çıkış</translation>
     </message>
     <message>
-        <location filename="../qml/Main.qml" line="189" />
+        <location filename="../qml/Main.qml" line="195" />
         <source>Load executable or cassette</source>
         <translation>Program veya kaset yükle</translation>
     </message>
     <message>
-        <location filename="../qml/Main.qml" line="190" />
+        <location filename="../qml/Main.qml" line="196" />
+        <location filename="../qml/Main.qml" line="495" />
+        <location filename="../qml/Main.qml" line="528" />
         <source>Atari programs (*.xex *.com *.exe *.cas)</source>
         <translation>Atari programları (*.xex *.com *.exe *.cas)</translation>
     </message>
     <message>
-        <location filename="../qml/Main.qml" line="216" />
+        <location filename="../qml/Main.qml" line="222" />
         <source>Open a disk image</source>
         <translation>Disk imajını aç</translation>
     </message>
     <message>
-        <location filename="../qml/Main.qml" line="217" />
+        <location filename="../qml/Main.qml" line="223" />
         <source>All Atari disk images (*.atr *.xfd *.pro)</source>
         <translation>Tüm Atari disk imajları (*.atr *.xfd *.pro)</translation>
     </message>
     <message>
-        <location filename="../qml/Main.qml" line="232" />
+        <location filename="../qml/Main.qml" line="238" />
         <source>Open a folder image</source>
         <translation>Klasör imajını aç</translation>
     </message>
     <message>
-        <location filename="../qml/Main.qml" line="358" />
+        <location filename="../qml/Main.qml" line="364" />
         <source>Stop printer emulation</source>
         <translation>Yazıcı emülasyonunu durdur</translation>
     </message>
     <message>
-        <location filename="../qml/Main.qml" line="359" />
+        <location filename="../qml/Main.qml" line="365" />
         <source>Start printer emulation</source>
         <translation>Yazıcı emülasyonunu başlat</translation>
     </message>
     <message>
-        <location filename="../qml/Main.qml" line="364" />
+        <location filename="../qml/Main.qml" line="370" />
         <source>Clear messages</source>
         <translation>İletileri sil</translation>
     </message>
     <message>
-        <location filename="../qml/Main.qml" line="421" />
-        <location filename="../qml/Main.qml" line="463" />
-        <location filename="../qml/Main.qml" line="499" />
-        <location filename="../qml/Main.qml" line="542" />
+        <location filename="../qml/Main.qml" line="427" />
+        <location filename="../qml/Main.qml" line="469" />
+        <location filename="../qml/Main.qml" line="537" />
+        <location filename="../qml/Main.qml" line="580" />
         <source>Save image as</source>
         <translation>İmajı kaydet</translation>
     </message>
     <message>
-        <location filename="../qml/Main.qml" line="422" />
-        <location filename="../qml/Main.qml" line="464" />
-        <location filename="../qml/Main.qml" line="500" />
-        <location filename="../qml/Main.qml" line="543" />
+        <location filename="../qml/Main.qml" line="428" />
+        <location filename="../qml/Main.qml" line="470" />
+        <location filename="../qml/Main.qml" line="538" />
+        <location filename="../qml/Main.qml" line="581" />
         <source>ATR image (*.atr)</source>
         <translation>ATR imajı (*.atr)</translation>
     </message>
     <message>
-        <location filename="../qml/Main.qml" line="442" />
-        <location filename="../qml/Main.qml" line="517" />
+        <location filename="../qml/Main.qml" line="448" />
+        <location filename="../qml/Main.qml" line="555" />
         <source>Unsaved changes</source>
         <translation>Kaydedilmemiş değişiklikler</translation>
     </message>
     <message>
-        <location filename="../qml/Main.qml" line="443" />
+        <location filename="../qml/Main.qml" line="449" />
         <source>These images have unsaved changes:
 
 %1</source>
@@ -1365,22 +1371,35 @@ Bip sesini duyduğunuzda oynat düğmesine basın ve yaklaşık aynı anda Atari
 %1</translation>
     </message>
     <message>
-        <location filename="../qml/Main.qml" line="457" />
+        <location filename="../qml/Main.qml" line="463" />
+        <location filename="../qml/Main.qml" line="488" />
         <source>Downloaded image</source>
         <translation>İndirilen imaj</translation>
     </message>
     <message>
-        <location filename="../qml/Main.qml" line="458" />
+        <location filename="../qml/Main.qml" line="464" />
+        <location filename="../qml/Main.qml" line="489" />
         <source>This image is only in the cache. Save it before ejecting?</source>
         <translation>Bu imaj yalnızca önbellekte. Çıkarmadan önce kaydedilsin mi?</translation>
     </message>
     <message>
-        <location filename="../qml/Main.qml" line="486" />
+        <location filename="../qml/Main.qml" line="494" />
+        <location filename="../qml/Main.qml" line="527" />
+        <source>Save program as</source>
+        <translation>Programı farklı kaydet</translation>
+    </message>
+    <message>
+        <location filename="../qml/Main.qml" line="510" />
+        <source>Loader</source>
+        <translation>Yükleyici</translation>
+    </message>
+    <message>
+        <location filename="../qml/Main.qml" line="513" />
         <source>Downloaded images</source>
         <translation>İndirilen imajlar</translation>
     </message>
     <message>
-        <location filename="../qml/Main.qml" line="487" />
+        <location filename="../qml/Main.qml" line="514" />
         <source>These images are only in the cache and will be lost:
 
 %1</source>
@@ -1389,22 +1408,22 @@ Bip sesini duyduğunuzda oynat düğmesine basın ve yaklaşık aynı anda Atari
 %1</translation>
     </message>
     <message>
-        <location filename="../qml/Main.qml" line="518" />
+        <location filename="../qml/Main.qml" line="556" />
         <source>'%1' has unsaved changes.</source>
         <translation>'%1' kaydedilmemiş değişiklikler içeriyor.</translation>
     </message>
     <message>
-        <location filename="../qml/Main.qml" line="530" />
+        <location filename="../qml/Main.qml" line="568" />
         <source>Install DOS</source>
         <translation>DOS kurulumu</translation>
     </message>
     <message>
-        <location filename="../qml/Main.qml" line="531" />
+        <location filename="../qml/Main.qml" line="569" />
         <source>Copy high-speed MyPicoDOS ($boot.bin + picodos.sys) into this folder? The Atari will then be able to boot DOS from it.</source>
         <translation>Hızlı MyPicoDOS ($boot.bin + picodos.sys) bu klasöre kopyalansın mı? Atari böylece DOS'u buradan başlatabilir.</translation>
     </message>
     <message>
-        <location filename="../qml/Main.qml" line="543" />
+        <location filename="../qml/Main.qml" line="581" />
         <source>XFD image (*.xfd)</source>
         <translation>XFD imajı (*.xfd)</translation>
     </message>
@@ -1716,7 +1735,7 @@ Bip sesini duyduğunuzda oynat düğmesine basın ve yaklaşık aynı anda Atari
         <translation>Dil:</translation>
     </message>
     <message>
-        <location filename="../engine.cpp" line="1849" />
+        <location filename="../engine.cpp" line="1917" />
         <source>English</source>
         <translation>Türkçe</translation>
     </message>

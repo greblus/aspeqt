@@ -396,6 +396,18 @@ void Engine::mountNetworkTemp(const QString &path)
     if (no < 0) return;
 
     mountFileWithDefaultProtection(no, path);
+
+    // Executables and cassettes are diverted to the loader slot; track the cache
+    // file there instead. This has to be tested first, because loading an XEX
+    // also installs the boot loader on D1 -- so a device sitting in the disk slot
+    // proves nothing about where the file actually went.
+    if (m_loaderKind != 0 && m_loaderFile == path) {
+        if (m_netTempLoader != path)
+            QFile::remove(m_netTempLoader);
+        m_netTempLoader = path;
+        return;
+    }
+
     if (!sio->getDevice(no + 0x31))
         return;                       // mount failed
     // The cache file is temporary: keep it out of the saved session (a dead
@@ -428,7 +440,67 @@ QVariantList Engine::networkTempDisks() const
         m["name"]    = QFileInfo(it.value()).fileName();
         out << m;
     }
+    if (!m_netTempLoader.isEmpty()) {
+        QVariantMap m;
+        m["hwIndex"] = -1;            // the loader slot, not a drive
+        m["slot"]    = 0;
+        m["name"]    = QFileInfo(m_netTempLoader).fileName();
+        out << m;
+    }
     return out;
+}
+
+QString Engine::loaderNetTempName() const
+{
+    return m_netTempLoader.isEmpty() ? QStringLiteral("program.xex")
+                                     : QFileInfo(m_netTempLoader).fileName();
+}
+
+// Eject the loader and drop its cache file. Kept apart from loaderEject(), which
+// the load* functions call internally -- deleting there would pull the file out
+// from under a retry/reload.
+void Engine::loaderEjectDiscard()
+{
+    loaderEject();
+    if (!m_netTempLoader.isEmpty()) {
+        QFile::remove(m_netTempLoader);
+        m_netTempLoader.clear();
+    }
+}
+
+bool Engine::saveLoaderTempAs(const QString &url)
+{
+    if (m_netTempLoader.isEmpty())
+        return false;
+    const QString dest = pathFromPickedUrl(url);
+    if (dest.isEmpty())
+        return false;
+
+    const QString cache = m_netTempLoader;
+    QFile in(cache);
+    QFile out(dest);
+    if (!in.open(QIODevice::ReadOnly) || !out.open(QIODevice::WriteOnly | QIODevice::Truncate)) {
+        toast(tr("'%1' cannot be saved.").arg(friendlyName(dest)));
+        return false;
+    }
+    while (!in.atEnd()) {
+        const QByteArray block = in.read(64 * 1024);
+        if (out.write(block) != block.size()) {
+            in.close(); out.close();
+            toast(tr("'%1' cannot be saved.").arg(friendlyName(dest)));
+            return false;
+        }
+    }
+    in.close();
+    out.close();
+
+    // Reload from the permanent copy so nothing points at the cache any more.
+    // Clear the tracking first: the reload ejects, and that must not delete the
+    // file we are still reading from.
+    m_netTempLoader.clear();
+    loaderLoadPath(url);
+    QFile::remove(cache);
+    return true;
 }
 
 
@@ -2004,6 +2076,11 @@ void Engine::loaderLoadPath(const QString &url)
     const QString picked = pathFromPickedUrl(url);
     if (picked.isEmpty())
         return;
+    // Loading something else drops whatever network download the loader held.
+    if (!m_netTempLoader.isEmpty() && m_netTempLoader != picked) {
+        QFile::remove(m_netTempLoader);
+        m_netTempLoader.clear();
+    }
     // Always copy a content:// pick to a real temp file: QFile on a SAF stream
     // can pass a one-shot open() probe yet fail the repeated sequential reads /
     // atEnd() that CAS parsing and the boot loader need.

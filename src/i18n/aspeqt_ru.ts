@@ -795,32 +795,32 @@
         <translation>AspeQt остановлен в %1.</translation>
     </message>
     <message>
-        <location filename="../engine.cpp" line="520" />
+        <location filename="../engine.cpp" line="588" />
         <source>Failed to load executable '%1'.</source>
         <translation>Не удалось загрузить программу «%1».</translation>
     </message>
     <message>
-        <location filename="../engine.cpp" line="531" />
+        <location filename="../engine.cpp" line="599" />
         <source>Executable (%1k)</source>
         <translation>Программа (%1k)</translation>
     </message>
     <message>
-        <location filename="../engine.cpp" line="534" />
+        <location filename="../engine.cpp" line="602" />
         <source>Loaded executable '%1'. Start (or reboot) your Atari to run it.</source>
         <translation>Программа «%1» загружена. Включите (или перезагрузите) Atari, чтобы её запустить.</translation>
     </message>
     <message>
-        <location filename="../engine.cpp" line="547" />
+        <location filename="../engine.cpp" line="615" />
         <source>Failed to load cassette image '%1'.</source>
         <translation>Не удалось загрузить образ кассеты «%1».</translation>
     </message>
     <message>
-        <location filename="../engine.cpp" line="558" />
+        <location filename="../engine.cpp" line="626" />
         <source>Cassette (%1:%2)</source>
         <translation>Кассета (%1:%2)</translation>
     </message>
     <message>
-        <location filename="../engine.cpp" line="565" />
+        <location filename="../engine.cpp" line="633" />
         <source>AspeQt is ready to playback the cassette image file '%1'.
 
 Do whatever is necessary in your Atari to load this cassette image like rebooting while holding Option and Start buttons or entering "CLOAD" in the BASIC prompt.
@@ -833,164 +833,166 @@ When you hear the beep sound, push the play button and press a key on your Atari
 Услышав сигнал, нажмите кнопку воспроизведения и примерно одновременно клавишу на Atari.</translation>
     </message>
     <message>
-        <location filename="../engine.cpp" line="595" />
+        <location filename="../engine.cpp" line="663" />
         <source>Playing back cassette image.</source>
         <translation>Воспроизведение образа кассеты.</translation>
     </message>
     <message>
-        <location filename="../engine.cpp" line="624" />
+        <location filename="../engine.cpp" line="692" />
         <source>Cassette playback finished.</source>
         <translation>Воспроизведение кассеты завершено.</translation>
     </message>
     <message>
-        <location filename="../engine.cpp" line="635" />
+        <location filename="../engine.cpp" line="703" />
         <source>Executable loaded into the Atari.</source>
         <translation>Программа загружена в Atari.</translation>
     </message>
     <message>
-        <location filename="../engine.cpp" line="736" />
+        <location filename="../engine.cpp" line="804" />
         <source>[%1] Auto-commit failed.</source>
         <translation>[%1] Автосохранение не удалось.</translation>
     </message>
     <message>
-        <location filename="../engine.cpp" line="892" />
+        <location filename="../engine.cpp" line="960" />
         <source>Loaded into the cas/xex slot.</source>
         <translation>Загружено в слот cas/xex.</translation>
     </message>
     <message>
-        <location filename="../engine.cpp" line="1095" />
-        <location filename="../engine.cpp" line="1103" />
+        <location filename="../engine.cpp" line="1163" />
+        <location filename="../engine.cpp" line="1171" />
         <source>This slot does not hold a mounted folder.</source>
         <translation>В этом слоте нет подключённой папки.</translation>
     </message>
     <message>
-        <location filename="../engine.cpp" line="1113" />
+        <location filename="../engine.cpp" line="1181" />
         <source>Installed high-speed MyPicoDOS into the folder. Reboot your Atari to load DOS.</source>
         <translation>Быстрый MyPicoDOS установлен в папку. Перезагрузите Atari, чтобы загрузить DOS.</translation>
     </message>
     <message>
-        <location filename="../engine.cpp" line="1087" />
-        <location filename="../engine.cpp" line="1116" />
+        <location filename="../engine.cpp" line="1155" />
+        <location filename="../engine.cpp" line="1184" />
         <source>Could not copy the DOS files into the folder.</source>
         <translation>Не удалось скопировать файлы DOS в папку.</translation>
     </message>
     <message>
-        <location filename="../engine.cpp" line="1238" />
+        <location filename="../engine.cpp" line="1306" />
         <source>[Disk %1] Auto-commit ON.</source>
         <translation>[Диск %1] Автосохранение ВКЛ.</translation>
     </message>
     <message>
-        <location filename="../engine.cpp" line="1239" />
+        <location filename="../engine.cpp" line="1307" />
         <source>[Disk %1] Auto-commit OFF.</source>
         <translation>[Диск %1] Автосохранение ВЫКЛ.</translation>
     </message>
     <message>
-        <location filename="../engine.cpp" line="1286" />
+        <location filename="../engine.cpp" line="479" />
+        <location filename="../engine.cpp" line="486" />
+        <location filename="../engine.cpp" line="1354" />
         <source>'%1' cannot be saved.</source>
         <translation>Не удалось сохранить «%1».</translation>
     </message>
     <message>
-        <location filename="../engine.cpp" line="1322" />
-        <location filename="../engine.cpp" line="2176" />
+        <location filename="../engine.cpp" line="1390" />
+        <location filename="../engine.cpp" line="2249" />
         <source>Cannot read '%1'.</source>
         <translation>Не удалось прочитать «%1».</translation>
     </message>
     <message>
-        <location filename="../engine.cpp" line="1398" />
-        <location filename="../engine.cpp" line="1612" />
-        <location filename="../engine.cpp" line="1619" />
-        <location filename="../engine.cpp" line="2190" />
+        <location filename="../engine.cpp" line="1466" />
+        <location filename="../engine.cpp" line="1680" />
+        <location filename="../engine.cpp" line="1687" />
+        <location filename="../engine.cpp" line="2263" />
         <source>Cannot write to '%1'.</source>
         <translation>Не удалось записать в '%1'.</translation>
     </message>
     <message>
-        <location filename="../engine.cpp" line="1519" />
+        <location filename="../engine.cpp" line="1587" />
         <source>Swapped disk %1 with disk %2.</source>
         <translation>Диск %1 заменен на диск %2.</translation>
     </message>
     <message>
-        <location filename="../engine.cpp" line="1611" />
-        <location filename="../engine.cpp" line="1618" />
+        <location filename="../engine.cpp" line="1679" />
+        <location filename="../engine.cpp" line="1686" />
         <source>Cannot save the printout, see the log.</source>
         <translation>Не удалось сохранить распечатку, смотрите журнал.</translation>
     </message>
     <message>
-        <location filename="../engine.cpp" line="1737" />
+        <location filename="../engine.cpp" line="1805" />
         <source>No phonebook file chosen (see Options).</source>
         <translation>Файл телефонной книги не выбран (см. параметры).</translation>
     </message>
     <message>
-        <location filename="../engine.cpp" line="1790" />
+        <location filename="../engine.cpp" line="1858" />
         <source>Cannot write the bundled phonebook to %1</source>
         <translation>Не удалось записать встроенную телефонную книгу в %1</translation>
     </message>
     <message>
-        <location filename="../engine.cpp" line="1806" />
+        <location filename="../engine.cpp" line="1874" />
         <source>The R: device is not enabled (see Options).</source>
         <translation>Устройство R: не включено (см. параметры).</translation>
     </message>
     <message>
-        <location filename="../engine.cpp" line="1825" />
+        <location filename="../engine.cpp" line="1893" />
         <source>This phonebook entry has no address.</source>
         <translation>У этой записи телефонной книги нет адреса.</translation>
     </message>
     <message>
-        <location filename="../engine.cpp" line="1837" />
+        <location filename="../engine.cpp" line="1905" />
         <source>Automatic</source>
         <translation>Автоматически</translation>
     </message>
     <message>
-        <location filename="../engine.cpp" line="1999" />
+        <location filename="../engine.cpp" line="2072" />
         <source>Failed to load '%1'.</source>
         <translation>Не удалось загрузить «%1».</translation>
     </message>
     <message>
-        <location filename="../engine.cpp" line="2011" />
+        <location filename="../engine.cpp" line="2084" />
         <source>Pick an Atari executable (.xex/.com/.exe) or a cassette image (.cas).</source>
         <translation>Выберите программу Atari (.xex/.com/.exe) или образ кассеты (.cas).</translation>
     </message>
     <message>
-        <location filename="../engine.cpp" line="2126" />
-        <location filename="../engine.cpp" line="2138" />
-        <location filename="../engine.cpp" line="2142" />
+        <location filename="../engine.cpp" line="2199" />
+        <location filename="../engine.cpp" line="2211" />
+        <location filename="../engine.cpp" line="2215" />
         <source>Cannot extract the files, see the log.</source>
         <translation>Не удалось извлечь файлы, смотрите журнал.</translation>
     </message>
     <message>
-        <location filename="../engine.cpp" line="2155" />
+        <location filename="../engine.cpp" line="2228" />
         <source>Cannot delete the files, see the log.</source>
         <translation>Не удалось удалить файлы, смотрите журнал.</translation>
     </message>
     <message>
-        <location filename="../engine.cpp" line="2175" />
-        <location filename="../engine.cpp" line="2189" />
-        <location filename="../engine.cpp" line="2201" />
+        <location filename="../engine.cpp" line="2248" />
+        <location filename="../engine.cpp" line="2262" />
+        <location filename="../engine.cpp" line="2274" />
         <source>Cannot add the file, see the log.</source>
         <translation>Не удалось добавить файл, смотрите журнал.</translation>
     </message>
     <message>
-        <location filename="../engine.cpp" line="714" />
+        <location filename="../engine.cpp" line="782" />
         <source>Emulation stopped.</source>
         <translation>Эмуляция остановлена.</translation>
     </message>
     <message>
-        <location filename="../engine.cpp" line="799" />
+        <location filename="../engine.cpp" line="867" />
         <source>Unmounted disk %1</source>
         <translation>Диск %1 отключен</translation>
     </message>
     <message>
-        <location filename="../engine.cpp" line="970" />
-        <location filename="../engine.cpp" line="1585" />
+        <location filename="../engine.cpp" line="1038" />
+        <location filename="../engine.cpp" line="1653" />
         <source>[%1] Mounted '%2' as '%3'.</source>
         <translation>[%1] Подключен '%2' как '%3'.</translation>
     </message>
     <message>
-        <location filename="../engine.cpp" line="1554" />
+        <location filename="../engine.cpp" line="1622" />
         <source>Printer emulation stopped.</source>
         <translation>Эмуляция принтера остановлена.</translation>
     </message>
     <message>
-        <location filename="../engine.cpp" line="1553" />
+        <location filename="../engine.cpp" line="1621" />
         <source>Printer emulation started.</source>
         <translation>Эмуляция принтера запущена.</translation>
     </message>
@@ -1127,27 +1129,27 @@ When you hear the beep sound, push the play button and press a key on your Atari
 <context>
     <name>LoaderCard</name>
     <message>
-        <location filename="../qml/LoaderCard.qml" line="65" />
+        <location filename="../qml/LoaderCard.qml" line="66" />
         <source>Load executable or cassette</source>
         <translation>Загрузить программу или кассету</translation>
     </message>
     <message>
-        <location filename="../qml/LoaderCard.qml" line="71" />
+        <location filename="../qml/LoaderCard.qml" line="72" />
         <source>Start cassette playback</source>
         <translation>Начать воспроизведение кассеты</translation>
     </message>
     <message>
-        <location filename="../qml/LoaderCard.qml" line="77" />
+        <location filename="../qml/LoaderCard.qml" line="78" />
         <source>Retry</source>
         <translation>Повторить</translation>
     </message>
     <message>
-        <location filename="../qml/LoaderCard.qml" line="91" />
+        <location filename="../qml/LoaderCard.qml" line="92" />
         <source>Eject</source>
         <translation>Извлечь</translation>
     </message>
     <message>
-        <location filename="../qml/LoaderCard.qml" line="101" />
+        <location filename="../qml/LoaderCard.qml" line="102" />
         <source>Load an executable or cassette.</source>
         <translation>Загрузите программу или кассету.</translation>
     </message>
@@ -1189,13 +1191,13 @@ When you hear the beep sound, push the play button and press a key on your Atari
     <name>Main</name>
     <message>
         <location filename="../qml/Main.qml" line="57" />
-        <location filename="../qml/Main.qml" line="351" />
+        <location filename="../qml/Main.qml" line="357" />
         <source>Stop emulation</source>
         <translation>Остановить эмуляцию</translation>
     </message>
     <message>
         <location filename="../qml/Main.qml" line="58" />
-        <location filename="../qml/Main.qml" line="351" />
+        <location filename="../qml/Main.qml" line="357" />
         <source>Start emulation</source>
         <translation>Запустить эмуляцию</translation>
     </message>
@@ -1243,12 +1245,14 @@ When you hear the beep sound, push the play button and press a key on your Atari
     <message>
         <location filename="../qml/Main.qml" line="85" />
         <location filename="../qml/Main.qml" line="93" />
-        <location filename="../qml/Main.qml" line="190" />
-        <location filename="../qml/Main.qml" line="217" />
-        <location filename="../qml/Main.qml" line="422" />
-        <location filename="../qml/Main.qml" line="464" />
-        <location filename="../qml/Main.qml" line="500" />
-        <location filename="../qml/Main.qml" line="543" />
+        <location filename="../qml/Main.qml" line="196" />
+        <location filename="../qml/Main.qml" line="223" />
+        <location filename="../qml/Main.qml" line="428" />
+        <location filename="../qml/Main.qml" line="470" />
+        <location filename="../qml/Main.qml" line="495" />
+        <location filename="../qml/Main.qml" line="528" />
+        <location filename="../qml/Main.qml" line="538" />
+        <location filename="../qml/Main.qml" line="581" />
         <source>All files (*)</source>
         <translation>Все файлы (*)</translation>
     </message>
@@ -1293,69 +1297,71 @@ When you hear the beep sound, push the play button and press a key on your Atari
         <translation>Выход</translation>
     </message>
     <message>
-        <location filename="../qml/Main.qml" line="189" />
+        <location filename="../qml/Main.qml" line="195" />
         <source>Load executable or cassette</source>
         <translation>Загрузить программу или кассету</translation>
     </message>
     <message>
-        <location filename="../qml/Main.qml" line="190" />
+        <location filename="../qml/Main.qml" line="196" />
+        <location filename="../qml/Main.qml" line="495" />
+        <location filename="../qml/Main.qml" line="528" />
         <source>Atari programs (*.xex *.com *.exe *.cas)</source>
         <translation>Программы Atari (*.xex *.com *.exe *.cas)</translation>
     </message>
     <message>
-        <location filename="../qml/Main.qml" line="216" />
+        <location filename="../qml/Main.qml" line="222" />
         <source>Open a disk image</source>
         <translation>Открыть образ диска</translation>
     </message>
     <message>
-        <location filename="../qml/Main.qml" line="217" />
+        <location filename="../qml/Main.qml" line="223" />
         <source>All Atari disk images (*.atr *.xfd *.pro)</source>
         <translation>Все образы дисков Atari (*.atr *.xfd *.pro)</translation>
     </message>
     <message>
-        <location filename="../qml/Main.qml" line="232" />
+        <location filename="../qml/Main.qml" line="238" />
         <source>Open a folder image</source>
         <translation>Открыть образ папки</translation>
     </message>
     <message>
-        <location filename="../qml/Main.qml" line="358" />
+        <location filename="../qml/Main.qml" line="364" />
         <source>Stop printer emulation</source>
         <translation>Остановить эмуляцию принтера</translation>
     </message>
     <message>
-        <location filename="../qml/Main.qml" line="359" />
+        <location filename="../qml/Main.qml" line="365" />
         <source>Start printer emulation</source>
         <translation>Запустить эмуляцию принтера</translation>
     </message>
     <message>
-        <location filename="../qml/Main.qml" line="364" />
+        <location filename="../qml/Main.qml" line="370" />
         <source>Clear messages</source>
         <translation>Очистить сообщения</translation>
     </message>
     <message>
-        <location filename="../qml/Main.qml" line="421" />
-        <location filename="../qml/Main.qml" line="463" />
-        <location filename="../qml/Main.qml" line="499" />
-        <location filename="../qml/Main.qml" line="542" />
+        <location filename="../qml/Main.qml" line="427" />
+        <location filename="../qml/Main.qml" line="469" />
+        <location filename="../qml/Main.qml" line="537" />
+        <location filename="../qml/Main.qml" line="580" />
         <source>Save image as</source>
         <translation>Сохранить образ как</translation>
     </message>
     <message>
-        <location filename="../qml/Main.qml" line="422" />
-        <location filename="../qml/Main.qml" line="464" />
-        <location filename="../qml/Main.qml" line="500" />
-        <location filename="../qml/Main.qml" line="543" />
+        <location filename="../qml/Main.qml" line="428" />
+        <location filename="../qml/Main.qml" line="470" />
+        <location filename="../qml/Main.qml" line="538" />
+        <location filename="../qml/Main.qml" line="581" />
         <source>ATR image (*.atr)</source>
         <translation>Образ ATR (*.atr)</translation>
     </message>
     <message>
-        <location filename="../qml/Main.qml" line="442" />
-        <location filename="../qml/Main.qml" line="517" />
+        <location filename="../qml/Main.qml" line="448" />
+        <location filename="../qml/Main.qml" line="555" />
         <source>Unsaved changes</source>
         <translation>Несохранённые изменения</translation>
     </message>
     <message>
-        <location filename="../qml/Main.qml" line="443" />
+        <location filename="../qml/Main.qml" line="449" />
         <source>These images have unsaved changes:
 
 %1</source>
@@ -1364,22 +1370,35 @@ When you hear the beep sound, push the play button and press a key on your Atari
 %1</translation>
     </message>
     <message>
-        <location filename="../qml/Main.qml" line="457" />
+        <location filename="../qml/Main.qml" line="463" />
+        <location filename="../qml/Main.qml" line="488" />
         <source>Downloaded image</source>
         <translation>Загруженный образ</translation>
     </message>
     <message>
-        <location filename="../qml/Main.qml" line="458" />
+        <location filename="../qml/Main.qml" line="464" />
+        <location filename="../qml/Main.qml" line="489" />
         <source>This image is only in the cache. Save it before ejecting?</source>
         <translation>Этот образ только в кэше. Сохранить его перед извлечением?</translation>
     </message>
     <message>
-        <location filename="../qml/Main.qml" line="486" />
+        <location filename="../qml/Main.qml" line="494" />
+        <location filename="../qml/Main.qml" line="527" />
+        <source>Save program as</source>
+        <translation>Сохранить программу как</translation>
+    </message>
+    <message>
+        <location filename="../qml/Main.qml" line="510" />
+        <source>Loader</source>
+        <translation>Загрузчик</translation>
+    </message>
+    <message>
+        <location filename="../qml/Main.qml" line="513" />
         <source>Downloaded images</source>
         <translation>Загруженные образы</translation>
     </message>
     <message>
-        <location filename="../qml/Main.qml" line="487" />
+        <location filename="../qml/Main.qml" line="514" />
         <source>These images are only in the cache and will be lost:
 
 %1</source>
@@ -1388,22 +1407,22 @@ When you hear the beep sound, push the play button and press a key on your Atari
 %1</translation>
     </message>
     <message>
-        <location filename="../qml/Main.qml" line="518" />
+        <location filename="../qml/Main.qml" line="556" />
         <source>'%1' has unsaved changes.</source>
         <translation>В «%1» есть несохранённые изменения.</translation>
     </message>
     <message>
-        <location filename="../qml/Main.qml" line="530" />
+        <location filename="../qml/Main.qml" line="568" />
         <source>Install DOS</source>
         <translation>Установка DOS</translation>
     </message>
     <message>
-        <location filename="../qml/Main.qml" line="531" />
+        <location filename="../qml/Main.qml" line="569" />
         <source>Copy high-speed MyPicoDOS ($boot.bin + picodos.sys) into this folder? The Atari will then be able to boot DOS from it.</source>
         <translation>Скопировать быстрый MyPicoDOS ($boot.bin + picodos.sys) в эту папку? Atari сможет загрузить с неё DOS.</translation>
     </message>
     <message>
-        <location filename="../qml/Main.qml" line="543" />
+        <location filename="../qml/Main.qml" line="581" />
         <source>XFD image (*.xfd)</source>
         <translation>Образ XFD (*.xfd)</translation>
     </message>
@@ -1715,7 +1734,7 @@ When you hear the beep sound, push the play button and press a key on your Atari
         <translation>Язык:</translation>
     </message>
     <message>
-        <location filename="../engine.cpp" line="1849" />
+        <location filename="../engine.cpp" line="1917" />
         <source>English</source>
         <translation>Russian</translation>
     </message>
