@@ -9,6 +9,7 @@ extern Engine *g_engine;
 #include <QQmlContext>
 #include "qmlbridge.h"
 #include "networkbrowser.h"
+#include "paperprovider.h"
 
 #ifdef Q_OS_WIN
 #include <windows.h>
@@ -87,6 +88,11 @@ int main(int argc, char *argv[])
     QQmlApplicationEngine engine;
     AppController controller(&engineWindow);
     NetworkBrowser netBrowser;
+    // The printer's page is served to QML through an image provider; the engine
+    // owns the QImage, the controller keeps the provider fed.
+    PaperProvider *paperProvider = new PaperProvider;   // engine takes ownership
+    engine.addImageProvider(QStringLiteral("paper"), paperProvider);
+    controller.setPaperProvider(paperProvider);
     engine.rootContext()->setContextProperty("app", &controller);
     engine.rootContext()->setContextProperty("netbrowser", &netBrowser);
     engine.load(QUrl(QStringLiteral("qrc:/qml/Main.qml")));

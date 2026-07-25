@@ -27,11 +27,11 @@ SOURCES += main.cpp \
     diskimagepro.cpp \
     folderimage.cpp \
     miscdevices.cpp \
+    epsonprinter.cpp \
     aspeqtsettings.cpp \
     autoboot.cpp \
     atarifilesystem.cpp \
     miscutils.cpp \
-    printeroutput.cpp \
     rdevice.cpp \
     phonebook.cpp \
     tnfsclient.cpp \
@@ -108,11 +108,11 @@ HEADERS += engine.h \
     diskimagepro.h \
     folderimage.h \
     miscdevices.h \
+    epsonprinter.h \
     aspeqtsettings.h \
     autoboot.h \
     atarifilesystem.h \
     miscutils.h \
-    printeroutput.h \
     rdevice.h \
     rdevice_handler.h \
     phonebook.h \

@@ -9,7 +9,8 @@
 
 #include "serialport.h"
 #include "sioworker.h"
-#include "printeroutput.h"
+#include "epsonprinter.h"
+#include <QImage>
 #include "rdevice.h"
 
 #define MAX_DISKS 15           // SIO disk device numbers 0x31..0x3F
@@ -55,7 +56,8 @@ private:
     int m_dvFsType = 0;                    // current filesystem type (0..5)
     QList<quint16> m_dvDirs;               // directory sector stack
     QStringList m_dvPaths;                 // directory name stack
-    PrinterOutput *printerOutput = nullptr;
+    class EpsonPrinter *m_epson = nullptr;
+    QImage m_paperImage;
     RDevice *m_rDevice = nullptr;
     QTranslator aspeqt_translator, aspeqt_qt_translator;
     
@@ -177,10 +179,15 @@ public:
     // menu items (mirror the QtWidgets menu bar)
     void createDisk(int sectorCount, int sectorSize);
     void ejectAll();
-    QString printerText();
-    QString printerTextAtascii();
     void    printerClear();
-    bool    printerSavePath(const QString &url, bool asPdf);
+    // Epson paper: the rendered page, plus saving and offline replay.
+    QImage  paperImage() const { return m_paperImage; }
+    bool    printerSavePaper(const QString &url);
+    bool    printerSavePdf(const QString &url);
+    void    printerSetFont(const QString &family);
+    QString printerFontFamily();
+    void    printerReplay(const QString &url);
+    void    printerTestPage();
     void quit();
     QStringList recentFiles();
     void mountRecent(int index);
@@ -247,7 +254,7 @@ public:
 signals:
     void stateChanged();
     void loaderProgress();   // frequent, loader-only (progress fill)
-    void printerTextChanged();
+    void paperChanged();
     void documentPicked(int reqId, const QString &uri);
 private:
 #endif

@@ -4,9 +4,9 @@ import QtQuick.Controls.Material
 import QtQuick.Layouts
 import "."
 
-// Printer text-output window (ASCII view), in QML. Shows the accumulated printer
-// output with a selectable font/size, word-wrap, clear and save. (The widget's
-// second ATASCII view + physical Print are omitted on Android.)
+// Printer output: the page the Epson emulation rendered, scrollable and
+// zoomable, with clear and save-as-PNG. The image comes from the "paper" image
+// provider; app.paperRevision is in the URL so a repaint actually reloads it.
 Popup {
     id: pw
     parent: Overlay.overlay
@@ -18,13 +18,25 @@ Popup {
     padding: 0
     closePolicy: Popup.NoAutoClose
 
-    readonly property var sizes: [9, 12, 15, 18]
+    // Fit-to-width on open; the buttons and pinch then scale from there.
+    property real zoom: 1.0
+    function fitWidth() {
+        if (paper.implicitWidth > 0)
+            zoom = (flick.width - 12) / paper.implicitWidth
+    }
 
-    FontLoader { id: atariFont; source: "qrc:/images/AtariClassicChunky.ttf" }
+    onOpened: {
+        fitWidth()
+        // Show the font the printer is actually using (stored between runs).
+        var f = app.printerFontFamily()
+        var i = f.length > 0 ? fontCombo.model.indexOf(f) : -1
+        if (i >= 0) fontCombo.currentIndex = i
+    }
 
     background: Rectangle { color: Material.background }
 
     FilePicker { id: pwPicker }
+    ConfirmDialog { id: pwConfirm }
 
     contentItem: ColumnLayout {
         spacing: 0
@@ -40,7 +52,7 @@ Popup {
                 anchors.fill: parent
                 anchors.leftMargin: 12
                 Label {
-                    text: qsTr("Printer text output")
+                    text: qsTr("Printer output")
                     color: "white"
                     font.pixelSize: 20
                     font.bold: true
@@ -58,89 +70,101 @@ Popup {
                 anchors.leftMargin: 8
                 anchors.rightMargin: 8
                 spacing: 6
+                // Which font the print head "has fitted". Changing it re-runs the
+                // parser over the stored job, so the page restyles in place.
                 ComboBox {
                     id: fontCombo
                     Layout.fillWidth: true
                     Layout.preferredHeight: 36
                     font.pixelSize: 13
                     model: Qt.fontFamilies()
-                }
-                ComboBox {
-                    id: sizeCombo
-                    Layout.preferredWidth: 74
-                    Layout.preferredHeight: 36
-                    font.pixelSize: 13
-                    model: pw.sizes
-                    currentIndex: 1
+                    onActivated: app.printerSetFont(currentText)
                 }
                 SlotButton {
-                    source: Theme.icon("actions/format-justify-fill.svg")
-                    checked: wrapOn.on
-                    tip: qsTr("Word wrap")
-                    onClicked: wrapOn.on = !wrapOn.on
+                    iconSize: 26
+                    source: Theme.icon("actions/view-fullscreen.svg")
+                    tip: qsTr("Fit width")
+                    onClicked: pw.fitWidth()
                 }
-                QtObject { id: wrapOn; property bool on: true }
                 SlotButton {
-                    source: Theme.icon("mimetypes/font-x-generic.svg")
-                    checked: atasciiOn.on
-                    tip: qsTr("Show ATASCII")
-                    onClicked: atasciiOn.on = !atasciiOn.on
-                }
-                QtObject { id: atasciiOn; property bool on: false }
-                SlotButton {
+                    iconSize: 26
                     source: Theme.icon("actions/edit-clear.svg")
-                    tip: qsTr("Clear contents")
-                    onClicked: app.printerClear()
+                    tip: qsTr("Clear the paper")
+                    onClicked: pwConfirm.ask(qsTr("Printer"),
+                        qsTr("Throw away the printed page?"),
+                        function (yes) { if (yes) app.printerClear() })
                 }
                 SlotButton {
+                    id: saveBtn
+                    iconSize: 26
                     source: Theme.icon("actions/document-save.svg")
-                    tip: qsTr("Save as text")
-                    onClicked: pwPicker.saveFile(
-                        qsTr("Save printout"), [qsTr("Text files (*.txt)")], "", "printout.txt",
-                        function (url) { if (url.length > 0) app.printerSavePath(url, false) })
-                }
-                SlotButton {
-                    source: Theme.icon("actions/document-print.svg")
-                    tip: qsTr("Save as PDF")
-                    onClicked: pwPicker.saveFile(
-                        qsTr("Save printout"), [qsTr("PDF files (*.pdf)")], "", "printout.pdf",
-                        function (url) { if (url.length > 0) app.printerSavePath(url, true) })
+                    tip: qsTr("Save as…")
+                    onClicked: saveMenu.open()
+
+                    Menu {
+                        id: saveMenu
+                        y: saveBtn.height
+                        MenuItem {
+                            text: qsTr("Save as PNG image")
+                            onTriggered: pwPicker.saveFile(
+                                qsTr("Save printout"), [qsTr("PNG images (*.png)")], "", "printout.png",
+                                function (url) { if (url.length > 0) app.printerSavePaper(url) })
+                        }
+                        MenuItem {
+                            text: qsTr("Save as PDF document")
+                            onTriggered: pwPicker.saveFile(
+                                qsTr("Save printout"), [qsTr("PDF documents (*.pdf)")], "", "printout.pdf",
+                                function (url) { if (url.length > 0) app.printerSavePdf(url) })
+                        }
+                    }
                 }
             }
         }
 
-        // text views: ASCII (top) and optional ATASCII (bottom, Atari font)
-        ColumnLayout {
+        // the paper
+        Flickable {
+            id: flick
             Layout.fillWidth: true
             Layout.fillHeight: true
             Layout.margins: 6
-            spacing: 6
+            clip: true
+            contentWidth: Math.max(width, paper.width)
+            contentHeight: Math.max(height, paper.height)
+            boundsBehavior: Flickable.StopAtBounds
+            ScrollBar.vertical: ScrollBar {}
+            ScrollBar.horizontal: ScrollBar {}
 
-            ScrollView {
-                Layout.fillWidth: true
-                Layout.fillHeight: true
-                clip: true
-                TextArea {
-                    readOnly: true
-                    text: app.printerText
-                    font.family: fontCombo.currentText
-                    font.pixelSize: pw.sizes[sizeCombo.currentIndex]
-                    wrapMode: wrapOn.on ? TextArea.Wrap : TextArea.NoWrap
-                }
+            // Two-finger zoom. target stays null so the handler only reports the
+            // gesture: scaling the item itself would fight the Flickable, which
+            // has to keep sizing its content from the zoom factor.
+            PinchHandler {
+                target: null
+                property real zoomAtStart: 1.0
+                onActiveChanged: if (active) zoomAtStart = pw.zoom
+                onActiveScaleChanged: pw.zoom =
+                    Math.max(0.1, Math.min(4.0, zoomAtStart * activeScale))
             }
-            ScrollView {
-                visible: atasciiOn.on
-                Layout.fillWidth: true
-                Layout.fillHeight: true
-                clip: true
-                background: Rectangle { color: "#F4F4F4"; border.color: "#D0D0D0" }
-                TextArea {
-                    readOnly: true
-                    text: app.printerTextAtascii
-                    font.family: atariFont.name
-                    font.pixelSize: pw.sizes[sizeCombo.currentIndex]
-                    wrapMode: wrapOn.on ? TextArea.Wrap : TextArea.NoWrap
-                }
+
+            Image {
+                id: paper
+                // The revision is what busts the cache: the path never changes.
+                source: "image://paper/page?rev=" + app.paperRevision
+                cache: false
+                asynchronous: true
+                smooth: true
+                fillMode: Image.PreserveAspectFit
+                width: implicitWidth * pw.zoom
+                height: implicitHeight * pw.zoom
+                anchors.horizontalCenter: parent.horizontalCenter
+                onStatusChanged: if (status === Image.Ready && pw.zoom === 1.0) pw.fitWidth()
+            }
+
+            Label {
+                anchors.centerIn: parent
+                visible: paper.implicitWidth <= 0
+                text: qsTr("Nothing printed yet.")
+                color: Theme.typeGrey
+                font.pixelSize: 15
             }
         }
 

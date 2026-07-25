@@ -86,8 +86,9 @@ class AppController : public QObject
     Q_PROPERTY(QString logHtml    READ logHtml    NOTIFY logChanged)
     Q_PROPERTY(QString logTailHtml READ logTailHtml NOTIFY logChanged)
     Q_PROPERTY(bool    canAddSlot READ canAddSlot NOTIFY drivesChanged)
-    Q_PROPERTY(QString printerText READ printerText NOTIFY printerTextChanged)
-    Q_PROPERTY(QString printerTextAtascii READ printerTextAtascii NOTIFY printerTextChanged)
+    // Bumped whenever a new page is rendered; QML puts it in the image URL so
+    // the Image element actually reloads (the provider path never changes).
+    Q_PROPERTY(int paperRevision READ paperRevision NOTIFY paperChanged)
 
 public:
     explicit AppController(Engine *engine, QObject *parent = nullptr);
@@ -118,10 +119,15 @@ public:
     QString logHtml() const;
     QString logTailHtml() const;
     bool    canAddSlot() const { return m_canAddSlot; }
-    QString printerText() const { return m_printerText; }
-    QString printerTextAtascii() const { return m_printerTextAtascii; }
     Q_INVOKABLE void printerClear();
-    Q_INVOKABLE bool printerSavePath(const QString &url, bool asPdf);
+    int  paperRevision() const { return m_paperRevision; }
+    void setPaperProvider(class PaperProvider *p) { m_paper = p; }
+    Q_INVOKABLE bool printerSavePaper(const QString &url);
+    Q_INVOKABLE bool printerSavePdf(const QString &url);
+    Q_INVOKABLE void printerSetFont(const QString &family);
+    Q_INVOKABLE QString printerFontFamily();
+    Q_INVOKABLE void printerReplay(const QString &url);
+    Q_INVOKABLE void printerTestPage();
 
     // Actions from QML -> engine wrappers.
     Q_INVOKABLE void eject(int hwIndex);
@@ -206,12 +212,11 @@ signals:
     void logChanged();
     void documentPicked(int reqId, const QString &uri);
     void drivesChanged();
-    void printerTextChanged();
+    void paperChanged();
 
 private slots:
     void refresh();                              // pull engine state -> model
     void refreshLoader();                        // light: loader progress only
-    void refreshPrinter();                       // printer text updated
     void onLogMessage(int type, const QString &msg);
 
 private:
@@ -231,6 +236,8 @@ private:
     QString m_statusText;
     bool    m_sioRunning = false;
     bool    m_printerOn = false;
+    class PaperProvider *m_paper = nullptr;
+    int     m_paperRevision = 0;
     bool    m_canAddSlot = true;
     // The log pane renders this as RichText, so it is re-parsed and re-laid out
     // on every change: keep it bounded and coalesce bursts (fast SIO logs
@@ -245,8 +252,6 @@ private:
     mutable bool    m_logDirty = true;
     QTimer          m_logNotify;
     void rebuildLogCaches() const;
-    QString m_printerText;
-    QString m_printerTextAtascii;
 };
 
 #endif // QMLBRIDGE_H

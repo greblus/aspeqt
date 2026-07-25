@@ -18,6 +18,9 @@
 #include <QFile>
 #include <QTemporaryFile>
 #include <QStandardPaths>
+#include <QFontDatabase>
+#include <QPdfWriter>
+#include <QPainter>
 #include <QDir>
 #include <QTranslator>
 #include <QtDebug>
@@ -292,15 +295,18 @@ Engine::Engine(QObject *parent)
     AspeCl *acl = new AspeCl(sio);
     sio->installDevice(0x46, acl);
 
-    printerOutput = new PrinterOutput(this);
     // Documentation Display
 
 
-    Printer *printer = new Printer(sio);
-    connect(printer, SIGNAL(print(QString)), printerOutput, SLOT(print(QString)));
-    connect(printerOutput, &PrinterOutput::textChanged, this, &Engine::printerTextChanged);
-    connect(printer, SIGNAL(print(QString)), this, SIGNAL(printerTextChanged()));
-    sio->installDevice(0x40, printer);
+    // Epson ESC/P emulation: renders the print job onto a paper image instead of
+    // collecting plain text (ported from AspeQt-2k26, which does the same).
+    m_epson = new EpsonPrinter(sio);
+    connect(m_epson, &EpsonPrinter::paperUpdated, this, [this](const QImage &img) {
+        m_paperImage = img;
+        emit paperChanged();
+    }, Qt::QueuedConnection);          // arrives from the SIO worker thread
+    m_epson->setFontFamily(printerFontFamily());
+    sio->installDevice(0x40, m_epson);
 
     // R: device -- 850 emulation, dials BBSes over TCP. It decides for itself
     // whether it is enabled (RDevice/Enabled), but it has to be installed
@@ -1671,14 +1677,85 @@ void Engine::ejectAll()
         ejectImage(i);
     }
 }
-QString Engine::printerText()   { return printerOutput ? printerOutput->plainText() : QString(); }
-QString Engine::printerTextAtascii() { return printerOutput ? printerOutput->atasciiText() : QString(); }
-void Engine::printerClear()     { if (printerOutput) printerOutput->clearText(); }
-// The QML side picks the destination (SAF on Android), so no dialog here.
-bool Engine::printerSavePath(const QString &url, bool asPdf)
+
+void Engine::printerClear()
 {
-    if (!printerOutput)
+    if (m_epson)
+        QMetaObject::invokeMethod(m_epson, "forceClear", Qt::QueuedConnection);
+}
+
+// The print head's font. Cutive Mono is the default because it is the closest
+// thing to a typewriter face that Android ships; on a system without it we fall
+// back to whatever the platform calls fixed-pitch.
+QString Engine::printerFontFamily()
+{
+    QSettings s;
+    QString family = s.value("Printer/FontFamily").toString();
+    if (family.isEmpty()) {
+        const QString wanted = QStringLiteral("Cutive Mono");
+        if (QFontDatabase::families().contains(wanted))
+            family = wanted;
+    }
+    return family;
+}
+
+void Engine::printerSetFont(const QString &family)
+{
+    QSettings s;
+    s.setValue("Printer/FontFamily", family);
+    if (m_epson)
+        QMetaObject::invokeMethod(m_epson, "setFontFamily", Qt::QueuedConnection,
+                                  Q_ARG(QString, family));
+}
+
+// Save the rendered page. PNG keeps the dot-matrix graphics crisp; the image is
+// what the Atari actually printed, so there is nothing else to serialise.
+bool Engine::printerSavePaper(const QString &url)
+{
+    if (m_paperImage.isNull()) {
+        toast(tr("Nothing has been printed yet."));
         return false;
+    }
+    const QString picked = pathFromPickedUrl(url);
+    if (picked.isEmpty())
+        return false;
+
+    ContentFile out(picked);
+    if (!out.open(QIODevice::WriteOnly | QIODevice::Truncate)
+        || !m_paperImage.save(&out, "PNG")) {
+        toast(tr("Cannot save the printout, see the log."));
+        qCritical() << "!e" << tr("Cannot write to '%1'.").arg(friendlyName(picked));
+        return false;
+    }
+    out.close();
+    toast(tr("Printout saved."));
+    return true;
+}
+
+// The bundled test page: exercises every typeface, pitch and graphics mode, so
+// the emulation (and the chosen font) can be judged at a glance.
+void Engine::printerTestPage()
+{
+    if (!m_epson) return;
+    QFile f(QStringLiteral(":/printer/printer/epson-test.prn"));
+    if (!f.open(QIODevice::ReadOnly)) {
+        qCritical() << "!e" << tr("The bundled test page is missing.");
+        return;
+    }
+    const QByteArray data = f.readAll();
+    f.close();
+    QMetaObject::invokeMethod(m_epson, "feedBytes", Qt::QueuedConnection,
+                              Q_ARG(QByteArray, data));
+}
+
+// Same page, as PDF. Each printed page becomes one PDF page, scaled to fit A4;
+// QPdfWriter lives in QtGui, so this needs no QtPrintSupport.
+bool Engine::printerSavePdf(const QString &url)
+{
+    if (m_paperImage.isNull()) {
+        toast(tr("Nothing has been printed yet."));
+        return false;
+    }
     const QString picked = pathFromPickedUrl(url);
     if (picked.isEmpty())
         return false;
@@ -1689,13 +1766,48 @@ bool Engine::printerSavePath(const QString &url, bool asPdf)
         qCritical() << "!e" << tr("Cannot write to '%1'.").arg(friendlyName(picked));
         return false;
     }
-    const bool ok = asPdf ? printerOutput->savePdf(&out) : printerOutput->saveText(&out);
-    out.close();
-    if (!ok) {
-        toast(tr("Cannot save the printout, see the log."));
-        qCritical() << "!e" << tr("Cannot write to '%1'.").arg(friendlyName(picked));
+
+    QPdfWriter pdf(&out);
+    pdf.setPageSize(QPageSize(QPageSize::A4));
+    pdf.setResolution(300);
+    pdf.setPageMargins(QMarginsF(10, 10, 10, 10), QPageLayout::Millimeter);
+
+    QPainter painter(&pdf);
+    const int pageH = EpsonPrinter::PageLengthPx;
+    const int pages = qMax(1, (m_paperImage.height() + pageH - 1) / pageH);
+    for (int i = 0; i < pages; ++i) {
+        if (i > 0)
+            pdf.newPage();
+        const int top = i * pageH;
+        const QImage slice = m_paperImage.copy(0, top, m_paperImage.width(),
+                                               qMin(pageH, m_paperImage.height() - top));
+        QSize sz = slice.size();
+        sz.scale(painter.viewport().size(), Qt::KeepAspectRatio);
+        painter.drawImage(QRect(painter.viewport().topLeft(), sz), slice);
     }
-    return ok;
+    painter.end();
+    out.close();
+    toast(tr("Printout saved."));
+    return true;
+}
+
+// Replay a captured print job straight into the parser. The Atari is the only
+// other way to produce one, which makes iterating on the rendering painful.
+void Engine::printerReplay(const QString &url)
+{
+    if (!m_epson) return;
+    const QString picked = pathFromPickedUrl(url);
+    if (picked.isEmpty()) return;
+
+    ContentFile in(picked);
+    if (!in.open(QIODevice::ReadOnly)) {
+        toast(tr("Cannot open the capture, see the log."));
+        return;
+    }
+    const QByteArray data = in.readAll();
+    in.close();
+    QMetaObject::invokeMethod(m_epson, "feedBytes", Qt::QueuedConnection,
+                              Q_ARG(QByteArray, data));
 }
 void Engine::quit()             { shutdown(); qApp->quit(); }
 

@@ -1,6 +1,7 @@
 #include "qmlbridge.h"
 #include "engine.h"
 #include "aspeqtsettings.h"
+#include "paperprovider.h"
 
 #include <QVariant>
 
@@ -93,7 +94,13 @@ AppController::AppController(Engine *engine, QObject *parent)
         connect(m_engine, &Engine::stateChanged, this, &AppController::refresh,
                 Qt::QueuedConnection);
         connect(m_engine, &Engine::loaderProgress, this, &AppController::refreshLoader);
-        connect(m_engine, &Engine::printerTextChanged, this, &AppController::refreshPrinter);
+        // A freshly rendered page: hand it to the provider, then bump the
+        // revision so QML reloads the image behind the unchanged URL.
+        connect(m_engine, &Engine::paperChanged, this, [this]() {
+            if (m_paper) m_paper->setImage(m_engine->paperImage());
+            ++m_paperRevision;
+            emit paperChanged();
+        });
         connect(m_engine, &Engine::logMessage, this, &AppController::onLogMessage);
         connect(m_engine, &Engine::documentPicked, this, &AppController::documentPicked);
     }
@@ -239,14 +246,12 @@ void AppController::clearLog()
 
 void AppController::createDisk(int sc, int ss) { if (m_engine) m_engine->createDisk(sc, ss); }
 void AppController::printerClear()      { if (m_engine) m_engine->printerClear(); }
-bool AppController::printerSavePath(const QString &url, bool asPdf) { return m_engine ? m_engine->printerSavePath(url, asPdf) : false; }
-void AppController::refreshPrinter()
-{
-    if (!m_engine) return;
-    m_printerText = m_engine->printerText();
-    m_printerTextAtascii = m_engine->printerTextAtascii();
-    emit printerTextChanged();
-}
+void AppController::printerSetFont(const QString &f) { if (m_engine) m_engine->printerSetFont(f); }
+QString AppController::printerFontFamily() { return m_engine ? m_engine->printerFontFamily() : QString(); }
+bool AppController::printerSavePaper(const QString &url) { return m_engine && m_engine->printerSavePaper(url); }
+bool AppController::printerSavePdf(const QString &url)   { return m_engine && m_engine->printerSavePdf(url); }
+void AppController::printerReplay(const QString &url)    { if (m_engine) m_engine->printerReplay(url); }
+void AppController::printerTestPage()                    { if (m_engine) m_engine->printerTestPage(); }
 void AppController::ejectAll()          { if (m_engine) m_engine->ejectAll(); }
 QVariantList AppController::modifiedDisks() { return m_engine ? m_engine->modifiedDisks() : QVariantList(); }
 void AppController::quit()              { if (m_engine) m_engine->quit(); }
