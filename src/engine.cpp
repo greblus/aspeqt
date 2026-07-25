@@ -791,6 +791,11 @@ void Engine::sioFinished()
     m_sioStatus.clear();
     qWarning() << "!i" << tr("Emulation stopped.");
     emit stateChanged();
+
+    if (m_restartSioAfterStop) {
+        m_restartSioAfterStop = false;
+        toggleSio();      // reopen the port with the new settings
+    }
 }
 
 void Engine::sioStatusChanged(QString status)
@@ -1853,6 +1858,19 @@ QVariantMap Engine::loadOptions()
 
 void Engine::applyOptions(const QVariantMap &o)
 {
+    // Speed, handshaking and the interface are only read when the port is
+    // opened, so changing them mid-session did nothing until the user stopped
+    // and started the emulation by hand.
+    const auto commsFingerprint = [] {
+        return QStringList{ QString::number(aspeqtSettings->serialPortInterface()),
+                            QString::number(aspeqtSettings->serialPortHandshakingMethod()),
+                            QString::number(aspeqtSettings->serialPortMaximumSpeed()),
+                            QString::number(aspeqtSettings->serialPortUsePokeyDivisors()),
+                            QString::number(aspeqtSettings->serialPortPokeyDivisor()),
+                            aspeqtSettings->bluetoothName() }.join('|');
+    };
+    const QString commsBefore = commsFingerprint();
+
     int ifaceVal = o.value("iface").toInt() == 1 ? SIO2BT : 0;
     aspeqtSettings->setSerialPortName(ifaceVal == SIO2BT ? "SIO2BT" : "SIO2PC");
     aspeqtSettings->setSerialPortInterface(ifaceVal);
@@ -1889,6 +1907,13 @@ void Engine::applyOptions(const QVariantMap &o)
         m_rDevice->setEnabled(aspeqtSettings->rDeviceEnabled());
         m_rDevice->loadPhonebook(aspeqtSettings->phonebookPath());
         m_rDevice->updateListenerConfig();
+    }
+
+    if (m_emulationRunning && commsBefore != commsFingerprint()) {
+        qWarning() << "!i" << tr("Serial settings changed; restarting the emulation.");
+        m_restartSioAfterStop = true;
+        sio->setPriority(QThread::NormalPriority);
+        sio->requestStop();
     }
 
     emit stateChanged();

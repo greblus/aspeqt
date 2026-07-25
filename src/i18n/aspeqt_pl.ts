@@ -332,39 +332,39 @@
 <context>
     <name>CassetteWorker</name>
     <message>
-        <location filename="../sioworker.cpp" line="401" />
-        <location filename="../sioworker.cpp" line="411" />
+        <location filename="../sioworker.cpp" line="406" />
+        <location filename="../sioworker.cpp" line="416" />
         <source>'%1' ends with an incomplete chunk; loaded the complete records only.</source>
         <translation>'%1' kończy się niekompletnym blokiem; wczytano tylko kompletne rekordy.</translation>
     </message>
     <message>
-        <location filename="../sioworker.cpp" line="354" />
+        <location filename="../sioworker.cpp" line="359" />
         <source>Cannot open '%1': %2</source>
         <translation>Nie można otworzyć '%1': %2</translation>
     </message>
     <message>
-        <location filename="../sioworker.cpp" line="365" />
-        <location filename="../sioworker.cpp" line="376" />
+        <location filename="../sioworker.cpp" line="370" />
+        <location filename="../sioworker.cpp" line="381" />
         <source>Cannot read '%1': %2</source>
         <translation>Nie można odczytać '%1': %2</translation>
     </message>
     <message>
-        <location filename="../sioworker.cpp" line="382" />
+        <location filename="../sioworker.cpp" line="387" />
         <source>Cannot open '%1': The header does not match.</source>
         <translation>Nie można otworzyć '%1': Nagłówek nie jest zgodny.</translation>
     </message>
     <message>
-        <location filename="../sioworker.cpp" line="387" />
+        <location filename="../sioworker.cpp" line="392" />
         <source>[Cassette]: File description '%2'.</source>
         <translation>[Kaseta]: Opis pliku '%2'.</translation>
     </message>
     <message>
-        <location filename="../sioworker.cpp" line="431" />
+        <location filename="../sioworker.cpp" line="436" />
         <source>Cannot open '%1': Unknown chunk header %2.</source>
         <translation>Nie można otworzyć '%1': Nieznany nagłówek bloku %2.</translation>
     </message>
     <message>
-        <location filename="../sioworker.cpp" line="480" />
+        <location filename="../sioworker.cpp" line="485" />
         <source>[Cassette] Playing record %1 of %2 (%3 ms of gap + %4 bytes of data)</source>
         <translation>[Kaseta] Odtwarzanie rekordu %1 z %2 (%3 ms przerwy + %4 B danych)</translation>
     </message>
@@ -760,21 +760,21 @@
 <context>
     <name>Engine</name>
     <message>
-        <location filename="../engine.cpp" line="2333" />
-        <location filename="../engine.cpp" line="2345" />
-        <location filename="../engine.cpp" line="2349" />
+        <location filename="../engine.cpp" line="2358" />
+        <location filename="../engine.cpp" line="2370" />
+        <location filename="../engine.cpp" line="2374" />
         <source>Cannot extract the files, see the log.</source>
         <translation>Nie można wypakować plików, zobacz do log-u</translation>
     </message>
     <message>
-        <location filename="../engine.cpp" line="2362" />
+        <location filename="../engine.cpp" line="2387" />
         <source>Cannot delete the files, see the log.</source>
         <translation>Nie można usunąć plików, zobacz do log-u</translation>
     </message>
     <message>
-        <location filename="../engine.cpp" line="2382" />
-        <location filename="../engine.cpp" line="2396" />
-        <location filename="../engine.cpp" line="2408" />
+        <location filename="../engine.cpp" line="2407" />
+        <location filename="../engine.cpp" line="2421" />
+        <location filename="../engine.cpp" line="2433" />
         <source>Cannot add the file, see the log.</source>
         <translation>Nie można dodać pliku, zobacz do log-u</translation>
     </message>
@@ -784,19 +784,19 @@
         <translation>Kaseta (%1:%2)</translation>
     </message>
     <message>
-        <location filename="../engine.cpp" line="1173" />
-        <location filename="../engine.cpp" line="1181" />
+        <location filename="../engine.cpp" line="1178" />
+        <location filename="../engine.cpp" line="1186" />
         <source>This slot does not hold a mounted folder.</source>
         <translation>Ten slot nie zawiera zamontowanego katalogu.</translation>
     </message>
     <message>
-        <location filename="../engine.cpp" line="1165" />
-        <location filename="../engine.cpp" line="1194" />
+        <location filename="../engine.cpp" line="1170" />
+        <location filename="../engine.cpp" line="1199" />
         <source>Could not copy the DOS files into the folder.</source>
         <translation>Nie udało się skopiować plików DOS do katalogu.</translation>
     </message>
     <message>
-        <location filename="../engine.cpp" line="1191" />
+        <location filename="../engine.cpp" line="1196" />
         <source>Installed high-speed MyPicoDOS into the folder. Reboot your Atari to load DOS.</source>
         <translation>Zainstalowano szybkie MyPicoDOS w katalogu. Zrestartuj Atari, aby wczytać DOS.</translation>
     </message>
@@ -806,12 +806,12 @@
         <translation>Plik exe (%1k)</translation>
     </message>
     <message>
-        <location filename="../engine.cpp" line="2206" />
+        <location filename="../engine.cpp" line="2231" />
         <source>Failed to load '%1'.</source>
         <translation>Nie udało się wczytać '%1'.</translation>
     </message>
     <message>
-        <location filename="../engine.cpp" line="2218" />
+        <location filename="../engine.cpp" line="2243" />
         <source>Pick an Atari executable (.xex/.com/.exe) or a cassette image (.cas).</source>
         <translation>Wybierz program Atari (.xex/.com/.exe) lub obraz kasety (.cas).</translation>
     </message>
@@ -866,79 +866,84 @@
         <translation>Program załadowany do Atari.</translation>
     </message>
     <message>
-        <location filename="../engine.cpp" line="814" />
+        <location filename="../engine.cpp" line="819" />
         <source>[%1] Auto-commit failed.</source>
         <translation>[%1] Autozapis nie powiódł się.</translation>
     </message>
     <message>
-        <location filename="../engine.cpp" line="970" />
+        <location filename="../engine.cpp" line="975" />
         <source>Loaded into the cas/xex slot.</source>
         <translation>Zamontowałem w slocie cas/xex.</translation>
     </message>
     <message>
-        <location filename="../engine.cpp" line="1400" />
-        <location filename="../engine.cpp" line="2383" />
+        <location filename="../engine.cpp" line="1405" />
+        <location filename="../engine.cpp" line="2408" />
         <source>Cannot read '%1'.</source>
         <translation>Nie można odczytać '%1'.</translation>
     </message>
     <message>
-        <location filename="../engine.cpp" line="1476" />
-        <location filename="../engine.cpp" line="1727" />
-        <location filename="../engine.cpp" line="1766" />
-        <location filename="../engine.cpp" line="2397" />
+        <location filename="../engine.cpp" line="1481" />
+        <location filename="../engine.cpp" line="1732" />
+        <location filename="../engine.cpp" line="1771" />
+        <location filename="../engine.cpp" line="2422" />
         <source>Cannot write to '%1'.</source>
         <translation>Nie można zapisać do pliku '%1'.</translation>
     </message>
     <message>
-        <location filename="../engine.cpp" line="1716" />
-        <location filename="../engine.cpp" line="1756" />
+        <location filename="../engine.cpp" line="1721" />
+        <location filename="../engine.cpp" line="1761" />
         <source>Nothing has been printed yet.</source>
         <translation>Jeszcze nic nie wydrukowano.</translation>
     </message>
     <message>
-        <location filename="../engine.cpp" line="1726" />
-        <location filename="../engine.cpp" line="1765" />
+        <location filename="../engine.cpp" line="1731" />
+        <location filename="../engine.cpp" line="1770" />
         <source>Cannot save the printout, see the log.</source>
         <translation>Nie można zapisać wydruku, zobacz do log-u</translation>
     </message>
     <message>
-        <location filename="../engine.cpp" line="1731" />
-        <location filename="../engine.cpp" line="1790" />
+        <location filename="../engine.cpp" line="1736" />
+        <location filename="../engine.cpp" line="1795" />
         <source>Printout saved.</source>
         <translation>Zapisano wydruk.</translation>
     </message>
     <message>
-        <location filename="../engine.cpp" line="1742" />
+        <location filename="../engine.cpp" line="1747" />
         <source>The bundled test page is missing.</source>
         <translation>Brak wbudowanej strony testowej.</translation>
     </message>
     <message>
-        <location filename="../engine.cpp" line="1804" />
+        <location filename="../engine.cpp" line="1809" />
         <source>Cannot open the capture, see the log.</source>
         <translation>Nie można otworzyć przechwyconego wydruku, zobacz log.</translation>
     </message>
     <message>
-        <location filename="../engine.cpp" line="1926" />
+        <location filename="../engine.cpp" line="1913" />
+        <source>Serial settings changed; restarting the emulation.</source>
+        <translation>Zmieniono ustawienia portu; ponowne uruchamianie emulacji.</translation>
+    </message>
+    <message>
+        <location filename="../engine.cpp" line="1951" />
         <source>No phonebook file chosen (see Options).</source>
         <translation>Nie wybrano pliku książki telefonicznej (zobacz Ustawienia).</translation>
     </message>
     <message>
-        <location filename="../engine.cpp" line="1979" />
+        <location filename="../engine.cpp" line="2004" />
         <source>Cannot write the bundled phonebook to %1</source>
         <translation>Nie można zapisać dołączonej książki telefonicznej do %1</translation>
     </message>
     <message>
-        <location filename="../engine.cpp" line="1995" />
+        <location filename="../engine.cpp" line="2020" />
         <source>The R: device is not enabled (see Options).</source>
         <translation>Urządzenie R: nie jest włączone (zobacz Ustawienia).</translation>
     </message>
     <message>
-        <location filename="../engine.cpp" line="2014" />
+        <location filename="../engine.cpp" line="2039" />
         <source>This phonebook entry has no address.</source>
         <translation>Ten wpis książki telefonicznej nie ma adresu.</translation>
     </message>
     <message>
-        <location filename="../engine.cpp" line="2026" />
+        <location filename="../engine.cpp" line="2051" />
         <source>Automatic</source>
         <translation>Automatyczny</translation>
     </message>
@@ -956,34 +961,34 @@ Wykonaj w Atari czynności potrzebne do wczytania tej kasety, np. zresetuj trzym
 Gdy usłyszysz sygnał, naciśnij przycisk play i mniej więcej w tym samym czasie naciśnij klawisz na Atari.</translation>
     </message>
     <message>
-        <location filename="../engine.cpp" line="1316" />
+        <location filename="../engine.cpp" line="1321" />
         <source>[Disk %1] Auto-commit ON.</source>
         <translation>[Dysk %1] Autozapis WŁĄCZONY.</translation>
     </message>
     <message>
-        <location filename="../engine.cpp" line="1317" />
+        <location filename="../engine.cpp" line="1322" />
         <source>[Disk %1] Auto-commit OFF.</source>
         <translation>[Dysk %1] Autozapis WYŁĄCZONY.</translation>
     </message>
     <message>
         <location filename="../engine.cpp" line="489" />
         <location filename="../engine.cpp" line="496" />
-        <location filename="../engine.cpp" line="1364" />
+        <location filename="../engine.cpp" line="1369" />
         <source>'%1' cannot be saved.</source>
         <translation>Nie można zapisać '%1'.</translation>
     </message>
     <message>
-        <location filename="../engine.cpp" line="1597" />
+        <location filename="../engine.cpp" line="1602" />
         <source>Swapped disk %1 with disk %2.</source>
         <translation>Zamieniono dysk %1 z dyskiem %2.</translation>
     </message>
     <message>
-        <location filename="../engine.cpp" line="1637" />
+        <location filename="../engine.cpp" line="1642" />
         <source>Printer emulation stopped.</source>
         <translation>Emulacja drukarki zatrzymana.</translation>
     </message>
     <message>
-        <location filename="../engine.cpp" line="1636" />
+        <location filename="../engine.cpp" line="1641" />
         <source>Printer emulation started.</source>
         <translation>Emulacja drukarki uruchomiona.</translation>
     </message>
@@ -1003,13 +1008,13 @@ Gdy usłyszysz sygnał, naciśnij przycisk play i mniej więcej w tym samym czas
         <translation>AspeQt zatrzymano %1.</translation>
     </message>
     <message>
-        <location filename="../engine.cpp" line="877" />
+        <location filename="../engine.cpp" line="882" />
         <source>Unmounted disk %1</source>
         <translation>Odmontowany dysk %1</translation>
     </message>
     <message>
-        <location filename="../engine.cpp" line="1048" />
-        <location filename="../engine.cpp" line="1668" />
+        <location filename="../engine.cpp" line="1053" />
+        <location filename="../engine.cpp" line="1673" />
         <source>[%1] Mounted '%2' as '%3'.</source>
         <translation>[%1] Zamontowe '%2' jako '%3'.</translation>
     </message>
@@ -1619,214 +1624,214 @@ Gdy usłyszysz sygnał, naciśnij przycisk play i mniej więcej w tym samym czas
 <context>
     <name>OptionsDialog</name>
     <message>
-        <location filename="../qml/OptionsDialog.qml" line="155" />
+        <location filename="../qml/OptionsDialog.qml" line="159" />
         <source>Options</source>
         <translation>Opcje</translation>
     </message>
     <message>
-        <location filename="../qml/OptionsDialog.qml" line="386" />
+        <location filename="../qml/OptionsDialog.qml" line="398" />
         <source>User interface</source>
         <translation>Interfejs użytkownika</translation>
     </message>
     <message>
-        <location filename="../qml/OptionsDialog.qml" line="186" />
+        <location filename="../qml/OptionsDialog.qml" line="194" />
         <source>Handshake method:</source>
         <translation>Metoda synchronizacji:</translation>
     </message>
     <message>
-        <location filename="../qml/OptionsDialog.qml" line="408" />
+        <location filename="../qml/OptionsDialog.qml" line="420" />
         <source>Save</source>
         <translation>Zapisz</translation>
     </message>
     <message>
-        <location filename="../qml/OptionsDialog.qml" line="250" />
+        <location filename="../qml/OptionsDialog.qml" line="258" />
         <source>(Required for AtariDOS compatibility)</source>
         <translation>(Wymagane dla zgodności z AtariDOS)</translation>
     </message>
     <message>
-        <location filename="../qml/OptionsDialog.qml" line="208" />
+        <location filename="../qml/OptionsDialog.qml" line="216" />
         <source>Bluetooth name:</source>
         <translation>Nazwa modułu BT:</translation>
     </message>
     <message>
-        <location filename="../qml/OptionsDialog.qml" line="219" />
+        <location filename="../qml/OptionsDialog.qml" line="227" />
         <source>Write ACK delay [ms]</source>
         <translation>Opóźnienie zapisu ACK [ms]</translation>
     </message>
     <message>
-        <location filename="../qml/OptionsDialog.qml" line="180" />
+        <location filename="../qml/OptionsDialog.qml" line="188" />
         <source>Serial interface:</source>
         <translation>Interfejs szeregowy:</translation>
     </message>
     <message>
-        <location filename="../qml/OptionsDialog.qml" line="223" />
+        <location filename="../qml/OptionsDialog.qml" line="231" />
         <source>Use non-standard speeds</source>
         <translation>Użyj niestandardowych prędkości</translation>
     </message>
     <message>
-        <location filename="../qml/OptionsDialog.qml" line="235" />
+        <location filename="../qml/OptionsDialog.qml" line="243" />
         <source>Use high speed executable loader</source>
         <translation>Szybkie ładowanie plików wykonywalnych</translation>
     </message>
     <message>
-        <location filename="../qml/OptionsDialog.qml" line="236" />
+        <location filename="../qml/OptionsDialog.qml" line="244" />
         <source>Use custom baud rate for cassette emulation</source>
         <oldsource>Use cutom baud rate for cassette emulation</oldsource>
         <translation>Własna prędkość dla emulacji kaset (bps)</translation>
     </message>
     <message>
-        <location filename="../qml/OptionsDialog.qml" line="248" />
+        <location filename="../qml/OptionsDialog.qml" line="256" />
         <source>Filter out underscore character from file names</source>
         <translation>Filtruj podkreślenia z nazw plików</translation>
     </message>
     <message>
-        <location filename="../qml/OptionsDialog.qml" line="387" />
+        <location filename="../qml/OptionsDialog.qml" line="399" />
         <source>Language:</source>
         <translation>Język:</translation>
     </message>
     <message>
-        <location filename="../engine.cpp" line="2038" />
+        <location filename="../engine.cpp" line="2063" />
         <source>English</source>
         <translation>Polski</translation>
     </message>
     <message>
-        <location filename="../qml/OptionsDialog.qml" line="178" />
+        <location filename="../qml/OptionsDialog.qml" line="186" />
         <source>SIO port emulation</source>
         <translation>Emulacja portu SIO</translation>
     </message>
     <message>
-        <location filename="../qml/OptionsDialog.qml" line="197" />
+        <location filename="../qml/OptionsDialog.qml" line="205" />
         <source>Transmission speed [bps]:</source>
         <translation>Prędkość transmisji [bps]:</translation>
     </message>
     <message>
-        <location filename="../qml/OptionsDialog.qml" line="227" />
+        <location filename="../qml/OptionsDialog.qml" line="235" />
         <source>POKEY divisor:</source>
         <translation>Dzielnik POKEY:</translation>
     </message>
     <message>
-        <location filename="../qml/OptionsDialog.qml" line="234" />
+        <location filename="../qml/OptionsDialog.qml" line="242" />
         <source>Emulation settings</source>
         <translation>Ustawienia emulacji</translation>
     </message>
     <message>
-        <location filename="../qml/OptionsDialog.qml" line="240" />
+        <location filename="../qml/OptionsDialog.qml" line="248" />
         <source>Cassette baud rate:</source>
         <translation>Prędkość transmisji kasety:</translation>
     </message>
     <message>
-        <location filename="../qml/OptionsDialog.qml" line="247" />
+        <location filename="../qml/OptionsDialog.qml" line="255" />
         <source>Folder images</source>
         <translation>Obrazy katalogów</translation>
     </message>
     <message>
-        <location filename="../qml/OptionsDialog.qml" line="259" />
+        <location filename="../qml/OptionsDialog.qml" line="267" />
         <source>Printer emulation</source>
         <translation type="unfinished">Emulacja drukarki</translation>
     </message>
     <message>
-        <location filename="../qml/OptionsDialog.qml" line="261" />
+        <location filename="../qml/OptionsDialog.qml" line="269" />
         <source>Emulate an Epson ESC/P printer</source>
         <translation>Emuluj drukarkę Epson ESC/P</translation>
     </message>
     <message>
-        <location filename="../qml/OptionsDialog.qml" line="266" />
+        <location filename="../qml/OptionsDialog.qml" line="274" />
         <source>What the Atari prints is rendered onto a page you can view and save. The font is chosen in the printer output window.</source>
         <translation>To, co drukuje Atari, jest renderowane na stronie, którą możesz obejrzeć i zapisać. Czcionkę wybiera się w oknie wydruku.</translation>
     </message>
     <message>
-        <location filename="../qml/OptionsDialog.qml" line="279" />
+        <location filename="../qml/OptionsDialog.qml" line="290" />
         <source>Print a test page</source>
         <translation>Wydrukuj stronę testową</translation>
     </message>
     <message>
-        <location filename="../qml/OptionsDialog.qml" line="284" />
+        <location filename="../qml/OptionsDialog.qml" line="296" />
         <source>Replay a capture…</source>
         <translation>Odtwórz przechwycony wydruk…</translation>
     </message>
     <message>
-        <location filename="../qml/OptionsDialog.qml" line="286" />
+        <location filename="../qml/OptionsDialog.qml" line="298" />
         <source>Open a print capture</source>
         <translation>Otwórz przechwycony wydruk</translation>
     </message>
     <message>
-        <location filename="../qml/OptionsDialog.qml" line="287" />
+        <location filename="../qml/OptionsDialog.qml" line="299" />
         <source>Print captures (*.prn)</source>
         <translation>Przechwycone wydruki (*.prn)</translation>
     </message>
     <message>
-        <location filename="../qml/OptionsDialog.qml" line="295" />
+        <location filename="../qml/OptionsDialog.qml" line="307" />
         <source>R: device (modem)</source>
         <translation>Urządzenie R: (modem)</translation>
     </message>
     <message>
-        <location filename="../qml/OptionsDialog.qml" line="296" />
+        <location filename="../qml/OptionsDialog.qml" line="308" />
         <source>Emulate an Atari 850 interface</source>
         <translation>Emuluj interfejs Atari 850</translation>
     </message>
     <message>
-        <location filename="../qml/OptionsDialog.qml" line="298" />
+        <location filename="../qml/OptionsDialog.qml" line="310" />
         <source>Dial BBSes over TCP with a terminal program. Needs a hardware handshake method (RI/DSR/CTS), not SOFT.</source>
         <translation>Dzwoń do BBS-ów przez TCP z programu terminala. Wymaga sprzętowej metody handshake (RI/DSR/CTS), nie SOFT.</translation>
     </message>
     <message>
-        <location filename="../qml/OptionsDialog.qml" line="309" />
+        <location filename="../qml/OptionsDialog.qml" line="321" />
         <source>Use the bundled BBS list</source>
         <translation>Użyj dołączonej listy BBS</translation>
     </message>
     <message>
-        <location filename="../qml/OptionsDialog.qml" line="320" />
+        <location filename="../qml/OptionsDialog.qml" line="332" />
         <source>Could not install the bundled list, see the log.</source>
         <translation>Nie można zainstalować dołączonej listy, zobacz log.</translation>
     </message>
     <message>
-        <location filename="../qml/OptionsDialog.qml" line="328" />
+        <location filename="../qml/OptionsDialog.qml" line="340" />
         <source>A copy of the telnet BBS list that ships with AspeQt-2k26. An existing copy is kept, not overwritten.</source>
         <translation>Kopia listy BBS (telnet) dołączanej do AspeQt-2k26. Istniejąca kopia jest zachowywana, nie nadpisywana.</translation>
     </message>
     <message>
-        <location filename="../qml/OptionsDialog.qml" line="338" />
+        <location filename="../qml/OptionsDialog.qml" line="350" />
         <source>Phonebook file:</source>
         <translation>Plik książki telefonicznej:</translation>
     </message>
     <message>
-        <location filename="../qml/OptionsDialog.qml" line="347" />
+        <location filename="../qml/OptionsDialog.qml" line="359" />
         <source>(none)</source>
         <translation>(brak)</translation>
     </message>
     <message>
-        <location filename="../qml/OptionsDialog.qml" line="354" />
+        <location filename="../qml/OptionsDialog.qml" line="366" />
         <source>Choose</source>
         <translation>Wybierz</translation>
     </message>
     <message>
-        <location filename="../qml/OptionsDialog.qml" line="357" />
+        <location filename="../qml/OptionsDialog.qml" line="369" />
         <source>Phonebook file</source>
         <translation>Plik książki telefonicznej</translation>
     </message>
     <message>
-        <location filename="../qml/OptionsDialog.qml" line="357" />
+        <location filename="../qml/OptionsDialog.qml" line="369" />
         <source>XML files (*.xml)</source>
         <translation>Pliki XML (*.xml)</translation>
     </message>
     <message>
-        <location filename="../qml/OptionsDialog.qml" line="287" />
-        <location filename="../qml/OptionsDialog.qml" line="357" />
+        <location filename="../qml/OptionsDialog.qml" line="299" />
+        <location filename="../qml/OptionsDialog.qml" line="369" />
         <source>All files (*)</source>
         <translation type="unfinished">Wszystkie pliki (*)</translation>
     </message>
     <message>
-        <location filename="../qml/OptionsDialog.qml" line="364" />
+        <location filename="../qml/OptionsDialog.qml" line="376" />
         <source>Answer incoming calls</source>
         <translation>Odbieraj połączenia przychodzące</translation>
     </message>
     <message>
-        <location filename="../qml/OptionsDialog.qml" line="370" />
+        <location filename="../qml/OptionsDialog.qml" line="382" />
         <source>Listen on port:</source>
         <translation>Nasłuchuj na porcie:</translation>
     </message>
     <message>
-        <location filename="../qml/OptionsDialog.qml" line="407" />
+        <location filename="../qml/OptionsDialog.qml" line="419" />
         <source>Cancel</source>
         <translation>Anuluj</translation>
     </message>
@@ -2645,7 +2650,7 @@ Gdy usłyszysz sygnał, naciśnij przycisk play i mniej więcej w tym samym czas
 <context>
     <name>RDevice</name>
     <message>
-        <location filename="../rdevice.cpp" line="1077" />
+        <location filename="../rdevice.cpp" line="1083" />
         <source>[RDevice] Dialing %1:%2...</source>
         <translation type="unfinished" />
     </message>
@@ -2965,22 +2970,22 @@ Gdy usłyszysz sygnał, naciśnij przycisk play i mniej więcej w tym samym czas
 <context>
     <name>SioWorker</name>
     <message>
-        <location filename="../sioworker.cpp" line="310" />
+        <location filename="../sioworker.cpp" line="315" />
         <source>Printer %1</source>
         <translation>Drukarka %1</translation>
     </message>
     <message>
-        <location filename="../sioworker.cpp" line="316" />
+        <location filename="../sioworker.cpp" line="321" />
         <source>AspeQt Client</source>
         <translation>Klient AspeQt</translation>
     </message>
     <message>
-        <location filename="../sioworker.cpp" line="322" />
+        <location filename="../sioworker.cpp" line="327" />
         <source>RS232 %1</source>
         <translation />
     </message>
     <message>
-        <location filename="../sioworker.cpp" line="201" />
+        <location filename="../sioworker.cpp" line="206" />
         <source>Cannot read command frame.</source>
         <translation>Nie można odczytać ramki komendy.</translation>
     </message>
@@ -3000,37 +3005,37 @@ Gdy usłyszysz sygnał, naciśnij przycisk play i mniej więcej w tym samym czas
         <translation type="unfinished" />
     </message>
     <message>
-        <location filename="../sioworker.cpp" line="216" />
+        <location filename="../sioworker.cpp" line="221" />
         <source>[%1] command: $%2, aux: $%3 ignored because the image explorer is open.</source>
         <translation>[%1] komenda: $%2, aux: $%3 zignorowana, ponieważ otwarto przeglądarkę obrazów.</translation>
     </message>
     <message>
-        <location filename="../sioworker.cpp" line="222" />
+        <location filename="../sioworker.cpp" line="227" />
         <source>[%1] command: $%2, aux: $%3 ignored.</source>
         <translation>[%1] komenda: $%2, aux: $%3 zignorowana.</translation>
     </message>
     <message>
-        <location filename="../sioworker.cpp" line="287" />
+        <location filename="../sioworker.cpp" line="292" />
         <source>Disk 1 (below autoboot)</source>
         <translation>Dysk 1 (autoboot)</translation>
     </message>
     <message>
-        <location filename="../sioworker.cpp" line="304" />
+        <location filename="../sioworker.cpp" line="309" />
         <source>Disk %1</source>
         <translation>Dysk %1</translation>
     </message>
     <message>
-        <location filename="../sioworker.cpp" line="313" />
+        <location filename="../sioworker.cpp" line="318" />
         <source>Smart device (APE time + URL)</source>
         <translation type="unfinished" />
     </message>
     <message>
-        <location filename="../sioworker.cpp" line="325" />
+        <location filename="../sioworker.cpp" line="330" />
         <source>PCLINK</source>
         <translation type="unfinished" />
     </message>
     <message>
-        <location filename="../sioworker.cpp" line="328" />
+        <location filename="../sioworker.cpp" line="333" />
         <source>Device $%1</source>
         <translation>Urządzenie $%1</translation>
     </message>
@@ -3136,7 +3141,7 @@ Gdy usłyszysz sygnał, naciśnij przycisk play i mniej więcej w tym samym czas
         <translation>Nie można skasować linii DTR i RTS w porcie szeregowym '%1': %2</translation>
     </message>
     <message>
-        <location filename="../serialport-android.cpp" line="95" />
+        <location filename="../serialport-android.cpp" line="97" />
         <location filename="../serialport-unix.cpp" line="117" />
         <source>Emulation started through standard serial port backend on '%1' with %2 handshaking.</source>
         <translation>Emulacja rozpoczęta przez standardowy port szeregowy na '%1' z synchronizacją %2.</translation>
@@ -3171,7 +3176,7 @@ Gdy usłyszysz sygnał, naciśnij przycisk play i mniej więcej w tym samym czas
         <translation type="unfinished" />
     </message>
     <message>
-        <location filename="../serialport-android.cpp" line="189" />
+        <location filename="../serialport-android.cpp" line="195" />
         <location filename="../serialport-unix.cpp" line="251" />
         <location filename="../serialport-unix.cpp" line="307" />
         <location filename="../serialport-win32.cpp" line="241" />
@@ -3179,7 +3184,7 @@ Gdy usłyszysz sygnał, naciśnij przycisk play i mniej więcej w tym samym czas
         <translation>%1 bps</translation>
     </message>
     <message>
-        <location filename="../serialport-android.cpp" line="177" />
+        <location filename="../serialport-android.cpp" line="183" />
         <location filename="../serialport-unix.cpp" line="252" />
         <location filename="../serialport-unix.cpp" line="308" />
         <location filename="../serialport-win32.cpp" line="242" />
@@ -3197,37 +3202,37 @@ Gdy usłyszysz sygnał, naciśnij przycisk play i mniej więcej w tym samym czas
         <translation type="unfinished" />
     </message>
     <message>
-        <location filename="../serialport-android.cpp" line="104" />
+        <location filename="../serialport-android.cpp" line="106" />
         <source>isOpen %1</source>
         <translation type="unfinished" />
     </message>
     <message>
-        <location filename="../serialport-android.cpp" line="110" />
+        <location filename="../serialport-android.cpp" line="112" />
         <source>close</source>
         <translation type="unfinished" />
     </message>
     <message>
-        <location filename="../serialport-android.cpp" line="118" />
+        <location filename="../serialport-android.cpp" line="120" />
         <source>cancel</source>
         <translation type="unfinished" />
     </message>
     <message>
-        <location filename="../serialport-android.cpp" line="124" />
+        <location filename="../serialport-android.cpp" line="130" />
         <source>speedByte</source>
         <translation type="unfinished" />
     </message>
     <message>
-        <location filename="../serialport-android.cpp" line="146" />
+        <location filename="../serialport-android.cpp" line="152" />
         <source>setNormalSpeed</source>
         <translation type="unfinished" />
     </message>
     <message>
-        <location filename="../serialport-android.cpp" line="153" />
+        <location filename="../serialport-android.cpp" line="159" />
         <source>setHighSpeed</source>
         <translation type="unfinished" />
     </message>
     <message>
-        <location filename="../serialport-android.cpp" line="184" />
+        <location filename="../serialport-android.cpp" line="190" />
         <source>Cannot set serial port speed: %1</source>
         <translation type="unfinished" />
     </message>
@@ -3239,52 +3244,52 @@ Gdy usłyszysz sygnał, naciśnij przycisk play i mniej więcej w tym samym czas
         <translation>Nie można pobrać stanu portu szeregowego: %1</translation>
     </message>
     <message>
-        <location filename="../serialport-android.cpp" line="293" />
+        <location filename="../serialport-android.cpp" line="299" />
         <source>writeCommandAck</source>
         <translation type="unfinished" />
     </message>
     <message>
-        <location filename="../serialport-android.cpp" line="299" />
+        <location filename="../serialport-android.cpp" line="305" />
         <source>writeCommandNak</source>
         <translation type="unfinished" />
     </message>
     <message>
-        <location filename="../serialport-android.cpp" line="305" />
+        <location filename="../serialport-android.cpp" line="311" />
         <source>writeDataAck</source>
         <translation type="unfinished" />
     </message>
     <message>
-        <location filename="../serialport-android.cpp" line="311" />
+        <location filename="../serialport-android.cpp" line="317" />
         <source>writeDataNak</source>
         <translation type="unfinished" />
     </message>
     <message>
-        <location filename="../serialport-android.cpp" line="317" />
+        <location filename="../serialport-android.cpp" line="323" />
         <source>writeComplete</source>
         <translation type="unfinished" />
     </message>
     <message>
-        <location filename="../serialport-android.cpp" line="328" />
+        <location filename="../serialport-android.cpp" line="334" />
         <source>writeError</source>
         <translation type="unfinished" />
     </message>
     <message>
-        <location filename="../serialport-android.cpp" line="338" />
+        <location filename="../serialport-android.cpp" line="344" />
         <source>sioChecksum</source>
         <translation type="unfinished" />
     </message>
     <message>
-        <location filename="../serialport-android.cpp" line="354" />
+        <location filename="../serialport-android.cpp" line="360" />
         <source>readRawFrame</source>
         <translation type="unfinished" />
     </message>
     <message>
-        <location filename="../serialport-android.cpp" line="396" />
+        <location filename="../serialport-android.cpp" line="402" />
         <source>readRawFrame: %1</source>
         <translation type="unfinished" />
     </message>
     <message>
-        <location filename="../serialport-android.cpp" line="442" />
+        <location filename="../serialport-android.cpp" line="448" />
         <location filename="../serialport-unix.cpp" line="576" />
         <source>Serial port write timeout. (%1 of %2 written)</source>
         <translation type="unfinished" />
@@ -3296,7 +3301,7 @@ Gdy usłyszysz sygnał, naciśnij przycisk play i mniej więcej w tym samym czas
         <translation>Nie można opróżnic buforu odczytu portu szeregowego: %1</translation>
     </message>
     <message>
-        <location filename="../serialport-android.cpp" line="273" />
+        <location filename="../serialport-android.cpp" line="279" />
         <location filename="../serialport-unix.cpp" line="425" />
         <location filename="../serialport-win32.cpp" line="361" />
         <source>Data frame checksum error, expected: %1, got: %2. (%3)</source>
@@ -3373,7 +3378,7 @@ Gdy usłyszysz sygnał, naciśnij przycisk play i mniej więcej w tym samym czas
         <translation>Nie można wyczyścić buforu zapisu portu szeregowego: %1</translation>
     </message>
     <message>
-        <location filename="../serialport-android.cpp" line="428" />
+        <location filename="../serialport-android.cpp" line="434" />
         <location filename="../serialport-win32.cpp" line="501" />
         <location filename="../serialport-win32.cpp" line="506" />
         <source>Cannot write to serial port: %1</source>

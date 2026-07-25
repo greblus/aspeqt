@@ -59,6 +59,10 @@ private:
     class EpsonPrinter *m_epson = nullptr;
     QImage m_paperImage;
     RDevice *m_rDevice = nullptr;
+    // Set when Options changed a serial parameter mid-session: the port is
+    // reopened once the worker has stopped, since speed and handshaking are
+    // only read there.
+    bool m_restartSioAfterStop = false;
     QTranslator aspeqt_translator, aspeqt_qt_translator;
     
     void setSession();  //

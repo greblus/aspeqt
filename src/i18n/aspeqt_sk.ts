@@ -332,39 +332,39 @@
 <context>
     <name>CassetteWorker</name>
     <message>
-        <location filename="../sioworker.cpp" line="354" />
+        <location filename="../sioworker.cpp" line="359" />
         <source>Cannot open '%1': %2</source>
         <translation>Nemožno otvoriť'%1':%2</translation>
     </message>
     <message>
-        <location filename="../sioworker.cpp" line="365" />
-        <location filename="../sioworker.cpp" line="376" />
+        <location filename="../sioworker.cpp" line="370" />
+        <location filename="../sioworker.cpp" line="381" />
         <source>Cannot read '%1': %2</source>
         <translation>Nemožno čítať '%1':%2</translation>
     </message>
     <message>
-        <location filename="../sioworker.cpp" line="382" />
+        <location filename="../sioworker.cpp" line="387" />
         <source>Cannot open '%1': The header does not match.</source>
         <translation>Nemožno otvoriť '%1': Nesúhlasí hlavička.</translation>
     </message>
     <message>
-        <location filename="../sioworker.cpp" line="387" />
+        <location filename="../sioworker.cpp" line="392" />
         <source>[Cassette]: File description '%2'.</source>
         <translation>[Kazeta]:Popis súboru '%2'.</translation>
     </message>
     <message>
-        <location filename="../sioworker.cpp" line="401" />
-        <location filename="../sioworker.cpp" line="411" />
+        <location filename="../sioworker.cpp" line="406" />
+        <location filename="../sioworker.cpp" line="416" />
         <source>'%1' ends with an incomplete chunk; loaded the complete records only.</source>
         <translation>„%1“ končí neúplným blokom; načítali sa len úplné záznamy.</translation>
     </message>
     <message>
-        <location filename="../sioworker.cpp" line="431" />
+        <location filename="../sioworker.cpp" line="436" />
         <source>Cannot open '%1': Unknown chunk header %2.</source>
         <translation>Nemožno otvoriť '%1': Neznámy kus hlavičky %2.</translation>
     </message>
     <message>
-        <location filename="../sioworker.cpp" line="480" />
+        <location filename="../sioworker.cpp" line="485" />
         <source>[Cassette] Playing record %1 of %2 (%3 ms of gap + %4 bytes of data)</source>
         <translation>[Kazeta] Prehrávam záznam %1 z %2 (%3 ms z medzery'+'%4bytov dát)</translation>
     </message>
@@ -848,157 +848,162 @@ Keď zaznie pípnutie, stlačte tlačidlo prehrávania a približne súčasne kl
         <translation>Program načítaný do Atari.</translation>
     </message>
     <message>
-        <location filename="../engine.cpp" line="814" />
+        <location filename="../engine.cpp" line="819" />
         <source>[%1] Auto-commit failed.</source>
         <translation>[%1] Automatické ukladanie zlyhalo.</translation>
     </message>
     <message>
-        <location filename="../engine.cpp" line="970" />
+        <location filename="../engine.cpp" line="975" />
         <source>Loaded into the cas/xex slot.</source>
         <translation>Načítané do slotu cas/xex.</translation>
     </message>
     <message>
-        <location filename="../engine.cpp" line="1173" />
-        <location filename="../engine.cpp" line="1181" />
+        <location filename="../engine.cpp" line="1178" />
+        <location filename="../engine.cpp" line="1186" />
         <source>This slot does not hold a mounted folder.</source>
         <translation>V tomto slote nie je pripojený priečinok.</translation>
     </message>
     <message>
-        <location filename="../engine.cpp" line="1191" />
+        <location filename="../engine.cpp" line="1196" />
         <source>Installed high-speed MyPicoDOS into the folder. Reboot your Atari to load DOS.</source>
         <translation>Rýchly MyPicoDOS bol nainštalovaný do priečinka. Reštartujte Atari na načítanie DOS-u.</translation>
     </message>
     <message>
-        <location filename="../engine.cpp" line="1165" />
-        <location filename="../engine.cpp" line="1194" />
+        <location filename="../engine.cpp" line="1170" />
+        <location filename="../engine.cpp" line="1199" />
         <source>Could not copy the DOS files into the folder.</source>
         <translation>Súbory DOS sa nepodarilo skopírovať do priečinka.</translation>
     </message>
     <message>
-        <location filename="../engine.cpp" line="1316" />
+        <location filename="../engine.cpp" line="1321" />
         <source>[Disk %1] Auto-commit ON.</source>
         <translation>[Disk %1] Automatické ukladanie ZAP.</translation>
     </message>
     <message>
-        <location filename="../engine.cpp" line="1317" />
+        <location filename="../engine.cpp" line="1322" />
         <source>[Disk %1] Auto-commit OFF.</source>
         <translation>[Disk %1] Automatické ukladanie VYP.</translation>
     </message>
     <message>
         <location filename="../engine.cpp" line="489" />
         <location filename="../engine.cpp" line="496" />
-        <location filename="../engine.cpp" line="1364" />
+        <location filename="../engine.cpp" line="1369" />
         <source>'%1' cannot be saved.</source>
         <translation>„%1“ sa nedá uložiť.</translation>
     </message>
     <message>
-        <location filename="../engine.cpp" line="1400" />
-        <location filename="../engine.cpp" line="2383" />
+        <location filename="../engine.cpp" line="1405" />
+        <location filename="../engine.cpp" line="2408" />
         <source>Cannot read '%1'.</source>
         <translation>„%1“ sa nedá načítať.</translation>
     </message>
     <message>
-        <location filename="../engine.cpp" line="1476" />
-        <location filename="../engine.cpp" line="1727" />
-        <location filename="../engine.cpp" line="1766" />
-        <location filename="../engine.cpp" line="2397" />
+        <location filename="../engine.cpp" line="1481" />
+        <location filename="../engine.cpp" line="1732" />
+        <location filename="../engine.cpp" line="1771" />
+        <location filename="../engine.cpp" line="2422" />
         <source>Cannot write to '%1'.</source>
         <translation>Nemožno zapisovať do %1 .</translation>
     </message>
     <message>
-        <location filename="../engine.cpp" line="1597" />
+        <location filename="../engine.cpp" line="1602" />
         <source>Swapped disk %1 with disk %2.</source>
         <translation>Výmena disku %1 za disk %2.</translation>
     </message>
     <message>
-        <location filename="../engine.cpp" line="1716" />
-        <location filename="../engine.cpp" line="1756" />
+        <location filename="../engine.cpp" line="1721" />
+        <location filename="../engine.cpp" line="1761" />
         <source>Nothing has been printed yet.</source>
         <translation>Zatiaľ sa nič nevytlačilo.</translation>
     </message>
     <message>
-        <location filename="../engine.cpp" line="1726" />
-        <location filename="../engine.cpp" line="1765" />
+        <location filename="../engine.cpp" line="1731" />
+        <location filename="../engine.cpp" line="1770" />
         <source>Cannot save the printout, see the log.</source>
         <translation>Výtlačok sa nedá uložiť, pozrite denník.</translation>
     </message>
     <message>
-        <location filename="../engine.cpp" line="1731" />
-        <location filename="../engine.cpp" line="1790" />
+        <location filename="../engine.cpp" line="1736" />
+        <location filename="../engine.cpp" line="1795" />
         <source>Printout saved.</source>
         <translation>Výtlačok uložený.</translation>
     </message>
     <message>
-        <location filename="../engine.cpp" line="1742" />
+        <location filename="../engine.cpp" line="1747" />
         <source>The bundled test page is missing.</source>
         <translation>Chýba priložená testovacia stránka.</translation>
     </message>
     <message>
-        <location filename="../engine.cpp" line="1804" />
+        <location filename="../engine.cpp" line="1809" />
         <source>Cannot open the capture, see the log.</source>
         <translation>Záznam sa nedá otvoriť, pozri denník.</translation>
     </message>
     <message>
-        <location filename="../engine.cpp" line="1926" />
+        <location filename="../engine.cpp" line="1913" />
+        <source>Serial settings changed; restarting the emulation.</source>
+        <translation>Nastavenia sériového portu sa zmenili; reštartuje sa emulácia.</translation>
+    </message>
+    <message>
+        <location filename="../engine.cpp" line="1951" />
         <source>No phonebook file chosen (see Options).</source>
         <translation>Nie je vybraný súbor telefónneho zoznamu (pozri Nastavenia).</translation>
     </message>
     <message>
-        <location filename="../engine.cpp" line="1979" />
+        <location filename="../engine.cpp" line="2004" />
         <source>Cannot write the bundled phonebook to %1</source>
         <translation>Priložený telefónny zoznam sa nedá zapísať do %1</translation>
     </message>
     <message>
-        <location filename="../engine.cpp" line="1995" />
+        <location filename="../engine.cpp" line="2020" />
         <source>The R: device is not enabled (see Options).</source>
         <translation>Zariadenie R: nie je povolené (pozri Nastavenia).</translation>
     </message>
     <message>
-        <location filename="../engine.cpp" line="2014" />
+        <location filename="../engine.cpp" line="2039" />
         <source>This phonebook entry has no address.</source>
         <translation>Táto položka telefónneho zoznamu nemá adresu.</translation>
     </message>
     <message>
-        <location filename="../engine.cpp" line="2026" />
+        <location filename="../engine.cpp" line="2051" />
         <source>Automatic</source>
         <translation>Automatický</translation>
     </message>
     <message>
-        <location filename="../engine.cpp" line="2206" />
+        <location filename="../engine.cpp" line="2231" />
         <source>Failed to load '%1'.</source>
         <translation>„%1“ sa nepodarilo načítať.</translation>
     </message>
     <message>
-        <location filename="../engine.cpp" line="2218" />
+        <location filename="../engine.cpp" line="2243" />
         <source>Pick an Atari executable (.xex/.com/.exe) or a cassette image (.cas).</source>
         <translation>Vyberte program Atari (.xex/.com/.exe) alebo obraz kazety (.cas).</translation>
     </message>
     <message>
-        <location filename="../engine.cpp" line="2333" />
-        <location filename="../engine.cpp" line="2345" />
-        <location filename="../engine.cpp" line="2349" />
+        <location filename="../engine.cpp" line="2358" />
+        <location filename="../engine.cpp" line="2370" />
+        <location filename="../engine.cpp" line="2374" />
         <source>Cannot extract the files, see the log.</source>
         <translation>Súbory sa nedajú rozbaliť, pozrite denník.</translation>
     </message>
     <message>
-        <location filename="../engine.cpp" line="2362" />
+        <location filename="../engine.cpp" line="2387" />
         <source>Cannot delete the files, see the log.</source>
         <translation>Súbory sa nedajú zmazať, pozrite denník.</translation>
     </message>
     <message>
-        <location filename="../engine.cpp" line="2382" />
-        <location filename="../engine.cpp" line="2396" />
-        <location filename="../engine.cpp" line="2408" />
+        <location filename="../engine.cpp" line="2407" />
+        <location filename="../engine.cpp" line="2421" />
+        <location filename="../engine.cpp" line="2433" />
         <source>Cannot add the file, see the log.</source>
         <translation>Súbor sa nedá pridať, pozrite denník.</translation>
     </message>
     <message>
-        <location filename="../engine.cpp" line="1637" />
+        <location filename="../engine.cpp" line="1642" />
         <source>Printer emulation stopped.</source>
         <translation>Emulácia tlačiarne zastavená.</translation>
     </message>
     <message>
-        <location filename="../engine.cpp" line="1636" />
+        <location filename="../engine.cpp" line="1641" />
         <source>Printer emulation started.</source>
         <translation>Emulácia tlačiarne spustená.</translation>
     </message>
@@ -1008,13 +1013,13 @@ Keď zaznie pípnutie, stlačte tlačidlo prehrávania a približne súčasne kl
         <translation>Emulácia zastavená.</translation>
     </message>
     <message>
-        <location filename="../engine.cpp" line="877" />
+        <location filename="../engine.cpp" line="882" />
         <source>Unmounted disk %1</source>
         <translation>Odpojený disk %1</translation>
     </message>
     <message>
-        <location filename="../engine.cpp" line="1048" />
-        <location filename="../engine.cpp" line="1668" />
+        <location filename="../engine.cpp" line="1053" />
+        <location filename="../engine.cpp" line="1673" />
         <source>[%1] Mounted '%2' as '%3'.</source>
         <translation>[%1] Pripojený '%2' ako '%3'.</translation>
     </message>
@@ -1619,213 +1624,213 @@ Keď zaznie pípnutie, stlačte tlačidlo prehrávania a približne súčasne kl
 <context>
     <name>OptionsDialog</name>
     <message>
-        <location filename="../qml/OptionsDialog.qml" line="155" />
+        <location filename="../qml/OptionsDialog.qml" line="159" />
         <source>Options</source>
         <translation>Možnosti</translation>
     </message>
     <message>
-        <location filename="../qml/OptionsDialog.qml" line="386" />
+        <location filename="../qml/OptionsDialog.qml" line="398" />
         <source>User interface</source>
         <translation>Uživateľské rozhranie</translation>
     </message>
     <message>
-        <location filename="../qml/OptionsDialog.qml" line="186" />
+        <location filename="../qml/OptionsDialog.qml" line="194" />
         <source>Handshake method:</source>
         <translation>Metóda handshake:</translation>
     </message>
     <message>
-        <location filename="../qml/OptionsDialog.qml" line="408" />
+        <location filename="../qml/OptionsDialog.qml" line="420" />
         <source>Save</source>
         <translation>Uložiť</translation>
     </message>
     <message>
-        <location filename="../qml/OptionsDialog.qml" line="180" />
+        <location filename="../qml/OptionsDialog.qml" line="188" />
         <source>Serial interface:</source>
         <translation>Sériové rozhranie:</translation>
     </message>
     <message>
-        <location filename="../qml/OptionsDialog.qml" line="219" />
+        <location filename="../qml/OptionsDialog.qml" line="227" />
         <source>Write ACK delay [ms]</source>
         <translation>Oneskorenie ACK pri zápise [ms]</translation>
     </message>
     <message>
-        <location filename="../qml/OptionsDialog.qml" line="178" />
+        <location filename="../qml/OptionsDialog.qml" line="186" />
         <source>SIO port emulation</source>
         <translation>Emulácia portu SIO</translation>
     </message>
     <message>
-        <location filename="../qml/OptionsDialog.qml" line="197" />
+        <location filename="../qml/OptionsDialog.qml" line="205" />
         <source>Transmission speed [bps]:</source>
         <translation>Rýchlosť prenosu [bps]:</translation>
     </message>
     <message>
-        <location filename="../qml/OptionsDialog.qml" line="208" />
+        <location filename="../qml/OptionsDialog.qml" line="216" />
         <source>Bluetooth name:</source>
         <translation>Názov Bluetooth:</translation>
     </message>
     <message>
-        <location filename="../qml/OptionsDialog.qml" line="223" />
+        <location filename="../qml/OptionsDialog.qml" line="231" />
         <source>Use non-standard speeds</source>
         <translation>Použiť neštandardnú rýchlosť</translation>
     </message>
     <message>
-        <location filename="../qml/OptionsDialog.qml" line="227" />
+        <location filename="../qml/OptionsDialog.qml" line="235" />
         <source>POKEY divisor:</source>
         <translation>Delič POKEY:</translation>
     </message>
     <message>
-        <location filename="../qml/OptionsDialog.qml" line="234" />
+        <location filename="../qml/OptionsDialog.qml" line="242" />
         <source>Emulation settings</source>
         <translation>Nastavenia emulácie</translation>
     </message>
     <message>
-        <location filename="../qml/OptionsDialog.qml" line="240" />
+        <location filename="../qml/OptionsDialog.qml" line="248" />
         <source>Cassette baud rate:</source>
         <translation>Rýchlosť kazety:</translation>
     </message>
     <message>
-        <location filename="../qml/OptionsDialog.qml" line="247" />
+        <location filename="../qml/OptionsDialog.qml" line="255" />
         <source>Folder images</source>
         <translation>Obrazy priečinkov</translation>
     </message>
     <message>
-        <location filename="../qml/OptionsDialog.qml" line="250" />
+        <location filename="../qml/OptionsDialog.qml" line="258" />
         <source>(Required for AtariDOS compatibility)</source>
         <translation>(Vyžadované pre kompatibilitu s AtariDOS)</translation>
     </message>
     <message>
-        <location filename="../qml/OptionsDialog.qml" line="259" />
+        <location filename="../qml/OptionsDialog.qml" line="267" />
         <source>Printer emulation</source>
         <translation type="unfinished">Emulácia tlačiarne</translation>
     </message>
     <message>
-        <location filename="../qml/OptionsDialog.qml" line="261" />
+        <location filename="../qml/OptionsDialog.qml" line="269" />
         <source>Emulate an Epson ESC/P printer</source>
         <translation>Emulovať tlačiareň Epson ESC/P</translation>
     </message>
     <message>
-        <location filename="../qml/OptionsDialog.qml" line="266" />
+        <location filename="../qml/OptionsDialog.qml" line="274" />
         <source>What the Atari prints is rendered onto a page you can view and save. The font is chosen in the printer output window.</source>
         <translation>To, čo Atari tlačí, sa vykreslí na stránku, ktorú si môžete pozrieť a uložiť. Písmo sa vyberá v okne výtlačku.</translation>
     </message>
     <message>
-        <location filename="../qml/OptionsDialog.qml" line="279" />
+        <location filename="../qml/OptionsDialog.qml" line="290" />
         <source>Print a test page</source>
         <translation>Vytlačiť testovaciu stránku</translation>
     </message>
     <message>
-        <location filename="../qml/OptionsDialog.qml" line="284" />
+        <location filename="../qml/OptionsDialog.qml" line="296" />
         <source>Replay a capture…</source>
         <translation>Prehrať záznam…</translation>
     </message>
     <message>
-        <location filename="../qml/OptionsDialog.qml" line="286" />
+        <location filename="../qml/OptionsDialog.qml" line="298" />
         <source>Open a print capture</source>
         <translation>Otvoriť záznam tlače</translation>
     </message>
     <message>
-        <location filename="../qml/OptionsDialog.qml" line="287" />
+        <location filename="../qml/OptionsDialog.qml" line="299" />
         <source>Print captures (*.prn)</source>
         <translation>Záznamy tlače (*.prn)</translation>
     </message>
     <message>
-        <location filename="../qml/OptionsDialog.qml" line="295" />
+        <location filename="../qml/OptionsDialog.qml" line="307" />
         <source>R: device (modem)</source>
         <translation>Zariadenie R: (modem)</translation>
     </message>
     <message>
-        <location filename="../qml/OptionsDialog.qml" line="296" />
+        <location filename="../qml/OptionsDialog.qml" line="308" />
         <source>Emulate an Atari 850 interface</source>
         <translation>Emulovať rozhranie Atari 850</translation>
     </message>
     <message>
-        <location filename="../qml/OptionsDialog.qml" line="298" />
+        <location filename="../qml/OptionsDialog.qml" line="310" />
         <source>Dial BBSes over TCP with a terminal program. Needs a hardware handshake method (RI/DSR/CTS), not SOFT.</source>
         <translation>Vytáčajte BBS cez TCP terminálovým programom. Vyžaduje hardvérovú metódu handshake (RI/DSR/CTS), nie SOFT.</translation>
     </message>
     <message>
-        <location filename="../qml/OptionsDialog.qml" line="309" />
+        <location filename="../qml/OptionsDialog.qml" line="321" />
         <source>Use the bundled BBS list</source>
         <translation>Použiť priložený zoznam BBS</translation>
     </message>
     <message>
-        <location filename="../qml/OptionsDialog.qml" line="320" />
+        <location filename="../qml/OptionsDialog.qml" line="332" />
         <source>Could not install the bundled list, see the log.</source>
         <translation>Priložený zoznam sa nepodarilo nainštalovať, pozri denník.</translation>
     </message>
     <message>
-        <location filename="../qml/OptionsDialog.qml" line="328" />
+        <location filename="../qml/OptionsDialog.qml" line="340" />
         <source>A copy of the telnet BBS list that ships with AspeQt-2k26. An existing copy is kept, not overwritten.</source>
         <translation>Kópia telnetového zoznamu BBS dodávaného s AspeQt-2k26. Existujúca kópia sa zachová, neprepíše sa.</translation>
     </message>
     <message>
-        <location filename="../qml/OptionsDialog.qml" line="338" />
+        <location filename="../qml/OptionsDialog.qml" line="350" />
         <source>Phonebook file:</source>
         <translation>Súbor telefónneho zoznamu:</translation>
     </message>
     <message>
-        <location filename="../qml/OptionsDialog.qml" line="347" />
+        <location filename="../qml/OptionsDialog.qml" line="359" />
         <source>(none)</source>
         <translation>(žiadny)</translation>
     </message>
     <message>
-        <location filename="../qml/OptionsDialog.qml" line="354" />
+        <location filename="../qml/OptionsDialog.qml" line="366" />
         <source>Choose</source>
         <translation>Vybrať</translation>
     </message>
     <message>
-        <location filename="../qml/OptionsDialog.qml" line="357" />
+        <location filename="../qml/OptionsDialog.qml" line="369" />
         <source>Phonebook file</source>
         <translation>Súbor telefónneho zoznamu</translation>
     </message>
     <message>
-        <location filename="../qml/OptionsDialog.qml" line="357" />
+        <location filename="../qml/OptionsDialog.qml" line="369" />
         <source>XML files (*.xml)</source>
         <translation>Súbory XML (*.xml)</translation>
     </message>
     <message>
-        <location filename="../qml/OptionsDialog.qml" line="287" />
-        <location filename="../qml/OptionsDialog.qml" line="357" />
+        <location filename="../qml/OptionsDialog.qml" line="299" />
+        <location filename="../qml/OptionsDialog.qml" line="369" />
         <source>All files (*)</source>
         <translation type="unfinished">Všetky súbory (*)</translation>
     </message>
     <message>
-        <location filename="../qml/OptionsDialog.qml" line="364" />
+        <location filename="../qml/OptionsDialog.qml" line="376" />
         <source>Answer incoming calls</source>
         <translation>Prijímať prichádzajúce hovory</translation>
     </message>
     <message>
-        <location filename="../qml/OptionsDialog.qml" line="370" />
+        <location filename="../qml/OptionsDialog.qml" line="382" />
         <source>Listen on port:</source>
         <translation>Počúvať na porte:</translation>
     </message>
     <message>
-        <location filename="../qml/OptionsDialog.qml" line="407" />
+        <location filename="../qml/OptionsDialog.qml" line="419" />
         <source>Cancel</source>
         <translation>Zrušiť</translation>
     </message>
     <message>
-        <location filename="../qml/OptionsDialog.qml" line="235" />
+        <location filename="../qml/OptionsDialog.qml" line="243" />
         <source>Use high speed executable loader</source>
         <translation>Použiť vysokorýchlostný loader</translation>
     </message>
     <message>
-        <location filename="../qml/OptionsDialog.qml" line="236" />
+        <location filename="../qml/OptionsDialog.qml" line="244" />
         <source>Use custom baud rate for cassette emulation</source>
         <translation>Použiť voliteľnú rýchlosť prenosu pri emulácií kazety</translation>
     </message>
     <message>
-        <location filename="../qml/OptionsDialog.qml" line="248" />
+        <location filename="../qml/OptionsDialog.qml" line="256" />
         <source>Filter out underscore character from file names</source>
         <translation>Odstrániť podčiarkovník z názvov súborov</translation>
     </message>
     <message>
-        <location filename="../qml/OptionsDialog.qml" line="387" />
+        <location filename="../qml/OptionsDialog.qml" line="399" />
         <source>Language:</source>
         <translation>Jazzk:</translation>
     </message>
     <message>
-        <location filename="../engine.cpp" line="2038" />
+        <location filename="../engine.cpp" line="2063" />
         <source>English</source>
         <translation>Slovak</translation>
     </message>
@@ -2644,7 +2649,7 @@ Keď zaznie pípnutie, stlačte tlačidlo prehrávania a približne súčasne kl
 <context>
     <name>RDevice</name>
     <message>
-        <location filename="../rdevice.cpp" line="1077" />
+        <location filename="../rdevice.cpp" line="1083" />
         <source>[RDevice] Dialing %1:%2...</source>
         <translation type="unfinished" />
     </message>
@@ -2979,57 +2984,57 @@ Keď zaznie pípnutie, stlačte tlačidlo prehrávania a približne súčasne kl
         <translation type="unfinished" />
     </message>
     <message>
-        <location filename="../sioworker.cpp" line="201" />
+        <location filename="../sioworker.cpp" line="206" />
         <source>Cannot read command frame.</source>
         <translation>Nemožno čítať command frame.</translation>
     </message>
     <message>
-        <location filename="../sioworker.cpp" line="216" />
+        <location filename="../sioworker.cpp" line="221" />
         <source>[%1] command: $%2, aux: $%3 ignored because the image explorer is open.</source>
         <translation>[%1] príkaz: $%2, aux: $%3 ignorovaný, pretože je otvorený prehliadač obrazov.</translation>
     </message>
     <message>
-        <location filename="../sioworker.cpp" line="222" />
+        <location filename="../sioworker.cpp" line="227" />
         <source>[%1] command: $%2, aux: $%3 ignored.</source>
         <translation>[%1] príkaz: $%2, aux: $%3 ignorovaný.</translation>
     </message>
     <message>
-        <location filename="../sioworker.cpp" line="287" />
+        <location filename="../sioworker.cpp" line="292" />
         <source>Disk 1 (below autoboot)</source>
         <translation>Disk 1 (nižší autoboot)</translation>
     </message>
     <message>
-        <location filename="../sioworker.cpp" line="304" />
+        <location filename="../sioworker.cpp" line="309" />
         <source>Disk %1</source>
         <translation>Disk %1</translation>
     </message>
     <message>
-        <location filename="../sioworker.cpp" line="310" />
+        <location filename="../sioworker.cpp" line="315" />
         <source>Printer %1</source>
         <translation>Tlačiareň %1</translation>
     </message>
     <message>
-        <location filename="../sioworker.cpp" line="313" />
+        <location filename="../sioworker.cpp" line="318" />
         <source>Smart device (APE time + URL)</source>
         <translation type="unfinished" />
     </message>
     <message>
-        <location filename="../sioworker.cpp" line="316" />
+        <location filename="../sioworker.cpp" line="321" />
         <source>AspeQt Client</source>
         <translation>AspeQt Client</translation>
     </message>
     <message>
-        <location filename="../sioworker.cpp" line="322" />
+        <location filename="../sioworker.cpp" line="327" />
         <source>RS232 %1</source>
         <translation>RS232 %1</translation>
     </message>
     <message>
-        <location filename="../sioworker.cpp" line="325" />
+        <location filename="../sioworker.cpp" line="330" />
         <source>PCLINK</source>
         <translation type="unfinished" />
     </message>
     <message>
-        <location filename="../sioworker.cpp" line="328" />
+        <location filename="../sioworker.cpp" line="333" />
         <source>Device $%1</source>
         <translation>Zariadenie $%1</translation>
     </message>
@@ -3135,7 +3140,7 @@ Keď zaznie pípnutie, stlačte tlačidlo prehrávania a približne súčasne kl
         <translation>Nemožno vyčistiť DTR a RTS v sériovom porte %1: %2</translation>
     </message>
     <message>
-        <location filename="../serialport-android.cpp" line="95" />
+        <location filename="../serialport-android.cpp" line="97" />
         <location filename="../serialport-unix.cpp" line="117" />
         <source>Emulation started through standard serial port backend on '%1' with %2 handshaking.</source>
         <translation>Emulácia začala skrz štandardný sériový port na %1 s %2 .</translation>
@@ -3170,7 +3175,7 @@ Keď zaznie pípnutie, stlačte tlačidlo prehrávania a približne súčasne kl
         <translation type="unfinished" />
     </message>
     <message>
-        <location filename="../serialport-android.cpp" line="189" />
+        <location filename="../serialport-android.cpp" line="195" />
         <location filename="../serialport-unix.cpp" line="251" />
         <location filename="../serialport-unix.cpp" line="307" />
         <location filename="../serialport-win32.cpp" line="241" />
@@ -3178,7 +3183,7 @@ Keď zaznie pípnutie, stlačte tlačidlo prehrávania a približne súčasne kl
         <translation>%1 bitov/sec</translation>
     </message>
     <message>
-        <location filename="../serialport-android.cpp" line="177" />
+        <location filename="../serialport-android.cpp" line="183" />
         <location filename="../serialport-unix.cpp" line="252" />
         <location filename="../serialport-unix.cpp" line="308" />
         <location filename="../serialport-win32.cpp" line="242" />
@@ -3191,37 +3196,37 @@ Keď zaznie pípnutie, stlačte tlačidlo prehrávania a približne súčasne kl
         <translation type="unfinished" />
     </message>
     <message>
-        <location filename="../serialport-android.cpp" line="104" />
+        <location filename="../serialport-android.cpp" line="106" />
         <source>isOpen %1</source>
         <translation type="unfinished" />
     </message>
     <message>
-        <location filename="../serialport-android.cpp" line="110" />
+        <location filename="../serialport-android.cpp" line="112" />
         <source>close</source>
         <translation type="unfinished" />
     </message>
     <message>
-        <location filename="../serialport-android.cpp" line="118" />
+        <location filename="../serialport-android.cpp" line="120" />
         <source>cancel</source>
         <translation type="unfinished" />
     </message>
     <message>
-        <location filename="../serialport-android.cpp" line="124" />
+        <location filename="../serialport-android.cpp" line="130" />
         <source>speedByte</source>
         <translation type="unfinished" />
     </message>
     <message>
-        <location filename="../serialport-android.cpp" line="146" />
+        <location filename="../serialport-android.cpp" line="152" />
         <source>setNormalSpeed</source>
         <translation type="unfinished" />
     </message>
     <message>
-        <location filename="../serialport-android.cpp" line="153" />
+        <location filename="../serialport-android.cpp" line="159" />
         <source>setHighSpeed</source>
         <translation type="unfinished" />
     </message>
     <message>
-        <location filename="../serialport-android.cpp" line="184" />
+        <location filename="../serialport-android.cpp" line="190" />
         <source>Cannot set serial port speed: %1</source>
         <translation type="unfinished" />
     </message>
@@ -3238,52 +3243,52 @@ Keď zaznie pípnutie, stlačte tlačidlo prehrávania a približne súčasne kl
         <translation type="unfinished" />
     </message>
     <message>
-        <location filename="../serialport-android.cpp" line="293" />
+        <location filename="../serialport-android.cpp" line="299" />
         <source>writeCommandAck</source>
         <translation type="unfinished" />
     </message>
     <message>
-        <location filename="../serialport-android.cpp" line="299" />
+        <location filename="../serialport-android.cpp" line="305" />
         <source>writeCommandNak</source>
         <translation type="unfinished" />
     </message>
     <message>
-        <location filename="../serialport-android.cpp" line="305" />
+        <location filename="../serialport-android.cpp" line="311" />
         <source>writeDataAck</source>
         <translation type="unfinished" />
     </message>
     <message>
-        <location filename="../serialport-android.cpp" line="311" />
+        <location filename="../serialport-android.cpp" line="317" />
         <source>writeDataNak</source>
         <translation type="unfinished" />
     </message>
     <message>
-        <location filename="../serialport-android.cpp" line="317" />
+        <location filename="../serialport-android.cpp" line="323" />
         <source>writeComplete</source>
         <translation type="unfinished" />
     </message>
     <message>
-        <location filename="../serialport-android.cpp" line="328" />
+        <location filename="../serialport-android.cpp" line="334" />
         <source>writeError</source>
         <translation type="unfinished" />
     </message>
     <message>
-        <location filename="../serialport-android.cpp" line="338" />
+        <location filename="../serialport-android.cpp" line="344" />
         <source>sioChecksum</source>
         <translation type="unfinished" />
     </message>
     <message>
-        <location filename="../serialport-android.cpp" line="354" />
+        <location filename="../serialport-android.cpp" line="360" />
         <source>readRawFrame</source>
         <translation type="unfinished" />
     </message>
     <message>
-        <location filename="../serialport-android.cpp" line="396" />
+        <location filename="../serialport-android.cpp" line="402" />
         <source>readRawFrame: %1</source>
         <translation type="unfinished" />
     </message>
     <message>
-        <location filename="../serialport-android.cpp" line="442" />
+        <location filename="../serialport-android.cpp" line="448" />
         <location filename="../serialport-unix.cpp" line="576" />
         <source>Serial port write timeout. (%1 of %2 written)</source>
         <translation type="unfinished" />
@@ -3295,7 +3300,7 @@ Keď zaznie pípnutie, stlačte tlačidlo prehrávania a približne súčasne kl
         <translation>Nemožno vyčistiť buffer čítania sériového portu: %1</translation>
     </message>
     <message>
-        <location filename="../serialport-android.cpp" line="273" />
+        <location filename="../serialport-android.cpp" line="279" />
         <location filename="../serialport-unix.cpp" line="425" />
         <location filename="../serialport-win32.cpp" line="361" />
         <source>Data frame checksum error, expected: %1, got: %2. (%3)</source>
@@ -3372,7 +3377,7 @@ Keď zaznie pípnutie, stlačte tlačidlo prehrávania a približne súčasne kl
         <translation>Nemožno vyčistiť buffer zápisu sériového portu: %1</translation>
     </message>
     <message>
-        <location filename="../serialport-android.cpp" line="428" />
+        <location filename="../serialport-android.cpp" line="434" />
         <location filename="../serialport-win32.cpp" line="501" />
         <location filename="../serialport-win32.cpp" line="506" />
         <source>Cannot write to serial port: %1</source>
