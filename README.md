@@ -7,18 +7,38 @@ interfaces:
 * **SIO2PC-USB** via an FTDI adapter (USB OTG host support is required), or
 * **SIO2BT** via a SIO2BT bluetooth dongle, supported by most modern Android devices.
 
-> **Since 1.2** the interface is written in **Qt Quick / QML** (Material Design):
-> the same drive-panel layout, but built for touch throughout. The engine behind it
-> — SIO, mounting, sessions, the cassette and executable loader — is unchanged and
-> now runs headless, with no widget code left anywhere in the app.
+**In version 1.2** the interface was re-created in **Qt Quick / QML** (Material Design):
+the same drive-panel layout, but built for touch throughout. The engine behind it
+— SIO, mounting, sessions, the cassette and executable loader — is unchanged and
+now runs headless, with no widget code left anywhere in the app.
 
 <p align="center">
-  <img src="src/screenshots/aspeqt_qml.jpg" alt="AspeQt QML redesign: loader slot, drive slots and log" width="42%">
+  <img src="src/screenshots/aspeqt_qml.jpg" alt="AspeQt QML redesign: loader slot, drive slots and log" width="34%">
 </p>
 
-## What's new in the Android port
+**What's new in 1.2.1:**
 
-The Android build has been reworked around a touch-friendly drive panel.
+* **R: device (Atari 850 modem emulation)**: dial BBSes over telnet and SSH, with a
+  phonebook, favourites and search; turn your Atari into an SSH terminal (SSH-Shell
+  connection type).
+
+<p align="center">
+  <img width="40%" height="40%" alt="ssh_atari_terminal" src="https://github.com/user-attachments/assets/4f211d7b-2228-4392-be50-a07295f115ab" />
+</p>
+  
+* **Network browser**: TNFS, FTP, FTPS and SFTP — mount ATR, CAS and XEX, and
+  download files to your device.
+* **Epson printer emulation**: print jobs rendered onto a page with bit
+  graphics, font choice, PNG and PDF export, and a built-in test page.
+
+<p align="center">
+  <a href="src/screenshots/phonebook.jpg"><img src="src/screenshots/phonebook.jpg" alt="BBS phonebook" width="21%"></a>
+  <a href="src/screenshots/netbrowser.jpg"><img src="src/screenshots/netbrowser.jpg" alt="Network browser: favourite servers" width="21%"></a>
+  <a href="src/screenshots/netbrowser2.jpg"><img src="src/screenshots/netbrowser2.jpg" alt="Network browser: listing a TNFS server" width="21%"></a>
+  <a href="src/screenshots/printer.jpg"><img src="src/screenshots/printer.jpg" alt="Epson printer output" width="21%"></a>
+</p>
+
+<p align="center"><sub>Phonebook · network browser · Epson printer output — click to enlarge</sub></p>
 
 ### Dynamic drive slots
 
@@ -46,7 +66,7 @@ A dedicated **loader slot sits at the top** of the list and replaces the old
   e.g. *Cassette (5:05)*, and fills as it plays.
 * **retry** re-runs the last load, **eject** stops playback / boot and clears the slot.
 
-### One-tap high-speed DOS for folders
+### High-speed DOS for mounted folders
 
 When you mount a **folder** as a virtual disk, the third slot button turns into a
 hard-disk icon labelled **DOS**. Tapping it copies **MyPicoDOS** (`$boot.bin` +
@@ -61,7 +81,7 @@ modifications and is a great `.xex` loader too.
 * Try binary-file loading with the **"use high-speed executable loader"** option
   turned on.
 
-### What you need
+### Software requirements
 
 1. An Android device with USB host support.
 2. An OTG cable.
@@ -72,7 +92,7 @@ modifications and is a great `.xex` loader too.
 6. Connecting a SIO2PC-USB adapter launches AspeQt automatically. With Lotharek's
    adapter, start with the **DSR** or **SOFT** flow-control method at **19200 bps**
    to confirm it works, then experiment with higher speeds and POKEY divisors
-   (a high-speed OS, SDX or QMEG is required for the fast SIO routines).
+   (a high-speed OS, QMEG or DOS/loader is required for the fast SIO routines).
 
 ## SIO2BT
 
@@ -94,7 +114,7 @@ ACK timeout increased). Speed, name and PIN can be configured with
 
 ## Downloads
 
-* **AspeQt** will soon be available again from [Google Play Store](https://play.google.com/store/search?q=aspeqt).
+* **AspeQt** is on [Google Play](https://play.google.com/store/apps/details?id=org.greblus.AspeQt).
 * All releases (including older ones) are on the [releases page](https://github.com/greblus/aspeqt/releases).
 
 ## Under the hood
@@ -102,6 +122,16 @@ ACK timeout increased). Speed, name and PIN can be configured with
 The 1.2 release also cleared out a lot of history. The UI is Qt Quick end to end,
 so the QtWidgets and print-support modules are gone from the build, along with every
 `.ui` form, the old dialogs and the widget-era window handling.
+
+## Files for testing
+
+* `src/printer/epson-test.prn` — a captured print job that exercises every
+  typeface, pitch and graphics mode of the Epson emulation. It is also bundled
+  into the app: **Options → Printer emulation → Print a test page** renders it
+  without an Atari connected. The same screen takes any other `.prn` capture, which is the
+  quick way to work on the rendering.
+* `src/icet/icet.atr` — the Ice-T terminal, a disk to mount when testing the R:
+  device. Boot it, then dial with `ATDT` or from the phonebook.
 
 ## Building
 
@@ -134,7 +164,7 @@ or build your own.
 
 ## License
 
-See `license.txt` for the full text.
+See `src/license.txt` for the full text.
 
 * Original code up to version 0.6.0 — Copyright 2009 by Fatih Aygün.
 * Updates since v0.6.0 — Copyright 2012 by Ray Ataergin.
@@ -151,11 +181,11 @@ You may freely copy, use, modify and distribute it under the **GPL 2.0** license
 * The high-speed code used in the EXE loader was written by Matthias Reichl —
   <http://www.horus.com/~hias/atari/>.
 * PCLINK by TheMontezuma — <https://github.com/TheMontezuma/RespeQt>.
-* R: device (850 emulation) derived from AspeQt-2k26 by Paul Jones —
-  <https://github.com/pjones1063/AspeQt-2k26>.
+* R: device / Atari 850 emulation, Epson printer, network file-system clients,
+  TNFS FTP (-FTPS), SSH transport, SFTP and SFTP browsing were derived from AspeQt-2k26
+  by Paul Jones — <https://github.com/pjones1063/AspeQt-2k26>.
 * 850 handler firmware from [Altirra](https://www.virtualdub.org/altirra.html) by
   Avery Lee — see `src/AUTHORS.txt` for more info.
+* Ice-T (`src/icet/icet.atr`), the Atari terminal used to test the R: device, is
+  by Itay Chamiel.
 
-## Contact
-
-Android port: Wiktor Grębla — greblus@gmail.com

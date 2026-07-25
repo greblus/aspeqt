@@ -31,6 +31,9 @@ AspeQt -- authors and third-party code
     libssh 0.11.5     LGPL-2.1 -- linked statically (Android will not load a
                       versioned .so). See src/doc/build-libssh.md.
 
+* Ice-T, the Atari terminal program shipped as src/icet/icet.atr for testing the
+  R: device, is by Itay Chamiel. It is not part of AspeQt and is included only as
+  a convenient test client.
 * 850 handler firmware (rdevice_handler.h): The 6502 handler blob uploaded to the Atari
   is the replacement 850 interface firmware from Altirra project by Avery Lee:
 
