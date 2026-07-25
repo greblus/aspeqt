@@ -8,11 +8,30 @@ AspeQt -- authors and third-party code
 * The high-speed code used in the EXE loader was written by Matthias Reichl
   http://www.horus.com/~hias/atari/
 * PCLINK by TheMontezuma — https://github.com/TheMontezuma/RespeQt
-* R: device / 850 emulation is derived from AspeQt-2k26 by Paul Jones <pjones1063@gmail.com>
-* The network file-system clients are ported from AspeQt-2k26 by Paul Jones, GPL-2:
-  inetworkclient.h, tnfsclient.{h,cpp} (TNFS), ftpclient.{h,cpp} (FTP/FTPS),
-  sshclient.{h,cpp} (SSH terminal + SFTP) and sftpclient.{h,cpp}. The Qt Quick
-  network browser (networkbrowser.{h,cpp}, NetworkBrowserDialog.qml) is original.
+* Code taken or derived from AspeQt-2k26 by Paul Jones <pjones1063@gmail.com>, GPL-2
+  (https://github.com/pjones1063/AspeQt-2k26). Each file carries the attribution in
+  its header:
+
+    rdevice.{h,cpp}         R: device / Atari 850 emulation with a Hayes modem
+    epsonprinter.{h,cpp}    Epson ESC/P printer emulation (the printed page)
+    inetworkclient.h        common interface for the network file-system clients
+    tnfsclient.{h,cpp}      TNFS
+    ftpclient.{h,cpp}       FTP (the FTPS support on top of it is ours)
+    sshclient.{h,cpp}       SSH transport, terminal and SFTP
+    sftpclient.{h,cpp}      SFTP browsing on that transport
+
+  Written here, but interoperating with that program: phonebook.{h,cpp} and
+  bbsdata.h keep the phonebook in AspeQt-2k26's XML format so the two can share a
+  file, and the Qt Quick network browser (networkbrowser.{h,cpp},
+  NetworkBrowserDialog.qml) and printer window (PrintWindow.qml) are original.
+
+* Bundled third-party libraries (Android builds):
+    OpenSSL 3.5.7     Apache License 2.0 -- shipped as libcrypto_3.so / libssl_3.so,
+                      built from the KDAB android_openssl recipe.
+    libssh 0.11.5     LGPL-2.1 -- linked statically (Android will not load a
+                      versioned .so). See src/doc/build-libssh.md.
+
+* AtariClassicChunky.ttf (bundled via images.qrc) is used for the ATASCII views.
 * 850 handler firmware (rdevice_handler.h): The 6502 handler blob uploaded to the Atari
   is the replacement 850 interface firmware from Altirra project by Avery Lee:
 
