@@ -161,6 +161,12 @@ void RDevice::setEnabled(bool enable)
 
 void RDevice::handleCommand(quint8 command, quint16 aux)
 {
+    // Debug-only trace: when ATDT goes dead there is otherwise no way to tell
+    // "the Atari stopped talking to $50" from "we stopped answering".
+    qDebug() << "!d" << QString("[R:] cmd $%1 aux $%2%3")
+                        .arg(command, 2, 16, QChar('0'))
+                        .arg(aux, 4, 16, QChar('0'))
+                        .arg(m_isEnabled ? "" : "  (device disabled -- dropped)");
     if (!m_isEnabled) return;
 
     quint8 aux1 = (aux & 0xFF);
