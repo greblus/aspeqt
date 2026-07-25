@@ -132,6 +132,13 @@ private:
     bool m_sshAskEcho = true;
     QString m_sshAskBuffer;
     void handleSshPromptByte(char c);
+public:
+    // Put the modem back in a known state for a fresh emulation run. The device
+    // outlives the SIO worker, so a session cut short (a dropped carrier, or
+    // Android freezing the app in the background) would otherwise leave it in
+    // stream mode, mid-login-prompt or holding stale buffers.
+    void resetSession();
+private:
     // Drops OSC sequences (ESC ] ... BEL/ST) from the incoming stream: they
     // carry terminal metadata -- window titles, systemd's session context -- that
     // an Atari terminal cannot act on and would print as garbage. Colour and

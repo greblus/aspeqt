@@ -1616,6 +1616,11 @@ void Engine::toggleSio()
         sio->setPriority(QThread::NormalPriority);
         sio->requestStop();
     } else {
+        // Start from a known modem state: the R: device outlives the worker, so
+        // a previous session that ended badly would otherwise still be in stream
+        // mode (or mid login prompt) and swallow the Atari's AT commands.
+        if (m_rDevice)
+            m_rDevice->resetSession();
         sio->start(QThread::TimeCriticalPriority);
     }
 }

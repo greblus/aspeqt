@@ -120,6 +120,26 @@ RDevice::~RDevice()
     tcpServer->close();
 }
 
+void RDevice::resetSession()
+{
+#ifdef HAVE_LIBSSH
+    if (m_ssh->isConnected()) m_ssh->disconnectFromHost();
+    m_sshAsk = SshAsk::None;
+    m_sshAskBuffer.clear();
+    m_oscState = 0;
+#endif
+    m_isSshMode = false;
+    m_isNetworkConnected = false;
+    if (tcpSocket->state() != QAbstractSocket::UnconnectedState)
+        tcpSocket->abort();
+
+    state = ModemState::CommandMode;
+    QMutexLocker locker(&m_bufferMutex);
+    m_txBuffer.clear();
+    m_networkToSioBuffer.clear();
+    m_atCmdBuffer.clear();
+}
+
 void RDevice::setEnabled(bool enable)
 {
     m_isEnabled = enable;
