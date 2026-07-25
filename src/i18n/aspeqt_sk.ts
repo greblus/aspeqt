@@ -3,82 +3,82 @@
 <context>
     <name>AspeCl</name>
     <message>
-        <location filename="../miscdevices.cpp" line="216" />
+        <location filename="../miscdevices.cpp" line="135" />
         <source>[%1] Date/time sent to client (%2).</source>
         <translation>[%1] Dátum/čas poslaný na klienta (%2).</translation>
     </message>
     <message>
-        <location filename="../miscdevices.cpp" line="244" />
+        <location filename="../miscdevices.cpp" line="163" />
         <source>[%1] Invalid swap request for drives: (%2)-(%3).</source>
         <translation>[%1] Zlá požiadavka na výmenu diskov (%2)-(%3).</translation>
     </message>
     <message>
-        <location filename="../miscdevices.cpp" line="238" />
+        <location filename="../miscdevices.cpp" line="157" />
         <source>[%1] Swapped disk %2 with disk %3.</source>
         <translation>[%1] Disk %2 bol vymenený s diskom %3.</translation>
     </message>
     <message>
-        <location filename="../miscdevices.cpp" line="278" />
+        <location filename="../miscdevices.cpp" line="197" />
         <source>[%1] Unmounted disk %2</source>
         <translation>[%1] Disk %2 bol odpojený</translation>
     </message>
     <message>
-        <location filename="../miscdevices.cpp" line="282" />
+        <location filename="../miscdevices.cpp" line="201" />
         <source>[%1] ALL images were remotely unmounted</source>
         <translation>[%1] Všetky obrazy boli odpojené</translation>
     </message>
     <message>
-        <location filename="../miscdevices.cpp" line="286" />
+        <location filename="../miscdevices.cpp" line="205" />
         <source>[%1] Can not remotely unmount ALL images due to pending changes.</source>
         <translation>[%1] Nemožno vzdialene odpojiť všetky diskové obrazy v dôsledku vykonávania zmien.</translation>
     </message>
     <message>
-        <location filename="../miscdevices.cpp" line="295" />
+        <location filename="../miscdevices.cpp" line="214" />
         <source>[%1] Can not remotely unmount disk %2 due to pending changes.</source>
         <translation>[%1]Nemožno na ďiaľku odpojit disk %2 z dôvodu prebiehajúcich zmien.</translation>
     </message>
     <message>
-        <location filename="../miscdevices.cpp" line="302" />
+        <location filename="../miscdevices.cpp" line="221" />
         <source>[%1] Remotely unmounted disk %2</source>
         <translation>[%1] Vzdialene odpojený disk%2</translation>
     </message>
     <message>
-        <location filename="../miscdevices.cpp" line="310" />
+        <location filename="../miscdevices.cpp" line="229" />
         <source>[%1] Invalid drive number: %2 for remote unmount</source>
         <translation>[%1] Zlé číslo disku: %2 pre ďiaľkovo odpojený</translation>
     </message>
     <message>
-        <location filename="../miscdevices.cpp" line="327" />
+        <location filename="../miscdevices.cpp" line="246" />
         <source>[%1] AspeQt can't determine the folder where the image file must be created/mounted!</source>
         <translation>[%1] AspeQt nedokáže určiť priečinok, kde sa má obraz vytvoriť/pripojiť!</translation>
     </message>
     <message>
-        <location filename="../miscdevices.cpp" line="329" />
+        <location filename="../miscdevices.cpp" line="248" />
         <source>[%1] Mount a Folder Image at least once before issuing a remote mount command.</source>
         <translation>[%1] Pripojte obraz priečinka aspoň raz pred vzdialeným príkazom na pripojenie.</translation>
     </message>
     <message>
-        <location filename="../miscdevices.cpp" line="346" />
+        <location filename="../miscdevices.cpp" line="265" />
         <source>[%1] Read data frame failed</source>
         <translation>[%1] Načítanie dátového rámca zlyhalo</translation>
     </message>
     <message>
-        <location filename="../miscdevices.cpp" line="361" />
+        <location filename="../miscdevices.cpp" line="280" />
         <source>[%1] Invalid image file attribute: %2</source>
         <translation>[%1] Neplatný atribút súboru obrazu: %2</translation>
     </message>
     <message>
-        <location filename="../miscdevices.cpp" line="371" />
+        <location filename="../miscdevices.cpp" line="290" />
         <source>[%1] Can not create PC File: %2</source>
         <translation>[%1] Nedá sa vytvoriť súbor na PC: %2</translation>
     </message>
     <message>
-        <location filename="../miscdevices.cpp" line="505" />
+        <location filename="../miscdevices.cpp" line="424" />
         <source>[%1] command: $%2, aux: $%3 NAKed.</source>
         <translation>[%1] prikaz: $%2, aux: $%3 Otvorený.</translation>
     </message>
     <message>
-        <location filename="../miscdevices.cpp" line="525" />
+        <location filename="../miscdevices.cpp" line="444" />
         <source>[%1] Image %2 mounted</source>
         <translation>[%1] Obraz %2 bol pripojený</translation>
     </message>
@@ -760,67 +760,67 @@
 <context>
     <name>Engine</name>
     <message>
-        <location filename="../engine.cpp" line="137" />
+        <location filename="../engine.cpp" line="140" />
         <source>AspeQt started at %1.</source>
         <translation>AspeQt naštartoval v %1.</translation>
     </message>
     <message>
-        <location filename="../engine.cpp" line="238" />
+        <location filename="../engine.cpp" line="241" />
         <source>AspeQt - Atari Serial Peripheral Emulator for Qt</source>
         <translation>AspeQt - Atari Serial Peripheral Emulator for Qt</translation>
     </message>
     <message>
-        <location filename="../engine.cpp" line="154" />
+        <location filename="../engine.cpp" line="157" />
         <source>Migrating the global settings to their new repository (session files are not affected).</source>
         <translation>Prenášajú sa globálne nastavenia do nového úložiska (súbory relácií zostávajú nezmenené).</translation>
     </message>
     <message>
-        <location filename="../engine.cpp" line="160" />
+        <location filename="../engine.cpp" line="163" />
         <source>Settings migrated successfully.</source>
         <translation>Nastavenia boli úspešne prenesené.</translation>
     </message>
     <message>
-        <location filename="../engine.cpp" line="214" />
+        <location filename="../engine.cpp" line="217" />
         <source>Requested session file not found in the given directory path or the path is incorrect. AspeQt will continue with the default session configuration.</source>
         <translation>Súbor relácie sa v zadanej ceste nenašiel alebo je cesta nesprávna. AspeQt bude pokračovať s predvolenou reláciou.</translation>
     </message>
     <message>
-        <location filename="../engine.cpp" line="225" />
+        <location filename="../engine.cpp" line="228" />
         <source>Requested session file not found in the application's current directory (no path was specified). AspeQt will continue with the default session configuration.</source>
         <translation>Súbor relácie sa v aktuálnom priečinku aplikácie nenašiel (cesta nebola zadaná). AspeQt bude pokračovať s predvolenou reláciou.</translation>
     </message>
     <message>
-        <location filename="../engine.cpp" line="333" />
+        <location filename="../engine.cpp" line="339" />
         <source>AspeQt stopped at %1.</source>
         <translation>AspeQt zastavil na %1.</translation>
     </message>
     <message>
-        <location filename="../engine.cpp" line="592" />
+        <location filename="../engine.cpp" line="598" />
         <source>Failed to load executable '%1'.</source>
         <translation>Program „%1“ sa nepodarilo načítať.</translation>
     </message>
     <message>
-        <location filename="../engine.cpp" line="603" />
+        <location filename="../engine.cpp" line="609" />
         <source>Executable (%1k)</source>
         <translation>Program (%1k)</translation>
     </message>
     <message>
-        <location filename="../engine.cpp" line="606" />
+        <location filename="../engine.cpp" line="612" />
         <source>Loaded executable '%1'. Start (or reboot) your Atari to run it.</source>
         <translation>Program „%1“ načítaný. Zapnite (alebo reštartujte) Atari na jeho spustenie.</translation>
     </message>
     <message>
-        <location filename="../engine.cpp" line="619" />
+        <location filename="../engine.cpp" line="625" />
         <source>Failed to load cassette image '%1'.</source>
         <translation>Obraz kazety „%1“ sa nepodarilo načítať.</translation>
     </message>
     <message>
-        <location filename="../engine.cpp" line="630" />
+        <location filename="../engine.cpp" line="636" />
         <source>Cassette (%1:%2)</source>
         <translation>Kazeta (%1:%2)</translation>
     </message>
     <message>
-        <location filename="../engine.cpp" line="637" />
+        <location filename="../engine.cpp" line="643" />
         <source>AspeQt is ready to playback the cassette image file '%1'.
 
 Do whatever is necessary in your Atari to load this cassette image like rebooting while holding Option and Start buttons or entering "CLOAD" in the BASIC prompt.
@@ -833,168 +833,218 @@ Pripravte Atari na načítanie tejto kazety: reštartujte s podržanými kláves
 Keď zaznie pípnutie, stlačte tlačidlo prehrávania a približne súčasne kláves na Atari.</translation>
     </message>
     <message>
-        <location filename="../engine.cpp" line="667" />
+        <location filename="../engine.cpp" line="673" />
         <source>Playing back cassette image.</source>
         <translation>Prehráva sa obraz kazety.</translation>
     </message>
     <message>
-        <location filename="../engine.cpp" line="696" />
+        <location filename="../engine.cpp" line="702" />
         <source>Cassette playback finished.</source>
         <translation>Prehrávanie kazety skončilo.</translation>
     </message>
     <message>
-        <location filename="../engine.cpp" line="707" />
+        <location filename="../engine.cpp" line="713" />
         <source>Executable loaded into the Atari.</source>
         <translation>Program načítaný do Atari.</translation>
     </message>
     <message>
-        <location filename="../engine.cpp" line="808" />
+        <location filename="../engine.cpp" line="814" />
         <source>[%1] Auto-commit failed.</source>
         <translation>[%1] Automatické ukladanie zlyhalo.</translation>
     </message>
     <message>
-        <location filename="../engine.cpp" line="964" />
+        <location filename="../engine.cpp" line="970" />
         <source>Loaded into the cas/xex slot.</source>
         <translation>Načítané do slotu cas/xex.</translation>
     </message>
     <message>
-        <location filename="../engine.cpp" line="1167" />
-        <location filename="../engine.cpp" line="1175" />
+        <location filename="../engine.cpp" line="1173" />
+        <location filename="../engine.cpp" line="1181" />
         <source>This slot does not hold a mounted folder.</source>
         <translation>V tomto slote nie je pripojený priečinok.</translation>
     </message>
     <message>
-        <location filename="../engine.cpp" line="1185" />
+        <location filename="../engine.cpp" line="1191" />
         <source>Installed high-speed MyPicoDOS into the folder. Reboot your Atari to load DOS.</source>
         <translation>Rýchly MyPicoDOS bol nainštalovaný do priečinka. Reštartujte Atari na načítanie DOS-u.</translation>
     </message>
     <message>
-        <location filename="../engine.cpp" line="1159" />
-        <location filename="../engine.cpp" line="1188" />
+        <location filename="../engine.cpp" line="1165" />
+        <location filename="../engine.cpp" line="1194" />
         <source>Could not copy the DOS files into the folder.</source>
         <translation>Súbory DOS sa nepodarilo skopírovať do priečinka.</translation>
     </message>
     <message>
-        <location filename="../engine.cpp" line="1310" />
+        <location filename="../engine.cpp" line="1316" />
         <source>[Disk %1] Auto-commit ON.</source>
         <translation>[Disk %1] Automatické ukladanie ZAP.</translation>
     </message>
     <message>
-        <location filename="../engine.cpp" line="1311" />
+        <location filename="../engine.cpp" line="1317" />
         <source>[Disk %1] Auto-commit OFF.</source>
         <translation>[Disk %1] Automatické ukladanie VYP.</translation>
     </message>
     <message>
-        <location filename="../engine.cpp" line="483" />
-        <location filename="../engine.cpp" line="490" />
-        <location filename="../engine.cpp" line="1358" />
+        <location filename="../engine.cpp" line="489" />
+        <location filename="../engine.cpp" line="496" />
+        <location filename="../engine.cpp" line="1364" />
         <source>'%1' cannot be saved.</source>
         <translation>„%1“ sa nedá uložiť.</translation>
     </message>
     <message>
-        <location filename="../engine.cpp" line="1394" />
-        <location filename="../engine.cpp" line="2266" />
+        <location filename="../engine.cpp" line="1400" />
+        <location filename="../engine.cpp" line="2383" />
         <source>Cannot read '%1'.</source>
         <translation>„%1“ sa nedá načítať.</translation>
     </message>
     <message>
-        <location filename="../engine.cpp" line="1470" />
-        <location filename="../engine.cpp" line="1684" />
-        <location filename="../engine.cpp" line="1691" />
-        <location filename="../engine.cpp" line="2280" />
+        <location filename="../engine.cpp" line="1476" />
+        <location filename="../engine.cpp" line="1727" />
+        <location filename="../engine.cpp" line="1766" />
+        <location filename="../engine.cpp" line="2397" />
         <source>Cannot write to '%1'.</source>
         <translation>Nemožno zapisovať do %1 .</translation>
     </message>
     <message>
-        <location filename="../engine.cpp" line="1591" />
+        <location filename="../engine.cpp" line="1597" />
         <source>Swapped disk %1 with disk %2.</source>
         <translation>Výmena disku %1 za disk %2.</translation>
     </message>
     <message>
-        <location filename="../engine.cpp" line="1683" />
-        <location filename="../engine.cpp" line="1690" />
+        <location filename="../engine.cpp" line="1716" />
+        <location filename="../engine.cpp" line="1756" />
+        <source>Nothing has been printed yet.</source>
+        <translation>Zatiaľ sa nič nevytlačilo.</translation>
+    </message>
+    <message>
+        <location filename="../engine.cpp" line="1726" />
+        <location filename="../engine.cpp" line="1765" />
         <source>Cannot save the printout, see the log.</source>
         <translation>Výtlačok sa nedá uložiť, pozrite denník.</translation>
     </message>
     <message>
-        <location filename="../engine.cpp" line="1809" />
+        <location filename="../engine.cpp" line="1731" />
+        <location filename="../engine.cpp" line="1790" />
+        <source>Printout saved.</source>
+        <translation>Výtlačok uložený.</translation>
+    </message>
+    <message>
+        <location filename="../engine.cpp" line="1742" />
+        <source>The bundled test page is missing.</source>
+        <translation>Chýba priložená testovacia stránka.</translation>
+    </message>
+    <message>
+        <location filename="../engine.cpp" line="1804" />
+        <source>Cannot open the capture, see the log.</source>
+        <translation>Záznam sa nedá otvoriť, pozri denník.</translation>
+    </message>
+    <message>
+        <location filename="../engine.cpp" line="1926" />
         <source>No phonebook file chosen (see Options).</source>
         <translation>Nie je vybraný súbor telefónneho zoznamu (pozri Nastavenia).</translation>
     </message>
     <message>
-        <location filename="../engine.cpp" line="1862" />
+        <location filename="../engine.cpp" line="1979" />
         <source>Cannot write the bundled phonebook to %1</source>
         <translation>Priložený telefónny zoznam sa nedá zapísať do %1</translation>
     </message>
     <message>
-        <location filename="../engine.cpp" line="1878" />
+        <location filename="../engine.cpp" line="1995" />
         <source>The R: device is not enabled (see Options).</source>
         <translation>Zariadenie R: nie je povolené (pozri Nastavenia).</translation>
     </message>
     <message>
-        <location filename="../engine.cpp" line="1897" />
+        <location filename="../engine.cpp" line="2014" />
         <source>This phonebook entry has no address.</source>
         <translation>Táto položka telefónneho zoznamu nemá adresu.</translation>
     </message>
     <message>
-        <location filename="../engine.cpp" line="1909" />
+        <location filename="../engine.cpp" line="2026" />
         <source>Automatic</source>
         <translation>Automatický</translation>
     </message>
     <message>
-        <location filename="../engine.cpp" line="2089" />
+        <location filename="../engine.cpp" line="2206" />
         <source>Failed to load '%1'.</source>
         <translation>„%1“ sa nepodarilo načítať.</translation>
     </message>
     <message>
-        <location filename="../engine.cpp" line="2101" />
+        <location filename="../engine.cpp" line="2218" />
         <source>Pick an Atari executable (.xex/.com/.exe) or a cassette image (.cas).</source>
         <translation>Vyberte program Atari (.xex/.com/.exe) alebo obraz kazety (.cas).</translation>
     </message>
     <message>
-        <location filename="../engine.cpp" line="2216" />
-        <location filename="../engine.cpp" line="2228" />
-        <location filename="../engine.cpp" line="2232" />
+        <location filename="../engine.cpp" line="2333" />
+        <location filename="../engine.cpp" line="2345" />
+        <location filename="../engine.cpp" line="2349" />
         <source>Cannot extract the files, see the log.</source>
         <translation>Súbory sa nedajú rozbaliť, pozrite denník.</translation>
     </message>
     <message>
-        <location filename="../engine.cpp" line="2245" />
+        <location filename="../engine.cpp" line="2362" />
         <source>Cannot delete the files, see the log.</source>
         <translation>Súbory sa nedajú zmazať, pozrite denník.</translation>
     </message>
     <message>
-        <location filename="../engine.cpp" line="2265" />
-        <location filename="../engine.cpp" line="2279" />
-        <location filename="../engine.cpp" line="2291" />
+        <location filename="../engine.cpp" line="2382" />
+        <location filename="../engine.cpp" line="2396" />
+        <location filename="../engine.cpp" line="2408" />
         <source>Cannot add the file, see the log.</source>
         <translation>Súbor sa nedá pridať, pozrite denník.</translation>
     </message>
     <message>
-        <location filename="../engine.cpp" line="1626" />
+        <location filename="../engine.cpp" line="1637" />
         <source>Printer emulation stopped.</source>
         <translation>Emulácia tlačiarne zastavená.</translation>
     </message>
     <message>
-        <location filename="../engine.cpp" line="1625" />
+        <location filename="../engine.cpp" line="1636" />
         <source>Printer emulation started.</source>
         <translation>Emulácia tlačiarne spustená.</translation>
     </message>
     <message>
-        <location filename="../engine.cpp" line="786" />
+        <location filename="../engine.cpp" line="792" />
         <source>Emulation stopped.</source>
         <translation>Emulácia zastavená.</translation>
     </message>
     <message>
-        <location filename="../engine.cpp" line="871" />
+        <location filename="../engine.cpp" line="877" />
         <source>Unmounted disk %1</source>
         <translation>Odpojený disk %1</translation>
     </message>
     <message>
-        <location filename="../engine.cpp" line="1042" />
-        <location filename="../engine.cpp" line="1657" />
+        <location filename="../engine.cpp" line="1048" />
+        <location filename="../engine.cpp" line="1668" />
         <source>[%1] Mounted '%2' as '%3'.</source>
         <translation>[%1] Pripojený '%2' ako '%3'.</translation>
+    </message>
+</context>
+<context>
+    <name>EpsonPrinter</name>
+    <message>
+        <location filename="../epsonprinter.cpp" line="66" />
+        <source>[%1] ignored</source>
+        <translation type="unfinished">[%1] ignorované</translation>
+    </message>
+    <message>
+        <location filename="../epsonprinter.cpp" line="78" />
+        <source>[%1] Get status.</source>
+        <translation type="unfinished" />
+    </message>
+    <message>
+        <location filename="../epsonprinter.cpp" line="100" />
+        <source>[%1] Received %2 bytes. Parsing instantly.</source>
+        <translation>[%1] Prijatých %2 bajtov, spracúva sa.</translation>
+    </message>
+    <message>
+        <location filename="../epsonprinter.cpp" line="118" />
+        <source>[%1] Print Job Closed by Atari.</source>
+        <translation>[%1] Atari zatvorilo tlačovú úlohu.</translation>
+    </message>
+    <message>
+        <location filename="../epsonprinter.cpp" line="133" />
+        <source>[%1] Unknown Command: $%2</source>
+        <translation>[%1] Neznámy príkaz: $%2</translation>
     </message>
 </context>
 <context>
@@ -1440,74 +1490,74 @@ Keď zaznie pípnutie, stlačte tlačidlo prehrávania a približne súčasne kl
         <translation>Online servery</translation>
     </message>
     <message>
-        <location filename="../qml/NetworkBrowserDialog.qml" line="129" />
+        <location filename="../qml/NetworkBrowserDialog.qml" line="133" />
         <source>Favourite this address</source>
         <translation>Pridať do obľúbených</translation>
     </message>
     <message>
-        <location filename="../qml/NetworkBrowserDialog.qml" line="136" />
+        <location filename="../qml/NetworkBrowserDialog.qml" line="140" />
         <source>Connect</source>
         <translation>Pripojiť</translation>
     </message>
     <message>
-        <location filename="../qml/NetworkBrowserDialog.qml" line="142" />
+        <location filename="../qml/NetworkBrowserDialog.qml" line="146" />
         <source>Refresh</source>
         <translation>Obnoviť</translation>
     </message>
     <message>
-        <location filename="../qml/NetworkBrowserDialog.qml" line="206" />
-        <location filename="../qml/NetworkBrowserDialog.qml" line="235" />
+        <location filename="../qml/NetworkBrowserDialog.qml" line="210" />
+        <location filename="../qml/NetworkBrowserDialog.qml" line="239" />
         <source>Mount</source>
         <translation>Pripojiť disk</translation>
     </message>
     <message>
-        <location filename="../qml/NetworkBrowserDialog.qml" line="210" />
-        <location filename="../qml/NetworkBrowserDialog.qml" line="242" />
+        <location filename="../qml/NetworkBrowserDialog.qml" line="214" />
+        <location filename="../qml/NetworkBrowserDialog.qml" line="246" />
         <source>Download</source>
         <translation>Stiahnuť</translation>
     </message>
     <message>
-        <location filename="../qml/NetworkBrowserDialog.qml" line="211" />
+        <location filename="../qml/NetworkBrowserDialog.qml" line="215" />
         <source>Download "%1"?</source>
         <translation>Stiahnuť „%1”?</translation>
     </message>
     <message>
-        <location filename="../qml/NetworkBrowserDialog.qml" line="207" />
+        <location filename="../qml/NetworkBrowserDialog.qml" line="211" />
         <source>Mount "%1" in a free slot?</source>
         <translation>Pripojiť „%1” do voľnej mechaniky?</translation>
     </message>
     <message>
-        <location filename="../qml/NetworkBrowserDialog.qml" line="251" />
+        <location filename="../qml/NetworkBrowserDialog.qml" line="255" />
         <source>(no match)</source>
         <translation>(žiadna zhoda)</translation>
     </message>
     <message>
-        <location filename="../qml/NetworkBrowserDialog.qml" line="251" />
+        <location filename="../qml/NetworkBrowserDialog.qml" line="255" />
         <source>(empty)</source>
         <translation>(prázdne)</translation>
     </message>
     <message>
-        <location filename="../qml/NetworkBrowserDialog.qml" line="284" />
+        <location filename="../qml/NetworkBrowserDialog.qml" line="288" />
         <source>Remove from favourites</source>
         <translation>Odstrániť z obľúbených</translation>
     </message>
     <message>
-        <location filename="../qml/NetworkBrowserDialog.qml" line="296" />
+        <location filename="../qml/NetworkBrowserDialog.qml" line="300" />
         <source>No favourite servers yet. Enter a tnfs://, sftp:// or ftp:// address, connect, and tap the star to save it.</source>
         <translation>Zatiaľ žiadne obľúbené servery. Zadajte adresu tnfs://, sftp:// alebo ftp://, pripojte sa a klepnutím na hviezdičku ju uložte.</translation>
     </message>
     <message>
-        <location filename="../qml/NetworkBrowserDialog.qml" line="319" />
+        <location filename="../qml/NetworkBrowserDialog.qml" line="323" />
         <source>Filter files…</source>
         <translation>Filtrovať súbory…</translation>
     </message>
     <message>
-        <location filename="../qml/NetworkBrowserDialog.qml" line="328" />
+        <location filename="../qml/NetworkBrowserDialog.qml" line="332" />
         <source>Clear filter</source>
         <translation>Vymazať filter</translation>
     </message>
     <message>
-        <location filename="../qml/NetworkBrowserDialog.qml" line="361" />
+        <location filename="../qml/NetworkBrowserDialog.qml" line="365" />
         <source>Close</source>
         <translation type="unfinished">Zavrieť</translation>
     </message>
@@ -1515,48 +1565,53 @@ Keď zaznie pípnutie, stlačte tlačidlo prehrávania a približne súčasne kl
 <context>
     <name>NetworkWorker</name>
     <message>
-        <location filename="../networkbrowser.cpp" line="64" />
+        <location filename="../networkbrowser.cpp" line="69" />
+        <source>Bad address: %1</source>
+        <translation>Chybná adresa: %1</translation>
+    </message>
+    <message>
+        <location filename="../networkbrowser.cpp" line="72" />
         <source>No host in the address.</source>
         <translation>V adrese chýba hostiteľ.</translation>
     </message>
     <message>
-        <location filename="../networkbrowser.cpp" line="77" />
+        <location filename="../networkbrowser.cpp" line="85" />
         <source>SFTP is not available in this build.</source>
         <translation>SFTP nie je v tejto verzii dostupné.</translation>
     </message>
     <message>
-        <location filename="../networkbrowser.cpp" line="86" />
+        <location filename="../networkbrowser.cpp" line="94" />
         <source>Could not connect to %1.</source>
         <translation>Nepodarilo sa pripojiť k %1.</translation>
     </message>
     <message>
-        <location filename="../networkbrowser.cpp" line="94" />
+        <location filename="../networkbrowser.cpp" line="102" />
         <source>TNFS mount failed on %1.</source>
         <translation>Pripojenie TNFS na %1 zlyhalo.</translation>
     </message>
     <message>
-        <location filename="../networkbrowser.cpp" line="107" />
-        <location filename="../networkbrowser.cpp" line="176" />
+        <location filename="../networkbrowser.cpp" line="115" />
+        <location filename="../networkbrowser.cpp" line="184" />
         <source>Not connected.</source>
         <translation>Nepripojené.</translation>
     </message>
     <message>
-        <location filename="../networkbrowser.cpp" line="127" />
+        <location filename="../networkbrowser.cpp" line="135" />
         <source>Cannot write %1.</source>
         <translation>Nedá sa zapísať %1.</translation>
     </message>
     <message>
-        <location filename="../networkbrowser.cpp" line="138" />
+        <location filename="../networkbrowser.cpp" line="146" />
         <source>Cannot open %1.</source>
         <translation>Nedá sa otvoriť %1.</translation>
     </message>
     <message>
-        <location filename="../networkbrowser.cpp" line="154" />
+        <location filename="../networkbrowser.cpp" line="162" />
         <source>Download of %1 failed (empty).</source>
         <translation>Sťahovanie %1 zlyhalo (prázdne).</translation>
     </message>
     <message>
-        <location filename="../networkbrowser.cpp" line="178" />
+        <location filename="../networkbrowser.cpp" line="186" />
         <source>Could not open %1.</source>
         <translation>Nepodarilo sa otvoriť %1.</translation>
     </message>
@@ -1564,177 +1619,213 @@ Keď zaznie pípnutie, stlačte tlačidlo prehrávania a približne súčasne kl
 <context>
     <name>OptionsDialog</name>
     <message>
-        <location filename="../qml/OptionsDialog.qml" line="151" />
+        <location filename="../qml/OptionsDialog.qml" line="155" />
         <source>Options</source>
         <translation>Možnosti</translation>
     </message>
     <message>
-        <location filename="../qml/OptionsDialog.qml" line="346" />
+        <location filename="../qml/OptionsDialog.qml" line="386" />
         <source>User interface</source>
         <translation>Uživateľské rozhranie</translation>
     </message>
     <message>
-        <location filename="../qml/OptionsDialog.qml" line="182" />
+        <location filename="../qml/OptionsDialog.qml" line="186" />
         <source>Handshake method:</source>
         <translation>Metóda handshake:</translation>
     </message>
     <message>
-        <location filename="../qml/OptionsDialog.qml" line="368" />
+        <location filename="../qml/OptionsDialog.qml" line="408" />
         <source>Save</source>
         <translation>Uložiť</translation>
     </message>
     <message>
-        <location filename="../qml/OptionsDialog.qml" line="176" />
+        <location filename="../qml/OptionsDialog.qml" line="180" />
         <source>Serial interface:</source>
         <translation>Sériové rozhranie:</translation>
     </message>
     <message>
-        <location filename="../qml/OptionsDialog.qml" line="215" />
+        <location filename="../qml/OptionsDialog.qml" line="219" />
         <source>Write ACK delay [ms]</source>
         <translation>Oneskorenie ACK pri zápise [ms]</translation>
     </message>
     <message>
-        <location filename="../qml/OptionsDialog.qml" line="174" />
+        <location filename="../qml/OptionsDialog.qml" line="178" />
         <source>SIO port emulation</source>
         <translation>Emulácia portu SIO</translation>
     </message>
     <message>
-        <location filename="../qml/OptionsDialog.qml" line="193" />
+        <location filename="../qml/OptionsDialog.qml" line="197" />
         <source>Transmission speed [bps]:</source>
         <translation>Rýchlosť prenosu [bps]:</translation>
     </message>
     <message>
-        <location filename="../qml/OptionsDialog.qml" line="204" />
+        <location filename="../qml/OptionsDialog.qml" line="208" />
         <source>Bluetooth name:</source>
         <translation>Názov Bluetooth:</translation>
     </message>
     <message>
-        <location filename="../qml/OptionsDialog.qml" line="219" />
+        <location filename="../qml/OptionsDialog.qml" line="223" />
         <source>Use non-standard speeds</source>
         <translation>Použiť neštandardnú rýchlosť</translation>
     </message>
     <message>
-        <location filename="../qml/OptionsDialog.qml" line="223" />
+        <location filename="../qml/OptionsDialog.qml" line="227" />
         <source>POKEY divisor:</source>
         <translation>Delič POKEY:</translation>
     </message>
     <message>
-        <location filename="../qml/OptionsDialog.qml" line="230" />
+        <location filename="../qml/OptionsDialog.qml" line="234" />
         <source>Emulation settings</source>
         <translation>Nastavenia emulácie</translation>
     </message>
     <message>
-        <location filename="../qml/OptionsDialog.qml" line="236" />
+        <location filename="../qml/OptionsDialog.qml" line="240" />
         <source>Cassette baud rate:</source>
         <translation>Rýchlosť kazety:</translation>
     </message>
     <message>
-        <location filename="../qml/OptionsDialog.qml" line="243" />
+        <location filename="../qml/OptionsDialog.qml" line="247" />
         <source>Folder images</source>
         <translation>Obrazy priečinkov</translation>
     </message>
     <message>
-        <location filename="../qml/OptionsDialog.qml" line="246" />
+        <location filename="../qml/OptionsDialog.qml" line="250" />
         <source>(Required for AtariDOS compatibility)</source>
         <translation>(Vyžadované pre kompatibilitu s AtariDOS)</translation>
     </message>
     <message>
-        <location filename="../qml/OptionsDialog.qml" line="255" />
+        <location filename="../qml/OptionsDialog.qml" line="259" />
+        <source>Printer emulation</source>
+        <translation type="unfinished">Emulácia tlačiarne</translation>
+    </message>
+    <message>
+        <location filename="../qml/OptionsDialog.qml" line="261" />
+        <source>Emulate an Epson ESC/P printer</source>
+        <translation>Emulovať tlačiareň Epson ESC/P</translation>
+    </message>
+    <message>
+        <location filename="../qml/OptionsDialog.qml" line="266" />
+        <source>What the Atari prints is rendered onto a page you can view and save. The font is chosen in the printer output window.</source>
+        <translation>To, čo Atari tlačí, sa vykreslí na stránku, ktorú si môžete pozrieť a uložiť. Písmo sa vyberá v okne výtlačku.</translation>
+    </message>
+    <message>
+        <location filename="../qml/OptionsDialog.qml" line="279" />
+        <source>Print a test page</source>
+        <translation>Vytlačiť testovaciu stránku</translation>
+    </message>
+    <message>
+        <location filename="../qml/OptionsDialog.qml" line="284" />
+        <source>Replay a capture…</source>
+        <translation>Prehrať záznam…</translation>
+    </message>
+    <message>
+        <location filename="../qml/OptionsDialog.qml" line="286" />
+        <source>Open a print capture</source>
+        <translation>Otvoriť záznam tlače</translation>
+    </message>
+    <message>
+        <location filename="../qml/OptionsDialog.qml" line="287" />
+        <source>Print captures (*.prn)</source>
+        <translation>Záznamy tlače (*.prn)</translation>
+    </message>
+    <message>
+        <location filename="../qml/OptionsDialog.qml" line="295" />
         <source>R: device (modem)</source>
         <translation>Zariadenie R: (modem)</translation>
     </message>
     <message>
-        <location filename="../qml/OptionsDialog.qml" line="256" />
+        <location filename="../qml/OptionsDialog.qml" line="296" />
         <source>Emulate an Atari 850 interface</source>
         <translation>Emulovať rozhranie Atari 850</translation>
     </message>
     <message>
-        <location filename="../qml/OptionsDialog.qml" line="258" />
+        <location filename="../qml/OptionsDialog.qml" line="298" />
         <source>Dial BBSes over TCP with a terminal program. Needs a hardware handshake method (RI/DSR/CTS), not SOFT.</source>
         <translation>Vytáčajte BBS cez TCP terminálovým programom. Vyžaduje hardvérovú metódu handshake (RI/DSR/CTS), nie SOFT.</translation>
     </message>
     <message>
-        <location filename="../qml/OptionsDialog.qml" line="269" />
+        <location filename="../qml/OptionsDialog.qml" line="309" />
         <source>Use the bundled BBS list</source>
         <translation>Použiť priložený zoznam BBS</translation>
     </message>
     <message>
-        <location filename="../qml/OptionsDialog.qml" line="280" />
+        <location filename="../qml/OptionsDialog.qml" line="320" />
         <source>Could not install the bundled list, see the log.</source>
         <translation>Priložený zoznam sa nepodarilo nainštalovať, pozri denník.</translation>
     </message>
     <message>
-        <location filename="../qml/OptionsDialog.qml" line="288" />
+        <location filename="../qml/OptionsDialog.qml" line="328" />
         <source>A copy of the telnet BBS list that ships with AspeQt-2k26. An existing copy is kept, not overwritten.</source>
         <translation>Kópia telnetového zoznamu BBS dodávaného s AspeQt-2k26. Existujúca kópia sa zachová, neprepíše sa.</translation>
     </message>
     <message>
-        <location filename="../qml/OptionsDialog.qml" line="298" />
+        <location filename="../qml/OptionsDialog.qml" line="338" />
         <source>Phonebook file:</source>
         <translation>Súbor telefónneho zoznamu:</translation>
     </message>
     <message>
-        <location filename="../qml/OptionsDialog.qml" line="307" />
+        <location filename="../qml/OptionsDialog.qml" line="347" />
         <source>(none)</source>
         <translation>(žiadny)</translation>
     </message>
     <message>
-        <location filename="../qml/OptionsDialog.qml" line="314" />
+        <location filename="../qml/OptionsDialog.qml" line="354" />
         <source>Choose</source>
         <translation>Vybrať</translation>
     </message>
     <message>
-        <location filename="../qml/OptionsDialog.qml" line="317" />
+        <location filename="../qml/OptionsDialog.qml" line="357" />
         <source>Phonebook file</source>
         <translation>Súbor telefónneho zoznamu</translation>
     </message>
     <message>
-        <location filename="../qml/OptionsDialog.qml" line="317" />
+        <location filename="../qml/OptionsDialog.qml" line="357" />
         <source>XML files (*.xml)</source>
         <translation>Súbory XML (*.xml)</translation>
     </message>
     <message>
-        <location filename="../qml/OptionsDialog.qml" line="317" />
+        <location filename="../qml/OptionsDialog.qml" line="287" />
+        <location filename="../qml/OptionsDialog.qml" line="357" />
         <source>All files (*)</source>
         <translation type="unfinished">Všetky súbory (*)</translation>
     </message>
     <message>
-        <location filename="../qml/OptionsDialog.qml" line="324" />
+        <location filename="../qml/OptionsDialog.qml" line="364" />
         <source>Answer incoming calls</source>
         <translation>Prijímať prichádzajúce hovory</translation>
     </message>
     <message>
-        <location filename="../qml/OptionsDialog.qml" line="330" />
+        <location filename="../qml/OptionsDialog.qml" line="370" />
         <source>Listen on port:</source>
         <translation>Počúvať na porte:</translation>
     </message>
     <message>
-        <location filename="../qml/OptionsDialog.qml" line="367" />
+        <location filename="../qml/OptionsDialog.qml" line="407" />
         <source>Cancel</source>
         <translation>Zrušiť</translation>
     </message>
     <message>
-        <location filename="../qml/OptionsDialog.qml" line="231" />
+        <location filename="../qml/OptionsDialog.qml" line="235" />
         <source>Use high speed executable loader</source>
         <translation>Použiť vysokorýchlostný loader</translation>
     </message>
     <message>
-        <location filename="../qml/OptionsDialog.qml" line="232" />
+        <location filename="../qml/OptionsDialog.qml" line="236" />
         <source>Use custom baud rate for cassette emulation</source>
         <translation>Použiť voliteľnú rýchlosť prenosu pri emulácií kazety</translation>
     </message>
     <message>
-        <location filename="../qml/OptionsDialog.qml" line="244" />
+        <location filename="../qml/OptionsDialog.qml" line="248" />
         <source>Filter out underscore character from file names</source>
         <translation>Odstrániť podčiarkovník z názvov súborov</translation>
     </message>
     <message>
-        <location filename="../qml/OptionsDialog.qml" line="347" />
+        <location filename="../qml/OptionsDialog.qml" line="387" />
         <source>Language:</source>
         <translation>Jazzk:</translation>
     </message>
     <message>
-        <location filename="../engine.cpp" line="1921" />
+        <location filename="../engine.cpp" line="2038" />
         <source>English</source>
         <translation>Slovak</translation>
     </message>
@@ -2466,89 +2557,70 @@ Keď zaznie pípnutie, stlačte tlačidlo prehrávania a približne súčasne kl
 <context>
     <name>PrintWindow</name>
     <message>
-        <location filename="../qml/PrintWindow.qml" line="43" />
-        <source>Printer text output</source>
-        <translation>Textový výstup tlačiarne</translation>
-    </message>
-    <message>
-        <location filename="../qml/PrintWindow.qml" line="79" />
-        <source>Word wrap</source>
-        <translation>Zalamovanie riadkov</translation>
+        <location filename="../qml/PrintWindow.qml" line="55" />
+        <source>Printer output</source>
+        <translation>Výstup tlačiarne</translation>
     </message>
     <message>
         <location filename="../qml/PrintWindow.qml" line="86" />
-        <source>Show ATASCII</source>
-        <translation>Zobraziť ATASCII</translation>
+        <source>Fit width</source>
+        <translation>Prispôsobiť šírke</translation>
     </message>
     <message>
         <location filename="../qml/PrintWindow.qml" line="92" />
-        <source>Clear contents</source>
-        <translation>Vyčistiť obsah</translation>
+        <source>Clear the paper</source>
+        <translation>Vyčistiť papier</translation>
     </message>
     <message>
-        <location filename="../qml/PrintWindow.qml" line="97" />
-        <source>Save as text</source>
-        <translation>Uložiť ako text</translation>
+        <location filename="../qml/PrintWindow.qml" line="93" />
+        <source>Printer</source>
+        <translation>Tlačiareň</translation>
     </message>
     <message>
-        <location filename="../qml/PrintWindow.qml" line="99" />
-        <location filename="../qml/PrintWindow.qml" line="106" />
+        <location filename="../qml/PrintWindow.qml" line="94" />
+        <source>Throw away the printed page?</source>
+        <translation>Zahodiť vytlačenú stránku?</translation>
+    </message>
+    <message>
+        <location filename="../qml/PrintWindow.qml" line="101" />
+        <source>Save as…</source>
+        <translation>Uložiť ako…</translation>
+    </message>
+    <message>
+        <location filename="../qml/PrintWindow.qml" line="108" />
+        <source>Save as PNG image</source>
+        <translation>Uložiť ako obrázok PNG</translation>
+    </message>
+    <message>
+        <location filename="../qml/PrintWindow.qml" line="110" />
+        <location filename="../qml/PrintWindow.qml" line="116" />
         <source>Save printout</source>
         <translation>Uložiť výtlačok</translation>
     </message>
     <message>
-        <location filename="../qml/PrintWindow.qml" line="99" />
-        <source>Text files (*.txt)</source>
-        <translation>Textové súbory (*.txt)</translation>
+        <location filename="../qml/PrintWindow.qml" line="110" />
+        <source>PNG images (*.png)</source>
+        <translation>Obrázky PNG (*.png)</translation>
     </message>
     <message>
-        <location filename="../qml/PrintWindow.qml" line="104" />
-        <source>Save as PDF</source>
-        <translation>Uložiť ako PDF</translation>
+        <location filename="../qml/PrintWindow.qml" line="114" />
+        <source>Save as PDF document</source>
+        <translation>Uložiť ako dokument PDF</translation>
     </message>
     <message>
-        <location filename="../qml/PrintWindow.qml" line="106" />
-        <source>PDF files (*.pdf)</source>
-        <translation>Súbory PDF (*.pdf)</translation>
+        <location filename="../qml/PrintWindow.qml" line="116" />
+        <source>PDF documents (*.pdf)</source>
+        <translation>Dokumenty PDF (*.pdf)</translation>
     </message>
     <message>
-        <location filename="../qml/PrintWindow.qml" line="156" />
+        <location filename="../qml/PrintWindow.qml" line="165" />
+        <source>Nothing printed yet.</source>
+        <translation>Zatiaľ nič nevytlačené.</translation>
+    </message>
+    <message>
+        <location filename="../qml/PrintWindow.qml" line="180" />
         <source>Close</source>
         <translation>Zavrieť</translation>
-    </message>
-</context>
-<context>
-    <name>Printer</name>
-    <message>
-        <location filename="../miscdevices.cpp" line="41" />
-        <source>[%1] Get status.</source>
-        <translation>[%1] Ziskať status.</translation>
-    </message>
-    <message>
-        <location filename="../miscdevices.cpp" line="64" />
-        <location filename="../miscdevices.cpp" line="101" />
-        <source>[%1] command: $%2, aux: $%3 NAKed.</source>
-        <translation>[%1] prikaz: $%2, aux: $%3 Otvorený.</translation>
-    </message>
-    <message>
-        <location filename="../miscdevices.cpp" line="72" />
-        <source>[%1] Converting Inverse Video Characters for ASCII viewing</source>
-        <translation>[%1] Konvertovať Inverzné Video znaky pre ASCII prezeranie</translation>
-    </message>
-    <message>
-        <location filename="../miscdevices.cpp" line="79" />
-        <source>[%1] Print: data frame failed</source>
-        <translation>[%1] Tlač: data frame zlyhalo</translation>
-    </message>
-    <message>
-        <location filename="../miscdevices.cpp" line="85" />
-        <source>[%1] Print (%2 chars)</source>
-        <translation>[%1] Tlačiť (%2 znakov)</translation>
-    </message>
-    <message>
-        <location filename="../miscdevices.cpp" line="107" />
-        <source>[%1] ignored</source>
-        <translation>[%1] ignorované</translation>
     </message>
 </context>
 <context>
@@ -2572,7 +2644,7 @@ Keď zaznie pípnutie, stlačte tlačidlo prehrávania a približne súčasne kl
 <context>
     <name>RDevice</name>
     <message>
-        <location filename="../rdevice.cpp" line="1019" />
+        <location filename="../rdevice.cpp" line="1077" />
         <source>[RDevice] Dialing %1:%2...</source>
         <translation type="unfinished" />
     </message>
@@ -3013,23 +3085,23 @@ Keď zaznie pípnutie, stlačte tlačidlo prehrávania a približne súčasne kl
 <context>
     <name>SmartDevice</name>
     <message>
-        <location filename="../miscdevices.cpp" line="138" />
+        <location filename="../miscdevices.cpp" line="49" />
         <source>[%1] Read date/time (%2).</source>
         <translation>[%1]Čitať dátum/čas(%2).</translation>
     </message>
     <message>
-        <location filename="../miscdevices.cpp" line="158" />
+        <location filename="../miscdevices.cpp" line="69" />
         <source>[%1] Read data frame failed</source>
         <translation>[%1] Načítanie dátového rámca zlyhalo</translation>
     </message>
     <message>
-        <location filename="../miscdevices.cpp" line="169" />
+        <location filename="../miscdevices.cpp" line="85" />
         <source>URL [%1] submitted</source>
         <translation>URL [%1] odoslaná</translation>
     </message>
     <message>
-        <location filename="../miscdevices.cpp" line="174" />
-        <location filename="../miscdevices.cpp" line="186" />
+        <location filename="../miscdevices.cpp" line="90" />
+        <location filename="../miscdevices.cpp" line="102" />
         <source>[%1] command: $%2, aux: $%3 NAKed.</source>
         <translation>[%1] príkaz: $%2, aux: $%3 zamietnutý (NAK).</translation>
     </message>

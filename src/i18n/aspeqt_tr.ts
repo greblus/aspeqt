@@ -3,82 +3,82 @@
 <context>
     <name>AspeCl</name>
     <message>
-        <location filename="../miscdevices.cpp" line="216" />
+        <location filename="../miscdevices.cpp" line="135" />
         <source>[%1] Date/time sent to client (%2).</source>
         <translation>[%1] Tarih/Saat alıcıya gönderildi(%2).</translation>
     </message>
     <message>
-        <location filename="../miscdevices.cpp" line="244" />
+        <location filename="../miscdevices.cpp" line="163" />
         <source>[%1] Invalid swap request for drives: (%2)-(%3).</source>
         <translation>[%1] Geçersiz takas istemi: %2-%3.</translation>
     </message>
     <message>
-        <location filename="../miscdevices.cpp" line="238" />
+        <location filename="../miscdevices.cpp" line="157" />
         <source>[%1] Swapped disk %2 with disk %3.</source>
         <translation>[%1] Disk %2  disk %3 ile takas edildi.</translation>
     </message>
     <message>
-        <location filename="../miscdevices.cpp" line="278" />
+        <location filename="../miscdevices.cpp" line="197" />
         <source>[%1] Unmounted disk %2</source>
         <translation>[%1] Disk %2 indirildi</translation>
     </message>
     <message>
-        <location filename="../miscdevices.cpp" line="282" />
+        <location filename="../miscdevices.cpp" line="201" />
         <source>[%1] ALL images were remotely unmounted</source>
         <translation>[%1] Tüm imajlar uzak kumanda indirildi</translation>
     </message>
     <message>
-        <location filename="../miscdevices.cpp" line="286" />
+        <location filename="../miscdevices.cpp" line="205" />
         <source>[%1] Can not remotely unmount ALL images due to pending changes.</source>
         <translation>[%1] İmajlar değişiklikler nedeniyle  uzak kumandalı indirilemiyor.</translation>
     </message>
     <message>
-        <location filename="../miscdevices.cpp" line="295" />
+        <location filename="../miscdevices.cpp" line="214" />
         <source>[%1] Can not remotely unmount disk %2 due to pending changes.</source>
         <translation>[%1] %2 numaralı disk imajı değişiklikler nedeniyle  uzak kumandalı indirilemiyor.</translation>
     </message>
     <message>
-        <location filename="../miscdevices.cpp" line="302" />
+        <location filename="../miscdevices.cpp" line="221" />
         <source>[%1] Remotely unmounted disk %2</source>
         <translation>[%1] %2 numaralı disk imajı uzak kumandalı indirildi</translation>
     </message>
     <message>
-        <location filename="../miscdevices.cpp" line="310" />
+        <location filename="../miscdevices.cpp" line="229" />
         <source>[%1] Invalid drive number: %2 for remote unmount</source>
         <translation>[%1] Uzak kumandalı indirme isteminde belirtilen disk numarası: %2  geçersiz</translation>
     </message>
     <message>
-        <location filename="../miscdevices.cpp" line="327" />
+        <location filename="../miscdevices.cpp" line="246" />
         <source>[%1] AspeQt can't determine the folder where the image file must be created/mounted!</source>
         <translation>[%1] AspeQ dosya imajının hangi klasörde yaratılacağına/yükleneceğine karar veremiyor</translation>
     </message>
     <message>
-        <location filename="../miscdevices.cpp" line="329" />
+        <location filename="../miscdevices.cpp" line="248" />
         <source>[%1] Mount a Folder Image at least once before issuing a remote mount command.</source>
         <translation>[%1] Uzakdan yükleme komutu vermeden önce en az bir kez Klasör imajı yüklemeniz gerekiyor</translation>
     </message>
     <message>
-        <location filename="../miscdevices.cpp" line="346" />
+        <location filename="../miscdevices.cpp" line="265" />
         <source>[%1] Read data frame failed</source>
         <translation>[%1] Veri çatısı okuma hatası</translation>
     </message>
     <message>
-        <location filename="../miscdevices.cpp" line="361" />
+        <location filename="../miscdevices.cpp" line="280" />
         <source>[%1] Invalid image file attribute: %2</source>
         <translation>[%1] Geçersiz dosya imaj niteliği: %2</translation>
     </message>
     <message>
-        <location filename="../miscdevices.cpp" line="371" />
+        <location filename="../miscdevices.cpp" line="290" />
         <source>[%1] Can not create PC File: %2</source>
         <translation>[%1]  PC dosyası: %2 yaratılamıyor</translation>
     </message>
     <message>
-        <location filename="../miscdevices.cpp" line="525" />
+        <location filename="../miscdevices.cpp" line="444" />
         <source>[%1] Image %2 mounted</source>
         <translation>"[%1] Imaj %2 yüklendi</translation>
     </message>
     <message>
-        <location filename="../miscdevices.cpp" line="505" />
+        <location filename="../miscdevices.cpp" line="424" />
         <source>[%1] command: $%2, aux: $%3 NAKed.</source>
         <translation>[%1] komut: $%2, aux: $%3 tanınmadı (NAK).</translation>
     </message>
@@ -760,67 +760,67 @@
 <context>
     <name>Engine</name>
     <message>
-        <location filename="../engine.cpp" line="238" />
+        <location filename="../engine.cpp" line="241" />
         <source>AspeQt - Atari Serial Peripheral Emulator for Qt</source>
         <translation>Aspeqt: Qt için Atari Seri Donanım Emülatörü</translation>
     </message>
     <message>
-        <location filename="../engine.cpp" line="137" />
+        <location filename="../engine.cpp" line="140" />
         <source>AspeQt started at %1.</source>
         <translation>AspeQt %1 de başlatıldı.</translation>
     </message>
     <message>
-        <location filename="../engine.cpp" line="154" />
+        <location filename="../engine.cpp" line="157" />
         <source>Migrating the global settings to their new repository (session files are not affected).</source>
         <translation>Genel ayarlar yeni depoya taşınıyor (oturum dosyaları etkilenmez).</translation>
     </message>
     <message>
-        <location filename="../engine.cpp" line="160" />
+        <location filename="../engine.cpp" line="163" />
         <source>Settings migrated successfully.</source>
         <translation>Ayarlar başarıyla taşındı.</translation>
     </message>
     <message>
-        <location filename="../engine.cpp" line="214" />
+        <location filename="../engine.cpp" line="217" />
         <source>Requested session file not found in the given directory path or the path is incorrect. AspeQt will continue with the default session configuration.</source>
         <translation>İstenen oturum dosyası belirtilen yolda bulunamadı veya yol hatalı. AspeQt varsayılan oturum yapılandırmasıyla devam edecek.</translation>
     </message>
     <message>
-        <location filename="../engine.cpp" line="225" />
+        <location filename="../engine.cpp" line="228" />
         <source>Requested session file not found in the application's current directory (no path was specified). AspeQt will continue with the default session configuration.</source>
         <translation>İstenen oturum dosyası uygulamanın geçerli dizininde bulunamadı (yol belirtilmedi). AspeQt varsayılan oturum yapılandırmasıyla devam edecek.</translation>
     </message>
     <message>
-        <location filename="../engine.cpp" line="333" />
+        <location filename="../engine.cpp" line="339" />
         <source>AspeQt stopped at %1.</source>
         <translation>AspeQt %1 de durduruldu.</translation>
     </message>
     <message>
-        <location filename="../engine.cpp" line="592" />
+        <location filename="../engine.cpp" line="598" />
         <source>Failed to load executable '%1'.</source>
         <translation>'%1' programı yüklenemedi.</translation>
     </message>
     <message>
-        <location filename="../engine.cpp" line="603" />
+        <location filename="../engine.cpp" line="609" />
         <source>Executable (%1k)</source>
         <translation>Program (%1k)</translation>
     </message>
     <message>
-        <location filename="../engine.cpp" line="606" />
+        <location filename="../engine.cpp" line="612" />
         <source>Loaded executable '%1'. Start (or reboot) your Atari to run it.</source>
         <translation>'%1' programı yüklendi. Çalıştırmak için Atari'yi başlatın (veya yeniden başlatın).</translation>
     </message>
     <message>
-        <location filename="../engine.cpp" line="619" />
+        <location filename="../engine.cpp" line="625" />
         <source>Failed to load cassette image '%1'.</source>
         <translation>'%1' kaset imajı yüklenemedi.</translation>
     </message>
     <message>
-        <location filename="../engine.cpp" line="630" />
+        <location filename="../engine.cpp" line="636" />
         <source>Cassette (%1:%2)</source>
         <translation>Kaset (%1:%2)</translation>
     </message>
     <message>
-        <location filename="../engine.cpp" line="637" />
+        <location filename="../engine.cpp" line="643" />
         <source>AspeQt is ready to playback the cassette image file '%1'.
 
 Do whatever is necessary in your Atari to load this cassette image like rebooting while holding Option and Start buttons or entering "CLOAD" in the BASIC prompt.
@@ -833,168 +833,218 @@ Atari'nizde bu kaseti yüklemek için gerekeni yapın: Option ve Start tuşları
 Bip sesini duyduğunuzda oynat düğmesine basın ve yaklaşık aynı anda Atari'de bir tuşa basın.</translation>
     </message>
     <message>
-        <location filename="../engine.cpp" line="667" />
+        <location filename="../engine.cpp" line="673" />
         <source>Playing back cassette image.</source>
         <translation>Kaset imajı oynatılıyor.</translation>
     </message>
     <message>
-        <location filename="../engine.cpp" line="696" />
+        <location filename="../engine.cpp" line="702" />
         <source>Cassette playback finished.</source>
         <translation>Kaset oynatma tamamlandı.</translation>
     </message>
     <message>
-        <location filename="../engine.cpp" line="707" />
+        <location filename="../engine.cpp" line="713" />
         <source>Executable loaded into the Atari.</source>
         <translation>Program Atari'ye yüklendi.</translation>
     </message>
     <message>
-        <location filename="../engine.cpp" line="808" />
+        <location filename="../engine.cpp" line="814" />
         <source>[%1] Auto-commit failed.</source>
         <translation>[%1] Otomatik kaydetme başarısız.</translation>
     </message>
     <message>
-        <location filename="../engine.cpp" line="964" />
+        <location filename="../engine.cpp" line="970" />
         <source>Loaded into the cas/xex slot.</source>
         <translation>cas/xex yuvasına yüklendi.</translation>
     </message>
     <message>
-        <location filename="../engine.cpp" line="1167" />
-        <location filename="../engine.cpp" line="1175" />
+        <location filename="../engine.cpp" line="1173" />
+        <location filename="../engine.cpp" line="1181" />
         <source>This slot does not hold a mounted folder.</source>
         <translation>Bu yuvada bağlı bir klasör yok.</translation>
     </message>
     <message>
-        <location filename="../engine.cpp" line="1185" />
+        <location filename="../engine.cpp" line="1191" />
         <source>Installed high-speed MyPicoDOS into the folder. Reboot your Atari to load DOS.</source>
         <translation>Hızlı MyPicoDOS klasöre kuruldu. DOS'u yüklemek için Atari'yi yeniden başlatın.</translation>
     </message>
     <message>
-        <location filename="../engine.cpp" line="1159" />
-        <location filename="../engine.cpp" line="1188" />
+        <location filename="../engine.cpp" line="1165" />
+        <location filename="../engine.cpp" line="1194" />
         <source>Could not copy the DOS files into the folder.</source>
         <translation>DOS dosyaları klasöre kopyalanamadı.</translation>
     </message>
     <message>
-        <location filename="../engine.cpp" line="1310" />
+        <location filename="../engine.cpp" line="1316" />
         <source>[Disk %1] Auto-commit ON.</source>
         <translation>[Disk %1] Otomatik kaydetme AÇIK.</translation>
     </message>
     <message>
-        <location filename="../engine.cpp" line="1311" />
+        <location filename="../engine.cpp" line="1317" />
         <source>[Disk %1] Auto-commit OFF.</source>
         <translation>[Disk %1] Otomatik kaydetme KAPALI.</translation>
     </message>
     <message>
-        <location filename="../engine.cpp" line="483" />
-        <location filename="../engine.cpp" line="490" />
-        <location filename="../engine.cpp" line="1358" />
+        <location filename="../engine.cpp" line="489" />
+        <location filename="../engine.cpp" line="496" />
+        <location filename="../engine.cpp" line="1364" />
         <source>'%1' cannot be saved.</source>
         <translation>'%1' kaydedilemiyor.</translation>
     </message>
     <message>
-        <location filename="../engine.cpp" line="1394" />
-        <location filename="../engine.cpp" line="2266" />
+        <location filename="../engine.cpp" line="1400" />
+        <location filename="../engine.cpp" line="2383" />
         <source>Cannot read '%1'.</source>
         <translation>'%1' okunamıyor.</translation>
     </message>
     <message>
-        <location filename="../engine.cpp" line="1470" />
-        <location filename="../engine.cpp" line="1684" />
-        <location filename="../engine.cpp" line="1691" />
-        <location filename="../engine.cpp" line="2280" />
+        <location filename="../engine.cpp" line="1476" />
+        <location filename="../engine.cpp" line="1727" />
+        <location filename="../engine.cpp" line="1766" />
+        <location filename="../engine.cpp" line="2397" />
         <source>Cannot write to '%1'.</source>
         <translation>%1 yazılamıyor.</translation>
     </message>
     <message>
-        <location filename="../engine.cpp" line="1591" />
+        <location filename="../engine.cpp" line="1597" />
         <source>Swapped disk %1 with disk %2.</source>
         <translation>Disk %1, dısk %2 ile takas edildi.</translation>
     </message>
     <message>
-        <location filename="../engine.cpp" line="1683" />
-        <location filename="../engine.cpp" line="1690" />
+        <location filename="../engine.cpp" line="1716" />
+        <location filename="../engine.cpp" line="1756" />
+        <source>Nothing has been printed yet.</source>
+        <translation>Henüz hiçbir şey yazdırılmadı.</translation>
+    </message>
+    <message>
+        <location filename="../engine.cpp" line="1726" />
+        <location filename="../engine.cpp" line="1765" />
         <source>Cannot save the printout, see the log.</source>
         <translation>Çıktı kaydedilemedi, günlüğe bakın.</translation>
     </message>
     <message>
-        <location filename="../engine.cpp" line="1809" />
+        <location filename="../engine.cpp" line="1731" />
+        <location filename="../engine.cpp" line="1790" />
+        <source>Printout saved.</source>
+        <translation>Çıktı kaydedildi.</translation>
+    </message>
+    <message>
+        <location filename="../engine.cpp" line="1742" />
+        <source>The bundled test page is missing.</source>
+        <translation>Yerleşik sınama sayfası eksik.</translation>
+    </message>
+    <message>
+        <location filename="../engine.cpp" line="1804" />
+        <source>Cannot open the capture, see the log.</source>
+        <translation>Yakalama açılamıyor, günlüğe bakın.</translation>
+    </message>
+    <message>
+        <location filename="../engine.cpp" line="1926" />
         <source>No phonebook file chosen (see Options).</source>
         <translation>Telefon defteri dosyası seçilmedi (Seçenekler'e bakın).</translation>
     </message>
     <message>
-        <location filename="../engine.cpp" line="1862" />
+        <location filename="../engine.cpp" line="1979" />
         <source>Cannot write the bundled phonebook to %1</source>
         <translation>Yerleşik telefon defteri %1 konumuna yazılamıyor</translation>
     </message>
     <message>
-        <location filename="../engine.cpp" line="1878" />
+        <location filename="../engine.cpp" line="1995" />
         <source>The R: device is not enabled (see Options).</source>
         <translation>R: aygıtı etkin değil (Seçenekler'e bakın).</translation>
     </message>
     <message>
-        <location filename="../engine.cpp" line="1897" />
+        <location filename="../engine.cpp" line="2014" />
         <source>This phonebook entry has no address.</source>
         <translation>Bu telefon defteri kaydının adresi yok.</translation>
     </message>
     <message>
-        <location filename="../engine.cpp" line="1909" />
+        <location filename="../engine.cpp" line="2026" />
         <source>Automatic</source>
         <translation>Otomatık</translation>
     </message>
     <message>
-        <location filename="../engine.cpp" line="2089" />
+        <location filename="../engine.cpp" line="2206" />
         <source>Failed to load '%1'.</source>
         <translation>'%1' yüklenemedi.</translation>
     </message>
     <message>
-        <location filename="../engine.cpp" line="2101" />
+        <location filename="../engine.cpp" line="2218" />
         <source>Pick an Atari executable (.xex/.com/.exe) or a cassette image (.cas).</source>
         <translation>Bir Atari programı (.xex/.com/.exe) veya kaset imajı (.cas) seçin.</translation>
     </message>
     <message>
-        <location filename="../engine.cpp" line="2216" />
-        <location filename="../engine.cpp" line="2228" />
-        <location filename="../engine.cpp" line="2232" />
+        <location filename="../engine.cpp" line="2333" />
+        <location filename="../engine.cpp" line="2345" />
+        <location filename="../engine.cpp" line="2349" />
         <source>Cannot extract the files, see the log.</source>
         <translation>Dosyalar çıkarılamadı, günlüğe bakın.</translation>
     </message>
     <message>
-        <location filename="../engine.cpp" line="2245" />
+        <location filename="../engine.cpp" line="2362" />
         <source>Cannot delete the files, see the log.</source>
         <translation>Dosyalar silinemedi, günlüğe bakın.</translation>
     </message>
     <message>
-        <location filename="../engine.cpp" line="2265" />
-        <location filename="../engine.cpp" line="2279" />
-        <location filename="../engine.cpp" line="2291" />
+        <location filename="../engine.cpp" line="2382" />
+        <location filename="../engine.cpp" line="2396" />
+        <location filename="../engine.cpp" line="2408" />
         <source>Cannot add the file, see the log.</source>
         <translation>Dosya eklenemedi, günlüğe bakın.</translation>
     </message>
     <message>
-        <location filename="../engine.cpp" line="786" />
+        <location filename="../engine.cpp" line="792" />
         <source>Emulation stopped.</source>
         <translation>Emülasyon durdu.</translation>
     </message>
     <message>
-        <location filename="../engine.cpp" line="871" />
+        <location filename="../engine.cpp" line="877" />
         <source>Unmounted disk %1</source>
         <translation>Disk %1 indirildi</translation>
     </message>
     <message>
-        <location filename="../engine.cpp" line="1042" />
-        <location filename="../engine.cpp" line="1657" />
+        <location filename="../engine.cpp" line="1048" />
+        <location filename="../engine.cpp" line="1668" />
         <source>[%1] Mounted '%2' as '%3'.</source>
         <translation>[%1] '%2', '%3' olarak yüklendi.</translation>
     </message>
     <message>
-        <location filename="../engine.cpp" line="1626" />
+        <location filename="../engine.cpp" line="1637" />
         <source>Printer emulation stopped.</source>
         <translation>Yazıcı emülasyonu durdu</translation>
     </message>
     <message>
-        <location filename="../engine.cpp" line="1625" />
+        <location filename="../engine.cpp" line="1636" />
         <source>Printer emulation started.</source>
         <translation>Yazıcı emülasyonu başladı</translation>
+    </message>
+</context>
+<context>
+    <name>EpsonPrinter</name>
+    <message>
+        <location filename="../epsonprinter.cpp" line="66" />
+        <source>[%1] ignored</source>
+        <translation type="unfinished">[%1] yok sayıldı</translation>
+    </message>
+    <message>
+        <location filename="../epsonprinter.cpp" line="78" />
+        <source>[%1] Get status.</source>
+        <translation type="unfinished" />
+    </message>
+    <message>
+        <location filename="../epsonprinter.cpp" line="100" />
+        <source>[%1] Received %2 bytes. Parsing instantly.</source>
+        <translation>[%1] %2 bayt alındı, işleniyor.</translation>
+    </message>
+    <message>
+        <location filename="../epsonprinter.cpp" line="118" />
+        <source>[%1] Print Job Closed by Atari.</source>
+        <translation>[%1] Atari yazdırma işini kapattı.</translation>
+    </message>
+    <message>
+        <location filename="../epsonprinter.cpp" line="133" />
+        <source>[%1] Unknown Command: $%2</source>
+        <translation>[%1] Bilinmeyen komut: $%2</translation>
     </message>
 </context>
 <context>
@@ -1441,74 +1491,74 @@ Bip sesini duyduğunuzda oynat düğmesine basın ve yaklaşık aynı anda Atari
         <translation>Çevrimiçi sunucular</translation>
     </message>
     <message>
-        <location filename="../qml/NetworkBrowserDialog.qml" line="129" />
+        <location filename="../qml/NetworkBrowserDialog.qml" line="133" />
         <source>Favourite this address</source>
         <translation>Adresi favorilere ekle</translation>
     </message>
     <message>
-        <location filename="../qml/NetworkBrowserDialog.qml" line="136" />
+        <location filename="../qml/NetworkBrowserDialog.qml" line="140" />
         <source>Connect</source>
         <translation>Bağlan</translation>
     </message>
     <message>
-        <location filename="../qml/NetworkBrowserDialog.qml" line="142" />
+        <location filename="../qml/NetworkBrowserDialog.qml" line="146" />
         <source>Refresh</source>
         <translation>Yenile</translation>
     </message>
     <message>
-        <location filename="../qml/NetworkBrowserDialog.qml" line="206" />
-        <location filename="../qml/NetworkBrowserDialog.qml" line="235" />
+        <location filename="../qml/NetworkBrowserDialog.qml" line="210" />
+        <location filename="../qml/NetworkBrowserDialog.qml" line="239" />
         <source>Mount</source>
         <translation>Bağla</translation>
     </message>
     <message>
-        <location filename="../qml/NetworkBrowserDialog.qml" line="210" />
-        <location filename="../qml/NetworkBrowserDialog.qml" line="242" />
+        <location filename="../qml/NetworkBrowserDialog.qml" line="214" />
+        <location filename="../qml/NetworkBrowserDialog.qml" line="246" />
         <source>Download</source>
         <translation>İndir</translation>
     </message>
     <message>
-        <location filename="../qml/NetworkBrowserDialog.qml" line="211" />
+        <location filename="../qml/NetworkBrowserDialog.qml" line="215" />
         <source>Download "%1"?</source>
         <translation>"%1" indirilsin mi?</translation>
     </message>
     <message>
-        <location filename="../qml/NetworkBrowserDialog.qml" line="207" />
+        <location filename="../qml/NetworkBrowserDialog.qml" line="211" />
         <source>Mount "%1" in a free slot?</source>
         <translation>"%1" boş bir sürücüye bağlansın mı?</translation>
     </message>
     <message>
-        <location filename="../qml/NetworkBrowserDialog.qml" line="251" />
+        <location filename="../qml/NetworkBrowserDialog.qml" line="255" />
         <source>(no match)</source>
         <translation>(eşleşme yok)</translation>
     </message>
     <message>
-        <location filename="../qml/NetworkBrowserDialog.qml" line="251" />
+        <location filename="../qml/NetworkBrowserDialog.qml" line="255" />
         <source>(empty)</source>
         <translation>(boş)</translation>
     </message>
     <message>
-        <location filename="../qml/NetworkBrowserDialog.qml" line="284" />
+        <location filename="../qml/NetworkBrowserDialog.qml" line="288" />
         <source>Remove from favourites</source>
         <translation>Favorilerden kaldır</translation>
     </message>
     <message>
-        <location filename="../qml/NetworkBrowserDialog.qml" line="296" />
+        <location filename="../qml/NetworkBrowserDialog.qml" line="300" />
         <source>No favourite servers yet. Enter a tnfs://, sftp:// or ftp:// address, connect, and tap the star to save it.</source>
         <translation>Henüz favori sunucu yok. Bir tnfs://, sftp:// veya ftp:// adresi girin, bağlanın ve kaydetmek için yıldıza dokunun.</translation>
     </message>
     <message>
-        <location filename="../qml/NetworkBrowserDialog.qml" line="319" />
+        <location filename="../qml/NetworkBrowserDialog.qml" line="323" />
         <source>Filter files…</source>
         <translation>Dosyaları süz…</translation>
     </message>
     <message>
-        <location filename="../qml/NetworkBrowserDialog.qml" line="328" />
+        <location filename="../qml/NetworkBrowserDialog.qml" line="332" />
         <source>Clear filter</source>
         <translation>Süzgeci temizle</translation>
     </message>
     <message>
-        <location filename="../qml/NetworkBrowserDialog.qml" line="361" />
+        <location filename="../qml/NetworkBrowserDialog.qml" line="365" />
         <source>Close</source>
         <translation type="unfinished">Kapat</translation>
     </message>
@@ -1516,48 +1566,53 @@ Bip sesini duyduğunuzda oynat düğmesine basın ve yaklaşık aynı anda Atari
 <context>
     <name>NetworkWorker</name>
     <message>
-        <location filename="../networkbrowser.cpp" line="64" />
+        <location filename="../networkbrowser.cpp" line="69" />
+        <source>Bad address: %1</source>
+        <translation>Hatalı adres: %1</translation>
+    </message>
+    <message>
+        <location filename="../networkbrowser.cpp" line="72" />
         <source>No host in the address.</source>
         <translation>Adreste ana makine yok.</translation>
     </message>
     <message>
-        <location filename="../networkbrowser.cpp" line="77" />
+        <location filename="../networkbrowser.cpp" line="85" />
         <source>SFTP is not available in this build.</source>
         <translation>Bu sürümde SFTP kullanılamıyor.</translation>
     </message>
     <message>
-        <location filename="../networkbrowser.cpp" line="86" />
+        <location filename="../networkbrowser.cpp" line="94" />
         <source>Could not connect to %1.</source>
         <translation>%1 bağlantısı kurulamadı.</translation>
     </message>
     <message>
-        <location filename="../networkbrowser.cpp" line="94" />
+        <location filename="../networkbrowser.cpp" line="102" />
         <source>TNFS mount failed on %1.</source>
         <translation>%1 üzerinde TNFS bağlama başarısız.</translation>
     </message>
     <message>
-        <location filename="../networkbrowser.cpp" line="107" />
-        <location filename="../networkbrowser.cpp" line="176" />
+        <location filename="../networkbrowser.cpp" line="115" />
+        <location filename="../networkbrowser.cpp" line="184" />
         <source>Not connected.</source>
         <translation>Bağlı değil.</translation>
     </message>
     <message>
-        <location filename="../networkbrowser.cpp" line="127" />
+        <location filename="../networkbrowser.cpp" line="135" />
         <source>Cannot write %1.</source>
         <translation>%1 yazılamıyor.</translation>
     </message>
     <message>
-        <location filename="../networkbrowser.cpp" line="138" />
+        <location filename="../networkbrowser.cpp" line="146" />
         <source>Cannot open %1.</source>
         <translation>%1 açılamıyor.</translation>
     </message>
     <message>
-        <location filename="../networkbrowser.cpp" line="154" />
+        <location filename="../networkbrowser.cpp" line="162" />
         <source>Download of %1 failed (empty).</source>
         <translation>%1 indirilemedi (boş).</translation>
     </message>
     <message>
-        <location filename="../networkbrowser.cpp" line="178" />
+        <location filename="../networkbrowser.cpp" line="186" />
         <source>Could not open %1.</source>
         <translation>%1 açılamadı.</translation>
     </message>
@@ -1565,177 +1620,213 @@ Bip sesini duyduğunuzda oynat düğmesine basın ve yaklaşık aynı anda Atari
 <context>
     <name>OptionsDialog</name>
     <message>
-        <location filename="../qml/OptionsDialog.qml" line="151" />
+        <location filename="../qml/OptionsDialog.qml" line="155" />
         <source>Options</source>
         <translation>Seçenekler</translation>
     </message>
     <message>
-        <location filename="../qml/OptionsDialog.qml" line="346" />
+        <location filename="../qml/OptionsDialog.qml" line="386" />
         <source>User interface</source>
         <translation>Kullanıcı arayüzü</translation>
     </message>
     <message>
-        <location filename="../qml/OptionsDialog.qml" line="182" />
+        <location filename="../qml/OptionsDialog.qml" line="186" />
         <source>Handshake method:</source>
         <translation>Senkronizasyon Yöntemi:</translation>
     </message>
     <message>
-        <location filename="../qml/OptionsDialog.qml" line="368" />
+        <location filename="../qml/OptionsDialog.qml" line="408" />
         <source>Save</source>
         <translation>Kaydet</translation>
     </message>
     <message>
-        <location filename="../qml/OptionsDialog.qml" line="176" />
+        <location filename="../qml/OptionsDialog.qml" line="180" />
         <source>Serial interface:</source>
         <translation>Seri arabirim:</translation>
     </message>
     <message>
-        <location filename="../qml/OptionsDialog.qml" line="215" />
+        <location filename="../qml/OptionsDialog.qml" line="219" />
         <source>Write ACK delay [ms]</source>
         <translation>Yazma ACK gecikmesi [ms]</translation>
     </message>
     <message>
-        <location filename="../qml/OptionsDialog.qml" line="174" />
+        <location filename="../qml/OptionsDialog.qml" line="178" />
         <source>SIO port emulation</source>
         <translation>SIO bağlantı noktası emülasyonu</translation>
     </message>
     <message>
-        <location filename="../qml/OptionsDialog.qml" line="193" />
+        <location filename="../qml/OptionsDialog.qml" line="197" />
         <source>Transmission speed [bps]:</source>
         <translation>İletim hızı [bps]:</translation>
     </message>
     <message>
-        <location filename="../qml/OptionsDialog.qml" line="204" />
+        <location filename="../qml/OptionsDialog.qml" line="208" />
         <source>Bluetooth name:</source>
         <translation>Bluetooth adı:</translation>
     </message>
     <message>
-        <location filename="../qml/OptionsDialog.qml" line="219" />
+        <location filename="../qml/OptionsDialog.qml" line="223" />
         <source>Use non-standard speeds</source>
         <translation>Standart olmayan hız kullan</translation>
     </message>
     <message>
-        <location filename="../qml/OptionsDialog.qml" line="223" />
+        <location filename="../qml/OptionsDialog.qml" line="227" />
         <source>POKEY divisor:</source>
         <translation>POKEY bölücü:</translation>
     </message>
     <message>
-        <location filename="../qml/OptionsDialog.qml" line="230" />
+        <location filename="../qml/OptionsDialog.qml" line="234" />
         <source>Emulation settings</source>
         <translation>Emülasyon ayarları</translation>
     </message>
     <message>
-        <location filename="../qml/OptionsDialog.qml" line="236" />
+        <location filename="../qml/OptionsDialog.qml" line="240" />
         <source>Cassette baud rate:</source>
         <translation>Kaset baud hızı:</translation>
     </message>
     <message>
-        <location filename="../qml/OptionsDialog.qml" line="243" />
+        <location filename="../qml/OptionsDialog.qml" line="247" />
         <source>Folder images</source>
         <translation>Klasör imajları</translation>
     </message>
     <message>
-        <location filename="../qml/OptionsDialog.qml" line="246" />
+        <location filename="../qml/OptionsDialog.qml" line="250" />
         <source>(Required for AtariDOS compatibility)</source>
         <translation>(AtariDOS uyumluluğu için gerekli)</translation>
     </message>
     <message>
-        <location filename="../qml/OptionsDialog.qml" line="255" />
+        <location filename="../qml/OptionsDialog.qml" line="259" />
+        <source>Printer emulation</source>
+        <translation type="unfinished">Yazıcı emülasyonu</translation>
+    </message>
+    <message>
+        <location filename="../qml/OptionsDialog.qml" line="261" />
+        <source>Emulate an Epson ESC/P printer</source>
+        <translation>Epson ESC/P yazıcısını öykün</translation>
+    </message>
+    <message>
+        <location filename="../qml/OptionsDialog.qml" line="266" />
+        <source>What the Atari prints is rendered onto a page you can view and save. The font is chosen in the printer output window.</source>
+        <translation>Atari'nin yazdırdıkları, görüntüleyip kaydedebileceğiniz bir sayfaya çizilir. Yazı tipi, çıktı penceresinden seçilir.</translation>
+    </message>
+    <message>
+        <location filename="../qml/OptionsDialog.qml" line="279" />
+        <source>Print a test page</source>
+        <translation>Sınama sayfası yazdır</translation>
+    </message>
+    <message>
+        <location filename="../qml/OptionsDialog.qml" line="284" />
+        <source>Replay a capture…</source>
+        <translation>Yakalamayı yeniden oynat…</translation>
+    </message>
+    <message>
+        <location filename="../qml/OptionsDialog.qml" line="286" />
+        <source>Open a print capture</source>
+        <translation>Yazdırma yakalaması aç</translation>
+    </message>
+    <message>
+        <location filename="../qml/OptionsDialog.qml" line="287" />
+        <source>Print captures (*.prn)</source>
+        <translation>Yazdırma yakalamaları (*.prn)</translation>
+    </message>
+    <message>
+        <location filename="../qml/OptionsDialog.qml" line="295" />
         <source>R: device (modem)</source>
         <translation>R: aygıtı (modem)</translation>
     </message>
     <message>
-        <location filename="../qml/OptionsDialog.qml" line="256" />
+        <location filename="../qml/OptionsDialog.qml" line="296" />
         <source>Emulate an Atari 850 interface</source>
         <translation>Atari 850 arabirimini öykün</translation>
     </message>
     <message>
-        <location filename="../qml/OptionsDialog.qml" line="258" />
+        <location filename="../qml/OptionsDialog.qml" line="298" />
         <source>Dial BBSes over TCP with a terminal program. Needs a hardware handshake method (RI/DSR/CTS), not SOFT.</source>
         <translation>Bir terminal programıyla TCP üzerinden BBS'leri arayın. SOFT değil, donanım el sıkışma yöntemi (RI/DSR/CTS) gerekir.</translation>
     </message>
     <message>
-        <location filename="../qml/OptionsDialog.qml" line="269" />
+        <location filename="../qml/OptionsDialog.qml" line="309" />
         <source>Use the bundled BBS list</source>
         <translation>Yerleşik BBS listesini kullan</translation>
     </message>
     <message>
-        <location filename="../qml/OptionsDialog.qml" line="280" />
+        <location filename="../qml/OptionsDialog.qml" line="320" />
         <source>Could not install the bundled list, see the log.</source>
         <translation>Yerleşik liste kurulamadı, günlüğe bakın.</translation>
     </message>
     <message>
-        <location filename="../qml/OptionsDialog.qml" line="288" />
+        <location filename="../qml/OptionsDialog.qml" line="328" />
         <source>A copy of the telnet BBS list that ships with AspeQt-2k26. An existing copy is kept, not overwritten.</source>
         <translation>AspeQt-2k26 ile gelen telnet BBS listesinin bir kopyası. Var olan kopya korunur, üzerine yazılmaz.</translation>
     </message>
     <message>
-        <location filename="../qml/OptionsDialog.qml" line="298" />
+        <location filename="../qml/OptionsDialog.qml" line="338" />
         <source>Phonebook file:</source>
         <translation>Telefon defteri dosyası:</translation>
     </message>
     <message>
-        <location filename="../qml/OptionsDialog.qml" line="307" />
+        <location filename="../qml/OptionsDialog.qml" line="347" />
         <source>(none)</source>
         <translation>(yok)</translation>
     </message>
     <message>
-        <location filename="../qml/OptionsDialog.qml" line="314" />
+        <location filename="../qml/OptionsDialog.qml" line="354" />
         <source>Choose</source>
         <translation>Seç</translation>
     </message>
     <message>
-        <location filename="../qml/OptionsDialog.qml" line="317" />
+        <location filename="../qml/OptionsDialog.qml" line="357" />
         <source>Phonebook file</source>
         <translation>Telefon defteri dosyası</translation>
     </message>
     <message>
-        <location filename="../qml/OptionsDialog.qml" line="317" />
+        <location filename="../qml/OptionsDialog.qml" line="357" />
         <source>XML files (*.xml)</source>
         <translation>XML dosyaları (*.xml)</translation>
     </message>
     <message>
-        <location filename="../qml/OptionsDialog.qml" line="317" />
+        <location filename="../qml/OptionsDialog.qml" line="287" />
+        <location filename="../qml/OptionsDialog.qml" line="357" />
         <source>All files (*)</source>
         <translation type="unfinished">Tüm dosyalar (*)</translation>
     </message>
     <message>
-        <location filename="../qml/OptionsDialog.qml" line="324" />
+        <location filename="../qml/OptionsDialog.qml" line="364" />
         <source>Answer incoming calls</source>
         <translation>Gelen çağrıları yanıtla</translation>
     </message>
     <message>
-        <location filename="../qml/OptionsDialog.qml" line="330" />
+        <location filename="../qml/OptionsDialog.qml" line="370" />
         <source>Listen on port:</source>
         <translation>Dinlenecek bağlantı noktası:</translation>
     </message>
     <message>
-        <location filename="../qml/OptionsDialog.qml" line="367" />
+        <location filename="../qml/OptionsDialog.qml" line="407" />
         <source>Cancel</source>
         <translation>İptal</translation>
     </message>
     <message>
-        <location filename="../qml/OptionsDialog.qml" line="231" />
+        <location filename="../qml/OptionsDialog.qml" line="235" />
         <source>Use high speed executable loader</source>
         <translation>Yüksek hızlı yükleyici kullan</translation>
     </message>
     <message>
-        <location filename="../qml/OptionsDialog.qml" line="232" />
+        <location filename="../qml/OptionsDialog.qml" line="236" />
         <source>Use custom baud rate for cassette emulation</source>
         <translation>Kaset emülasyonu için özel hız kullan (bps) </translation>
     </message>
     <message>
-        <location filename="../qml/OptionsDialog.qml" line="244" />
+        <location filename="../qml/OptionsDialog.qml" line="248" />
         <source>Filter out underscore character from file names</source>
         <translation>Dosya isimlerinden alt çizgi karakterini filtrele</translation>
     </message>
     <message>
-        <location filename="../qml/OptionsDialog.qml" line="347" />
+        <location filename="../qml/OptionsDialog.qml" line="387" />
         <source>Language:</source>
         <translation>Dil:</translation>
     </message>
     <message>
-        <location filename="../engine.cpp" line="1921" />
+        <location filename="../engine.cpp" line="2038" />
         <source>English</source>
         <translation>Türkçe</translation>
     </message>
@@ -2467,89 +2558,70 @@ Bip sesini duyduğunuzda oynat düğmesine basın ve yaklaşık aynı anda Atari
 <context>
     <name>PrintWindow</name>
     <message>
-        <location filename="../qml/PrintWindow.qml" line="43" />
-        <source>Printer text output</source>
-        <translation>Yazıcı metin çıktısı</translation>
-    </message>
-    <message>
-        <location filename="../qml/PrintWindow.qml" line="79" />
-        <source>Word wrap</source>
-        <translation>Kelime kaydırma</translation>
+        <location filename="../qml/PrintWindow.qml" line="55" />
+        <source>Printer output</source>
+        <translation>Yazıcı çıktısı</translation>
     </message>
     <message>
         <location filename="../qml/PrintWindow.qml" line="86" />
-        <source>Show ATASCII</source>
-        <translation>ATASCII göster</translation>
+        <source>Fit width</source>
+        <translation>Genişliğe sığdır</translation>
     </message>
     <message>
         <location filename="../qml/PrintWindow.qml" line="92" />
-        <source>Clear contents</source>
-        <translation>İçeriği temizle</translation>
+        <source>Clear the paper</source>
+        <translation>Kâğıdı temizle</translation>
     </message>
     <message>
-        <location filename="../qml/PrintWindow.qml" line="97" />
-        <source>Save as text</source>
-        <translation>Metin olarak kaydet</translation>
+        <location filename="../qml/PrintWindow.qml" line="93" />
+        <source>Printer</source>
+        <translation>Yazıcı</translation>
     </message>
     <message>
-        <location filename="../qml/PrintWindow.qml" line="99" />
-        <location filename="../qml/PrintWindow.qml" line="106" />
+        <location filename="../qml/PrintWindow.qml" line="94" />
+        <source>Throw away the printed page?</source>
+        <translation>Yazdırılan sayfa atılsın mı?</translation>
+    </message>
+    <message>
+        <location filename="../qml/PrintWindow.qml" line="101" />
+        <source>Save as…</source>
+        <translation>Farklı kaydet…</translation>
+    </message>
+    <message>
+        <location filename="../qml/PrintWindow.qml" line="108" />
+        <source>Save as PNG image</source>
+        <translation>PNG görüntü olarak kaydet</translation>
+    </message>
+    <message>
+        <location filename="../qml/PrintWindow.qml" line="110" />
+        <location filename="../qml/PrintWindow.qml" line="116" />
         <source>Save printout</source>
         <translation>Çıktıyı kaydet</translation>
     </message>
     <message>
-        <location filename="../qml/PrintWindow.qml" line="99" />
-        <source>Text files (*.txt)</source>
-        <translation>Metin dosyaları (*.txt)</translation>
+        <location filename="../qml/PrintWindow.qml" line="110" />
+        <source>PNG images (*.png)</source>
+        <translation>PNG görüntüleri (*.png)</translation>
     </message>
     <message>
-        <location filename="../qml/PrintWindow.qml" line="104" />
-        <source>Save as PDF</source>
-        <translation>PDF olarak kaydet</translation>
+        <location filename="../qml/PrintWindow.qml" line="114" />
+        <source>Save as PDF document</source>
+        <translation>PDF belgesi olarak kaydet</translation>
     </message>
     <message>
-        <location filename="../qml/PrintWindow.qml" line="106" />
-        <source>PDF files (*.pdf)</source>
-        <translation>PDF dosyaları (*.pdf)</translation>
+        <location filename="../qml/PrintWindow.qml" line="116" />
+        <source>PDF documents (*.pdf)</source>
+        <translation>PDF belgeleri (*.pdf)</translation>
     </message>
     <message>
-        <location filename="../qml/PrintWindow.qml" line="156" />
+        <location filename="../qml/PrintWindow.qml" line="165" />
+        <source>Nothing printed yet.</source>
+        <translation>Henüz bir şey yazdırılmadı.</translation>
+    </message>
+    <message>
+        <location filename="../qml/PrintWindow.qml" line="180" />
         <source>Close</source>
         <translation>Kapat</translation>
-    </message>
-</context>
-<context>
-    <name>Printer</name>
-    <message>
-        <location filename="../miscdevices.cpp" line="41" />
-        <source>[%1] Get status.</source>
-        <translation>[%1] Konum göster.</translation>
-    </message>
-    <message>
-        <location filename="../miscdevices.cpp" line="64" />
-        <location filename="../miscdevices.cpp" line="101" />
-        <source>[%1] command: $%2, aux: $%3 NAKed.</source>
-        <translation>[%1] komut: $%2, aux: $%3 tanınmadı (NAK).</translation>
-    </message>
-    <message>
-        <location filename="../miscdevices.cpp" line="72" />
-        <source>[%1] Converting Inverse Video Characters for ASCII viewing</source>
-        <translation>[%1] ATASCII ters video karakterleri ASCII ye çevriliyor</translation>
-    </message>
-    <message>
-        <location filename="../miscdevices.cpp" line="79" />
-        <source>[%1] Print: data frame failed</source>
-        <translation>[%1] Print: veri bedeni başarısız oldu</translation>
-    </message>
-    <message>
-        <location filename="../miscdevices.cpp" line="85" />
-        <source>[%1] Print (%2 chars)</source>
-        <translation>[%1] Print (%2 karakter)</translation>
-    </message>
-    <message>
-        <location filename="../miscdevices.cpp" line="107" />
-        <source>[%1] ignored</source>
-        <translation>[%1] yok sayıldı</translation>
     </message>
 </context>
 <context>
@@ -2573,7 +2645,7 @@ Bip sesini duyduğunuzda oynat düğmesine basın ve yaklaşık aynı anda Atari
 <context>
     <name>RDevice</name>
     <message>
-        <location filename="../rdevice.cpp" line="1019" />
+        <location filename="../rdevice.cpp" line="1077" />
         <source>[RDevice] Dialing %1:%2...</source>
         <translation type="unfinished" />
     </message>
@@ -3014,23 +3086,23 @@ Bip sesini duyduğunuzda oynat düğmesine basın ve yaklaşık aynı anda Atari
 <context>
     <name>SmartDevice</name>
     <message>
-        <location filename="../miscdevices.cpp" line="138" />
+        <location filename="../miscdevices.cpp" line="49" />
         <source>[%1] Read date/time (%2).</source>
         <translation>[%1] Tarih/Saat (%2).</translation>
     </message>
     <message>
-        <location filename="../miscdevices.cpp" line="158" />
+        <location filename="../miscdevices.cpp" line="69" />
         <source>[%1] Read data frame failed</source>
         <translation>[%1] Veri çatısı okuma hatası</translation>
     </message>
     <message>
-        <location filename="../miscdevices.cpp" line="169" />
+        <location filename="../miscdevices.cpp" line="85" />
         <source>URL [%1] submitted</source>
         <translation>URL [%1] gönderildi</translation>
     </message>
     <message>
-        <location filename="../miscdevices.cpp" line="174" />
-        <location filename="../miscdevices.cpp" line="186" />
+        <location filename="../miscdevices.cpp" line="90" />
+        <location filename="../miscdevices.cpp" line="102" />
         <source>[%1] command: $%2, aux: $%3 NAKed.</source>
         <translation>[%1] komut: $%2, aux: $%3 tanınmadı (NAK).</translation>
     </message>

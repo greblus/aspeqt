@@ -3,82 +3,82 @@
 <context>
     <name>AspeCl</name>
     <message>
-        <location filename="../miscdevices.cpp" line="216" />
+        <location filename="../miscdevices.cpp" line="135" />
         <source>[%1] Date/time sent to client (%2).</source>
         <translation>[%1] Дата/время отправлены клиенту (%2).</translation>
     </message>
     <message>
-        <location filename="../miscdevices.cpp" line="244" />
+        <location filename="../miscdevices.cpp" line="163" />
         <source>[%1] Invalid swap request for drives: (%2)-(%3).</source>
         <translation>[%1] Неверный запрос обмена приводов: (%2)-(%3).</translation>
     </message>
     <message>
-        <location filename="../miscdevices.cpp" line="238" />
+        <location filename="../miscdevices.cpp" line="157" />
         <source>[%1] Swapped disk %2 with disk %3.</source>
         <translation>[%1] Диск %2 обменян с диском %3.</translation>
     </message>
     <message>
-        <location filename="../miscdevices.cpp" line="278" />
+        <location filename="../miscdevices.cpp" line="197" />
         <source>[%1] Unmounted disk %2</source>
         <translation>[%1] Диск %2 отключён</translation>
     </message>
     <message>
-        <location filename="../miscdevices.cpp" line="282" />
+        <location filename="../miscdevices.cpp" line="201" />
         <source>[%1] ALL images were remotely unmounted</source>
         <translation>[%1] ВСЕ образы отключены удалённо</translation>
     </message>
     <message>
-        <location filename="../miscdevices.cpp" line="286" />
+        <location filename="../miscdevices.cpp" line="205" />
         <source>[%1] Can not remotely unmount ALL images due to pending changes.</source>
         <translation>[%1] Невозможно отключить ВСЕ образы из-за несохранённых изменений.</translation>
     </message>
     <message>
-        <location filename="../miscdevices.cpp" line="295" />
+        <location filename="../miscdevices.cpp" line="214" />
         <source>[%1] Can not remotely unmount disk %2 due to pending changes.</source>
         <translation>[%1] Невозможно отключить диск %2 из-за несохранённых изменений.</translation>
     </message>
     <message>
-        <location filename="../miscdevices.cpp" line="302" />
+        <location filename="../miscdevices.cpp" line="221" />
         <source>[%1] Remotely unmounted disk %2</source>
         <translation>[%1] Диск %2 отключён удалённо</translation>
     </message>
     <message>
-        <location filename="../miscdevices.cpp" line="310" />
+        <location filename="../miscdevices.cpp" line="229" />
         <source>[%1] Invalid drive number: %2 for remote unmount</source>
         <translation>[%1] Неверный номер привода %2 для удалённого отключения</translation>
     </message>
     <message>
-        <location filename="../miscdevices.cpp" line="327" />
+        <location filename="../miscdevices.cpp" line="246" />
         <source>[%1] AspeQt can't determine the folder where the image file must be created/mounted!</source>
         <translation>[%1] AspeQt не может определить папку для создания/подключения образа!</translation>
     </message>
     <message>
-        <location filename="../miscdevices.cpp" line="329" />
+        <location filename="../miscdevices.cpp" line="248" />
         <source>[%1] Mount a Folder Image at least once before issuing a remote mount command.</source>
         <translation>[%1] Подключите образ папки хотя бы один раз перед удалённой командой подключения.</translation>
     </message>
     <message>
-        <location filename="../miscdevices.cpp" line="346" />
+        <location filename="../miscdevices.cpp" line="265" />
         <source>[%1] Read data frame failed</source>
         <translation>[%1] Не удалось прочитать кадр данных</translation>
     </message>
     <message>
-        <location filename="../miscdevices.cpp" line="361" />
+        <location filename="../miscdevices.cpp" line="280" />
         <source>[%1] Invalid image file attribute: %2</source>
         <translation>[%1] Неверный атрибут файла образа: %2</translation>
     </message>
     <message>
-        <location filename="../miscdevices.cpp" line="371" />
+        <location filename="../miscdevices.cpp" line="290" />
         <source>[%1] Can not create PC File: %2</source>
         <translation>[%1] Не удалось создать файл на ПК: %2</translation>
     </message>
     <message>
-        <location filename="../miscdevices.cpp" line="505" />
+        <location filename="../miscdevices.cpp" line="424" />
         <source>[%1] command: $%2, aux: $%3 NAKed.</source>
         <translation>[%1] команда: $%2, aux: $%3 NAKed.</translation>
     </message>
     <message>
-        <location filename="../miscdevices.cpp" line="525" />
+        <location filename="../miscdevices.cpp" line="444" />
         <source>[%1] Image %2 mounted</source>
         <translation>[%1] Образ %2 подключён</translation>
     </message>
@@ -760,67 +760,67 @@
 <context>
     <name>Engine</name>
     <message>
-        <location filename="../engine.cpp" line="238" />
+        <location filename="../engine.cpp" line="241" />
         <source>AspeQt - Atari Serial Peripheral Emulator for Qt</source>
         <translation>AspeQt - эмулятор SIO-периферии для Atari под Qt</translation>
     </message>
     <message>
-        <location filename="../engine.cpp" line="137" />
+        <location filename="../engine.cpp" line="140" />
         <source>AspeQt started at %1.</source>
         <translation>AspeQt запущен в %1.</translation>
     </message>
     <message>
-        <location filename="../engine.cpp" line="154" />
+        <location filename="../engine.cpp" line="157" />
         <source>Migrating the global settings to their new repository (session files are not affected).</source>
         <translation>Перенос глобальных настроек в новое хранилище (файлы сессий не затрагиваются).</translation>
     </message>
     <message>
-        <location filename="../engine.cpp" line="160" />
+        <location filename="../engine.cpp" line="163" />
         <source>Settings migrated successfully.</source>
         <translation>Настройки успешно перенесены.</translation>
     </message>
     <message>
-        <location filename="../engine.cpp" line="214" />
+        <location filename="../engine.cpp" line="217" />
         <source>Requested session file not found in the given directory path or the path is incorrect. AspeQt will continue with the default session configuration.</source>
         <translation>Файл сессии не найден по указанному пути либо путь неверен. AspeQt продолжит с настройками сессии по умолчанию.</translation>
     </message>
     <message>
-        <location filename="../engine.cpp" line="225" />
+        <location filename="../engine.cpp" line="228" />
         <source>Requested session file not found in the application's current directory (no path was specified). AspeQt will continue with the default session configuration.</source>
         <translation>Файл сессии не найден в текущем каталоге приложения (путь не указан). AspeQt продолжит с настройками сессии по умолчанию.</translation>
     </message>
     <message>
-        <location filename="../engine.cpp" line="333" />
+        <location filename="../engine.cpp" line="339" />
         <source>AspeQt stopped at %1.</source>
         <translation>AspeQt остановлен в %1.</translation>
     </message>
     <message>
-        <location filename="../engine.cpp" line="592" />
+        <location filename="../engine.cpp" line="598" />
         <source>Failed to load executable '%1'.</source>
         <translation>Не удалось загрузить программу «%1».</translation>
     </message>
     <message>
-        <location filename="../engine.cpp" line="603" />
+        <location filename="../engine.cpp" line="609" />
         <source>Executable (%1k)</source>
         <translation>Программа (%1k)</translation>
     </message>
     <message>
-        <location filename="../engine.cpp" line="606" />
+        <location filename="../engine.cpp" line="612" />
         <source>Loaded executable '%1'. Start (or reboot) your Atari to run it.</source>
         <translation>Программа «%1» загружена. Включите (или перезагрузите) Atari, чтобы её запустить.</translation>
     </message>
     <message>
-        <location filename="../engine.cpp" line="619" />
+        <location filename="../engine.cpp" line="625" />
         <source>Failed to load cassette image '%1'.</source>
         <translation>Не удалось загрузить образ кассеты «%1».</translation>
     </message>
     <message>
-        <location filename="../engine.cpp" line="630" />
+        <location filename="../engine.cpp" line="636" />
         <source>Cassette (%1:%2)</source>
         <translation>Кассета (%1:%2)</translation>
     </message>
     <message>
-        <location filename="../engine.cpp" line="637" />
+        <location filename="../engine.cpp" line="643" />
         <source>AspeQt is ready to playback the cassette image file '%1'.
 
 Do whatever is necessary in your Atari to load this cassette image like rebooting while holding Option and Start buttons or entering "CLOAD" in the BASIC prompt.
@@ -833,168 +833,218 @@ When you hear the beep sound, push the play button and press a key on your Atari
 Услышав сигнал, нажмите кнопку воспроизведения и примерно одновременно клавишу на Atari.</translation>
     </message>
     <message>
-        <location filename="../engine.cpp" line="667" />
+        <location filename="../engine.cpp" line="673" />
         <source>Playing back cassette image.</source>
         <translation>Воспроизведение образа кассеты.</translation>
     </message>
     <message>
-        <location filename="../engine.cpp" line="696" />
+        <location filename="../engine.cpp" line="702" />
         <source>Cassette playback finished.</source>
         <translation>Воспроизведение кассеты завершено.</translation>
     </message>
     <message>
-        <location filename="../engine.cpp" line="707" />
+        <location filename="../engine.cpp" line="713" />
         <source>Executable loaded into the Atari.</source>
         <translation>Программа загружена в Atari.</translation>
     </message>
     <message>
-        <location filename="../engine.cpp" line="808" />
+        <location filename="../engine.cpp" line="814" />
         <source>[%1] Auto-commit failed.</source>
         <translation>[%1] Автосохранение не удалось.</translation>
     </message>
     <message>
-        <location filename="../engine.cpp" line="964" />
+        <location filename="../engine.cpp" line="970" />
         <source>Loaded into the cas/xex slot.</source>
         <translation>Загружено в слот cas/xex.</translation>
     </message>
     <message>
-        <location filename="../engine.cpp" line="1167" />
-        <location filename="../engine.cpp" line="1175" />
+        <location filename="../engine.cpp" line="1173" />
+        <location filename="../engine.cpp" line="1181" />
         <source>This slot does not hold a mounted folder.</source>
         <translation>В этом слоте нет подключённой папки.</translation>
     </message>
     <message>
-        <location filename="../engine.cpp" line="1185" />
+        <location filename="../engine.cpp" line="1191" />
         <source>Installed high-speed MyPicoDOS into the folder. Reboot your Atari to load DOS.</source>
         <translation>Быстрый MyPicoDOS установлен в папку. Перезагрузите Atari, чтобы загрузить DOS.</translation>
     </message>
     <message>
-        <location filename="../engine.cpp" line="1159" />
-        <location filename="../engine.cpp" line="1188" />
+        <location filename="../engine.cpp" line="1165" />
+        <location filename="../engine.cpp" line="1194" />
         <source>Could not copy the DOS files into the folder.</source>
         <translation>Не удалось скопировать файлы DOS в папку.</translation>
     </message>
     <message>
-        <location filename="../engine.cpp" line="1310" />
+        <location filename="../engine.cpp" line="1316" />
         <source>[Disk %1] Auto-commit ON.</source>
         <translation>[Диск %1] Автосохранение ВКЛ.</translation>
     </message>
     <message>
-        <location filename="../engine.cpp" line="1311" />
+        <location filename="../engine.cpp" line="1317" />
         <source>[Disk %1] Auto-commit OFF.</source>
         <translation>[Диск %1] Автосохранение ВЫКЛ.</translation>
     </message>
     <message>
-        <location filename="../engine.cpp" line="483" />
-        <location filename="../engine.cpp" line="490" />
-        <location filename="../engine.cpp" line="1358" />
+        <location filename="../engine.cpp" line="489" />
+        <location filename="../engine.cpp" line="496" />
+        <location filename="../engine.cpp" line="1364" />
         <source>'%1' cannot be saved.</source>
         <translation>Не удалось сохранить «%1».</translation>
     </message>
     <message>
-        <location filename="../engine.cpp" line="1394" />
-        <location filename="../engine.cpp" line="2266" />
+        <location filename="../engine.cpp" line="1400" />
+        <location filename="../engine.cpp" line="2383" />
         <source>Cannot read '%1'.</source>
         <translation>Не удалось прочитать «%1».</translation>
     </message>
     <message>
-        <location filename="../engine.cpp" line="1470" />
-        <location filename="../engine.cpp" line="1684" />
-        <location filename="../engine.cpp" line="1691" />
-        <location filename="../engine.cpp" line="2280" />
+        <location filename="../engine.cpp" line="1476" />
+        <location filename="../engine.cpp" line="1727" />
+        <location filename="../engine.cpp" line="1766" />
+        <location filename="../engine.cpp" line="2397" />
         <source>Cannot write to '%1'.</source>
         <translation>Не удалось записать в '%1'.</translation>
     </message>
     <message>
-        <location filename="../engine.cpp" line="1591" />
+        <location filename="../engine.cpp" line="1597" />
         <source>Swapped disk %1 with disk %2.</source>
         <translation>Диск %1 заменен на диск %2.</translation>
     </message>
     <message>
-        <location filename="../engine.cpp" line="1683" />
-        <location filename="../engine.cpp" line="1690" />
+        <location filename="../engine.cpp" line="1716" />
+        <location filename="../engine.cpp" line="1756" />
+        <source>Nothing has been printed yet.</source>
+        <translation>Пока ничего не напечатано.</translation>
+    </message>
+    <message>
+        <location filename="../engine.cpp" line="1726" />
+        <location filename="../engine.cpp" line="1765" />
         <source>Cannot save the printout, see the log.</source>
         <translation>Не удалось сохранить распечатку, смотрите журнал.</translation>
     </message>
     <message>
-        <location filename="../engine.cpp" line="1809" />
+        <location filename="../engine.cpp" line="1731" />
+        <location filename="../engine.cpp" line="1790" />
+        <source>Printout saved.</source>
+        <translation>Распечатка сохранена.</translation>
+    </message>
+    <message>
+        <location filename="../engine.cpp" line="1742" />
+        <source>The bundled test page is missing.</source>
+        <translation>Встроенная тестовая страница отсутствует.</translation>
+    </message>
+    <message>
+        <location filename="../engine.cpp" line="1804" />
+        <source>Cannot open the capture, see the log.</source>
+        <translation>Не удалось открыть запись, см. журнал.</translation>
+    </message>
+    <message>
+        <location filename="../engine.cpp" line="1926" />
         <source>No phonebook file chosen (see Options).</source>
         <translation>Файл телефонной книги не выбран (см. параметры).</translation>
     </message>
     <message>
-        <location filename="../engine.cpp" line="1862" />
+        <location filename="../engine.cpp" line="1979" />
         <source>Cannot write the bundled phonebook to %1</source>
         <translation>Не удалось записать встроенную телефонную книгу в %1</translation>
     </message>
     <message>
-        <location filename="../engine.cpp" line="1878" />
+        <location filename="../engine.cpp" line="1995" />
         <source>The R: device is not enabled (see Options).</source>
         <translation>Устройство R: не включено (см. параметры).</translation>
     </message>
     <message>
-        <location filename="../engine.cpp" line="1897" />
+        <location filename="../engine.cpp" line="2014" />
         <source>This phonebook entry has no address.</source>
         <translation>У этой записи телефонной книги нет адреса.</translation>
     </message>
     <message>
-        <location filename="../engine.cpp" line="1909" />
+        <location filename="../engine.cpp" line="2026" />
         <source>Automatic</source>
         <translation>Автоматически</translation>
     </message>
     <message>
-        <location filename="../engine.cpp" line="2089" />
+        <location filename="../engine.cpp" line="2206" />
         <source>Failed to load '%1'.</source>
         <translation>Не удалось загрузить «%1».</translation>
     </message>
     <message>
-        <location filename="../engine.cpp" line="2101" />
+        <location filename="../engine.cpp" line="2218" />
         <source>Pick an Atari executable (.xex/.com/.exe) or a cassette image (.cas).</source>
         <translation>Выберите программу Atari (.xex/.com/.exe) или образ кассеты (.cas).</translation>
     </message>
     <message>
-        <location filename="../engine.cpp" line="2216" />
-        <location filename="../engine.cpp" line="2228" />
-        <location filename="../engine.cpp" line="2232" />
+        <location filename="../engine.cpp" line="2333" />
+        <location filename="../engine.cpp" line="2345" />
+        <location filename="../engine.cpp" line="2349" />
         <source>Cannot extract the files, see the log.</source>
         <translation>Не удалось извлечь файлы, смотрите журнал.</translation>
     </message>
     <message>
-        <location filename="../engine.cpp" line="2245" />
+        <location filename="../engine.cpp" line="2362" />
         <source>Cannot delete the files, see the log.</source>
         <translation>Не удалось удалить файлы, смотрите журнал.</translation>
     </message>
     <message>
-        <location filename="../engine.cpp" line="2265" />
-        <location filename="../engine.cpp" line="2279" />
-        <location filename="../engine.cpp" line="2291" />
+        <location filename="../engine.cpp" line="2382" />
+        <location filename="../engine.cpp" line="2396" />
+        <location filename="../engine.cpp" line="2408" />
         <source>Cannot add the file, see the log.</source>
         <translation>Не удалось добавить файл, смотрите журнал.</translation>
     </message>
     <message>
-        <location filename="../engine.cpp" line="786" />
+        <location filename="../engine.cpp" line="792" />
         <source>Emulation stopped.</source>
         <translation>Эмуляция остановлена.</translation>
     </message>
     <message>
-        <location filename="../engine.cpp" line="871" />
+        <location filename="../engine.cpp" line="877" />
         <source>Unmounted disk %1</source>
         <translation>Диск %1 отключен</translation>
     </message>
     <message>
-        <location filename="../engine.cpp" line="1042" />
-        <location filename="../engine.cpp" line="1657" />
+        <location filename="../engine.cpp" line="1048" />
+        <location filename="../engine.cpp" line="1668" />
         <source>[%1] Mounted '%2' as '%3'.</source>
         <translation>[%1] Подключен '%2' как '%3'.</translation>
     </message>
     <message>
-        <location filename="../engine.cpp" line="1626" />
+        <location filename="../engine.cpp" line="1637" />
         <source>Printer emulation stopped.</source>
         <translation>Эмуляция принтера остановлена.</translation>
     </message>
     <message>
-        <location filename="../engine.cpp" line="1625" />
+        <location filename="../engine.cpp" line="1636" />
         <source>Printer emulation started.</source>
         <translation>Эмуляция принтера запущена.</translation>
+    </message>
+</context>
+<context>
+    <name>EpsonPrinter</name>
+    <message>
+        <location filename="../epsonprinter.cpp" line="66" />
+        <source>[%1] ignored</source>
+        <translation type="unfinished">[%1] пропущено</translation>
+    </message>
+    <message>
+        <location filename="../epsonprinter.cpp" line="78" />
+        <source>[%1] Get status.</source>
+        <translation type="unfinished">[%1] Получение статуса.</translation>
+    </message>
+    <message>
+        <location filename="../epsonprinter.cpp" line="100" />
+        <source>[%1] Received %2 bytes. Parsing instantly.</source>
+        <translation>[%1] Получено %2 байт, обработка.</translation>
+    </message>
+    <message>
+        <location filename="../epsonprinter.cpp" line="118" />
+        <source>[%1] Print Job Closed by Atari.</source>
+        <translation>[%1] Atari закрыла задание печати.</translation>
+    </message>
+    <message>
+        <location filename="../epsonprinter.cpp" line="133" />
+        <source>[%1] Unknown Command: $%2</source>
+        <translation>[%1] Неизвестная команда: $%2</translation>
     </message>
 </context>
 <context>
@@ -1440,74 +1490,74 @@ When you hear the beep sound, push the play button and press a key on your Atari
         <translation>Онлайн-серверы</translation>
     </message>
     <message>
-        <location filename="../qml/NetworkBrowserDialog.qml" line="129" />
+        <location filename="../qml/NetworkBrowserDialog.qml" line="133" />
         <source>Favourite this address</source>
         <translation>В избранное</translation>
     </message>
     <message>
-        <location filename="../qml/NetworkBrowserDialog.qml" line="136" />
+        <location filename="../qml/NetworkBrowserDialog.qml" line="140" />
         <source>Connect</source>
         <translation>Подключиться</translation>
     </message>
     <message>
-        <location filename="../qml/NetworkBrowserDialog.qml" line="142" />
+        <location filename="../qml/NetworkBrowserDialog.qml" line="146" />
         <source>Refresh</source>
         <translation>Обновить</translation>
     </message>
     <message>
-        <location filename="../qml/NetworkBrowserDialog.qml" line="206" />
-        <location filename="../qml/NetworkBrowserDialog.qml" line="235" />
+        <location filename="../qml/NetworkBrowserDialog.qml" line="210" />
+        <location filename="../qml/NetworkBrowserDialog.qml" line="239" />
         <source>Mount</source>
         <translation>Монтировать</translation>
     </message>
     <message>
-        <location filename="../qml/NetworkBrowserDialog.qml" line="210" />
-        <location filename="../qml/NetworkBrowserDialog.qml" line="242" />
+        <location filename="../qml/NetworkBrowserDialog.qml" line="214" />
+        <location filename="../qml/NetworkBrowserDialog.qml" line="246" />
         <source>Download</source>
         <translation>Скачать</translation>
     </message>
     <message>
-        <location filename="../qml/NetworkBrowserDialog.qml" line="211" />
+        <location filename="../qml/NetworkBrowserDialog.qml" line="215" />
         <source>Download "%1"?</source>
         <translation>Скачать «%1»?</translation>
     </message>
     <message>
-        <location filename="../qml/NetworkBrowserDialog.qml" line="207" />
+        <location filename="../qml/NetworkBrowserDialog.qml" line="211" />
         <source>Mount "%1" in a free slot?</source>
         <translation>Смонтировать «%1» в свободный дисковод?</translation>
     </message>
     <message>
-        <location filename="../qml/NetworkBrowserDialog.qml" line="251" />
+        <location filename="../qml/NetworkBrowserDialog.qml" line="255" />
         <source>(no match)</source>
         <translation>(нет совпадений)</translation>
     </message>
     <message>
-        <location filename="../qml/NetworkBrowserDialog.qml" line="251" />
+        <location filename="../qml/NetworkBrowserDialog.qml" line="255" />
         <source>(empty)</source>
         <translation>(пусто)</translation>
     </message>
     <message>
-        <location filename="../qml/NetworkBrowserDialog.qml" line="284" />
+        <location filename="../qml/NetworkBrowserDialog.qml" line="288" />
         <source>Remove from favourites</source>
         <translation>Убрать из избранного</translation>
     </message>
     <message>
-        <location filename="../qml/NetworkBrowserDialog.qml" line="296" />
+        <location filename="../qml/NetworkBrowserDialog.qml" line="300" />
         <source>No favourite servers yet. Enter a tnfs://, sftp:// or ftp:// address, connect, and tap the star to save it.</source>
         <translation>Пока нет избранных серверов. Введите адрес tnfs://, sftp:// или ftp://, подключитесь и коснитесь звёздочки, чтобы сохранить.</translation>
     </message>
     <message>
-        <location filename="../qml/NetworkBrowserDialog.qml" line="319" />
+        <location filename="../qml/NetworkBrowserDialog.qml" line="323" />
         <source>Filter files…</source>
         <translation>Фильтр файлов…</translation>
     </message>
     <message>
-        <location filename="../qml/NetworkBrowserDialog.qml" line="328" />
+        <location filename="../qml/NetworkBrowserDialog.qml" line="332" />
         <source>Clear filter</source>
         <translation>Очистить фильтр</translation>
     </message>
     <message>
-        <location filename="../qml/NetworkBrowserDialog.qml" line="361" />
+        <location filename="../qml/NetworkBrowserDialog.qml" line="365" />
         <source>Close</source>
         <translation type="unfinished">Закрыть</translation>
     </message>
@@ -1515,48 +1565,53 @@ When you hear the beep sound, push the play button and press a key on your Atari
 <context>
     <name>NetworkWorker</name>
     <message>
-        <location filename="../networkbrowser.cpp" line="64" />
+        <location filename="../networkbrowser.cpp" line="69" />
+        <source>Bad address: %1</source>
+        <translation>Неверный адрес: %1</translation>
+    </message>
+    <message>
+        <location filename="../networkbrowser.cpp" line="72" />
         <source>No host in the address.</source>
         <translation>В адресе нет хоста.</translation>
     </message>
     <message>
-        <location filename="../networkbrowser.cpp" line="77" />
+        <location filename="../networkbrowser.cpp" line="85" />
         <source>SFTP is not available in this build.</source>
         <translation>SFTP недоступен в этой сборке.</translation>
     </message>
     <message>
-        <location filename="../networkbrowser.cpp" line="86" />
+        <location filename="../networkbrowser.cpp" line="94" />
         <source>Could not connect to %1.</source>
         <translation>Не удалось подключиться к %1.</translation>
     </message>
     <message>
-        <location filename="../networkbrowser.cpp" line="94" />
+        <location filename="../networkbrowser.cpp" line="102" />
         <source>TNFS mount failed on %1.</source>
         <translation>Не удалось смонтировать TNFS на %1.</translation>
     </message>
     <message>
-        <location filename="../networkbrowser.cpp" line="107" />
-        <location filename="../networkbrowser.cpp" line="176" />
+        <location filename="../networkbrowser.cpp" line="115" />
+        <location filename="../networkbrowser.cpp" line="184" />
         <source>Not connected.</source>
         <translation>Нет подключения.</translation>
     </message>
     <message>
-        <location filename="../networkbrowser.cpp" line="127" />
+        <location filename="../networkbrowser.cpp" line="135" />
         <source>Cannot write %1.</source>
         <translation>Не удалось записать %1.</translation>
     </message>
     <message>
-        <location filename="../networkbrowser.cpp" line="138" />
+        <location filename="../networkbrowser.cpp" line="146" />
         <source>Cannot open %1.</source>
         <translation>Не удалось открыть %1.</translation>
     </message>
     <message>
-        <location filename="../networkbrowser.cpp" line="154" />
+        <location filename="../networkbrowser.cpp" line="162" />
         <source>Download of %1 failed (empty).</source>
         <translation>Не удалось скачать %1 (пусто).</translation>
     </message>
     <message>
-        <location filename="../networkbrowser.cpp" line="178" />
+        <location filename="../networkbrowser.cpp" line="186" />
         <source>Could not open %1.</source>
         <translation>Не удалось открыть %1.</translation>
     </message>
@@ -1564,177 +1619,213 @@ When you hear the beep sound, push the play button and press a key on your Atari
 <context>
     <name>OptionsDialog</name>
     <message>
-        <location filename="../qml/OptionsDialog.qml" line="151" />
+        <location filename="../qml/OptionsDialog.qml" line="155" />
         <source>Options</source>
         <translation>Настройки</translation>
     </message>
     <message>
-        <location filename="../qml/OptionsDialog.qml" line="346" />
+        <location filename="../qml/OptionsDialog.qml" line="386" />
         <source>User interface</source>
         <translation>Интерфейс</translation>
     </message>
     <message>
-        <location filename="../qml/OptionsDialog.qml" line="182" />
+        <location filename="../qml/OptionsDialog.qml" line="186" />
         <source>Handshake method:</source>
         <translation>Метод рукопожатия:</translation>
     </message>
     <message>
-        <location filename="../qml/OptionsDialog.qml" line="368" />
+        <location filename="../qml/OptionsDialog.qml" line="408" />
         <source>Save</source>
         <translation>Сохранить</translation>
     </message>
     <message>
-        <location filename="../qml/OptionsDialog.qml" line="176" />
+        <location filename="../qml/OptionsDialog.qml" line="180" />
         <source>Serial interface:</source>
         <translation>Последовательный интерфейс:</translation>
     </message>
     <message>
-        <location filename="../qml/OptionsDialog.qml" line="215" />
+        <location filename="../qml/OptionsDialog.qml" line="219" />
         <source>Write ACK delay [ms]</source>
         <translation>Задержка ACK при записи [мс]</translation>
     </message>
     <message>
-        <location filename="../qml/OptionsDialog.qml" line="174" />
+        <location filename="../qml/OptionsDialog.qml" line="178" />
         <source>SIO port emulation</source>
         <translation>Эмуляция порта SIO</translation>
     </message>
     <message>
-        <location filename="../qml/OptionsDialog.qml" line="193" />
+        <location filename="../qml/OptionsDialog.qml" line="197" />
         <source>Transmission speed [bps]:</source>
         <translation>Скорость передачи [бит/с]:</translation>
     </message>
     <message>
-        <location filename="../qml/OptionsDialog.qml" line="204" />
+        <location filename="../qml/OptionsDialog.qml" line="208" />
         <source>Bluetooth name:</source>
         <translation>Имя Bluetooth:</translation>
     </message>
     <message>
-        <location filename="../qml/OptionsDialog.qml" line="219" />
+        <location filename="../qml/OptionsDialog.qml" line="223" />
         <source>Use non-standard speeds</source>
         <translation>Использовать нестандартную скорость</translation>
     </message>
     <message>
-        <location filename="../qml/OptionsDialog.qml" line="223" />
+        <location filename="../qml/OptionsDialog.qml" line="227" />
         <source>POKEY divisor:</source>
         <translation>Делитель POKEY:</translation>
     </message>
     <message>
-        <location filename="../qml/OptionsDialog.qml" line="230" />
+        <location filename="../qml/OptionsDialog.qml" line="234" />
         <source>Emulation settings</source>
         <translation>Настройки эмуляции</translation>
     </message>
     <message>
-        <location filename="../qml/OptionsDialog.qml" line="236" />
+        <location filename="../qml/OptionsDialog.qml" line="240" />
         <source>Cassette baud rate:</source>
         <translation>Скорость кассеты:</translation>
     </message>
     <message>
-        <location filename="../qml/OptionsDialog.qml" line="243" />
+        <location filename="../qml/OptionsDialog.qml" line="247" />
         <source>Folder images</source>
         <translation>Образы папок</translation>
     </message>
     <message>
-        <location filename="../qml/OptionsDialog.qml" line="246" />
+        <location filename="../qml/OptionsDialog.qml" line="250" />
         <source>(Required for AtariDOS compatibility)</source>
         <translation>(Требуется для совместимости с AtariDOS)</translation>
     </message>
     <message>
-        <location filename="../qml/OptionsDialog.qml" line="255" />
+        <location filename="../qml/OptionsDialog.qml" line="259" />
+        <source>Printer emulation</source>
+        <translation type="unfinished">Эмуляция принтера</translation>
+    </message>
+    <message>
+        <location filename="../qml/OptionsDialog.qml" line="261" />
+        <source>Emulate an Epson ESC/P printer</source>
+        <translation>Эмулировать принтер Epson ESC/P</translation>
+    </message>
+    <message>
+        <location filename="../qml/OptionsDialog.qml" line="266" />
+        <source>What the Atari prints is rendered onto a page you can view and save. The font is chosen in the printer output window.</source>
+        <translation>То, что печатает Atari, отрисовывается на странице, которую можно просмотреть и сохранить. Шрифт выбирается в окне печати.</translation>
+    </message>
+    <message>
+        <location filename="../qml/OptionsDialog.qml" line="279" />
+        <source>Print a test page</source>
+        <translation>Напечатать тестовую страницу</translation>
+    </message>
+    <message>
+        <location filename="../qml/OptionsDialog.qml" line="284" />
+        <source>Replay a capture…</source>
+        <translation>Воспроизвести запись…</translation>
+    </message>
+    <message>
+        <location filename="../qml/OptionsDialog.qml" line="286" />
+        <source>Open a print capture</source>
+        <translation>Открыть запись печати</translation>
+    </message>
+    <message>
+        <location filename="../qml/OptionsDialog.qml" line="287" />
+        <source>Print captures (*.prn)</source>
+        <translation>Записи печати (*.prn)</translation>
+    </message>
+    <message>
+        <location filename="../qml/OptionsDialog.qml" line="295" />
         <source>R: device (modem)</source>
         <translation>Устройство R: (модем)</translation>
     </message>
     <message>
-        <location filename="../qml/OptionsDialog.qml" line="256" />
+        <location filename="../qml/OptionsDialog.qml" line="296" />
         <source>Emulate an Atari 850 interface</source>
         <translation>Эмулировать интерфейс Atari 850</translation>
     </message>
     <message>
-        <location filename="../qml/OptionsDialog.qml" line="258" />
+        <location filename="../qml/OptionsDialog.qml" line="298" />
         <source>Dial BBSes over TCP with a terminal program. Needs a hardware handshake method (RI/DSR/CTS), not SOFT.</source>
         <translation>Звоните на BBS по TCP из терминальной программы. Нужен аппаратный метод квитирования (RI/DSR/CTS), не SOFT.</translation>
     </message>
     <message>
-        <location filename="../qml/OptionsDialog.qml" line="269" />
+        <location filename="../qml/OptionsDialog.qml" line="309" />
         <source>Use the bundled BBS list</source>
         <translation>Использовать встроенный список BBS</translation>
     </message>
     <message>
-        <location filename="../qml/OptionsDialog.qml" line="280" />
+        <location filename="../qml/OptionsDialog.qml" line="320" />
         <source>Could not install the bundled list, see the log.</source>
         <translation>Не удалось установить встроенный список, см. журнал.</translation>
     </message>
     <message>
-        <location filename="../qml/OptionsDialog.qml" line="288" />
+        <location filename="../qml/OptionsDialog.qml" line="328" />
         <source>A copy of the telnet BBS list that ships with AspeQt-2k26. An existing copy is kept, not overwritten.</source>
         <translation>Копия telnet-списка BBS, поставляемого с AspeQt-2k26. Существующая копия сохраняется и не перезаписывается.</translation>
     </message>
     <message>
-        <location filename="../qml/OptionsDialog.qml" line="298" />
+        <location filename="../qml/OptionsDialog.qml" line="338" />
         <source>Phonebook file:</source>
         <translation>Файл телефонной книги:</translation>
     </message>
     <message>
-        <location filename="../qml/OptionsDialog.qml" line="307" />
+        <location filename="../qml/OptionsDialog.qml" line="347" />
         <source>(none)</source>
         <translation>(нет)</translation>
     </message>
     <message>
-        <location filename="../qml/OptionsDialog.qml" line="314" />
+        <location filename="../qml/OptionsDialog.qml" line="354" />
         <source>Choose</source>
         <translation>Выбрать</translation>
     </message>
     <message>
-        <location filename="../qml/OptionsDialog.qml" line="317" />
+        <location filename="../qml/OptionsDialog.qml" line="357" />
         <source>Phonebook file</source>
         <translation>Файл телефонной книги</translation>
     </message>
     <message>
-        <location filename="../qml/OptionsDialog.qml" line="317" />
+        <location filename="../qml/OptionsDialog.qml" line="357" />
         <source>XML files (*.xml)</source>
         <translation>Файлы XML (*.xml)</translation>
     </message>
     <message>
-        <location filename="../qml/OptionsDialog.qml" line="317" />
+        <location filename="../qml/OptionsDialog.qml" line="287" />
+        <location filename="../qml/OptionsDialog.qml" line="357" />
         <source>All files (*)</source>
         <translation type="unfinished">Все файлы (*)</translation>
     </message>
     <message>
-        <location filename="../qml/OptionsDialog.qml" line="324" />
+        <location filename="../qml/OptionsDialog.qml" line="364" />
         <source>Answer incoming calls</source>
         <translation>Отвечать на входящие вызовы</translation>
     </message>
     <message>
-        <location filename="../qml/OptionsDialog.qml" line="330" />
+        <location filename="../qml/OptionsDialog.qml" line="370" />
         <source>Listen on port:</source>
         <translation>Слушать порт:</translation>
     </message>
     <message>
-        <location filename="../qml/OptionsDialog.qml" line="367" />
+        <location filename="../qml/OptionsDialog.qml" line="407" />
         <source>Cancel</source>
         <translation>Отмена</translation>
     </message>
     <message>
-        <location filename="../qml/OptionsDialog.qml" line="231" />
+        <location filename="../qml/OptionsDialog.qml" line="235" />
         <source>Use high speed executable loader</source>
         <translation>Быстрый загрузчик исполняемых файлов</translation>
     </message>
     <message>
-        <location filename="../qml/OptionsDialog.qml" line="232" />
+        <location filename="../qml/OptionsDialog.qml" line="236" />
         <source>Use custom baud rate for cassette emulation</source>
         <translation>Нестандартная скорость обмена для кассеты</translation>
     </message>
     <message>
-        <location filename="../qml/OptionsDialog.qml" line="244" />
+        <location filename="../qml/OptionsDialog.qml" line="248" />
         <source>Filter out underscore character from file names</source>
         <translation>Убирать символ подчёркивания из имён файлов</translation>
     </message>
     <message>
-        <location filename="../qml/OptionsDialog.qml" line="347" />
+        <location filename="../qml/OptionsDialog.qml" line="387" />
         <source>Language:</source>
         <translation>Язык:</translation>
     </message>
     <message>
-        <location filename="../engine.cpp" line="1921" />
+        <location filename="../engine.cpp" line="2038" />
         <source>English</source>
         <translation>Russian</translation>
     </message>
@@ -2466,89 +2557,70 @@ When you hear the beep sound, push the play button and press a key on your Atari
 <context>
     <name>PrintWindow</name>
     <message>
-        <location filename="../qml/PrintWindow.qml" line="43" />
-        <source>Printer text output</source>
-        <translation>Текстовый вывод принтера</translation>
-    </message>
-    <message>
-        <location filename="../qml/PrintWindow.qml" line="79" />
-        <source>Word wrap</source>
-        <translation>Перенос слов</translation>
+        <location filename="../qml/PrintWindow.qml" line="55" />
+        <source>Printer output</source>
+        <translation>Вывод принтера</translation>
     </message>
     <message>
         <location filename="../qml/PrintWindow.qml" line="86" />
-        <source>Show ATASCII</source>
-        <translation>Показать ATASCII</translation>
+        <source>Fit width</source>
+        <translation>По ширине</translation>
     </message>
     <message>
         <location filename="../qml/PrintWindow.qml" line="92" />
-        <source>Clear contents</source>
-        <translation>Очистить контент</translation>
+        <source>Clear the paper</source>
+        <translation>Очистить бумагу</translation>
     </message>
     <message>
-        <location filename="../qml/PrintWindow.qml" line="97" />
-        <source>Save as text</source>
-        <translation>Сохранить как текст</translation>
+        <location filename="../qml/PrintWindow.qml" line="93" />
+        <source>Printer</source>
+        <translation>Принтер</translation>
     </message>
     <message>
-        <location filename="../qml/PrintWindow.qml" line="99" />
-        <location filename="../qml/PrintWindow.qml" line="106" />
+        <location filename="../qml/PrintWindow.qml" line="94" />
+        <source>Throw away the printed page?</source>
+        <translation>Выбросить напечатанную страницу?</translation>
+    </message>
+    <message>
+        <location filename="../qml/PrintWindow.qml" line="101" />
+        <source>Save as…</source>
+        <translation>Сохранить как…</translation>
+    </message>
+    <message>
+        <location filename="../qml/PrintWindow.qml" line="108" />
+        <source>Save as PNG image</source>
+        <translation>Сохранить как изображение PNG</translation>
+    </message>
+    <message>
+        <location filename="../qml/PrintWindow.qml" line="110" />
+        <location filename="../qml/PrintWindow.qml" line="116" />
         <source>Save printout</source>
         <translation>Сохранить распечатку</translation>
     </message>
     <message>
-        <location filename="../qml/PrintWindow.qml" line="99" />
-        <source>Text files (*.txt)</source>
-        <translation>Текстовые файлы (*.txt)</translation>
+        <location filename="../qml/PrintWindow.qml" line="110" />
+        <source>PNG images (*.png)</source>
+        <translation>Изображения PNG (*.png)</translation>
     </message>
     <message>
-        <location filename="../qml/PrintWindow.qml" line="104" />
-        <source>Save as PDF</source>
-        <translation>Сохранить как PDF</translation>
+        <location filename="../qml/PrintWindow.qml" line="114" />
+        <source>Save as PDF document</source>
+        <translation>Сохранить как документ PDF</translation>
     </message>
     <message>
-        <location filename="../qml/PrintWindow.qml" line="106" />
-        <source>PDF files (*.pdf)</source>
-        <translation>Файлы PDF (*.pdf)</translation>
+        <location filename="../qml/PrintWindow.qml" line="116" />
+        <source>PDF documents (*.pdf)</source>
+        <translation>Документы PDF (*.pdf)</translation>
     </message>
     <message>
-        <location filename="../qml/PrintWindow.qml" line="156" />
+        <location filename="../qml/PrintWindow.qml" line="165" />
+        <source>Nothing printed yet.</source>
+        <translation>Пока ничего не напечатано.</translation>
+    </message>
+    <message>
+        <location filename="../qml/PrintWindow.qml" line="180" />
         <source>Close</source>
         <translation>Закрыть</translation>
-    </message>
-</context>
-<context>
-    <name>Printer</name>
-    <message>
-        <location filename="../miscdevices.cpp" line="41" />
-        <source>[%1] Get status.</source>
-        <translation>[%1] Получение статуса.</translation>
-    </message>
-    <message>
-        <location filename="../miscdevices.cpp" line="64" />
-        <location filename="../miscdevices.cpp" line="101" />
-        <source>[%1] command: $%2, aux: $%3 NAKed.</source>
-        <translation>[%1] команда: $%2, aux: $%3 NAKed.</translation>
-    </message>
-    <message>
-        <location filename="../miscdevices.cpp" line="72" />
-        <source>[%1] Converting Inverse Video Characters for ASCII viewing</source>
-        <translation>[%1] Преобразование символов инверсного видео для просмотра ASCII</translation>
-    </message>
-    <message>
-        <location filename="../miscdevices.cpp" line="79" />
-        <source>[%1] Print: data frame failed</source>
-        <translation>[%1] Печать: ошибка фрейма данных</translation>
-    </message>
-    <message>
-        <location filename="../miscdevices.cpp" line="85" />
-        <source>[%1] Print (%2 chars)</source>
-        <translation>[%1] Печать (%2 символов)</translation>
-    </message>
-    <message>
-        <location filename="../miscdevices.cpp" line="107" />
-        <source>[%1] ignored</source>
-        <translation>[%1] пропущено</translation>
     </message>
 </context>
 <context>
@@ -2572,7 +2644,7 @@ When you hear the beep sound, push the play button and press a key on your Atari
 <context>
     <name>RDevice</name>
     <message>
-        <location filename="../rdevice.cpp" line="1019" />
+        <location filename="../rdevice.cpp" line="1077" />
         <source>[RDevice] Dialing %1:%2...</source>
         <translation type="unfinished" />
     </message>
@@ -3013,23 +3085,23 @@ When you hear the beep sound, push the play button and press a key on your Atari
 <context>
     <name>SmartDevice</name>
     <message>
-        <location filename="../miscdevices.cpp" line="138" />
+        <location filename="../miscdevices.cpp" line="49" />
         <source>[%1] Read date/time (%2).</source>
         <translation>[%1] Чтение даты/времени (%2).</translation>
     </message>
     <message>
-        <location filename="../miscdevices.cpp" line="158" />
+        <location filename="../miscdevices.cpp" line="69" />
         <source>[%1] Read data frame failed</source>
         <translation>[%1] Не удалось прочитать кадр данных</translation>
     </message>
     <message>
-        <location filename="../miscdevices.cpp" line="169" />
+        <location filename="../miscdevices.cpp" line="85" />
         <source>URL [%1] submitted</source>
         <translation>URL [%1] отправлен</translation>
     </message>
     <message>
-        <location filename="../miscdevices.cpp" line="174" />
-        <location filename="../miscdevices.cpp" line="186" />
+        <location filename="../miscdevices.cpp" line="90" />
+        <location filename="../miscdevices.cpp" line="102" />
         <source>[%1] command: $%2, aux: $%3 NAKed.</source>
         <translation>[%1] команда: $%2, aux: $%3 NAKed.</translation>
     </message>
