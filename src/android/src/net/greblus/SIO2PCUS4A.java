@@ -209,6 +209,12 @@ public class SIO2PCUS4A implements SerialDevice
             sPort.setParameters(19200, 8, UsbSerialPort.STOPBITS_1, UsbSerialPort.PARITY_NONE);
             sPort.setDTR(true);
             sPort.setRTS(true);
+            // Start from a clean line: the FTDI buffers can still hold whatever
+            // the Atari sent before we opened (or a previous session left), and
+            // replaying that as the first command frame breaks the boot.
+            try { sPort.purgeHwBuffers(true, true); } catch (Exception e) {}
+            skipPurgeOnce = false;
+            resetCommandLatch();
             // Cache the connection + read endpoint for sioRead() and rawStatus().
             // (The FTDI latency timer is left at its 16 ms default, like the old
             // fork — lower values split the 5-byte command frame across packets.)
