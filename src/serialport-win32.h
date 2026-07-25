@@ -2,6 +2,7 @@
 #define SERIALPORTWIN32_H
 
 #include "serialport.h"
+#include <atomic>
 
 class StandardSerialPortBackend : public AbstractSerialPortBackend
 {
@@ -31,7 +32,8 @@ public:
     bool writeRawFrame(const QByteArray &data);
 
 private:
-    bool mCanceled;
+    // Set from the GUI thread to break the command-frame wait loop.
+    std::atomic<bool> mCanceled{false};
     bool mHighSpeed;
     void *mHandle, *mCancelHandle;
     int mSpeed;

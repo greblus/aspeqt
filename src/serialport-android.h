@@ -2,6 +2,7 @@
 #define SERIALPORTUNIX_H
 
 #include "serialport.h"
+#include <atomic>
 
 class StandardSerialPortBackend : public AbstractSerialPortBackend
 {
@@ -36,7 +37,8 @@ public:
     bool isCommandLineAsserted() override;
 
 private:
-    bool mCanceled;
+    // Set from the GUI thread to break the command-frame wait loop.
+    std::atomic<bool> mCanceled{false};
     int mHandle;
     int mSpeed;
     int mMethod;

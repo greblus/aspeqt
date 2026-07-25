@@ -41,6 +41,13 @@ public class SerialActivity extends QtActivity
 
         // The SIO cable was plugged in while we were already running.
         public static native void usbAttached();
+
+        // Set while emulation is being stopped. The frame-reading loops below
+        // poll it so a stop takes effect immediately instead of waiting out
+        // multi-second USB reads (or until the cable is pulled).
+        public static volatile boolean cancelWait = false;
+
+        public static void setCancelWait(boolean v) { cancelWait = v; }
         private static final int SAF_REQ_BASE = 0x5AF0;
         private static int m_safReqId = 0;
         protected static ByteBuffer rbuf = ByteBuffer.allocateDirect(65535);

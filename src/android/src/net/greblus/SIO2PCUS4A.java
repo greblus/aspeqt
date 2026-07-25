@@ -499,6 +499,7 @@ public class SIO2PCUS4A implements SerialDevice
     while (true) {
         ret = 0; total = 0; total_retries = 0;
         do {
+            if (SerialActivity.cancelWait) return 2;
             if (total_retries > 2) return 2;
             try {
                 ret = sioRead(sa.rb, 5-total, 5000);
@@ -575,6 +576,7 @@ public class SIO2PCUS4A implements SerialDevice
     do {
         status = 0; total_retries = 0;
         do {
+            if (SerialActivity.cancelWait) return 2;
             if (total_retries > 10e2) return 2;
             status = getModemStatus();
             total_retries += 1;
@@ -611,6 +613,7 @@ public class SIO2PCUS4A implements SerialDevice
         do {
             res = 0;
             try {
+                if (SerialActivity.cancelWait) return 2;
                 if (total_retries > 4) return 2;
                 res = sioRead(sa.rb, 5-total, 5000); }
             catch (IOException e) {};
@@ -634,6 +637,7 @@ public class SIO2PCUS4A implements SerialDevice
 
         total_retries = 0;
         do {
+            if (SerialActivity.cancelWait) return 2;
             if (total_retries > 10e2) return 2;
             status = getModemStatus();
             total_retries += 1;

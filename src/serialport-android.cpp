@@ -68,6 +68,8 @@ bool StandardSerialPortBackend::open()
 
     mMethod = aspeqtSettings->serialPortHandshakingMethod();
     mCanceled = false;
+    QJniObject::callStaticMethod<void>("net/greblus/SerialActivity",
+                                       "setCancelWait", "(Z)V", (jboolean)false);
 
     if (!setNormalSpeed()) {
         close();
@@ -117,6 +119,10 @@ void StandardSerialPortBackend::cancel()
 {
     if (debug) qWarning() << "!i" << tr("cancel");
     mCanceled = true;
+    // Break the Java side out of its frame wait as well: it sits in multi-second
+    // USB reads and status polls that otherwise only end when the cable is pulled.
+    QJniObject::callStaticMethod<void>("net/greblus/SerialActivity",
+                                       "setCancelWait", "(Z)V", (jboolean)true);
 }
 
 int StandardSerialPortBackend::speedByte()
