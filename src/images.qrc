@@ -3,6 +3,5 @@
         <file>images/MainWindowBackGround.png</file>
         <file>tape.gif</file>
         <file alias="tape-reel.png">images/tape-reel.png</file>
-        <file alias="AtariClassicChunky.ttf">fonts/AtariClassicChunky.ttf</file>
     </qresource>
 </RCC>
