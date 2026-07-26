@@ -1281,7 +1281,43 @@ void Engine::loadTranslators()
         qApp->installTranslator(&aspeqt_qt_translator);
         qApp->installTranslator(&aspeqt_translator);
     }
+#ifdef Q_OS_ANDROID
+    pushAndroidStrings();
+#endif
 }
+
+#ifdef Q_OS_ANDROID
+// The Java side raises toasts of its own (cable connected, bluetooth refused).
+// Their text used to live in res/values-*/strings.xml, which cannot work here:
+// Android picks a resource by the *phone's* locale, while AspeQt has its own
+// language setting -- and Qt's generated build.gradle carries `resConfig "en"`,
+// so every translated resource is stripped from the package anyway. Push the
+// strings down instead, from the same .ts files as the rest of the UI, and
+// re-push whenever the language changes.
+void Engine::pushAndroidStrings()
+{
+    const QList<QPair<const char *, QString>> msgs = {
+        { "bt_module_not_present",    tr("BT module not present.") },
+        { "bt_module_check",          tr("Turn BT on, check your BT module name set in options and make sure it's paired") },
+        { "bt_try_connecting",        tr("Connecting with SIO2BT. Please wait...") },
+        { "bt_connected",             tr("Connected with SIO2BT.") },
+        { "bt_failed_connecting",     tr("Failed to connect with SIO2BT. Try again...") },
+        { "bt_no_permission",         tr("AspeQt needs the Bluetooth permission to talk to SIO2BT.") },
+        { "bt_turn_on",               tr("Turn Bluetooth on, then start the emulation again.") },
+        { "sio2pc_connected",         tr("Connected with SIO2PC-USB.") },
+        { "sio2pc_failed_connecting", tr("Failed to connect with SIO2PC-USB.") },
+        { "sio2pc_no_permissions",    tr("No permissions for SIO2PC-USB.") },
+        { "sio2pc_not_attached",      tr("SIO2PC-USB is not attached.") },
+    };
+    for (const auto &m : msgs) {
+        QJniObject key = QJniObject::fromString(QLatin1String(m.first));
+        QJniObject val = QJniObject::fromString(m.second);
+        QJniObject::callStaticMethod<void>("net/greblus/SerialActivity", "setMessage",
+                                           "(Ljava/lang/String;Ljava/lang/String;)V",
+                                           key.object<jstring>(), val.object<jstring>());
+    }
+}
+#endif
 
 int Engine::saveDisk(int no)
 {

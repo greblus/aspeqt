@@ -31,13 +31,13 @@ public class SIO2BT implements SerialDevice
         // Nothing else here: this runs from onCreate(), and enable() would need
         // a permission we have not asked for yet (SecurityException on API 31+).
         if (m_BluetoothAdapter == null)
-            Toast.makeText(sa, sa.getResources().getString(R.string.bt_module_not_present), Toast.LENGTH_SHORT).show();
+            Toast.makeText(sa, SerialActivity.msg("bt_module_not_present", R.string.bt_module_not_present), Toast.LENGTH_SHORT).show();
     }
 
-    private void toast(final int resId, final int length) {
+    private void toast(final String key, final int resId, final int length) {
         sa.runOnUiThread(new Runnable() {
             public void run() {
-                Toast.makeText(sa, sa.getResources().getString(resId), length).show();
+                Toast.makeText(sa, SerialActivity.msg(key, resId), length).show();
             }
         });
     }
@@ -51,7 +51,7 @@ public class SIO2BT implements SerialDevice
         // API 31+ gates everything below this line behind BLUETOOTH_CONNECT.
         if (!SerialActivity.ensureBluetoothPermission()) {
             Log.i("BT", "BLUETOOTH_CONNECT not granted");
-            toast(R.string.bt_no_permission, Toast.LENGTH_LONG);
+            toast("bt_no_permission", R.string.bt_no_permission, Toast.LENGTH_LONG);
             return 0;
         }
 
@@ -68,7 +68,7 @@ public class SIO2BT implements SerialDevice
                     }
                 }
             });
-            toast(R.string.bt_turn_on, Toast.LENGTH_LONG);
+            toast("bt_turn_on", R.string.bt_turn_on, Toast.LENGTH_LONG);
             return 0;
         }
 
@@ -92,7 +92,7 @@ public class SIO2BT implements SerialDevice
         if (m_device == null) {
             sa.runOnUiThread(new Runnable() {
                 public void run() {
-                    Toast.makeText(sa, sa.getResources().getString(R.string.bt_module_check), Toast.LENGTH_SHORT).show();
+                    Toast.makeText(sa, SerialActivity.msg("bt_module_check", R.string.bt_module_check), Toast.LENGTH_SHORT).show();
                 }
             });
         return 0;
@@ -111,7 +111,7 @@ public class SIO2BT implements SerialDevice
 
         if (m_socket != null)
         {
-            toast(R.string.bt_try_connecting, Toast.LENGTH_LONG);
+            toast("bt_try_connecting", R.string.bt_try_connecting, Toast.LENGTH_LONG);
 
             try {
                 m_socket.connect();
@@ -133,7 +133,7 @@ public class SIO2BT implements SerialDevice
                 Log.i("BT", "Device opened");
                 sa.runOnUiThread(new Runnable() {
                     public void run() {
-                        Toast.makeText(sa, sa.getResources().getString(R.string.bt_connected), Toast.LENGTH_LONG).show();
+                        Toast.makeText(sa, SerialActivity.msg("bt_connected", R.string.bt_connected), Toast.LENGTH_LONG).show();
                     }
                 });
             return 1;
@@ -142,7 +142,7 @@ public class SIO2BT implements SerialDevice
                 Log.i("BT", "Device not connected");
             sa.runOnUiThread(new Runnable() {
                 public void run() {
-                    Toast.makeText(sa, sa.getResources().getString(R.string.bt_failed_connecting), Toast.LENGTH_LONG).show();
+                    Toast.makeText(sa, SerialActivity.msg("bt_failed_connecting", R.string.bt_failed_connecting), Toast.LENGTH_LONG).show();
                 }
             });
             return 0;

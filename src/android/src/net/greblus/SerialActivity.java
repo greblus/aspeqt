@@ -63,6 +63,28 @@ public class SerialActivity extends QtActivity
         // Signalled when the async USB-permission result arrives, so openDevice()
         // can wait for it instead of racing ahead and failing to open.
         public static java.util.concurrent.CountDownLatch usbPermissionLatch;
+        // Toast texts, pushed down from the Qt side by Engine::pushAndroidStrings().
+        // res/values-*/strings.xml cannot serve them: Android picks those by the
+        // phone's locale, while AspeQt has its own language setting -- and Qt's
+        // generated build.gradle carries `resConfig "en"`, which strips every
+        // translated resource from the package anyway. The R.string values stay
+        // as the fallback for the brief moment before the engine has pushed.
+        private static final java.util.HashMap<String, String> s_msgs =
+                new java.util.HashMap<String, String>();
+
+        public static void setMessage(String key, String text) {
+            if (key != null && text != null)
+                s_msgs.put(key, text);
+        }
+
+        static String msg(String key, int fallbackResId) {
+            String s = s_msgs.get(key);
+            if (s != null)
+                return s;
+            return s_activity != null
+                    ? s_activity.getResources().getString(fallbackResId) : "";
+        }
+
         // Same trick for BLUETOOTH_CONNECT, which API 31+ requires at runtime.
         public static java.util.concurrent.CountDownLatch btPermissionLatch;
         private static final int BT_PERMISSION_REQUEST = 4711;
@@ -764,7 +786,7 @@ public class SerialActivity extends QtActivity
                         Log.i("USB", "Permission denied for device " + device);
                         SerialActivity.s_activity.runOnUiThread(new Runnable() {
                             public void run() {
-                                Toast.makeText(SerialActivity.s_activity, SerialActivity.s_activity.getResources().getString(R.string.sio2pc_no_permissions), Toast.LENGTH_LONG).show();
+                                Toast.makeText(SerialActivity.s_activity, SerialActivity.msg("sio2pc_no_permissions", R.string.sio2pc_no_permissions), Toast.LENGTH_LONG).show();
                             }
                         });
                     }

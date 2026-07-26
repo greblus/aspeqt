@@ -136,7 +136,7 @@ public class SIO2PCUS4A implements SerialDevice
         if (!deviceIterator.hasNext()) {
             sa.runOnUiThread(new Runnable() {
                 public void run() {
-                    Toast.makeText(sa, sa.getResources().getString(R.string.sio2pc_not_attached), Toast.LENGTH_LONG).show();
+                    Toast.makeText(sa, SerialActivity.msg("sio2pc_not_attached", R.string.sio2pc_not_attached), Toast.LENGTH_LONG).show();
                 }
             });
             return 0;
@@ -165,7 +165,7 @@ public class SIO2PCUS4A implements SerialDevice
         if (!dev_found) {
             sa.runOnUiThread(new Runnable() {
                 public void run() {
-                    Toast.makeText(sa, sa.getResources().getString(R.string.sio2pc_not_attached), Toast.LENGTH_LONG).show();
+                    Toast.makeText(sa, SerialActivity.msg("sio2pc_not_attached", R.string.sio2pc_not_attached), Toast.LENGTH_LONG).show();
                 }
             });
             return 0;
@@ -186,7 +186,7 @@ public class SIO2PCUS4A implements SerialDevice
             if (!manager.hasPermission(device)) {
                 sa.runOnUiThread(new Runnable() {
                     public void run() {
-                        Toast.makeText(sa, sa.getResources().getString(R.string.sio2pc_no_permissions), Toast.LENGTH_LONG).show();
+                        Toast.makeText(sa, SerialActivity.msg("sio2pc_no_permissions", R.string.sio2pc_no_permissions), Toast.LENGTH_LONG).show();
                     }
                 });
                 return 0;
@@ -225,7 +225,7 @@ public class SIO2PCUS4A implements SerialDevice
             if (debug) Log.i("USB", "Can't open port");
             sa.runOnUiThread(new Runnable() {
                 public void run() {
-                    Toast.makeText(sa, sa.getResources().getString(R.string.sio2pc_failed_connecting), Toast.LENGTH_LONG).show();
+                    Toast.makeText(sa, SerialActivity.msg("sio2pc_failed_connecting", R.string.sio2pc_failed_connecting), Toast.LENGTH_LONG).show();
                 }
             });
             return -1;
@@ -233,7 +233,7 @@ public class SIO2PCUS4A implements SerialDevice
         if (debug) Log.i("USB", "Device opened");
         sa.runOnUiThread(new Runnable() {
             public void run() {
-                Toast.makeText(sa, sa.getResources().getString(R.string.sio2pc_connected), Toast.LENGTH_LONG).show();
+                Toast.makeText(sa, SerialActivity.msg("sio2pc_connected", R.string.sio2pc_connected), Toast.LENGTH_LONG).show();
             }
         });
         return 1;

@@ -135,6 +135,10 @@ private:
     void ejectImage(int no);
     void toggleWriteProtection(int no);
     void loadTranslators();
+#ifdef Q_OS_ANDROID
+    // Hand the Java side its toast texts in the current language.
+    void pushAndroidStrings();
+#endif
     void autoSaveDisk(int no);                                              //
 
 protected:
