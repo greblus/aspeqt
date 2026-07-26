@@ -17,5 +17,7 @@
     <string name="sio2pc_failed_connecting">Brak połączenia z SIO2PC-USB.</string>
     <string name="sio2pc_no_permissions">Brak uprawnień dla SIO2PC-USB.</string>
     <string name="sio2pc_not_attached">SIO2PC-USB nie jest podłączone.</string>
+    <string name="bt_no_permission">AspeQt potrzebuje uprawnienia Bluetooth, żeby połączyć się z SIO2BT.</string>
+    <string name="bt_turn_on">Włącz Bluetooth i uruchom emulację ponownie.</string>
     <string name="bt_module_not_present">Brak adaptera BT w urządzeniu.</string>
 </resources>

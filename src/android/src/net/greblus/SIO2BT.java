@@ -28,11 +28,18 @@ public class SIO2BT implements SerialDevice
 
     SIO2BT() {
         m_BluetoothAdapter = BluetoothAdapter.getDefaultAdapter();
+        // Nothing else here: this runs from onCreate(), and enable() would need
+        // a permission we have not asked for yet (SecurityException on API 31+).
         if (m_BluetoothAdapter == null)
             Toast.makeText(sa, sa.getResources().getString(R.string.bt_module_not_present), Toast.LENGTH_SHORT).show();
-        else
-            if (!m_BluetoothAdapter.isEnabled())
-                m_BluetoothAdapter.enable();
+    }
+
+    private void toast(final int resId, final int length) {
+        sa.runOnUiThread(new Runnable() {
+            public void run() {
+                Toast.makeText(sa, sa.getResources().getString(resId), length).show();
+            }
+        });
     }
 
     public int openDevice() {
@@ -41,22 +48,45 @@ public class SIO2BT implements SerialDevice
             return 0;
         }
 
-        if (!m_BluetoothAdapter.isEnabled())
-            m_BluetoothAdapter.enable();
+        // API 31+ gates everything below this line behind BLUETOOTH_CONNECT.
+        if (!SerialActivity.ensureBluetoothPermission()) {
+            Log.i("BT", "BLUETOOTH_CONNECT not granted");
+            toast(R.string.bt_no_permission, Toast.LENGTH_LONG);
+            return 0;
+        }
 
-        while (!m_BluetoothAdapter.isEnabled()) {} //let's wait for BT a little bit
+        // enable() is a no-op for apps since API 33, so the old "spin until the
+        // adapter comes up" loop would hang forever with Bluetooth off. Ask the
+        // user with the system dialog instead and let them start again.
+        if (!m_BluetoothAdapter.isEnabled()) {
+            sa.runOnUiThread(new Runnable() {
+                public void run() {
+                    try {
+                        sa.startActivity(new Intent(BluetoothAdapter.ACTION_REQUEST_ENABLE));
+                    } catch (Exception e) {
+                        Log.i("BT", "cannot ask to enable BT: " + e);
+                    }
+                }
+            });
+            toast(R.string.bt_turn_on, Toast.LENGTH_LONG);
+            return 0;
+        }
 
-        m_BluetoothAdapter.cancelDiscovery();
-        Set<BluetoothDevice> pairedDevices = m_BluetoothAdapter.getBondedDevices();
-        if (pairedDevices.size() > 0) {
+        // No cancelDiscovery() here: we never start discovery, and the call
+        // needs BLUETOOTH_SCAN -- which is what used to throw right here.
+        m_device = null;
+        try {
+            Set<BluetoothDevice> pairedDevices = m_BluetoothAdapter.getBondedDevices();
             for (BluetoothDevice device : pairedDevices) {
-                if (device.getName().equals(sa.bluetoothName)) {
-                    if (debug) Log.i("BT", device.getName());
+                final String name = device.getName();
+                if (name != null && name.equals(sa.bluetoothName)) {
+                    if (debug) Log.i("BT", name);
                     m_device = device;
                     break;
-                } else
-                    m_device = null;
+                }
             }
+        } catch (SecurityException e) {
+            Log.i("BT", "getBondedDevices: " + e);
         }
 
         if (m_device == null) {
@@ -72,23 +102,29 @@ public class SIO2BT implements SerialDevice
         BluetoothSocket tmp = null;
         try {
                 tmp = m_device.createRfcommSocketToServiceRecord(uuid);
-        } catch (IOException e) { }
+        } catch (IOException e) {
+            Log.i("BT", "createRfcommSocket: " + e);
+        } catch (SecurityException e) {
+            Log.i("BT", "createRfcommSocket: " + e);
+        }
         m_socket = tmp;
 
         if (m_socket != null)
         {
-            sa.runOnUiThread(new Runnable() {
-                public void run() {
-                    Toast.makeText(sa, sa.getResources().getString(R.string.bt_try_connecting), Toast.LENGTH_LONG).show();
-                }
-            });
+            toast(R.string.bt_try_connecting, Toast.LENGTH_LONG);
 
             try {
                 m_socket.connect();
-            } catch (IOException e) { }
+            } catch (Exception e) {
+                // Was silently swallowed, and the isConnected() below then threw
+                // NullPointerException on a socket that was never created.
+                Log.i("BT", "connect: " + e);
+                try { m_socket.close(); } catch (IOException ignored) { }
+                m_socket = null;
+            }
         }
 
-        if (m_socket.isConnected()) {
+        if (m_socket != null && m_socket.isConnected()) {
             try {
                 m_input = m_socket.getInputStream();
                 m_output = m_socket.getOutputStream();

@@ -63,6 +63,42 @@ public class SerialActivity extends QtActivity
         // Signalled when the async USB-permission result arrives, so openDevice()
         // can wait for it instead of racing ahead and failing to open.
         public static java.util.concurrent.CountDownLatch usbPermissionLatch;
+        // Same trick for BLUETOOTH_CONNECT, which API 31+ requires at runtime.
+        public static java.util.concurrent.CountDownLatch btPermissionLatch;
+        private static final int BT_PERMISSION_REQUEST = 4711;
+
+        // Called from SIO2BT.openDevice() on the SIO thread: ask on the UI
+        // thread and block here until the user has answered. Without the
+        // permission every classic-Bluetooth call throws SecurityException.
+        public static boolean ensureBluetoothPermission() {
+            if (android.os.Build.VERSION.SDK_INT < 31) return true;
+            if (s_activity == null) return false;
+            if (s_activity.checkSelfPermission(android.Manifest.permission.BLUETOOTH_CONNECT)
+                    == PackageManager.PERMISSION_GRANTED)
+                return true;
+
+            btPermissionLatch = new java.util.concurrent.CountDownLatch(1);
+            s_activity.runOnUiThread(new Runnable() {
+                public void run() {
+                    s_activity.requestPermissions(
+                            new String[]{ android.Manifest.permission.BLUETOOTH_CONNECT },
+                            BT_PERMISSION_REQUEST);
+                }
+            });
+            try {
+                btPermissionLatch.await(60, java.util.concurrent.TimeUnit.SECONDS);
+            } catch (InterruptedException e) {}
+            return s_activity.checkSelfPermission(android.Manifest.permission.BLUETOOTH_CONNECT)
+                    == PackageManager.PERMISSION_GRANTED;
+        }
+
+        @Override
+        public void onRequestPermissionsResult(int requestCode, String[] permissions,
+                                               int[] grantResults) {
+            super.onRequestPermissionsResult(requestCode, permissions, grantResults);
+            if (requestCode == BT_PERMISSION_REQUEST && btPermissionLatch != null)
+                btPermissionLatch.countDown();
+        }
 
         @Override
 	public void onCreate(Bundle savedInstanceState)
