@@ -29,10 +29,22 @@ Popup {
         syncAddress()
     }
     function syncAddress() {
-        addr.editText = netbrowser.connected
-            ? netbrowser.currentUrl
-            : (netbrowser.favorites.length > 0 ? netbrowser.favorites[0]
-               : (netbrowser.history.length > 0 ? netbrowser.history[0] : "tnfs://"))
+        // Left empty when disconnected on purpose: pre-filling it with a
+        // favourite lit the star up, so the obvious tap *removed* that favourite
+        // instead of adding the address in the field. The dropdown still offers
+        // favourites and history.
+        addr.editText = netbrowser.connected ? netbrowser.currentUrl : ""
+    }
+
+    // Is the address in the field a saved favourite? isFavorite() ignores the
+    // trailing slash; referencing netbrowser.favorites keeps the binding live.
+    readonly property bool addrIsFavorite:
+        netbrowser.favorites.length >= 0 && netbrowser.isFavorite(addr.editText)
+
+    function confirmRemoveFavorite(url) {
+        nbConfirm.ask(qsTr("Favourites"),
+                      qsTr("Remove \"%1\" from favourites?").arg(url),
+                      function (yes) { if (yes) netbrowser.toggleFavorite(url) })
     }
 
     // Address dropdown = favourites first, then recent history, de-duplicated.
@@ -73,6 +85,9 @@ Popup {
         function onSaved(localPath) { nb.notify(qsTr("Saved to ") + localPath) }
         function onEntriesChanged() { nb.rebuildFilter() }
         function onPathChanged() { if (netbrowser.connected) nb.syncAddress() }
+        // Disconnecting (home, or ".." at the server root) clears the address
+        // too, so the field matches what is on screen: the favourites list.
+        function onConnectedChanged() { nb.syncAddress() }
     }
 
     ConfirmDialog { id: nbConfirm }
@@ -130,9 +145,18 @@ Popup {
             SlotButton {
                 iconSize: nb.rowH - 2 * Theme.btnPad
                 source: Theme.icon("emblems/emblem-star.svg")
-                tip: qsTr("Favourite this address")
-                checked: netbrowser.favorites.indexOf(addr.editText) >= 0
-                onClicked: netbrowser.toggleFavorite(addr.editText)
+                tip: nb.addrIsFavorite ? qsTr("Remove from favourites")
+                                       : qsTr("Favourite this address")
+                checked: nb.addrIsFavorite
+                // Adding is harmless and immediate; removing always asks, so a
+                // stray tap cannot silently drop a saved server.
+                onClicked: {
+                    var u = addr.editText
+                    if (nb.addrIsFavorite)
+                        nb.confirmRemoveFavorite(u)
+                    else
+                        netbrowser.toggleFavorite(u)
+                }
             }
             SlotButton {
                 iconSize: nb.rowH - 2 * Theme.btnPad
@@ -140,12 +164,15 @@ Popup {
                 tip: qsTr("Connect")
                 onClicked: netbrowser.open(addr.editText)
             }
+            // Home = drop the connection and go back to the favourite servers.
+            // There is no separate refresh button: re-tapping the connect arrow
+            // with the same address reconnects and re-lists the directory.
             SlotButton {
                 iconSize: nb.rowH - 2 * Theme.btnPad
-                source: Theme.icon("actions/view-refresh.svg")
-                tip: qsTr("Refresh")
+                source: Theme.icon("actions/go-home.svg")
+                tip: qsTr("Favourite servers")
                 enabledState: netbrowser.connected
-                onClicked: netbrowser.refresh()
+                onClicked: netbrowser.close()
             }
         }
 
@@ -286,7 +313,7 @@ Popup {
                             source: Theme.icon("emblems/emblem-star.svg")
                             checked: true
                             tip: qsTr("Remove from favourites")
-                            onClicked: netbrowser.toggleFavorite(modelData)
+                            onClicked: nb.confirmRemoveFavorite(modelData)
                         }
                     }
                 }

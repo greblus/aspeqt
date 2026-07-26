@@ -1506,9 +1506,19 @@ Bip sesini duyduğunuzda oynat düğmesine basın ve yaklaşık aynı anda Atari
         <translation>Bağlan</translation>
     </message>
     <message>
-        <location filename="../qml/NetworkBrowserDialog.qml" line="146" />
-        <source>Refresh</source>
-        <translation>Yenile</translation>
+        <location filename="../qml/NetworkBrowserDialog.qml" line="55" />
+        <source>Favourites</source>
+        <translation>Favoriler</translation>
+    </message>
+    <message>
+        <location filename="../qml/NetworkBrowserDialog.qml" line="56" />
+        <source>Remove "%1" from favourites?</source>
+        <translation>„%1” favorilerden kaldırılsın mı?</translation>
+    </message>
+    <message>
+        <location filename="../qml/NetworkBrowserDialog.qml" line="149" />
+        <source>Favourite servers</source>
+        <translation>Favori sunucular</translation>
     </message>
     <message>
         <location filename="../qml/NetworkBrowserDialog.qml" line="210" />

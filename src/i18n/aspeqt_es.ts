@@ -1506,9 +1506,19 @@ Cuando oigas el pitido, pulsa el botón de reproducción y una tecla del Atari c
         <translation>Conectar</translation>
     </message>
     <message>
-        <location filename="../qml/NetworkBrowserDialog.qml" line="146" />
-        <source>Refresh</source>
-        <translation>Actualizar</translation>
+        <location filename="../qml/NetworkBrowserDialog.qml" line="55" />
+        <source>Favourites</source>
+        <translation>Favoritos</translation>
+    </message>
+    <message>
+        <location filename="../qml/NetworkBrowserDialog.qml" line="56" />
+        <source>Remove "%1" from favourites?</source>
+        <translation>¿Quitar «%1» de favoritos?</translation>
+    </message>
+    <message>
+        <location filename="../qml/NetworkBrowserDialog.qml" line="149" />
+        <source>Favourite servers</source>
+        <translation>Servidores favoritos</translation>
     </message>
     <message>
         <location filename="../qml/NetworkBrowserDialog.qml" line="210" />

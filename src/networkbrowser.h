@@ -68,11 +68,15 @@ signals:
     void reqDownload(const QString &remotePath, const QString &name,
                      const QString &localDir, int action);   // 1 = mount, 0 = save
     void reqClose();
+    // Reconnect and list `path`: used when a listing fails because the session
+    // died while the app sat in the background.
+    void reqReconnect(const QString &url, const QString &path);
 
 private slots:
     void onOpened(bool ok, const QString &host, const QString &path);
     void onListed(const QVariantList &entries, const QString &path);
     void onFailed(const QString &message);
+    void onListFailed(const QString &path, const QString &message);
     void onDownloaded(const QString &localPath, const QString &name, int action);
 
 private:
@@ -96,6 +100,9 @@ private:
     QStringList m_favorites;
     QString m_lastUrl;
     QString m_pendingConnectUrl;   // added to history once the connect succeeds
+    // One silent reconnect per failed listing, so a dropped session recovers
+    // instead of leaving the browser stuck on a location it can no longer read.
+    bool m_reconnectTried = false;
 };
 
 #endif // NETWORKBROWSER_H

@@ -1505,9 +1505,19 @@ When you hear the beep sound, push the play button and press a key on your Atari
         <translation>Подключиться</translation>
     </message>
     <message>
-        <location filename="../qml/NetworkBrowserDialog.qml" line="146" />
-        <source>Refresh</source>
-        <translation>Обновить</translation>
+        <location filename="../qml/NetworkBrowserDialog.qml" line="55" />
+        <source>Favourites</source>
+        <translation>Избранное</translation>
+    </message>
+    <message>
+        <location filename="../qml/NetworkBrowserDialog.qml" line="56" />
+        <source>Remove "%1" from favourites?</source>
+        <translation>Удалить «%1» из избранного?</translation>
+    </message>
+    <message>
+        <location filename="../qml/NetworkBrowserDialog.qml" line="149" />
+        <source>Favourite servers</source>
+        <translation>Избранные серверы</translation>
     </message>
     <message>
         <location filename="../qml/NetworkBrowserDialog.qml" line="210" />

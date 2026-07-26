@@ -55,6 +55,29 @@ public:
 public slots:
     void doOpen(const QString &url)
     {
+        QString host, path;
+        if (!connectTo(url, host, path))
+            return;                       // connectTo reported the reason
+        emit opened(true, host, path);
+        listPath(path);
+    }
+
+    // Re-establish the session and go straight back to `path`. The browser asks
+    // for this when a listing failed on a connection that had gone stale.
+    void doReconnectAndList(const QString &url, const QString &path)
+    {
+        QString host, ignored;
+        if (!connectTo(url, host, ignored)) {
+            emit listFailed(path, tr("Reconnecting to %1 failed.").arg(url));
+            return;
+        }
+        emit opened(true, host, path);
+        listPath(path);
+    }
+
+private:
+    bool connectTo(const QString &url, QString &hostOut, QString &pathOut)
+    {
         teardown();
         const QString text = normalizeUrl(url);
         const QUrl u(text);
@@ -67,9 +90,9 @@ public slots:
             // Report the parse error: a mistyped address used to surface as
             // "could not connect to demo", naming a fragment as the host.
             emit failed(tr("Bad address: %1").arg(u.errorString()));
-            return;
+            return false;
         }
-        if (host.isEmpty()) { emit failed(tr("No host in the address.")); return; }
+        if (host.isEmpty()) { emit failed(tr("No host in the address.")); return false; }
 
         if (scheme == "ftp" || scheme == "ftps") {
             auto *f = new FtpClient();
@@ -83,7 +106,7 @@ public slots:
             m_client = s;
 #else
             emit failed(tr("SFTP is not available in this build."));
-            return;
+            return false;
 #endif
         } else {
             m_client = new TnfsClient();   // default and "tnfs"
@@ -92,7 +115,7 @@ public slots:
         if (!m_client->connectToHost(host, quint16(port < 0 ? 0 : port))) {
             teardown();
             emit failed(tr("Could not connect to %1.").arg(host));
-            return;
+            return false;
         }
         // TNFS needs an explicit MOUNT (session id) before any dir op; the
         // INetworkClient interface has no mount(), so do it on the concrete type.
@@ -100,13 +123,15 @@ public slots:
             if (!t->mount("/")) {
                 teardown();
                 emit failed(tr("TNFS mount failed on %1.").arg(host));
-                return;
+                return false;
             }
         }
-        emit opened(true, host, path);
-        listPath(path);
+        hostOut = host;
+        pathOut = path;
+        return true;
     }
 
+public slots:
     void doList(const QString &path) { listPath(path); }
 
     void doDownload(const QString &remotePath, const QString &name,
@@ -171,6 +196,8 @@ signals:
     void opened(bool ok, const QString &host, const QString &path);
     void listed(const QVariantList &entries, const QString &path);
     void failed(const QString &message);
+    // A listing failed: the caller decides whether to reconnect and retry.
+    void listFailed(const QString &path, const QString &message);
     void downloaded(const QString &localPath, const QString &name, int action);
 
 private:
@@ -181,9 +208,9 @@ private:
 
     void listPath(const QString &path)
     {
-        if (!m_client) { emit failed(tr("Not connected.")); return; }
+        if (!m_client) { emit listFailed(path, tr("Not connected.")); return; }
         if (!m_client->beginListing(path)) {
-            emit failed(tr("Could not open %1.").arg(path));
+            emit listFailed(path, tr("Could not open %1.").arg(path));
             return;
         }
         QVariantList entries;
@@ -228,10 +255,12 @@ NetworkBrowser::NetworkBrowser(QObject *parent) : QObject(parent)
     connect(this, &NetworkBrowser::reqList,     m_worker, &NetworkWorker::doList);
     connect(this, &NetworkBrowser::reqDownload, m_worker, &NetworkWorker::doDownload);
     connect(this, &NetworkBrowser::reqClose,    m_worker, &NetworkWorker::doClose);
+    connect(this, &NetworkBrowser::reqReconnect, m_worker, &NetworkWorker::doReconnectAndList);
 
     connect(m_worker, &NetworkWorker::opened,     this, &NetworkBrowser::onOpened);
     connect(m_worker, &NetworkWorker::listed,     this, &NetworkBrowser::onListed);
     connect(m_worker, &NetworkWorker::failed,     this, &NetworkBrowser::onFailed);
+    connect(m_worker, &NetworkWorker::listFailed, this, &NetworkBrowser::onListFailed);
     connect(m_worker, &NetworkWorker::downloaded, this, &NetworkBrowser::onDownloaded);
 
     loadPrefs();
@@ -275,11 +304,13 @@ QString NetworkBrowser::currentUrl() const
 void NetworkBrowser::enter(const QString &name)
 {
     if (!m_connected) return;
-    if (!m_path.endsWith('/')) m_path += '/';
-    m_path += name;
-    emit pathChanged();
+    QString target = m_path;
+    if (!target.endsWith('/')) target += '/';
+    target += name;
+    // The path is not committed here: onListed() sets it once the server has
+    // actually answered, so a failed step leaves the view where it was.
     setBusy(true);
-    emit reqList(m_path);
+    emit reqList(target);
 }
 
 void NetworkBrowser::up()
@@ -288,10 +319,8 @@ void NetworkBrowser::up()
     QString p = m_path;
     if (p.endsWith('/')) p.chop(1);
     const int slash = p.lastIndexOf('/');
-    m_path = (slash <= 0) ? "/" : p.left(slash);
-    emit pathChanged();
     setBusy(true);
-    emit reqList(m_path);
+    emit reqList((slash <= 0) ? QStringLiteral("/") : p.left(slash));
 }
 
 void NetworkBrowser::refresh()
@@ -350,6 +379,7 @@ void NetworkBrowser::onOpened(bool ok, const QString &host, const QString &path)
 
 void NetworkBrowser::onListed(const QVariantList &entries, const QString &path)
 {
+    m_reconnectTried = false;
     m_entries = entries;
     m_path = path;
     rememberLocation();
@@ -361,6 +391,26 @@ void NetworkBrowser::onListed(const QVariantList &entries, const QString &path)
 void NetworkBrowser::onFailed(const QString &message)
 {
     setBusy(false);
+    emit error(message);
+}
+
+// A listing failed. Sitting in the background for hours costs us the session, and
+// the old behaviour was to keep pretending we were connected: refresh did nothing
+// and every "up" moved the path without ever loading it. Reconnect once, silently;
+// if that fails too, drop back to the favourites list.
+void NetworkBrowser::onListFailed(const QString &path, const QString &message)
+{
+    if (!m_reconnectTried && !m_lastUrl.isEmpty()) {
+        m_reconnectTried = true;
+        emit reqReconnect(m_lastUrl, path);   // stays busy across the retry
+        return;
+    }
+    m_reconnectTried = false;
+    m_connected = false;
+    m_entries.clear();
+    setBusy(false);
+    emit entriesChanged();
+    emit connectedChanged();
     emit error(message);
 }
 
@@ -379,17 +429,37 @@ void NetworkBrowser::reopenLast()
         open(m_lastUrl);
 }
 
+// "tnfs://host/" and "tnfs://host" are the same server, but currentUrl() always
+// carries the path ("/" at the root) while a hand-typed favourite usually does
+// not. Compare and store one canonical spelling, or the star would miss the
+// stored entry, add a near-duplicate, and only then start removing things.
+static QString canonicalFavorite(const QString &url)
+{
+    QString u = url.trimmed();
+    while (u.endsWith('/')) u.chop(1);
+    return u;
+}
+
 bool NetworkBrowser::isFavorite(const QString &url) const
 {
-    return m_favorites.contains(url.trimmed());
+    const QString u = canonicalFavorite(url);
+    if (u.isEmpty()) return false;
+    for (const QString &f : m_favorites)
+        if (canonicalFavorite(f) == u) return true;
+    return false;
 }
 
 void NetworkBrowser::toggleFavorite(const QString &url)
 {
-    const QString u = url.trimmed();
+    const QString u = canonicalFavorite(url);
     if (u.isEmpty()) return;
-    if (m_favorites.contains(u)) m_favorites.removeAll(u);
-    else                         m_favorites.prepend(u);
+    if (isFavorite(u)) {
+        for (int i = m_favorites.size() - 1; i >= 0; --i)
+            if (canonicalFavorite(m_favorites.at(i)) == u)
+                m_favorites.removeAt(i);
+    } else {
+        m_favorites.prepend(u);
+    }
     savePrefs();
     emit favoritesChanged();
 }
@@ -421,6 +491,24 @@ void NetworkBrowser::loadPrefs()
     m_history   = s.value("history").toStringList();
     m_favorites = s.value("favorites").toStringList();
     m_lastUrl   = s.value("lastUrl").toString();
+
+    // Seed a few public Atari servers so the favourites list is not empty on a
+    // fresh install. Done once (guarded by a flag, not by the list being empty)
+    // so removing them sticks -- they are only a starting point.
+    if (!s.value("defaultsSeeded", false).toBool()) {
+        static const char *defaults[] = {
+            "tnfs://fujinet.pl",
+            "tnfs://fujinet.abbuc.de",
+            "tnfs://tnfs.fujinet.online",
+            "tnfs://atari8.us",
+            "ftp://ftp.pigwa.net",
+        };
+        for (const char *d : defaults)
+            if (!m_favorites.contains(QLatin1String(d)))
+                m_favorites.append(QLatin1String(d));
+        s.setValue("defaultsSeeded", true);
+        s.setValue("favorites", m_favorites);
+    }
     s.endGroup();
 }
 

@@ -1505,9 +1505,19 @@ Wenn der Signalton ertönt, drücken Sie die Wiedergabetaste und etwa gleichzeit
         <translation>Verbinden</translation>
     </message>
     <message>
-        <location filename="../qml/NetworkBrowserDialog.qml" line="146" />
-        <source>Refresh</source>
-        <translation>Aktualisieren</translation>
+        <location filename="../qml/NetworkBrowserDialog.qml" line="55" />
+        <source>Favourites</source>
+        <translation>Favoriten</translation>
+    </message>
+    <message>
+        <location filename="../qml/NetworkBrowserDialog.qml" line="56" />
+        <source>Remove "%1" from favourites?</source>
+        <translation>„%1“ aus den Favoriten entfernen?</translation>
+    </message>
+    <message>
+        <location filename="../qml/NetworkBrowserDialog.qml" line="149" />
+        <source>Favourite servers</source>
+        <translation>Favoriten-Server</translation>
     </message>
     <message>
         <location filename="../qml/NetworkBrowserDialog.qml" line="210" />
