@@ -128,6 +128,10 @@ public:
     Q_INVOKABLE QString printerFontFamily();
     Q_INVOKABLE void printerReplay(const QString &url);
     Q_INVOKABLE void printerTestPage();
+    // True on the very first run after an install: AspeqtSettings reads the
+    // flag in its constructor and clears it immediately, so this stays stable
+    // for the whole session.
+    Q_INVOKABLE bool isFirstRun() const;
 
     // Actions from QML -> engine wrappers.
     Q_INVOKABLE void eject(int hwIndex);

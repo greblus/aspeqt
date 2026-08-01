@@ -412,6 +412,18 @@ ApplicationWindow {
     ConfirmDialog { id: confirmDialog }
     DiskViewer { id: diskViewer }
 
+    // First run after an install: offer the options, where the serial port and
+    // the SIO2PC/SIO2BT choice live. This used to live in MainWindow::show()
+    // and was lost when the widget UI went away. Delayed by a beat so the
+    // window is painted behind the dialog rather than appearing under it.
+    Timer {
+        interval: 600
+        running: app.isFirstRun()
+        onTriggered: confirmDialog.ask(qsTr("First run"),
+            qsTr("You are running AspeQt for the first time.\n\nDo you want to open the options dialog?"),
+            function (yes) { if (yes) { optionsDialog.load(); optionsDialog.open() } })
+    }
+
 
     // --- unsaved changes -----------------------------------------------------
     // The engine no longer asks anything: it is told to save, eject or quit.

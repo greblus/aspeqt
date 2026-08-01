@@ -761,7 +761,7 @@
 <context>
     <name>Engine</name>
     <message>
-        <location filename="../engine.cpp" line="+241"/>
+        <location filename="../engine.cpp" line="+242"/>
         <source>AspeQt - Atari Serial Peripheral Emulator for Qt</source>
         <translation>AspeQt - эмулятор SIO-периферии для Atari под Qt</translation>
     </message>
@@ -876,7 +876,7 @@ When you hear the beep sound, push the play button and press a key on your Atari
         <translation>Не удалось скопировать файлы DOS в папку.</translation>
     </message>
     <message>
-        <location line="+158"/>
+        <location line="+156"/>
         <source>[Disk %1] Auto-commit ON.</source>
         <translation>[Диск %1] Автосохранение ВКЛ.</translation>
     </message>
@@ -886,9 +886,9 @@ When you hear the beep sound, push the play button and press a key on your Atari
         <translation>[Диск %1] Автосохранение ВЫКЛ.</translation>
     </message>
     <message>
-        <location line="-869"/>
+        <location line="-867"/>
         <location line="+7"/>
-        <location line="+909"/>
+        <location line="+907"/>
         <source>&apos;%1&apos; cannot be saved.</source>
         <translation>Не удалось сохранить «%1».</translation>
     </message>
@@ -1054,7 +1054,7 @@ When you hear the beep sound, push the play button and press a key on your Atari
         <translation>Не удалось добавить файл, смотрите журнал.</translation>
     </message>
     <message>
-        <location line="-1677"/>
+        <location line="-1675"/>
         <source>Emulation stopped.</source>
         <translation>Эмуляция остановлена.</translation>
     </message>
@@ -1065,7 +1065,7 @@ When you hear the beep sound, push the play button and press a key on your Atari
     </message>
     <message>
         <location line="+171"/>
-        <location line="+656"/>
+        <location line="+654"/>
         <source>[%1] Mounted &apos;%2&apos; as &apos;%3&apos;.</source>
         <translation>[%1] Подключен &apos;%2&apos; как &apos;%3&apos;.</translation>
     </message>
@@ -1111,7 +1111,7 @@ When you hear the beep sound, push the play button and press a key on your Atari
 <context>
     <name>FileTypes</name>
     <message>
-        <location filename="../miscutils.cpp" line="+197"/>
+        <location filename="../miscutils.cpp" line="+226"/>
         <source>ATR disk image</source>
         <translation>Образ диска ATR</translation>
     </message>
@@ -1209,7 +1209,7 @@ When you hear the beep sound, push the play button and press a key on your Atari
 <context>
     <name>FolderImage</name>
     <message>
-        <location filename="../folderimage.cpp" line="+213"/>
+        <location filename="../folderimage.cpp" line="+274"/>
         <source>Cannot mirror &apos;%1&apos; in &apos;%2&apos;: No suitable Atari name can be found.</source>
         <translation>Не удалось отзеркалить &apos;%1&apos; в &apos;%2&apos;: не найдено подходящего Atari-имени.</translation>
     </message>
@@ -1219,7 +1219,7 @@ When you hear the beep sound, push the play button and press a key on your Atari
         <translation>Не удалось отзеркалить %1 из %2 файлов в &apos;%3&apos;: директория Atari переполнена.</translation>
     </message>
     <message>
-        <location filename="../folderimage.h" line="+61"/>
+        <location filename="../folderimage.h" line="+64"/>
         <source>Folder image</source>
         <translation>Образ папки</translation>
     </message>
@@ -1358,7 +1358,7 @@ When you hear the beep sound, push the play button and press a key on your Atari
         <location line="+8"/>
         <location line="+103"/>
         <location line="+27"/>
-        <location line="+205"/>
+        <location line="+217"/>
         <location line="+42"/>
         <location line="+25"/>
         <location line="+33"/>
@@ -1368,7 +1368,7 @@ When you hear the beep sound, push the play button and press a key on your Atari
         <translation>Все файлы (*)</translation>
     </message>
     <message>
-        <location line="-491"/>
+        <location line="-503"/>
         <source>Save session…</source>
         <translation>Сохранить сессию…</translation>
     </message>
@@ -1414,13 +1414,13 @@ When you hear the beep sound, push the play button and press a key on your Atari
     </message>
     <message>
         <location line="+1"/>
-        <location line="+299"/>
+        <location line="+311"/>
         <location line="+33"/>
         <source>Atari programs (*.xex *.com *.exe *.cas)</source>
         <translation>Программы Atari (*.xex *.com *.exe *.cas)</translation>
     </message>
     <message>
-        <location line="-306"/>
+        <location line="-318"/>
         <source>Open a disk image</source>
         <translation>Открыть образ диска</translation>
     </message>
@@ -1450,7 +1450,21 @@ When you hear the beep sound, push the play button and press a key on your Atari
         <translation>Очистить сообщения</translation>
     </message>
     <message>
-        <location line="+57"/>
+        <location line="+52"/>
+        <source>First run</source>
+        <translation>Первый запуск</translation>
+    </message>
+    <message>
+        <location line="+1"/>
+        <source>You are running AspeQt for the first time.
+
+Do you want to open the options dialog?</source>
+        <translation>Вы запускаете AspeQt в первый раз.
+
+Открыть диалог настроек?</translation>
+    </message>
+    <message>
+        <location line="+16"/>
         <location line="+42"/>
         <location line="+68"/>
         <location line="+43"/>
@@ -3420,7 +3434,7 @@ When you hear the beep sound, push the play button and press a key on your Atari
     <message>
         <location line="+30"/>
         <source>Emulation started through standard serial port backend on &apos;%1&apos; with %2 handshaking</source>
-        <translation>Эмуляция запущена через стандартный последовательный порт '%1', управление потоком: %2</translation>
+        <translation>Эмуляция запущена через стандартный последовательный порт &apos;%1&apos;, управление потоком: %2</translation>
     </message>
     <message>
         <location line="+140"/>

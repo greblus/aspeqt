@@ -761,7 +761,7 @@
 <context>
     <name>Engine</name>
     <message>
-        <location filename="../engine.cpp" line="+140"/>
+        <location filename="../engine.cpp" line="+141"/>
         <source>AspeQt started at %1.</source>
         <translation>AspeQt naštartoval v %1.</translation>
     </message>
@@ -876,7 +876,7 @@ Keď zaznie pípnutie, stlačte tlačidlo prehrávania a približne súčasne kl
         <translation>Súbory DOS sa nepodarilo skopírovať do priečinka.</translation>
     </message>
     <message>
-        <location line="+158"/>
+        <location line="+156"/>
         <source>[Disk %1] Auto-commit ON.</source>
         <translation>[Disk %1] Automatické ukladanie ZAP.</translation>
     </message>
@@ -886,9 +886,9 @@ Keď zaznie pípnutie, stlačte tlačidlo prehrávania a približne súčasne kl
         <translation>[Disk %1] Automatické ukladanie VYP.</translation>
     </message>
     <message>
-        <location line="-869"/>
+        <location line="-867"/>
         <location line="+7"/>
-        <location line="+909"/>
+        <location line="+907"/>
         <source>&apos;%1&apos; cannot be saved.</source>
         <translation>„%1“ sa nedá uložiť.</translation>
     </message>
@@ -1064,7 +1064,7 @@ Keď zaznie pípnutie, stlačte tlačidlo prehrávania a približne súčasne kl
         <translation>Emulácia tlačiarne spustená.</translation>
     </message>
     <message>
-        <location line="-885"/>
+        <location line="-883"/>
         <source>Emulation stopped.</source>
         <translation>Emulácia zastavená.</translation>
     </message>
@@ -1075,7 +1075,7 @@ Keď zaznie pípnutie, stlačte tlačidlo prehrávania a približne súčasne kl
     </message>
     <message>
         <location line="+171"/>
-        <location line="+656"/>
+        <location line="+654"/>
         <source>[%1] Mounted &apos;%2&apos; as &apos;%3&apos;.</source>
         <translation>[%1] Pripojený &apos;%2&apos; ako &apos;%3&apos;.</translation>
     </message>
@@ -1111,7 +1111,7 @@ Keď zaznie pípnutie, stlačte tlačidlo prehrávania a približne súčasne kl
 <context>
     <name>FileTypes</name>
     <message>
-        <location filename="../miscutils.cpp" line="+197"/>
+        <location filename="../miscutils.cpp" line="+226"/>
         <source>ATR disk image</source>
         <translation>ATR diskový obraz</translation>
     </message>
@@ -1209,7 +1209,7 @@ Keď zaznie pípnutie, stlačte tlačidlo prehrávania a približne súčasne kl
 <context>
     <name>FolderImage</name>
     <message>
-        <location filename="../folderimage.cpp" line="+213"/>
+        <location filename="../folderimage.cpp" line="+274"/>
         <source>Cannot mirror &apos;%1&apos; in &apos;%2&apos;: No suitable Atari name can be found.</source>
         <translation>Nemožno vidieť &apos;%1&apos; v &apos;%2&apos;: Nenájdený vhodný Atari názov.</translation>
     </message>
@@ -1219,7 +1219,7 @@ Keď zaznie pípnutie, stlačte tlačidlo prehrávania a približne súčasne kl
         <translation>Nemožno vidieť %1 zo %2 súborov v &apos;%3&apos;: Atari adresár je plný.</translation>
     </message>
     <message>
-        <location filename="../folderimage.h" line="+61"/>
+        <location filename="../folderimage.h" line="+64"/>
         <source>Folder image</source>
         <translation>Obraz priečinku</translation>
     </message>
@@ -1358,7 +1358,7 @@ Keď zaznie pípnutie, stlačte tlačidlo prehrávania a približne súčasne kl
         <location line="+8"/>
         <location line="+103"/>
         <location line="+27"/>
-        <location line="+205"/>
+        <location line="+217"/>
         <location line="+42"/>
         <location line="+25"/>
         <location line="+33"/>
@@ -1368,7 +1368,7 @@ Keď zaznie pípnutie, stlačte tlačidlo prehrávania a približne súčasne kl
         <translation>Všetky súbory (*)</translation>
     </message>
     <message>
-        <location line="-491"/>
+        <location line="-503"/>
         <source>Save session…</source>
         <translation>Uložiť reláciu…</translation>
     </message>
@@ -1414,13 +1414,13 @@ Keď zaznie pípnutie, stlačte tlačidlo prehrávania a približne súčasne kl
     </message>
     <message>
         <location line="+1"/>
-        <location line="+299"/>
+        <location line="+311"/>
         <location line="+33"/>
         <source>Atari programs (*.xex *.com *.exe *.cas)</source>
         <translation>Programy Atari (*.xex *.com *.exe *.cas)</translation>
     </message>
     <message>
-        <location line="-306"/>
+        <location line="-318"/>
         <source>Open a disk image</source>
         <translation>Otvoriť diskový obraz</translation>
     </message>
@@ -1450,7 +1450,20 @@ Keď zaznie pípnutie, stlačte tlačidlo prehrávania a približne súčasne kl
         <translation>Vymazať správy</translation>
     </message>
     <message>
-        <location line="+57"/>
+        <location line="+52"/>
+        <source>First run</source>
+        <translation>Prvé spustenie</translation>
+    </message>
+    <message>
+        <location line="+1"/>
+        <source>You are running AspeQt for the first time.
+
+Do you want to open the options dialog?</source>
+        <translation>Práve ste spustili AspeQt po prvý krát.
+Prajete si otvoriť Nastavenia?</translation>
+    </message>
+    <message>
+        <location line="+16"/>
         <location line="+42"/>
         <location line="+68"/>
         <location line="+43"/>
@@ -3420,7 +3433,7 @@ Keď zaznie pípnutie, stlačte tlačidlo prehrávania a približne súčasne kl
     <message>
         <location line="+30"/>
         <source>Emulation started through standard serial port backend on &apos;%1&apos; with %2 handshaking</source>
-        <translation>Emulácia spustená cez štandardný sériový port na '%1' s riadením toku %2</translation>
+        <translation>Emulácia spustená cez štandardný sériový port na &apos;%1&apos; s riadením toku %2</translation>
     </message>
     <message>
         <location line="+140"/>

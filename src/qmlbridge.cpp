@@ -107,6 +107,11 @@ AppController::AppController(Engine *engine, QObject *parent)
     refresh();
 }
 
+bool AppController::isFirstRun() const
+{
+    return aspeqtSettings->isFirstTime();
+}
+
 void AppController::refresh()
 {
     if (!m_engine) return;

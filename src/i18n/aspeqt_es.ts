@@ -762,7 +762,7 @@
 <context>
     <name>Engine</name>
     <message>
-        <location filename="../engine.cpp" line="+140"/>
+        <location filename="../engine.cpp" line="+141"/>
         <source>AspeQt started at %1.</source>
         <translation>AspeQt comenzó a %1.</translation>
     </message>
@@ -877,7 +877,7 @@ Cuando oigas el pitido, pulsa el botón de reproducción y una tecla del Atari c
         <translation>No se pudieron copiar los archivos DOS en la carpeta.</translation>
     </message>
     <message>
-        <location line="+158"/>
+        <location line="+156"/>
         <source>[Disk %1] Auto-commit ON.</source>
         <translation>[Disco %1] Guardado automático ACTIVADO.</translation>
     </message>
@@ -887,9 +887,9 @@ Cuando oigas el pitido, pulsa el botón de reproducción y una tecla del Atari c
         <translation>[Disco %1] Guardado automático DESACTIVADO.</translation>
     </message>
     <message>
-        <location line="-869"/>
+        <location line="-867"/>
         <location line="+7"/>
-        <location line="+909"/>
+        <location line="+907"/>
         <source>&apos;%1&apos; cannot be saved.</source>
         <translation>No se puede guardar «%1».</translation>
     </message>
@@ -1065,7 +1065,7 @@ Cuando oigas el pitido, pulsa el botón de reproducción y una tecla del Atari c
         <translation>Emulación de impresora iniciada.</translation>
     </message>
     <message>
-        <location line="-885"/>
+        <location line="-883"/>
         <source>Emulation stopped.</source>
         <translation>Emulación detuvo.</translation>
     </message>
@@ -1076,7 +1076,7 @@ Cuando oigas el pitido, pulsa el botón de reproducción y una tecla del Atari c
     </message>
     <message>
         <location line="+171"/>
-        <location line="+656"/>
+        <location line="+654"/>
         <source>[%1] Mounted &apos;%2&apos; as &apos;%3&apos;.</source>
         <translation>[%1] &apos;%2&apos;  montado como &apos;%3&apos;.</translation>
     </message>
@@ -1112,7 +1112,7 @@ Cuando oigas el pitido, pulsa el botón de reproducción y una tecla del Atari c
 <context>
     <name>FileTypes</name>
     <message>
-        <location filename="../miscutils.cpp" line="+197"/>
+        <location filename="../miscutils.cpp" line="+226"/>
         <source>ATR disk image</source>
         <translation>Imagen de disco ATR</translation>
     </message>
@@ -1210,7 +1210,7 @@ Cuando oigas el pitido, pulsa el botón de reproducción y una tecla del Atari c
 <context>
     <name>FolderImage</name>
     <message>
-        <location filename="../folderimage.cpp" line="+213"/>
+        <location filename="../folderimage.cpp" line="+274"/>
         <source>Cannot mirror &apos;%1&apos; in &apos;%2&apos;: No suitable Atari name can be found.</source>
         <translation>No se puede &apos;%1&apos; espejo de &apos;%2&apos;: No existe el nombre.</translation>
     </message>
@@ -1220,7 +1220,7 @@ Cuando oigas el pitido, pulsa el botón de reproducción y una tecla del Atari c
         <translation>No se puede reflejar%1 de%2 archivos en &apos;%3&apos;: Directorio está lleno.</translation>
     </message>
     <message>
-        <location filename="../folderimage.h" line="+61"/>
+        <location filename="../folderimage.h" line="+64"/>
         <source>Folder image</source>
         <translation>Carpeta de imágenes</translation>
     </message>
@@ -1359,7 +1359,7 @@ Cuando oigas el pitido, pulsa el botón de reproducción y una tecla del Atari c
         <location line="+8"/>
         <location line="+103"/>
         <location line="+27"/>
-        <location line="+205"/>
+        <location line="+217"/>
         <location line="+42"/>
         <location line="+25"/>
         <location line="+33"/>
@@ -1369,7 +1369,7 @@ Cuando oigas el pitido, pulsa el botón de reproducción y una tecla del Atari c
         <translation>Todos los archivos (*)</translation>
     </message>
     <message>
-        <location line="-491"/>
+        <location line="-503"/>
         <source>Save session…</source>
         <translation>Guardar sesión…</translation>
     </message>
@@ -1415,13 +1415,13 @@ Cuando oigas el pitido, pulsa el botón de reproducción y una tecla del Atari c
     </message>
     <message>
         <location line="+1"/>
-        <location line="+299"/>
+        <location line="+311"/>
         <location line="+33"/>
         <source>Atari programs (*.xex *.com *.exe *.cas)</source>
         <translation>Programas Atari (*.xex *.com *.exe *.cas)</translation>
     </message>
     <message>
-        <location line="-306"/>
+        <location line="-318"/>
         <source>Open a disk image</source>
         <translation>Abrir una imagen de disco</translation>
     </message>
@@ -1451,7 +1451,21 @@ Cuando oigas el pitido, pulsa el botón de reproducción y una tecla del Atari c
         <translation>Borrar mensajes</translation>
     </message>
     <message>
-        <location line="+57"/>
+        <location line="+52"/>
+        <source>First run</source>
+        <translation>Primera ejecución</translation>
+    </message>
+    <message>
+        <location line="+1"/>
+        <source>You are running AspeQt for the first time.
+
+Do you want to open the options dialog?</source>
+        <translation>Está ejecutando AspeQt por primera vez.
+
+¿Desea abrir el diálogo de opciones?</translation>
+    </message>
+    <message>
+        <location line="+16"/>
         <location line="+42"/>
         <location line="+68"/>
         <location line="+43"/>
@@ -3421,7 +3435,7 @@ Cuando oigas el pitido, pulsa el botón de reproducción y una tecla del Atari c
     <message>
         <location line="+30"/>
         <source>Emulation started through standard serial port backend on &apos;%1&apos; with %2 handshaking</source>
-        <translation>Emulación iniciada por el puerto serie estándar en '%1' con control de flujo %2</translation>
+        <translation>Emulación iniciada por el puerto serie estándar en &apos;%1&apos; con control de flujo %2</translation>
     </message>
     <message>
         <location line="+140"/>

@@ -761,7 +761,7 @@
 <context>
     <name>Engine</name>
     <message>
-        <location filename="../engine.cpp" line="+2394"/>
+        <location filename="../engine.cpp" line="+2393"/>
         <location line="+12"/>
         <location line="+4"/>
         <source>Cannot extract the files, see the log.</source>
@@ -780,7 +780,7 @@
         <translation>Nie można dodać pliku, zobacz do log-u</translation>
     </message>
     <message>
-        <location line="-1833"/>
+        <location line="-1831"/>
         <source>Cassette (%1:%2)</source>
         <translation>Kaseta (%1:%2)</translation>
     </message>
@@ -807,7 +807,7 @@
         <translation>Plik exe (%1k)</translation>
     </message>
     <message>
-        <location line="+1658"/>
+        <location line="+1656"/>
         <source>Failed to load &apos;%1&apos;.</source>
         <translation>Nie udało się wczytać &apos;%1&apos;.</translation>
     </message>
@@ -817,7 +817,7 @@
         <translation>Wybierz program Atari (.xex/.com/.exe) lub obraz kasety (.cas).</translation>
     </message>
     <message>
-        <location line="-1681"/>
+        <location line="-1679"/>
         <source>Failed to load executable &apos;%1&apos;.</source>
         <translation>Nie udało się załadować programu &apos;%1&apos;.</translation>
     </message>
@@ -877,7 +877,7 @@
         <translation>Zamontowałem w slocie cas/xex.</translation>
     </message>
     <message>
-        <location line="+325"/>
+        <location line="+323"/>
         <source>BT module not present.</source>
         <translation>Brak adaptera BT w urządzeniu.</translation>
     </message>
@@ -1004,7 +1004,7 @@
         <translation>Automatyczny</translation>
     </message>
     <message>
-        <location line="-1444"/>
+        <location line="-1442"/>
         <source>AspeQt is ready to playback the cassette image file &apos;%1&apos;.
 
 Do whatever is necessary in your Atari to load this cassette image like rebooting while holding Option and Start buttons or entering &quot;CLOAD&quot; in the BASIC prompt.
@@ -1017,7 +1017,7 @@ Wykonaj w Atari czynności potrzebne do wczytania tej kasety, np. zresetuj trzym
 Gdy usłyszysz sygnał, naciśnij przycisk play i mniej więcej w tym samym czasie naciśnij klawisz na Atari.</translation>
     </message>
     <message>
-        <location line="+714"/>
+        <location line="+712"/>
         <source>[Disk %1] Auto-commit ON.</source>
         <translation>[Dysk %1] Autozapis WŁĄCZONY.</translation>
     </message>
@@ -1027,9 +1027,9 @@ Gdy usłyszysz sygnał, naciśnij przycisk play i mniej więcej w tym samym czas
         <translation>[Dysk %1] Autozapis WYŁĄCZONY.</translation>
     </message>
     <message>
-        <location line="-869"/>
+        <location line="-867"/>
         <location line="+7"/>
-        <location line="+909"/>
+        <location line="+907"/>
         <source>&apos;%1&apos; cannot be saved.</source>
         <translation>Nie można zapisać &apos;%1&apos;.</translation>
     </message>
@@ -1049,7 +1049,7 @@ Gdy usłyszysz sygnał, naciśnij przycisk play i mniej więcej w tym samym czas
         <translation>Emulacja drukarki uruchomiona.</translation>
     </message>
     <message>
-        <location line="-885"/>
+        <location line="-883"/>
         <source>Emulation stopped.</source>
         <translation>Emulacja zatrzymana.</translation>
     </message>
@@ -1070,12 +1070,12 @@ Gdy usłyszysz sygnał, naciśnij przycisk play i mniej więcej w tym samym czas
     </message>
     <message>
         <location line="+171"/>
-        <location line="+656"/>
+        <location line="+654"/>
         <source>[%1] Mounted &apos;%2&apos; as &apos;%3&apos;.</source>
         <translation>[%1] Zamontowe &apos;%2&apos; jako &apos;%3&apos;.</translation>
     </message>
     <message>
-        <location line="-1468"/>
+        <location line="-1466"/>
         <source>AspeQt - Atari Serial Peripheral Emulator for Qt</source>
         <translation>AspeQt - Emulator Szeregowych Peryferiów Atari dla Qt</translation>
     </message>
@@ -1111,7 +1111,7 @@ Gdy usłyszysz sygnał, naciśnij przycisk play i mniej więcej w tym samym czas
 <context>
     <name>FileTypes</name>
     <message>
-        <location filename="../miscutils.cpp" line="+197"/>
+        <location filename="../miscutils.cpp" line="+226"/>
         <source>ATR disk image</source>
         <translation>Obraz dysku ATR</translation>
     </message>
@@ -1209,7 +1209,7 @@ Gdy usłyszysz sygnał, naciśnij przycisk play i mniej więcej w tym samym czas
 <context>
     <name>FolderImage</name>
     <message>
-        <location filename="../folderimage.cpp" line="+213"/>
+        <location filename="../folderimage.cpp" line="+274"/>
         <source>Cannot mirror &apos;%1&apos; in &apos;%2&apos;: No suitable Atari name can be found.</source>
         <translation>Nie można odwzorować &apos;%1&apos; w &apos;%2&apos;: Nie można znaleźć odpowiedniej nazwy Atari.</translation>
     </message>
@@ -1219,7 +1219,7 @@ Gdy usłyszysz sygnał, naciśnij przycisk play i mniej więcej w tym samym czas
         <translation>Nie można odwzorować %1 z %2 plików w &apos;%3&apos;: Katalog Atari jest pełny.</translation>
     </message>
     <message>
-        <location filename="../folderimage.h" line="+61"/>
+        <location filename="../folderimage.h" line="+64"/>
         <source>Folder image</source>
         <translation>Folder</translation>
     </message>
@@ -1358,7 +1358,7 @@ Gdy usłyszysz sygnał, naciśnij przycisk play i mniej więcej w tym samym czas
         <location line="+8"/>
         <location line="+103"/>
         <location line="+27"/>
-        <location line="+205"/>
+        <location line="+217"/>
         <location line="+42"/>
         <location line="+25"/>
         <location line="+33"/>
@@ -1368,7 +1368,7 @@ Gdy usłyszysz sygnał, naciśnij przycisk play i mniej więcej w tym samym czas
         <translation>Wszystkie pliki (*)</translation>
     </message>
     <message>
-        <location line="-491"/>
+        <location line="-503"/>
         <source>Save session…</source>
         <translation>Zapisz sesję…</translation>
     </message>
@@ -1388,7 +1388,21 @@ Gdy usłyszysz sygnał, naciśnij przycisk play i mniej więcej w tym samym czas
         <translation>Nowy obraz dysku…</translation>
     </message>
     <message>
-        <location line="+344"/>
+        <location line="+318"/>
+        <source>First run</source>
+        <translation>Pierwsze uruchomienie</translation>
+    </message>
+    <message>
+        <location line="+1"/>
+        <source>You are running AspeQt for the first time.
+
+Do you want to open the options dialog?</source>
+        <translation>Uruchomiłeś AspeQt po raz pierwszy.
+
+Czy chcesz otworzyć opcje?</translation>
+    </message>
+    <message>
+        <location line="+37"/>
         <location line="+107"/>
         <source>Unsaved changes</source>
         <translation>Niezapisane zmiany</translation>
@@ -1476,7 +1490,7 @@ Gdy usłyszysz sygnał, naciśnij przycisk play i mniej więcej w tym samym czas
         <translation>Obraz XFD (*.xfd)</translation>
     </message>
     <message>
-        <location line="-476"/>
+        <location line="-488"/>
         <source>Eject all</source>
         <translation>Wysuń wszystkie</translation>
     </message>
@@ -1502,13 +1516,13 @@ Gdy usłyszysz sygnał, naciśnij przycisk play i mniej więcej w tym samym czas
     </message>
     <message>
         <location line="+1"/>
-        <location line="+299"/>
+        <location line="+311"/>
         <location line="+33"/>
         <source>Atari programs (*.xex *.com *.exe *.cas)</source>
         <translation>Programy Atari (*.xex *.com *.exe *.cas)</translation>
     </message>
     <message>
-        <location line="-306"/>
+        <location line="-318"/>
         <source>Open a disk image</source>
         <translation>Otwórz obraz dysku</translation>
     </message>
@@ -1762,7 +1776,7 @@ Gdy usłyszysz sygnał, naciśnij przycisk play i mniej więcej w tym samym czas
         <translation>Język:</translation>
     </message>
     <message>
-        <location filename="../engine.cpp" line="+1858"/>
+        <location filename="../engine.cpp" line="+1856"/>
         <source>English</source>
         <translation>Polski</translation>
     </message>
@@ -3421,7 +3435,7 @@ Gdy usłyszysz sygnał, naciśnij przycisk play i mniej więcej w tym samym czas
     <message>
         <location line="+30"/>
         <source>Emulation started through standard serial port backend on &apos;%1&apos; with %2 handshaking</source>
-        <translation>Emulacja uruchomiona przez standardowy port szeregowy na '%1', sterowanie przepływem: %2</translation>
+        <translation>Emulacja uruchomiona przez standardowy port szeregowy na &apos;%1&apos;, sterowanie przepływem: %2</translation>
     </message>
     <message>
         <location line="+140"/>

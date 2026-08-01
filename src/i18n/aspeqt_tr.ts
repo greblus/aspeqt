@@ -761,7 +761,7 @@
 <context>
     <name>Engine</name>
     <message>
-        <location filename="../engine.cpp" line="+241"/>
+        <location filename="../engine.cpp" line="+242"/>
         <source>AspeQt - Atari Serial Peripheral Emulator for Qt</source>
         <translation>Aspeqt: Qt için Atari Seri Donanım Emülatörü</translation>
     </message>
@@ -876,7 +876,7 @@ Bip sesini duyduğunuzda oynat düğmesine basın ve yaklaşık aynı anda Atari
         <translation>DOS dosyaları klasöre kopyalanamadı.</translation>
     </message>
     <message>
-        <location line="+158"/>
+        <location line="+156"/>
         <source>[Disk %1] Auto-commit ON.</source>
         <translation>[Disk %1] Otomatik kaydetme AÇIK.</translation>
     </message>
@@ -886,9 +886,9 @@ Bip sesini duyduğunuzda oynat düğmesine basın ve yaklaşık aynı anda Atari
         <translation>[Disk %1] Otomatik kaydetme KAPALI.</translation>
     </message>
     <message>
-        <location line="-869"/>
+        <location line="-867"/>
         <location line="+7"/>
-        <location line="+909"/>
+        <location line="+907"/>
         <source>&apos;%1&apos; cannot be saved.</source>
         <translation>&apos;%1&apos; kaydedilemiyor.</translation>
     </message>
@@ -900,42 +900,42 @@ Bip sesini duyduğunuzda oynat düğmesine basın ve yaklaşık aynı anda Atari
     <message>
         <location line="+1"/>
         <source>Turn BT on, check your BT module name set in options and make sure it&apos;s paired</source>
-        <translation>BT'yi açın, seçeneklerdeki modül adını ve eşleştirmeyi kontrol edin</translation>
+        <translation>BT&apos;yi açın, seçeneklerdeki modül adını ve eşleştirmeyi kontrol edin</translation>
     </message>
     <message>
         <location line="+1"/>
         <source>Connecting with SIO2BT. Please wait...</source>
-        <translation>SIO2BT'ye bağlanılıyor. Lütfen bekleyin...</translation>
+        <translation>SIO2BT&apos;ye bağlanılıyor. Lütfen bekleyin...</translation>
     </message>
     <message>
         <location line="+1"/>
         <source>Connected with SIO2BT.</source>
-        <translation>SIO2BT'ye bağlanıldı.</translation>
+        <translation>SIO2BT&apos;ye bağlanıldı.</translation>
     </message>
     <message>
         <location line="+1"/>
         <source>Failed to connect with SIO2BT. Try again...</source>
-        <translation>SIO2BT'ye bağlanılamadı. Tekrar deneyin...</translation>
+        <translation>SIO2BT&apos;ye bağlanılamadı. Tekrar deneyin...</translation>
     </message>
     <message>
         <location line="+1"/>
         <source>AspeQt needs the Bluetooth permission to talk to SIO2BT.</source>
-        <translation>AspeQt'in SIO2BT ile iletişim için Bluetooth iznine ihtiyacı var.</translation>
+        <translation>AspeQt&apos;in SIO2BT ile iletişim için Bluetooth iznine ihtiyacı var.</translation>
     </message>
     <message>
         <location line="+1"/>
         <source>Turn Bluetooth on, then start the emulation again.</source>
-        <translation>Bluetooth'u açın ve emülasyonu yeniden başlatın.</translation>
+        <translation>Bluetooth&apos;u açın ve emülasyonu yeniden başlatın.</translation>
     </message>
     <message>
         <location line="+1"/>
         <source>Connected with SIO2PC-USB.</source>
-        <translation>SIO2PC-USB'ye bağlanıldı.</translation>
+        <translation>SIO2PC-USB&apos;ye bağlanıldı.</translation>
     </message>
     <message>
         <location line="+1"/>
         <source>Failed to connect with SIO2PC-USB.</source>
-        <translation>SIO2PC-USB'ye bağlanılamadı.</translation>
+        <translation>SIO2PC-USB&apos;ye bağlanılamadı.</translation>
     </message>
     <message>
         <location line="+1"/>
@@ -1054,7 +1054,7 @@ Bip sesini duyduğunuzda oynat düğmesine basın ve yaklaşık aynı anda Atari
         <translation>Dosya eklenemedi, günlüğe bakın.</translation>
     </message>
     <message>
-        <location line="-1677"/>
+        <location line="-1675"/>
         <source>Emulation stopped.</source>
         <translation>Emülasyon durdu.</translation>
     </message>
@@ -1065,7 +1065,7 @@ Bip sesini duyduğunuzda oynat düğmesine basın ve yaklaşık aynı anda Atari
     </message>
     <message>
         <location line="+171"/>
-        <location line="+656"/>
+        <location line="+654"/>
         <source>[%1] Mounted &apos;%2&apos; as &apos;%3&apos;.</source>
         <translation>[%1] &apos;%2&apos;, &apos;%3&apos; olarak yüklendi.</translation>
     </message>
@@ -1111,7 +1111,7 @@ Bip sesini duyduğunuzda oynat düğmesine basın ve yaklaşık aynı anda Atari
 <context>
     <name>FileTypes</name>
     <message>
-        <location filename="../miscutils.cpp" line="+197"/>
+        <location filename="../miscutils.cpp" line="+226"/>
         <source>ATR disk image</source>
         <translation>ATR disk imajı</translation>
     </message>
@@ -1209,7 +1209,7 @@ Bip sesini duyduğunuzda oynat düğmesine basın ve yaklaşık aynı anda Atari
 <context>
     <name>FolderImage</name>
     <message>
-        <location filename="../folderimage.cpp" line="+213"/>
+        <location filename="../folderimage.cpp" line="+274"/>
         <source>Cannot mirror &apos;%1&apos; in &apos;%2&apos;: No suitable Atari name can be found.</source>
         <translatorcomment>%1, %2 ye aksettirilemiyor. Uygun bir Atari adı bulunamadı.</translatorcomment>
         <translation>Cannot mirror &apos;%1&apos; in &apos;%2&apos;: No suitable Atari name can be found.</translation>
@@ -1220,7 +1220,7 @@ Bip sesini duyduğunuzda oynat düğmesine basın ve yaklaşık aynı anda Atari
         <translation>%2 dosyanın %1 i &apos;%3&apos; e aksettirilemiyor. Atari dizin&apos;i dolu.</translation>
     </message>
     <message>
-        <location filename="../folderimage.h" line="+61"/>
+        <location filename="../folderimage.h" line="+64"/>
         <source>Folder image</source>
         <translation>Klasör imajı</translation>
     </message>
@@ -1359,7 +1359,7 @@ Bip sesini duyduğunuzda oynat düğmesine basın ve yaklaşık aynı anda Atari
         <location line="+8"/>
         <location line="+103"/>
         <location line="+27"/>
-        <location line="+205"/>
+        <location line="+217"/>
         <location line="+42"/>
         <location line="+25"/>
         <location line="+33"/>
@@ -1369,7 +1369,7 @@ Bip sesini duyduğunuzda oynat düğmesine basın ve yaklaşık aynı anda Atari
         <translation>Tüm dosyalar (*)</translation>
     </message>
     <message>
-        <location line="-491"/>
+        <location line="-503"/>
         <source>Save session…</source>
         <translation>Oturumu kaydet…</translation>
     </message>
@@ -1415,13 +1415,13 @@ Bip sesini duyduğunuzda oynat düğmesine basın ve yaklaşık aynı anda Atari
     </message>
     <message>
         <location line="+1"/>
-        <location line="+299"/>
+        <location line="+311"/>
         <location line="+33"/>
         <source>Atari programs (*.xex *.com *.exe *.cas)</source>
         <translation>Atari programları (*.xex *.com *.exe *.cas)</translation>
     </message>
     <message>
-        <location line="-306"/>
+        <location line="-318"/>
         <source>Open a disk image</source>
         <translation>Disk imajını aç</translation>
     </message>
@@ -1451,7 +1451,21 @@ Bip sesini duyduğunuzda oynat düğmesine basın ve yaklaşık aynı anda Atari
         <translation>İletileri sil</translation>
     </message>
     <message>
-        <location line="+57"/>
+        <location line="+52"/>
+        <source>First run</source>
+        <translation>İlk koşu</translation>
+    </message>
+    <message>
+        <location line="+1"/>
+        <source>You are running AspeQt for the first time.
+
+Do you want to open the options dialog?</source>
+        <translation>AspeQt yi ilk kez kullanıyorsunuz.
+
+Seçenekler diyaloğunu açmak istermisiniz?</translation>
+    </message>
+    <message>
+        <location line="+16"/>
         <location line="+42"/>
         <location line="+68"/>
         <location line="+43"/>
@@ -3421,7 +3435,7 @@ Bip sesini duyduğunuzda oynat düğmesine basın ve yaklaşık aynı anda Atari
     <message>
         <location line="+30"/>
         <source>Emulation started through standard serial port backend on &apos;%1&apos; with %2 handshaking</source>
-        <translation>Emülasyon '%1' üzerinde standart seri port ile %2 el sıkışma kullanılarak başlatıldı</translation>
+        <translation>Emülasyon &apos;%1&apos; üzerinde standart seri port ile %2 el sıkışma kullanılarak başlatıldı</translation>
     </message>
     <message>
         <location line="+140"/>
