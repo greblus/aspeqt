@@ -391,6 +391,16 @@ public class SerialActivity extends QtActivity
         public static String displayName(String uri) {
             try {
                 android.net.Uri u = android.net.Uri.parse(uri);
+                // A bare .../tree/<id> URI cannot be queried: providers answer with
+                // "UnsupportedOperationException: Unsupported Uri". Ask about the
+                // tree's own document instead. Without this every folder mount fell
+                // back to the raw document id -- tolerable on local storage
+                // ("primary:Download/Atari"), unreadable on Google Drive
+                // ("acc=1;doc=encoded=tzCLtyQ2q92R...").
+                final String path = u.getPath();
+                if (path != null && path.contains("/tree/") && !path.contains("/document/"))
+                    u = android.provider.DocumentsContract.buildDocumentUriUsingTree(
+                            u, android.provider.DocumentsContract.getTreeDocumentId(u));
                 android.database.Cursor c = s_activity.getContentResolver()
                         .query(u, null, null, null, null);
                 if (c != null) {
