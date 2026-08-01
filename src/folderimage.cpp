@@ -5,6 +5,10 @@
 #include <QFileInfoList>
 #include <QtDebug>
 #include <QRegularExpression>
+#include <QStandardPaths>
+#include <QCryptographicHash>
+#include <QDir>
+#include <QFileInfo>
 #include <algorithm>
 #ifdef Q_OS_ANDROID
 #include <QJniObject>
@@ -130,9 +134,66 @@ ContentFile *FolderImage::dataFile(int fileNo)
         m_openFile = nullptr;
         return nullptr;
     }
+#ifdef Q_OS_ANDROID
+    // A cloud provider (Google Drive) hands back a *non-seekable* descriptor.
+    // Sector reads seek before every read, and that seek silently failed: as
+    // long as the Atari read strictly forward the bytes happened to line up,
+    // but the first retried sector returned the *next* 125 bytes instead of the
+    // same ones, the file stream desynchronised and DOS hung. Serve such a
+    // document from a local copy instead -- the first read pays for the
+    // download, everything after it is a plain file.
+    if (atariFiles[fileNo].source.startsWith(QLatin1String("content:"))
+            && !m_openFile->seek(0)) {
+        m_openFile->close();
+        delete m_openFile;
+        m_openFile = nullptr;
+        const QString local = cachedCopy(atariFiles[fileNo].source,
+                                         atariFiles[fileNo].longName);
+        if (local.isEmpty())
+            return nullptr;
+        m_openFile = new ContentFile(local);
+        if (!m_openFile->open(QFile::ReadOnly)) {
+            delete m_openFile;
+            m_openFile = nullptr;
+            return nullptr;
+        }
+    }
+#endif
     m_openFileNo = fileNo;
     return m_openFile;
 }
+
+#ifdef Q_OS_ANDROID
+// Local cache copy of a SAF document, made once per mount. Named after a hash of
+// the document URI so two files with the same name cannot collide.
+QString FolderImage::cachedCopy(const QString &uri, const QString &name)
+{
+    const QString dir = QStandardPaths::writableLocation(QStandardPaths::CacheLocation)
+                      + QStringLiteral("/foldercache");
+    QDir().mkpath(dir);
+    const QString tag = QString::fromLatin1(
+        QCryptographicHash::hash(uri.toUtf8(), QCryptographicHash::Sha1).toHex().left(12));
+    QString safe = name;
+    safe.remove(QRegularExpression("[^A-Za-z0-9._-]"));
+    const QString path = dir + "/" + tag + "-" + safe;
+    if (QFileInfo::exists(path))
+        return path;
+
+    QJniObject ju = QJniObject::fromString(uri);
+    QJniObject jp = QJniObject::fromString(path);
+    const jint n = QJniObject::callStaticMethod<jint>(
+        "net/greblus/SerialActivity", "copyUriToFile",
+        "(Ljava/lang/String;Ljava/lang/String;)I",
+        ju.object<jstring>(), jp.object<jstring>());
+    if (n < 0) {
+        QFile::remove(path);
+        return QString();
+    }
+    qDebug() << "!d" << QString("[FolderImage] cached '%1' (%2 B) from a non-seekable provider")
+                        .arg(name).arg(int(n));
+    return path;
+}
+#endif
 
 bool FolderImage::format(quint16, quint16)
 {
@@ -265,6 +326,20 @@ bool FolderImage::open(const QString &fileName, FileTypes::FileType /* type */)
     return true;
 }
 
+// Force a buffer to exactly one sector's worth of bytes. Every caller below
+// writes at fixed offsets (data[15], data[125]...), and QByteArray::operator[]
+// does no bounds checking -- a short read of $boot.bin (an empty stub left by a
+// provider that accepted the create but swallowed the write, as Google Drive
+// does) used to walk straight off the end and take the app down with SIGSEGV.
+// Qt 6's resize() leaves the added bytes uninitialised, hence the explicit fill.
+static void padSector(QByteArray &d, int size)
+{
+    if (d.size() > size)
+        d.truncate(size);
+    else if (d.size() < size)
+        d.append(QByteArray(size - d.size(), '\0'));
+}
+
 bool FolderImage::readSector(quint16 sector, QByteArray &data)
 {
     /* Boot */
@@ -286,6 +361,7 @@ bool FolderImage::readSector(quint16 sector, QByteArray &data)
              data[0x15] = 0x60;  // RTS
          } else {
              data = boot.read(128);
+             padSector(data, 128);
              buildDirectory();
              for(int i=0; i<64; i++) {
                  // AtariDOS, MyDos, SmartDOS  and DosXL
@@ -313,36 +389,33 @@ bool FolderImage::readSector(quint16 sector, QByteArray &data)
                      }
                      data[9] = bootFileSector % 256;
                      data[10] = bootFileSector / 256;
-                     // Create the piconame.txt file
-                     ContentFile picoName(nameSource("piconame.txt", true));
-                     picoName.open(QFile::WriteOnly);
+                     // Build piconame.txt in full and write it in one call: a
+                     // streaming write through a file descriptor is what left a
+                     // 0-byte file on providers that refuse a truncating open.
                      QString folderLabel = dir.dirName();
 #ifdef Q_OS_ANDROID
                      if (m_tree.startsWith(QLatin1String("content:")))
                          folderLabel = androidTreeCall("treeDisplayName", m_tree);
 #endif
-                     QByteArray nameLine;
-                     nameLine.append(folderLabel.toStdString());
-                     nameLine.append('\x9b');
-                     picoName.write(nameLine);
+                     QByteArray picoData;
+                     picoData.append(folderLabel.toStdString());
+                     picoData.append('\x9b');
                      for(int i=0; i<64; i++){
                      if(atariFiles[i].exists) {
                          if(atariFiles[i].longName != "$boot.bin") {
-                                 nameLine.clear();
-                                 nameLine.append(atariFiles[i].atariName.toStdString());
+                                 picoData.append(atariFiles[i].atariName.toStdString());
                                  QByteArray space(qMax(0, 8 - (int)atariFiles[i].atariName.size()), '\x20');
-                                 nameLine.append(space.toStdString());
-                                 nameLine.append(atariFiles[i].atariExt.toStdString());
-                                 nameLine.append('\x20');
-                                 nameLine.append(atariFiles[i].longName.mid(0, atariFiles[i].longName.indexOf(".", -1)-1).toStdString());
-                                 nameLine.append('\x9B');
-                                 picoName.write(nameLine);
+                                 picoData.append(space.toStdString());
+                                 picoData.append(atariFiles[i].atariExt.toStdString());
+                                 picoData.append('\x20');
+                                 picoData.append(atariFiles[i].longName.mid(0, atariFiles[i].longName.indexOf(".", -1)-1).toStdString());
+                                 picoData.append('\x9B');
                          }
                       } else {
-                             picoName.close();
                              break;
                       }
                      }
+                     writeWholeFile(nameSource("piconame.txt", true), picoData);
                      break;
                  }
                  // SpartaDOS, force it to change to AtariDOS format after the boot
@@ -372,12 +445,14 @@ bool FolderImage::readSector(quint16 sector, QByteArray &data)
         boot.open(QFile::ReadOnly);
         boot.seek(128);
         data = boot.read(128);
+        padSector(data, 128);
         return true;
     }
     if (sector == 3) {
         boot.open(QFile::ReadOnly);
         boot.seek(256);
         data = boot.read(128);
+        padSector(data, 128);
         return true;
     }
     // SpartaDOS Boot
@@ -470,7 +545,7 @@ bool FolderImage::readSector(quint16 sector, QByteArray &data)
             file->seek(0);
             data = file->read(125);
             size = data.size();
-            data.resize(128);
+            padSector(data, 128);
             if (file->atEnd()) {
                 next = 0;
             }
@@ -503,7 +578,7 @@ bool FolderImage::readSector(quint16 sector, QByteArray &data)
                 atariFiles[atariFileNo].sectPass += 1;
 	    }
             size = data.size();
-            data.resize(128);
+            padSector(data, 128);
             atariFiles[atariFileNo].lastSector = sector;
             if (file->atEnd()) next = 0;
             data[125] = (atariFileNo * 4) | (next / 256);

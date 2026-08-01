@@ -41,6 +41,9 @@ protected:
     // Openable source for a by-name helper file ($boot.bin, piconame.txt, ...).
     // create=true finds-or-creates it (Android SAF); on desktop it is just a path.
     QString nameSource(const QString &name, bool create);
+#ifdef Q_OS_ANDROID
+    QString cachedCopy(const QString &uri, const QString &name);
+#endif
     QMap<QString, QString> m_nameCache;   // Android: name -> resolved source URI
     // Cached read handle for the file currently being served sector by sector,
     // so we don't reopen it (an fd/ContentResolver round-trip) every 125 bytes.

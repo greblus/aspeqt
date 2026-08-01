@@ -125,6 +125,12 @@ Engine::Engine(QObject *parent)
     // Nothing in the network-mount cache is validly mounted at startup, so wipe
     // it: a previous run that was killed without ejecting would leak files here.
     QDir(netTempDir()).removeRecursively();
+    // Same for the copies FolderImage makes of documents whose provider gives
+    // out non-seekable descriptors (Google Drive). They are a read cache and
+    // nothing else: dropping them at startup bounds the disk they take and
+    // guarantees a new session sees the current contents of the folder.
+    QDir(QStandardPaths::writableLocation(QStandardPaths::CacheLocation)
+         + QStringLiteral("/foldercache")).removeRecursively();
     g_aspeQtAppPath = QCoreApplication::applicationDirPath();
     g_disablePicoHiSpeed = false;
     logFile = new QFile(QDir::temp().absoluteFilePath("aspeqt.log"));
