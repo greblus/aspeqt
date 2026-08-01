@@ -7,6 +7,7 @@
 #include <QStringList>
 #ifdef Q_OS_ANDROID
 #include <QJniObject>
+#include <QJniEnvironment>
 #endif
 
 #ifdef Q_OS_ANDROID
@@ -46,6 +47,34 @@ bool ContentFile::open(OpenMode mode)
     }
 #endif
     return QFile::open(mode);
+}
+
+bool writeWholeFile(const QString &target, const QByteArray &bytes)
+{
+    if (target.isEmpty())
+        return false;
+#ifdef Q_OS_ANDROID
+    if (target.startsWith(QLatin1String("content:"))) {
+        QJniEnvironment env;
+        jbyteArray arr = env->NewByteArray(bytes.size());
+        if (!arr)
+            return false;
+        env->SetByteArrayRegion(arr, 0, bytes.size(),
+                                reinterpret_cast<const jbyte *>(bytes.constData()));
+        QJniObject juri = QJniObject::fromString(target);
+        const jint written = QJniObject::callStaticMethod<jint>(
+            "net/greblus/SerialActivity", "writeUriBytes", "(Ljava/lang/String;[B)I",
+            juri.object<jstring>(), arr);
+        env->DeleteLocalRef(arr);
+        return written == bytes.size();
+    }
+#endif
+    QFile f(target);
+    if (!f.open(QIODevice::WriteOnly | QIODevice::Truncate))
+        return false;
+    const bool ok = f.write(bytes) == bytes.size() && f.flush();
+    f.close();
+    return ok;
 }
 
 QString androidContentUri(const QUrl &url)

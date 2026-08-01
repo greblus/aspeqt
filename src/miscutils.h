@@ -14,6 +14,13 @@ class QUrl;
 // sub-folders or with special characters fail to open.
 QString androidContentUri(const QUrl &url);
 
+// Replace a file's whole contents. For a content:// target this goes through
+// ContentResolver.openOutputStream rather than a file descriptor: the
+// truncating open ContentFile needs is optional in SAF and Google Drive refuses
+// it, which silently left 0-byte files behind. Use it for the small helper files
+// we generate ($boot.bin, picodos.sys, piconame.txt); returns false on failure.
+bool writeWholeFile(const QString &target, const QByteArray &bytes);
+
 // A QFile that opens a SAF content:// URI through a real file descriptor
 // (ContentResolver.openFileDescriptor via SerialActivity.openFd), so the picked
 // file is read/written in place with no copy into app storage. For a normal

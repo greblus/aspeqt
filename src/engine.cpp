@@ -31,6 +31,7 @@
 
 #ifdef Q_OS_ANDROID
 #include <QJniObject>
+#include <QJniEnvironment>
 #endif
 
 #include <QScreen>
@@ -1212,14 +1213,12 @@ bool Engine::writeIntoTree(const QString &tree, const QString &name, const QByte
     const QString childUri = androidChildOrCreate(tree, name);
     if (childUri.isEmpty())
         return false;
-    ContentFile dst(childUri);
-    return dst.open(QIODevice::WriteOnly | QIODevice::Truncate) && dst.write(bytes) >= 0;
+    return writeWholeFile(childUri, bytes);
 }
 #else
 bool Engine::writeIntoDir(const QString &dir, const QString &name, const QByteArray &bytes)
 {
-    QFile dst(dir + "/" + name);
-    return dst.open(QIODevice::WriteOnly | QIODevice::Truncate) && dst.write(bytes) >= 0;
+    return writeWholeFile(dir + "/" + name, bytes);
 }
 #endif
 

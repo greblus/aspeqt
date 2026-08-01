@@ -623,7 +623,35 @@ public class SerialActivity extends QtActivity
                         s_activity.getContentResolver().openFileDescriptor(u, mode);
                 if (pfd == null) return -1;
                 return pfd.detachFd();
-            } catch (Throwable e) { return -1; }
+            } catch (Throwable e) {
+                Log.i("SAF", "openFd(" + mode + ") failed: " + e);
+                return -1;
+            }
+        }
+
+        // Write bytes into a content:// document through the ContentResolver.
+        // openOutputStream() is what every provider implements; openFileDescriptor
+        // with a truncating mode ("wt") is optional and Google Drive rejects it,
+        // which is how a folder mounted from Drive ended up with a 0-byte
+        // $boot.bin. Returns the number of bytes written, or -1.
+        public static int writeUriBytes(String uri, byte[] data) {
+            android.net.Uri u = android.net.Uri.parse(uri);
+            String[] modes = { "wt", "w" };
+            for (int i = 0; i < modes.length; ++i) {
+                try {
+                    java.io.OutputStream out =
+                            s_activity.getContentResolver().openOutputStream(u, modes[i]);
+                    if (out == null) continue;
+                    try {
+                        out.write(data);
+                        out.flush();
+                    } finally { out.close(); }
+                    return data.length;
+                } catch (Throwable e) {
+                    Log.i("SAF", "writeUriBytes(" + modes[i] + ") failed: " + e);
+                }
+            }
+            return -1;
         }
 
         public static int openDevice() {
