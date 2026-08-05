@@ -167,7 +167,7 @@ void BootShimImage::handleCommand(quint8 command, quint16 aux)
                             .arg(deviceName());
                 m_serving = false;
                 m_usedReal = false;
-                m_real->handleCommand(command, aux);
+                forward(command, aux);
                 return;
             }
             m_lastSector = aux;
@@ -195,5 +195,22 @@ void BootShimImage::handleCommand(quint8 command, quint16 aux)
             m_usedReal = true;
         m_afterGap = false;
     }
+    forward(command, aux);
+}
+
+// SioWorker takes the device's lock before dispatching, but that is our lock,
+// not the mounted disk's -- and the disk editor holds the disk's lock while it
+// has the image open. Take it here too, so a sector cannot be served from an
+// image that is being written to.
+void BootShimImage::forward(quint8 command, quint16 aux)
+{
+    if (!m_real->tryLock()) {
+        qWarning() << "!w" << tr("[%1] command: $%2, aux: $%3 ignored because the image explorer is open.")
+                      .arg(deviceName())
+                      .arg(command, 2, 16, QChar('0'))
+                      .arg(aux, 4, 16, QChar('0'));
+        return;
+    }
     m_real->handleCommand(command, aux);
+    m_real->unlock();
 }

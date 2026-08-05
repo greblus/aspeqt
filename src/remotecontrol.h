@@ -31,6 +31,7 @@ public:
 
     void handleCommand(quint8 command, quint16 aux) override;
     void handOver();                       // "xc" arrived: step aside
+    void forward(quint8 command, quint16 aux);  // hand a command to the mounted disk
     SioDevice *realDisk() const { return m_real; }
 
 signals:

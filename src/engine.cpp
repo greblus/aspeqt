@@ -388,7 +388,7 @@ QVariantList Engine::modifiedDisks()
 {
     QVariantList out;
     for (int i = 0; i < m_numDisks; i++) {
-        SimpleDiskImage *img = qobject_cast <SimpleDiskImage*> (sio->getDevice(i + 0x31));
+        SimpleDiskImage *img = diskAt(i);
         if (!img || !img->isModified())
             continue;
         QVariantMap m;
@@ -970,7 +970,7 @@ void Engine::ejectImage(int no)
     if (no == 0)
         disarmHighSpeedAtrBoot();
 
-    SimpleDiskImage *img = qobject_cast <SimpleDiskImage*> (sio->getDevice(no + 0x31));
+    SimpleDiskImage *img = diskAt(no);
 
     sio->uninstallDevice(no + 0x31);
     if (!img) {
@@ -1297,7 +1297,7 @@ void Engine::installDos(int no)
     const bool ok = writeIntoTree(tree, "$boot.bin", boot)
                  && writeIntoTree(tree, "picodos.sys", dos);
 #else
-    FolderImage *folder = qobject_cast<FolderImage *>(sio->getDevice(no + 0x31));
+    FolderImage *folder = qobject_cast<FolderImage *>(diskAt(no));
     if (!folder) {
         toast(tr("This slot does not hold a mounted folder."));
         return;
@@ -1367,7 +1367,7 @@ int     Engine::androidCopyDirToTree(const QString &, const QString &) { return 
 
 void Engine::toggleWriteProtection(int no)
 {
-    SimpleDiskImage *img = qobject_cast <SimpleDiskImage*> (sio->getDevice(no + 0x31));
+    SimpleDiskImage *img = diskAt(no);
     if (!img) return;
     m_writeProtect[no] = !m_writeProtect[no];
     img->setReadOnly(m_writeProtect[no]);
@@ -1435,7 +1435,7 @@ void Engine::pushAndroidStrings()
 
 int Engine::saveDisk(int no)
 {
-    SimpleDiskImage *img = qobject_cast <SimpleDiskImage*> (sio->getDevice(no + 0x31));
+    SimpleDiskImage *img = diskAt(no);
     if (!img)
         return SaveFailed;
 
@@ -1462,7 +1462,7 @@ void Engine::autoCommit(int no)
 
 int Engine::toggleAutoCommitDisk(int no)
 {
-    SimpleDiskImage *img = qobject_cast <SimpleDiskImage*> (sio->getDevice(no + 0x31));
+    SimpleDiskImage *img = diskAt(no);
     if (!img) return SaveFailed;
 
     // Auto-commit is engine state now (it used to live in the slot widget's
@@ -1487,7 +1487,7 @@ int Engine::toggleAutoCommitDisk(int no)
 //
 bool Engine::saveAsPath(int no, const QString &url)
 {
-    SimpleDiskImage *img = qobject_cast <SimpleDiskImage*> (sio->getDevice(no + 0x31));
+    SimpleDiskImage *img = diskAt(no);
     if (!img)
         return false;
     const QString fileName = pathFromPickedUrl(url);
