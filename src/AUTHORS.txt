@@ -31,6 +31,18 @@ AspeQt -- authors and third-party code
     libssh 0.11.5     LGPL-2.1 -- linked statically (Android will not load a
                       versioned .so). See src/doc/build-libssh.md.
 
+* High-speed SIO boot loader: src/atari/hisioboot/hisioboot-atarisio.atr is built
+  unmodified from Matthias Reichl's highspeed-sio sources (GPL-2), commit df5fd87,
+  carrying highspeed SIO patch v1.33. Sources, and the README shipped next to it
+  as README-hipatch.txt: https://github.com/HiassofT/highspeed-sio
+  Built with:
+    atasm -f0 -dFASTVBI=1 -dPATCHKEY=1 -r -ohipatch-code.bin hipatch-code.src
+    atasm -dPATCHKEY=1 -dATRBOOT=1 -dATARISIO_SWAP=1 -r -o<out>.atr hipatch.src
+  It boots first in D1:, patches the running OS for high-speed SIO and then asks
+  for the drives to be exchanged over SIO device $61 -- AtariSIO's remote-control
+  protocol, reimplemented here in remotecontrol.{h,cpp}
+  (https://github.com/HiassofT/AtariSIO).
+
 * Ice-T, the Atari terminal program shipped as src/icet/icet.atr for testing the
   R: device, is by Itay Chamiel. It is not part of AspeQt and is included only as
   a convenient test client.

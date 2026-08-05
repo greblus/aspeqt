@@ -59,6 +59,8 @@ private:
     class EpsonPrinter *m_epson = nullptr;
     QImage m_paperImage;
     RDevice *m_rDevice = nullptr;
+    class RemoteControl *m_remote = nullptr;      // SIO device $61
+    class BootShimImage *m_hisioLoader = nullptr; // bundled boot loader, while armed
     // Set when Options changed a serial parameter mid-session: the port is
     // reopened once the worker has stopped, since speed and handshaking are
     // only read there.
@@ -180,6 +182,11 @@ public:
     void toggleWriteProtect(int i);
     int addSlot();    // returns the hardware index of the added slot (-1 none)
     void swapSlots(int source, int slot);   // drag-reorder: swap two drives
+    void onDrivesExchanged(int d1, int d2); // $61 remote control did the swap
+    void onBootShimReleased();              // loader handed D1: back to the disk
+    void armHighSpeedAtrBoot();             // put the loader in front of D1:
+    void disarmHighSpeedAtrBoot();          // ... and take it away again
+    SimpleDiskImage *diskAt(int no);        // slot's disk, past the loader
     void loaderPlay();
     void toggleSio();
     void togglePrinter();

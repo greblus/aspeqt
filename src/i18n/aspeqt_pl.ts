@@ -331,6 +331,19 @@
     </message>
 </context>
 <context>
+    <name>BootShimImage</name>
+    <message>
+        <location filename="../remotecontrol.cpp" line="+156"/>
+        <source>[%1] Not a boot read; the mounted disk takes over.</source>
+        <translation>[%1] To nie odczyt bootujący; przejmuje zamontowany dysk.</translation>
+    </message>
+    <message>
+        <location line="+21"/>
+        <source>[%1] The Atari is booting again; patching once more.</source>
+        <translation>[%1] Atari bootuje ponownie; łatam jeszcze raz.</translation>
+    </message>
+</context>
+<context>
     <name>CassetteWorker</name>
     <message>
         <location filename="../sioworker.cpp" line="+406"/>
@@ -761,7 +774,7 @@
 <context>
     <name>Engine</name>
     <message>
-        <location filename="../engine.cpp" line="+2393"/>
+        <location filename="../engine.cpp" line="+2524"/>
         <location line="+12"/>
         <location line="+4"/>
         <source>Cannot extract the files, see the log.</source>
@@ -780,12 +793,12 @@
         <translation>Nie można dodać pliku, zobacz do log-u</translation>
     </message>
     <message>
-        <location line="-1831"/>
+        <location line="-1946"/>
         <source>Cassette (%1:%2)</source>
         <translation>Kaseta (%1:%2)</translation>
     </message>
     <message>
-        <location line="+542"/>
+        <location line="+633"/>
         <location line="+8"/>
         <source>This slot does not hold a mounted folder.</source>
         <translation>Ten slot nie zawiera zamontowanego katalogu.</translation>
@@ -802,12 +815,12 @@
         <translation>Zainstalowano szybkie MyPicoDOS w katalogu. Zrestartuj Atari, aby wczytać DOS.</translation>
     </message>
     <message>
-        <location line="-587"/>
+        <location line="-678"/>
         <source>Executable (%1k)</source>
         <translation>Plik exe (%1k)</translation>
     </message>
     <message>
-        <location line="+1656"/>
+        <location line="+1771"/>
         <source>Failed to load &apos;%1&apos;.</source>
         <translation>Nie udało się wczytać &apos;%1&apos;.</translation>
     </message>
@@ -817,12 +830,12 @@
         <translation>Wybierz program Atari (.xex/.com/.exe) lub obraz kasety (.cas).</translation>
     </message>
     <message>
-        <location line="-1679"/>
+        <location line="-1794"/>
         <source>Failed to load executable &apos;%1&apos;.</source>
         <translation>Nie udało się załadować programu &apos;%1&apos;.</translation>
     </message>
     <message>
-        <location line="-441"/>
+        <location line="-450"/>
         <source>Migrating the global settings to their new repository (session files are not affected).</source>
         <translation>Przenoszę ustawienia globalne do nowego repozytorium (pliki sesji pozostają bez zmian).</translation>
     </message>
@@ -842,7 +855,7 @@
         <translation>Nie znaleziono pliku sesji w bieżącym katalogu aplikacji (nie podano ścieżki). AspeQt będzie kontynuował z domyślną konfiguracją sesji.</translation>
     </message>
     <message>
-        <location line="+384"/>
+        <location line="+393"/>
         <source>Loaded executable &apos;%1&apos;. Start (or reboot) your Atari to run it.</source>
         <translation>Załadowano program &apos;%1&apos;. Uruchom (lub zresetuj) Atari, aby go wystartować.</translation>
     </message>
@@ -868,16 +881,31 @@
     </message>
     <message>
         <location line="+106"/>
+        <source>Could not open the high-speed boot loader.</source>
+        <translation>Nie można otworzyć loadera szybkiego SIO.</translation>
+    </message>
+    <message>
+        <location line="+11"/>
+        <source>High-speed boot: D1: answers as the loader until the Atari boots.</source>
+        <translation>Szybki boot: D1: odpowiada jako loader do czasu wystartowania Atari.</translation>
+    </message>
+    <message>
+        <location line="+8"/>
+        <source>High-speed SIO patched in; D1: is the mounted disk.</source>
+        <translation>Szybkie SIO załatane; D1: to zamontowany dysk.</translation>
+    </message>
+    <message>
+        <location line="+61"/>
         <source>[%1] Auto-commit failed.</source>
         <translation>[%1] Autozapis nie powiódł się.</translation>
     </message>
     <message>
-        <location line="+156"/>
+        <location line="+162"/>
         <source>Loaded into the cas/xex slot.</source>
         <translation>Zamontowałem w slocie cas/xex.</translation>
     </message>
     <message>
-        <location line="+323"/>
+        <location line="+328"/>
         <source>BT module not present.</source>
         <translation>Brak adaptera BT w urządzeniu.</translation>
     </message>
@@ -933,20 +961,25 @@
     </message>
     <message>
         <location line="+131"/>
-        <location line="+1003"/>
+        <location line="+1027"/>
         <source>Cannot read &apos;%1&apos;.</source>
         <translation>Nie można odczytać &apos;%1&apos;.</translation>
     </message>
     <message>
-        <location line="-927"/>
-        <location line="+251"/>
+        <location line="-951"/>
+        <location line="+273"/>
         <location line="+39"/>
-        <location line="+651"/>
+        <location line="+653"/>
         <source>Cannot write to &apos;%1&apos;.</source>
         <translation>Nie można zapisać do pliku &apos;%1&apos;.</translation>
     </message>
     <message>
-        <location line="-701"/>
+        <location line="-823"/>
+        <source>The Atari asked to exchange disk %1 with disk %2.</source>
+        <translation>Atari poprosiło o zamianę dysku %1 z dyskiem %2.</translation>
+    </message>
+    <message>
+        <location line="+120"/>
         <location line="+40"/>
         <source>Nothing has been printed yet.</source>
         <translation>Jeszcze nic nie wydrukowano.</translation>
@@ -974,7 +1007,7 @@
         <translation>Nie można otworzyć przechwyconego wydruku, zobacz log.</translation>
     </message>
     <message>
-        <location line="+104"/>
+        <location line="+106"/>
         <source>Serial settings changed; restarting the emulation.</source>
         <translation>Zmieniono ustawienia portu; ponowne uruchamianie emulacji.</translation>
     </message>
@@ -1004,7 +1037,7 @@
         <translation>Automatyczny</translation>
     </message>
     <message>
-        <location line="-1442"/>
+        <location line="-1557"/>
         <source>AspeQt is ready to playback the cassette image file &apos;%1&apos;.
 
 Do whatever is necessary in your Atari to load this cassette image like rebooting while holding Option and Start buttons or entering &quot;CLOAD&quot; in the BASIC prompt.
@@ -1017,7 +1050,7 @@ Wykonaj w Atari czynności potrzebne do wczytania tej kasety, np. zresetuj trzym
 Gdy usłyszysz sygnał, naciśnij przycisk play i mniej więcej w tym samym czasie naciśnij klawisz na Atari.</translation>
     </message>
     <message>
-        <location line="+712"/>
+        <location line="+803"/>
         <source>[Disk %1] Auto-commit ON.</source>
         <translation>[Dysk %1] Autozapis WŁĄCZONY.</translation>
     </message>
@@ -1027,19 +1060,19 @@ Gdy usłyszysz sygnał, naciśnij przycisk play i mniej więcej w tym samym czas
         <translation>[Dysk %1] Autozapis WYŁĄCZONY.</translation>
     </message>
     <message>
-        <location line="-867"/>
+        <location line="-958"/>
         <location line="+7"/>
-        <location line="+907"/>
+        <location line="+998"/>
         <source>&apos;%1&apos; cannot be saved.</source>
         <translation>Nie można zapisać &apos;%1&apos;.</translation>
     </message>
     <message>
-        <location line="+233"/>
+        <location line="+235"/>
         <source>Swapped disk %1 with disk %2.</source>
         <translation>Zamieniono dysk %1 z dyskiem %2.</translation>
     </message>
     <message>
-        <location line="+40"/>
+        <location line="+60"/>
         <source>Printer emulation stopped.</source>
         <translation>Emulacja drukarki zatrzymana.</translation>
     </message>
@@ -1049,33 +1082,33 @@ Gdy usłyszysz sygnał, naciśnij przycisk play i mniej więcej w tym samym czas
         <translation>Emulacja drukarki uruchomiona.</translation>
     </message>
     <message>
-        <location line="-883"/>
+        <location line="-916"/>
         <source>Emulation stopped.</source>
         <translation>Emulacja zatrzymana.</translation>
     </message>
     <message>
-        <location line="-652"/>
+        <location line="-741"/>
         <source>AspeQt started at %1.</source>
         <translation>AspeQt uruchomiono %1.</translation>
     </message>
     <message>
-        <location line="+199"/>
+        <location line="+208"/>
         <source>AspeQt stopped at %1.</source>
         <translation>AspeQt zatrzymano %1.</translation>
     </message>
     <message>
-        <location line="+543"/>
+        <location line="+629"/>
         <source>Unmounted disk %1</source>
         <translation>Odmontowany dysk %1</translation>
     </message>
     <message>
-        <location line="+171"/>
-        <location line="+654"/>
+        <location line="+176"/>
+        <location line="+676"/>
         <source>[%1] Mounted &apos;%2&apos; as &apos;%3&apos;.</source>
         <translation>[%1] Zamontowe &apos;%2&apos; jako &apos;%3&apos;.</translation>
     </message>
     <message>
-        <location line="-1466"/>
+        <location line="-1588"/>
         <source>AspeQt - Atari Serial Peripheral Emulator for Qt</source>
         <translation>AspeQt - Emulator Szeregowych Peryferiów Atari dla Qt</translation>
     </message>
@@ -1710,22 +1743,22 @@ Czy chcesz otworzyć opcje?</translation>
 <context>
     <name>OptionsDialog</name>
     <message>
-        <location filename="../qml/OptionsDialog.qml" line="+159"/>
+        <location filename="../qml/OptionsDialog.qml" line="+161"/>
         <source>Options</source>
         <translation>Opcje</translation>
     </message>
     <message>
-        <location line="+239"/>
+        <location line="+251"/>
         <source>User interface</source>
         <translation>Interfejs użytkownika</translation>
     </message>
     <message>
-        <location line="-204"/>
+        <location line="-216"/>
         <source>Handshake method:</source>
         <translation>Metoda synchronizacji:</translation>
     </message>
     <message>
-        <location line="+226"/>
+        <location line="+238"/>
         <source>Save</source>
         <translation>Zapisz</translation>
     </message>
@@ -1735,7 +1768,7 @@ Czy chcesz otworzyć opcje?</translation>
         <translation>(Wymagane dla zgodności z AtariDOS)</translation>
     </message>
     <message>
-        <location line="-42"/>
+        <location line="-54"/>
         <source>Bluetooth name:</source>
         <translation>Nazwa modułu BT:</translation>
     </message>
@@ -1760,7 +1793,7 @@ Czy chcesz otworzyć opcje?</translation>
         <translation>Szybkie ładowanie plików wykonywalnych</translation>
     </message>
     <message>
-        <location line="+1"/>
+        <location line="+13"/>
         <source>Use custom baud rate for cassette emulation</source>
         <oldsource>Use cutom baud rate for cassette emulation</oldsource>
         <translation>Własna prędkość dla emulacji kaset (bps)</translation>
@@ -1776,12 +1809,12 @@ Czy chcesz otworzyć opcje?</translation>
         <translation>Język:</translation>
     </message>
     <message>
-        <location filename="../engine.cpp" line="+1856"/>
+        <location filename="../engine.cpp" line="+1980"/>
         <source>English</source>
         <translation>Polski</translation>
     </message>
     <message>
-        <location filename="../qml/OptionsDialog.qml" line="-213"/>
+        <location filename="../qml/OptionsDialog.qml" line="-225"/>
         <source>SIO port emulation</source>
         <translation>Emulacja portu SIO</translation>
     </message>
@@ -1801,7 +1834,17 @@ Czy chcesz otworzyć opcje?</translation>
         <translation>Ustawienia emulacji</translation>
     </message>
     <message>
+        <location line="+4"/>
+        <source>Use high speed disk loader</source>
+        <translation>Szybkie ładowanie obrazów dysków</translation>
+    </message>
+    <message>
         <location line="+6"/>
+        <source>Boots D1: through a high-speed SIO patch. Mount every disk before starting the Atari: it decides each drive&apos;s speed once.</source>
+        <translation>Bootuje D1: z łatką szybkiego SIO. Zamontuj wszystkie dyski przed uruchomieniem Atari: prędkość każdego napędu ustalana jest raz.</translation>
+    </message>
+    <message>
+        <location line="+8"/>
         <source>Cassette baud rate:</source>
         <translation>Prędkość transmisji kasety:</translation>
     </message>
@@ -2739,6 +2782,29 @@ Czy chcesz otworzyć opcje?</translation>
         <location filename="../rdevice.cpp" line="+1083"/>
         <source>[RDevice] Dialing %1:%2...</source>
         <translation>[RDevice] Wybieranie numeru %1:%2...</translation>
+    </message>
+</context>
+<context>
+    <name>RemoteControl</name>
+    <message>
+        <location filename="../remotecontrol.cpp" line="-153"/>
+        <source>[%1] Read data frame failed</source>
+        <translation type="unfinished">[%1] Czytanie ramki danych nie powiodło się</translation>
+    </message>
+    <message>
+        <location line="+52"/>
+        <source>[%1] command: $%2, aux: $%3 unknown.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location line="+35"/>
+        <source>[%1] Handed D1: over to the mounted disk.</source>
+        <translation>[%1] D1: przekazany zamontowanemu dyskowi.</translation>
+    </message>
+    <message>
+        <location line="+6"/>
+        <source>[%1] Exchanged D%2: and D%3:.</source>
+        <translation>[%1] Zamieniono D%2: z D%3:.</translation>
     </message>
 </context>
 <context>

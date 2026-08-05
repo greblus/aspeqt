@@ -10,6 +10,7 @@
 #include <jni.h>
 #endif
 #include "pclink.h"
+#include "remotecontrol.h"
 #include "miscdevices.h"
 #include "aspeqtsettings.h"
 #include "autoboot.h"
@@ -270,6 +271,15 @@ Engine::Engine(QObject *parent)
 
     PCLINK* pclink = new PCLINK(sio);
     sio->installDevice(0x6F, pclink);
+
+    // AtariSIO remote control ($61): the high-speed boot loader uses it to have
+    // D1: and D2: exchanged after it has patched the OS.
+    m_remote = new RemoteControl(sio);
+    sio->installDevice(0x61, m_remote);
+    connect(m_remote, &RemoteControl::drivesExchanged, this, &Engine::onDrivesExchanged,
+            Qt::QueuedConnection);
+    connect(m_remote, &RemoteControl::bootShimReleased, this, &Engine::onBootShimReleased,
+            Qt::QueuedConnection);
 
 #ifdef Q_OS_ANDROID
     // Loader state (used to be done by androidBuildLoaderSlot()).
@@ -788,12 +798,100 @@ void Engine::loaderRetry()
 void Engine::sioStarted()
 {
     m_emulationRunning = true;
+    armHighSpeedAtrBoot();
     emit stateChanged();
+}
+
+// Put the loader ATR in front of D1: while leaving the slot itself alone. The
+// Atari boots it, it patches the OS for highspeed SIO and asks $61 to exchange
+// D1: and D2:; RemoteControl answers that by handing the mounted disk over.
+// Nothing here touches the UI, so the user sees their own disk in slot 1 the
+// whole time and slot 2 stays free -- which is what multi-disk games need.
+void Engine::armHighSpeedAtrBoot()
+{
+    if (!aspeqtSettings->useHighSpeedAtrLoader() || !m_remote || !m_emulationRunning)
+        return;
+    if (m_remote->bootShimArmed())
+        return;
+
+    SioDevice *real = sio->getDevice(0x31);
+    if (!real)                       // nothing mounted in D1: -- nothing to boot
+        return;
+
+    // Unpack the bundled loader every time rather than when the file is missing:
+    // a cached copy from an older version outlives an update and would keep an
+    // outdated patch in circulation.
+    const QString path = QStandardPaths::writableLocation(QStandardPaths::CacheLocation)
+                       + QStringLiteral("/hisioboot.atr");
+    QFile src(QStringLiteral(":/hisio/hisioboot.atr"));
+    if (!src.open(QIODevice::ReadOnly))
+        return;
+    const QByteArray bytes = src.readAll();
+    src.close();
+    if (!writeWholeFile(path, bytes))
+        return;
+
+    BootShimImage *loader = new BootShimImage(sio, real, 16);
+    if (!loader->open(path, FileTypes::Atr)) {
+        delete loader;
+        qWarning() << "!e" << tr("Could not open the high-speed boot loader.");
+        return;
+    }
+    loader->setReadOnly(true);
+    connect(loader, &BootShimImage::steppedAside, this, &Engine::onBootShimReleased,
+            Qt::QueuedConnection);
+
+    sio->uninstallDevice(0x31);      // hands the mounted disk over, without deleting it
+    sio->installDevice(0x31, loader);
+    m_hisioLoader = loader;
+    m_remote->armBootShim(loader);
+    qDebug() << "!i" << tr("High-speed boot: D1: answers as the loader until the Atari boots.");
+}
+
+// The loader has handed the Atari over to the mounted disk. It stays in the
+// device table -- it is the one thing that can notice the next boot and patch
+// that one too -- so there is nothing to undo here beyond saying so.
+void Engine::onBootShimReleased()
+{
+    qDebug() << "!i" << tr("High-speed SIO patched in; D1: is the mounted disk.");
+}
+
+// Emulation is going down (or the slot is being emptied) with the loader still
+// in front of D1:: give the slot its disk back before anything else touches it.
+void Engine::disarmHighSpeedAtrBoot()
+{
+    if (!m_hisioLoader)
+        return;
+    SioDevice *real = m_hisioLoader->realDisk();
+    if (m_remote)
+        m_remote->forgetBootShim();
+    // Look the loader up rather than assuming $31: a slot swap moves whatever
+    // sits in the device table, and that is the loader, not the parked disk.
+    for (int i = 0; i < MAX_DISKS; ++i) {
+        if (sio->getDevice(0x31 + i) != m_hisioLoader)
+            continue;
+        sio->uninstallDevice(0x31 + i);
+        if (real)
+            sio->installDevice(0x31 + i, real);
+        break;
+    }
+    m_hisioLoader->deleteLater();
+    m_hisioLoader = nullptr;
+}
+
+// The disk in a slot, seen past the boot loader if it is standing in for D1:.
+SimpleDiskImage *Engine::diskAt(int no)
+{
+    SioDevice *dev = sio->getDevice(0x31 + no);
+    if (m_hisioLoader && dev == m_hisioLoader)
+        dev = m_hisioLoader->realDisk();
+    return qobject_cast<SimpleDiskImage *>(dev);
 }
 
 void Engine::sioFinished()
 {
     sio->wait();          // already finished: this just closes the port
+    disarmHighSpeedAtrBoot();
     m_emulationRunning = false;
     m_sioStatus.clear();
     qWarning() << "!i" << tr("Emulation stopped.");
@@ -866,6 +964,12 @@ void Engine::setSession()
 // this is reached (the QML side knows which images are modified).
 void Engine::ejectImage(int no)
 {
+    // D1: may be answering as the boot loader, with the real disk parked in the
+    // $61 device. Undo that first, or the disk being ejected is not the one the
+    // device table holds -- and the parked pointer would be left dangling.
+    if (no == 0)
+        disarmHighSpeedAtrBoot();
+
     SimpleDiskImage *img = qobject_cast <SimpleDiskImage*> (sio->getDevice(no + 0x31));
 
     sio->uninstallDevice(no + 0x31);
@@ -1032,6 +1136,11 @@ void Engine::mountFile(int no, const QString &fileName, bool /*prot*/)
             m_folderTree.remove(no);
         }
 #endif
+
+        // A new disk in D1: gets the loader put back in front of it, so the
+        // next reboot of the Atari is a high-speed one as well.
+        if (no == 0)
+            armHighSpeedAtrBoot();
 
         PCLINK* pclink = reinterpret_cast<PCLINK*>(sio->getDevice(0x6F));
         if(isDir || pclink->hasLink(no+1))
@@ -1545,7 +1654,9 @@ QVariantList Engine::driveList()
         if (!m_slotPresent[i]) continue;   // only slots that are present
         QVariantMap m;
         m["hwIndex"] = i;
-        SimpleDiskImage *img = qobject_cast<SimpleDiskImage *>(sio->getDevice(0x31 + i));
+        // Past the boot loader, if it is standing in for D1:: the slot shows
+        // what the user mounted, not our business.
+        SimpleDiskImage *img = diskAt(i);
         if (img) {
             const QString orig = img->originalFileName();
             int slash = orig.lastIndexOf('/');
@@ -1631,6 +1742,11 @@ void Engine::swapSlots(int source, int slot)
     if (source == slot || source < 0 || slot < 0) return;
     if (!m_slotPresent[source] || !m_slotPresent[slot]) return;
 
+    // Swap the disks, not the boot loader standing in front of one of them --
+    // otherwise the loader travels to the other slot and the disk it is holding
+    // is dropped from the device table entirely.
+    disarmHighSpeedAtrBoot();
+
     sio->swapDevices(slot + 0x31, source + 0x31);
     aspeqtSettings->swapImages(slot, source);
 
@@ -1640,9 +1756,34 @@ void Engine::swapSlots(int source, int slot)
         pclink->swapLinks(slot + 1, source + 1);
         sio->installDevice(0x6F, pclink);
     }
+    // Whatever ended up in D1: gets the loader in front of it -- including a
+    // disk dragged there from another slot, which is how you pick what boots.
+    // armHighSpeedAtrBoot() is a no-op when the option is off or D1: is empty.
+    armHighSpeedAtrBoot();
+
     qDebug() << "!n" << tr("Swapped disk %1 with disk %2.").arg(slot + 1).arg(source + 1);
     emit stateChanged();
 }
+// The $61 remote control already exchanged the two devices on the SIO thread --
+// the Atari boots the new D1: immediately, so that could not wait for us. All
+// that is left here is to make the UI and the saved session tell the same story.
+void Engine::onDrivesExchanged(int d1, int d2)
+{
+    const int a = d1 - 1, b = d2 - 1;
+    if (a < 0 || b < 0 || a >= m_numDisks || b >= m_numDisks)
+        return;
+    aspeqtSettings->swapImages(a, b);
+
+    PCLINK *pclink = reinterpret_cast<PCLINK *>(sio->getDevice(0x6F));
+    if (pclink && (pclink->hasLink(d1) || pclink->hasLink(d2))) {
+        sio->uninstallDevice(0x6F);
+        pclink->swapLinks(d1, d2);
+        sio->installDevice(0x6F, pclink);
+    }
+    qDebug() << "!i" << tr("The Atari asked to exchange disk %1 with disk %2.").arg(d1).arg(d2);
+    emit stateChanged();
+}
+
 void Engine::loaderPlay()              { loaderPlayCas(); }
 void Engine::toggleSio()
 {
@@ -1884,6 +2025,7 @@ QVariantMap Engine::loadOptions()
     o["useDivisors"]      = aspeqtSettings->serialPortUsePokeyDivisors();
     o["pokeyDivisor"]     = aspeqtSettings->serialPortPokeyDivisor();
     o["hsExeLoader"]      = aspeqtSettings->useHighSpeedExeLoader();
+    o["hsAtrLoader"]      = aspeqtSettings->useHighSpeedAtrLoader();
     o["useCustomCasBaud"] = aspeqtSettings->useCustomCasBaud();
     o["customCasBaud"]    = aspeqtSettings->customCasBaud();
     o["filterUscore"]     = aspeqtSettings->filterUnderscore();
@@ -1922,6 +2064,7 @@ void Engine::applyOptions(const QVariantMap &o)
     aspeqtSettings->setSerialPortUsePokeyDivisors(o.value("useDivisors").toBool());
     aspeqtSettings->setSerialPortPokeyDivisor(o.value("pokeyDivisor").toInt());
     aspeqtSettings->setUseHighSpeedExeLoader(o.value("hsExeLoader").toBool());
+    aspeqtSettings->setUseHighSpeedAtrLoader(o.value("hsAtrLoader").toBool());
     aspeqtSettings->setUseCustomCasBaud(o.value("useCustomCasBaud").toBool());
     aspeqtSettings->setCustomCasBaud(o.value("customCasBaud").toInt());
     // Always on now (their checkboxes were removed from the QML options).
@@ -2125,7 +2268,7 @@ static AtariFileSystem *createDiskFs(int index, SimpleDiskImage *disk)
 bool Engine::diskOpen(int hwIndex)
 {
     diskClose();
-    SimpleDiskImage *img = qobject_cast<SimpleDiskImage *>(sio->getDevice(0x31 + hwIndex));
+    SimpleDiskImage *img = diskAt(hwIndex);
     if (!img) return false;
     m_dvDisk = img;
     m_dvDisk->lock();

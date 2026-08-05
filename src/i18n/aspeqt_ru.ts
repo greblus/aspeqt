@@ -331,6 +331,19 @@
     </message>
 </context>
 <context>
+    <name>BootShimImage</name>
+    <message>
+        <location filename="../remotecontrol.cpp" line="+156"/>
+        <source>[%1] Not a boot read; the mounted disk takes over.</source>
+        <translation>[%1] Это не загрузочное чтение; управление берёт подключённый диск.</translation>
+    </message>
+    <message>
+        <location line="+21"/>
+        <source>[%1] The Atari is booting again; patching once more.</source>
+        <translation>[%1] Atari загружается снова; патч применяется ещё раз.</translation>
+    </message>
+</context>
+<context>
     <name>CassetteWorker</name>
     <message>
         <location filename="../sioworker.cpp" line="+359"/>
@@ -761,7 +774,7 @@
 <context>
     <name>Engine</name>
     <message>
-        <location filename="../engine.cpp" line="+242"/>
+        <location filename="../engine.cpp" line="+249"/>
         <source>AspeQt - Atari Serial Peripheral Emulator for Qt</source>
         <translation>AspeQt - эмулятор SIO-периферии для Atari под Qt</translation>
     </message>
@@ -791,7 +804,7 @@
         <translation>Файл сессии не найден в текущем каталоге приложения (путь не указан). AspeQt продолжит с настройками сессии по умолчанию.</translation>
     </message>
     <message>
-        <location line="+111"/>
+        <location line="+120"/>
         <source>AspeQt stopped at %1.</source>
         <translation>AspeQt остановлен в %1.</translation>
     </message>
@@ -849,17 +862,17 @@ When you hear the beep sound, push the play button and press a key on your Atari
         <translation>Программа загружена в Atari.</translation>
     </message>
     <message>
-        <location line="+106"/>
+        <location line="+186"/>
         <source>[%1] Auto-commit failed.</source>
         <translation>[%1] Автосохранение не удалось.</translation>
     </message>
     <message>
-        <location line="+156"/>
+        <location line="+162"/>
         <source>Loaded into the cas/xex slot.</source>
         <translation>Загружено в слот cas/xex.</translation>
     </message>
     <message>
-        <location line="+203"/>
+        <location line="+208"/>
         <location line="+8"/>
         <source>This slot does not hold a mounted folder.</source>
         <translation>В этом слоте нет подключённой папки.</translation>
@@ -886,14 +899,29 @@ When you hear the beep sound, push the play button and press a key on your Atari
         <translation>[Диск %1] Автосохранение ВЫКЛ.</translation>
     </message>
     <message>
-        <location line="-867"/>
+        <location line="-958"/>
         <location line="+7"/>
-        <location line="+907"/>
+        <location line="+998"/>
         <source>&apos;%1&apos; cannot be saved.</source>
         <translation>Не удалось сохранить «%1».</translation>
     </message>
     <message>
-        <location line="-105"/>
+        <location line="-675"/>
+        <source>Could not open the high-speed boot loader.</source>
+        <translation>Не удалось открыть загрузчик быстрого SIO.</translation>
+    </message>
+    <message>
+        <location line="+11"/>
+        <source>High-speed boot: D1: answers as the loader until the Atari boots.</source>
+        <translation>Быстрая загрузка: D1: отвечает как загрузчик, пока Atari не стартует.</translation>
+    </message>
+    <message>
+        <location line="+8"/>
+        <source>High-speed SIO patched in; D1: is the mounted disk.</source>
+        <translation>Быстрый SIO установлен; D1: — подключённый диск.</translation>
+    </message>
+    <message>
+        <location line="+551"/>
         <source>BT module not present.</source>
         <translation>BT-модуль отсутствует.</translation>
     </message>
@@ -949,25 +977,30 @@ When you hear the beep sound, push the play button and press a key on your Atari
     </message>
     <message>
         <location line="+131"/>
-        <location line="+1003"/>
+        <location line="+1027"/>
         <source>Cannot read &apos;%1&apos;.</source>
         <translation>Не удалось прочитать «%1».</translation>
     </message>
     <message>
-        <location line="-927"/>
-        <location line="+251"/>
+        <location line="-951"/>
+        <location line="+273"/>
         <location line="+39"/>
-        <location line="+651"/>
+        <location line="+653"/>
         <source>Cannot write to &apos;%1&apos;.</source>
         <translation>Не удалось записать в &apos;%1&apos;.</translation>
     </message>
     <message>
-        <location line="-820"/>
+        <location line="-842"/>
         <source>Swapped disk %1 with disk %2.</source>
         <translation>Диск %1 заменен на диск %2.</translation>
     </message>
     <message>
-        <location line="+119"/>
+        <location line="+19"/>
+        <source>The Atari asked to exchange disk %1 with disk %2.</source>
+        <translation>Atari запросил обмен диска %1 с диском %2.</translation>
+    </message>
+    <message>
+        <location line="+120"/>
         <location line="+40"/>
         <source>Nothing has been printed yet.</source>
         <translation>Пока ничего не напечатано.</translation>
@@ -995,7 +1028,7 @@ When you hear the beep sound, push the play button and press a key on your Atari
         <translation>Не удалось открыть запись, см. журнал.</translation>
     </message>
     <message>
-        <location line="+104"/>
+        <location line="+106"/>
         <source>Serial settings changed; restarting the emulation.</source>
         <translation>Настройки последовательного порта изменены; перезапуск эмуляции.</translation>
     </message>
@@ -1054,18 +1087,18 @@ When you hear the beep sound, push the play button and press a key on your Atari
         <translation>Не удалось добавить файл, смотрите журнал.</translation>
     </message>
     <message>
-        <location line="-1675"/>
+        <location line="-1710"/>
         <source>Emulation stopped.</source>
         <translation>Эмуляция остановлена.</translation>
     </message>
     <message>
-        <location line="+90"/>
+        <location line="+96"/>
         <source>Unmounted disk %1</source>
         <translation>Диск %1 отключен</translation>
     </message>
     <message>
-        <location line="+171"/>
-        <location line="+654"/>
+        <location line="+176"/>
+        <location line="+676"/>
         <source>[%1] Mounted &apos;%2&apos; as &apos;%3&apos;.</source>
         <translation>[%1] Подключен &apos;%2&apos; как &apos;%3&apos;.</translation>
     </message>
@@ -1710,27 +1743,27 @@ Do you want to open the options dialog?</source>
 <context>
     <name>OptionsDialog</name>
     <message>
-        <location filename="../qml/OptionsDialog.qml" line="+159"/>
+        <location filename="../qml/OptionsDialog.qml" line="+161"/>
         <source>Options</source>
         <translation>Настройки</translation>
     </message>
     <message>
-        <location line="+239"/>
+        <location line="+251"/>
         <source>User interface</source>
         <translation>Интерфейс</translation>
     </message>
     <message>
-        <location line="-204"/>
+        <location line="-216"/>
         <source>Handshake method:</source>
         <translation>Метод рукопожатия:</translation>
     </message>
     <message>
-        <location line="+226"/>
+        <location line="+238"/>
         <source>Save</source>
         <translation>Сохранить</translation>
     </message>
     <message>
-        <location line="-232"/>
+        <location line="-244"/>
         <source>Serial interface:</source>
         <translation>Последовательный интерфейс:</translation>
     </message>
@@ -1770,7 +1803,17 @@ Do you want to open the options dialog?</source>
         <translation>Настройки эмуляции</translation>
     </message>
     <message>
+        <location line="+4"/>
+        <source>Use high speed disk loader</source>
+        <translation>Быстрая загрузка образов дисков</translation>
+    </message>
+    <message>
         <location line="+6"/>
+        <source>Boots D1: through a high-speed SIO patch. Mount every disk before starting the Atari: it decides each drive&apos;s speed once.</source>
+        <translation>Загружает D1: через патч быстрого SIO. Подключите все диски до включения Atari: скорость каждого дисковода определяется один раз.</translation>
+    </message>
+    <message>
+        <location line="+8"/>
         <source>Cassette baud rate:</source>
         <translation>Скорость кассеты:</translation>
     </message>
@@ -1896,12 +1939,12 @@ Do you want to open the options dialog?</source>
         <translation>Отмена</translation>
     </message>
     <message>
-        <location line="-176"/>
+        <location line="-188"/>
         <source>Use high speed executable loader</source>
         <translation>Быстрый загрузчик исполняемых файлов</translation>
     </message>
     <message>
-        <location line="+1"/>
+        <location line="+13"/>
         <source>Use custom baud rate for cassette emulation</source>
         <translation>Нестандартная скорость обмена для кассеты</translation>
     </message>
@@ -1916,7 +1959,7 @@ Do you want to open the options dialog?</source>
         <translation>Язык:</translation>
     </message>
     <message>
-        <location filename="../engine.cpp" line="+422"/>
+        <location filename="../engine.cpp" line="+424"/>
         <source>English</source>
         <translation>Russian</translation>
     </message>
@@ -2738,6 +2781,29 @@ Do you want to open the options dialog?</source>
         <location filename="../rdevice.cpp" line="+1083"/>
         <source>[RDevice] Dialing %1:%2...</source>
         <translation>[RDevice] Набор номера %1:%2...</translation>
+    </message>
+</context>
+<context>
+    <name>RemoteControl</name>
+    <message>
+        <location filename="../remotecontrol.cpp" line="-153"/>
+        <source>[%1] Read data frame failed</source>
+        <translation type="unfinished">[%1] Не удалось прочитать кадр данных</translation>
+    </message>
+    <message>
+        <location line="+52"/>
+        <source>[%1] command: $%2, aux: $%3 unknown.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location line="+35"/>
+        <source>[%1] Handed D1: over to the mounted disk.</source>
+        <translation>[%1] D1: передан подключённому диску.</translation>
+    </message>
+    <message>
+        <location line="+6"/>
+        <source>[%1] Exchanged D%2: and D%3:.</source>
+        <translation>[%1] D%2: и D%3: поменяны местами.</translation>
     </message>
 </context>
 <context>

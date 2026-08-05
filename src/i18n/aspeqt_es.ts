@@ -332,6 +332,19 @@
     </message>
 </context>
 <context>
+    <name>BootShimImage</name>
+    <message>
+        <location filename="../remotecontrol.cpp" line="+156"/>
+        <source>[%1] Not a boot read; the mounted disk takes over.</source>
+        <translation>[%1] No es una lectura de arranque; toma el control el disco montado.</translation>
+    </message>
+    <message>
+        <location line="+21"/>
+        <source>[%1] The Atari is booting again; patching once more.</source>
+        <translation>[%1] El Atari arranca de nuevo; se aplica el parche otra vez.</translation>
+    </message>
+</context>
+<context>
     <name>CassetteWorker</name>
     <message>
         <location filename="../sioworker.cpp" line="+359"/>
@@ -762,7 +775,7 @@
 <context>
     <name>Engine</name>
     <message>
-        <location filename="../engine.cpp" line="+141"/>
+        <location filename="../engine.cpp" line="+148"/>
         <source>AspeQt started at %1.</source>
         <translation>AspeQt comenzó a %1.</translation>
     </message>
@@ -792,7 +805,7 @@
         <translation>No se encontró el archivo de sesión en el directorio actual de la aplicación (no se indicó ninguna ruta). AspeQt continuará con la sesión predeterminada.</translation>
     </message>
     <message>
-        <location line="+111"/>
+        <location line="+120"/>
         <source>AspeQt stopped at %1.</source>
         <translation>AspeQt se detuvo en el %1.</translation>
     </message>
@@ -850,17 +863,17 @@ Cuando oigas el pitido, pulsa el botón de reproducción y una tecla del Atari c
         <translation>Ejecutable cargado en el Atari.</translation>
     </message>
     <message>
-        <location line="+106"/>
+        <location line="+186"/>
         <source>[%1] Auto-commit failed.</source>
         <translation>[%1] Falló el guardado automático.</translation>
     </message>
     <message>
-        <location line="+156"/>
+        <location line="+162"/>
         <source>Loaded into the cas/xex slot.</source>
         <translation>Cargado en la ranura cas/xex.</translation>
     </message>
     <message>
-        <location line="+203"/>
+        <location line="+208"/>
         <location line="+8"/>
         <source>This slot does not hold a mounted folder.</source>
         <translation>Esta ranura no contiene una carpeta montada.</translation>
@@ -887,14 +900,29 @@ Cuando oigas el pitido, pulsa el botón de reproducción y una tecla del Atari c
         <translation>[Disco %1] Guardado automático DESACTIVADO.</translation>
     </message>
     <message>
-        <location line="-867"/>
+        <location line="-958"/>
         <location line="+7"/>
-        <location line="+907"/>
+        <location line="+998"/>
         <source>&apos;%1&apos; cannot be saved.</source>
         <translation>No se puede guardar «%1».</translation>
     </message>
     <message>
-        <location line="-105"/>
+        <location line="-675"/>
+        <source>Could not open the high-speed boot loader.</source>
+        <translation>No se pudo abrir el cargador de arranque rápido.</translation>
+    </message>
+    <message>
+        <location line="+11"/>
+        <source>High-speed boot: D1: answers as the loader until the Atari boots.</source>
+        <translation>Arranque rápido: D1: responde como el cargador hasta que el Atari arranque.</translation>
+    </message>
+    <message>
+        <location line="+8"/>
+        <source>High-speed SIO patched in; D1: is the mounted disk.</source>
+        <translation>SIO rápido aplicado; D1: es el disco montado.</translation>
+    </message>
+    <message>
+        <location line="+551"/>
         <source>BT module not present.</source>
         <translation>No hay módulo BT.</translation>
     </message>
@@ -950,25 +978,30 @@ Cuando oigas el pitido, pulsa el botón de reproducción y una tecla del Atari c
     </message>
     <message>
         <location line="+131"/>
-        <location line="+1003"/>
+        <location line="+1027"/>
         <source>Cannot read &apos;%1&apos;.</source>
         <translation>No se puede leer «%1».</translation>
     </message>
     <message>
-        <location line="-927"/>
-        <location line="+251"/>
+        <location line="-951"/>
+        <location line="+273"/>
         <location line="+39"/>
-        <location line="+651"/>
+        <location line="+653"/>
         <source>Cannot write to &apos;%1&apos;.</source>
         <translation>No se puede escribir &apos;%1&apos;.</translation>
     </message>
     <message>
-        <location line="-820"/>
+        <location line="-842"/>
         <source>Swapped disk %1 with disk %2.</source>
         <translation>Swapped disco%1 con el disco%2.</translation>
     </message>
     <message>
-        <location line="+119"/>
+        <location line="+19"/>
+        <source>The Atari asked to exchange disk %1 with disk %2.</source>
+        <translation>El Atari pidió intercambiar el disco %1 con el disco %2.</translation>
+    </message>
+    <message>
+        <location line="+120"/>
         <location line="+40"/>
         <source>Nothing has been printed yet.</source>
         <translation>Todavía no se ha impreso nada.</translation>
@@ -996,7 +1029,7 @@ Cuando oigas el pitido, pulsa el botón de reproducción y una tecla del Atari c
         <translation>No se puede abrir la captura, consulta el registro.</translation>
     </message>
     <message>
-        <location line="+104"/>
+        <location line="+106"/>
         <source>Serial settings changed; restarting the emulation.</source>
         <translation>Cambiaron los ajustes del puerto serie; reiniciando la emulación.</translation>
     </message>
@@ -1055,7 +1088,7 @@ Cuando oigas el pitido, pulsa el botón de reproducción y una tecla del Atari c
         <translation>No se puede añadir el archivo, consulta el registro.</translation>
     </message>
     <message>
-        <location line="-791"/>
+        <location line="-793"/>
         <source>Printer emulation stopped.</source>
         <translation>Emulación de impresora detenida.</translation>
     </message>
@@ -1065,18 +1098,18 @@ Cuando oigas el pitido, pulsa el botón de reproducción y una tecla del Atari c
         <translation>Emulación de impresora iniciada.</translation>
     </message>
     <message>
-        <location line="-883"/>
+        <location line="-916"/>
         <source>Emulation stopped.</source>
         <translation>Emulación detuvo.</translation>
     </message>
     <message>
-        <location line="+90"/>
+        <location line="+96"/>
         <source>Unmounted disk %1</source>
         <translation>Disco sin montar %1</translation>
     </message>
     <message>
-        <location line="+171"/>
-        <location line="+654"/>
+        <location line="+176"/>
+        <location line="+676"/>
         <source>[%1] Mounted &apos;%2&apos; as &apos;%3&apos;.</source>
         <translation>[%1] &apos;%2&apos;  montado como &apos;%3&apos;.</translation>
     </message>
@@ -1711,27 +1744,27 @@ Do you want to open the options dialog?</source>
 <context>
     <name>OptionsDialog</name>
     <message>
-        <location filename="../qml/OptionsDialog.qml" line="+159"/>
+        <location filename="../qml/OptionsDialog.qml" line="+161"/>
         <source>Options</source>
         <translation>Opciones</translation>
     </message>
     <message>
-        <location line="+239"/>
+        <location line="+251"/>
         <source>User interface</source>
         <translation>Interfaz de usuario</translation>
     </message>
     <message>
-        <location line="-204"/>
+        <location line="-216"/>
         <source>Handshake method:</source>
         <translation>Handshak método:</translation>
     </message>
     <message>
-        <location line="+226"/>
+        <location line="+238"/>
         <source>Save</source>
         <translation>Guardar</translation>
     </message>
     <message>
-        <location line="-232"/>
+        <location line="-244"/>
         <source>Serial interface:</source>
         <translation>Interfaz serie:</translation>
     </message>
@@ -1771,7 +1804,17 @@ Do you want to open the options dialog?</source>
         <translation>Ajustes de emulación</translation>
     </message>
     <message>
+        <location line="+4"/>
+        <source>Use high speed disk loader</source>
+        <translation>Usar cargador rápido de discos</translation>
+    </message>
+    <message>
         <location line="+6"/>
+        <source>Boots D1: through a high-speed SIO patch. Mount every disk before starting the Atari: it decides each drive&apos;s speed once.</source>
+        <translation>Arranca D1: mediante un parche de SIO rápido. Monte todos los discos antes de encender el Atari: la velocidad de cada unidad se decide una sola vez.</translation>
+    </message>
+    <message>
+        <location line="+8"/>
         <source>Cassette baud rate:</source>
         <translation>Velocidad del casete:</translation>
     </message>
@@ -1897,12 +1940,12 @@ Do you want to open the options dialog?</source>
         <translation>Cancelar</translation>
     </message>
     <message>
-        <location line="-176"/>
+        <location line="-188"/>
         <source>Use high speed executable loader</source>
         <translation>Utilice cargador de alta velocidad para ejecutables</translation>
     </message>
     <message>
-        <location line="+1"/>
+        <location line="+13"/>
         <source>Use custom baud rate for cassette emulation</source>
         <translation>Use la velocidad de transmisión personalizada para la emulación de cinta</translation>
     </message>
@@ -1917,7 +1960,7 @@ Do you want to open the options dialog?</source>
         <translation>Lenguaje:</translation>
     </message>
     <message>
-        <location filename="../engine.cpp" line="+390"/>
+        <location filename="../engine.cpp" line="+392"/>
         <source>English</source>
         <translation>Español</translation>
     </message>
@@ -2739,6 +2782,29 @@ Do you want to open the options dialog?</source>
         <location filename="../rdevice.cpp" line="+1083"/>
         <source>[RDevice] Dialing %1:%2...</source>
         <translation>[RDevice] Llamando a %1:%2...</translation>
+    </message>
+</context>
+<context>
+    <name>RemoteControl</name>
+    <message>
+        <location filename="../remotecontrol.cpp" line="-153"/>
+        <source>[%1] Read data frame failed</source>
+        <translation type="unfinished">[%1] Fallo al leer trama de datos</translation>
+    </message>
+    <message>
+        <location line="+52"/>
+        <source>[%1] command: $%2, aux: $%3 unknown.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location line="+35"/>
+        <source>[%1] Handed D1: over to the mounted disk.</source>
+        <translation>[%1] D1: entregado al disco montado.</translation>
+    </message>
+    <message>
+        <location line="+6"/>
+        <source>[%1] Exchanged D%2: and D%3:.</source>
+        <translation>[%1] Se intercambiaron D%2: y D%3:.</translation>
     </message>
 </context>
 <context>

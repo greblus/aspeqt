@@ -30,6 +30,7 @@ Popup {
         useDivisors.checked = o.useDivisors
         pokeyDivisor.value = o.pokeyDivisor
         hsExeLoader.checked = o.hsExeLoader
+        hsAtrLoader.checked = o.hsAtrLoader
         useCustomCas.checked = o.useCustomCasBaud
         customCasBaud.value = o.customCasBaud
         filterUscore.checked = o.filterUscore
@@ -53,6 +54,7 @@ Popup {
             "useDivisors": useDivisors.checked,
             "pokeyDivisor": pokeyDivisor.value,
             "hsExeLoader": hsExeLoader.checked,
+            "hsAtrLoader": hsAtrLoader.checked,
             "useCustomCasBaud": useCustomCas.checked,
             "customCasBaud": customCasBaud.value,
             "filterUscore": filterUscore.checked,
@@ -241,6 +243,18 @@ Popup {
                 // ---- Emulation settings -----------------------------------
                 SectionTitle { text: qsTr("Emulation settings") }
                 CheckBox { id: hsExeLoader; text: qsTr("Use high speed executable loader") }
+                CheckBox {
+                    id: hsAtrLoader
+                    text: qsTr("Use high speed disk loader")
+                    // Boots a small loader that patches the Atari's OS for
+                    // high-speed SIO, then hands D1: over to the mounted disk.
+                    // Slots are untouched, so a second disk stays where it is.
+                }
+                FieldLabel {
+                    text: qsTr("Boots D1: through a high-speed SIO patch. Mount every disk "
+                             + "before starting the Atari: it decides each drive's speed once.")
+                    visible: hsAtrLoader.checked
+                }
                 CheckBox { id: useCustomCas; text: qsTr("Use custom baud rate for cassette emulation") }
                 RowLayout {
                     Layout.fillWidth: true

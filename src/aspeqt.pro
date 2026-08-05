@@ -37,7 +37,8 @@ SOURCES += main.cpp \
     tnfsclient.cpp \
     ftpclient.cpp \
     networkbrowser.cpp \
-    pclink.cpp
+    pclink.cpp \
+    remotecontrol.cpp
 win32:LIBS += -lwinmm -lz
 win32:SOURCES += serialport-win32.cpp
 unix:
@@ -121,7 +122,8 @@ HEADERS += engine.h \
     tnfsclient.h \
     ftpclient.h \
     networkbrowser.h \
-    pclink.h
+    pclink.h \
+    remotecontrol.h
 
 win32:HEADERS += serialport-win32.h
 

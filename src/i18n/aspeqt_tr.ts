@@ -331,6 +331,19 @@
     </message>
 </context>
 <context>
+    <name>BootShimImage</name>
+    <message>
+        <location filename="../remotecontrol.cpp" line="+156"/>
+        <source>[%1] Not a boot read; the mounted disk takes over.</source>
+        <translation>[%1] Önyükleme okuması değil; takılı disk devralıyor.</translation>
+    </message>
+    <message>
+        <location line="+21"/>
+        <source>[%1] The Atari is booting again; patching once more.</source>
+        <translation>[%1] Atari yeniden açılıyor; yama tekrar uygulanıyor.</translation>
+    </message>
+</context>
+<context>
     <name>CassetteWorker</name>
     <message>
         <location filename="../sioworker.cpp" line="+359"/>
@@ -761,7 +774,7 @@
 <context>
     <name>Engine</name>
     <message>
-        <location filename="../engine.cpp" line="+242"/>
+        <location filename="../engine.cpp" line="+249"/>
         <source>AspeQt - Atari Serial Peripheral Emulator for Qt</source>
         <translation>Aspeqt: Qt için Atari Seri Donanım Emülatörü</translation>
     </message>
@@ -791,7 +804,7 @@
         <translation>İstenen oturum dosyası uygulamanın geçerli dizininde bulunamadı (yol belirtilmedi). AspeQt varsayılan oturum yapılandırmasıyla devam edecek.</translation>
     </message>
     <message>
-        <location line="+111"/>
+        <location line="+120"/>
         <source>AspeQt stopped at %1.</source>
         <translation>AspeQt %1 de durduruldu.</translation>
     </message>
@@ -849,17 +862,17 @@ Bip sesini duyduğunuzda oynat düğmesine basın ve yaklaşık aynı anda Atari
         <translation>Program Atari&apos;ye yüklendi.</translation>
     </message>
     <message>
-        <location line="+106"/>
+        <location line="+186"/>
         <source>[%1] Auto-commit failed.</source>
         <translation>[%1] Otomatik kaydetme başarısız.</translation>
     </message>
     <message>
-        <location line="+156"/>
+        <location line="+162"/>
         <source>Loaded into the cas/xex slot.</source>
         <translation>cas/xex yuvasına yüklendi.</translation>
     </message>
     <message>
-        <location line="+203"/>
+        <location line="+208"/>
         <location line="+8"/>
         <source>This slot does not hold a mounted folder.</source>
         <translation>Bu yuvada bağlı bir klasör yok.</translation>
@@ -886,14 +899,29 @@ Bip sesini duyduğunuzda oynat düğmesine basın ve yaklaşık aynı anda Atari
         <translation>[Disk %1] Otomatik kaydetme KAPALI.</translation>
     </message>
     <message>
-        <location line="-867"/>
+        <location line="-958"/>
         <location line="+7"/>
-        <location line="+907"/>
+        <location line="+998"/>
         <source>&apos;%1&apos; cannot be saved.</source>
         <translation>&apos;%1&apos; kaydedilemiyor.</translation>
     </message>
     <message>
-        <location line="-105"/>
+        <location line="-675"/>
+        <source>Could not open the high-speed boot loader.</source>
+        <translation>Hızlı önyükleme yükleyicisi açılamadı.</translation>
+    </message>
+    <message>
+        <location line="+11"/>
+        <source>High-speed boot: D1: answers as the loader until the Atari boots.</source>
+        <translation>Hızlı önyükleme: Atari açılana kadar D1: yükleyici olarak yanıt verir.</translation>
+    </message>
+    <message>
+        <location line="+8"/>
+        <source>High-speed SIO patched in; D1: is the mounted disk.</source>
+        <translation>Hızlı SIO yaması uygulandı; D1: artık takılı disk.</translation>
+    </message>
+    <message>
+        <location line="+551"/>
         <source>BT module not present.</source>
         <translation>BT modülü yok.</translation>
     </message>
@@ -949,25 +977,30 @@ Bip sesini duyduğunuzda oynat düğmesine basın ve yaklaşık aynı anda Atari
     </message>
     <message>
         <location line="+131"/>
-        <location line="+1003"/>
+        <location line="+1027"/>
         <source>Cannot read &apos;%1&apos;.</source>
         <translation>&apos;%1&apos; okunamıyor.</translation>
     </message>
     <message>
-        <location line="-927"/>
-        <location line="+251"/>
+        <location line="-951"/>
+        <location line="+273"/>
         <location line="+39"/>
-        <location line="+651"/>
+        <location line="+653"/>
         <source>Cannot write to &apos;%1&apos;.</source>
         <translation>%1 yazılamıyor.</translation>
     </message>
     <message>
-        <location line="-820"/>
+        <location line="-842"/>
         <source>Swapped disk %1 with disk %2.</source>
         <translation>Disk %1, dısk %2 ile takas edildi.</translation>
     </message>
     <message>
-        <location line="+119"/>
+        <location line="+19"/>
+        <source>The Atari asked to exchange disk %1 with disk %2.</source>
+        <translation>Atari, %1 numaralı diskle %2 numaralı diskin değiştirilmesini istedi.</translation>
+    </message>
+    <message>
+        <location line="+120"/>
         <location line="+40"/>
         <source>Nothing has been printed yet.</source>
         <translation>Henüz hiçbir şey yazdırılmadı.</translation>
@@ -995,7 +1028,7 @@ Bip sesini duyduğunuzda oynat düğmesine basın ve yaklaşık aynı anda Atari
         <translation>Yakalama açılamıyor, günlüğe bakın.</translation>
     </message>
     <message>
-        <location line="+104"/>
+        <location line="+106"/>
         <source>Serial settings changed; restarting the emulation.</source>
         <translation>Seri port ayarları değişti; öykünme yeniden başlatılıyor.</translation>
     </message>
@@ -1054,18 +1087,18 @@ Bip sesini duyduğunuzda oynat düğmesine basın ve yaklaşık aynı anda Atari
         <translation>Dosya eklenemedi, günlüğe bakın.</translation>
     </message>
     <message>
-        <location line="-1675"/>
+        <location line="-1710"/>
         <source>Emulation stopped.</source>
         <translation>Emülasyon durdu.</translation>
     </message>
     <message>
-        <location line="+90"/>
+        <location line="+96"/>
         <source>Unmounted disk %1</source>
         <translation>Disk %1 indirildi</translation>
     </message>
     <message>
-        <location line="+171"/>
-        <location line="+654"/>
+        <location line="+176"/>
+        <location line="+676"/>
         <source>[%1] Mounted &apos;%2&apos; as &apos;%3&apos;.</source>
         <translation>[%1] &apos;%2&apos;, &apos;%3&apos; olarak yüklendi.</translation>
     </message>
@@ -1711,27 +1744,27 @@ Seçenekler diyaloğunu açmak istermisiniz?</translation>
 <context>
     <name>OptionsDialog</name>
     <message>
-        <location filename="../qml/OptionsDialog.qml" line="+159"/>
+        <location filename="../qml/OptionsDialog.qml" line="+161"/>
         <source>Options</source>
         <translation>Seçenekler</translation>
     </message>
     <message>
-        <location line="+239"/>
+        <location line="+251"/>
         <source>User interface</source>
         <translation>Kullanıcı arayüzü</translation>
     </message>
     <message>
-        <location line="-204"/>
+        <location line="-216"/>
         <source>Handshake method:</source>
         <translation>Senkronizasyon Yöntemi:</translation>
     </message>
     <message>
-        <location line="+226"/>
+        <location line="+238"/>
         <source>Save</source>
         <translation>Kaydet</translation>
     </message>
     <message>
-        <location line="-232"/>
+        <location line="-244"/>
         <source>Serial interface:</source>
         <translation>Seri arabirim:</translation>
     </message>
@@ -1771,7 +1804,17 @@ Seçenekler diyaloğunu açmak istermisiniz?</translation>
         <translation>Emülasyon ayarları</translation>
     </message>
     <message>
+        <location line="+4"/>
+        <source>Use high speed disk loader</source>
+        <translation>Hızlı disk yükleyiciyi kullan</translation>
+    </message>
+    <message>
         <location line="+6"/>
+        <source>Boots D1: through a high-speed SIO patch. Mount every disk before starting the Atari: it decides each drive&apos;s speed once.</source>
+        <translation>D1: sürücüsünü hızlı SIO yamasıyla başlatır. Atari'yi açmadan önce tüm diskleri takın: her sürücünün hızı bir kez belirlenir.</translation>
+    </message>
+    <message>
+        <location line="+8"/>
         <source>Cassette baud rate:</source>
         <translation>Kaset baud hızı:</translation>
     </message>
@@ -1897,12 +1940,12 @@ Seçenekler diyaloğunu açmak istermisiniz?</translation>
         <translation>İptal</translation>
     </message>
     <message>
-        <location line="-176"/>
+        <location line="-188"/>
         <source>Use high speed executable loader</source>
         <translation>Yüksek hızlı yükleyici kullan</translation>
     </message>
     <message>
-        <location line="+1"/>
+        <location line="+13"/>
         <source>Use custom baud rate for cassette emulation</source>
         <translation>Kaset emülasyonu için özel hız kullan (bps) </translation>
     </message>
@@ -1917,7 +1960,7 @@ Seçenekler diyaloğunu açmak istermisiniz?</translation>
         <translation>Dil:</translation>
     </message>
     <message>
-        <location filename="../engine.cpp" line="+422"/>
+        <location filename="../engine.cpp" line="+424"/>
         <source>English</source>
         <translation>Türkçe</translation>
     </message>
@@ -2739,6 +2782,29 @@ Seçenekler diyaloğunu açmak istermisiniz?</translation>
         <location filename="../rdevice.cpp" line="+1083"/>
         <source>[RDevice] Dialing %1:%2...</source>
         <translation>[RDevice] %1:%2 aranıyor...</translation>
+    </message>
+</context>
+<context>
+    <name>RemoteControl</name>
+    <message>
+        <location filename="../remotecontrol.cpp" line="-153"/>
+        <source>[%1] Read data frame failed</source>
+        <translation type="unfinished">[%1] Veri çatısı okuma hatası</translation>
+    </message>
+    <message>
+        <location line="+52"/>
+        <source>[%1] command: $%2, aux: $%3 unknown.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location line="+35"/>
+        <source>[%1] Handed D1: over to the mounted disk.</source>
+        <translation>[%1] D1: takılı diske devredildi.</translation>
+    </message>
+    <message>
+        <location line="+6"/>
+        <source>[%1] Exchanged D%2: and D%3:.</source>
+        <translation>[%1] D%2: ve D%3: değiştirildi.</translation>
     </message>
 </context>
 <context>

@@ -37,6 +37,7 @@ AspeqtSettings::AspeqtSettings()
     mSerialPortUsePokeyDivisors = mSettings->value("SerialPortUsePokeyDivisors", false).toBool();
     mSerialPortPokeyDivisor = mSettings->value("SerialPortPokeyDivisor", 0).toInt();
     mUseHighSpeedExeLoader = mSettings->value("UseHighSpeedExeLoader", false).toBool();
+    mUseHighSpeedAtrLoader = mSettings->value("UseHighSpeedAtrLoader", false).toBool();
     #ifndef Q_OS_ANDROID
     mAtariSioDriverName = mSettings->value("AtariSioDriverName", AtariSioBackend::defaultPortName()).toString();
     #endif
@@ -128,6 +129,7 @@ void AspeqtSettings::saveSessionToFile(const QString &fileName)
         s.setValue("SerialPortUsePokeyDivisors", mSerialPortUsePokeyDivisors);
         s.setValue("SerialPortPokeyDivisor", mSerialPortPokeyDivisor);
         s.setValue("UseHighSpeedExeLoader", mUseHighSpeedExeLoader);
+        s.setValue("UseHighSpeedAtrLoader", mUseHighSpeedAtrLoader);
         s.setValue("CustomCasBaud", mCustomCasBaud);
         s.setValue("UseCustomCasBaud", mUseCustomCasBaud);
         s.setValue("I18nLanguage", mI18nLanguage);
@@ -185,6 +187,7 @@ void AspeqtSettings::saveSessionToFile(const QString &fileName)
         mSerialPortUsePokeyDivisors = s.value("SerialPortUsePokeyDivisors", false).toBool();
         mSerialPortPokeyDivisor = s.value("SerialPortPokeyDivisor", 6).toInt();
         mUseHighSpeedExeLoader = s.value("UseHighSpeedExeLoader", false).toBool();
+        mUseHighSpeedAtrLoader = s.value("UseHighSpeedAtrLoader", false).toBool();
         mCustomCasBaud = s.value("CustomCasBaud", 875).toInt();
         mUseCustomCasBaud = s.value("UseCustomCasBaud", false).toBool();
         mI18nLanguage = s.value("I18nLanguage").toString();
@@ -363,6 +366,17 @@ void AspeqtSettings::setBackend(int backend)
 bool AspeqtSettings::useHighSpeedExeLoader()
 {
     return mUseHighSpeedExeLoader;
+}
+
+bool AspeqtSettings::useHighSpeedAtrLoader()
+{
+    return mUseHighSpeedAtrLoader;
+}
+
+void AspeqtSettings::setUseHighSpeedAtrLoader(bool use)
+{
+    mUseHighSpeedAtrLoader = use;
+    mSettings->setValue("UseHighSpeedAtrLoader", use);
 }
 
 void AspeqtSettings::setUseHighSpeedExeLoader(bool use)

@@ -45,6 +45,8 @@ public:
 
     bool useHighSpeedExeLoader();
     void setUseHighSpeedExeLoader(bool use);
+    bool useHighSpeedAtrLoader();
+    void setUseHighSpeedAtrLoader(bool use);
 
     QString atariSioDriverName();
     void setAtariSioDriverName(const QString &name);
@@ -232,6 +234,7 @@ private:
     int mSerialPortPokeyDivisor;
 
     bool mUseHighSpeedExeLoader;
+    bool mUseHighSpeedAtrLoader;
 
     QString mAtariSioDriverName;
     int mAtariSioHandshakingMethod;
