@@ -16,7 +16,7 @@ now runs headless, with no widget code left anywhere in the app.
   <img src="src/screenshots/aspeqt_qml.jpg" alt="AspeQt QML redesign: loader slot, drive slots and log" width="34%">
 </p>
 
-**What's new in 1.2.1:**
+**What's new in 1.2:**
 
 * **R: device (Atari 850 modem emulation)**: dial BBSes over telnet and SSH, with a
   phonebook, favourites and search; turn your Atari into an SSH terminal (SSH-Shell
@@ -30,6 +30,7 @@ now runs headless, with no widget code left anywhere in the app.
   download files to your device.
 * **Epson printer emulation**: print jobs rendered onto a page with bit
   graphics, font choice, PNG and PDF export, and a built-in test page.
+* **High-speed atr disk boot over SIO** (device $61 - AtariSIO remote control - disk swapping) on stock/unmodified Atari computers. Mount your atr in D1: and AspeQt will automatically boot Hiass's bundled sioboot-atarisio.atr OS patcher, swap disks and boot your atr image with high speed SIO. Requires "Use high speed disk loader" option in combination with "Use non-standard speeds" POKEY divisor set to 0, or higher typical speed, eg. 57600bps.
 
 <p align="center">
   <a href="src/screenshots/phonebook.jpg"><img src="src/screenshots/phonebook.jpg" alt="BBS phonebook" width="21%"></a>
