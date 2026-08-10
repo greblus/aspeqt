@@ -195,6 +195,19 @@ QString FolderImage::cachedCopy(const QString &uri, const QString &name)
 }
 #endif
 
+bool FolderImage::hasHighSpeedDos()
+{
+    bool boot = false, dos = false;
+    const QVector<Entry> entries = listFolder();
+    for (const Entry &e : entries) {
+        if (e.name.compare(QLatin1String("picodos.sys"), Qt::CaseInsensitive) == 0)
+            dos = true;
+        else if (e.name.compare(QLatin1String("$boot.bin"), Qt::CaseInsensitive) == 0)
+            boot = true;
+    }
+    return boot && dos;
+}
+
 bool FolderImage::format(quint16, quint16)
 {
     return false;

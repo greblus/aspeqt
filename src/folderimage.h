@@ -26,6 +26,13 @@ class FolderImage : public SimpleDiskImage
 {
     Q_OBJECT
 
+public:
+    // True when the folder already carries high-speed MyPicoDOS ($boot.bin plus
+    // picodos.sys, what "Install DOS" writes). Such a folder patches the Atari
+    // for high-speed SIO on its own, so booting our loader in front of it would
+    // only do the same work twice.
+    bool hasHighSpeedDos();
+
 protected:
     QDir dir;
     QString m_tree;              // Android: the SAF tree content:// URI

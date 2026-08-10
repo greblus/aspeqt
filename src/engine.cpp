@@ -825,6 +825,16 @@ void Engine::armHighSpeedAtrBoot()
     if (!real)                       // nothing mounted in D1: -- nothing to boot
         return;
 
+    // A folder holding high-speed MyPicoDOS boots patched all by itself; putting
+    // our loader in front of it would patch the OS, hand over, and then let
+    // MyPicoDOS do the very same thing again. Folders with some other DOS (or
+    // none) still get the loader -- that is the case it exists for.
+    FolderImage *folder = qobject_cast<FolderImage *>(real);
+    if (folder && folder->hasHighSpeedDos()) {
+        qDebug() << "!i" << tr("D1: already boots high-speed MyPicoDOS; leaving it to it.");
+        return;
+    }
+
     // Unpack the bundled loader every time rather than when the file is missing:
     // a cached copy from an older version outlives an update and would keep an
     // outdated patch in circulation.
@@ -849,6 +859,11 @@ void Engine::armHighSpeedAtrBoot()
             Qt::QueuedConnection);
 
     sio->uninstallDevice(0x31);      // hands the mounted disk over, without deleting it
+    // uninstallDevice() marks it as device -1, which SioWorker spells out as
+    // "Disk 1 (below autoboot)" -- a name from the executable loader that has
+    // nothing to do with this, and which the disk viewer turned into "D-47:".
+    // It is still the disk in slot 1, so let it say so.
+    real->setDeviceNo(0x31);
     sio->installDevice(0x31, loader);
     m_hisioLoader = loader;
     m_remote->armBootShim(loader);
