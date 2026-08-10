@@ -1,6 +1,8 @@
 #include "qmlbridge.h"
 #include "engine.h"
 #include "aspeqtsettings.h"
+#include "miscutils.h"
+#include <QDir>
 #include "paperprovider.h"
 
 #include <QVariant>
@@ -105,6 +107,21 @@ AppController::AppController(Engine *engine, QObject *parent)
         connect(m_engine, &Engine::documentPicked, this, &AppController::documentPicked);
     }
     refresh();
+}
+
+bool AppController::saveLogTo(const QString &url)
+{
+    ContentFile src(QDir::temp().absoluteFilePath("aspeqt.log"));
+    if (!src.open(QIODevice::ReadOnly))
+        return false;
+    const QByteArray bytes = src.readAll();
+    src.close();
+    return writeWholeFile(url, bytes);
+}
+
+void AppController::trace(const QString &message)
+{
+    qDebug() << "!d" << message;
 }
 
 bool AppController::isFirstRun() const

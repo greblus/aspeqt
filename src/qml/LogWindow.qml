@@ -199,6 +199,14 @@ Popup {
                     }
                     Item { Layout.fillWidth: true }
                     Button {
+                        text: qsTr("Save log")
+                        // The whole rolling log file, not just what is on screen:
+                        // this is what to attach to a bug report.
+                        onClicked: logPicker.saveFile(
+                            qsTr("Save log"), [qsTr("Log files (*.log)")], "", "aspeqt.log",
+                            function (url) { if (url.length > 0) app.saveLogTo(url) })
+                    }
+                    Button {
                         text: qsTr("Close")
                         highlighted: true
                         onClicked: logWin.close()
@@ -206,6 +214,8 @@ Popup {
                 }
             }
         }
+
+        FilePicker { id: logPicker }
 
         // bottom safe-area strip (navigation bar)
         Rectangle {

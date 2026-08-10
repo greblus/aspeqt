@@ -175,6 +175,21 @@ Popup {
             clip: true
             contentWidth: availableWidth
             ScrollBar.horizontal.policy: ScrollBar.AlwaysOff
+            // Keep the bar visible: it shows there is more below, and its width
+            // stops changing, so the column inside is not re-laid out whenever
+            // the bar appears and disappears.
+            ScrollBar.vertical.policy: ScrollBar.AlwaysOn
+
+            // A press that lands on a check box or a text field can be swallowed
+            // by that control, leaving the view unscrollable with one finger
+            // (reported on a Galaxy Note 9; a second finger goes to the flickable
+            // and works). Holding the press back for a moment lets a drag start
+            // anywhere and still delivers plain taps.
+            Component.onCompleted: if (contentItem) {
+                contentItem.pressDelay = 120
+                contentItem.boundsBehavior = Flickable.StopAtBounds
+            }
+
 
             ColumnLayout {
                 x: 14

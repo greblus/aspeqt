@@ -96,6 +96,10 @@ void logMessageOutput(QtMsgType type, const QMessageLogContext &context, const Q
     QByteArray displayMsg = localMsg.mid(3);
     logFile->write(displayMsg);
     logFile->write("\n");
+    // Flush every line: a log is worth having exactly when the app did not exit
+    // cleanly -- a crash, or a tester force-stopping it because the screen is
+    // stuck. Buffered tails are the part that would have explained why.
+    logFile->flush();
     if (type == QtFatalMsg) {
         logFile->close();
         abort();
@@ -145,7 +149,10 @@ Engine::Engine(QObject *parent)
     logFile->open(logMode);
     logMutex = new QMutex();
     qInstallMessageHandler(logMessageOutput);
-    qDebug() << "!d" << tr("AspeQt started at %1.").arg(QDateTime::currentDateTime().toString());
+    // Stamp the build into the log: a log sent in from a tester is worth much
+    // less if it does not say which version produced it.
+    qDebug() << "!d" << tr("AspeQt %1 started at %2.")
+                        .arg(QLatin1String(VERSION), QDateTime::currentDateTime().toString());
 
     /* Remove old temporaries */
     QDir tempDir = QDir::temp();

@@ -333,14 +333,19 @@
 <context>
     <name>BootShimImage</name>
     <message>
-        <location filename="../remotecontrol.cpp" line="+156"/>
+        <location filename="../remotecontrol.cpp" line="+166"/>
         <source>[%1] Not a boot read; the mounted disk takes over.</source>
         <translation>[%1] Nie je to zavádzacie čítanie; preberá pripojený disk.</translation>
     </message>
     <message>
-        <location line="+21"/>
+        <location line="+19"/>
         <source>[%1] The Atari is booting again; patching once more.</source>
         <translation>[%1] Atari sa zavádza znova; patchujem ešte raz.</translation>
+    </message>
+    <message>
+        <location line="+23"/>
+        <source>[%1] command: $%2, aux: $%3 ignored because the image explorer is open.</source>
+        <translation type="unfinished">[%1] príkaz: $%2, aux: $%3 ignorovaný, pretože je otvorený prehliadač obrazov.</translation>
     </message>
 </context>
 <context>
@@ -774,12 +779,7 @@
 <context>
     <name>Engine</name>
     <message>
-        <location filename="../engine.cpp" line="+148"/>
-        <source>AspeQt started at %1.</source>
-        <translation>AspeQt naštartoval v %1.</translation>
-    </message>
-    <message>
-        <location line="+101"/>
+        <location filename="../engine.cpp" line="+256"/>
         <source>AspeQt - Atari Serial Peripheral Emulator for Qt</source>
         <translation>AspeQt - Atari Serial Peripheral Emulator for Qt</translation>
     </message>
@@ -862,7 +862,7 @@ Keď zaznie pípnutie, stlačte tlačidlo prehrávania a približne súčasne kl
         <translation>Program načítaný do Atari.</translation>
     </message>
     <message>
-        <location line="+186"/>
+        <location line="+194"/>
         <source>[%1] Auto-commit failed.</source>
         <translation>[%1] Automatické ukladanie zlyhalo.</translation>
     </message>
@@ -899,14 +899,19 @@ Keď zaznie pípnutie, stlačte tlačidlo prehrávania a približne súčasne kl
         <translation>[Disk %1] Automatické ukladanie VYP.</translation>
     </message>
     <message>
-        <location line="-958"/>
+        <location line="-966"/>
         <location line="+7"/>
-        <location line="+998"/>
+        <location line="+1006"/>
         <source>&apos;%1&apos; cannot be saved.</source>
         <translation>„%1“ sa nedá uložiť.</translation>
     </message>
     <message>
-        <location line="-675"/>
+        <location line="-1372"/>
+        <source>AspeQt %1 started at %2.</source>
+        <translation>AspeQt %1 spustený %2.</translation>
+    </message>
+    <message>
+        <location line="+690"/>
         <source>Could not open the high-speed boot loader.</source>
         <translation>Nepodarilo sa otvoriť zavádzač rýchleho SIO.</translation>
     </message>
@@ -921,7 +926,7 @@ Keď zaznie pípnutie, stlačte tlačidlo prehrávania a približne súčasne kl
         <translation>Rýchle SIO je zavedené; D1: je pripojený disk.</translation>
     </message>
     <message>
-        <location line="+551"/>
+        <location line="+558"/>
         <source>BT module not present.</source>
         <translation>BT modul nie je prítomný.</translation>
     </message>
@@ -977,13 +982,13 @@ Keď zaznie pípnutie, stlačte tlačidlo prehrávania a približne súčasne kl
     </message>
     <message>
         <location line="+131"/>
-        <location line="+1027"/>
+        <location line="+1037"/>
         <source>Cannot read &apos;%1&apos;.</source>
         <translation>„%1“ sa nedá načítať.</translation>
     </message>
     <message>
-        <location line="-951"/>
-        <location line="+273"/>
+        <location line="-961"/>
+        <location line="+283"/>
         <location line="+39"/>
         <location line="+653"/>
         <source>Cannot write to &apos;%1&apos;.</source>
@@ -1097,7 +1102,7 @@ Keď zaznie pípnutie, stlačte tlačidlo prehrávania a približne súčasne kl
         <translation>Emulácia tlačiarne spustená.</translation>
     </message>
     <message>
-        <location line="-916"/>
+        <location line="-926"/>
         <source>Emulation stopped.</source>
         <translation>Emulácia zastavená.</translation>
     </message>
@@ -1108,7 +1113,7 @@ Keď zaznie pípnutie, stlačte tlačidlo prehrávania a približne súčasne kl
     </message>
     <message>
         <location line="+176"/>
-        <location line="+676"/>
+        <location line="+686"/>
         <source>[%1] Mounted &apos;%2&apos; as &apos;%3&apos;.</source>
         <translation>[%1] Pripojený &apos;%2&apos; ako &apos;%3&apos;.</translation>
     </message>
@@ -1327,6 +1332,17 @@ Keď zaznie pípnutie, stlačte tlačidlo prehrávania a približne súčasne kl
     </message>
     <message>
         <location line="+12"/>
+        <location line="+4"/>
+        <source>Save log</source>
+        <translation>Uložiť log</translation>
+    </message>
+    <message>
+        <location line="+0"/>
+        <source>Log files (*.log)</source>
+        <translation>Log súbory (*.log)</translation>
+    </message>
+    <message>
+        <location line="+4"/>
         <source>Close</source>
         <translation>Zavrieť</translation>
     </message>
@@ -1747,7 +1763,7 @@ Prajete si otvoriť Nastavenia?</translation>
         <translation>Možnosti</translation>
     </message>
     <message>
-        <location line="+251"/>
+        <location line="+266"/>
         <source>User interface</source>
         <translation>Uživateľské rozhranie</translation>
     </message>
@@ -2785,7 +2801,7 @@ Prajete si otvoriť Nastavenia?</translation>
 <context>
     <name>RemoteControl</name>
     <message>
-        <location filename="../remotecontrol.cpp" line="-153"/>
+        <location filename="../remotecontrol.cpp" line="-184"/>
         <source>[%1] Read data frame failed</source>
         <translation type="unfinished">[%1] Načítanie dátového rámca zlyhalo</translation>
     </message>

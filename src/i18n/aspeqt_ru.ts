@@ -333,14 +333,19 @@
 <context>
     <name>BootShimImage</name>
     <message>
-        <location filename="../remotecontrol.cpp" line="+156"/>
+        <location filename="../remotecontrol.cpp" line="+166"/>
         <source>[%1] Not a boot read; the mounted disk takes over.</source>
         <translation>[%1] Это не загрузочное чтение; управление берёт подключённый диск.</translation>
     </message>
     <message>
-        <location line="+21"/>
+        <location line="+19"/>
         <source>[%1] The Atari is booting again; patching once more.</source>
         <translation>[%1] Atari загружается снова; патч применяется ещё раз.</translation>
+    </message>
+    <message>
+        <location line="+23"/>
+        <source>[%1] command: $%2, aux: $%3 ignored because the image explorer is open.</source>
+        <translation type="unfinished">[%1] команда: $%2, aux: $%3 игнорирована, потому что открыт просмотр образа.</translation>
     </message>
 </context>
 <context>
@@ -774,17 +779,12 @@
 <context>
     <name>Engine</name>
     <message>
-        <location filename="../engine.cpp" line="+249"/>
+        <location filename="../engine.cpp" line="+256"/>
         <source>AspeQt - Atari Serial Peripheral Emulator for Qt</source>
         <translation>AspeQt - эмулятор SIO-периферии для Atari под Qt</translation>
     </message>
     <message>
-        <location line="-101"/>
-        <source>AspeQt started at %1.</source>
-        <translation>AspeQt запущен в %1.</translation>
-    </message>
-    <message>
-        <location line="+17"/>
+        <location line="-84"/>
         <source>Migrating the global settings to their new repository (session files are not affected).</source>
         <translation>Перенос глобальных настроек в новое хранилище (файлы сессий не затрагиваются).</translation>
     </message>
@@ -862,7 +862,7 @@ When you hear the beep sound, push the play button and press a key on your Atari
         <translation>Программа загружена в Atari.</translation>
     </message>
     <message>
-        <location line="+186"/>
+        <location line="+194"/>
         <source>[%1] Auto-commit failed.</source>
         <translation>[%1] Автосохранение не удалось.</translation>
     </message>
@@ -899,14 +899,19 @@ When you hear the beep sound, push the play button and press a key on your Atari
         <translation>[Диск %1] Автосохранение ВЫКЛ.</translation>
     </message>
     <message>
-        <location line="-958"/>
+        <location line="-966"/>
         <location line="+7"/>
-        <location line="+998"/>
+        <location line="+1006"/>
         <source>&apos;%1&apos; cannot be saved.</source>
         <translation>Не удалось сохранить «%1».</translation>
     </message>
     <message>
-        <location line="-675"/>
+        <location line="-1372"/>
+        <source>AspeQt %1 started at %2.</source>
+        <translation>AspeQt %1 запущен %2.</translation>
+    </message>
+    <message>
+        <location line="+690"/>
         <source>Could not open the high-speed boot loader.</source>
         <translation>Не удалось открыть загрузчик быстрого SIO.</translation>
     </message>
@@ -921,7 +926,7 @@ When you hear the beep sound, push the play button and press a key on your Atari
         <translation>Быстрый SIO установлен; D1: — подключённый диск.</translation>
     </message>
     <message>
-        <location line="+551"/>
+        <location line="+558"/>
         <source>BT module not present.</source>
         <translation>BT-модуль отсутствует.</translation>
     </message>
@@ -977,13 +982,13 @@ When you hear the beep sound, push the play button and press a key on your Atari
     </message>
     <message>
         <location line="+131"/>
-        <location line="+1027"/>
+        <location line="+1037"/>
         <source>Cannot read &apos;%1&apos;.</source>
         <translation>Не удалось прочитать «%1».</translation>
     </message>
     <message>
-        <location line="-951"/>
-        <location line="+273"/>
+        <location line="-961"/>
+        <location line="+283"/>
         <location line="+39"/>
         <location line="+653"/>
         <source>Cannot write to &apos;%1&apos;.</source>
@@ -1087,7 +1092,7 @@ When you hear the beep sound, push the play button and press a key on your Atari
         <translation>Не удалось добавить файл, смотрите журнал.</translation>
     </message>
     <message>
-        <location line="-1710"/>
+        <location line="-1720"/>
         <source>Emulation stopped.</source>
         <translation>Эмуляция остановлена.</translation>
     </message>
@@ -1098,7 +1103,7 @@ When you hear the beep sound, push the play button and press a key on your Atari
     </message>
     <message>
         <location line="+176"/>
-        <location line="+676"/>
+        <location line="+686"/>
         <source>[%1] Mounted &apos;%2&apos; as &apos;%3&apos;.</source>
         <translation>[%1] Подключен &apos;%2&apos; как &apos;%3&apos;.</translation>
     </message>
@@ -1327,6 +1332,17 @@ When you hear the beep sound, push the play button and press a key on your Atari
     </message>
     <message>
         <location line="+12"/>
+        <location line="+4"/>
+        <source>Save log</source>
+        <translation>Сохранить журнал</translation>
+    </message>
+    <message>
+        <location line="+0"/>
+        <source>Log files (*.log)</source>
+        <translation>Файлы журнала (*.log)</translation>
+    </message>
+    <message>
+        <location line="+4"/>
         <source>Close</source>
         <translation>Закрыть</translation>
     </message>
@@ -1748,7 +1764,7 @@ Do you want to open the options dialog?</source>
         <translation>Настройки</translation>
     </message>
     <message>
-        <location line="+251"/>
+        <location line="+266"/>
         <source>User interface</source>
         <translation>Интерфейс</translation>
     </message>
@@ -2786,7 +2802,7 @@ Do you want to open the options dialog?</source>
 <context>
     <name>RemoteControl</name>
     <message>
-        <location filename="../remotecontrol.cpp" line="-153"/>
+        <location filename="../remotecontrol.cpp" line="-184"/>
         <source>[%1] Read data frame failed</source>
         <translation type="unfinished">[%1] Не удалось прочитать кадр данных</translation>
     </message>

@@ -123,6 +123,10 @@ public:
     int  paperRevision() const { return m_paperRevision; }
     void setPaperProvider(class PaperProvider *p) { m_paper = p; }
     Q_INVOKABLE bool printerSavePaper(const QString &url);
+    // Diagnostics: copy the rolling log file to a picked location, and let QML
+    // add its own lines to it (they go to the file only, not the log window).
+    Q_INVOKABLE bool saveLogTo(const QString &url);
+    Q_INVOKABLE void trace(const QString &message);
     Q_INVOKABLE bool printerSavePdf(const QString &url);
     Q_INVOKABLE void printerSetFont(const QString &family);
     Q_INVOKABLE QString printerFontFamily();

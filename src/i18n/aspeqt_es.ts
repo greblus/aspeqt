@@ -334,14 +334,19 @@
 <context>
     <name>BootShimImage</name>
     <message>
-        <location filename="../remotecontrol.cpp" line="+156"/>
+        <location filename="../remotecontrol.cpp" line="+166"/>
         <source>[%1] Not a boot read; the mounted disk takes over.</source>
         <translation>[%1] No es una lectura de arranque; toma el control el disco montado.</translation>
     </message>
     <message>
-        <location line="+21"/>
+        <location line="+19"/>
         <source>[%1] The Atari is booting again; patching once more.</source>
         <translation>[%1] El Atari arranca de nuevo; se aplica el parche otra vez.</translation>
+    </message>
+    <message>
+        <location line="+23"/>
+        <source>[%1] command: $%2, aux: $%3 ignored because the image explorer is open.</source>
+        <translation type="unfinished">[%1] comando: $%2, aux: $%3  ignorado porque el explorador de imagen está abierta.</translation>
     </message>
 </context>
 <context>
@@ -775,12 +780,7 @@
 <context>
     <name>Engine</name>
     <message>
-        <location filename="../engine.cpp" line="+148"/>
-        <source>AspeQt started at %1.</source>
-        <translation>AspeQt comenzó a %1.</translation>
-    </message>
-    <message>
-        <location line="+101"/>
+        <location filename="../engine.cpp" line="+256"/>
         <source>AspeQt - Atari Serial Peripheral Emulator for Qt</source>
         <translation>AspeQt - Atari Serial Peripheral Emulator para Qt</translation>
     </message>
@@ -863,7 +863,7 @@ Cuando oigas el pitido, pulsa el botón de reproducción y una tecla del Atari c
         <translation>Ejecutable cargado en el Atari.</translation>
     </message>
     <message>
-        <location line="+186"/>
+        <location line="+194"/>
         <source>[%1] Auto-commit failed.</source>
         <translation>[%1] Falló el guardado automático.</translation>
     </message>
@@ -900,14 +900,19 @@ Cuando oigas el pitido, pulsa el botón de reproducción y una tecla del Atari c
         <translation>[Disco %1] Guardado automático DESACTIVADO.</translation>
     </message>
     <message>
-        <location line="-958"/>
+        <location line="-966"/>
         <location line="+7"/>
-        <location line="+998"/>
+        <location line="+1006"/>
         <source>&apos;%1&apos; cannot be saved.</source>
         <translation>No se puede guardar «%1».</translation>
     </message>
     <message>
-        <location line="-675"/>
+        <location line="-1372"/>
+        <source>AspeQt %1 started at %2.</source>
+        <translation>AspeQt %1 iniciado el %2.</translation>
+    </message>
+    <message>
+        <location line="+690"/>
         <source>Could not open the high-speed boot loader.</source>
         <translation>No se pudo abrir el cargador de arranque rápido.</translation>
     </message>
@@ -922,7 +927,7 @@ Cuando oigas el pitido, pulsa el botón de reproducción y una tecla del Atari c
         <translation>SIO rápido aplicado; D1: es el disco montado.</translation>
     </message>
     <message>
-        <location line="+551"/>
+        <location line="+558"/>
         <source>BT module not present.</source>
         <translation>No hay módulo BT.</translation>
     </message>
@@ -978,13 +983,13 @@ Cuando oigas el pitido, pulsa el botón de reproducción y una tecla del Atari c
     </message>
     <message>
         <location line="+131"/>
-        <location line="+1027"/>
+        <location line="+1037"/>
         <source>Cannot read &apos;%1&apos;.</source>
         <translation>No se puede leer «%1».</translation>
     </message>
     <message>
-        <location line="-951"/>
-        <location line="+273"/>
+        <location line="-961"/>
+        <location line="+283"/>
         <location line="+39"/>
         <location line="+653"/>
         <source>Cannot write to &apos;%1&apos;.</source>
@@ -1098,7 +1103,7 @@ Cuando oigas el pitido, pulsa el botón de reproducción y una tecla del Atari c
         <translation>Emulación de impresora iniciada.</translation>
     </message>
     <message>
-        <location line="-916"/>
+        <location line="-926"/>
         <source>Emulation stopped.</source>
         <translation>Emulación detuvo.</translation>
     </message>
@@ -1109,7 +1114,7 @@ Cuando oigas el pitido, pulsa el botón de reproducción y una tecla del Atari c
     </message>
     <message>
         <location line="+176"/>
-        <location line="+676"/>
+        <location line="+686"/>
         <source>[%1] Mounted &apos;%2&apos; as &apos;%3&apos;.</source>
         <translation>[%1] &apos;%2&apos;  montado como &apos;%3&apos;.</translation>
     </message>
@@ -1328,6 +1333,17 @@ Cuando oigas el pitido, pulsa el botón de reproducción y una tecla del Atari c
     </message>
     <message>
         <location line="+12"/>
+        <location line="+4"/>
+        <source>Save log</source>
+        <translation>Guardar registro</translation>
+    </message>
+    <message>
+        <location line="+0"/>
+        <source>Log files (*.log)</source>
+        <translation>Archivos de registro (*.log)</translation>
+    </message>
+    <message>
+        <location line="+4"/>
         <source>Close</source>
         <translation>Cerrar</translation>
     </message>
@@ -1749,7 +1765,7 @@ Do you want to open the options dialog?</source>
         <translation>Opciones</translation>
     </message>
     <message>
-        <location line="+251"/>
+        <location line="+266"/>
         <source>User interface</source>
         <translation>Interfaz de usuario</translation>
     </message>
@@ -2787,7 +2803,7 @@ Do you want to open the options dialog?</source>
 <context>
     <name>RemoteControl</name>
     <message>
-        <location filename="../remotecontrol.cpp" line="-153"/>
+        <location filename="../remotecontrol.cpp" line="-184"/>
         <source>[%1] Read data frame failed</source>
         <translation type="unfinished">[%1] Fallo al leer trama de datos</translation>
     </message>

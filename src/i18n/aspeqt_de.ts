@@ -333,14 +333,19 @@
 <context>
     <name>BootShimImage</name>
     <message>
-        <location filename="../remotecontrol.cpp" line="+156"/>
+        <location filename="../remotecontrol.cpp" line="+166"/>
         <source>[%1] Not a boot read; the mounted disk takes over.</source>
         <translation>[%1] Kein Boot-Zugriff; die eingelegte Diskette übernimmt.</translation>
     </message>
     <message>
-        <location line="+21"/>
+        <location line="+19"/>
         <source>[%1] The Atari is booting again; patching once more.</source>
         <translation>[%1] Der Atari bootet erneut; wird wieder gepatcht.</translation>
+    </message>
+    <message>
+        <location line="+23"/>
+        <source>[%1] command: $%2, aux: $%3 ignored because the image explorer is open.</source>
+        <translation type="unfinished">[%1] Kommando: %2, aux: %3 ignoriert weil der Image Explorer offen ist.</translation>
     </message>
 </context>
 <context>
@@ -774,12 +779,7 @@
 <context>
     <name>Engine</name>
     <message>
-        <location filename="../engine.cpp" line="+148"/>
-        <source>AspeQt started at %1.</source>
-        <translation>AspeQt gestartet bei %1.</translation>
-    </message>
-    <message>
-        <location line="+101"/>
+        <location filename="../engine.cpp" line="+256"/>
         <source>AspeQt - Atari Serial Peripheral Emulator for Qt</source>
         <translation>AspeQt - ATARI Serielle Peripherie Emulation für Qt</translation>
     </message>
@@ -862,7 +862,7 @@ Wenn der Signalton ertönt, drücken Sie die Wiedergabetaste und etwa gleichzeit
         <translation>Programm in den Atari geladen.</translation>
     </message>
     <message>
-        <location line="+186"/>
+        <location line="+194"/>
         <source>[%1] Auto-commit failed.</source>
         <translation>[%1] Automatisches Speichern fehlgeschlagen.</translation>
     </message>
@@ -899,14 +899,19 @@ Wenn der Signalton ertönt, drücken Sie die Wiedergabetaste und etwa gleichzeit
         <translation>[Diskette %1] Automatisches Speichern AUS.</translation>
     </message>
     <message>
-        <location line="-958"/>
+        <location line="-966"/>
         <location line="+7"/>
-        <location line="+998"/>
+        <location line="+1006"/>
         <source>&apos;%1&apos; cannot be saved.</source>
         <translation>„%1“ kann nicht gespeichert werden.</translation>
     </message>
     <message>
-        <location line="-675"/>
+        <location line="-1372"/>
+        <source>AspeQt %1 started at %2.</source>
+        <translation>AspeQt %1 gestartet am %2.</translation>
+    </message>
+    <message>
+        <location line="+690"/>
         <source>Could not open the high-speed boot loader.</source>
         <translation>Der Highspeed-Boot-Loader konnte nicht geöffnet werden.</translation>
     </message>
@@ -921,7 +926,7 @@ Wenn der Signalton ertönt, drücken Sie die Wiedergabetaste und etwa gleichzeit
         <translation>Highspeed-SIO eingebunden; D1: ist die eingelegte Diskette.</translation>
     </message>
     <message>
-        <location line="+551"/>
+        <location line="+558"/>
         <source>BT module not present.</source>
         <translation>Kein BT-Modul vorhanden.</translation>
     </message>
@@ -977,13 +982,13 @@ Wenn der Signalton ertönt, drücken Sie die Wiedergabetaste und etwa gleichzeit
     </message>
     <message>
         <location line="+131"/>
-        <location line="+1027"/>
+        <location line="+1037"/>
         <source>Cannot read &apos;%1&apos;.</source>
         <translation>„%1“ kann nicht gelesen werden.</translation>
     </message>
     <message>
-        <location line="-951"/>
-        <location line="+273"/>
+        <location line="-961"/>
+        <location line="+283"/>
         <location line="+39"/>
         <location line="+653"/>
         <source>Cannot write to &apos;%1&apos;.</source>
@@ -1097,7 +1102,7 @@ Wenn der Signalton ertönt, drücken Sie die Wiedergabetaste und etwa gleichzeit
         <translation>Druckeremulation gestartet.</translation>
     </message>
     <message>
-        <location line="-916"/>
+        <location line="-926"/>
         <source>Emulation stopped.</source>
         <translation>Emulation gestoppt.</translation>
     </message>
@@ -1108,7 +1113,7 @@ Wenn der Signalton ertönt, drücken Sie die Wiedergabetaste und etwa gleichzeit
     </message>
     <message>
         <location line="+176"/>
-        <location line="+676"/>
+        <location line="+686"/>
         <source>[%1] Mounted &apos;%2&apos; as &apos;%3&apos;.</source>
         <translation>[%1] &apos;%2&apos; als &apos;%3&apos; gemountet.</translation>
     </message>
@@ -1327,6 +1332,17 @@ Wenn der Signalton ertönt, drücken Sie die Wiedergabetaste und etwa gleichzeit
     </message>
     <message>
         <location line="+12"/>
+        <location line="+4"/>
+        <source>Save log</source>
+        <translation>Log speichern</translation>
+    </message>
+    <message>
+        <location line="+0"/>
+        <source>Log files (*.log)</source>
+        <translation>Log-Dateien (*.log)</translation>
+    </message>
+    <message>
+        <location line="+4"/>
         <source>Close</source>
         <translation>Schließen</translation>
     </message>
@@ -1746,7 +1762,7 @@ Do you want to open the options dialog?</source>
         <translation>Optionen</translation>
     </message>
     <message>
-        <location line="+251"/>
+        <location line="+266"/>
         <source>User interface</source>
         <translation>Benutzerinterface</translation>
     </message>
@@ -2784,7 +2800,7 @@ Do you want to open the options dialog?</source>
 <context>
     <name>RemoteControl</name>
     <message>
-        <location filename="../remotecontrol.cpp" line="-153"/>
+        <location filename="../remotecontrol.cpp" line="-184"/>
         <source>[%1] Read data frame failed</source>
         <translation type="unfinished">[%1] Lesen von Data Frame fehlgeschlagen</translation>
     </message>

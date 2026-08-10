@@ -333,14 +333,19 @@
 <context>
     <name>BootShimImage</name>
     <message>
-        <location filename="../remotecontrol.cpp" line="+156"/>
+        <location filename="../remotecontrol.cpp" line="+166"/>
         <source>[%1] Not a boot read; the mounted disk takes over.</source>
         <translation>[%1] Önyükleme okuması değil; takılı disk devralıyor.</translation>
     </message>
     <message>
-        <location line="+21"/>
+        <location line="+19"/>
         <source>[%1] The Atari is booting again; patching once more.</source>
         <translation>[%1] Atari yeniden açılıyor; yama tekrar uygulanıyor.</translation>
+    </message>
+    <message>
+        <location line="+23"/>
+        <source>[%1] command: $%2, aux: $%3 ignored because the image explorer is open.</source>
+        <translation type="unfinished">[%1] Komut: $%2, aux: $%3 gözardı edildi çünkü imaj görüntü ekranı açık..</translation>
     </message>
 </context>
 <context>
@@ -774,17 +779,12 @@
 <context>
     <name>Engine</name>
     <message>
-        <location filename="../engine.cpp" line="+249"/>
+        <location filename="../engine.cpp" line="+256"/>
         <source>AspeQt - Atari Serial Peripheral Emulator for Qt</source>
         <translation>Aspeqt: Qt için Atari Seri Donanım Emülatörü</translation>
     </message>
     <message>
-        <location line="-101"/>
-        <source>AspeQt started at %1.</source>
-        <translation>AspeQt %1 de başlatıldı.</translation>
-    </message>
-    <message>
-        <location line="+17"/>
+        <location line="-84"/>
         <source>Migrating the global settings to their new repository (session files are not affected).</source>
         <translation>Genel ayarlar yeni depoya taşınıyor (oturum dosyaları etkilenmez).</translation>
     </message>
@@ -862,7 +862,7 @@ Bip sesini duyduğunuzda oynat düğmesine basın ve yaklaşık aynı anda Atari
         <translation>Program Atari&apos;ye yüklendi.</translation>
     </message>
     <message>
-        <location line="+186"/>
+        <location line="+194"/>
         <source>[%1] Auto-commit failed.</source>
         <translation>[%1] Otomatik kaydetme başarısız.</translation>
     </message>
@@ -899,14 +899,19 @@ Bip sesini duyduğunuzda oynat düğmesine basın ve yaklaşık aynı anda Atari
         <translation>[Disk %1] Otomatik kaydetme KAPALI.</translation>
     </message>
     <message>
-        <location line="-958"/>
+        <location line="-966"/>
         <location line="+7"/>
-        <location line="+998"/>
+        <location line="+1006"/>
         <source>&apos;%1&apos; cannot be saved.</source>
         <translation>&apos;%1&apos; kaydedilemiyor.</translation>
     </message>
     <message>
-        <location line="-675"/>
+        <location line="-1372"/>
+        <source>AspeQt %1 started at %2.</source>
+        <translation>AspeQt %1 %2 tarihinde başlatıldı.</translation>
+    </message>
+    <message>
+        <location line="+690"/>
         <source>Could not open the high-speed boot loader.</source>
         <translation>Hızlı önyükleme yükleyicisi açılamadı.</translation>
     </message>
@@ -921,7 +926,7 @@ Bip sesini duyduğunuzda oynat düğmesine basın ve yaklaşık aynı anda Atari
         <translation>Hızlı SIO yaması uygulandı; D1: artık takılı disk.</translation>
     </message>
     <message>
-        <location line="+551"/>
+        <location line="+558"/>
         <source>BT module not present.</source>
         <translation>BT modülü yok.</translation>
     </message>
@@ -977,13 +982,13 @@ Bip sesini duyduğunuzda oynat düğmesine basın ve yaklaşık aynı anda Atari
     </message>
     <message>
         <location line="+131"/>
-        <location line="+1027"/>
+        <location line="+1037"/>
         <source>Cannot read &apos;%1&apos;.</source>
         <translation>&apos;%1&apos; okunamıyor.</translation>
     </message>
     <message>
-        <location line="-951"/>
-        <location line="+273"/>
+        <location line="-961"/>
+        <location line="+283"/>
         <location line="+39"/>
         <location line="+653"/>
         <source>Cannot write to &apos;%1&apos;.</source>
@@ -1087,7 +1092,7 @@ Bip sesini duyduğunuzda oynat düğmesine basın ve yaklaşık aynı anda Atari
         <translation>Dosya eklenemedi, günlüğe bakın.</translation>
     </message>
     <message>
-        <location line="-1710"/>
+        <location line="-1720"/>
         <source>Emulation stopped.</source>
         <translation>Emülasyon durdu.</translation>
     </message>
@@ -1098,7 +1103,7 @@ Bip sesini duyduğunuzda oynat düğmesine basın ve yaklaşık aynı anda Atari
     </message>
     <message>
         <location line="+176"/>
-        <location line="+676"/>
+        <location line="+686"/>
         <source>[%1] Mounted &apos;%2&apos; as &apos;%3&apos;.</source>
         <translation>[%1] &apos;%2&apos;, &apos;%3&apos; olarak yüklendi.</translation>
     </message>
@@ -1328,6 +1333,17 @@ Bip sesini duyduğunuzda oynat düğmesine basın ve yaklaşık aynı anda Atari
     </message>
     <message>
         <location line="+12"/>
+        <location line="+4"/>
+        <source>Save log</source>
+        <translation>Günlüğü kaydet</translation>
+    </message>
+    <message>
+        <location line="+0"/>
+        <source>Log files (*.log)</source>
+        <translation>Günlük dosyaları (*.log)</translation>
+    </message>
+    <message>
+        <location line="+4"/>
         <source>Close</source>
         <translation>Kapat</translation>
     </message>
@@ -1749,7 +1765,7 @@ Seçenekler diyaloğunu açmak istermisiniz?</translation>
         <translation>Seçenekler</translation>
     </message>
     <message>
-        <location line="+251"/>
+        <location line="+266"/>
         <source>User interface</source>
         <translation>Kullanıcı arayüzü</translation>
     </message>
@@ -1811,7 +1827,7 @@ Seçenekler diyaloğunu açmak istermisiniz?</translation>
     <message>
         <location line="+6"/>
         <source>Boots D1: through a high-speed SIO patch. Mount every disk before starting the Atari: it decides each drive&apos;s speed once.</source>
-        <translation>D1: sürücüsünü hızlı SIO yamasıyla başlatır. Atari'yi açmadan önce tüm diskleri takın: her sürücünün hızı bir kez belirlenir.</translation>
+        <translation>D1: sürücüsünü hızlı SIO yamasıyla başlatır. Atari&apos;yi açmadan önce tüm diskleri takın: her sürücünün hızı bir kez belirlenir.</translation>
     </message>
     <message>
         <location line="+8"/>
@@ -2787,7 +2803,7 @@ Seçenekler diyaloğunu açmak istermisiniz?</translation>
 <context>
     <name>RemoteControl</name>
     <message>
-        <location filename="../remotecontrol.cpp" line="-153"/>
+        <location filename="../remotecontrol.cpp" line="-184"/>
         <source>[%1] Read data frame failed</source>
         <translation type="unfinished">[%1] Veri çatısı okuma hatası</translation>
     </message>
