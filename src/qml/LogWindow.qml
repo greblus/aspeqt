@@ -114,6 +114,23 @@ Popup {
                     font.bold: true
                     Layout.fillWidth: true
                 }
+                ToolButton {
+                    text: "\u22ee"
+                    font.pixelSize: 22
+                    onClicked: logMenu.open()
+                    Menu {
+                        id: logMenu
+                        y: parent.height
+                        MenuItem {
+                            // The whole rolling log file, not just what is on
+                            // screen: this is what to attach to a bug report.
+                            text: qsTr("Save log")
+                            onTriggered: logPicker.saveFile(
+                                qsTr("Save log"), [qsTr("Log files (*.log)")], "", "aspeqt.log",
+                                function (url) { if (url.length > 0) app.saveLogTo(url) })
+                        }
+                    }
+                }
             }
         }
 
@@ -198,14 +215,6 @@ Popup {
                         Layout.preferredHeight: 34
                     }
                     Item { Layout.fillWidth: true }
-                    Button {
-                        text: qsTr("Save log")
-                        // The whole rolling log file, not just what is on screen:
-                        // this is what to attach to a bug report.
-                        onClicked: logPicker.saveFile(
-                            qsTr("Save log"), [qsTr("Log files (*.log)")], "", "aspeqt.log",
-                            function (url) { if (url.length > 0) app.saveLogTo(url) })
-                    }
                     Button {
                         text: qsTr("Close")
                         highlighted: true
